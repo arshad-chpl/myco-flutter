@@ -11,9 +11,8 @@ import '../models/app_version_model.dart';
 import 'version_remote_data_source.dart';
 
 class VersionRemoteDataSourceImpl implements VersionRemoteDataSource {
-  final Dio dio;
-
-  VersionRemoteDataSourceImpl(this.dio);
+ApiClient apiClient;
+  VersionRemoteDataSourceImpl(this.apiClient);
 
   @override
   Future<AppVersionModel> getAppVersion() async {
@@ -25,9 +24,7 @@ class VersionRemoteDataSourceImpl implements VersionRemoteDataSource {
     };
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
 
-    final response = await GetIt.I<ApiClient>(
-      instanceName: VariableBag.masterAPICall,
-    ).postDynamic('versionControllerEnc.php', encryptedBody);
+    final response = await apiClient.postDynamic('versionControllerEnc.php', encryptedBody);
     return AppVersionModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 }

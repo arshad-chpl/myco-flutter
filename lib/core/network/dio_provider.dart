@@ -3,11 +3,11 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:myco_flutter/core/constants.dart';
 
 Dio createDio(credentials) {
-   final dio = Dio(
+  final dio = Dio(
     BaseOptions(
       baseUrl: VariableBag.mainURL, // Replace with your API base URL
-      connectTimeout: const Duration(seconds: 15),
-      receiveTimeout: const Duration(seconds: 15),
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
       headers: {'Content-Type': 'application/json'},
     ),
   );
