@@ -19,12 +19,12 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
     emit(LanguageLoading());
     try {
       final languages = await repository.getAppLanguage();
-      if (languages.language != null &&
-          languages.language!.isNotEmpty) {
-        emit(LanguageLoaded(languages.language!));
-      } else {
-        emit(LanguageError("Failed to load languages"));
-      }
+      // if (languages.language != null &&
+      //     languages.language!.isNotEmpty) {
+      //   emit(LanguageLoaded(languages.language!));
+      // } else {
+      //   emit(LanguageError("Failed to load languages"));
+      // }
     } catch (e) {
       emit(LanguageError("Failed to load languages"));
     }
@@ -39,11 +39,11 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
         event.selectedLanguage.languageId ?? "1",
         preference.getCompanyId().toString(),
       );
-      if (success) {
-        emit(LanguageValueDownloaded());
-      } else {
-        emit(LanguageError("Failed to load language values"));
-      }
+      // if (success) {
+      //   emit(LanguageValueDownloaded());
+      // } else {
+      //   emit(LanguageError("Failed to load language values"));
+      // }
     }
   }
 }

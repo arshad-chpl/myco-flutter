@@ -11,4 +11,9 @@ class AppColors {
   static const Color gray5 = Color(0xFFF2F2F2);
   static const Color gray10 = Color(0xFFE6E6E6);
   static const Color white = Color(0xFFFFFFFF);
+  static const Color bgWhite = Color(0xFFFAFAFF);
+  static const Color blueLightShade = Color(
+    0xFFeef1f9,
+  ); // use in take order expansion tile
+  static const Color myCoCyan = Color(0xFF08A4BB);
 }

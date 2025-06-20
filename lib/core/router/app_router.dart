@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/features/language_selector/view/language_selector_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
+import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
+import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
 import 'route_paths.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -13,7 +15,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash,
+    initialLocation: RoutePaths.takeOrder,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -21,14 +23,24 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.splash,
         name: 'splash',
-        builder: (context, state) =>
-            BlocProvider(create: (_)=>GetIt.I<SplashBloc>()..add(LoadSplash()), child: const SplashPage()),
+        builder: (context, state) => BlocProvider(
+          create: (_) => GetIt.I<SplashBloc>()..add(LoadSplash()),
+          child: const SplashPage(),
+        ),
       ),
-         GoRoute(
-      path: RoutePaths.language,
-      name: 'language',
-      builder: (context, state) => const LanguageSelectorPage(),
-    ),
+      GoRoute(
+        path: RoutePaths.language,
+        name: 'language',
+        builder: (context, state) => const LanguageSelectorPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.takeOrder,
+        name: 'take-order',
+        builder: (context, state) => BlocProvider(
+          create: (_) => TakeOrderBloc(),
+          child: TakeOrderPage(),
+        ),
+      ),
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,
