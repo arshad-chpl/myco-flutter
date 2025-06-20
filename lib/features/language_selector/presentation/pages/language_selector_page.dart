@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import '../../../widgets/custom_text.dart';
-import '../presentation/bloc/language_bloc.dart';
-import '../presentation/bloc/language_event.dart';
-import '../presentation/bloc/language_state.dart';
-import '../model/language_response.dart';
-import '../repositories/language_repository.dart';
+import 'package:myco_flutter/features/language_selector/domain/repositories/language_repository.dart';
+import '../../../../widgets/custom_text.dart';
+import '../bloc/language_bloc.dart';
+import '../bloc/language_event.dart';
+import '../bloc/language_state.dart';
+import '../../model/language_response.dart';
+
 
 class LanguageSelectorPage extends StatelessWidget {
   const LanguageSelectorPage({super.key});
