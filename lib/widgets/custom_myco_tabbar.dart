@@ -97,12 +97,15 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
 class MyCustomTabBar extends StatelessWidget {
   final List<String> tabs;
   final List<Color> selectedBgColors;
   final List<TextStyle>? selectedTextStyles;
+  final double? height;
+  final double? width;
   final Color unselectedBorderAndTextColor;
   final Color tabBarBorderColor;
   final TextStyle? unselectedTextStyle;
@@ -122,6 +125,8 @@ class MyCustomTabBar extends StatelessWidget {
     required this.unselectedBorderAndTextColor,
     required this.tabBarBorderColor,
     required this.selectedIndex,
+    this.height,
+    this.width,
     this.selectedTextStyles,
     this.unselectedTextStyle,
     this.borderRadius,
@@ -132,56 +137,60 @@ class MyCustomTabBar extends StatelessWidget {
     this.tabBarBackgroundColor,
     this.onTabChange,
   }) : assert(
-          selectedBgColors.length == tabs.length,
-          "Each tab must have a corresponding selectedBgColor",
-        );
+         selectedBgColors.length == tabs.length,
+         "Each tab must have a corresponding selectedBgColor",
+       );
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-        decoration: BoxDecoration(
-          border: Border.all(color: tabBarBorderColor),
-          borderRadius: BorderRadius.circular(borderRadius ?? 50),
-          color: tabBarBackgroundColor ?? Colors.white,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: List.generate(tabs.length, (index) {
-            final isSelected = index == selectedIndex;
+    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+    height: height ?? 0.06 * getHeight(context),
+    width: width ?? 0.9 * getWidth(context),
+    decoration: BoxDecoration(
+      border: Border.all(color: tabBarBorderColor),
+      borderRadius: BorderRadius.circular(borderRadius ?? 50),
+      color: tabBarBackgroundColor ?? Colors.white,
+    ),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(tabs.length, (index) {
+        final isSelected = index == selectedIndex;
 
-            return Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: MyCoButton(
-                  isShadowBottomLeft:
-                      isSelected ? isShadowBottomLeft ?? false : false,
-                  isShadowBottomRight:
-                      isSelected ? isShadowBottomRight ?? false : false,
-                  isShadowTopLeft:
-                      isSelected ? isShadowTopLeft ?? false : false,
-                  isShadowTopRight:
-                      isSelected ? isShadowTopRight ?? false : false,
-                  title: tabs[index],
-                  onTap: () => onTabChange?.call(index),
-                  backgroundColor:
-                      isSelected ? selectedBgColors[index] : Colors.transparent,
-                  borderColor:
-                      isSelected ? selectedBgColors[index] : Colors.transparent,
-                  borderWidth: isSelected ? null : 1.5,
-                  boarderRadius: borderRadius ?? 50,
-                  textStyle: isSelected
-                      ? const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                        )
-                      : TextStyle(
-                          color: selectedBgColors[index],
-                          fontWeight: FontWeight.w500,
-                        ),
-                ),
-              ),
-            );
-          }),
-        ),
-      );
+        return Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: MyCoButton(
+              isShadowBottomLeft: isSelected
+                  ? isShadowBottomLeft ?? false
+                  : false,
+              isShadowBottomRight: isSelected
+                  ? isShadowBottomRight ?? false
+                  : false,
+              isShadowTopLeft: isSelected ? isShadowTopLeft ?? false : false,
+              isShadowTopRight: isSelected ? isShadowTopRight ?? false : false,
+              title: tabs[index],
+              onTap: () => onTabChange?.call(index),
+              backgroundColor: isSelected
+                  ? selectedBgColors[index]
+                  : Colors.transparent,
+              borderColor: isSelected
+                  ? selectedBgColors[index]
+                  : Colors.transparent,
+              borderWidth: isSelected ? null : 1.5,
+              boarderRadius: borderRadius ?? 50,
+              textStyle: isSelected
+                  ? const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                    )
+                  : TextStyle(
+                      color: selectedBgColors[index],
+                      fontWeight: FontWeight.w500,
+                    ),
+            ),
+          ),
+        );
+      }),
+    ),
+  );
 }

@@ -16,4 +16,6 @@ class AppColors {
     0xFFeef1f9,
   ); // use in take order expansion tile
   static const Color myCoCyan = Color(0xFF08A4BB);
+  static const Color lightTeal = Color(0xFFEEF7FD);
+  static const Color red = Color(0xFFC44141);
 }

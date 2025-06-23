@@ -43,7 +43,7 @@ class OfferBox extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 20 * getResponsiveText(context),
+                  fontSize: 22 * getResponsiveText(context),
                 ),
               ),
             ],

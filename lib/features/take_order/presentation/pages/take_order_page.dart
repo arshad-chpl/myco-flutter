@@ -4,6 +4,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/offers_page.dart';
+import 'package:myco_flutter/features/take_order/presentation/pages/order_summary_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/products_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/frequent_buy_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -37,32 +38,49 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
             color: AppColors.white,
           ),
           width: 0.17 * getWidth(context),
-          height: 0.04 * getHeight(context),
+          height: 0.03 * getHeight(context),
           boarderRadius: 20 * getResponsive(context),
           isShadowBottomLeft: true,
         ),
         SizedBox(width: 0.01 * getWidth(context)),
-        MyCoButton(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => OffersPage()),
-            );
-          },
-          title: 'Offers',
-          textStyle: TextStyle(
-            fontSize: 14 * getResponsiveText(context),
-            color: AppColors.white,
-          ),
-          backgroundColor: AppColors.primary_1,
-          width: 0.17 * getWidth(context),
-          height: 0.04 * getHeight(context),
-          boarderRadius: 20 * getResponsive(context),
-          borderColor: AppColors.primary_1,
-          isShadowBottomLeft: true,
+        Stack(
+          alignment: const AlignmentGeometry.directional(1.5, -1.5),
+          children: [
+            MyCoButton(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OffersPage()),
+                );
+              },
+              title: 'Offers',
+              textStyle: TextStyle(
+                fontSize: 14 * getResponsiveText(context),
+                color: AppColors.white,
+              ),
+              backgroundColor: AppColors.primary_1,
+              width: 0.17 * getWidth(context),
+              height: 0.03 * getHeight(context),
+              boarderRadius: 20 * getResponsive(context),
+              borderColor: AppColors.primary_1,
+              isShadowBottomLeft: true,
+            ),
+            Container(
+              height: 0.02 * getHeight(context),
+              width: 0.1 * getWidth(context),
+              decoration: const BoxDecoration(shape: BoxShape.circle),
+              child: Image.asset(
+                'assets/take_order/offer.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+          ],
         ),
         SizedBox(width: 0.02 * getWidth(context)),
-        const Icon(Icons.shopping_cart),
+        Image.asset(
+          'assets/take_order/cart.png',
+          width: 0.07 * getWidth(context),
+        ),
         SizedBox(width: 0.06 * getWidth(context)),
       ],
     ),
@@ -188,19 +206,31 @@ class FrequentsBuyScreen extends StatelessWidget {
             onTap: () {},
             title: 'Reset Cart',
             width: 0.4 * getWidth(context),
+            height: 0.05 * getHeight(context),
             backgroundColor: AppColors.bgWhite,
             textStyle: TextStyle(
               color: AppColors.primary,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.bold,
               fontSize: 20 * getResponsiveText(context),
             ),
             boarderRadius: 30 * getResponsive(context),
           ),
           MyCoButton(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => OrderSummaryPage()),
+              );
+            },
             title: 'Add Order',
             width: 0.4 * getWidth(context),
+            height: 0.05 * getHeight(context),
             boarderRadius: 30 * getResponsive(context),
+            textStyle: TextStyle(
+              color: AppColors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20 * getResponsiveText(context),
+            ),
           ),
         ],
       ),
