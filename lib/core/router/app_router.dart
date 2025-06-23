@@ -40,13 +40,14 @@ class AppRouter {
         name: 'selectCompany',
         builder: (context, state) => BlocProvider(
           create: (context) => GetIt.I<CompanyBloc>(),
-          child: const SelectCompanyPage()),
+          child: const SelectCompanyPage(),
+        ),
       ),
-      GoRoute(
-        path: RoutePaths.language,
-        name: 'language',
-        builder: (context, state) => const LanguageSelectorPage(),
-      ),
+      // GoRoute(
+      //   path: RoutePaths.language,
+      //   name: 'language',
+      //   builder: (context, state) => const LanguageSelectorPage(),
+      // ),
       GoRoute(
         path: RoutePaths.takeOrder,
         name: 'take-order',

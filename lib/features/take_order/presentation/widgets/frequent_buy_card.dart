@@ -45,7 +45,7 @@ class FrequentBuyCard extends StatelessWidget {
               showModalBottomSheet(
                 shape: const BeveledRectangleBorder(),
                 context: context,
-                builder: (context) => AddOrderBottomsheet(),
+                builder: (context) => const AddOrderBottomsheet(),
               );
             },
             title: 'Add',
@@ -56,6 +56,33 @@ class FrequentBuyCard extends StatelessWidget {
           const Spacer(),
         ],
       ),
+    ),
+  );
+
+  Container buildContainer(
+    BuildContext context, {
+    required double width,
+    Color? bgColor,
+    bool isIcon = true,
+    IconData? icon,
+    String? textData,
+  }) => Container(
+    height: 0.045 * getHeight(context),
+    width: width,
+    decoration: BoxDecoration(
+      color: bgColor ?? AppColors.primary,
+      borderRadius: BorderRadius.circular(8.0 * getResponsive(context)),
+    ),
+    child: Center(
+      child: isIcon
+          ? Icon(icon, color: AppColors.white)
+          : Text(
+              textData ?? '',
+              style: TextStyle(
+                fontSize: 20 * getResponsiveText(context),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
     ),
   );
 }
