@@ -5,4 +5,12 @@ class RoutePaths {
   static const String language = '/language';
   static const String selectCompany = '/select-company';
   static const String takeOrder = '/take-order';
+  static const String offers = '/offers';
+  static const String products = '/products';
+  static const String orderSummary = '/order-summary';
+  static const String allDistributor = '/all-distributor';
+  static const String orderHistory = '/order-history';
+  static const String editOrder = '/edit-order';
+  static const String distributorVisitor = 'distributor-visitor';
+  static const String noOrder = 'no-order';
 }
