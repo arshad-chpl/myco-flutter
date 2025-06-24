@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
-import 'package:myco_flutter/features/take_order/presentation/pages/offers_page.dart';
-import 'package:myco_flutter/features/take_order/presentation/pages/order_summary_page.dart';
-import 'package:myco_flutter/features/take_order/presentation/pages/products_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/frequent_buy_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
@@ -48,10 +46,11 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
           children: [
             MyCoButton(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => OffersPage()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => OffersPage()),
+                // );
+                context.pushNamed('offers');
               },
               title: 'Offers',
               textStyle: TextStyle(
@@ -161,10 +160,11 @@ class AllProductsScreen extends StatelessWidget {
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) => MyCoTextfield(
-                onClick: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ProductsPage()),
-                ),
+                // onClick: () => Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const ProductsPage()),
+                // ),
+                onClick: () => context.pushNamed('products'),
                 isReadOnly: true,
                 hintText: productList[index],
                 hintTextStyle: const TextStyle(color: AppColors.primary),
@@ -217,10 +217,11 @@ class FrequentsBuyScreen extends StatelessWidget {
           ),
           MyCoButton(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => OrderSummaryPage()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => OrderSummaryPage()),
+              // );
+              context.pushNamed('order-summary');
             },
             title: 'Add Order',
             width: 0.4 * getWidth(context),

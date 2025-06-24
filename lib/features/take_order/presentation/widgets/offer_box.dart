@@ -18,6 +18,7 @@ class OfferBox extends StatelessWidget {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(12 * getResponsive(context)),
     ),
+    color: AppColors.white,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

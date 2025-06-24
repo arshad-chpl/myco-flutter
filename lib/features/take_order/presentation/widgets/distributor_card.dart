@@ -24,6 +24,7 @@ class DistributorCard extends StatelessWidget {
   Widget build(BuildContext context) => Card(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+      side: BorderSide(color: Colors.grey),
     ),
     color: AppColors.white,
     child: Column(
@@ -53,7 +54,7 @@ class DistributorCard extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 22 * getResponsiveText(context),
+                    fontSize: 20 * getResponsiveText(context),
                   ),
                 ),
                 isButton
