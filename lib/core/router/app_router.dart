@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/login/presentation/pages/otp_dialog.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
@@ -17,7 +18,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.takeOrder,
+    initialLocation: RoutePaths.login,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -55,6 +56,12 @@ class AppRouter {
           create: (_) => TakeOrderBloc(),
           child: TakeOrderPage(),
         ),
+      ),
+
+      GoRoute(
+        path: RoutePaths.login,
+        name: 'login',
+        builder: (context, state) => const OtpVerifyDialog(),
       ),
       // Add all modular routes here
       // ...authRoutes,
