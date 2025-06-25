@@ -23,7 +23,7 @@ class AppTheme {
       iconTheme: IconThemeData(color: Colors.white),
     ),
     textTheme: const TextTheme(
-      bodyLarge: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+      bodyLarge: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       bodyMedium: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
       titleLarge: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
     ),
@@ -47,9 +47,21 @@ class AppTheme {
       backgroundColor: AppColors.primary,
     ),
     textTheme: const TextTheme(
-      bodyLarge: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, color: Colors.white),
-      bodyMedium: TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: Colors.white70),
-      titleLarge: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Colors.white),
+      bodyLarge: TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 16,
+        color: Colors.white,
+      ),
+      bodyMedium: TextStyle(
+        fontWeight: FontWeight.w500,
+        fontSize: 14,
+        color: Colors.white70,
+      ),
+      titleLarge: TextStyle(
+        fontWeight: FontWeight.w700,
+        fontSize: 20,
+        color: Colors.white,
+      ),
     ),
   );
 }

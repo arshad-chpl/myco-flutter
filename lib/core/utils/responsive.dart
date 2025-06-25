@@ -14,6 +14,10 @@ double getResponsive(context) {
   return MediaQuery.of(context).size.height * 0.001;
 }
 
+double getResponsiveOnWidth(context) {
+  return MediaQuery.of(context).size.width * 0.001;
+}
+
 double getResponsiveText(context) {
   if (Platform.isAndroid) {
     return 0.8;
