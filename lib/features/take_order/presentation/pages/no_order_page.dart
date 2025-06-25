@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 
 class NoOrderPage extends StatelessWidget {
@@ -7,9 +7,9 @@ class NoOrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.getColor(context).surface,
+    backgroundColor: AppTheme.getColor(context).surface,
     appBar: AppBar(
-      backgroundColor: AppColors.getColor(context).surface,
+      backgroundColor: AppTheme.getColor(context).surface,
       title: Text('No Order'),
       leading: BackButton(),
     ),

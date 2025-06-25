@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/text_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/bottom_navigation_bar/bloc/bottom_navigation_bar_bloc.dart';
@@ -25,14 +25,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) => SafeArea(
     child: BlocBuilder<BottomNavigationBarBloc, BottomNavigationBarState>(
       builder: (context, state) => Scaffold(
-        backgroundColor: AppColors.getColor(context).surface,
+        backgroundColor: AppTheme.getColor(context).surface,
         body: screens[state.currentIndex],
         extendBody: true,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             context.read<BottomNavigationBarBloc>().add(ToggleIconEvent());
           },
-          backgroundColor: AppColors.getColor(context).primary,
+          backgroundColor: AppTheme.getColor(context).primary,
           shape: const CircleBorder(),
           child: Image.asset(
             state.isMenuSelected
@@ -75,7 +75,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     'Menu',
                     style: AppTextTheme.getTextTheme(context).labelLarge!
                         .copyWith(
-                          color: AppColors.getColor(context).onSurfaceVariant,
+                          color: AppTheme.getColor(context).onSurfaceVariant,
                         ),
                     // TextStyle(
                     //   color: AppColors.getColor(context).onSurfaceVariant,
@@ -136,8 +136,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
             text,
             style: AppTextTheme.getTextTheme(context).labelLarge!.copyWith(
               color: isSelected
-                  ? AppColors.getColor(context).primary
-                  : AppColors.getColor(context).onSurfaceVariant,
+                  ? AppTheme.getColor(context).primary
+                  : AppTheme.getColor(context).onSurfaceVariant,
             ),
           ),
         ],

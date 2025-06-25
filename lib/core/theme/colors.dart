@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
- static ColorScheme getColor(BuildContext context)=> Theme.of(context).colorScheme;
-
-
   // Primary and Secondary Colors
   static const Color primary = Color(0xFF2F648E);
   static const Color secondary = Color(0xFF2FBBA4);
