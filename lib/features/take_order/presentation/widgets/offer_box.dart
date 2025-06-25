@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 
@@ -18,7 +19,7 @@ class OfferBox extends StatelessWidget {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(12 * getResponsive(context)),
     ),
-    color: AppColors.white,
+    color: AppTheme.getColor(context).onPrimary,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

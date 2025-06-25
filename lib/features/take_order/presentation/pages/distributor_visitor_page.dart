@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
@@ -13,9 +14,9 @@ class DistributorVisitorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.backgroundPrimary,
+    backgroundColor: AppTheme.getColor(context).surface,
     appBar: AppBar(
-      backgroundColor: AppColors.backgroundPrimary,
+      backgroundColor: AppTheme.getColor(context).surface,
       title: Text(
         'Mahakali Tractors (RT43575)',
         style: TextStyle(fontSize: 20 * getResponsiveText(context)),
@@ -124,7 +125,7 @@ class DistributorVisitorPage extends StatelessWidget {
                   // height: 0.2 * getHeight(context),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
-                    color: AppColors.white,
+                    color: AppTheme.getColor(context).onPrimary,
                     borderRadius: BorderRadius.circular(
                       12 * getResponsive(context),
                     ),
@@ -159,9 +160,9 @@ class DistributorVisitorPage extends StatelessWidget {
                         title: isRunning ? 'Stop' : 'Start',
                         width: 0.25 * getWidth(context),
                         height: 0.04 * getHeight(context),
-                        backgroundColor: AppColors.secondary,
+                        backgroundColor: AppTheme.getColor(context).secondary,
                         boarderRadius: 30 * getResponsive(context),
-                        borderColor: AppColors.secondary,
+                        borderColor: AppTheme.getColor(context).secondary,
                         isShadowBottomLeft: true,
                       ),
 
@@ -178,9 +179,9 @@ class DistributorVisitorPage extends StatelessWidget {
                                     ),
                                   ),
                                   IconButton(
-                                    icon: const Icon(
+                                    icon: Icon(
                                       Icons.refresh,
-                                      color: AppColors.primary,
+                                      color: AppTheme.getColor(context).primary,
                                     ),
                                     onPressed: () {
                                       context.read<TakeOrderBloc>().add(
@@ -259,7 +260,7 @@ class DistributorVisitorPage extends StatelessWidget {
               // height: 0.2 * getHeight(context),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
-                color: AppColors.white,
+                color: AppTheme.getColor(context).onPrimary,
                 borderRadius: BorderRadius.circular(
                   12 * getResponsive(context),
                 ),
@@ -340,7 +341,7 @@ class DistributorVisitorPage extends StatelessWidget {
     builder: (context) => Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12 * getResponsive(context)),
-        color: AppColors.white,
+        color: AppTheme.getColor(context).onPrimary,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -406,7 +407,7 @@ class DistributorVisitorPage extends StatelessWidget {
                   title: 'CLOSE',
                   width: 0.4 * getWidth(context),
                   height: 0.06 * getHeight(context),
-                  backgroundColor: AppColors.white,
+                  backgroundColor: AppTheme.getColor(context).onPrimary,
                   boarderRadius: 30 * getResponsive(context),
                   textStyle: const TextStyle(
                     color: AppColors.primary,
@@ -418,7 +419,7 @@ class DistributorVisitorPage extends StatelessWidget {
                   title: 'END VISIT',
                   width: 0.4 * getWidth(context),
                   height: 0.06 * getHeight(context),
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: AppTheme.getColor(context).primary,
                   boarderRadius: 30 * getResponsive(context),
                   textStyle: const TextStyle(
                     color: AppColors.white,
@@ -443,7 +444,7 @@ class DistributorVisitorPage extends StatelessWidget {
     ),
     context: context,
     builder: (context) => Container(
-      color: AppColors.white,
+      color: AppTheme.getColor(context).onPrimary,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -454,7 +455,9 @@ class DistributorVisitorPage extends StatelessWidget {
             ),
             width: getWidth(context),
             height: 0.05 * getHeight(context),
-            decoration: const BoxDecoration(color: AppColors.primary),
+            decoration: BoxDecoration(
+              color: AppTheme.getColor(context).primary,
+            ),
             child: Text(
               'Visit Purpose',
               style: TextStyle(
@@ -535,7 +538,7 @@ class DistributorVisitorPage extends StatelessWidget {
                   title: 'CLOSE',
                   width: 0.4 * getWidth(context),
                   height: 0.06 * getHeight(context),
-                  backgroundColor: AppColors.white,
+                  backgroundColor: AppTheme.getColor(context).onPrimary,
                   boarderRadius: 30 * getResponsive(context),
                   textStyle: const TextStyle(
                     color: AppColors.primary,
@@ -547,7 +550,7 @@ class DistributorVisitorPage extends StatelessWidget {
                   title: 'DONE',
                   width: 0.4 * getWidth(context),
                   height: 0.06 * getHeight(context),
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: AppTheme.getColor(context).primary,
                   boarderRadius: 30 * getResponsive(context),
                   textStyle: const TextStyle(
                     color: AppColors.white,
