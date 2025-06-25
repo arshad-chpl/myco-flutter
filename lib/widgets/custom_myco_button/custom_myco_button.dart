@@ -20,6 +20,7 @@ class MyCoButton extends StatelessWidget {
   final double? borderWidth;
   final double? boarderRadius;
   final String? fontFamily;
+  final bool wantBorder;
   final bool isShadowTopLeft;
   final bool isShadowTopRight;
   final bool isShadowBottomRight;
@@ -44,6 +45,7 @@ class MyCoButton extends StatelessWidget {
     this.borderWidth,
     this.boarderRadius,
     this.fontFamily,
+    this.wantBorder = true,
     this.isShadowTopLeft = false,
     this.isShadowTopRight = false,
     this.isShadowBottomRight = false,
@@ -70,6 +72,7 @@ class MyCoButton extends StatelessWidget {
       borderColor: borderColor,
       borderWidth: borderWidth,
       boarderRadius: boarderRadius,
+      wantBorder: wantBorder,
       isShadowTopLeft: isShadowTopLeft,
       isShadowTopRight: isShadowTopRight,
       isShadowBottomRight: isShadowBottomRight,
@@ -96,6 +99,7 @@ class _MyCoButtonMobile extends StatelessWidget {
   final double? borderWidth;
   final double? boarderRadius;
   final String? fontFamily;
+  final bool wantBorder;
   final bool isShadowTopLeft;
   final bool isShadowTopRight;
   final bool isShadowBottomRight;
@@ -119,6 +123,7 @@ class _MyCoButtonMobile extends StatelessWidget {
     this.borderWidth,
     this.boarderRadius,
     this.fontFamily,
+    this.wantBorder = true,
     this.isShadowTopLeft = false,
     this.isShadowTopRight = false,
     this.isShadowBottomRight = false,
@@ -150,16 +155,17 @@ class _MyCoButtonMobile extends StatelessWidget {
                 BoxDecoration(
                   color: bgColor,
                   borderRadius: BorderRadius.circular(radius),
-                  border:
-                      border ??
-                      Border.all(
-                        color:
-                            borderColor ??
-                            MyCoButtonTheme.defaultBorder.top.color,
-                        width:
-                            borderWidth ??
-                            MyCoButtonTheme.defaultBorder.top.width,
-                      ),
+                  border: wantBorder
+                      ? border ??
+                            Border.all(
+                              color:
+                                  borderColor ??
+                                  MyCoButtonTheme.defaultBorder.top.color,
+                              width:
+                                  borderWidth ??
+                                  MyCoButtonTheme.defaultBorder.top.width,
+                            )
+                      : null,
                 ),
             child: Center(
               child: _ButtonContent(
