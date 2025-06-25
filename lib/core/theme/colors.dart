@@ -18,4 +18,7 @@ class AppColors {
   static const Color myCoCyan = Color(0xFF08A4BB);
   static const Color lightTeal = Color(0xFFEEF7FD);
   static const Color red = Color(0xFFC44141);
+  static const Color greyText = Color(
+    0xFF9DB2CE,
+  ); // used in bottom navigation bar's unselected text
 }
