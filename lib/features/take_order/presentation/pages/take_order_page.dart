@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
-import 'package:myco_flutter/features/take_order/presentation/pages/offers_page.dart';
-import 'package:myco_flutter/features/take_order/presentation/pages/order_summary_page.dart';
-import 'package:myco_flutter/features/take_order/presentation/pages/products_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/frequent_buy_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
@@ -24,9 +22,9 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.bgWhite,
+    backgroundColor: AppColors.backgroundPrimary,
     appBar: AppBar(
-      backgroundColor: AppColors.bgWhite,
+      backgroundColor: AppColors.backgroundPrimary,
       leading: const BackButton(),
       title: const Text('Take Order'),
       actions: [
@@ -48,21 +46,22 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
           children: [
             MyCoButton(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => OffersPage()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => OffersPage()),
+                // );
+                context.pushNamed('offers');
               },
               title: 'Offers',
               textStyle: TextStyle(
                 fontSize: 14 * getResponsiveText(context),
                 color: AppColors.white,
               ),
-              backgroundColor: AppColors.primary_1,
+              backgroundColor: AppColors.secondary,
               width: 0.17 * getWidth(context),
               height: 0.03 * getHeight(context),
               boarderRadius: 20 * getResponsive(context),
-              borderColor: AppColors.primary_1,
+              borderColor: AppColors.secondary,
               isShadowBottomLeft: true,
             ),
             Container(
@@ -98,11 +97,11 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
                 tabs: const ['All Products', 'Frequents Buy'],
                 selectedBgColors: const [
                   AppColors.primary,
-                  AppColors.primary_1,
+                  AppColors.secondary,
                 ],
                 unselectedBorderAndTextColor: AppColors.white,
                 tabBarBorderColor: AppColors.black,
-                tabBarBackgroundColor: AppColors.bgWhite,
+                tabBarBackgroundColor: AppColors.backgroundPrimary,
                 isShadowBottomLeft: true,
                 selectedIndex: selectedIndex,
                 onTabChange: (index) {
@@ -161,10 +160,11 @@ class AllProductsScreen extends StatelessWidget {
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) => MyCoTextfield(
-                onClick: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ProductsPage()),
-                ),
+                // onClick: () => Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const ProductsPage()),
+                // ),
+                onClick: () => context.pushNamed('products'),
                 isReadOnly: true,
                 hintText: productList[index],
                 hintTextStyle: const TextStyle(color: AppColors.primary),
@@ -207,7 +207,7 @@ class FrequentsBuyScreen extends StatelessWidget {
             title: 'Reset Cart',
             width: 0.4 * getWidth(context),
             height: 0.05 * getHeight(context),
-            backgroundColor: AppColors.bgWhite,
+            backgroundColor: AppColors.backgroundPrimary,
             textStyle: TextStyle(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,
@@ -217,10 +217,11 @@ class FrequentsBuyScreen extends StatelessWidget {
           ),
           MyCoButton(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => OrderSummaryPage()),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => OrderSummaryPage()),
+              // );
+              context.pushNamed('order-summary');
             },
             title: 'Add Order',
             width: 0.4 * getWidth(context),

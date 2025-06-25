@@ -56,7 +56,7 @@ class AddOrderBottomsheet extends StatelessWidget {
                 height: 0.05 * getHeight(context),
                 width: 0.25 * getWidth(context),
                 decoration: BoxDecoration(
-                  color: AppColors.primary_1.withValues(alpha: 0.3),
+                  color: AppColors.secondary.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(
                     12 * getResponsive(context),
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/offer_box.dart';
 
@@ -31,7 +32,12 @@ class OffersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text('Offers'), leading: const BackButton()),
+    backgroundColor: AppColors.backgroundPrimary,
+    appBar: AppBar(
+      backgroundColor: AppColors.backgroundPrimary,
+      title: const Text('Offers'),
+      leading: const BackButton(),
+    ),
     body: Container(
       padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
       child: Column(

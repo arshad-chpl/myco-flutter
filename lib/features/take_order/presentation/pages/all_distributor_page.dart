@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -8,7 +10,9 @@ class AllDistributorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    backgroundColor: AppColors.backgroundPrimary,
     appBar: AppBar(
+      backgroundColor: AppColors.backgroundPrimary,
       leading: const BackButton(),
       title: const Text('All Distributor'),
     ),
@@ -33,31 +37,40 @@ class AllDistributorPage extends StatelessWidget {
           Expanded(
             child: ListView.separated(
               itemCount: 3,
-              itemBuilder: (context, index) => DistributorCard(
-                headerHeight: 0.05 * getHeight(context),
-                title: 'Mukund',
-                bottomWidget: Padding(
-                  padding: EdgeInsets.all(8 * getResponsive(context)),
-                  child: Column(
-                    children: [
-                      getCommonRow(
-                        context,
-                        icon: Icons.person,
-                        title: 'Manish',
-                        isRadio: true,
-                      ),
-                      getCommonRow(
-                        context,
-                        icon: Icons.email,
-                        title: 'Mukund@yopmail.com',
-                      ),
-                      SizedBox(height: 0.01 * getHeight(context)),
-                      getCommonRow(
-                        context,
-                        icon: Icons.call,
-                        title: '+919909945983',
-                      ),
-                    ],
+              itemBuilder: (context, index) => InkWell(
+                onTap: () => context.pushNamed('distributor-visitor'),
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => DistributorVisitorPage(),
+                //   ),
+                // ),
+                child: DistributorCard(
+                  headerHeight: 0.05 * getHeight(context),
+                  title: 'Mukund',
+                  bottomWidget: Padding(
+                    padding: EdgeInsets.all(8 * getResponsive(context)),
+                    child: Column(
+                      children: [
+                        getCommonRow(
+                          context,
+                          icon: Icons.person,
+                          title: 'Manish',
+                          isRadio: true,
+                        ),
+                        getCommonRow(
+                          context,
+                          icon: Icons.email,
+                          title: 'Mukund@yopmail.com',
+                        ),
+                        SizedBox(height: 0.01 * getHeight(context)),
+                        getCommonRow(
+                          context,
+                          icon: Icons.call,
+                          title: '+919909945983',
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -79,7 +92,7 @@ class AllDistributorPage extends StatelessWidget {
     children: [
       Icon(icon),
       SizedBox(width: 0.01 * getWidth(context)),
-      Text(title, style: TextStyle(fontSize: 20 * getResponsiveText(context))),
+      Text(title, style: TextStyle(fontSize: 16 * getResponsiveText(context))),
       const Spacer(),
       isRadio
           ? Radio(value: true, groupValue: '', onChanged: (value) {})

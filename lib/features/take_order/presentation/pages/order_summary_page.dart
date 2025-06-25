@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/take_order/presentation/pages/all_distributor_page.dart';
-import 'package:myco_flutter/features/take_order/presentation/pages/order_history_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 class OrderSummaryPage extends StatelessWidget {
   final bool isRepeatOrder;
@@ -13,9 +11,9 @@ class OrderSummaryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.bgWhite,
+    backgroundColor: AppColors.backgroundPrimary,
     appBar: AppBar(
-      backgroundColor: AppColors.bgWhite,
+      backgroundColor: AppColors.backgroundPrimary,
       leading: const BackButton(),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,13 +29,13 @@ class OrderSummaryPage extends StatelessWidget {
         ],
       ),
     ),
-    body: SingleChildScrollView(
-      child: Container(
-        height: 0.9 * getHeight(context),
-        padding: EdgeInsets.symmetric(
-          horizontal: 0.08 * getWidth(context),
-          vertical: 0.02 * getHeight(context),
-        ),
+    body: Container(
+      height: getHeight(context),
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.08 * getWidth(context),
+        vertical: 0.02 * getHeight(context),
+      ),
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -51,14 +49,14 @@ class OrderSummaryPage extends StatelessWidget {
                   Text(
                     'Item (1)',
                     style: TextStyle(
-                      fontSize: 20 * getResponsiveText(context),
+                      fontSize: 16 * getResponsiveText(context),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
                     'Units (25)',
                     style: TextStyle(
-                      fontSize: 20 * getResponsiveText(context),
+                      fontSize: 16 * getResponsiveText(context),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -66,7 +64,7 @@ class OrderSummaryPage extends StatelessWidget {
                   Text(
                     'Total: ₹20000',
                     style: TextStyle(
-                      fontSize: 20 * getResponsiveText(context),
+                      fontSize: 16 * getResponsiveText(context),
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -108,7 +106,7 @@ class OrderSummaryPage extends StatelessWidget {
                           'Available Stocks : 9989',
                           style: TextStyle(
                             fontSize: 13 * getResponsiveText(context),
-                            color: AppColors.primary_1,
+                            color: AppColors.secondary,
                           ),
                         ),
                       ],
@@ -220,15 +218,47 @@ class OrderSummaryPage extends StatelessWidget {
             Text(
               'Remark',
               style: TextStyle(
-                fontSize: 20 * getResponsiveText(context),
+                fontSize: 14 * getResponsiveText(context),
+                fontWeight: FontWeight.w400,
                 color: AppColors.primary,
               ),
             ),
-            SizedBox(height: 0.01 * getHeight(context)),
-            MyCoTextfield(
-              preFixImage: 'assets/take_order/message-edit.png',
-              hintText: 'Type Here',
-              hintTextStyle: TextStyle(color: Colors.grey[400]),
+            SizedBox(height: 0.005 * getHeight(context)),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(
+                  12 * getResponsive(context),
+                ),
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: 0.018 * getWidth(context),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(top: 0.01 * getHeight(context)),
+                    child: Image.asset(
+                      'assets/take_order/message-edit.png',
+                      height: 0.025 * getHeight(context),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextFormField(
+                      maxLines: 5,
+                      minLines: 3,
+                      decoration: const InputDecoration(
+                        hintText: 'Type Here',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 0.02 * getHeight(context)),
             // Distributor Card
@@ -237,12 +267,13 @@ class OrderSummaryPage extends StatelessWidget {
               isButton: true,
               buttonText: 'Change',
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AllDistributorPage(),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const AllDistributorPage(),
+                //   ),
+                // );
+                context.goNamed('all-distributor');
               },
               bottomWidget: Padding(
                 padding: EdgeInsets.all(8 * getResponsive(context)),
@@ -274,16 +305,17 @@ class OrderSummaryPage extends StatelessWidget {
               ),
             ),
             // Buttons
-            const Spacer(),
+            SizedBox(height: 0.03 * getHeight(context)),
             isRepeatOrder
                 ? MyCoButton(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OrderHistoryPage(),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const OrderHistoryPage(),
+                      //   ),
+                      // );
+                      context.pushNamed('order-history');
                     },
                     title: 'Place Order',
                     width: getWidth(context),
@@ -303,7 +335,7 @@ class OrderSummaryPage extends StatelessWidget {
                         title: 'Add More',
                         width: 0.4 * getWidth(context),
                         height: 0.05 * getHeight(context),
-                        backgroundColor: AppColors.bgWhite,
+                        backgroundColor: AppColors.backgroundPrimary,
                         textStyle: TextStyle(
                           color: AppColors.primary,
                           fontWeight: FontWeight.bold,
@@ -313,12 +345,13 @@ class OrderSummaryPage extends StatelessWidget {
                       ),
                       MyCoButton(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OrderHistoryPage(),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => OrderHistoryPage(),
+                          //   ),
+                          // );
+                          context.pushNamed('order-history');
                         },
                         title: 'Place Order',
                         width: 0.4 * getWidth(context),
