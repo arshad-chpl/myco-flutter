@@ -13,9 +13,9 @@ class DistributorVisitorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.bgWhite,
+    backgroundColor: AppColors.backgroundPrimary,
     appBar: AppBar(
-      backgroundColor: AppColors.bgWhite,
+      backgroundColor: AppColors.backgroundPrimary,
       title: Text(
         'Mahakali Tractors (RT43575)',
         style: TextStyle(fontSize: 20 * getResponsiveText(context)),
@@ -159,9 +159,9 @@ class DistributorVisitorPage extends StatelessWidget {
                         title: isRunning ? 'Stop' : 'Start',
                         width: 0.25 * getWidth(context),
                         height: 0.04 * getHeight(context),
-                        backgroundColor: AppColors.primary_1,
+                        backgroundColor: AppColors.secondary,
                         boarderRadius: 30 * getResponsive(context),
-                        borderColor: AppColors.primary_1,
+                        borderColor: AppColors.secondary,
                         isShadowBottomLeft: true,
                       ),
 

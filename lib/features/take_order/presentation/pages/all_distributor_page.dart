@@ -10,9 +10,9 @@ class AllDistributorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.bgWhite,
+    backgroundColor: AppColors.backgroundPrimary,
     appBar: AppBar(
-      backgroundColor: AppColors.bgWhite,
+      backgroundColor: AppColors.backgroundPrimary,
       leading: const BackButton(),
       title: const Text('All Distributor'),
     ),

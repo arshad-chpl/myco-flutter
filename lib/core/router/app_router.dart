@@ -26,7 +26,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.login,
+    initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -120,7 +120,7 @@ class AppRouter {
         name: 'login',
         builder: (context, state) => const OtpVerifyDialog(),
       ),
-     GoRoute(
+      GoRoute(
         path: RoutePaths.dashboard,
         name: 'dashboard',
         builder: (context, state) => DashBoardPage(),

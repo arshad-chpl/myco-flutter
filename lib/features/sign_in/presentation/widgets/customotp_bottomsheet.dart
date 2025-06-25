@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/core/utils/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
@@ -138,7 +138,7 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
               Text(
                 widget.title ?? 'Email Verification Sent!',
                 style: TextStyle(
-                  fontSize: AppTheme.lightTheme.textTheme.titleLarge!.fontSize,
+                  fontSize: AppTheme.getTextStyle(context).titleLarge!.fontSize,
                   color: AppColors.textPrimary,
                   fontWeight: FontWeight.w700,
                 ),
@@ -149,7 +149,7 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                     'A verification code will be sent to the email${widget.emailAddress} for your account verification process.',
                 textAlign: TextAlign.left,
                 style: TextStyle(
-                  fontSize: AppTheme.lightTheme.textTheme.bodyMedium!.fontSize,
+                  fontSize: AppTheme.getTextStyle(context).bodyMedium!.fontSize,
                   color: AppColors.textPrimary,
                 ),
               ),
@@ -279,7 +279,7 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                     'signin with different method? ',
                     style: TextStyle(
                       fontSize:
-                          AppTheme.lightTheme.textTheme.bodyMedium!.fontSize,
+                          AppTheme.getTextStyle(context).bodyMedium!.fontSize,
                     ),
                   ),
                   GestureDetector(
@@ -288,7 +288,7 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                       'Here',
                       style: TextStyle(
                         fontSize:
-                            AppTheme.lightTheme.textTheme.bodyMedium!.fontSize,
+                            AppTheme.getTextStyle(context).bodyMedium!.fontSize,
                         color: AppColors.primary,
                         fontWeight: FontWeight.w600,
                       ),

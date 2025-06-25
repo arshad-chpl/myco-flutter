@@ -21,8 +21,11 @@ class CustomTimer extends StatefulWidget {
   final List<ColorRange> colorRanges;
   final VoidCallback? onCompleted;
 
+  final double timerWidth;
+  final double timerHeight;
+
   const CustomTimer({
-    Key? key,
+    super.key,
     this.maxMinutes = 10,
     this.minutesPerSegment = 2,
     this.strokeWidth = 20,
@@ -31,7 +34,9 @@ class CustomTimer extends StatefulWidget {
     this.primaryColor = const [Colors.teal],
     this.colorRanges = const [],
     this.onCompleted,
-  }) : super(key: key);
+    this.timerWidth = 250,
+    this.timerHeight = 250,
+  });
 
   @override
   State<CustomTimer> createState() => _CustomTimerState();
@@ -77,29 +82,31 @@ class _CustomTimerState extends State<CustomTimer> {
     final displaySeconds = (totalSeconds % 60).toString().padLeft(2, '0');
     final timeText = "$displayHours:$displayMinutes:$displaySeconds";
 
+    final safeStrokeWidth = min(widget.strokeWidth, widget.timerWidth * 0.2);
+
     return SizedBox(
-      width: 250,
-      height: 250,
+      width: widget.timerWidth,
+      height: widget.timerHeight,
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Main Background Shadow Circle
+          // Outer shadow circle
           Container(
-            width: 200,
-            height: 200,
+            width: widget.timerWidth * 0.8,
+            height: widget.timerHeight * 0.8,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               boxShadow: [BoxShadow(color: Color(0xFF2FBBA4), blurRadius: 25)],
             ),
           ),
-          // Inner White Circle Shadow
+
+          // Inner white circle
           Container(
-            width: 80,
-            height: 80,
+            width: widget.timerWidth * 0.45,
+            height: widget.timerHeight * 0.45,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               boxShadow: [
-                // BoxShadow(color: Color(0xFF2FBBA4)),
                 BoxShadow(
                   color: AppColors.white,
                   spreadRadius: 14,
@@ -107,19 +114,21 @@ class _CustomTimerState extends State<CustomTimer> {
                 ),
               ],
             ),
-            alignment: Alignment.center,
           ),
 
-          // Custom Timer Circle
-          SizedBox(
-            height: 200,
-            width: 200,
+          // Timer arc and inner shadow
+          Padding(
+            padding: EdgeInsets.all(safeStrokeWidth / 2),
             child: CustomPaint(
+              size: Size(
+                widget.timerWidth - safeStrokeWidth,
+                widget.timerHeight - safeStrokeWidth,
+              ),
               painter: _CustomTimerPainter(
                 maxMinutes: widget.maxMinutes,
                 currentMinutes: currentMinutes,
                 minutesPerSegment: widget.minutesPerSegment,
-                strokeWidth: widget.strokeWidth,
+                strokeWidth: safeStrokeWidth,
                 sectionGap: widget.sectionGap,
                 backgroundColor: widget.backgroundColor,
                 primaryColor: widget.primaryColor,
@@ -127,13 +136,12 @@ class _CustomTimerState extends State<CustomTimer> {
               ),
               foregroundPainter: InnerShadowPainter(
                 strokeWidth: 5,
-                // blurRadius: 10,
                 shadowColor: Colors.black26,
               ),
             ),
           ),
 
-          // Timer Text
+          // Time text
           Text(
             timeText,
             style: const TextStyle(
@@ -181,14 +189,16 @@ class _CustomTimerPainter extends CustomPainter {
     final totalAvailableAngle = 360.0 - totalGapAngle;
     final anglePerMinute = totalAvailableAngle / maxMinutes;
 
-    final backgroundPaint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth
-      ..color = backgroundColor;
+    final backgroundPaint =
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = strokeWidth
+          ..color = backgroundColor;
 
-    final colorPaint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth;
+    final colorPaint =
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = strokeWidth;
 
     double globalStartAngle = -90;
 
@@ -281,10 +291,10 @@ class InnerShadowPainter extends CustomPainter {
     final innerRadius = outerRadius - strokeWidth;
     final center = size.center(Offset.zero);
 
-    final outerPath = Path()
-      ..addOval(Rect.fromCircle(center: center, radius: outerRadius));
-    final innerPath = Path()
-      ..addOval(Rect.fromCircle(center: center, radius: innerRadius));
+    final outerPath =
+        Path()..addOval(Rect.fromCircle(center: center, radius: outerRadius));
+    final innerPath =
+        Path()..addOval(Rect.fromCircle(center: center, radius: innerRadius));
     final ringPath = Path.combine(
       PathOperation.difference,
       outerPath,

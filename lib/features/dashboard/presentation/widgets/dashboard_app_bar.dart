@@ -49,7 +49,7 @@ class DashboardAppBar extends StatelessWidget {
                 ),
               ),
               // Text('Person Name'),
-              Text('Designation'),
+              Text('Designation', style: TextTheme.of(context).bodyLarge),
               Text('date and time now'),
             ],
           ),

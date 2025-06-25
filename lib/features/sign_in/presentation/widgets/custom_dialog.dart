@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/core/utils/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 
 class MyCoDialog extends StatelessWidget {
@@ -102,7 +102,7 @@ class _MyCoDialogContent extends StatelessWidget {
             description!,
             style: TextStyle(
               fontSize:
-                  AppTheme.lightTheme.textTheme.bodyMedium?.fontSize ??
+                  AppTheme.getTextStyle(context).bodyMedium?.fontSize ??
                   16 * getResponsive(context),
             ),
             textAlign: TextAlign.center,

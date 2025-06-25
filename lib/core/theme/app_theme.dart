@@ -3,6 +3,9 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/theme/text_theme.dart';
 
 class AppTheme {
+ static ColorScheme getColor(BuildContext context)=> Theme.of(context).colorScheme;
+static TextTheme getTextStyle(BuildContext context) => Theme.of(context).textTheme;
+
   static ThemeData lightTheme(BuildContext context) => ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
@@ -54,7 +57,7 @@ class AppTheme {
           ),
         ),
         colorScheme: ColorScheme.dark(
-          primary: AppColors.primary,
+          primary: AppColors.black,
           secondary: AppColors.secondary,
           surface: Colors.grey[850]!,
           error: AppColors.error,
