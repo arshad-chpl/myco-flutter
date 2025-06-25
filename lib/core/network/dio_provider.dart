@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:myco_flutter/core/constants.dart';
+import 'package:myco_flutter/constants/constants.dart';
 
 Dio createDio(credentials) {
   final dio = Dio(

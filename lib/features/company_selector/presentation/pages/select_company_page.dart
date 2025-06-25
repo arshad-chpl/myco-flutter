@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/features/company_selector/domain/entites/society_response.dart';
@@ -102,7 +103,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                           children: [
                             // Replace with your own image asset path
                             Image.asset(
-                              'assets/images/no_company.png',
+                              AppAssets.noCompany,
                               height: 180,
                             ),
                             const SizedBox(height: 20),
@@ -168,7 +169,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                             padding: const EdgeInsets.all(8),
                             child: ListTile(
                               selectedColor: AppColors.primary,
-                              leading: Image.asset('assets/images/logo.png'),
+                              leading: Image.asset(AppAssets.myCoLogo),
                               title: CustomText(
                                 company.societyName!,
                                 fontWeight: FontWeight.w600,
@@ -238,7 +239,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                       children: [
                         // Replace with your actual image path
                         Image.asset(
-                          'assets/images/search_company.png',
+                          AppAssets.searchCompany,
                           height: 180,
                         ),
                         const SizedBox(height: 20),

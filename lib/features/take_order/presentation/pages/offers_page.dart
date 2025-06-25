@@ -32,9 +32,9 @@ class OffersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.bgWhite,
+    backgroundColor: AppColors.getColor(context).surface,
     appBar: AppBar(
-      backgroundColor: AppColors.bgWhite,
+      backgroundColor: AppColors.getColor(context).surface,
       title: const Text('Offers'),
       leading: const BackButton(),
     ),

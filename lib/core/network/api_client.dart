@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:myco_flutter/core/constants.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_client.g.dart';

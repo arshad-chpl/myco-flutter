@@ -26,14 +26,12 @@ class CustomPopupDropdownStyled<T> extends StatelessWidget {
     final popupTheme = theme.popupMenuTheme;
     final textTheme = theme.textTheme;
     final primaryColor = theme.colorScheme.primary;
-    final secondaryColor = theme.colorScheme.secondary;
 
     return SizedBox(
       width: width ?? 200,
       height: height ?? 50,
       child: PopupMenuButton<T>(
         itemBuilder: (context) => items.asMap().entries.map((entry) {
-          final index = entry.key;
           final item = entry.value;
           return PopupMenuItem<T>(
             value: item,

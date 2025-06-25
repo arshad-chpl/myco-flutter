@@ -50,7 +50,6 @@ linter:
 
     ### CLASSES & STRUCTURE ###
     annotate_overrides: true
-    avoid_classes_with_only_static_members: true
     prefer_final_fields: true
     use_key_in_widget_constructors: true
     avoid_unnecessary_containers: true

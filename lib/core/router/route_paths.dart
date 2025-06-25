@@ -4,6 +4,7 @@ class RoutePaths {
   static const String home = '/home';
   static const String language = '/language';
   static const String selectCompany = '/select-company';
+  static const String dashboard = '/dashboard';
   static const String takeOrder = '/take-order';
   static const String offers = '/offers';
   static const String products = '/products';

@@ -24,7 +24,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) => SafeArea(
     child: BlocBuilder<BottomNavigationBarBloc, BottomNavigationBarState>(
       builder: (context, state) => Scaffold(
-        backgroundColor: AppColors.bgWhite,
+        backgroundColor: AppColors.getColor(context).surface,
         body: screens[state.currentIndex],
         extendBody: true,
         floatingActionButton: FloatingActionButton(
@@ -73,7 +73,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   child: Text(
                     'Menu',
                     style: TextStyle(
-                      color: AppColors.greyText,
+                      color: AppColors.getColor(context).onSurfaceVariant,
                       fontSize: 14 * getResponsiveText(context),
                     ),
                   ),
@@ -131,7 +131,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
           Text(
             text,
             style: TextStyle(
-              color: isSelected ? AppColors.primary : AppColors.greyText,
+              color: isSelected
+                  ? AppColors.primary
+                  : AppColors.getColor(context).onSurfaceVariant,
               fontSize: 14 * getResponsiveText(context),
             ),
           ),
@@ -178,7 +180,7 @@ class CustomBottomBar extends StatelessWidget {
             child: Text(
               'Menu',
               style: TextStyle(
-                color: AppColors.greyText,
+                color: AppColors.getColor(context).onSurfaceVariant,
                 fontSize: 14 * getResponsiveText(context),
               ),
             ),
@@ -233,7 +235,9 @@ class CustomBottomBar extends StatelessWidget {
           Text(
             text,
             style: TextStyle(
-              color: isSelected ? AppColors.primary : AppColors.greyText,
+              color: isSelected
+                  ? AppColors.primary
+                  : AppColors.getColor(context).onSurfaceVariant,
               fontSize: 14 * getResponsiveText(context),
             ),
           ),
