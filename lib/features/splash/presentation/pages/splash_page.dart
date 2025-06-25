@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -22,6 +23,8 @@ class _SplashPageState extends State<SplashPage>
   late final AnimationController _controller;
   final PreferenceManager _preference = GetIt.I<PreferenceManager>();
   bool _canNavigate = false;
+  String version = '';
+  String buildNumber = '';
 
   @override
   void initState() {
@@ -31,9 +34,13 @@ class _SplashPageState extends State<SplashPage>
 
   Future<void> _init() async {
     _controller = AnimationController(vsync: this);
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    version = packageInfo.version;
+    buildNumber = packageInfo.buildNumber;
+    setState(() {});
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed && _canNavigate) {
-        _navigateNext();
+        // _navigateNext();
       }
     });
     _preference.clearSecureStorageOnFreshInstall();
@@ -97,17 +104,40 @@ class _SplashPageState extends State<SplashPage>
     },
     child: Scaffold(
       backgroundColor: AppColors.splashBg,
-      body: Center(
-        child: Lottie.asset(
-          'assets/splash/myco_splash.json',
-          controller: _controller,
-          onLoaded: (composition) {
-            _controller
-              ..duration = composition.duration
-              ..forward();
-          },
-          height: 400,
-          width: 400,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppColors.secondary, AppColors.white, AppColors.secondary],
+          ),
+        ),
+        child: Stack(
+          children: [
+            Center(
+              child: Lottie.asset(
+                'assets/splash/myco_splash.json',
+                controller: _controller,
+                onLoaded: (composition) {
+                  _controller
+                    ..duration = composition.duration
+                    ..forward();
+                },
+                height: 0.3 * getHeight(context),
+                // width: 0.5 * getWidth(context),
+              ),
+            ),
+            Container(
+              alignment: Alignment.bottomCenter,
+              padding: EdgeInsets.only(bottom: 0.05 * getHeight(context)),
+              child: CustomText(
+                'Version ${version} (${buildNumber})',
+                color: AppColors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
         ),
       ),
     ),

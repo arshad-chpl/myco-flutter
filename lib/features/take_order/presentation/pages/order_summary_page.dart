@@ -11,9 +11,9 @@ class OrderSummaryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.bgWhite,
+    backgroundColor: AppColors.backgroundPrimary,
     appBar: AppBar(
-      backgroundColor: AppColors.bgWhite,
+      backgroundColor: AppColors.backgroundPrimary,
       leading: const BackButton(),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +106,7 @@ class OrderSummaryPage extends StatelessWidget {
                           'Available Stocks : 9989',
                           style: TextStyle(
                             fontSize: 13 * getResponsiveText(context),
-                            color: AppColors.primary_1,
+                            color: AppColors.secondary,
                           ),
                         ),
                       ],
@@ -335,7 +335,7 @@ class OrderSummaryPage extends StatelessWidget {
                         title: 'Add More',
                         width: 0.4 * getWidth(context),
                         height: 0.05 * getHeight(context),
-                        backgroundColor: AppColors.bgWhite,
+                        backgroundColor: AppColors.backgroundPrimary,
                         textStyle: TextStyle(
                           color: AppColors.primary,
                           fontWeight: FontWeight.bold,

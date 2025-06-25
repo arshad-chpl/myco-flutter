@@ -9,9 +9,9 @@ class OrderHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.bgWhite,
+    backgroundColor: AppColors.backgroundPrimary,
     appBar: AppBar(
-      backgroundColor: AppColors.bgWhite,
+      backgroundColor: AppColors.backgroundPrimary,
       leading: const BackButton(),
       title: const Text('Order History'),
     ),
@@ -99,7 +99,7 @@ class OrderHistoryCard extends StatelessWidget {
                 MyCoButton(
                   onTap: () {},
                   title: 'Approved',
-                  backgroundColor: AppColors.primary_1,
+                  backgroundColor: AppColors.secondary,
                   width: 0.25 * getWidth(context),
                   height: 0.03 * getHeight(context),
                   boarderRadius: 30 * getResponsive(context),
@@ -261,8 +261,8 @@ class OrderHistoryCard extends StatelessWidget {
                       color: AppColors.white,
                     ),
                     boarderRadius: 30 * getResponsive(context),
-                    backgroundColor: AppColors.primary_2,
-                    borderColor: AppColors.primary_2,
+                    backgroundColor: AppColors.secondary,
+                    borderColor: AppColors.secondary,
                     isShadowBottomLeft: true,
                   ),
                   const Spacer(),

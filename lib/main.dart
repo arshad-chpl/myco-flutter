@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/router/app_router.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/theme/text_theme.dart';
 import 'package:myco_flutter/di/injector.dart';
 
 Future<void> main() async {
@@ -8,7 +11,13 @@ Future<void> main() async {
   // await Firebase.initializeApp();
   await init();
 
-  runApp(const MyApp());
+  runApp(
+    //     DevicePreview(
+    //   enabled: !kReleaseMode,
+    //   builder: (context) => MyApp(), // Wrap your app
+    // ),
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,9 +28,9 @@ class MyApp extends StatelessWidget {
     final router = GetIt.I<AppRouter>().router;
     return MaterialApp.router(
       title: 'MyCo Flutter',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      themeMode: ThemeMode.system,
+      theme: AppTheme.lightTheme(context),
+      darkTheme: AppTheme.darkTheme(context),
       routerConfig: router,
       debugShowCheckedModeBanner: false,
     );
