@@ -4,7 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:myco_flutter/core/constants.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/core/network/dio_provider.dart';
 import 'package:myco_flutter/core/network/network_info.dart';

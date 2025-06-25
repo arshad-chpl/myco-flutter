@@ -13,7 +13,11 @@ part 'splash_state.dart';
 
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
   final GetAppVersion getAppVersion;
+  String _appVersion = '';
+  String _buildNumber = '';
 
+  String get appVersion => _appVersion;
+  String get buildNumber => _buildNumber;
   SplashBloc(this.getAppVersion) : super(SplashInitial()) {
     on<LoadSplash>(_onLoadSplash);
   }
@@ -22,17 +26,18 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     LoadSplash event,
     Emitter<SplashState> emit,
   ) async {
-    emit(SplashLoading());
 
     try {
-      Either<Failure, AppVersion> versionInfo =
-          await getAppVersion(); // Domain entity
-
       final PackageInfo packageInfo = await PackageInfo.fromPlatform();
       final String version = packageInfo.version;
       final String buildNumber = packageInfo.buildNumber;
-
       final String platform = Platform.isAndroid ? 'android' : 'ios';
+      _appVersion = version;
+      _buildNumber = buildNumber;
+
+      Either<Failure, AppVersion> versionInfo =
+          await getAppVersion(); // Domain entity
+
 
       print('App Version: $version');
       print('Build Number: $buildNumber');

@@ -24,9 +24,9 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.bgWhite,
+    backgroundColor: AppColors.backgroundPrimary,
     appBar: AppBar(
-      backgroundColor: AppColors.bgWhite,
+      backgroundColor: AppColors.backgroundPrimary,
       leading: const BackButton(),
       title: const Text('Take Order'),
       actions: [
@@ -58,11 +58,11 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
                 fontSize: 14 * getResponsiveText(context),
                 color: AppColors.white,
               ),
-              backgroundColor: AppColors.primary_1,
+              backgroundColor: AppColors.secondary,
               width: 0.17 * getWidth(context),
               height: 0.03 * getHeight(context),
               boarderRadius: 20 * getResponsive(context),
-              borderColor: AppColors.primary_1,
+              borderColor: AppColors.secondary,
               isShadowBottomLeft: true,
             ),
             Container(
@@ -98,11 +98,11 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
                 tabs: const ['All Products', 'Frequents Buy'],
                 selectedBgColors: const [
                   AppColors.primary,
-                  AppColors.primary_1,
+                  AppColors.secondary,
                 ],
                 unselectedBorderAndTextColor: AppColors.white,
                 tabBarBorderColor: AppColors.black,
-                tabBarBackgroundColor: AppColors.bgWhite,
+                tabBarBackgroundColor: AppColors.backgroundPrimary,
                 isShadowBottomLeft: true,
                 selectedIndex: selectedIndex,
                 onTabChange: (index) {
@@ -207,7 +207,7 @@ class FrequentsBuyScreen extends StatelessWidget {
             title: 'Reset Cart',
             width: 0.4 * getWidth(context),
             height: 0.05 * getHeight(context),
-            backgroundColor: AppColors.bgWhite,
+            backgroundColor: AppColors.backgroundPrimary,
             textStyle: TextStyle(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,

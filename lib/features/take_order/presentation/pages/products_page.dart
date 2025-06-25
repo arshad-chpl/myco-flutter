@@ -8,11 +8,11 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.bgWhite,
+    backgroundColor: AppColors.backgroundPrimary,
     appBar: AppBar(
       title: const Text('Products'),
       leading: const BackButton(),
-      backgroundColor: AppColors.bgWhite,
+      backgroundColor: AppColors.backgroundPrimary,
     ),
     body: Container(
       padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),

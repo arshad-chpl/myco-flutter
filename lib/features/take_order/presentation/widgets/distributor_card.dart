@@ -40,7 +40,7 @@ class DistributorCard extends StatelessWidget {
             height: headerHeight ?? 0.06 * getHeight(context),
             padding: EdgeInsets.all(10 * getResponsive(context)),
             decoration: BoxDecoration(
-              color: AppColors.primary_1,
+              color: AppColors.secondary,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(12 * getResponsive(context)),
               ),

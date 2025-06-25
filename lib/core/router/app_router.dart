@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
+import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
@@ -17,7 +18,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.takeOrder,
+    initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -55,6 +56,11 @@ class AppRouter {
           create: (_) => TakeOrderBloc(),
           child: TakeOrderPage(),
         ),
+      ),
+     GoRoute(
+        path: RoutePaths.dashboard,
+        name: 'dashboard',
+        builder: (context, state) => DashBoardPage(),
       ),
       // Add all modular routes here
       // ...authRoutes,
