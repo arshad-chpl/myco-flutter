@@ -18,4 +18,14 @@ class AppColors {
   static const Color myCoCyan = Color(0xFF08A4BB);
   static const Color lightTeal = Color(0xFFEEF7FD);
   static const Color red = Color(0xFFC44141);
+  static const Color borderColor = Color(0xFF98A2B3);
+  static const LinearGradient welcomeGradient = LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.center,
+          colors: [
+            Color(0xFF2F648E), // Light Sky Blue
+            Color(0xFFFFFFFF),
+            // Light Blue
+          ],
+        );
 }

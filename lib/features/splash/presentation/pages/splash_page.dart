@@ -96,7 +96,7 @@ class _SplashPageState extends State<SplashPage>
       }
     },
     child: Scaffold(
-      backgroundColor: AppColors.splashBg,
+      backgroundColor: AppColors.myCoCyan,
       body: Center(
         child: Lottie.asset(
           'assets/splash/myco_splash.json',

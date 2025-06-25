@@ -4,9 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
+import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
+import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
+import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
+import 'package:myco_flutter/features/search_company/presentation/pages/select_company.dart';
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
@@ -17,7 +22,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.takeOrder,
+    initialLocation: RoutePaths.termsAndConditions,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -56,6 +61,19 @@ class AppRouter {
           child: TakeOrderPage(),
         ),
       ),
+      GoRoute(
+        path: RoutePaths.getStarted,
+        name: 'get-started',
+        builder: (context, state) => const GetStarted(),
+      ),
+      GoRoute(
+        path: RoutePaths.companySearch,
+        name: 'companySearch',
+        builder: (context, state) => const SearchCompanyScreen(),
+      ),
+      GoRoute(path: RoutePaths.termsAndConditions
+          , name: 'termsAndConditions',
+          builder: (context, state) => const TermsAndConditions()),
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,
