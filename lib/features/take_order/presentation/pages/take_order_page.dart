@@ -11,7 +11,7 @@ import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 // ignore: must_be_immutable
 class TakeOrderPage extends StatefulWidget {
-  TakeOrderPage({super.key});
+  const TakeOrderPage({super.key});
 
   @override
   State<TakeOrderPage> createState() => _TakeOrderPageState();
@@ -22,9 +22,9 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.backgroundPrimary,
+    backgroundColor: AppColors.getColor(context).surface,
     appBar: AppBar(
-      backgroundColor: AppColors.backgroundPrimary,
+      backgroundColor: AppColors.getColor(context).surface,
       leading: const BackButton(),
       title: const Text('Take Order'),
       actions: [
