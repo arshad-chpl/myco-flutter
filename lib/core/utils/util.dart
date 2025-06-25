@@ -1,8 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'dart:io';
-
-
 class Util {
   // Private constructor
   Util._privateConstructor();
@@ -14,7 +9,11 @@ class Util {
   static Util get instance => _instance;
 
   /// Method to generate password
-  String getCurrentPassword(String societyId, String userId, String userMobile) {
+  String getCurrentPassword(
+    String societyId,
+    String userId,
+    String userMobile,
+  ) {
     final subMobile = _getLastThreeChars(userMobile);
     return '$userId@$subMobile@$societyId';
   }
@@ -38,21 +37,19 @@ class Util {
   // }
 
   String getMonthName(int month) => switch (month) {
-      0 => 'All',
-      1 => 'January',
-      2 => 'February',
-      3 => 'March',
-      4 => 'April',
-      5 => 'May',
-      6 => 'June',
-      7 => 'July',
-      8 => 'August',
-      9 => 'September',
-      10 => 'October',
-      11 => 'November',
-      12 => 'December',
-      _ => 'Unknown', // Return a non-null String
-    };
-
-
+    0 => 'All',
+    1 => 'January',
+    2 => 'February',
+    3 => 'March',
+    4 => 'April',
+    5 => 'May',
+    6 => 'June',
+    7 => 'July',
+    8 => 'August',
+    9 => 'September',
+    10 => 'October',
+    11 => 'November',
+    12 => 'December',
+    _ => 'Unknown', // Return a non-null String
+  };
 }
