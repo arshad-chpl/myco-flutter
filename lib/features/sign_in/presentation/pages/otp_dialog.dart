@@ -3,6 +3,7 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/custom_dialog.dart';
@@ -20,13 +21,13 @@ class OtpVerifyDialog extends StatefulWidget {
 class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.white,
+    backgroundColor: AppTheme.lightTheme(context).colorScheme.onPrimary,
     appBar: AppBar(
       title: const Text('OTP Verification'),
       centerTitle: true,
-      backgroundColor: AppColors.white,
+      backgroundColor: AppTheme.lightTheme(context).appBarTheme.backgroundColor,
       elevation: 0,
-      foregroundColor: AppColors.black,
+      foregroundColor: AppTheme.lightTheme(context).appBarTheme.foregroundColor,
     ),
     body: Center(
       child: Text(
@@ -41,64 +42,64 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
       onPressed: () {
         // lets get started bottom sheet
 
-        // showModalBottomSheet(
-        //   context: context,
-        //   backgroundColor: AppColors.white,
-        //   builder: (context) => Container(
-        //     height: .5 * getHeight(context),
-        //     width: getWidth(context),
-        //     child: Padding(
-        //       padding: EdgeInsets.symmetric(
-        //         vertical: 45.0 * getResponsive(context),
-        //         horizontal: 30 * getResponsive(context),
-        //       ),
-        //       child: Column(
-        //         children: [
-        //           Image.asset(
-        //             'assets/sign_in/myco_logo.png',
-        //             height: .095 * getHeight(context),
-        //             width: .5 * getWidth(context),
-        //           ),
-        //           SizedBox(height: .02 * getHeight(context)),
-        //           Text(
-        //             'Let’s Get Started',
-        //             style: TextStyle(
-        //               fontSize: 30 * getResponsiveText(context),
-        //               fontWeight: FontWeight.bold,
-        //               color: AppColors.textPrimary,
-        //             ),
-        //           ),
-        //           SizedBox(height: .02 * getHeight(context)),
-        //           Text(
-        //             'To enhance your user experience, please set up your profile first. This will help us tailor the app to your needs and ensure you get the most out of our features!',
-        //             style: TextStyle(
-        //               fontSize: 17 * getResponsiveText(context),
-        //               color: AppColors.textPrimary2,
-        //               fontWeight: FontWeight.w500,
-        //             ),
-        //           ),
-        //           SizedBox(height: .035 * getHeight(context)),
-        //           MyCoButton(
-        //             onTap: () {},
-        //             title: 'Set Up My Profile',
-        //             boarderRadius: 30 * getResponsive(context),
-        //             isShadowBottomLeft: true,
-        //           ),
-        //           SizedBox(height: .02 * getHeight(context)),
-        //           MyCoButton(
-        //             onTap: () {},
-        //             boarderRadius: 30 * getResponsive(context),
-        //             title: 'Explore The App First',
-        //             backgroundColor: AppColors.white,
-        //             textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(
-        //               context,
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // );
+        showModalBottomSheet(
+          context: context,
+          backgroundColor: AppTheme.getColor(context).onPrimary,
+          builder: (context) => Container(
+            height: .5 * getHeight(context),
+            width: getWidth(context),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 45.0 * getResponsive(context),
+                horizontal: 30 * getResponsive(context),
+              ),
+              child: Column(
+                children: [
+                  Image.asset(
+                    'assets/sign_in/myco_logo.png',
+                    height: .095 * getHeight(context),
+                    width: .5 * getWidth(context),
+                  ),
+                  SizedBox(height: .02 * getHeight(context)),
+                  Text(
+                    'Let’s Get Started',
+                    style: TextStyle(
+                      fontSize: 30 * getResponsiveText(context),
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  SizedBox(height: .02 * getHeight(context)),
+                  Text(
+                    'To enhance your user experience, please set up your profile first. This will help us tailor the app to your needs and ensure you get the most out of our features!',
+                    style: TextStyle(
+                      fontSize: 17 * getResponsiveText(context),
+                      color: AppColors.textPrimary2,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: .035 * getHeight(context)),
+                  MyCoButton(
+                    onTap: () {},
+                    title: 'Set Up My Profile',
+                    boarderRadius: 30 * getResponsive(context),
+                    isShadowBottomLeft: true,
+                  ),
+                  SizedBox(height: .02 * getHeight(context)),
+                  MyCoButton(
+                    onTap: () {},
+                    boarderRadius: 30 * getResponsive(context),
+                    title: 'Explore The App First',
+                    backgroundColor: AppColors.white,
+                    textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(
+                      context,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
 
         // otp and email bottom sheet
 
