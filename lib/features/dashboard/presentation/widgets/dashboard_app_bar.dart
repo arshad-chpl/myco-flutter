@@ -3,6 +3,7 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class DashboardAppBar extends StatelessWidget {
   const DashboardAppBar({super.key});
@@ -36,21 +37,32 @@ class DashboardAppBar extends StatelessWidget {
             children: [
               RichText(
                 text: TextSpan(
-                  text: 'Person Name',
-                  style: TextStyle(
-                    color: AppColors.black,
-                    fontSize: 16,
-                    // fontFamily: 'Gilroy',
-                    fontWeight: FontWeight.w700,
-                  ),
                   children: [
+                    WidgetSpan(
+                      child: CustomText(
+                        'Person Name',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14 * getResponsiveText(context),
+                      ),
+                    ),
+                    WidgetSpan(child: SizedBox(width: 10)),
                     WidgetSpan(child: Image.asset(AppAssets.verified)),
                   ],
                 ),
               ),
-              // Text('Person Name'),
-              Text('Designation'),
-              Text('date and time now'),
+
+              CustomText(
+                'Designation',
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+                color: AppColors.spanishYellow,
+              ),
+              CustomText(
+                'date and time now',
+                fontWeight: FontWeight.w500,
+                fontSize: 10,
+                color: AppTheme.getColor(context).onSurfaceVariant,
+              ),
             ],
           ),
 
@@ -58,7 +70,7 @@ class DashboardAppBar extends StatelessWidget {
           Spacer(),
           Container(
             decoration: BoxDecoration(
-              color: Util.instance.applyOpacity(AppColors.myCoCyan, 0.1),
+              color: Util.applyOpacity(AppColors.myCoCyan, 0.1),
 
               shape: BoxShape.circle,
             ),
@@ -69,7 +81,7 @@ class DashboardAppBar extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              color: Util.instance.applyOpacity(AppColors.myCoCyan, 0.1),
+              color: Util.applyOpacity(AppColors.myCoCyan, 0.1),
 
               shape: BoxShape.circle,
             ),

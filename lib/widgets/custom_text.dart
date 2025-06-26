@@ -10,27 +10,26 @@ class CustomText extends StatelessWidget {
   final TextOverflow? overflow;
 
   const CustomText(
-      this.text, {
-        super.key,
-        this.fontSize = 16,
-        this.fontWeight = FontWeight.w400,
-        this.color,
-        this.textAlign,
-        this.maxLines,
-        this.overflow,
-      });
+    this.text, {
+    super.key,
+    this.fontSize = 16,
+    this.fontWeight = FontWeight.w400,
+    this.color,
+    this.textAlign,
+    this.maxLines,
+    this.overflow,
+  });
 
   @override
   Widget build(BuildContext context) => Text(
-      text,
-      textAlign: textAlign,
-      maxLines: maxLines,
-      overflow: overflow,
-      style: TextStyle(
-        fontFamily: 'Inter',
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        color: color ?? Colors.black,
-      ),
-    );
+    text,
+    textAlign: textAlign,
+    maxLines: maxLines,
+    overflow: overflow,
+    style: TextStyle(
+      fontFamily: Util.getFontFamily(fontWeight),
+      fontSize: fontSize,
+      color: color ?? AppTheme.getColor(context).onSurface,
+    ),
+  );
 }

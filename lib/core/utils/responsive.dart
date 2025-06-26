@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
@@ -56,6 +57,9 @@ double getResponsive(context) {
 }
 
 double getResponsiveOnWidth(context) {
+  kDebugMode
+      ? print('Responsive Width: ${MediaQuery.of(context).size.width * 0.001}')
+      : null;
   return MediaQuery.of(context).size.width * 0.001;
 }
 

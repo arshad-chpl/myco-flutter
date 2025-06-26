@@ -44,6 +44,11 @@ class AppRouter {
           child: const SelectCompanyPage(),
         ),
       ),
+      GoRoute(
+        path: RoutePaths.dashboard,
+        name: 'dashboard',
+        builder: (context, state) => DashBoardPage(),
+      ),
       // GoRoute(
       //   path: RoutePaths.language,
       //   name: 'language',

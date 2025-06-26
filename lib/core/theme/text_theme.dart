@@ -31,7 +31,7 @@ static TextTheme getTextTheme(BuildContext context) => TextTheme(
 
   static TextStyle _gilroyStyle(FontWeight weight, double size) {
     return TextStyle(
-      fontFamily: Util.instance.convertFontWeight(weight),
+      fontFamily: Util.getFontFamily(weight),
       fontSize: size,
     );
   }
