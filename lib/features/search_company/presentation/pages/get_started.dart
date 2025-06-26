@@ -4,6 +4,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/image_animation.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class GetStarted extends StatelessWidget {
   const GetStarted({super.key});
@@ -28,23 +29,21 @@ class GetStarted extends StatelessWidget {
               // ),
               const BouncingImage(),
                SizedBox(height: 0.12 * getHeight(context)),
-               Text(
+               CustomText(
                 'Welcome to MyCo!',
-                style: TextStyle(
+
                   fontSize: 30 * getResponsiveText(context),
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   color: Color(0xFF101828),
-                ),
+            
                  textAlign: TextAlign.center,
               ),
                SizedBox(height: 0.014 *  getHeight(context)),
-               Text(
+               CustomText(
                 'Make Smart Decisions! Set clear timelines for projects and celebrate your achievements!',
-                style: TextStyle(
                   fontSize: 15 * getResponsiveText(context),
-                  color: Color(0xFF475467),
-                  
-                ),
+                  color: const Color(0xFF475467),
+                  fontWeight: FontWeight.w500,
                  textAlign: TextAlign.center,
               ),
                SizedBox(height: 0.05 * getHeight(context)),

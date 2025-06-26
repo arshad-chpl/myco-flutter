@@ -3,6 +3,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/search_company/presentation/widgets/bottomsheet_radio_btn.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 class SearchCompanyScreen extends StatelessWidget {
@@ -23,13 +24,13 @@ class SearchCompanyScreen extends StatelessWidget {
                Image.asset("assets/search_society/search-company.png",
                width: 0.8 * getWidth(context),),
               SizedBox(height: 0.055 * getHeight(context)),
-              Text(
+              CustomText(
                 'Select Your Company',
-                style: TextStyle(
+
                   fontSize: 30 * getResponsiveText(context),
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                   color: const Color(0xFF101828),
-                ),
+                
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 0.014 * getHeight(context)),
