@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({super.key});
@@ -10,7 +11,7 @@ class ProductsPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
     appBar: AppBar(
-      title: const Text('Products'),
+      title: const CustomText('Products', fontWeight: FontWeight.w600),
       leading: const BackButton(),
       backgroundColor: AppTheme.getColor(context).surface,
     ),

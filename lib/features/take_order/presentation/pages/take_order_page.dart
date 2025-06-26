@@ -8,6 +8,7 @@ import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bl
 import 'package:myco_flutter/features/take_order/presentation/widgets/frequent_buy_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 // ignore: must_be_immutable
@@ -23,20 +24,22 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppTheme.getColor(context).surface,
     appBar: AppBar(
-      backgroundColor: AppTheme.getColor(context).surface,
       leading: const BackButton(),
-      title: const Text('Take Order'),
+      title: CustomText(
+        'Take Order',
+        fontSize: 20 * getResponsiveText(context),
+        fontWeight: FontWeight.w700,
+      ),
       actions: [
         MyCoButton(
           onTap: () {},
           title: 'Refresh',
           textStyle: AppTheme.getTextStyle(
             context,
-          ).labelLarge!.copyWith(color: AppTheme.getColor(context).onPrimary),
+          ).labelMedium!.copyWith(color: AppTheme.getColor(context).onPrimary),
           width: 0.17 * getWidth(context),
-          height: 0.03 * getHeight(context),
+          height: 0.028 * getHeight(context),
           boarderRadius: 20 * getResponsive(context),
           isShadowBottomLeft: true,
         ),
@@ -49,12 +52,12 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
                 context.pushNamed('offers');
               },
               title: 'Offers',
-              textStyle: AppTheme.getTextStyle(context).labelLarge!.copyWith(
+              textStyle: AppTheme.getTextStyle(context).labelMedium!.copyWith(
                 color: AppTheme.getColor(context).onPrimary,
               ),
               backgroundColor: AppTheme.getColor(context).secondary,
               width: 0.17 * getWidth(context),
-              height: 0.03 * getHeight(context),
+              height: 0.028 * getHeight(context),
               boarderRadius: 20 * getResponsive(context),
               borderColor: AppTheme.getColor(context).secondary,
               isShadowBottomLeft: true,
@@ -73,7 +76,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
         SizedBox(width: 0.02 * getWidth(context)),
         Image.asset(
           'assets/take_order/cart.png',
-          width: 0.07 * getWidth(context),
+          width: 0.06 * getWidth(context),
         ),
         SizedBox(width: 0.06 * getWidth(context)),
       ],
@@ -82,7 +85,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
       padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
       child: Column(
         children: [
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.01 * getHeight(context)),
           BlocBuilder<TakeOrderBloc, TakeOrderState>(
             builder: (context, state) {
               final selectedIndex = state is TabChangeState
@@ -94,9 +97,11 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
                   AppTheme.getColor(context).primary,
                   AppTheme.getColor(context).secondary,
                 ],
-                unselectedBorderAndTextColor: AppColors.white,
-                tabBarBorderColor: AppColors.black,
-                tabBarBackgroundColor: AppColors.backgroundPrimary,
+                unselectedBorderAndTextColor: AppTheme.getColor(
+                  context,
+                ).onPrimary,
+                tabBarBorderColor: AppTheme.getColor(context).onSurface,
+                tabBarBackgroundColor: AppTheme.getColor(context).surface,
                 isShadowBottomLeft: true,
                 selectedIndex: selectedIndex,
                 onTabChange: (index) {
@@ -107,7 +112,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
               );
             },
           ),
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.015 * getHeight(context)),
 
           Expanded(
             child: BlocBuilder<TakeOrderBloc, TakeOrderState>(
@@ -152,29 +157,27 @@ class AllProductsScreen extends StatelessWidget {
             boarderRadius: 12 * getResponsive(context),
           ),
 
-          SizedBox(height: 0.035 * getHeight(context)),
+          SizedBox(height: 0.025 * getHeight(context)),
 
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) => MyCoTextfield(
-                // onClick: () => Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const ProductsPage()),
-                // ),
                 onClick: () => context.pushNamed('products'),
                 isReadOnly: true,
                 hintText: productList[index],
                 hintTextStyle: AppTheme.getTextStyle(context).bodyLarge!
                     .copyWith(color: AppTheme.getColor(context).primary),
                 border: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.grey),
+                  borderSide: BorderSide(
+                    color: AppTheme.getColor(context).outline,
+                  ),
                   borderRadius: BorderRadius.circular(
                     12 * getResponsive(context),
                   ),
                 ),
               ),
               separatorBuilder: (context, index) =>
-                  SizedBox(height: 0.02 * getHeight(context)),
+                  SizedBox(height: 0.01 * getHeight(context)),
               itemCount: productList.length,
             ),
           ),
@@ -190,10 +193,10 @@ class FrequentsBuyScreen extends StatelessWidget {
     children: [
       Expanded(
         child: ListView.separated(
-          itemCount: 5,
+          itemCount: 7,
           itemBuilder: (context, index) => const FrequentBuyCard(),
           separatorBuilder: (context, index) =>
-              SizedBox(height: 0.02 * getHeight(context)),
+              SizedBox(height: 0.015 * getHeight(context)),
         ),
       ),
       SizedBox(height: 0.02 * getHeight(context)),
@@ -204,7 +207,7 @@ class FrequentsBuyScreen extends StatelessWidget {
             onTap: () {},
             title: 'Reset Cart',
             width: 0.4 * getWidth(context),
-            height: 0.05 * getHeight(context),
+            height: 0.045 * getHeight(context),
             backgroundColor: AppTheme.getColor(context).surface,
             textStyle: AppTheme.getTextStyle(context).headlineSmall!.copyWith(
               color: AppTheme.getColor(context).primary,
@@ -217,7 +220,7 @@ class FrequentsBuyScreen extends StatelessWidget {
             },
             title: 'Add Order',
             width: 0.4 * getWidth(context),
-            height: 0.05 * getHeight(context),
+            height: 0.045 * getHeight(context),
             boarderRadius: 30 * getResponsive(context),
             textStyle: AppTheme.getTextStyle(context).headlineSmall!.copyWith(
               color: AppTheme.getColor(context).onPrimary,
@@ -230,40 +233,43 @@ class FrequentsBuyScreen extends StatelessWidget {
   );
 }
 
-class AllProductsScreenV2 extends StatelessWidget {
-  const AllProductsScreenV2({super.key});
+// class AllProductsScreenV2 extends StatelessWidget {
+//   const AllProductsScreenV2({super.key});
 
-  @override
-  Widget build(BuildContext context) => ListView.separated(
-    itemCount: 4,
-    itemBuilder: (context, index) => ExpansionTile(
-      iconColor: AppColors.black,
-      collapsedIconColor: AppColors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      collapsedShape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      childrenPadding: EdgeInsets.zero,
-      backgroundColor: AppColors.blueLightShade,
-      collapsedTextColor: AppColors.white,
-      collapsedBackgroundColor: AppColors.primary,
-      title: const Text('Cold Drink'),
-      children: [
-        _buildMenuItem(context, 'Soda'),
-        _buildMenuItem(context, 'Thanda'),
-        _buildMenuItem(context, 'Milk Shake'),
-      ],
-    ),
-    separatorBuilder: (context, index) =>
-        SizedBox(height: 0.02 * getHeight(context)),
-  );
+//   @override
+//   Widget build(BuildContext context) => ListView.separated(
+//     itemCount: 4,
+//     itemBuilder: (context, index) => ExpansionTile(
+//       iconColor: AppColors.black,
+//       collapsedIconColor: AppColors.white,
+//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+//       collapsedShape: RoundedRectangleBorder(
+//         borderRadius: BorderRadius.circular(12),
+//       ),
+//       childrenPadding: EdgeInsets.zero,
+//       backgroundColor: AppColors.blueLightShade,
+//       collapsedTextColor: AppColors.white,
+//       collapsedBackgroundColor: AppColors.primary,
+//       title: const Text('Cold Drink'),
+//       children: [
+//         _buildMenuItem(context, 'Soda'),
+//         _buildMenuItem(context, 'Thanda'),
+//         _buildMenuItem(context, 'Milk Shake'),
+//       ],
+//     ),
+//     separatorBuilder: (context, index) =>
+//         SizedBox(height: 0.02 * getHeight(context)),
+//   );
 
-  Widget _buildMenuItem(BuildContext context, String title) => ListTile(
-    title: Text(title, style: AppTheme.getTextStyle(context).bodyMedium),
-
-    trailing: Icon(Icons.arrow_forward_ios, size: 18 * getResponsive(context)),
-    onTap: () {
-      // Handle tap
-    },
-  );
-}
+//   Widget _buildMenuItem(BuildContext context, String title) => ListTile(
+//     title: CustomText(
+//       title,
+//       fontWeight: FontWeight.w600,
+//       fontSize: 14 * getResponsiveText(context),
+//     ),
+//     trailing: Icon(Icons.arrow_forward_ios, size: 18 * getResponsive(context)),
+//     onTap: () {
+//       // Handle tap
+//     },
+//   );
+// }
