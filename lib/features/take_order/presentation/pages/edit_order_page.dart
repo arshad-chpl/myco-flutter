@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class EditOrderPage extends StatelessWidget {
   const EditOrderPage({super.key});
@@ -15,226 +15,224 @@ class EditOrderPage extends StatelessWidget {
     appBar: AppBar(
       backgroundColor: AppTheme.getColor(context).surface,
       leading: const BackButton(),
+      // centerTitle: false,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Edit Order #230'),
-          Text(
+          const CustomText('Edit Order #241', fontWeight: FontWeight.w600),
+          CustomText(
             'Mukund Madhav',
-            style: TextStyle(
-              fontSize: 18 * getResponsiveText(context),
-              color: AppColors.primary,
-            ),
+            fontSize: 14 * getResponsiveText(context),
+            color: AppTheme.getColor(context).primary,
+            fontWeight: FontWeight.w600,
           ),
         ],
       ),
     ),
-    body: SingleChildScrollView(
-      child: Container(
-        height: 0.9 * getHeight(context),
-        padding: EdgeInsets.symmetric(
-          horizontal: 0.08 * getWidth(context),
-          vertical: 0.02 * getHeight(context),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // First Container
-            Container(
-              padding: EdgeInsets.all(10 * getResponsive(context)),
-              decoration: getCommonDecoration(context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Item (1)',
-                    style: TextStyle(
-                      fontSize: 20 * getResponsiveText(context),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    'Units (25)',
-                    style: TextStyle(
-                      fontSize: 20 * getResponsiveText(context),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(width: 0.015 * getWidth(context)),
-                  Text(
-                    'Total: ₹20000',
-                    style: TextStyle(
-                      fontSize: 20 * getResponsiveText(context),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 0.02 * getHeight(context)),
-            // Unit Container
-            Container(
-              padding: EdgeInsets.symmetric(
-                vertical: 10 * getResponsive(context),
-              ),
-              decoration: getCommonDecoration(context),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTile(
-                    leading: Container(
-                      decoration: getCommonDecoration(context),
-                      child: Image.asset(
-                        'assets/take_order/apple_image.png',
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    horizontalTitleGap: 0.01 * getWidth(context),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Appy Fizz (Apple)',
-                          style: TextStyle(
-                            fontSize: 14 * getResponsiveText(context),
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primary,
-                          ),
-                        ),
-                        SizedBox(height: 0.01 * getHeight(context)),
-                        Text(
-                          'Available Stocks : 9989',
-                          style: TextStyle(
-                            fontSize: 13 * getResponsiveText(context),
-                            color: AppColors.secondary,
-                          ),
-                        ),
-                      ],
-                    ),
-                    trailing: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 6 * getResponsive(context),
-                              ),
-                              decoration: BoxDecoration(
-                                border: Border.all(),
-                                borderRadius: BorderRadius.circular(
-                                  12 * getResponsive(context),
-                                ),
-                                color: AppColors.lightTeal,
-                              ),
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    'assets/take_order/message-edit.png',
-                                    fit: BoxFit.cover,
-                                    height: 0.02 * getHeight(context),
-                                  ),
-                                  SizedBox(width: 0.02 * getWidth(context)),
-                                  const Text('25 Units'),
-                                ],
-                              ),
-                            ),
-                            Image.asset(
-                              'assets/take_order/xcircle.png',
-                              width: 0.06 * getWidth(context),
-                              height: 0.02 * getHeight(context),
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 0.005 * getHeight(context)),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 0.04 * getWidth(context),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Piece Wise(25 * ₹80.0)'),
-                        Text(
-                          '₹2000.0',
-                          style: TextStyle(color: AppColors.primary),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 0.02 * getHeight(context)),
-            // Shipping Charges Card
-            DistributorCard(
-              headerHeight: 0.05 * getHeight(context),
-              title: 'Shipping Charges',
-              isButton: true,
-              buttonText: '₹Add',
-              bottomWidget: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Amount cannot Exceed 1,00,000',
-                  style: TextStyle(color: AppColors.error),
+    body: Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.08 * getWidth(context),
+        vertical: 0.01 * getHeight(context),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // First Container
+          Container(
+            padding: EdgeInsets.all(10 * getResponsive(context)),
+            decoration: getCommonDecoration(context),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomText(
+                  'Item (1)',
+                  fontSize: 16 * getResponsiveText(context),
+                  fontWeight: FontWeight.bold,
                 ),
+                CustomText(
+                  'Units (25)',
+                  fontSize: 16 * getResponsiveText(context),
+                  fontWeight: FontWeight.bold,
+                ),
+                SizedBox(width: 0.015 * getWidth(context)),
+                CustomText(
+                  'Total: ₹20000',
+                  fontSize: 16 * getResponsiveText(context),
+                  fontWeight: FontWeight.bold,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 0.018 * getHeight(context)),
+          // Unit Container
+          Container(
+            decoration: getCommonDecoration(context),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  leading: Container(
+                    decoration: getCommonDecoration(context),
+                    child: Image.asset(
+                      'assets/take_order/apple_image.png',
+                      height: 0.045 * getHeight(context),
+                      width: 0.1 * getWidth(context),
+                    ),
+                  ),
+                  horizontalTitleGap: 0.01 * getWidth(context),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                        'Appy Fizz (Apple)',
+                        fontSize: 12 * getResponsiveText(context),
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.getColor(context).primary,
+                      ),
+                      SizedBox(height: 0.01 * getHeight(context)),
+                      CustomText(
+                        'Available Stocks : 9989',
+                        fontSize: 12 * getResponsiveText(context),
+                        color: AppTheme.getColor(context).secondary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ],
+                  ),
+                  trailing: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SizedBox(height: 0.01 * getHeight(context)),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 6 * getResponsive(context),
+                              vertical: 1 * getResponsive(context),
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: AppTheme.getColor(context).outline,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                8 * getResponsive(context),
+                              ),
+                              color: AppColors.lightTeal,
+                            ),
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  'assets/take_order/message-edit.png',
+                                  fit: BoxFit.cover,
+                                  height: 0.015 * getHeight(context),
+                                ),
+                                SizedBox(width: 0.02 * getWidth(context)),
+                                CustomText(
+                                  '25 Units',
+                                  fontSize: 12 * getResponsiveText(context),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 0.01 * getWidth(context)),
+                          Image.asset(
+                            'assets/take_order/xcircle.png',
+                            width: 0.06 * getWidth(context),
+                            height: 0.025 * getHeight(context),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 0.04 * getWidth(context),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomText(
+                        'Piece Wise(25 * ₹80.0)',
+                        fontSize: 13 * getResponsiveText(context),
+                        fontWeight: FontWeight.w500,
+                      ),
+                      CustomText(
+                        '₹2000.0',
+                        fontSize: 13 * getResponsiveText(context),
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.getColor(context).primary,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 0.008 * getHeight(context)),
+              ],
+            ),
+          ),
+
+          SizedBox(height: 0.01 * getHeight(context)),
+          // Shipping Charges Card
+          DistributorCard(
+            headerHeight: 0.04 * getHeight(context),
+            title: 'Shipping Charges',
+            isButton: true,
+            buttonText: '₹Add',
+            bottomWidget: Padding(
+              padding: EdgeInsets.all(10.0 * getResponsive(context)),
+              child: CustomText(
+                'Amount cannot Exceed 1,00,000',
+                fontSize: 13 * getResponsiveText(context),
+                fontWeight: FontWeight.w600,
+                color: AppColors.error,
               ),
             ),
-            SizedBox(height: 0.02 * getHeight(context)),
-            // Total Amount Container
-            Container(
-              padding: EdgeInsets.all(10 * getResponsive(context)),
-              decoration: getCommonDecoration(context),
-              child: Column(
-                children: [
-                  getTotalAmountRow(
-                    context,
-                    leftText: 'Total',
-                    rightText: '₹2000.0',
-                  ),
-                  SizedBox(height: 0.01 * getHeight(context)),
-                  getTotalAmountRow(
-                    context,
-                    leftText: 'Shipping Charges',
-                    rightText: '₹00.0',
-                  ),
-                  const Divider(),
-                  getTotalAmountRow(
-                    context,
-                    leftText: 'Grand Total',
-                    rightText: '₹2000.0',
-                    textColor: AppColors.primary,
-                  ),
-                ],
-              ),
+          ),
+          SizedBox(height: 0.015 * getHeight(context)),
+          // Total Amount Container
+          Container(
+            padding: EdgeInsets.all(10 * getResponsive(context)),
+            decoration: getCommonDecoration(context),
+            child: Column(
+              children: [
+                getTotalAmountRow(
+                  context,
+                  leftText: 'Total',
+                  rightText: '₹2000.0',
+                ),
+                SizedBox(height: 0.005 * getHeight(context)),
+                getTotalAmountRow(
+                  context,
+                  leftText: 'Shipping Charges',
+                  rightText: '₹00.0',
+                ),
+                const Divider(),
+                getTotalAmountRow(
+                  context,
+                  leftText: 'Grand Total',
+                  rightText: '₹2000.0',
+                  textColor: AppTheme.getColor(context).primary,
+                ),
+              ],
             ),
-            const Spacer(),
-            MyCoButton(
-              onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => OrderHistoryPage()),
-                // );
-                context.pushNamed('order-history');
-              },
-              title: 'Update Order',
-              width: getWidth(context),
-              height: 0.05 * getHeight(context),
-              boarderRadius: 30 * getResponsive(context),
-              textStyle: TextStyle(
-                color: AppColors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20 * getResponsiveText(context),
-              ),
+          ),
+          const Spacer(),
+          MyCoButton(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            title: 'Update Order',
+            width: getWidth(context),
+            height: 0.055 * getHeight(context),
+            boarderRadius: 30 * getResponsive(context),
+            textStyle: TextStyle(
+              color: AppColors.white,
+              fontSize: 18 * getResponsiveText(context),
             ),
-            SizedBox(height: 0.02 * getHeight(context)),
-          ],
-        ),
+          ),
+          SizedBox(height: 0.03 * getHeight(context)),
+        ],
       ),
     ),
   );
@@ -247,28 +245,23 @@ class EditOrderPage extends StatelessWidget {
   }) => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Text(
+      CustomText(
         leftText,
-        style: TextStyle(
-          fontSize: 18 * getResponsiveText(context),
-          fontWeight: FontWeight.w600,
-          color: textColor,
-        ),
+        fontSize: 15 * getResponsiveText(context),
+        fontWeight: FontWeight.w600,
+        color: textColor,
       ),
-      Text(
+      CustomText(
         rightText,
-        style: TextStyle(
-          fontSize: 18 * getResponsiveText(context),
-          fontWeight: FontWeight.w600,
-          color: textColor,
-        ),
+        fontSize: 15 * getResponsiveText(context),
+        fontWeight: FontWeight.w500,
+        color: textColor,
       ),
     ],
   );
-
   BoxDecoration getCommonDecoration(BuildContext context) => BoxDecoration(
-    border: Border.all(color: Colors.grey[400]!),
+    border: Border.all(color: AppTheme.getColor(context).outline),
     borderRadius: BorderRadius.circular(12 * getResponsive(context)),
-    color: AppColors.white,
+    color: AppTheme.getColor(context).onPrimary,
   );
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class OfferBox extends StatelessWidget {
   const OfferBox({
@@ -25,8 +26,8 @@ class OfferBox extends StatelessWidget {
       children: [
         // Header
         Container(
-          height: 0.07 * getHeight(context),
-          padding: EdgeInsets.all(10 * getResponsive(context)),
+          height: 0.05 * getHeight(context),
+          padding: EdgeInsets.all(8 * getResponsive(context)),
           decoration: BoxDecoration(
             color: AppColors.myCoCyan,
             borderRadius: BorderRadius.vertical(
@@ -37,16 +38,14 @@ class OfferBox extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/take_order/offer.png',
-                height: 0.03 * getHeight(context),
+                height: 0.02 * getHeight(context),
               ),
               SizedBox(width: 0.02 * getWidth(context)),
-              Text(
+              CustomText(
                 title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22 * getResponsiveText(context),
-                ),
+                color: AppTheme.getColor(context).onPrimary,
+                fontWeight: FontWeight.bold,
+                fontSize: 18 * getResponsiveText(context),
               ),
             ],
           ),
@@ -54,13 +53,12 @@ class OfferBox extends StatelessWidget {
 
         // Offer Description
         Padding(
-          padding: EdgeInsets.all(14 * getResponsive(context)),
-          child: Text(
+          padding: EdgeInsets.all(10 * getResponsive(context)),
+          child: CustomText(
             textContent,
-            style: TextStyle(
-              fontSize: 18 * getResponsiveText(context),
-              color: Colors.grey[700],
-            ),
+            fontSize: 14 * getResponsiveText(context),
+            fontWeight: FontWeight.w500,
+            color: AppTheme.getColor(context).onSurfaceVariant,
           ),
         ),
 
@@ -72,13 +70,11 @@ class OfferBox extends StatelessWidget {
             12 * getResponsive(context),
             12 * getResponsive(context),
           ),
-          child: Text(
+          child: CustomText(
             offerTime,
-            style: TextStyle(
-              fontSize: 16 * getResponsiveText(context),
-              color: AppColors.primary,
-              fontWeight: FontWeight.w600,
-            ),
+            fontSize: 12 * getResponsiveText(context),
+            color: AppTheme.getColor(context).primary,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ],
