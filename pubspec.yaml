@@ -52,6 +52,7 @@ dependencies:
   connectivity_plus: ^6.1.4
   dartz: ^0.10.1
   url_launcher: ^6.3.1
+  badges: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -83,6 +84,7 @@ flutter:
     - assets/images/
     - assets/splash/myco_splash.json
     - assets/take_order/
+    - assets/sign_in/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

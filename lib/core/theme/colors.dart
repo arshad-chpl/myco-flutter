@@ -18,4 +18,8 @@ class AppColors {
   static const Color myCoCyan = Color(0xFF08A4BB);
   static const Color lightTeal = Color(0xFFEEF7FD);
   static const Color red = Color(0xFFC44141);
+  //sign in
+  static const Color textGray = Color(0xFF475467);
+  static const Color lightPurple = Color(0xFFF4F3FF);
+  static const Color gray = Color(0xFF98A2B3);
 }

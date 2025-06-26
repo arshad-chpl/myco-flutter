@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/sign_in/presentation/pages/select_other_company_page.dart';
+import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
@@ -17,7 +19,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.takeOrder,
+    initialLocation: RoutePaths.signUpForm,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -55,6 +57,11 @@ class AppRouter {
           create: (_) => TakeOrderBloc(),
           child: TakeOrderPage(),
         ),
+      ),
+      GoRoute(
+        path: RoutePaths.signUpForm,
+        name: 'select-other-company',
+        builder: (context, state) => SignupFormPage(),
       ),
       // Add all modular routes here
       // ...authRoutes,
