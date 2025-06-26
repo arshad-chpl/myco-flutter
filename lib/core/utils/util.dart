@@ -32,15 +32,7 @@ class Util {
 static  Color applyOpacity(Color color, double opacity) =>
       color.withAlpha((opacity * 255).round());
 
-///Gilroy-Thin
-// Gilroy-UltraLight
-// Gilroy-Light
-// Gilroy-Regular
-// Gilroy-Medium
-// Gilroy-SemiBold
-// Gilroy-Bold
-// Gilroy-ExtraBold
-// Gilroy-Heavy
+
   // Method to convert FontWeight to String
 static  String getFontFamily(FontWeight? fontWeight) {
     switch (fontWeight) {
@@ -96,3 +88,4 @@ static  String getMonthName(int month) => switch (month) {
     _ => 'Unknown', // Return a non-null String
   };
 }
+

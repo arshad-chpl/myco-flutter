@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/take_order/presentation/pages/edit_order_page.dart';
-import 'package:myco_flutter/features/take_order/presentation/pages/order_summary_page.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
 class OrderHistoryPage extends StatelessWidget {
@@ -45,7 +45,7 @@ class OrderHistoryCard extends StatelessWidget {
 
     color: AppColors.white,
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      // crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Header
         Material(
@@ -56,51 +56,52 @@ class OrderHistoryCard extends StatelessWidget {
           elevation: 3.0,
           child: Container(
             // height: 0.06 * getHeight(context),
-            padding: EdgeInsets.all(10 * getResponsive(context)),
+            padding: EdgeInsets.all(8 * getResponsive(context)),
             decoration: BoxDecoration(
-              color: AppColors.primary,
+              color: AppTheme.getColor(context).primary,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(12 * getResponsive(context)),
               ),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Order Number : #230',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22 * getResponsiveText(context),
-                      ),
+                      style: AppTheme.getTextStyle(context).headlineSmall!
+                          .copyWith(
+                            color: AppTheme.getColor(context).onPrimary,
+                          ),
                     ),
                     SizedBox(height: 0.01 * getHeight(context)),
                     Row(
                       children: [
                         Icon(
                           Icons.calendar_month,
-                          color: AppColors.white,
+                          color: AppTheme.getColor(context).onPrimary,
                           size: 20 * getResponsive(context),
                         ),
                         Text(
                           '01st April, 2025( 09:45 AM)',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18 * getResponsiveText(context),
-                          ),
+                          style: AppTheme.getTextStyle(context).bodyMedium!
+                              .copyWith(
+                                color: AppTheme.getColor(context).onPrimary,
+                              ),
                         ),
                       ],
                     ),
                   ],
                 ),
-                const Spacer(),
+                // const Spacer(),
                 MyCoButton(
                   onTap: () {},
                   title: 'Approved',
-                  backgroundColor: AppColors.secondary,
+                  textStyle: AppTheme.getTextStyle(context).headlineSmall!
+                      .copyWith(color: AppTheme.getColor(context).onPrimary),
+                  backgroundColor: AppTheme.getColor(context).secondary,
                   width: 0.25 * getWidth(context),
                   height: 0.03 * getHeight(context),
                   boarderRadius: 30 * getResponsive(context),
@@ -118,73 +119,33 @@ class OrderHistoryCard extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Order By',
-                    style: TextStyle(
-                      fontSize: 16 * getResponsiveText(context),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(width: 0.22 * getWidth(context)),
-                  Text(
-                    ':',
-                    style: TextStyle(fontSize: 16 * getResponsiveText(context)),
-                  ),
-                  SizedBox(width: 0.05 * getWidth(context)),
-                  Text(
-                    'Manish Chandra',
-                    style: TextStyle(
-                      fontSize: 16 * getResponsiveText(context),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
+              getCommonRow(
+                context,
+                title: 'Order By',
+                value: 'Manish Chandra',
+                onTap: () {},
               ),
-              SizedBox(height: 0.01 * getHeight(context)),
-              Row(
-                children: [
-                  Text(
-                    'Order Process Status',
-                    style: TextStyle(
-                      fontSize: 16 * getResponsiveText(context),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(width: 0.04 * getWidth(context)),
-                  Text(
-                    ':',
-                    style: TextStyle(fontSize: 16 * getResponsiveText(context)),
-                  ),
-                  SizedBox(width: 0.05 * getWidth(context)),
-                  InkWell(
-                    onTap: () {
-                      changeProcessStatusBottomSheet(context);
-                    },
-                    child: Text(
-                      'Change',
-                      style: TextStyle(
-                        fontSize: 16 * getResponsiveText(context),
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 0.01 * getWidth(context)),
-                ],
+              getCommonRow(
+                context,
+                title: 'Order Process Status',
+                value: 'Change',
+                decoration: TextDecoration.underline,
+                textColor: AppTheme.getColor(context).primary,
+                onTap: () {
+                  changeProcessStatusBottomSheet(context);
+                },
               ),
               SizedBox(height: 0.02 * getHeight(context)),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  getOrderContainer(context),
-                  getOrderContainer(context),
-                  getOrderContainer(context),
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    getOrderContainer(context),
+                    getOrderContainer(context),
+                    getOrderContainer(context),
+                  ],
+                ),
               ),
               SizedBox(height: 0.008 * getHeight(context)),
               Row(
@@ -196,11 +157,8 @@ class OrderHistoryCard extends StatelessWidget {
                     },
                     child: Text(
                       'View Ordered Products',
-                      style: TextStyle(
-                        fontSize: 14 * getResponsiveText(context),
-                        decoration: TextDecoration.underline,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: AppTheme.getTextStyle(context).bodyMedium!
+                          .copyWith(decoration: TextDecoration.underline),
                     ),
                   ),
                 ],
@@ -213,12 +171,10 @@ class OrderHistoryCard extends StatelessWidget {
                       cancelOrderBottomSheet(context);
                     },
                     title: 'Cancel Order',
-                    width: 0.22 * getWidth(context),
+                    width: 0.25 * getWidth(context),
                     height: 0.03 * getHeight(context),
-                    textStyle: TextStyle(
-                      fontSize: 15 * getResponsiveText(context),
-                      color: AppColors.white,
-                    ),
+                    textStyle: AppTheme.getTextStyle(context).bodyMedium!
+                        .copyWith(color: AppTheme.getColor(context).onPrimary),
                     boarderRadius: 30 * getResponsive(context),
                     backgroundColor: AppColors.red,
                     borderColor: AppColors.red,
@@ -227,34 +183,21 @@ class OrderHistoryCard extends StatelessWidget {
                   SizedBox(width: 0.01 * getWidth(context)),
                   MyCoButton(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const OrderSummaryPage(isRepeatOrder: true),
-                        ),
-                      );
+                      context.pushNamed('order-summary', extra: true);
                     },
                     title: 'Repeat Order',
-                    width: 0.22 * getWidth(context),
+                    width: 0.25 * getWidth(context),
                     height: 0.03 * getHeight(context),
-                    textStyle: TextStyle(
-                      fontSize: 15 * getResponsiveText(context),
-                      color: AppColors.white,
-                    ),
+                    textStyle: AppTheme.getTextStyle(context).bodyMedium!
+                        .copyWith(color: AppTheme.getColor(context).onPrimary),
                     boarderRadius: 30 * getResponsive(context),
-                    backgroundColor: AppColors.secondary,
-                    borderColor: AppColors.secondary,
+                    backgroundColor: AppTheme.getColor(context).secondary,
+                    borderColor: AppTheme.getColor(context).secondary,
                     isShadowBottomLeft: true,
                   ),
                   const Spacer(),
                   InkWell(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const EditOrderPage(),
-                      ),
-                    ),
+                    onTap: () => context.pushNamed('edit-order'),
                     child: Image.asset(
                       'assets/take_order/message-edit.png',
                       height: 0.025 * getHeight(context),
@@ -273,100 +216,95 @@ class OrderHistoryCard extends StatelessWidget {
     ),
   );
 
-  Future<dynamic> orderedProductsBottomSheet(BuildContext context) =>
-      showModalBottomSheet(
-        shape: const BeveledRectangleBorder(),
-        context: context,
-        builder: (context) => Container(
-          color: AppColors.white,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 0.04 * getWidth(context),
-                  vertical: 0.01 * getHeight(context),
+  Future<dynamic> orderedProductsBottomSheet(
+    BuildContext context,
+  ) => showModalBottomSheet(
+    shape: const BeveledRectangleBorder(),
+    context: context,
+    builder: (context) => Container(
+      color: AppTheme.getColor(context).onPrimary,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.04 * getWidth(context),
+              vertical: 0.01 * getHeight(context),
+            ),
+            width: getWidth(context),
+            height: 0.06 * getHeight(context),
+            decoration: const BoxDecoration(color: AppColors.primary),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Order #230',
+                  style: AppTheme.getTextStyle(context).headlineMedium!
+                      .copyWith(color: AppTheme.getColor(context).onPrimary),
                 ),
-                width: getWidth(context),
-                height: 0.06 * getHeight(context),
-                decoration: const BoxDecoration(color: AppColors.primary),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Order #230',
-                      style: TextStyle(
-                        color: AppColors.white,
-                        fontSize: 24 * getResponsiveText(context),
-                        fontWeight: FontWeight.w500,
-                      ),
+                InkWell(
+                  onTap: () => Navigator.pop(context),
+                  child: Image.asset(
+                    'assets/take_order/down_arrow.png',
+                    width: 0.06 * getWidth(context),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.04 * getWidth(context),
+              vertical: 0.01 * getHeight(context),
+            ),
+            child: Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                shrinkWrap: true,
+                itemCount: 9,
+                itemBuilder: (context, index) => Container(
+                  padding: EdgeInsets.all(8 * getResponsive(context)),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey[600]!),
+                    borderRadius: BorderRadius.circular(
+                      12 * getResponsive(context),
                     ),
-                    InkWell(
-                      onTap: () => Navigator.pop(context),
-                      child: Image.asset(
-                        'assets/take_order/down_arrow.png',
-                        width: 0.06 * getWidth(context),
+                  ),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/take_order/apple_image.png',
+                        height: 0.04 * getHeight(context),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 0.04 * getWidth(context),
-                  vertical: 0.01 * getHeight(context),
-                ),
-                child: Expanded(
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                        ),
-                    shrinkWrap: true,
-                    itemCount: 9,
-                    itemBuilder: (context, index) => Container(
-                      padding: EdgeInsets.all(8 * getResponsive(context)),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey[600]!),
-                        borderRadius: BorderRadius.circular(
-                          12 * getResponsive(context),
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'assets/take_order/apple_image.png',
-                            height: 0.04 * getHeight(context),
-                          ),
-                          SizedBox(height: 0.01 * getHeight(context)),
-                          Text(
-                            'Appy Fizz',
-                            style: TextStyle(
-                              color: AppColors.primary,
-                              fontSize: 20 * getResponsiveText(context),
+                      SizedBox(height: 0.01 * getHeight(context)),
+                      Text(
+                        'Appy Fizz',
+                        style: AppTheme.getTextStyle(context).bodyLarge!
+                            .copyWith(
+                              color: AppTheme.getColor(context).primary,
                             ),
-                          ),
-                          SizedBox(height: 0.01 * getHeight(context)),
-                          Text(
-                            'Unit: 25 ₹2000.0',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 16 * getResponsiveText(context),
-                            ),
-                          ),
-                        ],
                       ),
-                    ),
+                      SizedBox(height: 0.01 * getHeight(context)),
+                      Text(
+                        'Unit: 25 ₹2000.0',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTheme.getTextStyle(context).bodyMedium,
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      );
+        ],
+      ),
+    ),
+  );
 
   Future<dynamic> changeProcessStatusBottomSheet(BuildContext context) =>
       showModalBottomSheet(
@@ -374,7 +312,7 @@ class OrderHistoryCard extends StatelessWidget {
         context: context,
         builder: (context) => Container(
           width: getWidth(context),
-          color: AppColors.white,
+          color: AppTheme.getColor(context).onPrimary,
           padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -383,10 +321,7 @@ class OrderHistoryCard extends StatelessWidget {
               SizedBox(height: 0.02 * getHeight(context)),
               Text(
                 'Change Order Process Status',
-                style: TextStyle(
-                  fontSize: 22 * getResponsiveText(context),
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTheme.getTextStyle(context).headlineMedium,
               ),
               SizedBox(height: 0.02 * getHeight(context)),
               DropdownMenu(
@@ -410,12 +345,10 @@ class OrderHistoryCard extends StatelessWidget {
                     title: 'CANCEL',
                     width: 0.4 * getWidth(context),
                     height: 0.04 * getHeight(context),
-                    backgroundColor: AppColors.white,
+                    backgroundColor: AppTheme.getColor(context).onPrimary,
                     boarderRadius: 30 * getResponsive(context),
-                    textStyle: const TextStyle(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    textStyle: AppTheme.getTextStyle(context).bodyLarge!
+                        .copyWith(color: AppTheme.getColor(context).primary),
                   ),
                   MyCoButton(
                     onTap: () {},
@@ -424,10 +357,8 @@ class OrderHistoryCard extends StatelessWidget {
                     height: 0.04 * getHeight(context),
                     backgroundColor: AppColors.primary,
                     boarderRadius: 30 * getResponsive(context),
-                    textStyle: const TextStyle(
-                      color: AppColors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    textStyle: AppTheme.getTextStyle(context).bodyLarge!
+                        .copyWith(color: AppTheme.getColor(context).onPrimary),
                   ),
                 ],
               ),
@@ -437,12 +368,47 @@ class OrderHistoryCard extends StatelessWidget {
         ),
       );
 
+  Row getCommonRow(
+    BuildContext context, {
+    required String title,
+    required String value,
+    required VoidCallback onTap,
+    Color textColor = AppColors.black,
+    TextDecoration? decoration,
+  }) => Row(
+    children: [
+      Expanded(
+        flex: 7,
+        child: Text(
+          title,
+          style: AppTheme.getTextStyle(
+            context,
+          ).headlineSmall!.copyWith(fontSize: 16 * getResponsiveText(context)),
+        ),
+      ),
+      const Text(':'),
+      SizedBox(width: 0.03 * getWidth(context)),
+      Expanded(
+        flex: 5,
+        child: InkWell(
+          onTap: onTap,
+          child: Text(
+            value,
+            style: AppTheme.getTextStyle(
+              context,
+            ).labelLarge!.copyWith(decoration: decoration, color: textColor),
+          ),
+        ),
+      ),
+    ],
+  );
+
   Future<dynamic> cancelOrderBottomSheet(BuildContext context) =>
       showModalBottomSheet(
         shape: const BeveledRectangleBorder(),
         context: context,
         builder: (context) => Container(
-          color: AppColors.white,
+          color: AppTheme.getColor(context).onPrimary,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -456,11 +422,8 @@ class OrderHistoryCard extends StatelessWidget {
                 decoration: const BoxDecoration(color: AppColors.primary),
                 child: Text(
                   'Order #230',
-                  style: TextStyle(
-                    color: AppColors.white,
-                    fontSize: 24 * getResponsiveText(context),
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: AppTheme.getTextStyle(context).headlineMedium!
+                      .copyWith(color: AppTheme.getColor(context).onPrimary),
                 ),
               ),
               Center(
@@ -473,10 +436,7 @@ class OrderHistoryCard extends StatelessWidget {
               Center(
                 child: Text(
                   'Do you Want to Cancel this Order ?',
-                  style: TextStyle(
-                    fontSize: 22 * getResponsiveText(context),
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: AppTheme.getTextStyle(context).headlineSmall,
                 ),
               ),
               SizedBox(height: 0.015 * getHeight(context)),
@@ -492,7 +452,7 @@ class OrderHistoryCard extends StatelessWidget {
                       title: 'CANCEL',
                       width: 0.4 * getWidth(context),
                       height: 0.04 * getHeight(context),
-                      backgroundColor: AppColors.white,
+                      backgroundColor: AppTheme.getColor(context).onPrimary,
                       boarderRadius: 30 * getResponsive(context),
                       textStyle: const TextStyle(
                         color: AppColors.primary,
@@ -504,7 +464,7 @@ class OrderHistoryCard extends StatelessWidget {
                       title: 'ADD',
                       width: 0.4 * getWidth(context),
                       height: 0.04 * getHeight(context),
-                      backgroundColor: AppColors.primary,
+                      backgroundColor: AppTheme.getColor(context).primary,
                       boarderRadius: 30 * getResponsive(context),
                       textStyle: const TextStyle(
                         color: AppColors.white,
@@ -522,7 +482,7 @@ class OrderHistoryCard extends StatelessWidget {
 
   Container getOrderContainer(BuildContext context) => Container(
     padding: EdgeInsets.all(8 * getResponsive(context)),
-
+    margin: EdgeInsets.symmetric(horizontal: 0.01 * getWidth(context)),
     decoration: BoxDecoration(
       border: Border.all(color: Colors.grey[600]!),
       borderRadius: BorderRadius.circular(12 * getResponsive(context)),

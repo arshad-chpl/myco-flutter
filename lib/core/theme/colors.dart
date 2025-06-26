@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
- static ColorScheme getColor(BuildContext context)=> Theme.of(context).colorScheme;
-
-
   // Primary and Secondary Colors
   static const Color primary = Color(0xFF2F648E);
   static const Color secondary = Color(0xFF2FBBA4);
@@ -33,4 +30,9 @@ class AppColors {
   ); // use in take order expansion tile
   static const Color lightTeal = Color(0xFFEEF7FD);
   static const Color red = Color(0xFFC44141);
+
+  static const Color borderColor = Color(0xFF98A2B3);
+  static const Color textPrimary2 = Color(0xFF344054);
+  static const Color textGrey200 = Color(0xFFEAECF0);
+  static const Color textBorder300 = Color(0xFFD0D5DD);
 }
