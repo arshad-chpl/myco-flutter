@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
-import 'package:myco_flutter/features/take_order/presentation/pages/offers_page.dart';
-import 'package:myco_flutter/features/take_order/presentation/pages/order_summary_page.dart';
-import 'package:myco_flutter/features/take_order/presentation/pages/products_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/frequent_buy_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
@@ -13,7 +12,7 @@ import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 // ignore: must_be_immutable
 class TakeOrderPage extends StatefulWidget {
-  TakeOrderPage({super.key});
+  const TakeOrderPage({super.key});
 
   @override
   State<TakeOrderPage> createState() => _TakeOrderPageState();
@@ -24,19 +23,18 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.bgWhite,
+    backgroundColor: AppTheme.getColor(context).surface,
     appBar: AppBar(
-      backgroundColor: AppColors.bgWhite,
+      backgroundColor: AppTheme.getColor(context).surface,
       leading: const BackButton(),
       title: const Text('Take Order'),
       actions: [
         MyCoButton(
           onTap: () {},
           title: 'Refresh',
-          textStyle: TextStyle(
-            fontSize: 14 * getResponsiveText(context),
-            color: AppColors.white,
-          ),
+          textStyle: AppTheme.getTextStyle(
+            context,
+          ).labelLarge!.copyWith(color: AppTheme.getColor(context).onPrimary),
           width: 0.17 * getWidth(context),
           height: 0.03 * getHeight(context),
           boarderRadius: 20 * getResponsive(context),
@@ -48,21 +46,17 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
           children: [
             MyCoButton(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => OffersPage()),
-                );
+                context.pushNamed('offers');
               },
               title: 'Offers',
-              textStyle: TextStyle(
-                fontSize: 14 * getResponsiveText(context),
-                color: AppColors.white,
+              textStyle: AppTheme.getTextStyle(context).labelLarge!.copyWith(
+                color: AppTheme.getColor(context).onPrimary,
               ),
-              backgroundColor: AppColors.primary_1,
+              backgroundColor: AppTheme.getColor(context).secondary,
               width: 0.17 * getWidth(context),
               height: 0.03 * getHeight(context),
               boarderRadius: 20 * getResponsive(context),
-              borderColor: AppColors.primary_1,
+              borderColor: AppTheme.getColor(context).secondary,
               isShadowBottomLeft: true,
             ),
             Container(
@@ -96,13 +90,13 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
                   : 0;
               return MyCustomTabBar(
                 tabs: const ['All Products', 'Frequents Buy'],
-                selectedBgColors: const [
-                  AppColors.primary,
-                  AppColors.primary_1,
+                selectedBgColors: [
+                  AppTheme.getColor(context).primary,
+                  AppTheme.getColor(context).secondary,
                 ],
                 unselectedBorderAndTextColor: AppColors.white,
                 tabBarBorderColor: AppColors.black,
-                tabBarBackgroundColor: AppColors.bgWhite,
+                tabBarBackgroundColor: AppColors.backgroundPrimary,
                 isShadowBottomLeft: true,
                 selectedIndex: selectedIndex,
                 onTabChange: (index) {
@@ -151,7 +145,9 @@ class AllProductsScreen extends StatelessWidget {
           // Search Field
           MyCoTextfield(
             hintText: 'Search',
-            hintTextStyle: const TextStyle(color: Colors.grey),
+            hintTextStyle: AppTheme.getTextStyle(
+              context,
+            ).labelLarge!.copyWith(color: AppColors.textSecondary),
             prefix: const Icon(Icons.search),
             boarderRadius: 12 * getResponsive(context),
           ),
@@ -161,13 +157,15 @@ class AllProductsScreen extends StatelessWidget {
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) => MyCoTextfield(
-                onClick: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ProductsPage()),
-                ),
+                // onClick: () => Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const ProductsPage()),
+                // ),
+                onClick: () => context.pushNamed('products'),
                 isReadOnly: true,
                 hintText: productList[index],
-                hintTextStyle: const TextStyle(color: AppColors.primary),
+                hintTextStyle: AppTheme.getTextStyle(context).bodyLarge!
+                    .copyWith(color: AppTheme.getColor(context).primary),
                 border: OutlineInputBorder(
                   borderSide: const BorderSide(color: Colors.grey),
                   borderRadius: BorderRadius.circular(
@@ -207,29 +205,22 @@ class FrequentsBuyScreen extends StatelessWidget {
             title: 'Reset Cart',
             width: 0.4 * getWidth(context),
             height: 0.05 * getHeight(context),
-            backgroundColor: AppColors.bgWhite,
-            textStyle: TextStyle(
-              color: AppColors.primary,
-              fontWeight: FontWeight.bold,
-              fontSize: 20 * getResponsiveText(context),
+            backgroundColor: AppTheme.getColor(context).surface,
+            textStyle: AppTheme.getTextStyle(context).headlineSmall!.copyWith(
+              color: AppTheme.getColor(context).primary,
             ),
             boarderRadius: 30 * getResponsive(context),
           ),
           MyCoButton(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => OrderSummaryPage()),
-              );
+              context.pushNamed('order-summary');
             },
             title: 'Add Order',
             width: 0.4 * getWidth(context),
             height: 0.05 * getHeight(context),
             boarderRadius: 30 * getResponsive(context),
-            textStyle: TextStyle(
-              color: AppColors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 20 * getResponsiveText(context),
+            textStyle: AppTheme.getTextStyle(context).headlineSmall!.copyWith(
+              color: AppTheme.getColor(context).onPrimary,
             ),
           ),
         ],
@@ -258,19 +249,19 @@ class AllProductsScreenV2 extends StatelessWidget {
       collapsedBackgroundColor: AppColors.primary,
       title: const Text('Cold Drink'),
       children: [
-        _buildMenuItem('Soda'),
-        _buildMenuItem('Thanda'),
-        _buildMenuItem('Milk Shake'),
+        _buildMenuItem(context, 'Soda'),
+        _buildMenuItem(context, 'Thanda'),
+        _buildMenuItem(context, 'Milk Shake'),
       ],
     ),
     separatorBuilder: (context, index) =>
         SizedBox(height: 0.02 * getHeight(context)),
   );
 
-  Widget _buildMenuItem(String title) => ListTile(
-    title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
+  Widget _buildMenuItem(BuildContext context, String title) => ListTile(
+    title: Text(title, style: AppTheme.getTextStyle(context).bodyMedium),
 
-    trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+    trailing: Icon(Icons.arrow_forward_ios, size: 18 * getResponsive(context)),
     onTap: () {
       // Handle tap
     },

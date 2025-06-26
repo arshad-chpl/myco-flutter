@@ -1,7 +1,10 @@
 part of 'splash_bloc.dart';
 
 abstract class SplashState extends Equatable {
-  const SplashState();
+  final String version;
+  final String buildNumber;
+
+  const SplashState({this.version='',this.buildNumber=''});
 
   @override
   List<Object> get props => [];
@@ -9,7 +12,13 @@ abstract class SplashState extends Equatable {
 
 class SplashInitial extends SplashState {}
 
-class SplashLoading extends SplashState {}
+class SplashLoading extends SplashState {
+  const SplashLoading({String version = '', String buildNumber = ''})
+      : super(version: version, buildNumber: buildNumber);
+
+  @override
+  List<Object> get props => [version, buildNumber];
+}
 
 class SplashLoaded extends SplashState {}
 

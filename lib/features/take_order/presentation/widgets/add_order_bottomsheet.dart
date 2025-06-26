@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -8,7 +9,7 @@ class AddOrderBottomsheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    color: AppColors.white,
+    color: AppTheme.getColor(context).onPrimary,
     child: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,7 +21,7 @@ class AddOrderBottomsheet extends StatelessWidget {
           ),
           width: getWidth(context),
           height: 0.06 * getHeight(context),
-          decoration: const BoxDecoration(color: AppColors.primary),
+          decoration: BoxDecoration(color: AppTheme.getColor(context).primary),
           child: Text(
             'Appy Fizz (Apple)',
             style: TextStyle(
@@ -56,7 +57,9 @@ class AddOrderBottomsheet extends StatelessWidget {
                 height: 0.05 * getHeight(context),
                 width: 0.25 * getWidth(context),
                 decoration: BoxDecoration(
-                  color: AppColors.primary_1.withValues(alpha: 0.3),
+                  color: AppTheme.getColor(
+                    context,
+                  ).secondary.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(
                     12 * getResponsive(context),
                   ),
@@ -97,7 +100,9 @@ class AddOrderBottomsheet extends StatelessWidget {
                     width: 0.17 * getWidth(context),
                     isIcon: false,
                     textData: 'Add',
-                    bgColor: AppColors.primary.withValues(alpha: 0.2),
+                    bgColor: AppTheme.getColor(
+                      context,
+                    ).primary.withValues(alpha: 0.2),
                   ),
                   SizedBox(width: 0.02 * getWidth(context)),
                   buildContainer(
@@ -120,7 +125,7 @@ class AddOrderBottomsheet extends StatelessWidget {
                 onTap: () {},
                 title: 'CANCEL',
                 width: 0.4 * getWidth(context),
-                backgroundColor: AppColors.white,
+                backgroundColor: AppTheme.getColor(context).onPrimary,
                 boarderRadius: 30 * getResponsive(context),
                 textStyle: const TextStyle(
                   color: AppColors.primary,
@@ -131,7 +136,7 @@ class AddOrderBottomsheet extends StatelessWidget {
                 onTap: () {},
                 title: 'ADD',
                 width: 0.4 * getWidth(context),
-                backgroundColor: AppColors.primary,
+                backgroundColor: AppTheme.getColor(context).primary,
                 boarderRadius: 30 * getResponsive(context),
                 textStyle: const TextStyle(
                   color: AppColors.white,
@@ -157,12 +162,12 @@ class AddOrderBottomsheet extends StatelessWidget {
     height: 0.045 * getHeight(context),
     width: width,
     decoration: BoxDecoration(
-      color: bgColor ?? AppColors.primary,
+      color: bgColor ?? AppTheme.getColor(context).primary,
       borderRadius: BorderRadius.circular(8.0 * getResponsive(context)),
     ),
     child: Center(
       child: isIcon
-          ? Icon(icon, color: AppColors.white)
+          ? Icon(icon, color: AppTheme.getColor(context).onPrimary)
           : Text(
               textData ?? '',
               style: TextStyle(

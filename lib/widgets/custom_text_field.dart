@@ -469,7 +469,7 @@ class TextFieldFormMobile extends StatelessWidget {
         padding: contentPadding ?? const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: fillColor ?? Colors.white,
-          border: Border.all(color: AppColors.secondary),
+          border: Border.all(color: AppColors.textfieldBorder),
           borderRadius: BorderRadius.circular(boarderRadius ?? 7.0),
         ),
         child: Row(

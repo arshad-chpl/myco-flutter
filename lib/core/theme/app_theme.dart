@@ -1,55 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/theme/text_theme.dart';
 
 class AppTheme {
-  static final lightTheme = ThemeData(
+  static ColorScheme getColor(BuildContext context) =>
+      Theme.of(context).colorScheme;
+  static TextTheme getTextStyle(BuildContext context) =>
+      Theme.of(context).textTheme;
+
+  static ThemeData lightTheme(BuildContext context) => ThemeData(
+    useMaterial3: true,
     brightness: Brightness.light,
-    scaffoldBackgroundColor: Colors.white,
-    fontFamily: 'Inter',
+    scaffoldBackgroundColor: AppColors.backgroundPrimary,
     primaryColor: AppColors.primary,
-    colorScheme: ColorScheme.fromSwatch().copyWith(
-      primary: AppColors.primary,
-      secondary: AppColors.secondary,
-      error: AppColors.error,
+    splashColor: AppColors.splashBg,
+    dividerColor: AppColors.textfieldBorder,
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppColors.backgroundPrimary,
+      foregroundColor: AppColors.white,
+      elevation: 0,
+      titleTextStyle: AppTextTheme.getTextTheme(
+        context,
+      ).titleLarge?.copyWith(color: AppColors.textPrimary),
     ),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.primary,
-      titleTextStyle: TextStyle(
-        fontFamily: 'Inter',
-        fontWeight: FontWeight.w600,
-        fontSize: 20,
-        color: Colors.white,
-      ),
-      iconTheme: IconThemeData(color: Colors.white),
+
+    // Color theme
+    colorScheme: const ColorScheme.light(
+      primary: AppColors.primary, //0xFF2F648E
+      secondary: AppColors.secondary, //0xFF2FBBA4
+
+      surface: AppColors.backgroundPrimary, //0xFFFAFAFF
+      error: AppColors.error, //0xFFE53935
+      onPrimary: AppColors.white, //0xFFFFFFFF
+      onSecondary: AppColors.white, //0xFFFFFFFF
+      onSurface: AppColors.textPrimary, //0xFF101828
+      onSurfaceVariant: AppColors.textSecondary, //0xFF475467
+      onError: AppColors.white, //0xFFFFFFFF
+      outline: AppColors.textfieldBorder, //0xFF98A2B3
     ),
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
-      bodyMedium: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
-      titleLarge: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-    ),
+
+    // text theme
+    textTheme: AppTextTheme.getTextTheme(context),
   );
 
-  static final ThemeData darkTheme = ThemeData(
+  // Optional: add this now for future dark mode use
+  static ThemeData darkTheme(BuildContext context) => ThemeData(
     brightness: Brightness.dark,
+    useMaterial3: true,
+    scaffoldBackgroundColor: Colors.black,
     primaryColor: AppColors.primary,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: AppColors.primary,
-      brightness: Brightness.dark,
-    ),
-    scaffoldBackgroundColor: const Color(0xFF121212),
-    fontFamily: 'Inter',
-    appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.primary,
-      foregroundColor: Colors.white,
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.grey[900],
+      foregroundColor: AppColors.white,
       elevation: 0,
+      titleTextStyle: AppTextTheme.getTextTheme(
+        context,
+      ).titleLarge?.copyWith(color: AppColors.white),
     ),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: AppColors.primary,
+    colorScheme: ColorScheme.dark(
+      primary: AppColors.black,
+      secondary: AppColors.secondary,
+      surface: Colors.grey[850]!,
+      error: AppColors.error,
+      onPrimary: AppColors.white,
+      onSecondary: AppColors.black,
+      onSurface: Colors.white70,
+      onError: Colors.white,
     ),
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(fontWeight: FontWeight.w400, fontSize: 16, color: Colors.white),
-      bodyMedium: TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: Colors.white70),
-      titleLarge: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Colors.white),
-    ),
+    textTheme: AppTextTheme.getTextTheme(
+      context,
+    ).apply(bodyColor: Colors.white, displayColor: Colors.white),
   );
 }
