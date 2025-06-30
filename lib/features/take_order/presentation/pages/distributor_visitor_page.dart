@@ -5,7 +5,9 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
+import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
+import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -20,8 +22,8 @@ class DistributorVisitorPage extends StatelessWidget {
       backgroundColor: AppTheme.getColor(context).surface,
       title: CustomText(
         'Mahakali Tractors (RT43575)',
-        fontSize: 18 * getResponsiveText(context),
-        fontWeight: FontWeight.w600,
+        fontSize: 20 * getResponsiveText(context),
+        fontWeight: FontWeight.w700,
       ),
     ),
     body: SingleChildScrollView(
@@ -345,12 +347,9 @@ class DistributorVisitorPage extends StatelessWidget {
   Future<dynamic> getEndVisitBottomSheet(
     BuildContext context, {
     required VoidCallback onTap,
-  }) => showModalBottomSheet(
-    shape: BeveledRectangleBorder(
-      borderRadius: BorderRadiusGeometry.circular(12 * getResponsive(context)),
-    ),
-    context: context,
-    builder: (context) => Container(
+  }) => getBottomSheet(
+    context,
+    Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12 * getResponsive(context)),
         color: AppTheme.getColor(context).onPrimary,
@@ -411,34 +410,11 @@ class DistributorVisitorPage extends StatelessWidget {
 
           Container(
             padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyCoButton(
-                  onTap: () => Navigator.pop(context),
-                  title: 'CLOSE',
-                  width: 0.4 * getWidth(context),
-                  height: 0.04 * getHeight(context),
-                  backgroundColor: AppTheme.getColor(context).onPrimary,
-                  boarderRadius: 30 * getResponsive(context),
-                  textStyle: TextStyle(
-                    color: AppTheme.getColor(context).primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                MyCoButton(
-                  onTap: onTap,
-                  title: 'END VISIT',
-                  width: 0.4 * getWidth(context),
-                  height: 0.04 * getHeight(context),
-                  backgroundColor: AppTheme.getColor(context).primary,
-                  boarderRadius: 30 * getResponsive(context),
-                  textStyle: TextStyle(
-                    color: AppTheme.getColor(context).onPrimary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            child: SideBySideButtons(
+              button1Name: 'CLOSE',
+              button2Name: 'END VISIT',
+              onTap1: () {},
+              onTap2: onTap,
             ),
           ),
           SizedBox(height: 0.03 * getHeight(context)),
@@ -450,12 +426,9 @@ class DistributorVisitorPage extends StatelessWidget {
   Future<dynamic> getVisitPurposeBottomSheet(
     BuildContext context, {
     required VoidCallback onTap,
-  }) => showModalBottomSheet(
-    shape: BeveledRectangleBorder(
-      borderRadius: BorderRadiusGeometry.circular(8 * getResponsive(context)),
-    ),
-    context: context,
-    builder: (context) => Container(
+  }) => getBottomSheet(
+    context,
+    Container(
       color: AppTheme.getColor(context).onPrimary,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -481,15 +454,17 @@ class DistributorVisitorPage extends StatelessWidget {
               ),
               // Inner shadow simulation using a white gradient
               Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.white.withValues(alpha: 0.3), // top white fade
-                        Colors.transparent, // fade to transparent
-                      ],
+                child: IgnorePointer(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.white.withValues(alpha: 0.3), // top white fade
+                          Colors.transparent, // fade to transparent
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -556,34 +531,11 @@ class DistributorVisitorPage extends StatelessWidget {
           SizedBox(height: 0.01 * getHeight(context)),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyCoButton(
-                  onTap: () => Navigator.pop(context),
-                  title: 'CLOSE',
-                  width: 0.4 * getWidth(context),
-                  height: 0.04 * getHeight(context),
-                  backgroundColor: AppTheme.getColor(context).onPrimary,
-                  boarderRadius: 30 * getResponsive(context),
-                  textStyle: TextStyle(
-                    color: AppTheme.getColor(context).primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                MyCoButton(
-                  onTap: onTap,
-                  title: 'DONE',
-                  width: 0.4 * getWidth(context),
-                  height: 0.04 * getHeight(context),
-                  backgroundColor: AppTheme.getColor(context).primary,
-                  boarderRadius: 30 * getResponsive(context),
-                  textStyle: TextStyle(
-                    color: AppTheme.getColor(context).onPrimary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            child: SideBySideButtons(
+              button1Name: 'CLOSE',
+              button2Name: 'DONE',
+              onTap1: () {},
+              onTap2: onTap,
             ),
           ),
           SizedBox(height: 0.03 * getHeight(context)),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class AddOrderBottomsheet extends StatelessWidget {
@@ -39,17 +38,19 @@ class AddOrderBottomsheet extends StatelessWidget {
             ),
             // Inner shadow simulation using a white gradient
             Positioned.fill(
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      AppTheme.getColor(
-                        context,
-                      ).onPrimary.withValues(alpha: 0.3), // top white fade
-                      Colors.transparent, // fade to transparent
-                    ],
+              child: IgnorePointer(
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        AppTheme.getColor(
+                          context,
+                        ).onPrimary.withValues(alpha: 0.3), // top white fade
+                        Colors.transparent, // fade to transparent
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -136,35 +137,11 @@ class AddOrderBottomsheet extends StatelessWidget {
         SizedBox(height: 0.045 * getHeight(context)),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              MyCoButton(
-                onTap: () {},
-                title: 'CANCEL',
-                width: 0.4 * getWidth(context),
-                height: 0.04 * getHeight(context),
-                backgroundColor: AppTheme.getColor(context).onPrimary,
-                boarderRadius: 30 * getResponsive(context),
-                textStyle: const TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              MyCoButton(
-                onTap: () {},
-                title: 'ADD',
-                width: 0.4 * getWidth(context),
-                height: 0.04 * getHeight(context),
-                backgroundColor: AppTheme.getColor(context).primary,
-                boarderRadius: 30 * getResponsive(context),
-                textStyle: const TextStyle(
-                  color: AppColors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                isShadowBottomLeft: true,
-              ),
-            ],
+          child: SideBySideButtons(
+            button1Name: 'CANCEL',
+            button2Name: 'ADD',
+            onTap1: () {},
+            onTap2: () {},
           ),
         ),
         SizedBox(height: 0.03 * getHeight(context)),

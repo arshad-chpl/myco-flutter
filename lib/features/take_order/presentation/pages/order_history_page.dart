@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
+import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -13,7 +15,11 @@ class OrderHistoryPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       leading: const BackButton(),
-      title: const CustomText('Order History', fontWeight: FontWeight.w600),
+      title: CustomText(
+        'Order History',
+        fontSize: 20 * getResponsiveText(context),
+        fontWeight: FontWeight.w700,
+      ),
     ),
     body: Container(
       padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
@@ -114,15 +120,17 @@ class OrderHistoryCard extends StatelessWidget {
             ),
             // Inner shadow simulation using a white gradient
             Positioned.fill(
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.white.withValues(alpha: 0.3), // top white fade
-                      Colors.transparent, // fade to transparent
-                    ],
+              child: IgnorePointer(
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.white.withValues(alpha: 0.3), // top white fade
+                        Colors.transparent, // fade to transparent
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -239,10 +247,9 @@ class OrderHistoryCard extends StatelessWidget {
 
   Future<dynamic> orderedProductsBottomSheet(
     BuildContext context,
-  ) => showModalBottomSheet(
-    shape: const BeveledRectangleBorder(),
-    context: context,
-    builder: (context) => Container(
+  ) => getBottomSheet(
+    context,
+    Container(
       color: AppTheme.getColor(context).onPrimary,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -280,15 +287,17 @@ class OrderHistoryCard extends StatelessWidget {
               ),
               // Inner shadow simulation using a white gradient
               Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.white.withValues(alpha: 0.3), // top white fade
-                        Colors.transparent, // fade to transparent
-                      ],
+                child: IgnorePointer(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.white.withValues(alpha: 0.3), // top white fade
+                          Colors.transparent, // fade to transparent
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -297,61 +306,54 @@ class OrderHistoryCard extends StatelessWidget {
           ),
           SizedBox(height: 0.008 * getHeight(context)),
           Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 0.04 * getWidth(context),
-              vertical: 0.01 * getHeight(context),
-            ),
-            child: Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 12,
+            padding: EdgeInsets.symmetric(horizontal: 0.04 * getWidth(context)),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 6,
+              ),
+              shrinkWrap: true,
+              itemCount: 9,
+              itemBuilder: (context, index) => Container(
+                padding: EdgeInsets.all(8 * getResponsive(context)),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppTheme.getColor(context).outline),
+                  borderRadius: BorderRadius.circular(
+                    12 * getResponsive(context),
+                  ),
                 ),
-                shrinkWrap: true,
-                itemCount: 9,
-                itemBuilder: (context, index) => Container(
-                  padding: EdgeInsets.all(8 * getResponsive(context)),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: AppTheme.getColor(context).outline,
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/take_order/apple_image.png',
+                      height: 0.025 * getHeight(context),
                     ),
-                    borderRadius: BorderRadius.circular(
-                      12 * getResponsive(context),
+                    SizedBox(height: 0.01 * getHeight(context)),
+                    CustomText(
+                      'Seven Up (7UP Soda) (500 ml)',
+                      maxLines: 2,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 10 * getResponsiveText(context),
+                      color: AppTheme.getColor(context).primary,
                     ),
-                  ),
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        'assets/take_order/apple_image.png',
-                        height: 0.025 * getHeight(context),
-                      ),
-                      SizedBox(height: 0.01 * getHeight(context)),
-                      CustomText(
-                        'Seven Up (7UP Soda) (500 ml)',
-                        maxLines: 2,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 10 * getResponsiveText(context),
-                        color: AppTheme.getColor(context).primary,
-                      ),
-                      SizedBox(height: 0.03 * getHeight(context)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CustomText(
-                            'Unit: 25',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 10 * getResponsiveText(context),
-                          ),
-                          CustomText(
-                            '₹2000.0',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 10 * getResponsiveText(context),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                    SizedBox(height: 0.03 * getHeight(context)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomText(
+                          'Unit: 25',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 10 * getResponsiveText(context),
+                        ),
+                        CustomText(
+                          '₹2000.0',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 10 * getResponsiveText(context),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -362,14 +364,9 @@ class OrderHistoryCard extends StatelessWidget {
   );
 
   Future<dynamic> changeProcessStatusBottomSheet(BuildContext context) =>
-      showModalBottomSheet(
-        shape: BeveledRectangleBorder(
-          borderRadius: BorderRadiusGeometry.circular(
-            12 * getResponsive(context),
-          ),
-        ),
-        context: context,
-        builder: (context) => Container(
+      getBottomSheet(
+        context,
+        Container(
           width: getWidth(context),
           color: AppTheme.getColor(context).onPrimary,
           padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
@@ -397,30 +394,11 @@ class OrderHistoryCard extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 0.025 * getHeight(context)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MyCoButton(
-                    onTap: () {},
-                    title: 'CANCEL',
-                    width: 0.4 * getWidth(context),
-                    height: 0.04 * getHeight(context),
-                    backgroundColor: AppTheme.getColor(context).onPrimary,
-                    boarderRadius: 30 * getResponsive(context),
-                    textStyle: AppTheme.getTextStyle(context).bodyLarge!
-                        .copyWith(color: AppTheme.getColor(context).primary),
-                  ),
-                  MyCoButton(
-                    onTap: () {},
-                    title: 'SUBMIT',
-                    width: 0.4 * getWidth(context),
-                    height: 0.04 * getHeight(context),
-                    backgroundColor: AppColors.primary,
-                    boarderRadius: 30 * getResponsive(context),
-                    textStyle: AppTheme.getTextStyle(context).bodyLarge!
-                        .copyWith(color: AppTheme.getColor(context).onPrimary),
-                  ),
-                ],
+              SideBySideButtons(
+                button1Name: 'CANCEL',
+                button2Name: 'SUBMIT',
+                onTap1: () {},
+                onTap2: () {},
               ),
               SizedBox(height: 0.035 * getHeight(context)),
             ],
@@ -465,10 +443,9 @@ class OrderHistoryCard extends StatelessWidget {
 
   Future<dynamic> cancelOrderBottomSheet(
     BuildContext context,
-  ) => showModalBottomSheet(
-    shape: const BeveledRectangleBorder(),
-    context: context,
-    builder: (context) => Container(
+  ) => getBottomSheet(
+    context,
+    Container(
       color: AppTheme.getColor(context).onPrimary,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -495,15 +472,17 @@ class OrderHistoryCard extends StatelessWidget {
               ),
               // Inner shadow simulation using a white gradient
               Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.white.withValues(alpha: 0.3), // top white fade
-                        Colors.transparent, // fade to transparent
-                      ],
+                child: IgnorePointer(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.white.withValues(alpha: 0.3), // top white fade
+                          Colors.transparent, // fade to transparent
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -528,34 +507,11 @@ class OrderHistoryCard extends StatelessWidget {
           SizedBox(height: 0.015 * getHeight(context)),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyCoButton(
-                  onTap: () {},
-                  title: 'NO',
-                  width: 0.4 * getWidth(context),
-                  height: 0.04 * getHeight(context),
-                  backgroundColor: AppTheme.getColor(context).onPrimary,
-                  boarderRadius: 30 * getResponsive(context),
-                  textStyle: const TextStyle(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                MyCoButton(
-                  onTap: () {},
-                  title: 'YES',
-                  width: 0.4 * getWidth(context),
-                  height: 0.04 * getHeight(context),
-                  backgroundColor: AppTheme.getColor(context).primary,
-                  boarderRadius: 30 * getResponsive(context),
-                  textStyle: const TextStyle(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            child: SideBySideButtons(
+              button1Name: 'NO',
+              button2Name: 'YES',
+              onTap1: () {},
+              onTap2: () {},
             ),
           ),
           SizedBox(height: 0.03 * getHeight(context)),

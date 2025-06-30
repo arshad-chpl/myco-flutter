@@ -10,10 +10,10 @@ class TakeOrderBloc extends Bloc<TakeOrderEvent, TakeOrderState> {
   Timer? _timer;
   Duration _duration = Duration.zero;
   TakeOrderBloc() : super(TakeOrderInitial()) {
-    // on<TakeOrderEvent>((event, emit) {
-    //   // TODO: implement event handler
-    // });
+    // Tab Event
     on<TabChangeEvent>(tabChangeEvent);
+
+    // Visit Timer Event
     on<StartVisitEvent>(onStart);
     on<StopVisitEvent>(onStop);
     on<RefreshTimerEvent>(onRefresh);

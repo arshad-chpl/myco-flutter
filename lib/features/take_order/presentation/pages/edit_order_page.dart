@@ -19,7 +19,11 @@ class EditOrderPage extends StatelessWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CustomText('Edit Order #241', fontWeight: FontWeight.w600),
+          CustomText(
+            'Edit Order #241',
+            fontSize: 20 * getResponsiveText(context),
+            fontWeight: FontWeight.w700,
+          ),
           CustomText(
             'Mukund Madhav',
             fontSize: 14 * getResponsiveText(context),

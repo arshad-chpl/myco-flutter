@@ -36,7 +36,11 @@ class OffersPage extends StatelessWidget {
     backgroundColor: AppTheme.getColor(context).surface,
     appBar: AppBar(
       backgroundColor: AppTheme.getColor(context).surface,
-      title: const CustomText('Offers', fontWeight: FontWeight.w700),
+      title: CustomText(
+        'Offers',
+        fontSize: 20 * getResponsiveText(context),
+        fontWeight: FontWeight.w700,
+      ),
       leading: const BackButton(),
     ),
     body: Container(

@@ -11,7 +11,11 @@ class ProductsPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
     appBar: AppBar(
-      title: const CustomText('Products', fontWeight: FontWeight.w600),
+      title: CustomText(
+        'Products',
+        fontSize: 20 * getResponsiveText(context),
+        fontWeight: FontWeight.w700,
+      ),
       leading: const BackButton(),
       backgroundColor: AppTheme.getColor(context).surface,
     ),
