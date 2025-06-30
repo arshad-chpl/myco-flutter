@@ -36,20 +36,6 @@ class DistributorCard extends StatelessWidget {
         // Header
         Stack(
           children: [
-            Positioned.fill(
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    colors: [
-                      Colors.white.withValues(alpha: 0.3), // top white fade
-                      Colors.transparent, // fade to transparent
-                    ],
-                  ),
-                ),
-              ),
-            ),
             Material(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12 * getResponsive(context)),
@@ -105,6 +91,22 @@ class DistributorCard extends StatelessWidget {
             ),
 
             // Inner shadow simulation using a white gradient
+            Positioned.fill(
+              child: IgnorePointer(
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        Colors.white.withValues(alpha: 0.3), // top white fade
+                        Colors.transparent, // fade to transparent
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
         bottomWidget,

@@ -6,6 +6,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/frequent_buy_card.dart';
+import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -154,6 +155,7 @@ class AllProductsScreen extends StatelessWidget {
               context,
             ).labelLarge!.copyWith(color: AppColors.textSecondary),
             prefix: const Icon(Icons.search),
+            contentPadding: EdgeInsets.only(top: 0.012 * getHeight(context)),
             boarderRadius: 12 * getResponsive(context),
           ),
 
@@ -200,33 +202,13 @@ class FrequentsBuyScreen extends StatelessWidget {
         ),
       ),
       SizedBox(height: 0.02 * getHeight(context)),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          MyCoButton(
-            onTap: () {},
-            title: 'Reset Cart',
-            width: 0.4 * getWidth(context),
-            height: 0.045 * getHeight(context),
-            backgroundColor: AppTheme.getColor(context).surface,
-            textStyle: AppTheme.getTextStyle(context).headlineSmall!.copyWith(
-              color: AppTheme.getColor(context).primary,
-            ),
-            boarderRadius: 30 * getResponsive(context),
-          ),
-          MyCoButton(
-            onTap: () {
-              context.pushNamed('order-summary');
-            },
-            title: 'Add Order',
-            width: 0.4 * getWidth(context),
-            height: 0.045 * getHeight(context),
-            boarderRadius: 30 * getResponsive(context),
-            textStyle: AppTheme.getTextStyle(context).headlineSmall!.copyWith(
-              color: AppTheme.getColor(context).onPrimary,
-            ),
-          ),
-        ],
+      SideBySideButtons(
+        button1Name: 'Reset Cart',
+        button2Name: 'Add Order',
+        onTap1: () {},
+        onTap2: () {
+          context.pushNamed('order-summary');
+        },
       ),
       SizedBox(height: 0.02 * getHeight(context)),
     ],

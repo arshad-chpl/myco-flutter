@@ -59,10 +59,25 @@ double getResponsiveOnWidth(context) {
   return MediaQuery.of(context).size.width * 0.001;
 }
 
-double getResponsiveText(context) {
-  if (Platform.isAndroid) {
-    return 0.8;
+// double getResponsiveText(context) {
+//   if (Platform.isAndroid) {
+//     return getWidth(context) > 600 ? 1.5 : 0.8;
+//   } else {
+//     return getWidth(context) > 600 ? 1.5 : 0.9;
+//   }
+// }
+
+double getResponsiveText(BuildContext context) {
+  double width = MediaQuery.of(context).size.width;
+
+  if (width >= 900) {
+    // Large tablets or landscape tablets
+    return 1.6;
+  } else if (width >= 600) {
+    // 7-inch tablets or small tablets
+    return 1.4;
   } else {
+    // Mobile devices
     return 0.9;
   }
 }

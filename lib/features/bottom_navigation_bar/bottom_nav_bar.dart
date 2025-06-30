@@ -26,6 +26,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     child: BlocBuilder<BottomNavigationBarBloc, BottomNavigationBarState>(
       builder: (context, state) => Scaffold(
         backgroundColor: AppTheme.getColor(context).surface,
+        // backgroundColor: Colors.grey,
         body: screens[state.currentIndex],
         extendBody: true,
         floatingActionButton: FloatingActionButton(
@@ -47,8 +48,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
           alignment: Alignment.bottomCenter,
           children: [
             CustomPaint(
-              size: Size(double.infinity, 0.08 * getHeight(context)),
-              painter: RPSCustomPainter(),
+              size: Size(double.infinity, 0.09 * getHeight(context)),
+              // painter: RPSCustomPainter(),
+              painter: BNBCustomPainter(),
             ),
             Row(
               children: [
@@ -70,7 +72,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 ),
                 SizedBox(width: 0.07 * getWidth(context)),
                 Padding(
-                  padding: EdgeInsets.only(top: 0.03 * getHeight(context)),
+                  padding: EdgeInsets.only(top: 0.04 * getHeight(context)),
                   child: CustomText(
                     'Menu',
                     color: AppTheme.getColor(context).onSurfaceVariant,

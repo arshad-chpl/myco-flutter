@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:myco_flutter/core/router/app_router.dart';
-import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
+import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -23,7 +22,11 @@ class OrderSummaryPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Text('Order Summary'),
-          const CustomText('Order Summary', fontWeight: FontWeight.w600),
+          CustomText(
+            'Order Summary',
+            fontSize: 20 * getResponsiveText(context),
+            fontWeight: FontWeight.w700,
+          ),
           CustomText(
             'Mukund Madhav',
             fontSize: 18 * getResponsiveText(context),
@@ -343,37 +346,13 @@ class OrderSummaryPage extends StatelessWidget {
                     textStyle: AppTheme.getTextStyle(context).headlineSmall!
                         .copyWith(color: AppTheme.getColor(context).onPrimary),
                   )
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      MyCoButton(
-                        onTap: () {
-                          context.pushNamed('all-distributor');
-                        },
-                        title: 'Add More',
-                        width: 0.4 * getWidth(context),
-                        height: 0.04 * getHeight(context),
-                        backgroundColor: AppColors.backgroundPrimary,
-                        textStyle: AppTheme.getTextStyle(context).headlineSmall!
-                            .copyWith(
-                              color: AppTheme.getColor(context).primary,
-                            ),
-                        boarderRadius: 30 * getResponsive(context),
-                      ),
-                      MyCoButton(
-                        onTap: () {
-                          context.pushNamed('order-history');
-                        },
-                        title: 'Place Order',
-                        width: 0.4 * getWidth(context),
-                        height: 0.04 * getHeight(context),
-                        boarderRadius: 30 * getResponsive(context),
-                        textStyle: AppTheme.getTextStyle(context).headlineSmall!
-                            .copyWith(
-                              color: AppTheme.getColor(context).onPrimary,
-                            ),
-                      ),
-                    ],
+                : SideBySideButtons(
+                    button1Name: 'Add More',
+                    button2Name: 'Place Order',
+                    onTap1: () {},
+                    onTap2: () {
+                      context.pushNamed('order-history');
+                    },
                   ),
             SizedBox(height: 0.02 * getHeight(context)),
           ],
