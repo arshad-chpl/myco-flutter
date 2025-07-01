@@ -186,6 +186,7 @@ class _MyCoTextfieldState extends State<MyCoTextfield> {
             hintText: widget.hintText,
             floatingLabelBehavior: widget.floatingLabelBehavior,
             typingtextStyle: widget.typingtextStyle,
+            textAlignment: widget.textAlignment,
           );
   }
 }
@@ -277,7 +278,7 @@ class TextfieldFormTablet extends StatelessWidget {
     focusNode: focusNode,
     autofocus: autoFocus ?? false,
     maxLength: maxLenght,
-    textAlign: textAlignment ?? TextAlign.center,
+    textAlign: textAlignment ?? TextAlign.start,
     inputFormatters: inputFormater,
     decoration: InputDecoration(
       floatingLabelBehavior: floatingLabelBehavior,

@@ -5,11 +5,25 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/circular_and_discussion.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_department_container.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_myteam%20(1).dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_section.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_slider.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_timer.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_upcomingcelebrationcard.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/dashboard_app_bar.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/moments_section.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/myTeamCard.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/my_team_section.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/quick_action_section.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/timerAndSlider.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/upcoming_celebration_section.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/your_department_section.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_shadow_container.dart';
+import 'package:myco_flutter/widgets/custom_stepper.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class DashBoardPage extends StatelessWidget {
@@ -30,81 +44,11 @@ class DashBoardPage extends StatelessWidget {
             // AppBar
             DashboardAppBar(),
 
-            BorderContainerWraper(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText('text'),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomTimer(
-                        timerHeight: 0.43 * getWidth(context),
-                        timerWidth: 0.43 * getWidth(context),
-                        maxMinutes: 10,
-                        minutesPerSegment: 2,
-                        strokeWidth: 25,
-                        sectionGap: 2,
-                        primaryColor: [
-                          AppTheme.getColor(context).primary,
-                          AppTheme.getColor(context).secondary,
-                        ],
-                        backgroundColor: AppColors.white,
-                        colorRanges: [
-                          ColorRange(4, 6, AppColors.spanishYellow),
-                          ColorRange(1, 2, Color(0xff2F648E)),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 8,
-                        children: [
-                          // CustomText('text'),
-                          // CustomText('text'),
-                          MyCoButton(
-                            title: 'Punch Out ',
-                            onTap: () {},
-                            height: 0.18 * getWidth(context),
-                            width: 0.4 * getWidth(context),
-                            textStyle: TextStyle(
-                              fontFamily: Util.instance.getFontFamily(
-                                FontWeight.w900,
-                              ),
-                            ),
-                            backgroundColor: AppTheme.getColor(
-                              context,
-                            ).secondary,
-                            isShadowTopLeft: true,
-                            wantBorder: false,
-                          ),
-                          MyCoButton(
-                            onTap: () {},
-                            title: 'My \nTimecard',
-                            image: SvgPicture.asset(AppAssets.timeCardBtn),
-                            spacing: 50 * getResponsiveOnWidth(context),
-                            imagePosition: AxisDirection.right,
-                            height: 0.18 * getWidth(context),
-                            width: 0.4 * getWidth(context),
-                            textStyle: AppTheme.getTextStyle(context)
-                                .headlineLarge
-                                ?.copyWith(
-                                  fontFamily: Util.instance.getFontFamily(
-                                    FontWeight.w500,
-                                  ),
-                                  fontSize: 22 * getResponsiveText(context),
-                                  color: AppTheme.getColor(context).onPrimary,
-                                ),
-                            backgroundColor: AppTheme.getColor(context).primary,
-                            isShadowTopLeft: true,
-                            wantBorder: false,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            // Body content
+            Expanded(
+              child: getWidth(context) > 600
+                  ? _tabview(context)
+                  : _mobileView(context),
             ),
           ],
         ),
@@ -112,98 +56,71 @@ class DashBoardPage extends StatelessWidget {
     ),
   );
 
-  // Widget TextPreview(BuildContext context) {
-  //   return Column(
-  //     children: [
-  //       Text(
-  //         'Hello World!',
-  //         style: TextStyle(
-  //           fontSize: 24,
-  //           fontFamily: getFontFamily(FontWeight.w100),
-  //         ),
-  //       ),
-  //       Text(
-  //         'Hello World!',
-  //         style: TextStyle(
-  //           fontSize: 24,
-  //           fontFamily: getFontFamily(FontWeight.w200),
-  //         ),
-  //       ),
-  //       Text(
-  //         'Hello World!',
-  //         style: TextStyle(
-  //           fontSize: 24,
-  //           fontFamily: getFontFamily(FontWeight.w300),
-  //         ),
-  //       ),
-  //       Text(
-  //         'Hello World!',
-  //         style: TextStyle(
-  //           fontSize: 24,
-  //           fontFamily: getFontFamily(FontWeight.w400),
-  //         ),
-  //       ),
-  //       Text(
-  //         'Hello World!',
-  //         style: TextStyle(
-  //           fontSize: 24,
-  //           fontFamily: getFontFamily(FontWeight.w500),
-  //         ),
-  //       ),
-  //       Text(
-  //         'Hello World!',
-  //         style: TextStyle(
-  //           fontSize: 24,
-  //           fontFamily: getFontFamily(FontWeight.w600),
-  //         ),
-  //       ),
-  //       Text(
-  //         'Hello World!',
-  //         style: TextStyle(
-  //           fontSize: 24,
-  //           fontFamily: getFontFamily(FontWeight.w700),
-  //         ),
-  //       ),
-  //       Text(
-  //         'Hello World!',
-  //         style: TextStyle(
-  //           fontSize: 24,
-  //           fontFamily: getFontFamily(FontWeight.w800),
-  //         ),
-  //       ),
-  //       Text(
-  //         'Hello World!',
-  //         style: TextStyle(
-  //           fontSize: 24,
-  //           fontFamily: getFontFamily(FontWeight.w900),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
+  Widget _tabview(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              spacing: 16,
+              children: [
+                // timer and slider section
+                timerAndSlider(context),
 
-  String getFontFamily(FontWeight fontWeight) {
-    switch (fontWeight) {
-      case FontWeight.w100:
-        return 'Gilroy-Thin';
-      case FontWeight.w200:
-        return 'Gilroy-UltraLight';
-      case FontWeight.w300:
-        return 'Gilroy-Light';
-      case FontWeight.w400:
-        return 'Gilroy-Regular';
-      case FontWeight.w500:
-        return 'Gilroy-Medium';
-      case FontWeight.w600:
-        return 'Gilroy-SemiBold';
-      case FontWeight.w700:
-        return 'Gilroy-Bold';
-      case FontWeight.w800:
-        return 'Gilroy-ExtraBold';
-      case FontWeight.w900:
-        return 'Gilroy-Heavy';
-      default:
-        return 'Gilroy-Regular';
-    }
+                // Circulars and discussion section
+                CircularAndDiscussion(),
+                // My Team Section
+                MyTeamSection(),
+// Your Department Section 
+                YourDepartmentSection(),
+                MomentsSection(),
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // Quick Access Section
+                QuickActionSection(),
+
+                // Upcoming Celebrations Section
+                UpcomingCelebrationSection(),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _mobileView(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        spacing: 16,
+        children: [
+          // timer and slider section
+          timerAndSlider(context),
+
+          // Circulars and discussion section
+          CircularAndDiscussion(),
+          // My Team Section
+          MyTeamSection(),
+          
+          // Quick Access Section
+           QuickActionSection(),
+
+          // Upcoming Celebrations Section
+          UpcomingCelebrationSection(),
+
+          //Your Department Section 
+          YourDepartmentSection(),
+
+          // Moments Section
+          MomentsSection(),
+        ],
+      ),
+    );
   }
 }

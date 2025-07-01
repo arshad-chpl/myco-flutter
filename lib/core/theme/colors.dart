@@ -39,4 +39,40 @@ class AppColors {
   static const Color textGray = Color(0xFF475467);
   static const Color lightPurple = Color(0xFFF4F3FF);
   static const Color gray = Color(0xFF98A2B3);
+  static const Color containerHigh = Color(0xFFDCEFFF);
+
+  //================================================================
+  // Dark Mode Colors
+  //================================================================
+
+  // Primary and Secondary Colors
+  static const Color darkprimary = Color(0xFF60A5FA); // Lighter blue variant
+  static const Color darksecondary = Color(
+    0xFF2FBBA4,
+  ); // Can stay the same or use a lighter teal
+  static const Color darkmyCoCyan = Color(
+    0xFF5EEAD4,
+  ); // Softer cyan for dark BG
+  static const Color darkbackgroundPrimary = Color(
+    0xFF0D1117,
+  ); // Very dark background (GitHub-like)
+
+  // Text
+  static const Color darktextPrimary = Color(
+    0xFFF9FAFB,
+  ); // Light near-white text
+  static const Color darktextSecondary = Color(
+    0xFFCBD5E1,
+  ); // Light gray-blue for subtext
+
+  // Surface
+  static const Color darksurfacePrimary = Color(
+    0xFF1E293B,
+  ); // Slightly elevated dark surface
+
+  // Border
+  static const Color darktextfieldBorder = Color(
+    0xFF64748B,
+  ); // Muted blue-gray border
+  static const Color containerGrey = Color(0xFFF9FAFB);
 }
