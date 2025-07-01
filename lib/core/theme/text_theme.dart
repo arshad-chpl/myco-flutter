@@ -47,7 +47,7 @@ class AppTextTheme {
 
   static TextStyle _gilroyStyle(FontWeight weight, double size) {
     return TextStyle(
-      fontFamily: Util.instance.getFontFamily(weight),
+      fontFamily: Util.getFontFamily(weight),
       fontSize: size,
     );
   }

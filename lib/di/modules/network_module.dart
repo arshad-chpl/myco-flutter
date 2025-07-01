@@ -20,21 +20,18 @@ Future<void> initNetworkModule(GetIt sl) async {
   final companyId = await preference.getCompanyId();
   final userMobile = await preference.getUserMobile();
   var baseUrl = await preference.getBaseUrl();
-  final password = Util.instance.getCurrentPassword(
+  final password = Util.getCurrentPassword(
     companyId.toString(),
     userId,
     userMobile.toString(),
   );
   final credentials = base64Encode(utf8.encode('$userId:$password'));
-sl.registerLazySingleton(() => createDio(credentials));
+  sl.registerLazySingleton(() => createDio(credentials));
   sl.registerLazySingleton(() => ApiClient(sl()));
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(Connectivity()));
 
- 
-
-
   _registerOrReplace<ApiClient>(
-    ApiClient(sl(),baseUrl: baseUrl??''),
+    ApiClient(sl(), baseUrl: baseUrl ?? ''),
     sl,
     instanceName: VariableBag.masterAPICall,
   );
