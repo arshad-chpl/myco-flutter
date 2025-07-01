@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -19,7 +20,6 @@ class CustomSection extends StatelessWidget {
   final bool? isShadow;
   final bool? isBorder;
   final bool? hasViewMoreButton;
-  final bool? wantCount;
   final VoidCallback? onViewMore;
   final TextStyle? titleStyle;
   const CustomSection({
@@ -38,22 +38,21 @@ class CustomSection extends StatelessWidget {
     this.isShadow = false,
     this.isBorder = false,
     this.hasViewMoreButton = false,
-    this.wantCount = false,
     this.onViewMore,
     this.titleStyle,
   });
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: padding ?? const EdgeInsets.all(16.0),
+    padding:
+        padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     margin: margin,
     decoration: BoxDecoration(
-      color: backgroundColor ?? Theme.of(context).colorScheme.surface,
+      color: backgroundColor ?? AppTheme.getColor(context).surface,
       borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
       border: isBorder == true
           ? Border.all(
-              color:
-                  borderColor ?? Theme.of(context).colorScheme.outlineVariant,
+              color: borderColor ?? AppTheme.getColor(context).outlineVariant,
               width: borderWidth ?? 1.0,
             )
           : null,
@@ -61,7 +60,7 @@ class CustomSection extends StatelessWidget {
           ? [
               BoxShadow(
                 color: Util.applyOpacity(
-                  Theme.of(context).colorScheme.onSurface,
+                  AppTheme.getColor(context).onSurface,
                   0.1,
                 ),
                 blurRadius: 5.0,
@@ -71,37 +70,69 @@ class CustomSection extends StatelessWidget {
           : [],
     ),
     child: Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
+              spacing: 10,
               children: [
-                CustomText(
-                  title,
-                  fontSize: 16 * getResponsiveText(context),
-                  fontWeight: FontWeight.w600,
+                SizedBox(
+                  width: 160,
+                  child: CustomText(
+                    title,
+                    fontSize: 16 * getDashboardResponsiveText(context),
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                const SizedBox(width: 8.0),
+
+                // Display icon if provided
                 if (icon != null) icon!,
-                if (wantCount == true && count != null)
+
+                // Display count if provided
+                if (count != null)
                   Container(
                     padding: EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: AppTheme.getColor(context).secondary,
+                      color: Util.applyOpacity(
+                        AppTheme.getColor(context).secondary,
+                        0.15,
+                      ),
                       borderRadius: BorderRadius.circular(4.0),
                     ),
                     child: CustomText(
-                      '($count)',
-                      fontSize: 14 * getResponsiveText(context),
+                      '$count',
+                      fontSize: 12 * getDashboardResponsiveText(context),
                       fontWeight: FontWeight.w500,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      color: AppColors.spanishYellow,
                     ),
                   ),
               ],
             ),
             if (hasViewMoreButton == true)
-              TextButton(onPressed: onViewMore, child: const Text('View More')),
+              GestureDetector(
+                onTap: onViewMore,
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                    vertical: 6.0,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppTheme.getColor(context).surfaceContainerHigh,
+
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+
+                  child: CustomText(
+                    'View All',
+                    fontSize: 13 * getDashboardResponsiveText(context),
+                    fontWeight: FontWeight.w500,
+                    color: AppTheme.getColor(context).secondary,
+                  ),
+                ),
+              ),
           ],
         ),
         if (subtitle != null)
@@ -109,7 +140,7 @@ class CustomSection extends StatelessWidget {
             padding: const EdgeInsets.only(top: 4.0),
             child: CustomText(
               subtitle!,
-              fontSize: 12 * getResponsiveText(context),
+              fontSize: 12 * getDashboardResponsiveText(context),
               fontWeight: FontWeight.w500,
             ),
           ),

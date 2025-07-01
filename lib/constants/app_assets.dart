@@ -14,10 +14,14 @@ class AppAssets {
   static const String googleSignIn = '$imagesPath/google_sign_in.png';
   static const String noCompany = '$imagesPath/no_company.png';
   static const String searchCompany = '$imagesPath/search_company.png';
+  static const String mycobanner = '$imagesPath/mycobanner.png';
+  static const String mycobanner1 = '$imagesPath/mycobanner1.png';
 
   //Svgs
   static const String timeCardBtn = '$svgsPath/timeCardBtn.svg';
   static const String punchIn = '$svgsPath/punchIn.svg';
+  static const String scanQR = '$svgsPath/scanQR.svg';
+  static const String refresh = '$svgsPath/refresh.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';

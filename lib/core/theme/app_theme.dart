@@ -29,6 +29,8 @@ class AppTheme {
       secondary: AppColors.secondary, //0xFF2FBBA4
 
       surface: AppColors.backgroundPrimary, //0xFFFAFAFF
+      surfaceContainer: AppColors.lightTeal, //0xFFEEF7FD
+      surfaceContainerHigh: AppColors.containerHigh,
       error: AppColors.error, //0xFFE53935
       onPrimary: AppColors.white, //0xFFFFFFFF
       onSecondary: AppColors.white, //0xFFFFFFFF
@@ -51,15 +53,20 @@ class AppTheme {
       foregroundColor: AppColors.white,
       elevation: 0,
     ),
-    colorScheme: ColorScheme.dark(
-      primary: AppColors.black,
-      secondary: AppColors.secondary,
-      surface: Colors.grey[850]!,
-      error: AppColors.error,
-      onPrimary: AppColors.white,
-      onSecondary: AppColors.black,
-      onSurface: Colors.white70,
-      onError: Colors.white,
+    colorScheme: const ColorScheme.dark(
+      primary: AppColors.primary, //0xFF2F648E
+      secondary: AppColors.secondary, //0xFF2FBBA4
+
+      surface: AppColors.darkbackgroundPrimary, //0xFFFAFAFF
+      surfaceContainer: AppColors.lightTeal, //0xFFEEF7FD
+      error: AppColors.error, //0xFFE53935
+      onPrimary: AppColors.white, //0xFFFFFFFF
+      onSecondary: AppColors.white, //0xFFFFFFFF
+      onSurface: AppColors.darktextPrimary, //0xFF101828
+      onSurfaceVariant: AppColors.darktextSecondary, //0xFF475467
+      onError: AppColors.white, //0xFFFFFFFF
+      outline: AppColors.darktextfieldBorder, //0xFF98A2B3
+      outlineVariant: AppColors.textGrey200, //0xFFEAECF0
     ),
   );
 }
