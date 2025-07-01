@@ -36,5 +36,7 @@ class AppColors {
   static const Color textGrey200 = Color(0xFFEAECF0);
   static const Color textBorder300 = Color(0xFFD0D5DD);
   static const Color containerGrey = Color(0xFFF9FAFB);
+  static const Color lightBlue = Color(0xFFDEE5EF);
+  static const Color littleDarkBlue = Color(0xFF5B84A6);
 
 }

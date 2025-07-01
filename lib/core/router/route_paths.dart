@@ -17,4 +17,5 @@ class RoutePaths {
   static const String editOrder = '/edit-order';
   static const String distributorVisitor = '/distributor-visitor';
   static const String noOrder = '/no-order';
+  static const String leave = '/leave';
 }

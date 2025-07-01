@@ -8,6 +8,7 @@ import 'package:myco_flutter/features/company_selector/presentation/bloc/company
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
@@ -22,7 +23,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.login,
+    initialLocation: RoutePaths.leave,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -53,6 +54,11 @@ class AppRouter {
           child: const SelectCompanyPage(),
         ),
       ),
+      GoRoute(
+        path: RoutePaths.leave,
+        name: 'leave',
+        builder: (context, state) => const LeaveScreen(),
+      ),
       // GoRoute(
       //   path: RoutePaths.language,
       //   name: 'language',
@@ -76,8 +82,8 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-      ), 
-       GoRoute(
+      ),
+      GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
