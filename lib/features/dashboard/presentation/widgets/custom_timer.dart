@@ -92,8 +92,8 @@ class _CustomTimerState extends State<CustomTimer> {
         children: [
           // Outer shadow circle
           Container(
-            width: widget.timerWidth * 0.8,
-            height: widget.timerHeight * 0.8,
+            width: widget.timerWidth,
+            height: widget.timerHeight,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               boxShadow: [BoxShadow(color: Color(0xFF2FBBA4), blurRadius: 25)],
@@ -102,42 +102,36 @@ class _CustomTimerState extends State<CustomTimer> {
 
           // Inner white circle
           Container(
-            width: widget.timerWidth * 0.45,
-            height: widget.timerHeight * 0.45,
-            decoration: const BoxDecoration(
+            width: widget.timerWidth * 0.47,
+            height: widget.timerHeight * 0.47,
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
                   color: AppColors.white,
-                  spreadRadius: 14,
-                  blurRadius: 15,
+                  spreadRadius: widget.timerWidth * 0.12,
+                  blurRadius: widget.timerWidth * 0.15,
                 ),
               ],
             ),
           ),
 
           // Timer arc and inner shadow
-          Padding(
-            padding: EdgeInsets.all(safeStrokeWidth / 2),
-            child: CustomPaint(
-              size: Size(
-                widget.timerWidth - safeStrokeWidth,
-                widget.timerHeight - safeStrokeWidth,
-              ),
-              painter: _CustomTimerPainter(
-                maxMinutes: widget.maxMinutes,
-                currentMinutes: currentMinutes,
-                minutesPerSegment: widget.minutesPerSegment,
-                strokeWidth: safeStrokeWidth,
-                sectionGap: widget.sectionGap,
-                backgroundColor: widget.backgroundColor,
-                primaryColor: widget.primaryColor,
-                colorRanges: widget.colorRanges,
-              ),
-              foregroundPainter: InnerShadowPainter(
-                strokeWidth: 5,
-                shadowColor: Colors.black26,
-              ),
+          CustomPaint(
+            size: Size(widget.timerWidth, widget.timerHeight),
+            painter: _CustomTimerPainter(
+              maxMinutes: widget.maxMinutes,
+              currentMinutes: currentMinutes,
+              minutesPerSegment: widget.minutesPerSegment,
+              strokeWidth: safeStrokeWidth,
+              sectionGap: widget.sectionGap,
+              backgroundColor: widget.backgroundColor,
+              primaryColor: widget.primaryColor,
+              colorRanges: widget.colorRanges,
+            ),
+            foregroundPainter: InnerShadowPainter(
+              strokeWidth: 5,
+              shadowColor: Colors.black26,
             ),
           ),
 
@@ -189,16 +183,14 @@ class _CustomTimerPainter extends CustomPainter {
     final totalAvailableAngle = 360.0 - totalGapAngle;
     final anglePerMinute = totalAvailableAngle / maxMinutes;
 
-    final backgroundPaint =
-        Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = strokeWidth
-          ..color = backgroundColor;
+    final backgroundPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth
+      ..color = backgroundColor;
 
-    final colorPaint =
-        Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = strokeWidth;
+    final colorPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth;
 
     double globalStartAngle = -90;
 
@@ -291,10 +283,10 @@ class InnerShadowPainter extends CustomPainter {
     final innerRadius = outerRadius - strokeWidth;
     final center = size.center(Offset.zero);
 
-    final outerPath =
-        Path()..addOval(Rect.fromCircle(center: center, radius: outerRadius));
-    final innerPath =
-        Path()..addOval(Rect.fromCircle(center: center, radius: innerRadius));
+    final outerPath = Path()
+      ..addOval(Rect.fromCircle(center: center, radius: outerRadius));
+    final innerPath = Path()
+      ..addOval(Rect.fromCircle(center: center, radius: innerRadius));
     final ringPath = Path.combine(
       PathOperation.difference,
       outerPath,

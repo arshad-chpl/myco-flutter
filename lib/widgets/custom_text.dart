@@ -31,10 +31,9 @@ class CustomText extends StatelessWidget {
     maxLines: maxLines,
     overflow: overflow,
     style: TextStyle(
-      fontFamily: Util.instance.getFontFamily(fontWeight),
+      fontFamily: Util.getFontFamily(fontWeight),
       fontSize: fontSize,
       color: color ?? AppTheme.getColor(context).onSurface,
-      decoration: decoration,
     ),
   );
 }

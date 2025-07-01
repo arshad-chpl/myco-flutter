@@ -89,6 +89,7 @@ flutter:
     - .env
     - assets/images/
     - assets/svgs/
+    - assets/gifs/
     - assets/dashboard/
     - assets/splash/myco_splash.json
     - assets/take_order/
