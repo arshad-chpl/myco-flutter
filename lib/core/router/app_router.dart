@@ -8,6 +8,9 @@ import 'package:myco_flutter/features/company_selector/presentation/bloc/company
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
+import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
+import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
@@ -22,7 +25,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.login,
+    initialLocation: RoutePaths.payslip,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -76,8 +79,8 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-      ), 
-       GoRoute(
+      ),
+      GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
@@ -86,6 +89,23 @@ class AppRouter {
         path: RoutePaths.companySearch,
         name: 'companySearch',
         builder: (context, state) => const TermsAndConditions(),
+      ),
+      GoRoute(
+        path: RoutePaths.payslip,
+        name: 'payslip',
+        builder: (context, state) => const PayslipPage(),
+        routes: [
+          GoRoute(
+            path: RoutePaths.salaryBreakUp,
+            name: 'salary-break-up',
+            builder: (context, state) => const SalaryBreakUpPage(),
+          ),
+          GoRoute(
+            path: RoutePaths.payslipDetail,
+            name: 'payslip-detail',
+            builder: (context, state) => const PayslipDetail(),
+          ),
+        ],
       ),
       // Add all modular routes here
       // ...authRoutes,
