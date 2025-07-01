@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 class AllDistributorPage extends StatelessWidget {
@@ -10,46 +11,47 @@ class AllDistributorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppTheme.getColor(context).surface,
     appBar: AppBar(
-      backgroundColor: AppTheme.getColor(context).surface,
       leading: const BackButton(),
-      title: const Text('All Distributor'),
+      centerTitle: false,
+      title: CustomText(
+        'All Distributor',
+        fontSize: 20 * getResponsiveText(context),
+        fontWeight: FontWeight.w700,
+      ),
     ),
 
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * getWidth(context),
-        vertical: 0.02 * getHeight(context),
+        // vertical: 0.02 * getHeight(context),
       ),
       child: Column(
         children: [
           MyCoTextfield(
             prefix: const Icon(Icons.search),
             hintText: 'Search',
-
+            hintTextStyle: TextStyle(color: AppTheme.getColor(context).outline),
             border: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.black38),
+              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
               borderRadius: BorderRadius.circular(12 * getResponsive(context)),
             ),
           ),
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.015 * getHeight(context)),
           Expanded(
             child: ListView.separated(
               itemCount: 3,
               itemBuilder: (context, index) => InkWell(
                 onTap: () => context.pushNamed('distributor-visitor'),
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => DistributorVisitorPage(),
-                //   ),
-                // ),
                 child: DistributorCard(
-                  headerHeight: 0.05 * getHeight(context),
+                  headerHeight: 0.045 * getHeight(context),
                   title: 'Mukund',
                   bottomWidget: Padding(
-                    padding: EdgeInsets.all(8 * getResponsive(context)),
+                    padding: EdgeInsets.only(
+                      left: 0.02 * getWidth(context),
+                      right: 0.02 * getWidth(context),
+                      bottom: 0.01 * getHeight(context),
+                    ),
                     child: Column(
                       children: [
                         getCommonRow(
@@ -68,6 +70,7 @@ class AllDistributorPage extends StatelessWidget {
                           context,
                           icon: Icons.call,
                           title: '+919909945983',
+                          decoration: TextDecoration.underline,
                         ),
                       ],
                     ),
@@ -87,15 +90,23 @@ class AllDistributorPage extends StatelessWidget {
     BuildContext context, {
     required IconData icon,
     required String title,
+    TextDecoration? decoration,
     bool isRadio = false,
   }) => Row(
     children: [
-      Icon(icon),
+      Icon(icon, size: 20 * getResponsive(context)),
       SizedBox(width: 0.01 * getWidth(context)),
-      Text(title, style: TextStyle(fontSize: 16 * getResponsiveText(context))),
+      CustomText(
+        title,
+        fontSize: 14 * getResponsiveText(context),
+        decoration: decoration,
+      ),
       const Spacer(),
       isRadio
-          ? Radio(value: true, groupValue: '', onChanged: (value) {})
+          ? Transform.scale(
+              scale: 0.7,
+              child: Radio(value: true, groupValue: '', onChanged: (value) {}),
+            )
           : const SizedBox.shrink(),
     ],
   );

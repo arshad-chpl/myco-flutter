@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 
 class Util {
   // Private constructor
@@ -11,6 +10,7 @@ class Util {
 
   // Getter to access the singleton
   static Util get instance => _instance;
+
   /// Method to generate password
   String getCurrentPassword(
     String societyId,
@@ -31,7 +31,6 @@ class Util {
   /// opacity should be between 0.0 and 1.0
   Color applyOpacity(Color color, double opacity) =>
       color.withAlpha((opacity * 255).round());
-
 
   // Method to convert FontWeight to String
   String getFontFamily(FontWeight fontWeight) {
@@ -88,5 +87,5 @@ class Util {
     _ => 'Unknown', // Return a non-null String
   };
 }
-String getFontFamily(FontWeight weight) => Util.instance.getFontFamily(weight);
 
+String getFontFamily(FontWeight weight) => Util.instance.getFontFamily(weight);

@@ -16,8 +16,9 @@ class AppTheme {
     splashColor: AppColors.splashBg,
     dividerColor: AppColors.textfieldBorder,
     appBarTheme: AppBarTheme(
+      surfaceTintColor: Colors.transparent,
       backgroundColor: AppColors.backgroundPrimary,
-      foregroundColor: AppColors.white,
+      foregroundColor: AppColors.black,
       elevation: 0,
       titleTextStyle: AppTextTheme.getTextTheme(
         context,

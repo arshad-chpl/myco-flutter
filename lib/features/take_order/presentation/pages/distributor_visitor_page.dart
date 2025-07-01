@@ -5,8 +5,11 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
+import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
+import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 class DistributorVisitorPage extends StatelessWidget {
@@ -17,9 +20,10 @@ class DistributorVisitorPage extends StatelessWidget {
     backgroundColor: AppTheme.getColor(context).surface,
     appBar: AppBar(
       backgroundColor: AppTheme.getColor(context).surface,
-      title: Text(
+      title: CustomText(
         'Mahakali Tractors (RT43575)',
-        style: TextStyle(fontSize: 20 * getResponsiveText(context)),
+        fontSize: 20 * getResponsiveText(context),
+        fontWeight: FontWeight.w700,
       ),
     ),
     body: SingleChildScrollView(
@@ -29,11 +33,13 @@ class DistributorVisitorPage extends StatelessWidget {
         child: Column(
           children: [
             DistributorCard(
+              headerHeight: 0.055 * getHeight(context),
               title: 'No Name',
+              isHeaderIconEnabled: true,
               bottomWidget: Container(
                 padding: EdgeInsets.symmetric(
                   horizontal: 0.04 * getWidth(context),
-                  vertical: 0.02 * getHeight(context),
+                  vertical: 0.01 * getHeight(context),
                 ),
                 child: Column(
                   children: [
@@ -44,12 +50,11 @@ class DistributorVisitorPage extends StatelessWidget {
                           width: 0.04 * getWidth(context),
                         ),
                         SizedBox(width: 0.02 * getWidth(context)),
-                        Text(
+                        CustomText(
                           '+91 9909945983',
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            fontSize: 14 * getResponsiveText(context),
-                          ),
+                          decoration: TextDecoration.underline,
+                          fontSize: 14 * getResponsiveText(context),
+                          fontWeight: FontWeight.w600,
                         ),
                       ],
                     ),
@@ -63,11 +68,10 @@ class DistributorVisitorPage extends StatelessWidget {
                         ),
                         SizedBox(width: 0.02 * getWidth(context)),
                         Expanded(
-                          child: Text(
+                          child: CustomText(
                             'A-809 World Trade Tower (WTT, Nr BMW Showroom, Sarkhej Gandhinagar Hwy, Makarba, Ahmedabad, Sarkhej-Okaf, Gujarat 380051, India',
-                            style: TextStyle(
-                              fontSize: 14 * getResponsiveText(context),
-                            ),
+                            fontSize: 12 * getResponsiveText(context),
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
@@ -79,17 +83,15 @@ class DistributorVisitorPage extends StatelessWidget {
                         Image.asset(
                           'assets/take_order/geo_location.png',
                           // height: 0.01 * getHeight(context),
-                          width: 0.08 * getWidth(context),
+                          width: 0.06 * getWidth(context),
                         ),
                         SizedBox(width: 0.01 * getWidth(context)),
-                        Text(
+                        CustomText(
                           'Get Direction',
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            fontSize: 12 * getResponsiveText(context),
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          decoration: TextDecoration.underline,
+                          fontSize: 12 * getResponsiveText(context),
+                          color: AppTheme.getColor(context).primary,
+                          fontWeight: FontWeight.w500,
                         ),
                       ],
                     ),
@@ -98,7 +100,7 @@ class DistributorVisitorPage extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: 0.02 * getHeight(context)),
+            SizedBox(height: 0.01 * getHeight(context)),
             BlocBuilder<TakeOrderBloc, TakeOrderState>(
               builder: (context, state) {
                 final bool isRunning = state is VisitRunning;
@@ -121,10 +123,11 @@ class DistributorVisitorPage extends StatelessWidget {
 
                 return Container(
                   padding: EdgeInsets.all(12 * getResponsive(context)),
-                  width: 0.9 * getWidth(context),
-                  // height: 0.2 * getHeight(context),
+                  width: 0.83 * getWidth(context),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    border: Border.all(
+                      color: AppTheme.getColor(context).outline,
+                    ),
                     color: AppTheme.getColor(context).onPrimary,
                     borderRadius: BorderRadius.circular(
                       12 * getResponsive(context),
@@ -158,12 +161,23 @@ class DistributorVisitorPage extends StatelessWidget {
                           }
                         },
                         title: isRunning ? 'Stop' : 'Start',
-                        width: 0.25 * getWidth(context),
-                        height: 0.04 * getHeight(context),
+                        width: 0.2 * getWidth(context),
+                        height: 0.035 * getHeight(context),
                         backgroundColor: AppTheme.getColor(context).secondary,
                         boarderRadius: 30 * getResponsive(context),
                         borderColor: AppTheme.getColor(context).secondary,
                         isShadowBottomLeft: true,
+                        image: isRunning
+                            ? Image.asset(
+                                'assets/take_order/stop-button.png',
+                                width: 0.05 * getWidth(context),
+                              )
+                            : Image.asset(
+                                'assets/take_order/play-button.png',
+                                width: 0.03 * getWidth(context),
+                              ),
+
+                        spacing: 3 * getResponsive(context),
                       ),
 
                       if (state is VisitRunning || state is VisitStopped)
@@ -171,17 +185,19 @@ class DistributorVisitorPage extends StatelessWidget {
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
+                                  SizedBox(width: 0.08 * getWidth(context)),
+                                  CustomText(
+                                    textAlign: TextAlign.center,
                                     formatted,
-                                    style: TextStyle(
-                                      fontSize: 16 * getResponsiveText(context),
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    fontSize: 14 * getResponsiveText(context),
+                                    fontWeight: FontWeight.bold,
+                                    color: AppTheme.getColor(context).primary,
                                   ),
                                   IconButton(
                                     icon: Icon(
                                       Icons.refresh,
                                       color: AppTheme.getColor(context).primary,
+                                      size: 20 * getResponsive(context),
                                     ),
                                     onPressed: () {
                                       context.read<TakeOrderBloc>().add(
@@ -192,15 +208,14 @@ class DistributorVisitorPage extends StatelessWidget {
                                 ],
                               )
                             : const SizedBox.shrink(),
-
-                      SizedBox(height: 0.01 * getHeight(context)),
-                      Text(
+                      isRunning
+                          ? const SizedBox.shrink()
+                          : SizedBox(height: 0.01 * getHeight(context)),
+                      CustomText(
                         'Click on ${isRunning ? "Stop" : "Start"} Button to ${isRunning ? "End" : "Start"} your Visit',
-                        style: TextStyle(
-                          fontSize: 14 * getResponsiveText(context),
-                          color: AppColors.error,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        fontSize: 14 * getResponsiveText(context),
+                        color: AppColors.error,
+                        fontWeight: FontWeight.w600,
                       ),
                     ],
                   ),
@@ -216,10 +231,6 @@ class DistributorVisitorPage extends StatelessWidget {
                   imagePath: 'assets/take_order/place_order.png',
                   name: 'Place Order',
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => TakeOrderPage()),
-                    // );
                     context.pushNamed('take-order');
                   },
                 ),
@@ -228,12 +239,6 @@ class DistributorVisitorPage extends StatelessWidget {
                   imagePath: 'assets/take_order/order_history.png',
                   name: 'Order History',
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const OrderHistoryPage(),
-                    //   ),
-                    // );
                     context.pushNamed('order-history');
                   },
                 ),
@@ -242,12 +247,6 @@ class DistributorVisitorPage extends StatelessWidget {
                   imagePath: 'assets/take_order/no_order.png',
                   name: 'No Order',
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const NoOrderPage(),
-                    //   ),
-                    // );
                     context.pushNamed('no-order');
                   },
                 ),
@@ -255,11 +254,13 @@ class DistributorVisitorPage extends StatelessWidget {
             ),
             SizedBox(height: 0.02 * getHeight(context)),
             Container(
-              padding: EdgeInsets.all(12 * getResponsive(context)),
-              width: 0.9 * getWidth(context),
-              // height: 0.2 * getHeight(context),
+              padding: EdgeInsets.symmetric(
+                vertical: 8 * getResponsive(context),
+                horizontal: 12 * getResponsive(context),
+              ),
+              width: 0.83 * getWidth(context),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
+                border: Border.all(color: AppTheme.getColor(context).outline),
                 color: AppTheme.getColor(context).onPrimary,
                 borderRadius: BorderRadius.circular(
                   12 * getResponsive(context),
@@ -285,41 +286,54 @@ class DistributorVisitorPage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 0.02 * getHeight(context)),
-
+            SizedBox(height: 0.01 * getHeight(context)),
             DistributorCard(
+              headerHeight: 0.055 * getHeight(context),
               title: 'Distributor',
               isButton: true,
               buttonText: 'Change',
-              onTap: () {},
+              onTap: () {
+                context.pushNamed('all-distributor');
+              },
               bottomWidget: Padding(
-                padding: EdgeInsets.all(8 * getResponsive(context)),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8 * getResponsive(context),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Mukund (M77)',
-                          style: TextStyle(
-                            fontSize: 18 * getResponsiveText(context),
-                            fontWeight: FontWeight.bold,
+                    Container(
+                      padding: EdgeInsets.only(left: 0.01 * getWidth(context)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomText(
+                            'Mukund (M77)',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16 * getResponsiveText(context),
                           ),
-                        ),
-                        Radio(
-                          value: true,
-                          groupValue: '',
-                          onChanged: (value) {},
-                        ),
-                      ],
-                    ),
-                    Text(
-                      'Contact Person : Manish ( +91 7980239236 )',
-                      style: TextStyle(
-                        fontSize: 14 * getResponsiveText(context),
+                          Transform.scale(
+                            scale: 0.7,
+                            child: Radio(
+                              value: true,
+                              groupValue: '',
+                              onChanged: (value) {},
+                            ),
+                          ),
+                        ],
                       ),
                     ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 6.0 * getResponsive(context),
+                      ),
+                      child: CustomText(
+                        'Contact Person :  Manish ( +91 7980239236 )',
+                        fontSize: 14 * getResponsiveText(context),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(height: 0.01 * getHeight(context)),
                   ],
                 ),
               ),
@@ -333,12 +347,9 @@ class DistributorVisitorPage extends StatelessWidget {
   Future<dynamic> getEndVisitBottomSheet(
     BuildContext context, {
     required VoidCallback onTap,
-  }) => showModalBottomSheet(
-    shape: BeveledRectangleBorder(
-      borderRadius: BorderRadiusGeometry.circular(12 * getResponsive(context)),
-    ),
-    context: context,
-    builder: (context) => Container(
+  }) => getBottomSheet(
+    context,
+    Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12 * getResponsive(context)),
         color: AppTheme.getColor(context).onPrimary,
@@ -350,20 +361,18 @@ class DistributorVisitorPage extends StatelessWidget {
           SizedBox(height: 0.03 * getHeight(context)),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
-            child: Text(
+            child: CustomText(
               'Remark',
-              style: TextStyle(
-                fontSize: 14 * getResponsiveText(context),
-                fontWeight: FontWeight.bold,
-              ),
+              fontSize: 14 * getResponsiveText(context),
+              fontWeight: FontWeight.bold,
             ),
           ),
           // SizedBox(height: 0.01 * getHeight(context)),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
             decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: Colors.grey),
+              color: AppTheme.getColor(context).onPrimary,
+              border: Border.all(color: AppTheme.getColor(context).outline),
               borderRadius: BorderRadius.circular(12 * getResponsive(context)),
             ),
             padding: EdgeInsets.symmetric(
@@ -376,17 +385,19 @@ class DistributorVisitorPage extends StatelessWidget {
                   padding: EdgeInsets.only(top: 0.01 * getHeight(context)),
                   child: Image.asset(
                     'assets/take_order/message-edit.png',
-                    height: 0.025 * getHeight(context),
+                    height: 0.022 * getHeight(context),
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 0.01 * getWidth(context)),
                 Expanded(
                   child: TextFormField(
-                    maxLines: 5,
-                    minLines: 3,
-                    decoration: const InputDecoration(
+                    maxLines: 6,
+                    minLines: 4,
+                    decoration: InputDecoration(
                       hintText: 'Type Here',
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: TextStyle(
+                        color: AppTheme.getColor(context).outline,
+                      ),
                       border: InputBorder.none,
                     ),
                   ),
@@ -399,37 +410,14 @@ class DistributorVisitorPage extends StatelessWidget {
 
           Container(
             padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyCoButton(
-                  onTap: () => Navigator.pop(context),
-                  title: 'CLOSE',
-                  width: 0.4 * getWidth(context),
-                  height: 0.06 * getHeight(context),
-                  backgroundColor: AppTheme.getColor(context).onPrimary,
-                  boarderRadius: 30 * getResponsive(context),
-                  textStyle: const TextStyle(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                MyCoButton(
-                  onTap: onTap,
-                  title: 'END VISIT',
-                  width: 0.4 * getWidth(context),
-                  height: 0.06 * getHeight(context),
-                  backgroundColor: AppTheme.getColor(context).primary,
-                  boarderRadius: 30 * getResponsive(context),
-                  textStyle: const TextStyle(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            child: SideBySideButtons(
+              button1Name: 'CLOSE',
+              button2Name: 'END VISIT',
+              onTap1: () {},
+              onTap2: onTap,
             ),
           ),
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.03 * getHeight(context)),
         ],
       ),
     ),
@@ -438,34 +426,50 @@ class DistributorVisitorPage extends StatelessWidget {
   Future<dynamic> getVisitPurposeBottomSheet(
     BuildContext context, {
     required VoidCallback onTap,
-  }) => showModalBottomSheet(
-    shape: BeveledRectangleBorder(
-      borderRadius: BorderRadiusGeometry.circular(8 * getResponsive(context)),
-    ),
-    context: context,
-    builder: (context) => Container(
+  }) => getBottomSheet(
+    context,
+    Container(
       color: AppTheme.getColor(context).onPrimary,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 0.08 * getWidth(context),
-              vertical: 0.01 * getHeight(context),
-            ),
-            width: getWidth(context),
-            height: 0.05 * getHeight(context),
-            decoration: BoxDecoration(
-              color: AppTheme.getColor(context).primary,
-            ),
-            child: Text(
-              'Visit Purpose',
-              style: TextStyle(
-                color: AppColors.white,
-                fontSize: 24 * getResponsiveText(context),
-                fontWeight: FontWeight.w500,
+          Stack(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 0.08 * getWidth(context),
+                  vertical: 0.01 * getHeight(context),
+                ),
+                width: getWidth(context),
+                height: 0.05 * getHeight(context),
+                decoration: BoxDecoration(
+                  color: AppTheme.getColor(context).primary,
+                ),
+                child: CustomText(
+                  'Visit Purpose',
+                  color: AppTheme.getColor(context).onPrimary,
+                  fontSize: 20 * getResponsiveText(context),
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
+              // Inner shadow simulation using a white gradient
+              Positioned.fill(
+                child: IgnorePointer(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.white.withValues(alpha: 0.3), // top white fade
+                          Colors.transparent, // fade to transparent
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 0.02 * getHeight(context)),
           Container(
@@ -477,90 +481,64 @@ class DistributorVisitorPage extends StatelessWidget {
               preFixImage: 'assets/take_order/search-normal.png',
             ),
           ),
-          SizedBox(height: 0.02 * getHeight(context)),
 
           Container(
             padding: EdgeInsets.symmetric(horizontal: 0.02 * getWidth(context)),
             child: Column(
               children: [
                 RadioListTile(
+                  radioScaleFactor: 0.7,
                   value: true,
                   groupValue: 'groupValue',
                   onChanged: (value) {},
-                  title: Text(
+                  title: CustomText(
                     'Vendor Closed',
-                    style: TextStyle(
-                      fontSize: 20 * getResponsiveText(context),
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    fontSize: 18 * getResponsiveText(context),
+                    color: AppTheme.getColor(context).primary,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 RadioListTile(
+                  radioScaleFactor: 0.7,
+
                   value: true,
                   groupValue: 'groupValue',
                   onChanged: (value) {},
-                  title: Text(
+                  title: CustomText(
                     'Shop Closed',
-                    style: TextStyle(
-                      fontSize: 20 * getResponsiveText(context),
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    fontSize: 18 * getResponsiveText(context),
+                    color: AppTheme.getColor(context).primary,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 RadioListTile(
+                  radioScaleFactor: 0.7,
+
                   value: true,
                   groupValue: 'groupValue',
                   onChanged: (value) {},
-                  title: Text(
+                  title: CustomText(
                     'Approved',
-                    style: TextStyle(
-                      fontSize: 20 * getResponsiveText(context),
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    fontSize: 18 * getResponsiveText(context),
+                    color: AppTheme.getColor(context).primary,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
           ),
 
-          SizedBox(height: 0.02 * getHeight(context)),
-
+          SizedBox(height: 0.01 * getHeight(context)),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyCoButton(
-                  onTap: () => Navigator.pop(context),
-                  title: 'CLOSE',
-                  width: 0.4 * getWidth(context),
-                  height: 0.06 * getHeight(context),
-                  backgroundColor: AppTheme.getColor(context).onPrimary,
-                  boarderRadius: 30 * getResponsive(context),
-                  textStyle: const TextStyle(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                MyCoButton(
-                  onTap: onTap,
-                  title: 'DONE',
-                  width: 0.4 * getWidth(context),
-                  height: 0.06 * getHeight(context),
-                  backgroundColor: AppTheme.getColor(context).primary,
-                  boarderRadius: 30 * getResponsive(context),
-                  textStyle: const TextStyle(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            child: SideBySideButtons(
+              button1Name: 'CLOSE',
+              button2Name: 'DONE',
+              onTap1: () {},
+              onTap2: onTap,
             ),
           ),
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.03 * getHeight(context)),
         ],
       ),
     ),
@@ -574,24 +552,20 @@ class DistributorVisitorPage extends StatelessWidget {
     children: [
       Expanded(
         flex: 5,
-        child: Text(
+        child: CustomText(
           title,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16 * getResponsiveText(context),
-          ),
+          fontWeight: FontWeight.w700,
+          fontSize: 15 * getResponsiveText(context),
         ),
       ),
-      const Text(':'),
+      const CustomText(':'),
       SizedBox(width: 0.03 * getWidth(context)),
       Expanded(
         flex: 5,
-        child: Text(
+        child: CustomText(
           value,
-          style: TextStyle(
-            fontSize: 16 * getResponsiveText(context),
-            color: Colors.grey,
-          ),
+          fontSize: 15 * getResponsiveText(context),
+          color: AppTheme.getColor(context).outline,
         ),
       ),
     ],
@@ -605,14 +579,12 @@ class DistributorVisitorPage extends StatelessWidget {
     onTap: onTap,
     child: Column(
       children: [
-        Image.asset(imagePath, width: 0.15 * getWidth(context)),
-        SizedBox(height: 0.02 * getWidth(context)),
-        Text(
+        Image.asset(imagePath, width: 0.13 * getWidth(context)),
+        SizedBox(height: 0.03 * getWidth(context)),
+        CustomText(
           name,
-          style: const TextStyle(
-            color: AppColors.primary,
-            fontWeight: FontWeight.bold,
-          ),
+          fontWeight: FontWeight.bold,
+          fontSize: 16 * getResponsiveText(context),
         ),
       ],
     ),

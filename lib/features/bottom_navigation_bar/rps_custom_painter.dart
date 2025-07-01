@@ -1,4 +1,6 @@
-import 'dart:ui';
+// import 'dart:ui';
+
+// import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
 
@@ -616,3 +618,48 @@ class RPSCustomPainter extends CustomPainter {
     return true;
   }
 }
+
+class BNBCustomPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = new Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.fill;
+
+    Path path = Path();
+    path.moveTo(0, 20); // start
+    path.quadraticBezierTo(size.width * 0.20, 0, size.width * 0.35, 0);
+    path.quadraticBezierTo(size.width * 0.40, 0, size.width * 0.40, 20);
+    path.arcToPoint(
+      Offset(size.width * 0.60, 20),
+      radius: Radius.circular(20.0),
+      clockwise: false,
+    );
+    path.quadraticBezierTo(size.width * 0.60, 0, size.width * 0.65, 0);
+    path.quadraticBezierTo(size.width * 0.80, 0, size.width, 20);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.lineTo(0, 20);
+    canvas.drawShadow(path, Colors.black, 10, true);
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+// class MyHomePage extends StatelessWidget {
+//   const MyHomePage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Color(0xFFFAFAFF),
+//       appBar: AppBar(backgroundColor: Color(0xFFFAFAFF)),
+//       bottomNavigationBar: CustomPaint(
+//         size: Size(MediaQuery.of(context).size.width, 100),
+//         painter: BNBCustomPainter(),
+//       ),
+//     );
+//   }
+// }
