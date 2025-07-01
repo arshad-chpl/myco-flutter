@@ -116,7 +116,7 @@ class _MyCoButtonMobile extends StatelessWidget {
     this.textStyle,
     this.image,
     required this.imagePosition,
-    required this.enabled,
+    this.enabled = true,
     this.spacing,
     this.border,
     this.borderColor,
