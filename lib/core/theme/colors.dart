@@ -35,14 +35,6 @@ class AppColors {
   static const Color textPrimary2 = Color(0xFF344054);
   static const Color textGrey200 = Color(0xFFEAECF0);
   static const Color textBorder300 = Color(0xFFD0D5DD);
-  
-  static const LinearGradient welcomeGradient = LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.center,
-          colors: [
-            Color(0xFF2F648E), // Light Sky Blue
-            Color(0xFFFFFFFF),
-            // Light Blue
-          ],
-        );
+  static const Color containerGrey = Color(0xFFF9FAFB);
+
 }

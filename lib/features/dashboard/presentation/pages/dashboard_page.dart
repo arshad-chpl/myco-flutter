@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_timer.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/dashboard_app_bar.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/myTeamCard.dart';
@@ -14,16 +17,6 @@ class DashBoardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    bottomNavigationBar: CustomPaint(
-      size: Size(390, 73),
-      painter: RPSCustomPainter(),
-    ),
-    floatingActionButton: FloatingActionButton(
-      onPressed: () {},
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      backgroundColor: AppTheme.getColor(context).primary,
-      child: Icon(Icons.add, color: AppColors.white),
-    ),
     floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     backgroundColor: AppTheme.getColor(context).surface,
 
@@ -32,6 +25,7 @@ class DashBoardPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16,
           children: [
             // AppBar
             DashboardAppBar(),
@@ -58,7 +52,7 @@ class DashBoardPage extends StatelessWidget {
                         ],
                         backgroundColor: AppColors.white,
                         colorRanges: [
-                          ColorRange(4, 6, Color(0xffFDB913)),
+                          ColorRange(4, 6, AppColors.spanishYellow),
                           ColorRange(1, 2, Color(0xff2F648E)),
                         ],
                       ),
@@ -69,25 +63,41 @@ class DashBoardPage extends StatelessWidget {
                           // CustomText('text'),
                           // CustomText('text'),
                           MyCoButton(
+                            title: 'Punch Out ',
                             onTap: () {},
-                            title: 'title',
-                            textStyle: AppTheme.getTextStyle(
-                              context,
-                            ).titleMedium,
                             height: 0.18 * getWidth(context),
                             width: 0.4 * getWidth(context),
+                            textStyle: TextStyle(
+                              fontFamily: Util.instance.getFontFamily(
+                                FontWeight.w900,
+                              ),
+                            ),
                             backgroundColor: AppTheme.getColor(
                               context,
                             ).secondary,
+                            isShadowTopLeft: true,
+                            wantBorder: false,
                           ),
                           MyCoButton(
                             onTap: () {},
-                            title: 'title',
+                            title: 'My \nTimecard',
+                            image: SvgPicture.asset(AppAssets.timeCardBtn),
+                            spacing: 50 * getResponsiveOnWidth(context),
+                            imagePosition: AxisDirection.right,
                             height: 0.18 * getWidth(context),
                             width: 0.4 * getWidth(context),
-                            backgroundColor: AppTheme.getColor(
-                              context,
-                            ).primary,
+                            textStyle: AppTheme.getTextStyle(context)
+                                .headlineLarge
+                                ?.copyWith(
+                                  fontFamily: Util.instance.getFontFamily(
+                                    FontWeight.w500,
+                                  ),
+                                  fontSize: 22 * getResponsiveText(context),
+                                  color: AppTheme.getColor(context).onPrimary,
+                                ),
+                            backgroundColor: AppTheme.getColor(context).primary,
+                            isShadowTopLeft: true,
+                            wantBorder: false,
                           ),
                         ],
                       ),
@@ -96,15 +106,6 @@ class DashBoardPage extends StatelessWidget {
                 ],
               ),
             ),
-
-            // TODO: Add your feature widgets here
-            // Example:
-            // MyCustomButton(),
-            // FeatureCard(),
-            // InputFieldPreview(),
-
-            // MyTeamCard(),
-            MyCoButton(onTap: () {}, title: 'title'),
           ],
         ),
       ),

@@ -258,32 +258,33 @@ class _BottomsheetRadioButtonState extends State<BottomsheetRadioButton> {
                   boarderRadius: 30,
                   width: getWidth(context) * .450,
                   onTap: () {
-                    if (selectedItem != null && widget.onSelect != null) {
-                      widget.onSelect!(selectedItem!);
-                    }
-                    Navigator.pop(context, selectedItem);
-                    if (widget.showSnackBar && selectedItem != null) {
-                      final selected = widget.items.firstWhere(
-                        (item) => item['id'] == selectedItem,
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: AppColors.primary,
-                          content: Text(
-                            "You selected ID: ${selected['id']}, Title: ${selected['title']}",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize:
-                                  Theme.of(
-                                    context,
-                                  ).textTheme.bodyMedium?.fontSize ??
-                                  14,
-                              fontFamily: 'Gilroy-SemiBold',
-                            ),
-                          ),
-                        ),
-                      );
-                    }
+                    // if (selectedItem != null && widget.onSelect != null) {
+                    //   widget.onSelect!(selectedItem!);
+                    // }
+                    // Navigator.pop(context, selectedItem);
+                    // if (widget.showSnackBar && selectedItem != null) {
+                    //   final selected = widget.items.firstWhere(
+                    //     (item) => item['id'] == selectedItem,
+                    //   );
+                    //   ScaffoldMessenger.of(context).showSnackBar(
+                    //     SnackBar(
+                    //       backgroundColor: AppColors.primary,
+                    //       content: Text(
+                    //         "You selected ID: ${selected['id']}, Title: ${selected['title']}",
+                    //         style: TextStyle(
+                    //           fontWeight: FontWeight.w400,
+                    //           fontSize:
+                    //               Theme.of(
+                    //                 context,
+                    //               ).textTheme.bodyMedium?.fontSize ??
+                    //               14,
+                    //           fontFamily: 'Gilroy-SemiBold',
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   );
+                    // }
+                    
                   },
                 ),
               ),

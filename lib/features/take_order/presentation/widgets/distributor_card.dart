@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
@@ -26,7 +26,7 @@ class DistributorCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(12 * getResponsive(context)),
       side: BorderSide(color: Colors.grey),
     ),
-    color: AppColors.white,
+    color: AppTheme.getColor(context).onPrimary,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -41,7 +41,7 @@ class DistributorCard extends StatelessWidget {
             height: headerHeight ?? 0.06 * getHeight(context),
             padding: EdgeInsets.all(10 * getResponsive(context)),
             decoration: BoxDecoration(
-              color: AppColors.secondary,
+              color: AppTheme.getColor(context).secondary,
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(12 * getResponsive(context)),
               ),

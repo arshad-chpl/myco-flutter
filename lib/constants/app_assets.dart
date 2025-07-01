@@ -3,6 +3,7 @@ class AppAssets {
   static const String basePath = 'assets';
   // static const String fontsPath = '$basePath/fonts';
   static const String imagesPath = '$basePath/images';
+  static const String svgsPath = '$basePath/svgs';
   static const String dashboard = '$basePath/dashboard';
   static const String iconsPath = '$basePath/icons';
   static const String splash = '$basePath/splash';
@@ -13,6 +14,9 @@ class AppAssets {
   static const String googleSignIn = '$imagesPath/google_sign_in.png';
   static const String noCompany = '$imagesPath/no_company.png';
   static const String searchCompany = '$imagesPath/search_company.png';
+
+  //Svgs
+  static const String timeCardBtn = '$svgsPath/timeCardBtn.svg';
 
   // dashboard Screen
   static const String search = '$dashboard/search.png';

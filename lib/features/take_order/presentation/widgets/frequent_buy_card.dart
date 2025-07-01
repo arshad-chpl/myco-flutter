@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/add_order_bottomsheet.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -10,7 +10,7 @@ class FrequentBuyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     decoration: BoxDecoration(
-      color: AppColors.white,
+      color: AppTheme.getColor(context).onPrimary,
       border: Border.all(),
       borderRadius: BorderRadius.circular(12 * getResponsive(context)),
     ),
@@ -23,19 +23,15 @@ class FrequentBuyCard extends StatelessWidget {
       ),
       title: Text(
         'Appy Fizz (Apple)',
-        style: TextStyle(
-          fontSize: 16 * getResponsiveText(context),
-          fontWeight: FontWeight.bold,
-        ),
+        style: AppTheme.getTextStyle(
+          context,
+        ).bodyLarge!.copyWith(fontWeight: FontWeight.w700),
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('KG', style: TextStyle(fontSize: 14 * getResponsive(context))),
-          Text(
-            '2322342',
-            style: TextStyle(fontSize: 14 * getResponsive(context)),
-          ),
+          Text('KG', style: AppTheme.getTextStyle(context).labelLarge),
+          Text('2322342', style: AppTheme.getTextStyle(context).labelLarge),
         ],
       ),
       trailing: Column(
@@ -70,12 +66,12 @@ class FrequentBuyCard extends StatelessWidget {
     height: 0.045 * getHeight(context),
     width: width,
     decoration: BoxDecoration(
-      color: bgColor ?? AppColors.primary,
+      color: bgColor ?? AppTheme.getColor(context).primary,
       borderRadius: BorderRadius.circular(8.0 * getResponsive(context)),
     ),
     child: Center(
       child: isIcon
-          ? Icon(icon, color: AppColors.white)
+          ? Icon(icon, color: AppTheme.getColor(context).onPrimary)
           : Text(
               textData ?? '',
               style: TextStyle(

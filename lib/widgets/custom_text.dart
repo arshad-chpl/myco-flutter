@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/util.dart';
 
 class CustomText extends StatelessWidget {
   final String text;
@@ -27,10 +29,9 @@ class CustomText extends StatelessWidget {
       maxLines: maxLines,
       overflow: overflow,
       style: TextStyle(
-        fontFamily: 'Inter',
+        fontFamily: Util.instance.getFontFamily(fontWeight),
         fontSize: fontSize,
-        fontWeight: fontWeight,
-        color: color ?? Colors.black,
+        color: color ?? AppTheme.getColor(context).onSurface,
       ),
     );
 }

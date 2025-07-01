@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/search_company/presentation/widgets/bottomsheet_radio_btn.dart';
@@ -12,8 +13,16 @@ class SearchCompanyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
       body: DecoratedBox(
-        decoration: const BoxDecoration(
-          gradient: AppColors.welcomeGradient,
+        decoration:  BoxDecoration(
+          gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.center,
+          colors: [
+           AppTheme.getColor(context).primary, // Light Sky Blue
+            AppTheme.getColor(context).onPrimary, // Light Teal
+            // Light Blue
+          ],
+        ),
         ),
         child: Padding(
           padding:  EdgeInsets.only(left: 26 * getResponsive(context), right: 26 * getResponsive(context),top: 180 * getResponsive(context)),
@@ -29,30 +38,28 @@ class SearchCompanyScreen extends StatelessWidget {
 
                   fontSize: 30 * getResponsiveText(context),
                   fontWeight: FontWeight.w600,
-                  color: const Color(0xFF101828),
+                  color: AppTheme.getColor(context).onSurface,
                 
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 0.014 * getHeight(context)),
-              Text(
+              CustomText(
                 'Your Journey Starts Here! Select your Company to register or sign in.',
-                style: TextStyle(
+
                   fontSize: 15 * getResponsiveText(context),
-                  color: const Color(0xFF475467),
-                  fontWeight: FontWeight.w400,
-                ),
+                  color: AppTheme.getColor(context).onSurfaceVariant,              
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 0.04 * getHeight(context)),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: CustomText(
                   'Company Name',
-                  style: TextStyle(
+
                     fontSize: 15 * getResponsiveText(context),
-                    fontWeight: FontWeight.w400,
-                    color: const Color(0xFF101828),
-                  ),
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.getColor(context).onSurfaceVariant,
+
                   textAlign: TextAlign.start,
                 ),
               ),
@@ -61,7 +68,7 @@ class SearchCompanyScreen extends StatelessWidget {
                 hintText: 'Search Your Company',
                 hintTextStyle: TextStyle(
                   fontSize: 18 * getResponsiveText(context),
-                  color: const Color(0xFF98A2B3),
+                  color: AppTheme.getColor(context).outline,
                 ),
                 preFixImage: 'assets/search_society/company_icon.png',
         
@@ -130,9 +137,9 @@ class SearchCompanyScreen extends StatelessWidget {
                 textStyle:  TextStyle(
                   fontSize: 18 * getResponsiveText(context),
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  color: AppTheme.getColor(context).onPrimary,
                 ),
-                backgroundColor: const Color(0xFF2F648E),
+                backgroundColor: AppTheme.getColor(context).primary,
                 isShadowBottomLeft: true,
               ),
             ],

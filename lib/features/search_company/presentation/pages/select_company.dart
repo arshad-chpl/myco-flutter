@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/search_company/presentation/widgets/bottomsheet_radio_btn.dart';
 import 'package:myco_flutter/features/search_company/presentation/widgets/box_design_registration.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class TermsAndConditions extends StatelessWidget {
   const TermsAndConditions({super.key});
@@ -25,7 +27,7 @@ class TermsAndConditions extends StatelessWidget {
                 right: 20 * getResponsive(context),
               ),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppTheme.getColor(context).onPrimary,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(30 * getResponsive(context)),
                 ),
@@ -39,12 +41,11 @@ class TermsAndConditions extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
+                    CustomText(
                       'Terms & Conditions and Privacy Policy',
-                      style: TextStyle(
+
                         fontSize: 24 * getResponsiveText(context),
-                        fontWeight: FontWeight.bold,
-                      ),
+                        fontWeight: FontWeight.w800,
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 20 * getResponsive(context)),
@@ -53,8 +54,8 @@ class TermsAndConditions extends StatelessWidget {
                       trackVisibility: true,
                       child: Container(
                         height: getHeight(context) * 0.58,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFFF9FAFB),
+                        decoration:  BoxDecoration(
+                          color: AppTheme.getColor(context).onSecondaryContainer,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.only(
@@ -66,43 +67,43 @@ class TermsAndConditions extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                CustomText(
                                   '1. Introduction',
-                                  style: TextStyle(
+
                                     fontSize: 18 * getResponsiveText(context),
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                    fontWeight: FontWeight.w600,
+                             
                                 ),
                                 SizedBox(height: 10 * getResponsive(context)),
-                                Text(
+                                CustomText(
                                   'Welcome to MyCo! By using our app, you agree to the following terms and conditions...',
-                                  style: TextStyle(
+                          
                                     fontSize: 16 * getResponsiveText(context),
-                                  ),
+                                  
                                 ),
                                 SizedBox(height: 20 * getResponsive(context)),
-                                Text(
+                                CustomText(
                                   '2. Privacy Policy',
-                                  style: TextStyle(
+                                 
                                     fontSize: 18 * getResponsiveText(context),
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                    fontWeight: FontWeight.w600,
+                                  
                                 ),
                                 SizedBox(height: 10 * getResponsive(context)),
-                                Text(
+                                CustomText(
                                   'We value your privacy. Please read our privacy policy to understand how we handle your data...',
-                                  style: TextStyle(
+                     
                                     fontSize: 16 * getResponsiveText(context),
-                                  ),
+                                  
                                 ),
                                 SizedBox(height: 10 * getResponsive(context)),
-                                Text( '3. User Responsibilities',
-                                  style: TextStyle(
+                                CustomText( '3. User Responsibilities',
+               
                                     fontSize: 18 * getResponsiveText(context),
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                    fontWeight: FontWeight.w600,
+                             
                                 ),
-                                SizedBox(height: 500),
+                                // SizedBox(height: 500),
                               ],
                             ),
                           ),
@@ -115,12 +116,12 @@ class TermsAndConditions extends StatelessWidget {
                       title: "I Agree",
                       height: 0.065 * getHeight(context),
                       boarderRadius: 30,
-                      textStyle: const TextStyle(
+                      textStyle:  TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        color:AppTheme.getColor(context).onPrimary,
                       ),
-                      backgroundColor: const Color(0xFF2F648E),
+                      backgroundColor: AppTheme.getColor(context).primary,
                       isShadowBottomLeft: true,
                     ),
                     SizedBox(height: 20 * getResponsive(context)),
@@ -129,12 +130,12 @@ class TermsAndConditions extends StatelessWidget {
                       title: "Decline",
                       height: 0.065 * getHeight(context),
                       boarderRadius: 30,
-                      textStyle: const TextStyle(
+                      textStyle:  TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.primary,
+                        color: AppTheme.getColor(context).primary,
                       ),
-                      backgroundColor: AppColors.white,
+                      backgroundColor: AppTheme.getColor(context).onPrimary,
                     ),
                   ],
                 ),

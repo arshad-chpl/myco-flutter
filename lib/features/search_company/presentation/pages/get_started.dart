@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/image_animation.dart';
@@ -12,8 +13,16 @@ class GetStarted extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     body: DecoratedBox(
-      decoration: const BoxDecoration(
-        gradient: AppColors.welcomeGradient,
+      decoration:  BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.center,
+          colors: [
+            AppTheme.getColor(context).primary, // Light Sky Blue
+            AppTheme.getColor(context).onPrimary, // Light Teal
+            // Light Blue
+          ],
+        )
       ),
       child: Center(
         child: Padding(
@@ -34,7 +43,7 @@ class GetStarted extends StatelessWidget {
 
                   fontSize: 30 * getResponsiveText(context),
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF101828),
+                  color: AppTheme.getColor(context).onSurface,
             
                  textAlign: TextAlign.center,
               ),
@@ -42,7 +51,7 @@ class GetStarted extends StatelessWidget {
                CustomText(
                 'Make Smart Decisions! Set clear timelines for projects and celebrate your achievements!',
                   fontSize: 15 * getResponsiveText(context),
-                  color: const Color(0xFF475467),
+                  color: AppTheme.getColor(context).onSurfaceVariant,
                   fontWeight: FontWeight.w500,
                  textAlign: TextAlign.center,
               ),
@@ -54,12 +63,12 @@ class GetStarted extends StatelessWidget {
                 title: "Get Started",
                   height: 0.065 * getHeight(context),
                 boarderRadius: 30,
-                textStyle: const TextStyle(
+                textStyle:  TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                  color: AppTheme.getColor(context).onPrimary,
                 ),
-                backgroundColor: const Color(0xFF2F648E),
+                backgroundColor: AppTheme.getColor(context).primary,
                 isShadowBottomLeft: true,
                 
               ),
