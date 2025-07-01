@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
-
 
 class PhoneNumberField extends StatelessWidget {
   final String selectedCountry;
@@ -13,7 +13,7 @@ class PhoneNumberField extends StatelessWidget {
   final void Function(String?, int)? onCountryChanged;
   final TextEditingController phoneController;
   final Map<String, String> countryDialCodes;
-  final Decoration ? decoration;
+  final Decoration? decoration;
 
   const PhoneNumberField({
     super.key,
@@ -31,12 +31,14 @@ class PhoneNumberField extends StatelessWidget {
     // final textTheme = theme.textTheme;
 
     return Container(
-      padding:const EdgeInsets.symmetric(horizontal: 7,),
-      decoration: decoration ??BoxDecoration(
-        border: Border.all(color: AppColors.primary),
-        borderRadius: BorderRadius.circular(10),
-        color: AppColors.white,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 7),
+      decoration:
+          decoration ??
+          BoxDecoration(
+            border: Border.all(color: AppColors.primary),
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.white,
+          ),
       child: Row(
         children: [
           SizedBox(
@@ -51,9 +53,10 @@ class PhoneNumberField extends StatelessWidget {
               onChanged: onCountryChanged,
               height: 40,
               width: 70,
-              hintTextStyle: AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
-                color: AppColors.primary,
-                  ),
+              hintTextStyle: TextStyle(
+                fontSize: 14 * getResponsiveText(context),
+                fontWeight: FontWeight.w600,
+              ),
               // useRadioList: false,
             ),
           ),
@@ -61,7 +64,8 @@ class PhoneNumberField extends StatelessWidget {
             countryDialCodes[selectedCountry] ?? '',
             style: TextStyle(
               color: AppColors.primary,
-              fontSize: AppTheme.lightTheme.textTheme.bodyMedium?.fontSize ,
+              fontSize: 14 * getResponsiveText(context),
+              fontWeight: FontWeight.w600,
             ),
           ),
           Expanded(

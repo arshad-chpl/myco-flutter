@@ -35,3 +35,12 @@ final class VisitStopped extends TakeOrderState {
   @override
   List<Object> get props => [duration];
 }
+
+class ProductSearchState extends TakeOrderState {
+  final List<String> fileteredProducts;
+
+  const ProductSearchState({required this.fileteredProducts});
+
+  @override
+  List<Object> get props => [fileteredProducts];
+}

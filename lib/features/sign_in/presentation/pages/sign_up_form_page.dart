@@ -32,7 +32,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.bgWhite,
+      color: AppColors.backgroundPrimary,
       child: SafeArea(
         child: Scaffold(
           backgroundColor: AppColors.white,
@@ -373,10 +373,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   ),
                   SizedBox(height: 0.1 * getWidth(context)),
                   MyCoButton(
-                    textStyle:TextStyle(
+                    textStyle: TextStyle(
                       color: AppColors.white,
-                      fontSize: 20*getResponsiveText(context),
-                      fontWeight: FontWeight.bold
+                      fontSize: 20 * getResponsiveText(context),
+                      fontWeight: FontWeight.bold,
                     ),
                     onTap: () {},
                     title: "Sign Up",
@@ -388,20 +388,26 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Already have an account?",style: TextStyle(
-                          fontSize: 18*getResponsiveText(context),
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.black
-                        ),),
-                        Text("Sign in here",style: TextStyle(
-                            fontSize: 18*getResponsiveText(context),
+                        Text(
+                          "Already have an account?",
+                          style: TextStyle(
+                            fontSize: 18 * getResponsiveText(context),
                             fontWeight: FontWeight.bold,
-                            color: AppColors.primary
-                        ),),
+                            color: AppColors.black,
+                          ),
+                        ),
+                        Text(
+                          "Sign in here",
+                          style: TextStyle(
+                            fontSize: 18 * getResponsiveText(context),
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 0.015*getHeight(context),)
+                  SizedBox(height: 0.015 * getHeight(context)),
                 ],
               ),
             ),

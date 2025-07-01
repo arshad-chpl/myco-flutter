@@ -40,7 +40,7 @@ class _SelectOtherCompanyPageState extends State<SelectOtherCompanyPage> {
               height: 0.7 * getHeight(context),
               width: getWidth(context),
               decoration: BoxDecoration(
-                color: AppColors.bgWhite,
+                color: AppColors.backgroundPrimary,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40 * getResponsive(context)),
                   topRight: Radius.circular(40 * getResponsive(context)),
@@ -99,11 +99,14 @@ class _SelectOtherCompanyPageState extends State<SelectOtherCompanyPage> {
                       ),
                     ),
                     SizedBox(height: 0.015 * getHeight(context)),
-                    Text("Phone number",style: TextStyle(
-                      fontSize: 16 * getResponsiveText(context),
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textGray,
-                    ),),
+                    Text(
+                      "Phone number",
+                      style: TextStyle(
+                        fontSize: 16 * getResponsiveText(context),
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textGray,
+                      ),
+                    ),
                     PhoneNumberField(
                       selectedCountry: selectedCountry,
                       countries: countryMap.keys.toList(),
@@ -117,9 +120,11 @@ class _SelectOtherCompanyPageState extends State<SelectOtherCompanyPage> {
                       countryDialCodes: countryMap,
                       phoneController: phoneController,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15*getResponsive(context)),
+                        borderRadius: BorderRadius.circular(
+                          15 * getResponsive(context),
+                        ),
                         border: Border.all(color: AppColors.gray5),
-                        color: AppColors.white
+                        color: AppColors.white,
                       ),
                     ),
                     SizedBox(height: 0.015 * getHeight(context)),
@@ -127,11 +132,11 @@ class _SelectOtherCompanyPageState extends State<SelectOtherCompanyPage> {
                       onTap: () {},
                       textStyle: TextStyle(
                         color: AppColors.white,
-                        fontSize: 18*getResponsiveText(context),
-                        fontWeight: FontWeight.bold
+                        fontSize: 18 * getResponsiveText(context),
+                        fontWeight: FontWeight.bold,
                       ),
                       title: "Sign in",
-                      boarderRadius: 30*getResponsive(context),
+                      boarderRadius: 30 * getResponsive(context),
                       // isShadowBottomRight: true,
                       isShadowBottomLeft: true,
                     ),
@@ -206,18 +211,24 @@ class _SelectOtherCompanyPageState extends State<SelectOtherCompanyPage> {
                     SizedBox(height: 0.025 * getHeight(context)),
                     Center(
                       child: RichText(
-                        text:TextSpan(
+                        text: TextSpan(
                           children: [
-                            TextSpan(text: "Don’t have an account? ",style: TextStyle(
-                              color: AppColors.black,
-                              fontSize: 14*getResponsiveText(context),
-                            ),),
-                            TextSpan(text: "Sign Up Here",style: TextStyle(
-                              color: AppColors.primary,
-                              fontSize: 14*getResponsiveText(context),
-                            ),)
-                          ]
-                        )
+                            TextSpan(
+                              text: "Don’t have an account? ",
+                              style: TextStyle(
+                                color: AppColors.black,
+                                fontSize: 14 * getResponsiveText(context),
+                              ),
+                            ),
+                            TextSpan(
+                              text: "Sign Up Here",
+                              style: TextStyle(
+                                color: AppColors.primary,
+                                fontSize: 14 * getResponsiveText(context),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(height: 0.025 * getHeight(context)),
@@ -231,45 +242,63 @@ class _SelectOtherCompanyPageState extends State<SelectOtherCompanyPage> {
                               isChecked = val;
                             });
                           },
-                          borderColor: isChecked ? AppColors.primary : Colors.grey, // 🔁 dynamic
+                          borderColor: isChecked
+                              ? AppColors.primary
+                              : Colors.grey, // 🔁 dynamic
                           activeColor: AppColors.lightPurple,
                           checkColor: AppColors.primary,
-                          height: 0.026*getHeight(context),
-                          width: 0.056*getWidth(context),
+                          height: 0.026 * getHeight(context),
+                          width: 0.056 * getWidth(context),
                         ),
-                        SizedBox(width: 0.015*getWidth(context),),
+                        SizedBox(width: 0.015 * getWidth(context)),
                         Expanded(
                           child: RichText(
                             text: TextSpan(
                               style: TextStyle(
                                 color: AppColors.black,
-                                fontSize: 14*getResponsiveText(context),
+                                fontSize: 14 * getResponsiveText(context),
                               ),
                               children: [
                                 TextSpan(
-                                    text:
-                                    "Please confirm that you agree to our ",style:
-                                TextStyle(color: AppColors.black,fontSize: 14*getResponsiveText(context),fontWeight: FontWeight.w600),),
+                                  text: "Please confirm that you agree to our ",
+                                  style: TextStyle(
+                                    color: AppColors.black,
+                                    fontSize: 14 * getResponsiveText(context),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                                 TextSpan(
                                   text: "Privacy Policy",
-                                  style:
-                                  TextStyle(color: AppColors.primary,fontSize: 14*getResponsiveText(context),),
+                                  style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontSize: 14 * getResponsiveText(context),
+                                  ),
                                 ),
                                 TextSpan(text: ", "),
                                 TextSpan(
                                   text: "Terms & Conditions",
-                                  style:
-                                  TextStyle(color: AppColors.primary),
+                                  style: TextStyle(color: AppColors.primary),
                                 ),
-                                TextSpan(text: " & ",style:
-                                TextStyle(color: AppColors.black,fontSize: 14*getResponsiveText(context),fontWeight: FontWeight.w600),),
+                                TextSpan(
+                                  text: " & ",
+                                  style: TextStyle(
+                                    color: AppColors.black,
+                                    fontSize: 14 * getResponsiveText(context),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                                 TextSpan(
                                   text: "Cancellation & Refund Policy",
-                                  style:
-                                  TextStyle(color: AppColors.primary),
+                                  style: TextStyle(color: AppColors.primary),
                                 ),
-                                TextSpan(text: ".",style:
-                                TextStyle(color: AppColors.black,fontSize: 14*getResponsiveText(context),fontWeight: FontWeight.w900),),
+                                TextSpan(
+                                  text: ".",
+                                  style: TextStyle(
+                                    color: AppColors.black,
+                                    fontSize: 14 * getResponsiveText(context),
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -287,6 +316,7 @@ class _SelectOtherCompanyPageState extends State<SelectOtherCompanyPage> {
     ),
   );
 }
+
 Widget customCheckbox({
   required bool value,
   required Function(bool) onChanged,
@@ -303,19 +333,10 @@ Widget customCheckbox({
       width: width,
       decoration: BoxDecoration(
         color: value ? activeColor : Colors.transparent,
-        border: Border.all(
-          color: borderColor,
-          width: 1,
-        ),
+        border: Border.all(color: borderColor, width: 1),
         borderRadius: BorderRadius.circular(4),
       ),
-      child: value
-          ? Icon(
-        Icons.check,
-        size: 18,
-        color: checkColor,
-      )
-          : null,
+      child: value ? Icon(Icons.check, size: 18, color: checkColor) : null,
     ),
   );
 }

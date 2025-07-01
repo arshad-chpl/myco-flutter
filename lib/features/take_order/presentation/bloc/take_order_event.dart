@@ -35,3 +35,13 @@ class TickEvent extends TakeOrderEvent {
   @override
   List<Object> get props => [];
 }
+
+class SearchQueryChangeEvent extends TakeOrderEvent {
+  final String query;
+  final List<String> allProducts;
+
+  const SearchQueryChangeEvent(this.query, this.allProducts);
+
+  @override
+  List<Object> get props => [query, allProducts];
+}
