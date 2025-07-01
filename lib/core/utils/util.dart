@@ -11,7 +11,6 @@ class Util {
 
   // Getter to access the singleton
   static Util get instance => _instance;
-
   /// Method to generate password
   String getCurrentPassword(
     String societyId,
@@ -33,40 +32,32 @@ class Util {
   Color applyOpacity(Color color, double opacity) =>
       color.withAlpha((opacity * 255).round());
 
-///Gilroy-Thin
-// Gilroy-UltraLight
-// Gilroy-Light
-// Gilroy-Regular
-// Gilroy-Medium
-// Gilroy-SemiBold
-// Gilroy-Bold
-// Gilroy-ExtraBold
-// Gilroy-Heavy
+
   // Method to convert FontWeight to String
-      String convertFontWeight(FontWeight fontWeight) {
-        switch (fontWeight) {
-          case FontWeight.w100:
-            return 'Gilroy-Thin';
-          case FontWeight.w200:
-            return 'Gilroy-UltraLight';
-          case FontWeight.w300:
-            return 'Gilroy-Light';
-          case FontWeight.w400:
-            return 'Gilroy-Regular';
-          case FontWeight.w500:
-            return 'Gilroy-Medium';
-          case FontWeight.w600:
-            return 'Gilroy-SemiBold';
-          case FontWeight.w700: 
-            return 'Gilroy-Bold';
-          case FontWeight.w800:
-            return 'Gilroy-ExtraBold';
-          case FontWeight.w900:
-            return 'Gilroy-Heavy';
-          default:
-            return 'Gilroy-Regular';
-        }
-      }
+  String getFontFamily(FontWeight fontWeight) {
+    switch (fontWeight) {
+      case FontWeight.w100:
+        return 'Gilroy-Thin';
+      case FontWeight.w200:
+        return 'Gilroy-UltraLight';
+      case FontWeight.w300:
+        return 'Gilroy-Light';
+      case FontWeight.w400:
+        return 'Gilroy-Regular';
+      case FontWeight.w500:
+        return 'Gilroy-Medium';
+      case FontWeight.w600:
+        return 'Gilroy-SemiBold';
+      case FontWeight.w700:
+        return 'Gilroy-Bold';
+      case FontWeight.w800:
+        return 'Gilroy-ExtraBold';
+      case FontWeight.w900:
+        return 'Gilroy-Heavy';
+      default:
+        return 'Gilroy-Regular';
+    }
+  }
 
   // Future<String?> getDeviceId() async {
   //   if (Platform.isAndroid || Platform.isIOS) {
@@ -97,3 +88,5 @@ class Util {
     _ => 'Unknown', // Return a non-null String
   };
 }
+String getFontFamily(FontWeight weight) => Util.instance.getFontFamily(weight);
+
