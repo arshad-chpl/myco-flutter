@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 
 class Util {
   // // Private constructor
@@ -22,19 +21,18 @@ class Util {
   }
 
   /// Utility to get last 3 characters
- static String _getLastThreeChars(String input) {
+  static String _getLastThreeChars(String input) {
     if (input.length < 3) return input;
     return input.substring(input.length - 3);
   }
 
   /// Method to apply opacity to a color
   /// opacity should be between 0.0 and 1.0
-static  Color applyOpacity(Color color, double opacity) =>
+  static Color applyOpacity(Color color, double opacity) =>
       color.withAlpha((opacity * 255).round());
 
-
   // Method to convert FontWeight to String
-static  String getFontFamily(FontWeight? fontWeight) {
+  static String getFontFamily(FontWeight? fontWeight) {
     switch (fontWeight) {
       case FontWeight.w100:
         return 'Gilroy-Thin';
@@ -71,7 +69,7 @@ static  String getFontFamily(FontWeight? fontWeight) {
   //   return null;
   // }
 
-static  String getMonthName(int month) => switch (month) {
+  static String getMonthName(int month) => switch (month) {
     0 => 'All',
     1 => 'January',
     2 => 'February',
@@ -88,4 +86,3 @@ static  String getMonthName(int month) => switch (month) {
     _ => 'Unknown', // Return a non-null String
   };
 }
-

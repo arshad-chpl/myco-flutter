@@ -3,12 +3,14 @@
 import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/custom_dialog.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/customotp_bottomsheet.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class OtpVerifyDialog extends StatefulWidget {
   const OtpVerifyDialog({super.key});
@@ -20,21 +22,16 @@ class OtpVerifyDialog extends StatefulWidget {
 class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.white,
     appBar: AppBar(
       title: const Text('OTP Verification'),
       centerTitle: true,
-      backgroundColor: AppColors.white,
       elevation: 0,
-      foregroundColor: AppColors.black,
     ),
     body: Center(
-      child: Text(
+      child: CustomText(
         'Press the button to verify OTP',
-        style: TextStyle(
-          fontSize: 18 * getResponsiveText(context),
-          color: AppColors.textPrimary,
-        ),
+        fontSize: 18 * getResponsiveText(context),
+        color: AppTheme.getColor(context).onSurface,
       ),
     ),
     floatingActionButton: FloatingActionButton(
@@ -43,9 +40,9 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
 
         // showModalBottomSheet(
         //   context: context,
-        //   backgroundColor: AppColors.white,
+        //   backgroundColor: AppTheme.getColor(context).onPrimary,
         //   builder: (context) => Container(
-        //     height: .5 * getHeight(context),
+        //     height: .52 * getHeight(context),
         //     width: getWidth(context),
         //     child: Padding(
         //       padding: EdgeInsets.symmetric(
@@ -60,22 +57,18 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
         //             width: .5 * getWidth(context),
         //           ),
         //           SizedBox(height: .02 * getHeight(context)),
-        //           Text(
+        //           CustomText(
         //             'Let’s Get Started',
-        //             style: TextStyle(
-        //               fontSize: 30 * getResponsiveText(context),
-        //               fontWeight: FontWeight.bold,
-        //               color: AppColors.textPrimary,
-        //             ),
+        //             fontSize: 30 * getResponsiveText(context),
+        //             color: AppTheme.getColor(context).onSurface,
+        //             fontWeight: FontWeight.w600,
         //           ),
         //           SizedBox(height: .02 * getHeight(context)),
-        //           Text(
+        //           CustomText(
         //             'To enhance your user experience, please set up your profile first. This will help us tailor the app to your needs and ensure you get the most out of our features!',
-        //             style: TextStyle(
-        //               fontSize: 17 * getResponsiveText(context),
-        //               color: AppColors.textPrimary2,
-        //               fontWeight: FontWeight.w500,
-        //             ),
+        //             fontSize: 16 * getResponsiveText(context),
+        //             color: AppTheme.getColor(context).onSurfaceVariant,
+        //             fontWeight: FontWeight.w600,
         //           ),
         //           SizedBox(height: .035 * getHeight(context)),
         //           MyCoButton(
@@ -89,7 +82,7 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
         //             onTap: () {},
         //             boarderRadius: 30 * getResponsive(context),
         //             title: 'Explore The App First',
-        //             backgroundColor: AppColors.white,
+        //             backgroundColor: AppTheme.getColor(context).onPrimary,
         //             textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(
         //               context,
         //             ),
@@ -106,6 +99,7 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
         //   imageUrl: 'assets/sign_in/email.png',
         //   imageHeight: 0.035 * getHeight(context),
         //   imageWidth: 0.09 * getWidth(context),
+        //   // isDialog: true,
         //   context: context,
         //   title: 'Sign In Phone Number',
         //   description:
@@ -125,46 +119,46 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
 
         // device change bottom sheet
 
-        // showModalBottomSheet(
-        //   context: context,
-        //   isScrollControlled: true,
-        //   backgroundColor: AppColors.white,
-        //   shape: RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.vertical(
-        //       top: Radius.circular(20 * getResponsive(context)),
-        //     ),
-        //   ),
-        //   builder: (_) => MyCoDialog(
-        //     isBottomSheet: true,
-        //     image: Image.asset(
-        //       'assets/sign_in/update.png',
-        //       height: .15 * getHeight(context),
-        //       width: .5 * getWidth(context),
-        //     ),
-        //     isDescriptionThere: false,
-        //     title:
-        //         'You were registered with Google - sdk_gphonr64_arm64, please contact to \nadmin or request for new phone registration.',
-        //     actions: [
-        //       MyCoButton(
-        //         onTap: () {},
-        //         title: 'Close',
-        //         height: 0.068 * getHeight(context),
-        //         width: .7 * getWidth(context),
-        //         backgroundColor: AppColors.white,
-        //         textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(context),
-        //         boarderRadius: 30 * getResponsive(context),
-        //       ),
-        //       MyCoButton(
-        //         onTap: () {},
-        //         title: 'Request',
-        //         height: 0.068 * getHeight(context),
-        //         width: .7 * getWidth(context),
-        //         boarderRadius: 30 * getResponsive(context),
-        //         isShadowBottomLeft: true,
-        //       ),
-        //     ],
-        //   ),
-        // );
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: AppTheme.getColor(context).onPrimary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(20 * getResponsive(context)),
+            ),
+          ),
+          builder: (_) => MyCoDialog(
+            isBottomSheet: true,
+            image: Image.asset(
+              'assets/sign_in/update.png',
+              height: .15 * getHeight(context),
+              width: .5 * getWidth(context),
+            ),
+            isDescriptionThere: false,
+            title:
+                'You were registered with Google - sdk_gphonr64_arm64, please contact to \nadmin or request for new phone registration.',
+            actions: [
+              MyCoButton(
+                onTap: () {},
+                title: 'Close',
+                height: 0.068 * getHeight(context),
+                width: .7 * getWidth(context),
+                backgroundColor: AppTheme.getColor(context).onPrimary,
+                textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(context),
+                boarderRadius: 30 * getResponsive(context),
+              ),
+              MyCoButton(
+                onTap: () {},
+                title: 'Request',
+                height: 0.068 * getHeight(context),
+                width: .7 * getWidth(context),
+                boarderRadius: 30 * getResponsive(context),
+                isShadowBottomLeft: true,
+              ),
+            ],
+          ),
+        );
       },
       child: const Icon(Icons.message),
     ),

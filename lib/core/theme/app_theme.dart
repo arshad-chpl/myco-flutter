@@ -18,6 +18,7 @@ class AppTheme {
     dividerColor: AppColors.textfieldBorder,
 
     appBarTheme: AppBarTheme(
+      surfaceTintColor: Colors.transparent,
       backgroundColor: AppColors.backgroundPrimary,
       foregroundColor: AppColors.black,
       elevation: 0,
@@ -27,7 +28,6 @@ class AppTheme {
     colorScheme: const ColorScheme.light(
       primary: AppColors.primary, //0xFF2F648E
       secondary: AppColors.secondary, //0xFF2FBBA4
-
       surface: AppColors.backgroundPrimary, //0xFFFAFAFF
       surfaceContainer: AppColors.lightTeal, //0xFFEEF7FD
       surfaceContainerHigh: AppColors.containerHigh,
@@ -35,10 +35,12 @@ class AppTheme {
       onPrimary: AppColors.white, //0xFFFFFFFF
       onSecondary: AppColors.white, //0xFFFFFFFF
       onSurface: AppColors.textPrimary, //0xFF101828
+      
       onSurfaceVariant: AppColors.textSecondary, //0xFF475467
       onError: AppColors.white, //0xFFFFFFFF
       outline: AppColors.textfieldBorder, //0xFF98A2B3
-      outlineVariant: AppColors.textGrey200, //0xFFEAECF0
+      onSecondaryContainer: AppColors.containerGrey, //0xFFF9FAFB
+      outlineVariant: AppColors.textGrey200, // 0xFFEAECF0
     ),
   );
 

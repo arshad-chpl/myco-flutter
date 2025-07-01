@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/text_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/bottom_navigation_bar/bloc/bottom_navigation_bar_bloc.dart';
 import 'package:myco_flutter/features/bottom_navigation_bar/rps_custom_painter.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -15,10 +15,10 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   List<Widget> screens = [
-    const Center(child: Text('Screen 1')),
-    const Center(child: Text('Screen 2')),
-    const Center(child: Text('Screen 3')),
-    const Center(child: Text('Screen 4')),
+    const Center(child: CustomText('Screen 1')),
+    const Center(child: CustomText('Screen 2')),
+    const Center(child: CustomText('Screen 3')),
+    const Center(child: CustomText('Screen 4')),
   ];
 
   @override
@@ -26,6 +26,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     child: BlocBuilder<BottomNavigationBarBloc, BottomNavigationBarState>(
       builder: (context, state) => Scaffold(
         backgroundColor: AppTheme.getColor(context).surface,
+        // backgroundColor: Colors.grey,
         body: screens[state.currentIndex],
         extendBody: true,
         floatingActionButton: FloatingActionButton(
@@ -47,8 +48,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
           alignment: Alignment.bottomCenter,
           children: [
             CustomPaint(
-              size: Size(double.infinity, 0.08 * getHeight(context)),
-              painter: RPSCustomPainter(),
+              size: Size(double.infinity, 0.09 * getHeight(context)),
+              // painter: RPSCustomPainter(),
+              painter: BNBCustomPainter(),
             ),
             Row(
               children: [
@@ -70,17 +72,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 ),
                 SizedBox(width: 0.07 * getWidth(context)),
                 Padding(
-                  padding: EdgeInsets.only(top: 0.03 * getHeight(context)),
-                  child: Text(
+                  padding: EdgeInsets.only(top: 0.04 * getHeight(context)),
+                  child: CustomText(
                     'Menu',
-                    style: AppTextTheme.getTextTheme(context).labelLarge!
-                        .copyWith(
-                          color: AppTheme.getColor(context).onSurfaceVariant,
-                        ),
-                    // TextStyle(
-                    //   color: AppColors.getColor(context).onSurfaceVariant,
-                    //   fontSize: 14 * getResponsiveText(context),
-                    // ),
+                    color: AppTheme.getColor(context).onSurfaceVariant,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14 * getResponsiveText(context),
                   ),
                 ),
                 SizedBox(width: 0.03 * getWidth(context)),
@@ -132,13 +129,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
             width: 0.1 * getWidth(context),
           ),
           SizedBox(height: 0.005 * getHeight(context)),
-          Text(
+          CustomText(
             text,
-            style: AppTextTheme.getTextTheme(context).labelLarge!.copyWith(
-              color: isSelected
-                  ? AppTheme.getColor(context).primary
-                  : AppTheme.getColor(context).onSurfaceVariant,
-            ),
+            fontWeight: FontWeight.w700,
+            fontSize: 14 * getResponsiveText(context),
+            color: isSelected
+                ? AppTheme.getColor(context).primary
+                : AppTheme.getColor(context).onSurfaceVariant,
           ),
         ],
       ),

@@ -71,11 +71,11 @@ double getResponsiveText(context) {
     return getWidth(context) > 600 ? 1.5 : 0.9;
   }
 }
+
 double getDashboardResponsiveText(BuildContext context) {
-  if (getWidth(context)>600) {
+  if (getWidth(context) > 600) {
     return 1.2;
-  }
-  else{
+  } else {
     return 1;
   }
 }

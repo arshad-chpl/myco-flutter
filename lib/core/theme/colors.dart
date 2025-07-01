@@ -70,4 +70,6 @@ class AppColors {
   static const Color darktextfieldBorder = Color(
     0xFF64748B,
   ); // Muted blue-gray border
+  static const Color containerGrey = Color(0xFFF9FAFB);
+
 }
