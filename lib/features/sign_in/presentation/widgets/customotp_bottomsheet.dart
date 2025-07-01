@@ -2,9 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 void showCustomEmailVerificationSheet({
   required BuildContext context,
@@ -23,13 +23,14 @@ void showCustomEmailVerificationSheet({
   String? description,
   bool isDialog = false,
   int length = 6,
+  final TextStyle? otpTextStyle,
 }) {
   isDialog
       ? showDialog(
           context: context,
           builder: (context) => AlertDialog(
             contentPadding: EdgeInsets.all(0 * getResponsive(context)),
-            backgroundColor: AppColors.white,
+            backgroundColor: AppTheme.getColor(context).onPrimary,
             content: _EmailVerificationContent(
               emailAddress: emailAddress,
               length: length,
@@ -45,11 +46,12 @@ void showCustomEmailVerificationSheet({
               isShadowTopRight: isShadowTopRight,
               isShadowBottomRight: isShadowBottomRight,
               isShadowBottomLeft: isShadowBottomLeft,
+              otpTextStyle:otpTextStyle,
             ),
           ),
         )
       : showModalBottomSheet(
-          backgroundColor: AppColors.white,
+          backgroundColor: AppTheme.getColor(context).onPrimary,
           context: context,
           isScrollControlled: true,
           shape: RoundedRectangleBorder(
@@ -72,6 +74,7 @@ void showCustomEmailVerificationSheet({
             isShadowTopRight: isShadowTopRight,
             isShadowBottomRight: isShadowBottomRight,
             isShadowBottomLeft: isShadowBottomLeft,
+            otpTextStyle:otpTextStyle,
           ),
         );
 }
@@ -91,7 +94,7 @@ class _EmailVerificationContent extends StatefulWidget {
   final bool? isShadowTopRight;
   final bool? isShadowBottomRight;
   final bool? isShadowBottomLeft;
-
+  final TextStyle? otpTextStyle;
   const _EmailVerificationContent({
     required this.emailAddress,
     required this.onSubmit,
@@ -107,6 +110,7 @@ class _EmailVerificationContent extends StatefulWidget {
     this.isShadowTopRight = false,
     this.isShadowBottomRight = false,
     this.isShadowBottomLeft = false,
+    this.otpTextStyle,
   });
 
   @override
@@ -127,31 +131,28 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
         Padding(
           padding: EdgeInsets.only(
             top: 48 * getResponsive(context),
-            left: 20 * getResponsive(context),
-            right: 20 * getResponsive(context),
+            left: 25 * getResponsive(context),
+            right: 25 * getResponsive(context),
             bottom: mediaQuery.viewInsets.bottom + 16 * getResponsive(context),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(height: .016 * getHeight(context)),
-              Text(
+              CustomText(
                 widget.title ?? 'Email Verification Sent!',
-                style: TextStyle(
-                  fontSize: AppTheme.getTextStyle(context).titleLarge!.fontSize,
-                  color: AppColors.textPrimary,
-                  fontWeight: FontWeight.w700,
-                ),
+                fontSize: 22 * getResponsiveText(context),
+                color: AppTheme.getColor(context).onSurface,
+                fontWeight: FontWeight.w700,
               ),
               SizedBox(height: .008 * getHeight(context)),
-              Text(
+              CustomText(
                 widget.description ??
                     'A verification code will be sent to the email${widget.emailAddress} for your account verification process.',
                 textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: AppTheme.getTextStyle(context).bodyMedium!.fontSize,
-                  color: AppColors.textPrimary,
-                ),
+                fontWeight: FontWeight.w500,
+                fontSize: 16 * getResponsiveText(context),
+                color: AppTheme.getColor(context).onSurfaceVariant,
               ),
               SizedBox(height: .024 * getHeight(context)),
               OTPInputField(
@@ -162,16 +163,15 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                     currentOtp = code;
                   });
                 },
+                otpTextStyle: widget.otpTextStyle,
               ),
               SizedBox(height: .012 * getHeight(context)),
               // timer
-              Text(
+              CustomText(
                 '00:25',
-                style: TextStyle(
-                  fontSize: 18 * getResponsiveText(context),
-                  color: AppColors.textPrimary,
-                  fontWeight: FontWeight.w500,
-                ),
+                fontSize: 18 * getResponsiveText(context),
+                color: AppTheme.getColor(context).onSurface,
+                fontWeight: FontWeight.w600,
               ),
               SizedBox(height: .008 * getHeight(context)),
               Padding(
@@ -181,7 +181,7 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                   child: RichText(
                     text: TextSpan(
                       style: TextStyle(
-                        color: AppColors.textPrimary,
+                        color: AppTheme.getColor(context).onSurface,
                         fontSize: 18 * getResponsiveText(context),
                       ),
                       children: [
@@ -191,7 +191,7 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                         TextSpan(
                           text: 'Resend it.',
                           style: TextStyle(
-                            color: AppColors.primary,
+                            color: AppTheme.getColor(context).primary,
                             fontWeight: FontWeight.w700,
                             fontSize: 18 * getResponsiveText(context),
                           ),
@@ -211,16 +211,16 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                 text: TextSpan(
                   style: TextStyle(
                     fontSize: 18 * getResponsiveText(context),
-                    color: AppColors.textPrimary,
+                    color: AppTheme.getColor(context).onSurface,
                   ),
                   children: [
                     TextSpan(
                       text: 'Email for OTP',
-                      style: const TextStyle(
-                        color: AppColors.primary,
+                      style: TextStyle(
+                        color: AppTheme.getColor(context).primary,
                         decoration: TextDecoration.underline,
                         decorationStyle: TextDecorationStyle.solid,
-                        decorationColor: AppColors.primary,
+                        decorationColor: AppTheme.getColor(context).primary,
                         decorationThickness: 2,
                         fontWeight: FontWeight.w500,
                       ),
@@ -230,21 +230,21 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                           print('Jemi in email');
                         },
                     ),
-                    const TextSpan(
+                    TextSpan(
                       text: ' Or ',
                       style: TextStyle(
-                        color: AppColors.textPrimary,
+                        color: AppTheme.getColor(context).onSurface,
                         decoration: TextDecoration.none,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     TextSpan(
                       text: 'Call for OTP',
-                      style: const TextStyle(
-                        color: AppColors.primary,
+                      style: TextStyle(
+                        color: AppTheme.getColor(context).primary,
                         decoration: TextDecoration.underline,
                         decorationStyle: TextDecorationStyle.solid,
-                        decorationColor: AppColors.primary,
+                        decorationColor: AppTheme.getColor(context).primary,
                         decorationThickness: 2,
                         fontWeight: FontWeight.w500,
                       ),
@@ -259,8 +259,7 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
               ),
               SizedBox(height: .02 * getHeight(context)),
               MyCoButton(
-                height: 40,
-                // width: 150,
+                height: .05 * getHeight(context),
                 onTap: currentOtp.length == widget.length
                     ? () {
                         widget.onVerifyButtonPressed();
@@ -269,29 +268,25 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                       }
                     : null,
                 title: 'Submit',
-                boarderRadius: 50,
+                boarderRadius: 50 * getResponsive(context),
+                isShadowBottomLeft: true,
               ),
-              SizedBox(height: .012 * getHeight(context)),
+              SizedBox(height: .014 * getHeight(context)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'signin with different method? ',
-                    style: TextStyle(
-                      fontSize:
-                          AppTheme.getTextStyle(context).bodyMedium!.fontSize,
-                    ),
+                  CustomText(
+                    'Sign in with different method ',
+                    fontSize: 18 * getResponsiveText(context),
+                    fontWeight: FontWeight.w500,
                   ),
                   GestureDetector(
                     onTap: widget.onResend,
-                    child: Text(
+                    child: CustomText(
                       'Here',
-                      style: TextStyle(
-                        fontSize:
-                            AppTheme.getTextStyle(context).bodyMedium!.fontSize,
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      fontSize: 18 * getResponsiveText(context),
+                      color: AppTheme.getColor(context).primary,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ],
@@ -323,25 +318,6 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                       width: widget.imageWidth,
                     ),
             ),
-            // child: Container(
-            //   height: widget.imageHeight,
-            //   width: widget.imageWidth,
-            //   padding: EdgeInsets.all(12 * getResponsive(context)),
-            //   decoration: BoxDecoration(
-            //     color: AppColors.primary,
-            //     borderRadius: BorderRadius.circular(
-            //       16 * getResponsive(context),
-            //     ),
-            //     boxShadow: const [
-            //       BoxShadow(
-            //         color: Colors.black12,
-            //         blurRadius: 8,
-            //         offset: Offset(0, 2),
-            //       ),
-            //     ],
-            //   ),
-            //   child:
-            // ),
           ),
         ),
       ],
@@ -357,7 +333,7 @@ class OTPInputField extends StatefulWidget {
   final TextInputType? textInputType;
   final InputDecoration? decoration;
   final int? maxLenghts;
-
+  final TextStyle? otpTextStyle;
   final void Function(String code) onCompleted;
   final void Function(String code)? onChanged;
 
@@ -372,6 +348,7 @@ class OTPInputField extends StatefulWidget {
     this.textInputType,
     this.decoration,
     this.maxLenghts,
+    this.otpTextStyle,
   });
 
   @override
@@ -438,6 +415,12 @@ class _OTPInputFieldState extends State<OTPInputField> {
             maxLength: widget.maxLenghts ?? 1,
             textAlign: widget.textAlignment ?? TextAlign.center,
             keyboardType: widget.textInputType ?? TextInputType.number,
+            style:
+                widget.otpTextStyle ??
+                TextStyle(
+                  color: AppTheme.getColor(context).onSurface,
+                  fontSize: 30 * getResponsiveText(context),
+                ),
             inputFormatters:
                 widget.inputFormaters ??
                 [FilteringTextInputFormatter.digitsOnly],
@@ -445,34 +428,34 @@ class _OTPInputFieldState extends State<OTPInputField> {
                 widget.decoration ??
                 InputDecoration(
                   hintText: '0',
-
                   hintStyle: TextStyle(
-                    color: AppColors.textGrey200,
+                    color: AppTheme.getColor(context).outlineVariant,
                     fontSize: 30 * getResponsiveText(context),
                   ),
                   counterText: '',
+
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
                       8 * getResponsive(context),
                     ),
-                    borderSide: const BorderSide(
-                      color: AppColors.textBorder300,
+                    borderSide: BorderSide(
+                      color: AppTheme.getColor(context).outline,
                     ),
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
                       8 * getResponsive(context),
                     ),
-                    borderSide: const BorderSide(
-                      color: AppColors.textBorder300,
+                    borderSide: BorderSide(
+                      color: AppTheme.getColor(context).outline,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
                       8 * getResponsive(context),
                     ),
-                    borderSide: const BorderSide(
-                      color: AppColors.textBorder300,
+                    borderSide: BorderSide(
+                      color: AppTheme.getColor(context).outline,
                     ),
                   ),
                   contentPadding: EdgeInsets.symmetric(
