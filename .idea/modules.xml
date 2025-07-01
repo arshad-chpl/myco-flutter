@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/myco_flutter.iml" filepath="$PROJECT_DIR$/myco_flutter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/myco_flutter_android.iml" filepath="$PROJECT_DIR$/android/myco_flutter_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/myco-flutter.iml" filepath="$PROJECT_DIR$/.idea/myco-flutter.iml" />
     </modules>
   </component>
 </project>
