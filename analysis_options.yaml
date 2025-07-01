@@ -9,11 +9,6 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
-analyzer:
-  exclude:
-    - "**/*.g.dart"
-    - "**/*.freezed.dart"
-
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
@@ -26,52 +21,6 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    ### NAMING CONVENTIONS ###
-    camel_case_types: true               # Classes, enums
-    camel_case_extensions: true          # Extensions
-    non_constant_identifier_names: false # Allow variables like `user_id`
-    library_prefixes: true
-    constant_identifier_names: false     # Allow UPPER_SNAKE_CASE only for const
-
-    ### FILE STRUCTURE & FORMAT ###
-    file_names: true                     # Enforce lowercase_with_underscores
-    prefer_single_quotes: true
-    always_use_package_imports: true
-    sort_pub_dependencies: true
-    directives_ordering: true
-    unnecessary_this: true
-    avoid_escaping_inner_quotes: true
-
-    ### FUNCTIONS ###
-    type_annotate_public_apis: true
-    always_declare_return_types: true
-    prefer_expression_function_bodies: true
-    avoid_positional_boolean_parameters: true
-
-    ### CLASSES & STRUCTURE ###
-    annotate_overrides: true
-    prefer_final_fields: true
-    use_key_in_widget_constructors: true
-    avoid_unnecessary_containers: true
-    sized_box_for_whitespace: true
-
-    ### VARIABLES ###
-    prefer_final_locals: true
-    unnecessary_final: false
-    avoid_print: true                  # Use logger instead
-    avoid_redundant_argument_values: true
-
-    ### BEST PRACTICES ###
-    prefer_const_constructors: true
-    prefer_const_literals_to_create_immutables: true
-    avoid_returning_null_for_future: true
-    unnecessary_null_checks: true
-    always_put_required_named_parameters_first: true
-
-    ### NULL SAFETY & CLEAN CODE ###
-    null_check_on_nullable_type_parameter: true
-    omit_local_variable_types: false
-    unnecessary_lambdas: true
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 
