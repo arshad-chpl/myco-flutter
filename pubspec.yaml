@@ -93,6 +93,7 @@ flutter:
     - assets/splash/myco_splash.json
     - assets/take_order/
     - assets/sign_in/
+    - assets/search_society/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

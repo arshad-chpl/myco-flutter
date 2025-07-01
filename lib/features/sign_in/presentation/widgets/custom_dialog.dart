@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class MyCoDialog extends StatelessWidget {
   final String title;
@@ -87,24 +88,18 @@ class _MyCoDialogContent extends StatelessWidget {
           image!,
           SizedBox(height: .016 * getHeight(context)),
         ],
-        Text(
+        CustomText(
           title,
-          style: TextStyle(
-            fontSize: 18 * getResponsiveText(context),
-            fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
-          ),
+          fontSize: 18 * getResponsiveText(context),
+          fontWeight: FontWeight.bold,
+          color: AppTheme.getColor(context).onSurface,
           textAlign: TextAlign.center,
         ),
         if (description != null && description!.isNotEmpty) ...[
           SizedBox(height: .016 * getHeight(context)),
-          Text(
+          CustomText(
             description!,
-            style: TextStyle(
-              fontSize:
-                  AppTheme.getTextStyle(context).bodyMedium?.fontSize ??
-                  16 * getResponsive(context),
-            ),
+            fontSize: 16 * getResponsive(context),
             textAlign: TextAlign.center,
           ),
         ],

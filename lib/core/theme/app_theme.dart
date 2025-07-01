@@ -29,15 +29,17 @@ class AppTheme {
     colorScheme: const ColorScheme.light(
       primary: AppColors.primary, //0xFF2F648E
       secondary: AppColors.secondary, //0xFF2FBBA4
-
       surface: AppColors.backgroundPrimary, //0xFFFAFAFF
       error: AppColors.error, //0xFFE53935
       onPrimary: AppColors.white, //0xFFFFFFFF
       onSecondary: AppColors.white, //0xFFFFFFFF
       onSurface: AppColors.textPrimary, //0xFF101828
+      
       onSurfaceVariant: AppColors.textSecondary, //0xFF475467
       onError: AppColors.white, //0xFFFFFFFF
       outline: AppColors.textfieldBorder, //0xFF98A2B3
+      onSecondaryContainer: AppColors.containerGrey, //0xFFF9FAFB
+      outlineVariant: AppColors.textGrey200, // 0xFFEAECF0
     ),
 
     // text theme
