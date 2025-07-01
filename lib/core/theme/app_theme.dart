@@ -34,9 +34,11 @@ class AppTheme {
       onPrimary: AppColors.white, //0xFFFFFFFF
       onSecondary: AppColors.white, //0xFFFFFFFF
       onSurface: AppColors.textPrimary, //0xFF101828
+      
       onSurfaceVariant: AppColors.textSecondary, //0xFF475467
       onError: AppColors.white, //0xFFFFFFFF
       outline: AppColors.textfieldBorder, //0xFF98A2B3
+      onSecondaryContainer: AppColors.containerGrey, //0xFFF9FAFB
       outlineVariant: AppColors.textGrey200, // 0xFFEAECF0
     ),
 
