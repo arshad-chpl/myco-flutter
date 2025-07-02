@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/sign_in/presentation/widgets/select_other_company_screen.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -284,7 +286,14 @@ class _BottomsheetRadioButtonState extends State<BottomsheetRadioButton> {
                     //     ),
                     //   );
                     // }
-                    
+                    context.pop();
+                    showModalBottomSheet(
+                      scrollControlDisabledMaxHeightRatio: 0.7 * getHeight(context),
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => SelectOtherCompanyScreen(),
+                    );
                   },
                 ),
               ),
