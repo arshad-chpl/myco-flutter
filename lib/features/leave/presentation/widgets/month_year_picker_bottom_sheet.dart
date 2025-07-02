@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
 class MonthYearPickerBottomSheet extends StatefulWidget {
   final int initialMonth;
@@ -159,20 +162,16 @@ class _MonthYearPickerBottomSheetState
         ),
         const SizedBox(height: 20),
         // Submit Button
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue.shade900,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
-          ),
-          onPressed: () {
+        MyCoButton(
+          boarderRadius: 50,
+          isShadowBottomLeft: true,
+          textStyle: TextStyle(letterSpacing: 1.2, color: AppColors.white,
+            fontSize: 14 * getResponsiveText(context),fontWeight: FontWeight.bold),
+          onTap: () {
             widget.onSubmit(selectedMonth, selectedYear);
             Navigator.pop(context);
-          },
-          child: const Text('SUBMIT', style: TextStyle(letterSpacing: 1.2)),
-        ),
+          },title: 'SUMMIT',),
+
       ],
     ),
   );

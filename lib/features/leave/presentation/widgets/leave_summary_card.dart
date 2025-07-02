@@ -22,7 +22,12 @@ class LeaveSummaryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Dynamic Top Info Chips
-          LeaveSummaryGrid(summaryItems: chips),
+          LeaveSummarySection(
+            summaryItems: chips,
+            maxLeavesInMonth: 2,
+            isOtherContainer: false,
+            onViewDates: () {},
+          ),
           // SizedBox(height: height * 0.025),
 
           // Dynamic Dotted Rows
@@ -31,23 +36,6 @@ class LeaveSummaryCard extends StatelessWidget {
       ),
     );
   }
-
-  Widget _infoChip(String title, String value) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-    decoration: BoxDecoration(
-      border: Border.all(color: Colors.blue.shade900),
-      borderRadius: BorderRadius.circular(8),
-      color: Colors.blue.shade50,
-    ),
-    child: Text(
-      '$title : $value',
-      style: TextStyle(
-        fontWeight: FontWeight.w500,
-        fontSize: 13,
-        color: Colors.blue.shade900,
-      ),
-    ),
-  );
 
   Widget _dottedRow(String title, String value) {
     return Padding(

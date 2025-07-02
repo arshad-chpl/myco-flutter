@@ -48,6 +48,8 @@ class MyCoTextfield extends StatefulWidget {
   final String? preFixImage;
   final InputBorder? border;
   final int? maxLenght;
+  final int? maxLines;
+  final int? minLines;
   final TextAlign? textAlignment;
   final List<TextInputFormatter>? inputFormater;
   final double? prefixImageWidth;
@@ -98,6 +100,7 @@ class MyCoTextfield extends StatefulWidget {
     this.textAlignment,
     this.inputFormater,
     this.border,
+    this.maxLines, this.minLines,
   });
 
   @override
@@ -151,6 +154,7 @@ class _MyCoTextfieldState extends State<MyCoTextfield> {
             textAlignment: widget.textAlignment,
             inputFormater: widget.inputFormater,
             border: widget.border,
+      maxLines:widget.maxLines,
           )
         : TextfieldFormTablet(
             labelText: widget.labelText,
@@ -226,6 +230,7 @@ class TextfieldFormTablet extends StatelessWidget {
   final bool? autoFocus;
   final TextStyle? typingtextStyle;
   final int? maxLenght;
+  final int? maxLine;
   final TextAlign? textAlignment;
   final List<TextInputFormatter>? inputFormater;
 
@@ -266,7 +271,7 @@ class TextfieldFormTablet extends StatelessWidget {
     this.typingtextStyle,
     this.maxLenght,
     this.textAlignment,
-    this.inputFormater,
+    this.inputFormater, this.maxLine,
   });
 
   @override
@@ -275,6 +280,8 @@ class TextfieldFormTablet extends StatelessWidget {
     onTap: onClick,
     onSaved: onSaved,
     controller: controller,
+    maxLines: maxLine,
+
     focusNode: focusNode,
     autofocus: autoFocus ?? false,
     maxLength: maxLenght,
@@ -310,6 +317,7 @@ class TextfieldFormTablet extends StatelessWidget {
       labelText: isLabelOn == true ? labelText : null,
 
       hintText: hintText,
+
       hintStyle:
           hintTextStyle ??
           TextStyle(
@@ -410,6 +418,7 @@ class TextFieldFormMobile extends StatelessWidget {
   final double? prefixImageHeight;
   final InputBorder? border;
   final int? maxLenght;
+  final int? maxLines;
   final TextAlign? textAlignment;
   final List<TextInputFormatter>? inputFormater;
   const TextFieldFormMobile({
@@ -458,6 +467,7 @@ class TextFieldFormMobile extends StatelessWidget {
     this.textAlignment,
     this.inputFormater,
     this.border,
+    this.maxLines,
   });
 
   @override
@@ -552,6 +562,7 @@ class TextFieldFormMobile extends StatelessWidget {
         autofocus: autoFocus ?? false,
         keyboardType: textInputType,
         maxLength: maxLenght,
+        maxLines: maxLines,
         textAlign: textAlignment ?? TextAlign.start,
         inputFormatters: inputFormater,
         decoration: InputDecoration(

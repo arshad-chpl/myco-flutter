@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 class LeaveFilterBottomSheet extends StatefulWidget {
   final String selectedValue;
   final Function(String) onSelected;
+  final List options;
 
   const LeaveFilterBottomSheet({
     super.key,
     required this.selectedValue,
-    required this.onSelected,
+    required this.onSelected, required this.options,
   });
 
   @override
@@ -25,7 +26,6 @@ class _LeaveFilterBottomSheetState extends State<LeaveFilterBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final options = ['All Leaves', 'Paid Leaves', 'UnPaid Leaves'];
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -34,7 +34,7 @@ class _LeaveFilterBottomSheetState extends State<LeaveFilterBottomSheet> {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: options.map((option) => RadioListTile<String>(
+        children: widget.options.map((option) => RadioListTile<String>(
             contentPadding: EdgeInsets.zero,
             activeColor: Colors.blue.shade900,
             title: Text(
@@ -59,7 +59,8 @@ class _LeaveFilterBottomSheetState extends State<LeaveFilterBottomSheet> {
 }
 
 
-void showLeaveFilterBottomSheet(BuildContext context, String selected, Function(String) onSelected) {
+void showLeaveFilterBottomSheet(BuildContext context, String selected,
+    Function(String) onSelected, List options) {
   showModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(
@@ -68,6 +69,7 @@ void showLeaveFilterBottomSheet(BuildContext context, String selected, Function(
     builder: (_) => LeaveFilterBottomSheet(
       selectedValue: selected,
       onSelected: onSelected,
+      options: options,
     ),
   );
 }
