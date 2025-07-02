@@ -8,6 +8,7 @@ import 'package:myco_flutter/features/company_selector/presentation/bloc/company
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
@@ -29,7 +30,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.payslip,
+    initialLocation: RoutePaths.employees,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -88,23 +89,21 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-
       ), // Add all modular routes here
-      GoRoute(
-        path: RoutePaths.takeOrder,
-        name: 'take-order',
-        builder: (context, state) => BlocProvider(
-          create: (_) => TakeOrderBloc(),
-          child: TakeOrderPage(),
-        ),
-      ),
+      // GoRoute(
+      //   path: RoutePaths.takeOrder,
+      //   name: 'take-order',
+      //   builder: (context, state) => BlocProvider(
+      //     create: (_) => TakeOrderBloc(),
+      //     child: TakeOrderPage(),
+      //   ),
+      // ),
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
         builder: (context, state) => SignupFormPage(),
-               
-      ), 
-       GoRoute(
+      ),
+      GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
@@ -130,6 +129,11 @@ class AppRouter {
             builder: (context, state) => const PayslipDetail(),
           ),
         ],
+      ),
+      GoRoute(
+        path: RoutePaths.employees,
+        name: 'employees',
+        builder: (context, state) => const EmployeesScreen(),
       ),
       // Add all modular routes here
       // ...authRoutes,
