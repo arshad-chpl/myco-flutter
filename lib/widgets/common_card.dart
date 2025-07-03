@@ -21,6 +21,8 @@ class CommonCard extends StatelessWidget {
   final String? headerPrefixIcon;
   final Color? headerPrefixIconColor;
   final Widget? suffixIcon;
+  final double? headerPrefixIconHeight;
+  final double? headerPrefixIconWidth;
   const CommonCard({
     required this.title,
     required this.bottomWidget,
@@ -39,6 +41,8 @@ class CommonCard extends StatelessWidget {
     this.borderRadius,
     this.headerColor,
     this.suffixIcon,
+    this.headerPrefixIconHeight,
+    this.headerPrefixIconWidth,
   });
 
   @override
@@ -56,7 +60,7 @@ class CommonCard extends StatelessWidget {
       children: [
         // Header
         Container(
-          height: headerHeight ?? 0.06 * getHeight(context),
+          height: headerHeight, //?? 0.06 * getHeight(context),
           padding: headerPadding ?? EdgeInsets.all(10 * getResponsive(context)),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.vertical(
@@ -81,10 +85,9 @@ class CommonCard extends StatelessWidget {
             children: [
               if (showHeaderPrefixIcon == true)
                 Image.asset(
-                  headerPrefixIcon ?? 'assets/images/calendar.png',
-                  // headerPrefixIcon ??  'assets/take_order/profile-circle.png',
-                  height: 0.1 * getHeight(context),
-                  width: 0.06 * getWidth(context),
+                  headerPrefixIcon ?? 'assets/take_order/profile-circle.png',
+                  height: headerPrefixIconHeight ?? 0.1 * getHeight(context),
+                  width: headerPrefixIconWidth ?? 0.06 * getWidth(context),
                   color: headerPrefixIconColor,
                 ),
               if (showHeaderPrefixIcon == true)
@@ -130,7 +133,7 @@ class CommonCard extends StatelessWidget {
                   width: 0.16 * getWidth(context),
                   boarderRadius: 30 * getResponsive(context),
                   height: 0.03 * getHeight(context),
-                  isShadowBottomLeft: true  ,
+                  isShadowBottomLeft: true,
                   enabled: true,
                 ),
               if (suffixIcon != null) suffixIcon ?? const SizedBox.shrink(),
