@@ -284,8 +284,8 @@ class TextFieldFormMobile extends StatelessWidget {
 
 
 
-  
-      
+
+
 
 
     @override
@@ -448,7 +448,7 @@ class TextFieldFormMobile extends StatelessWidget {
                             (isTab
                                 ? 0.5 * getWidth(context)
                                 : 0.03 * getWidth(context)),
-                        height: prefixImageHeight ?? 
+                        height: prefixImageHeight ??
                             (isTab
                                 ? 0.5 * getHeight(context)
                                 : 0.03 * getHeight(context)),

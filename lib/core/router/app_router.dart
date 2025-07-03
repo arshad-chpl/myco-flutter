@@ -15,6 +15,7 @@ import 'package:myco_flutter/features/language_selector/presentation/pages/langu
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/select_other_company_page.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
@@ -69,7 +70,7 @@ class AppRouter {
         builder: (context, state) => DashBoardPage(),
       ),
 
-      
+
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
           providers: [BlocProvider(create: (context) => ListIdeaBloc())],
@@ -90,6 +91,11 @@ class AppRouter {
             builder: (context, state) => IdeaRequest(),
           ),
         ],
+      ),
+      GoRoute(
+        path: RoutePaths.leave,
+        name: 'leave',
+        builder: (context, state) => const LeaveScreen(),
       ),
       // GoRoute(
       //   path: RoutePaths.language,
@@ -120,8 +126,8 @@ class AppRouter {
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
         builder: (context, state) => SignupFormPage(),
-               
-      ), 
+
+      ),
        GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',

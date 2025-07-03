@@ -59,6 +59,9 @@ dependencies:
   badges: ^3.1.2
   dotenv: ^4.2.0
   json_annotation: ^4.9.0
+  table_calendar: ^3.2.0
+  flutter_speed_dial:
+  fluttertoast: ^8.2.12
 
 dev_dependencies:
   flutter_test:

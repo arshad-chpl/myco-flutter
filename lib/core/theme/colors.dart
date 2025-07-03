@@ -75,4 +75,7 @@ class AppColors {
     0xFF64748B,
   ); // Muted blue-gray border
   static const Color containerGrey = Color(0xFFF9FAFB);
+  static const Color lightBlue = Color(0xFFDEE5EF);
+  static const Color littleDarkBlue = Color(0xFF5B84A6);
+
 }
