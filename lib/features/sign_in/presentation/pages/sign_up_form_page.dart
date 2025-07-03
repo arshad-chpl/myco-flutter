@@ -10,6 +10,7 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_get_started.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_term_and_condition.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/customotp_bottomsheet.dart';
+import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
@@ -38,6 +39,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
     'USA': '+1',
     'INA': '+62',
   };
+  String? _selectedValue;
+
+  final List<String> _dropdownItems = ['Option 1', 'Option 2', 'Option 3'];
+
+  final List<String> leaveTypes = ['Paid leave', 'Unpaid leave', 'Casual leave'];
+  String? selectedLeaveType;
   @override
   Widget build(BuildContext context) => Container(
       color: AppTheme.getColor(context).surface,
@@ -79,7 +86,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   LabeledDropdown<String>(
                     label: "Select Branch",
                     isRequired: true,
-                    items: [],
+                    items: _dropdownItems,
                     selectedItem: selectedBranch,
                     itemToString: (item) => item,
                     onChanged: (val, index) {
@@ -108,7 +115,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       });
                     },
                     prefix: Image.asset(
-                      "assets/sign_in/branch_icon.png",
+                      "assets/sign_in/department_icon.png",
                       height: 0.025 * getHeight(context),
                       fit: BoxFit.contain,
                     ),
@@ -127,7 +134,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       });
                     },
                     prefix: Image.asset(
-                      "assets/sign_in/branch_icon.png",
+                      "assets/sign_in/sub_department_icon.png",
                       height: 0.025 * getHeight(context),
                       fit: BoxFit.contain,
                     ),
@@ -146,7 +153,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       });
                     },
                     prefix: Image.asset(
-                      "assets/sign_in/branch_icon.png",
+                      "assets/sign_in/clock_icon.png",
                       height: 0.025 * getHeight(context),
                       fit: BoxFit.contain,
                     ),
@@ -166,7 +173,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       });
                     },
                     prefix: Image.asset(
-                      "assets/sign_in/branch_icon.png",
+                      "assets/sign_in/designation_icon.png",
                       height: 0.025 * getHeight(context),
                       fit: BoxFit.contain,
                     ),
@@ -185,7 +192,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       });
                     },
                     prefix: Image.asset(
-                      "assets/sign_in/branch_icon.png",
+                      "assets/sign_in/joining_date_icon.png",
                       height: 0.025 * getHeight(context),
                       fit: BoxFit.contain,
                     ),
@@ -198,7 +205,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                         hint: "First Name",
                         // controller: _firstNameController,
                         validator: (val) =>
-                            val == null || val.isEmpty ? "Required" : null,
+                        val == null || val.isEmpty ? "Required" : null,
                         textInputType: TextInputType.name,
                         widthFactor: 0.42 * getWidth(context),
                         textFieldHeight: 0.0165 * getHeight(context),
@@ -305,7 +312,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   SizedBox(height: 0.015 * getHeight(context)),
                   Row(
                     children: [
-                      customCheckbox(
+                      CustomCheckbox(
                         value: isChecked,
                         onChanged: (val) {
                           setState(() {
@@ -314,11 +321,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
                         },
                         borderColor: isChecked
                             ? AppTheme.getColor(context).primary
-                            : AppTheme.getColor(context).onSecondaryContainer, // 🔁 dynamic
-                        activeColor: AppTheme.getColor(context).onPrimaryContainer,
+                            : AppTheme.getColor(context).primary, // 🔁 dynamic
+                        activeColor: AppTheme.getColor(context).primaryContainer,
                         checkColor: AppTheme.getColor(context).primary,
                         height: 0.026 * getHeight(context),
                         width: 0.056 * getWidth(context),
+                        unCheckedBackground: AppTheme.getColor(context).primaryContainer
                       ),
                       SizedBox(width: 0.015 * getWidth(context)),
                       SizedBox(
@@ -481,28 +489,4 @@ class _SignupFormPageState extends State<SignupFormPage> {
         ),
       ),
     );
-}
-
-Widget customCheckbox({
-  required bool value,
-  required Function(bool) onChanged,
-  required Color borderColor,
-  required Color activeColor,
-  required Color checkColor,
-  required double height,
-  required double width,
-}) {
-  return GestureDetector(
-    onTap: () => onChanged(!value),
-    child: Container(
-      height: height,
-      width: width,
-      decoration: BoxDecoration(
-        color: value ? activeColor : Colors.transparent,
-        border: Border.all(color: borderColor, width: 1),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: value ? Icon(Icons.check, size: 18, color: checkColor) : null,
-    ),
-  );
 }
