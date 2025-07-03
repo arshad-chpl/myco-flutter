@@ -8,15 +8,23 @@ class RoutePaths {
   static const String takeOrder = '/take-order';
   static const String getStarted = '/get-started';
   static const String companySearch = '/search-company';
-  
+
   static const String offers = '/offers';
   static const String products = '/products';
   static const String orderSummary = '/order-summary';
   static const String allDistributor = '/all-distributor';
   static const String orderHistory = '/order-history';
   static const String editOrder = '/edit-order';
-  static const String distributorVisitor = '/distributor-visitor';
-  static const String noOrder = '/no-order';
+  static const String distributorVisitor = 'distributor-visitor';
+  static const String noOrder = 'no-order';
+  static const String selectOtherCompany = '/select-other-company';
+  static const String signUpForm = '/sign-up-form';
+  // static const String distributorVisitor = '/distributor-visitor';
+  // static const String noOrder = '/no-order';
+
+  static const String payslip = '/payslip';
+  static const String salaryBreakUp = '/salary-break-up';
+  static const String payslipDetail = '/payslip-detail';
   static const String ideabox = '/idea-box';
   static const String ideaRequest = '/idea-request';
 }

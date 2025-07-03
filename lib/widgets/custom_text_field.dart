@@ -15,7 +15,7 @@ class MyCoTextfield extends StatefulWidget {
   final String? hintText;
   final TextEditingController? controller;
   final void Function(String?)? onSaved;
-  final bool isSuffixIconOn;
+  final bool? isSuffixIconOn;
   final String? image1;
   final String? image2;
   final Color? color;
@@ -69,7 +69,7 @@ class MyCoTextfield extends StatefulWidget {
     this.hintText,
     this.controller,
     this.onSaved,
-    required this.isSuffixIconOn,
+    this.isSuffixIconOn,
     this.image1,
     this.image2,
     this.color,

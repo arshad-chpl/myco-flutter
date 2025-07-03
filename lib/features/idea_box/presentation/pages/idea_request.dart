@@ -41,15 +41,15 @@ class IdeaRequest extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () async{
-                  final selectedDate = await showPicker(
-                    context,
-                    minDate: DateTime(2020),
-                    maxDate: DateTime(2030),
-                    pickDay: false,
-                    timePicker: false,
-                  );
-                },
+                // onTap: () async{
+                //   final selectedDate = await showPicker(
+                //     context,
+                //     minDate: DateTime(2020),
+                //     maxDate: DateTime(2030),
+                //     pickDay: false,
+                //     timePicker: false,
+                //   );
+                // },
                 child: Row(
                   children: [
                     CustomText(

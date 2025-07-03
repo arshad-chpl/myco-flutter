@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/theme/text_theme.dart';
+import 'package:myco_flutter/core/utils/util.dart';
 
 class AppTheme {
   static ColorScheme getColor(BuildContext context) =>
@@ -15,14 +16,12 @@ class AppTheme {
     primaryColor: AppColors.primary,
     splashColor: AppColors.splashBg,
     dividerColor: AppColors.textfieldBorder,
+
     appBarTheme: AppBarTheme(
       surfaceTintColor: Colors.transparent,
       backgroundColor: AppColors.backgroundPrimary,
       foregroundColor: AppColors.black,
       elevation: 0,
-      titleTextStyle: AppTextTheme.getTextTheme(
-        context,
-      ).titleLarge?.copyWith(color: AppColors.textPrimary),
     ),
 
     // Color theme
@@ -30,6 +29,8 @@ class AppTheme {
       primary: AppColors.primary, //0xFF2F648E
       secondary: AppColors.secondary, //0xFF2FBBA4
       surface: AppColors.backgroundPrimary, //0xFFFAFAFF
+      surfaceContainer: AppColors.lightTeal, //0xFFEEF7FD
+      surfaceContainerHigh: AppColors.containerHigh,
       error: AppColors.error, //0xFFE53935
       onPrimary: AppColors.white, //0xFFFFFFFF
       onSecondary: AppColors.white, //0xFFFFFFFF
@@ -40,10 +41,8 @@ class AppTheme {
       outline: AppColors.textfieldBorder, //0xFF98A2B3
       onSecondaryContainer: AppColors.containerGrey, //0xFFF9FAFB
       outlineVariant: AppColors.textGrey200, // 0xFFEAECF0
+      primaryContainer: AppColors.lightPurple //0xFFF4F3FF
     ),
-
-    // text theme
-    textTheme: AppTextTheme.getTextTheme(context),
   );
 
   // Optional: add this now for future dark mode use
@@ -56,22 +55,21 @@ class AppTheme {
       backgroundColor: Colors.grey[900],
       foregroundColor: AppColors.white,
       elevation: 0,
-      titleTextStyle: AppTextTheme.getTextTheme(
-        context,
-      ).titleLarge?.copyWith(color: AppColors.white),
     ),
-    colorScheme: ColorScheme.dark(
-      primary: AppColors.black,
-      secondary: AppColors.secondary,
-      surface: Colors.grey[850]!,
-      error: AppColors.error,
-      onPrimary: AppColors.white,
-      onSecondary: AppColors.black,
-      onSurface: Colors.white70,
-      onError: Colors.white,
+    colorScheme: const ColorScheme.dark(
+      primary: AppColors.primary, //0xFF2F648E
+      secondary: AppColors.secondary, //0xFF2FBBA4
+
+      surface: AppColors.darkbackgroundPrimary, //0xFFFAFAFF
+      surfaceContainer: AppColors.lightTeal, //0xFFEEF7FD
+      error: AppColors.error, //0xFFE53935
+      onPrimary: AppColors.white, //0xFFFFFFFF
+      onSecondary: AppColors.white, //0xFFFFFFFF
+      onSurface: AppColors.darktextPrimary, //0xFF101828
+      onSurfaceVariant: AppColors.darktextSecondary, //0xFF475467
+      onError: AppColors.white, //0xFFFFFFFF
+      outline: AppColors.darktextfieldBorder, //0xFF98A2B3
+      outlineVariant: AppColors.textGrey200, //0xFFEAECF0
     ),
-    textTheme: AppTextTheme.getTextTheme(
-      context,
-    ).apply(bodyColor: Colors.white, displayColor: Colors.white),
   );
 }

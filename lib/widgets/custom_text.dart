@@ -11,7 +11,7 @@ class CustomText extends StatelessWidget {
   final int? maxLines;
   final TextOverflow? overflow;
   final TextDecoration? decoration;
-  final AppTheme? underlineColor;
+  final Color? decorationColor;
 
   const CustomText(
     this.text, {
@@ -23,23 +23,21 @@ class CustomText extends StatelessWidget {
     this.maxLines,
     this.overflow,
     this.decoration,
-    this.underlineColor,
+    this.decorationColor,
   });
 
   @override
   Widget build(BuildContext context) => Text(
-        text,
-        textAlign: textAlign,
-        maxLines: maxLines,
-        overflow: overflow,
-        style: TextStyle(
-          fontFamily: Util.instance.getFontFamily(fontWeight),
-          fontSize: fontSize,
-          color: color ?? AppTheme.getColor(context).onSurface,
-          decoration: decoration,
-          decorationColor: underlineColor != null
-              ? AppTheme.getColor(context).primary
-              : null,
-        ),
-      );
+    text,
+    textAlign: textAlign,
+    maxLines: maxLines,
+    overflow: overflow,
+    style: TextStyle(
+      fontFamily: Util.getFontFamily(fontWeight),
+      fontSize: fontSize,
+      color: color ?? AppTheme.getColor(context).onSurface,
+      decoration: decoration,
+      decorationColor: decorationColor,
+    ),
+  );
 }

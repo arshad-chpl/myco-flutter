@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/router/app_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-
 import 'package:myco_flutter/di/injector.dart';
 
 Future<void> main() async {
