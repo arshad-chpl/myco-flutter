@@ -24,8 +24,8 @@ class LeaveActionButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(12),
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: width * 0.01,
-          vertical: height * 0.015,
+          horizontal: width * 0.04,
+          vertical: height * 0.01,
         ),
         decoration: BoxDecoration(
           color: AppColors.lightBlue,

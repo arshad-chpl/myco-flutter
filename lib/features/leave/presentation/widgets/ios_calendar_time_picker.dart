@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
@@ -110,7 +111,6 @@ class _DialDatePickerWidgetState extends State<DialDatePickerWidget> {
             ),
             onPressed: () {
               widget.onSubmit(_selectedDate);
-              Navigator.of(context).pop();
             },
           ),
         ),
@@ -235,6 +235,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
               )
               .toList(),
           onChanged: (index) {
+            HapticFeedback.lightImpact();
             setState(() {
               selectedDay = dayList[index];
               _notifyChange();
@@ -246,6 +247,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         controller: FixedExtentScrollController(initialItem: selectedMonth - 1),
         children: monthNames.map((m) => Center(child: Text(m))).toList(),
         onChanged: (index) {
+          HapticFeedback.lightImpact();
           setState(() {
             selectedMonth = index + 1;
             _generateDayList();
@@ -262,6 +264,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
             .map((y) => Center(child: Text(y.toString())))
             .toList(),
         onChanged: (index) {
+          HapticFeedback.lightImpact();
           setState(() {
             selectedYear = yearList[index];
             _generateDayList();

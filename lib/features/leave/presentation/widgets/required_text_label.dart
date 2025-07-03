@@ -28,7 +28,7 @@ class RequiredTextLabel extends StatelessWidget {
               WidgetSpan(
                 child: Padding(
                   padding: EdgeInsets.only(left: spacing ?? 4),
-                  child: Text(
+                  child: const Text(
                     '*',
                     style: TextStyle(
                       color: Colors.red,

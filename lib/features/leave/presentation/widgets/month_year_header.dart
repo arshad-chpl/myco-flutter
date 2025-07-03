@@ -68,7 +68,7 @@ class _MonthYearHeaderState extends State<MonthYearHeader> {
 
   @override
   Widget build(BuildContext context) => Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       ArrowButton(icon: Icons.chevron_left, onTap: () => _changeMonth(-1)),
       const SizedBox(width: 8),

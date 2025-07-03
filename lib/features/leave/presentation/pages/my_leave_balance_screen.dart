@@ -71,7 +71,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
     ),
     body: SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(25.0),
         child: Column(
           spacing: 0.015 * getHeight(context),
           children: [
@@ -145,7 +145,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
                   LeaveSummaryItem(title: 'Leave Payout', value: '0'),
                   LeaveSummaryItem(title: 'Carry Forward', value: '0'),
                 ],
-                maxLeavesInMonth: 0,
+                maxLeavesInMonth: 2,
                 onViewDates: () {
                   showLeaveDatesBottomSheet(context, [
                     LeaveDetail(

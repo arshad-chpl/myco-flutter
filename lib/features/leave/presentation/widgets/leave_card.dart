@@ -13,7 +13,7 @@ class LeaveEntry {
   final String approvedBy;
   final String status;
   final String payStatus;
-
+  final Widget onViewDetailWidget;
   LeaveEntry({
     required this.date,
     required this.leaveType,
@@ -23,6 +23,7 @@ class LeaveEntry {
     required this.approvedBy,
     required this.status,
     required this.payStatus,
+    required this.onViewDetailWidget,
   });
 }
 
@@ -85,7 +86,9 @@ class LeaveCard extends StatelessWidget {
             title: leave.date,
             headerColor: leave.status == 'Pending'
                 ? AppColors.spanishYellow
-                : AppColors.primary,
+                : leave.status == 'Reject'
+                ? AppColors.red
+                : AppColors.secondary,
             bottomWidget: Padding(
               padding: EdgeInsets.all(10 * responsive),
               child: Column(
@@ -166,7 +169,24 @@ class LeaveCard extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
+                                ),
+                                builder: (_) => Padding(
+                                  padding: EdgeInsets.all(
+                                    20 * responsive,
+                                  ),
+                                  child: leave.onViewDetailWidget,
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primary,
                               padding: const EdgeInsets.symmetric(

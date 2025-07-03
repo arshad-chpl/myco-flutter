@@ -116,6 +116,7 @@ class LeaveSummarySection extends StatelessWidget {
                         ],
                       ),
                     ),
+                    SizedBox(height: 12 * responsive),
                   ],
                 ),
         ],
