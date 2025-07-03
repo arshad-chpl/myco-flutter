@@ -106,6 +106,7 @@ flutter:
     - assets/take_order/
     - assets/sign_in/
     - assets/search_society/
+    - assets/ideabox/
     - assets/payslip/
     - assets/media_picker/
   # An image asset can refer to one or more resolution-specific "variants", see
