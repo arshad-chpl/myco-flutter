@@ -41,6 +41,7 @@ class AppTheme {
       outline: AppColors.textfieldBorder, //0xFF98A2B3
       onSecondaryContainer: AppColors.containerGrey, //0xFFF9FAFB
       outlineVariant: AppColors.textGrey200, // 0xFFEAECF0
+      primaryContainer: AppColors.lightPurple //0xFFF4F3FF
     ),
   );
 
