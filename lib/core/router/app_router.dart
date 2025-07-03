@@ -12,6 +12,9 @@ import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.d
 import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/add_short_leave_screen.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/my_team_leaves_screen.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
@@ -33,7 +36,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.leave,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -70,7 +73,6 @@ class AppRouter {
         builder: (context, state) => DashBoardPage(),
       ),
 
-
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
           providers: [BlocProvider(create: (context) => ListIdeaBloc())],
@@ -94,8 +96,23 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.leave,
-        name: 'leave',
+        name: '/leave',
         builder: (context, state) => const LeaveScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.myLeaveBalanceScreen,
+        name: '/my_leave_balance_screen',
+        builder: (context, state) => const MyLeaveBalanceScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.myTeamLeavesScreen,
+        name: '/my_team_leaves_screen',
+        builder: (context, state) => const MyTeamLeavesScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.addShortLeaveScreen,
+        name: '/add_short_leave_screen',
+        builder: (context, state) => AddShortLeaveScreen(),
       ),
       // GoRoute(
       //   path: RoutePaths.language,
@@ -120,15 +137,13 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-
       ), // Add all modular routes here
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
         builder: (context, state) => SignupFormPage(),
-
       ),
-       GoRoute(
+      GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
