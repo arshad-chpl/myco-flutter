@@ -60,6 +60,15 @@ dependencies:
   dotenv: ^4.2.0
   json_annotation: ^4.9.0
 
+  # Media_Picker_Packages
+  photo_manager: ^3.7.1
+  photo_manager_image_provider: ^2.2.0
+  image_picker: ^1.1.2
+  file_picker: ^10.2.0
+
+  # Permission
+  permission_handler: ^12.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -98,6 +107,7 @@ flutter:
     - assets/sign_in/
     - assets/search_society/
     - assets/payslip/
+    - assets/media_picker/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

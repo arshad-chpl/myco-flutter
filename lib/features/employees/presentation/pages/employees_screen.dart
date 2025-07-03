@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/employees/presentation/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class EmployeesScreen extends StatefulWidget {
@@ -33,6 +34,27 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
       appBarBackgoundColor: AppTheme.getColor(context).surface,
       appbartxtcolor: AppTheme.getColor(context).onSurface,
       // fontWeight: AppTextTheme.getTextTheme(context).titleMedium,
+    ),
+    body: Column(
+      children: [
+        const SizedBox(height: 50),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomMediaPickerContainer(
+            title: 'Assets Image',
+            titleFontSize: 14,
+            imageTitle: 'Capture Image',
+            containerHeight: 100,
+            multipleImage: 5,
+            imagePath: 'assets/media_picker/gallery-export.png',
+            backgroundColor: Colors.blue.shade50,
+            isCameraShow: true,
+            isGalleryShow: true,
+            isDocumentShow: true,
+            isCropImage: true,
+          ),
+        ),
+      ],
     ),
   );
 }
