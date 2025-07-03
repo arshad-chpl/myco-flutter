@@ -7,6 +7,9 @@ import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
+import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
+import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
+import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
@@ -22,7 +25,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.login,
+    initialLocation: RoutePaths.ideaRequest,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -53,6 +56,29 @@ class AppRouter {
           child: const SelectCompanyPage(),
         ),
       ),
+
+      
+      ShellRoute(
+        builder: (context, state, child) => MultiBlocProvider(
+          providers: [BlocProvider(create: (context) => ListIdeaBloc())],
+          child: child,
+        ),
+        routes: [
+          GoRoute(
+            path: RoutePaths.ideabox,
+            name: 'idea-box',
+            builder: (context, state) => BlocProvider(
+              create: (context) => ListIdeaBloc(),
+              child: ListOfIdeas(),
+            ),
+          ),
+          GoRoute(
+            path: RoutePaths.ideaRequest,
+            name: '/idea-request',
+            builder: (context, state) => IdeaRequest(),
+          ),
+        ],
+      ),
       // GoRoute(
       //   path: RoutePaths.language,
       //   name: 'language',
@@ -76,8 +102,8 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-      ), 
-       GoRoute(
+      ),
+      GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
@@ -85,8 +111,9 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.companySearch,
         name: 'companySearch',
-        builder: (context, state) => const TermsAndConditions(),
+        builder: (context, state) => const SearchCompanyScreen(),
       ),
+
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,

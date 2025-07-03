@@ -71,7 +71,8 @@ class SearchCompanyScreen extends StatelessWidget {
                   color: AppTheme.getColor(context).outline,
                 ),
                 preFixImage: 'assets/search_society/company_icon.png',
-        
+                isReadOnly: true,
+                
                 border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   borderSide: BorderSide(color: Color(0xFF98A2B3), width: 1),

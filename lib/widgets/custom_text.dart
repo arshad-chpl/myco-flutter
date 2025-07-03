@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/util.dart';
-
 class CustomText extends StatelessWidget {
   final String text;
   final double fontSize;
@@ -11,6 +11,7 @@ class CustomText extends StatelessWidget {
   final int? maxLines;
   final TextOverflow? overflow;
   final TextDecoration? decoration;
+  final AppTheme? underlineColor;
 
   const CustomText(
     this.text, {
@@ -22,19 +23,23 @@ class CustomText extends StatelessWidget {
     this.maxLines,
     this.overflow,
     this.decoration,
+    this.underlineColor,
   });
 
   @override
   Widget build(BuildContext context) => Text(
-    text,
-    textAlign: textAlign,
-    maxLines: maxLines,
-    overflow: overflow,
-    style: TextStyle(
-      fontFamily: Util.instance.getFontFamily(fontWeight),
-      fontSize: fontSize,
-      color: color ?? AppTheme.getColor(context).onSurface,
-      decoration: decoration,
-    ),
-  );
+        text,
+        textAlign: textAlign,
+        maxLines: maxLines,
+        overflow: overflow,
+        style: TextStyle(
+          fontFamily: Util.instance.getFontFamily(fontWeight),
+          fontSize: fontSize,
+          color: color ?? AppTheme.getColor(context).onSurface,
+          decoration: decoration,
+          decorationColor: underlineColor != null
+              ? AppTheme.getColor(context).primary
+              : null,
+        ),
+      );
 }
