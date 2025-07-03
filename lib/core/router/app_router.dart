@@ -11,13 +11,16 @@ import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart'
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
+import 'package:myco_flutter/features/visit/presentation/bloc/camera_bloc/camera_bloc.dart';
+import 'package:myco_flutter/features/visit/presentation/bloc/date_time_bloc/date_time_bloc.dart';
+import 'package:myco_flutter/features/visit/presentation/pages/face_detection.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.takeOrder,
+    initialLocation: RoutePaths.faceDetection,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -66,7 +69,25 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-      ), // Add all modular routes here
+      ),
+
+
+      GoRoute(
+        path: RoutePaths.faceDetection,
+        name: 'faceDetection',
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => GetIt.I<DateTimeBLoc>()..add(StartDateTime()),
+            ),
+            BlocProvider(
+                create: (_) => CameraBloc()..add(LaunchCamera()),
+            ),
+          ],
+          child: const FaceDetectionPage(),
+        )
+      )
+      // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,
     ],

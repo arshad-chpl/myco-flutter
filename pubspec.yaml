@@ -56,6 +56,8 @@ dependencies:
   flutter_dotenv: ^5.2.1
   device_preview: ^1.2.0
   flutter_svg: ^2.2.0
+  permission_handler: ^12.0.0+1
+  camera: ^0.11.1
 
 dev_dependencies:
   flutter_test:
@@ -89,6 +91,7 @@ flutter:
     - assets/splash/myco_splash.json
     - assets/take_order/
     - assets/sign_in/
+    - assets/face_detection/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
