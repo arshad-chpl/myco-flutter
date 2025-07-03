@@ -25,4 +25,6 @@ class RoutePaths {
   static const String payslip = '/payslip';
   static const String salaryBreakUp = '/salary-break-up';
   static const String payslipDetail = '/payslip-detail';
+  static const String ideabox = '/idea-box';
+  static const String ideaRequest = '/idea-request';
 }

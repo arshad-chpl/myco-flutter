@@ -7,6 +7,9 @@ import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
+import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
+import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
+import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
@@ -64,6 +67,29 @@ class AppRouter {
         path: RoutePaths.dashboard,
         name: 'dashboard',
         builder: (context, state) => DashBoardPage(),
+      ),
+
+      
+      ShellRoute(
+        builder: (context, state, child) => MultiBlocProvider(
+          providers: [BlocProvider(create: (context) => ListIdeaBloc())],
+          child: child,
+        ),
+        routes: [
+          GoRoute(
+            path: RoutePaths.ideabox,
+            name: 'idea-box',
+            builder: (context, state) => BlocProvider(
+              create: (context) => ListIdeaBloc(),
+              child: ListOfIdeas(),
+            ),
+          ),
+          GoRoute(
+            path: RoutePaths.ideaRequest,
+            name: '/idea-request',
+            builder: (context, state) => IdeaRequest(),
+          ),
+        ],
       ),
       // GoRoute(
       //   path: RoutePaths.language,
@@ -123,6 +149,7 @@ class AppRouter {
           ),
         ],
       ),
+
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,
