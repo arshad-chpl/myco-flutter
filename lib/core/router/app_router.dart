@@ -13,7 +13,6 @@ import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
-import 'package:myco_flutter/features/sign_in/presentation/pages/select_other_company_page.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';

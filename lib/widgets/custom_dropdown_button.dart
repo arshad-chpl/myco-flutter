@@ -1,9 +1,7 @@
-// ignore_for_file: prefer_expression_function_bodies
-
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+
 
 class CustomPopupDropdownStyled<T> extends StatelessWidget {
   final List<T> items;
@@ -25,6 +23,9 @@ class CustomPopupDropdownStyled<T> extends StatelessWidget {
   final Color? colorBackground;
   final double? popupElevation;
   final double? borderRadius;
+  final double ? iconSize;
+  final Icon? icon;
+  final Color? iconColor;
   final double? spacing;
 
   const CustomPopupDropdownStyled({
@@ -47,18 +48,16 @@ class CustomPopupDropdownStyled<T> extends StatelessWidget {
     this.border,
     this.colorBackground,
     this.popupElevation,
-    this.borderRadius,
-    this.spacing,
+    this.borderRadius, this.iconSize, this.icon, this.iconColor, this.spacing,
+
   });
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
+  Widget build(BuildContext context) => SizedBox(
       width: width ?? double.infinity,
-      height: height ?? 50,
+      height: height ??  50,
       child: PopupMenuButton<T>(
-        itemBuilder: (context) {
-          return items.asMap().entries.map((entry) {
+        itemBuilder: (context) => items.asMap().entries.map((entry) {
             final index = entry.key;
             final item = entry.value;
 
@@ -67,58 +66,61 @@ class CustomPopupDropdownStyled<T> extends StatelessWidget {
               enabled: !useRadioList,
               child: useRadioList
                   ? RadioListTile<T>(
-                      value: item,
-                      groupValue: selectedItem,
-                      onChanged: (val) {
-                        Navigator.pop(context);
-                        onChanged?.call(val, index);
-                      },
-                      title: Text(
-                        itemToString(item),
-                        style: TextStyle(
-                          fontSize: 14 * getResponsiveText(context),
-                          color: AppColors.primary,
-                        ),
-                      ),
-                      activeColor: AppColors.primary,
-                      contentPadding: EdgeInsets.zero,
-                      dense: true,
-                    )
+                value: item,
+                groupValue: selectedItem,
+                onChanged: (val) {
+                  Navigator.pop(context);
+                  onChanged?.call(val, index);
+                },
+                title: Text(
+                  itemToString(item),
+                  style: TextStyle(
+                    fontSize: AppTheme
+                        .getTextStyle(context).bodyMedium!.fontSize,
+                    color: AppTheme.getColor(context).primary,
+
+                  ),
+                ),
+                activeColor: AppTheme.getColor(context).primary,
+                contentPadding: EdgeInsets.zero,
+                dense: true,
+              )
                   : Text(
-                      itemToString(item),
-                      style: TextStyle(
-                        // fontSize:
-                        // AppTheme.lightTheme.textTheme.bodyMedium?.fontSize,
-                        color: AppColors.primary,
-                      ),
-                    ),
+                itemToString(item),
+                style: TextStyle(
+                  fontSize: AppTheme
+                      .getTextStyle(context).bodyMedium!.fontSize,
+                  color: AppTheme.getColor(context).primary,
+
+                ),
+              ),
             );
-          }).toList();
-        },
+          }).toList(),
         onSelected: useRadioList
             ? null
             : (value) {
-                final index = items.indexOf(value);
-                onChanged?.call(value, index);
-              },
-        color: colorBackground ?? AppColors.white,
-        elevation: popupElevation ?? 4,
-        shape:
-            popupShape ??
+          final index = items.indexOf(value);
+          onChanged?.call(value, index);
+        },
+        color: colorBackground ?? AppTheme.getColor(context).onPrimary,
+        elevation: popupElevation ?? 4 * getResponsive(context),
+        shape: popupShape ??
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-              side: const BorderSide(color: AppColors.primary, width: 1.5),
+              borderRadius: BorderRadius.circular(8 * getResponsive(context)),
+              side: BorderSide(color: AppTheme.getColor(context).primary, width: 0.002 * getWidth(context) ),
             ),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: EdgeInsets.symmetric(
+            horizontal: 12 * getResponsive(context),
+          ),
           decoration: BoxDecoration(
-            color: colorBackground ?? AppColors.white,
-            borderRadius: BorderRadius.circular(borderRadius ?? 8),
-            border: border ?? Border.all(color: AppColors.primary),
+            color: colorBackground ?? AppTheme.getColor(context).onPrimary,
+            borderRadius: BorderRadius.circular(borderRadius ?? 8 * getResponsive(context)),
+            border: border ?? Border.all(color: AppTheme.getColor(context).primary, width: 0.002 * getWidth(context)),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               if (prefix != null)
                 prefix!
@@ -126,51 +128,48 @@ class CustomPopupDropdownStyled<T> extends StatelessWidget {
                 GestureDetector(
                   onTap: onTapPrefix,
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 16.0),
+                    padding: EdgeInsets.only(right: 16.0 * getResponsive(context)),
                     child: Image.asset(
                       prefixImage!,
-                      height: prefixImageHeight ?? 18,
-                      width: prefixImageWidth ?? 18,
-                      fit: BoxFit.cover,
+                      height: prefixImageHeight ?? 0.018 * getHeight(context),
+                      width: prefixImageWidth ?? 0.018 *getWidth(context),
+                      fit: BoxFit.contain,
                     ),
                   ),
                 )
               else
                 const SizedBox.shrink(),
-
-              SizedBox(width: spacing ?? 0.01 * getWidth(context)),
-              Text(
-                selectedItem != null
-                    ? itemToString(selectedItem as T)
-                    : hintText ?? 'Select',
-                // style: selectedItem != null
-                //     ? AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
-                //   color: AppColors.primary,
-                // )
-                //     : hintTextStyle ??
-                //     AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
-                //       color: AppColors.primary,
-                //     ),
-                overflow: TextOverflow.ellipsis,
+              
+              SizedBox(width: spacing??0,),
+              Expanded(
+                child: Text(
+                  selectedItem != null
+                      ? itemToString(selectedItem as T)
+                      : hintText ?? 'Select',
+                  style: selectedItem != null
+                      ? AppTheme.getTextStyle(context).bodyMedium?.copyWith(
+                    color: AppTheme.getColor(context).primary,
+                  )
+                      : hintTextStyle ??
+                      AppTheme.getTextStyle(context).bodyMedium?.copyWith(
+                        color: AppTheme.getColor(context).primary,
+                      ),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-              const Icon(
-                Icons.arrow_drop_down,
-                color: AppColors.primary,
-                size: 20,
-              ),
+              Icon(icon?.icon ?? Icons.keyboard_arrow_down, color:iconColor??  AppTheme.getColor(context).primary, size:iconSize?? 30 * getResponsive(context)),
             ],
           ),
         ),
       ),
     );
-  }
 }
 
 //below given code is the example of the usage of the above code in ui
 
 //  final List<String> leavetype = ['Paid leave', 'Unpaid leave', 'Casual leave'];
 //   String? selectedleavetype;
-// CustomPopupDropdownStyled<String>(
+// //CustomPopupDropdownStyled<String>(
 //                     items: leavetype,
 //                     hintText: 'Select Leave Type',
 //                     // width: double.infinity,

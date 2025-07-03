@@ -42,7 +42,7 @@ class PhoneNumberField extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 75,
+            width: 80,
             height: 45,
             child: CustomPopupDropdownStyled<String>(
               // border: InputBorder.none,
