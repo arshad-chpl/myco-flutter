@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
@@ -103,14 +104,15 @@ class _SplashPageState extends State<SplashPage>
       }
     },
     child: Scaffold(
-      backgroundColor: AppColors.splashBg,
+      backgroundColor: AppTheme.getColor(context).onPrimary,
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [AppColors.secondary, AppColors.white, AppColors.secondary],
-          ),
+          // gradient: LinearGradient(
+          //   begin: Alignment.topLeft,
+          //   end: Alignment.bottomRight,
+          //   colors: [AppColors.secondary, AppColors.white, AppColors.secondary],
+          // ),
+          color: AppTheme.getColor(context).onPrimary
         ),
         child: Stack(
           children: [

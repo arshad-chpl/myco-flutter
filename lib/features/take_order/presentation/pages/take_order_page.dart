@@ -188,7 +188,7 @@ class AllProductsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(
                       12 * getResponsive(context),
                     ),
-                  ),
+                  ), 
                 ),
                 separatorBuilder: (context, index) =>
                     SizedBox(height: 0.01 * getHeight(context)),
