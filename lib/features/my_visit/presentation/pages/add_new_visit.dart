@@ -4,11 +4,13 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_custom_radio_button.dart';
+import 'package:myco_flutter/widgets/big_textfield.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
 import 'package:myco_flutter/widgets/custom_text_radio_button.dart';
 
 class AddNewVisit extends StatefulWidget {
@@ -41,18 +43,21 @@ class _AddNewVisitState extends State<AddNewVisit> {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppColors.backgroundPrimary,
-    appBar: AppBar(
-      title: const Text(
-        'Add New Visit',
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-      ),
+    appBar: CustomAppbar(
+      appBarText: 'Add New Visit',
+      appBarBackgoundColor: Colors.white,
+      appbartxtcolor: Colors.black,
+      fontWeight: FontWeight.bold,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.black, size: 35),
+        icon: Icon(
+          Icons.arrow_back,
+          color: Colors.black,
+          size: 30 * getResponsive(context),
+        ),
         onPressed: () => Navigator.pop(context),
       ),
-      backgroundColor: Colors.white,
-      elevation: 0,
     ),
+
     body: Padding(
       padding: const EdgeInsets.all(20.0),
       child: SingleChildScrollView(
@@ -69,14 +74,16 @@ class _AddNewVisitState extends State<AddNewVisit> {
             ),
             CustomText(
               'Customer to visit',
-              fontSize: 14 * getResponsiveText(context),
+              fontSize: 12 * getResponsiveText(context),
               fontWeight: FontWeight.w500,
-              color: AppColors.gray,
+              color: AppTheme.getColor(context).primary,
             ),
             CustomPopupDropdownStyled<String>(
               height: 60 * getResponsive(context),
-              spacing: 15 * getResponsive(context),
+              spacing: 10 * getResponsive(context),
               prefix: SvgPicture.asset('assets/visit/personalcard.svg'),
+              prefixImageHeight: 20 * getResponsive(context),
+              prefixImageWidth: 20 * getResponsive(context),
               items: leavetype,
               hintText: '  Select ',
               selectedItem: selectedleavetype,
@@ -88,7 +95,14 @@ class _AddNewVisitState extends State<AddNewVisit> {
               },
             ),
             LabeledTextField(
+              heightFactor: 60 * getResponsive(context),
+              textAlignment: TextAlign.start,
               label: 'Visit Date',
+              labelTextStyle: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 12 * getResponsiveText(context),
+                color: AppColors.gray,
+              ),
               hint: 'Select Date',
               widthFactor: getWidth(context),
               border: OutlineInputBorder(
@@ -104,11 +118,12 @@ class _AddNewVisitState extends State<AddNewVisit> {
                 fit: BoxFit.scaleDown,
               ),
             ),
+
             CustomText(
               'Visit Slot',
-              fontSize: 14 * getResponsiveText(context),
-              fontWeight: FontWeight.w500,
-              color: AppColors.gray,
+              fontSize: 12 * getResponsiveText(context),
+              fontWeight: FontWeight.w600,
+              color: AppColors.textSecondary,
             ),
             CustomPopupDropdownStyled<String>(
               height: 60 * getResponsive(context),
@@ -164,72 +179,56 @@ class _AddNewVisitState extends State<AddNewVisit> {
                 ),
               ],
             ),
-            CustomText(
-              'Purpose Of Visit',
-              fontSize: 14 * getResponsiveText(context),
-              fontWeight: FontWeight.w500,
-              color: AppColors.gray,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: AppTheme.getColor(context).outline),
-                borderRadius: BorderRadius.circular(
-                  12 * getResponsive(context),
+
+            Column(
+              spacing: 3 * getResponsive(context),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomText(
+                  'Purpose Of Visit',
+                  fontSize: 12 * getResponsiveText(context),
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.black,
                 ),
-              ),
-              padding: EdgeInsets.symmetric(
-                horizontal: 0.018 * getWidth(context),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(
-                      top: 0.01 * getHeight(context),
-                      left: 0.01 * getWidth(context),
+                BigMyCoTextField(
+                  prefixImage: SvgPicture.asset('assets/visit/sticky_note.svg'),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppTheme.getColor(context).primary,
                     ),
-                    child: SvgPicture.asset('assets/visit/note.svg'),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                      maxLines: 5,
-                      minLines: 3,
-                      decoration: InputDecoration(
-                        hintText: 'Enter Description',
-                        hintStyle: TextStyle(
-                          color: AppTheme.getColor(context).outline,
-                        ),
-                        border: InputBorder.none,
-                      ),
+                    borderRadius: BorderRadius.circular(
+                      10 * getResponsive(context),
                     ),
                   ),
-                ],
-              ),
-            ),
-            Theme(
-              data: Theme.of(
-                context,
-              ).copyWith(unselectedWidgetColor: Colors.grey.shade400),
-              child: CheckboxListTile(
-                value: autoStartVisit,
-                onChanged: (value) =>
-                    setState(() => autoStartVisit = value ?? false),
-                title: Text(
-                  'Please agree to automatically start the visit',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 20 * getResponsiveText(context),
-                    fontWeight: FontWeight.w400,
-                  ),
                 ),
-                activeColor: AppTheme.getColor(context).primary,
-                checkColor: Colors.white,
-                controlAffinity: ListTileControlAffinity.leading,
-                contentPadding: EdgeInsets.zero,
-              ),
+              ],
             ),
 
+            Row(
+              spacing: 10 * getResponsive(context),
+              children: [
+                CustomCheckbox(
+                  value: autoStartVisit,
+                  onChanged: (value) => setState(() => autoStartVisit = value),
+                  borderColor: AppColors.black,
+                  activeColor: AppTheme.getColor(context).primary,
+                  checkColor: Colors.white,
+                  height: 20,
+                  width: 20,
+                  unCheckedBackground: Colors.white,
+                ),
+                Expanded(
+                  child: Text(
+                    'Please agree to automatically start the visit',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey.shade600,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             MyCoButton(
               onTap: () {
                 // Handle form submission

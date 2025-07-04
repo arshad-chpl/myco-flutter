@@ -57,9 +57,9 @@ class PhoneNumberField extends StatelessWidget {
                 fontSize: 14 * getResponsiveText(context),
                 fontWeight: FontWeight.w600,
               ),
-              hintTextStyle: AppTheme.lightTheme(context).textTheme.bodyMedium?.copyWith(
-                color: AppColors.primary,
-                  ),
+              // hintTextStyle: AppTheme.lightTheme(context).textTheme.bodyMedium?.copyWith(
+              //   color: AppColors.primary,
+              //     ),
               // useRadioList: false,
             ),
           ),
@@ -69,7 +69,7 @@ class PhoneNumberField extends StatelessWidget {
               color: AppColors.primary,
               fontSize: 14 * getResponsiveText(context),
               fontWeight: FontWeight.w600,
-              fontSize: AppTheme.lightTheme(context).textTheme.bodyMedium?.fontSize ,
+              // fontSize: AppTheme.lightTheme(context).textTheme.bodyMedium?.fontSize ,
             ),
           ),
           Expanded(
