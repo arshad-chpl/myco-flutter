@@ -51,5 +51,4 @@ class AppAssets {
   static const String assetVector = '$assetVisit/Vector.svg';
   static const String assetDocumentText = '$assetVisit/document-text.svg';
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
-  static const String loadingAnimation = 'visit/animations/loading.json';
 }
