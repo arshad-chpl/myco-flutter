@@ -1,6 +1,6 @@
 class AppAssets {
-  // commmon paths for assets in the application
-  static const String basePath = 'assets';
+  // commmon paths for visit in the application
+  static const String basePath = 'visit';
   // static const String fontsPath = '$basePath/fonts';
   static const String imagesPath = '$basePath/images';
   static const String svgsPath = '$basePath/svgs';
@@ -33,8 +33,8 @@ class AppAssets {
   static const String verified = '$dashboard/verified.png';
 
   // Icons
-  static const String homeIcon = 'assets/icons/home_icon.png';
-  static const String settingsIcon = 'assets/icons/settings_icon.png';
+  static const String homeIcon = 'visit/icons/home_icon.png';
+  static const String settingsIcon = 'visit/icons/settings_icon.png';
 
   // Animations (if using Lottie or similar)
   static const String loadingAnimation = 'assets/animations/loading.json';
@@ -51,4 +51,5 @@ class AppAssets {
   static const String assetVector = '$assetVisit/Vector.svg';
   static const String assetDocumentText = '$assetVisit/document-text.svg';
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
+  static const String loadingAnimation = 'visit/animations/loading.json';
 }

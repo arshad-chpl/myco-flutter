@@ -14,7 +14,9 @@ import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
@@ -29,7 +31,15 @@ import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
 import 'package:myco_flutter/features/visit/presentation/pages/add_expense_page.dart';
+import 'package:myco_flutter/features/visit/presentation/bloc/visit_bloc.dart';
+import 'package:myco_flutter/features/visit/presentation/pages/my_visit_page.dart';
+import 'package:myco_flutter/features/visits/presentation/pages/visit_report.dart';
+
 import 'route_paths.dart';
+import 'package:myco_flutter/features/visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
+import 'package:myco_flutter/features/visit/presentation/pages/face_detection.dart';
+
+import 'package:myco_flutter/features/visits/presentation/pages/details_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -46,6 +56,13 @@ class AppRouter {
           child: const SplashPage(),
         ),
       ),
+
+      GoRoute(
+        path: RoutePaths.addVisit,
+        name: 'add visit',
+        builder: (context, state) => const Visit(),
+      ),
+
       GoRoute(
         path: RoutePaths.language,
         name: 'language',
@@ -56,6 +73,17 @@ class AppRouter {
         name: 'login',
         builder: (context, state) => const OtpVerifyDialog(),
       ),
+      GoRoute(
+        path: RoutePaths.details,
+        name: 'details',
+        builder: (context, state) => const DetailsPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.visitReport,
+        name: 'visit_report',
+        builder: (context, state) => const VisitReport(),
+      ),
+
       GoRoute(
         path: RoutePaths.selectCompany,
         name: 'selectCompany',
@@ -97,6 +125,15 @@ class AppRouter {
         name: 'leave',
         builder: (context, state) => const LeaveScreen(),
       ),
+      GoRoute(
+        path: RoutePaths.myVisit,
+        name: 'myVisit',
+        builder: (context, state) => BlocProvider(
+          create: (_) => GetIt.I<VisitBloc>(),
+          child: const MyVisitPage(),
+        ),
+      ),
+
       // GoRoute(
       //   path: RoutePaths.language,
       //   name: 'language',
@@ -120,7 +157,19 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-      ), // Add all modular routes here
+      ),
+
+
+      GoRoute(
+        path: RoutePaths.faceDetection,
+        name: 'faceDetection',
+        builder: (context, state) => BlocProvider(
+            create: (context) => GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+          child: const FaceDetectionPage(),
+        )
+      ),
+      // Add all modular routes here
+     // Add all modular routes here
       // GoRoute(
       //   path: RoutePaths.takeOrder,
       //   name: 'take-order',
@@ -170,6 +219,11 @@ class AppRouter {
         path: RoutePaths.employees,
         name: 'employees',
         builder: (context, state) => const EmployeesScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.addCustomer,
+        name: 'addCustomer',
+        builder: (context, state) => const AddCustomer(),
       ),
 
       GoRoute(

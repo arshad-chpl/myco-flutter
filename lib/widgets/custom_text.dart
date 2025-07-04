@@ -22,8 +22,8 @@ class CustomText extends StatelessWidget {
     this.textAlign,
     this.maxLines,
     this.overflow,
-    this.decoration,
-    this.decorationColor,
+    this.decoration, this.decorationColor,
+
   });
 
   @override
@@ -38,6 +38,7 @@ class CustomText extends StatelessWidget {
       color: color ?? AppTheme.getColor(context).onSurface,
       decoration: decoration,
       decorationColor: decorationColor,
+
     ),
   );
 }

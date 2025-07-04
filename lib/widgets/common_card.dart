@@ -23,6 +23,8 @@ class CommonCard extends StatelessWidget {
   final Widget? suffixIcon;
   final double? headerPrefixIconHeight;
   final double? headerPrefixIconWidth;
+  final bool? showBlackShadowInChild;
+  final Widget? subTitleIcon;
   const CommonCard({
     required this.title,
     required this.bottomWidget,
@@ -43,6 +45,8 @@ class CommonCard extends StatelessWidget {
     this.suffixIcon,
     this.headerPrefixIconHeight,
     this.headerPrefixIconWidth,
+    this.showBlackShadowInChild,
+    this.subTitleIcon,
   });
 
   @override
@@ -69,9 +73,15 @@ class CommonCard extends StatelessWidget {
               ),
             ),
             boxShadow: [
+              if (showBlackShadowInChild == true)
+                const BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(0, 2),
+                  blurRadius: 4,
+                ),
               BoxShadow(
                 color:
-                    headerColor?.withAlpha(200) ??
+                headerColor?.withAlpha(200) ??
                     AppTheme.getColor(context).secondary.withAlpha(200),
               ),
               BoxShadow(
@@ -86,7 +96,7 @@ class CommonCard extends StatelessWidget {
               if (showHeaderPrefixIcon == true)
                 Image.asset(
                   headerPrefixIcon ?? 'assets/take_order/profile-circle.png',
-                  height: headerPrefixIconHeight ?? 0.1 * getHeight(context),
+                  // height: headerPrefixIconHeight ?? 0.1 * getHeight(context),
                   width: headerPrefixIconWidth ?? 0.06 * getWidth(context),
                   color: headerPrefixIconColor,
                 ),
@@ -100,22 +110,33 @@ class CommonCard extends StatelessWidget {
                     CustomText(
                       title,
                       color: AppTheme.getColor(context).onPrimary,
-                      fontSize: 17 * getResponsiveText(context),
+                      fontSize: 18 * getResponsiveText(context),
                       fontWeight: FontWeight.bold,
                     ),
                     if (secondTitle != null)
                       CustomText(
                         '$secondTitle',
                         color: AppTheme.getColor(context).onPrimary,
-                        fontSize: 17 * getResponsiveText(context),
+                        fontSize: 18 * getResponsiveText(context),
                         fontWeight: FontWeight.bold,
                       ),
                     if (subTitle != null)
-                      CustomText(
-                        '$subTitle',
-                        color: AppTheme.getColor(context).onPrimary,
-                        fontSize: 15 * getResponsiveText(context),
-                        fontWeight: FontWeight.bold,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (subTitleIcon != null)
+                            subTitleIcon!,
+                          if (subTitleIcon != null)
+                            SizedBox(width: 0.01 * getWidth(context)),
+                          Expanded(
+                            child: CustomText(
+                              '$subTitle',
+                              color: AppTheme.getColor(context).onPrimary,
+                              fontSize: 15 * getResponsiveText(context),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                   ],
                 ),
@@ -134,7 +155,6 @@ class CommonCard extends StatelessWidget {
                   boarderRadius: 30 * getResponsive(context),
                   height: 0.03 * getHeight(context),
                   isShadowBottomLeft: true,
-                  enabled: true,
                 ),
               if (suffixIcon != null) suffixIcon ?? const SizedBox.shrink(),
             ],
