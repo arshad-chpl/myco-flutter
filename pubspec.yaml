@@ -38,7 +38,7 @@ dependencies:
   get_it: ^8.0.3
   dio: ^5.8.0+1
   retrofit: ^4.4.2
-  go_router: 
+  go_router: 16.0.0
   cached_network_image: ^3.4.1
   equatable: ^2.0.7
   intl: ^0.20.2
@@ -59,7 +59,18 @@ dependencies:
   badges: ^3.1.2
   dotenv: ^4.2.0
   json_annotation: ^4.9.0
+  table_calendar: ^3.2.0
+  flutter_speed_dial:
+  fluttertoast: ^8.2.12
 
+  # Media_Picker_Packages
+  photo_manager: ^3.7.1
+  photo_manager_image_provider: ^2.2.0
+  image_picker: ^1.1.2
+  file_picker: ^10.2.0
+
+  # Permission
+  permission_handler: ^12.0.0
 
 dev_dependencies:
   flutter_test:
@@ -87,7 +98,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add visit to your application, add an visit section, like this:
+  # To add assets to your application, add an assets section, like this:
   assets:
     - .env
     - assets/images/
@@ -99,10 +110,14 @@ flutter:
     - assets/sign_in/
     - assets/search_society/
     - assets/visit/
+    - assets/ideabox/
+    - assets/payslip/
+    - assets/media_picker/
+    - assets/lost_and_found/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
-  # For details regarding adding visit from package dependencies, see
+  # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/to/asset-from-package
 
   # To add custom fonts to your application, add a fonts section here,
@@ -138,5 +153,6 @@ flutter:
     - family: Gilroy-Heavy
       fonts:
         - asset: assets/fonts/Gilroy-Heavy.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

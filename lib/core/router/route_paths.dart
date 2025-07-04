@@ -23,4 +23,17 @@ class RoutePaths {
   static const String addVisit = '/add-visit';
 
 
+  // static const String distributorVisitor = '/distributor-visitor';
+  // static const String noOrder = '/no-order';
+
+  static const String payslip = '/payslip';
+  static const String salaryBreakUp = '/salary-break-up';
+  static const String payslipDetail = '/payslip-detail';
+  static const String ideabox = '/idea-box';
+  static const String ideaRequest = '/idea-request';
+  static const String leave = '/leave';
+
+  static const String employees = '/employees';
+
+  static const String lostAndFound = '/lost-and-found';
 }
