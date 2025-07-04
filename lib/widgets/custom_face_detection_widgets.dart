@@ -22,13 +22,13 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
     return AppTheme.getColor(context).primary;
   }
 
-  Widget buildOverLay() {
+  Widget buildOverLay(BuildContext context) {
     if(scanningState == 'failure') {
       return GestureDetector(
         onTap: retry,
-        child: const Align(
+        child:  Align(
           alignment: Alignment.center,
-          child: Icon(Icons.refresh, color: AppColors.white, size: 35,),
+          child: Icon(Icons.refresh, color: AppColors.white, size: 35 * getResponsive(context),),
         ),
       );
     }
@@ -57,7 +57,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
         color: AppTheme.getColor(context).error,
         child:  CustomText(
           'Failed to match current face with your registered face',
-          fontSize: 12,
+          fontSize: 14 * getResponsiveText(context),
           color: AppTheme.getColor(context).onPrimary,
           fontWeight: FontWeight.w700,
           textAlign: TextAlign.center,
@@ -80,7 +80,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-                  height: 3,
+                  height: 0.003 * getHeight(context),
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   color: AppTheme.getColor(context).primary
               ),
@@ -90,7 +90,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-                  height: 3,
+                  height: 0.003 * getHeight(context),
                   margin: const EdgeInsets.symmetric(horizontal: 40),
                   color: AppTheme.getColor(context).primary
               ),
@@ -107,7 +107,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
           left: 0,
           right: 0,
           child: Container(
-              height: 3,
+              height: 0.003 * getHeight(context),
               margin: const EdgeInsets.symmetric(horizontal: 40),
               color: AppTheme.getColor(context).primary
           ),
@@ -117,7 +117,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
           left: 0,
           right: 0,
           child: Container(
-              height: 3,
+              height: 0.003 * getHeight(context),
               margin: const EdgeInsets.symmetric(horizontal: 40),
               color: AppTheme.getColor(context).primary
           ),
@@ -129,12 +129,11 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
+  Widget build(BuildContext context) => Container(
       height: 0.30 * getHeight(context),
       width: double.infinity,
       decoration: BoxDecoration(
-          border: Border.all(color: getBorderColor(context), width: 6),
+          border: Border.all(color: getBorderColor(context), width: 13 * getResponsiveOnWidth(context)),
           borderRadius: BorderRadius.circular(27)
       ),
       child: ClipRRect(
@@ -156,12 +155,11 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
             else
               const Center(child: CircularProgressIndicator()),
             scanningLines(context),
-          buildOverLay(),
+          buildOverLay(context),
             Align(alignment: Alignment.bottomCenter, child: labelMessage(context))
           ],
         )
       ),
     );
-  }
 }
 
