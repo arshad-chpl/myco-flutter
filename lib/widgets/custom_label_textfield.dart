@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+  import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 class LabeledTextField extends StatelessWidget {
@@ -114,17 +115,14 @@ class LabeledTextField extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        CustomText(
           label,
-          style: TextStyle(
             color: AppColors.textGray,
             fontSize: 16 * getResponsiveText(context),
-            fontWeight: FontWeight.bold,
-          ),
+            fontWeight: FontWeight.bold
         ),
         SizedBox(height: 0.005 * getHeight(context)),
         SizedBox(
@@ -134,7 +132,7 @@ class LabeledTextField extends StatelessWidget {
             controller: controller,
             hintText: hint,
             hintTextStyle:
-                hintTextStyle ??
+            hintTextStyle ??
                 TextStyle(
                   fontSize: 18 * getResponsiveText(context),
                   color: AppColors.gray,
@@ -172,7 +170,7 @@ class LabeledTextField extends StatelessWidget {
             iconWidth: iconWidth,
             image1: image1,
             image2: image2,
-            isSuffixIconOn: isSuffixIconOn,
+            isSuffixIconOn: isSuffixIconOn ?? false,
             labelTextStyle: labelTextStyle,
             onClick: onClick,
             onTap1: onTap1,
@@ -185,4 +183,3 @@ class LabeledTextField extends StatelessWidget {
       ],
     );
   }
-}

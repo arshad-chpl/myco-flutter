@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class LabeledDropdown<T> extends StatelessWidget {
   final String label;
@@ -54,28 +55,23 @@ class LabeledDropdown<T> extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Text(
+            CustomText(
               label,
-              style: TextStyle(
                 color: AppColors.textGray,
                 fontSize: 16 * getResponsiveText(context),
                 fontWeight: FontWeight.bold,
-              ),
             ),
             if (isRequired)
-              Text(
+              CustomText(
                 "*",
-                style: TextStyle(
                   color: AppColors.red,
                   fontSize: 20 * getResponsiveText(context),
                   fontWeight: FontWeight.bold,
-                ),
               ),
           ],
         ),
@@ -85,7 +81,6 @@ class LabeledDropdown<T> extends StatelessWidget {
           prefixImage: prefixImage,
           height: height ?? 0.06 * getHeight(context),
           width: width ?? 0.9 * getWidth(context),
-          spacing: spacing ?? 0.02 * getWidth(context),
           hintText: hintText,
           hintTextStyle:
               hintTextStyle ??
@@ -110,5 +105,4 @@ class LabeledDropdown<T> extends StatelessWidget {
         ),
       ],
     );
-  }
 }

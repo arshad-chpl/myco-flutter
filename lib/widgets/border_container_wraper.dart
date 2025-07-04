@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/util.dart';
 
 class BorderContainerWraper extends StatelessWidget {
@@ -32,8 +31,7 @@ class BorderContainerWraper extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
+  Widget build(BuildContext context) => Container(
       height: height,
       width: width,
       padding: padding ?? EdgeInsets.all(8.0),
@@ -59,5 +57,4 @@ class BorderContainerWraper extends StatelessWidget {
       ),
       child: child,
     );
-  }
 }

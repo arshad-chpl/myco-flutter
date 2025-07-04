@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/util.dart';
-
 class CustomText extends StatelessWidget {
   final String text;
   final double fontSize;
@@ -22,8 +22,8 @@ class CustomText extends StatelessWidget {
     this.textAlign,
     this.maxLines,
     this.overflow,
-    this.decoration,
-    this.decorationColor,
+    this.decoration, this.decorationColor,
+
   });
 
   @override
@@ -38,6 +38,7 @@ class CustomText extends StatelessWidget {
       color: color ?? AppTheme.getColor(context).onSurface,
       decoration: decoration,
       decorationColor: decorationColor,
+
     ),
   );
 }
