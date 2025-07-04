@@ -13,6 +13,7 @@ import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
@@ -133,9 +134,13 @@ class AppRouter {
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
         builder: (context, state) => SignupFormPage(),
-
       ),
-       GoRoute(
+      GoRoute(
+        path: RoutePaths.lostAndFound,
+        name: 'lost-and-found',
+        builder: (context, state) => LostAndFound(),
+      ),
+      GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
