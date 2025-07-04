@@ -587,7 +587,7 @@ class TextFieldFormMobile extends StatelessWidget {
               contentPadding ??
               EdgeInsets.symmetric(horizontal: 12, vertical: height ?? 2),
           labelText: isLabelOn == true ? labelText : null,
-          hintText: hintText??"99092187876236",
+          hintText: hintText ?? "99092187876236",
           hintStyle:
               hintTextStyle ??
               textTheme.bodyLarge?.copyWith(
@@ -628,13 +628,13 @@ class TextFieldFormMobile extends StatelessWidget {
                     if (image1 != null)
                       GestureDetector(
                         onTap: onTap1,
-                        child: Image.asset(image1!, height: iconHeight ?? 18),
+                        child: Image.asset(image1!, height: iconHeight ?? 20),
                       ),
                     const SizedBox(width: 12),
                     if (image2 != null)
                       GestureDetector(
                         onTap: onTap2,
-                        child: Image.asset(image2!, height: iconHeight ?? 18),
+                        child: Image.asset(image2!, height: iconHeight ?? 20),
                       ),
                     const SizedBox(width: 12),
                   ],

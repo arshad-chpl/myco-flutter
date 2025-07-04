@@ -1,0 +1,104 @@
+import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/asset/widgets/custom_dash_line.dart';
+import 'package:myco_flutter/widgets/common_card.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
+
+class ActiveAssetsCard extends StatelessWidget {
+  final String title;
+  final String subTitle;
+  final String image;
+  final String brand;
+  final String srNo;
+  final String handOverDate;
+  final EdgeInsetsGeometry? childPadding;
+  final double? spaceBetweenData;
+  final Color? titleColor;
+  final Color? dashLineColor;
+  const ActiveAssetsCard({
+    required this.title,
+    required this.subTitle,
+    required this.image,
+    required this.brand,
+    required this.srNo,
+    required this.handOverDate,
+    super.key,
+    this.childPadding,
+    this.spaceBetweenData,
+    this.dashLineColor,
+    this.titleColor,
+  });
+
+  @override
+  Widget build(BuildContext context) => CommonCard(
+    title: title,
+    subTitle: subTitle,
+    headerColor: titleColor,
+    borderColor: AppTheme.lightTheme(context).dividerColor,
+    bottomWidget: Padding(
+      padding: childPadding ?? EdgeInsets.all(10 * getResponsive(context)),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Image.asset(image, width: 0.3 * getWidth(context)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: DashedLine(
+                color: dashLineColor ?? AppTheme.getColor(context).primary,
+                axis: Axis.vertical,
+                dashLength: 2,
+                width: 1,
+              ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AssetsVerticalData(title: 'Brand', data: brand),
+                  SizedBox(
+                    height: spaceBetweenData ?? 0.02 * getHeight(context),
+                  ),
+                  AssetsVerticalData( title: 'Sr.No./MAC/Sim', data: srNo),
+                  SizedBox(
+                    height: spaceBetweenData ?? 0.02 * getHeight(context),
+                  ),
+                  AssetsVerticalData( title: 'Handover', data: handOverDate),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+class AssetsVerticalData extends StatelessWidget {
+  final String title;
+  final String data;
+  const AssetsVerticalData({
+    required this.title,
+    required this.data,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) => Column(
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      CustomText(
+        title,
+        fontSize: 18 * getResponsiveText(context),
+        fontWeight: FontWeight.w700,
+      ),
+      CustomText(
+        data,
+        fontWeight: FontWeight.w500,
+        fontSize: 18 * getResponsiveText(context),
+      ),
+    ],
+  );
+}

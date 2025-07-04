@@ -23,6 +23,7 @@ class CommonCard extends StatelessWidget {
   final Widget? suffixIcon;
   final double? headerPrefixIconHeight;
   final double? headerPrefixIconWidth;
+  final bool? showBlackShadowInChild;
   const CommonCard({
     required this.title,
     required this.bottomWidget,
@@ -43,6 +44,7 @@ class CommonCard extends StatelessWidget {
     this.suffixIcon,
     this.headerPrefixIconHeight,
     this.headerPrefixIconWidth,
+    this.showBlackShadowInChild,
   });
 
   @override
@@ -69,6 +71,13 @@ class CommonCard extends StatelessWidget {
               ),
             ),
             boxShadow: [
+              if (showBlackShadowInChild == true)
+                const BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(0, 2),
+                  blurRadius: 6,
+                ),
+
               BoxShadow(
                 color:
                     headerColor?.withAlpha(200) ??
