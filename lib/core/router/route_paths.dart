@@ -22,6 +22,8 @@ class RoutePaths {
   // static const String distributorVisitor = '/distributor-visitor';
   // static const String noOrder = '/no-order';
 
+  static const String employees = '/employees';
+  
   static const String payslip = '/payslip';
   static const String salaryBreakUp = '/salary-break-up';
   static const String payslipDetail = '/payslip-detail';

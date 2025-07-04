@@ -90,14 +90,6 @@ class AppRouter {
           ),
         ],
       ), // Add all modular routes here
-      // GoRoute(
-      //   path: RoutePaths.takeOrder,
-      //   name: 'take-order',
-      //   builder: (context, state) => BlocProvider(
-      //     create: (_) => TakeOrderBloc(),
-      //     child: TakeOrderPage(),
-      //   ),
-      // ),
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
