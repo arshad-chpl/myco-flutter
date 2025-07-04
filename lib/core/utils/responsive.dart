@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Responsive {
@@ -45,6 +45,7 @@ double getHeight(context) {
 }
 
 double getWidth(context) {
+  print(MediaQuery.of(context).size.width);
   return MediaQuery.of(context).size.width;
 }
 
@@ -56,13 +57,24 @@ double getResponsive(context) {
 }
 
 double getResponsiveOnWidth(context) {
+  kDebugMode
+      ? print('Responsive Width: ${MediaQuery.of(context).size.width * 0.001}')
+      : null;
   return MediaQuery.of(context).size.width * 0.001;
 }
 
 double getResponsiveText(context) {
   if (Platform.isAndroid) {
-    return 0.8;
+    return getWidth(context) > 600 ? 1.5 : 0.8;
   } else {
-    return 0.9;
+    return getWidth(context) > 600 ? 1.5 : 0.9;
+  }
+}
+
+double getDashboardResponsiveText(BuildContext context) {
+  if (getWidth(context) > 600) {
+    return 1.2;
+  } else {
+    return 1;
   }
 }
