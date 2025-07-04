@@ -11,6 +11,7 @@ import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
@@ -32,7 +33,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.employees,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -119,8 +120,15 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-
       ), // Add all modular routes here
+      // GoRoute(
+      //   path: RoutePaths.takeOrder,
+      //   name: 'take-order',
+      //   builder: (context, state) => BlocProvider(
+      //     create: (_) => TakeOrderBloc(),
+      //     child: TakeOrderPage(),
+      //   ),
+      // ),
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
@@ -135,7 +143,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.companySearch,
         name: 'companySearch',
-        builder: (context, state) => const SearchCompanyScreen(),
+        builder: (context, state) => const TermsAndConditions(),
       ),
       GoRoute(
         path: RoutePaths.payslip,
@@ -154,7 +162,11 @@ class AppRouter {
           ),
         ],
       ),
-
+      GoRoute(
+        path: RoutePaths.employees,
+        name: 'employees',
+        builder: (context, state) => const EmployeesScreen(),
+      ),
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,
