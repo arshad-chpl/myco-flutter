@@ -6,9 +6,17 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/visit/presentation/pages/visit_template.dart';
 import 'package:myco_flutter/features/visit/presentation/widgets/dashed_border_container.dart';
+import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_calendar_bottom_sheet.dart';
+import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
+import 'package:myco_flutter/widgets/custom_label_textfield.dart';
+
+import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
+import 'package:myco_flutter/widgets/custom_media_picker_container/gallery_picker_screen.dart';
+import 'package:myco_flutter/widgets/custom_media_picker_container/media_picker.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_radio_button.dart';
 
 class AddExpensePage extends StatefulWidget {
   const AddExpensePage({super.key});
@@ -34,15 +42,17 @@ class _AddExpensePageState extends State<AddExpensePage> {
     ),
     body: Container(
       //      padding: EdgeInsets.symmetric(horizontal: 0.080 * getWidth(context)),
-      padding: EdgeInsets.all(18),
+      padding: EdgeInsets.all(22),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 16 * getResponsive(context),
+          spacing: 10 * getResponsive(context),
           children: [
             LabeledTextField(
+              textAlignment: TextAlign.start,
               label: 'Title',
               hint: 'Type here',
+              isSuffixIconOn: false,
               widthFactor: getWidth(context),
               border: OutlineInputBorder(
                 borderSide: BorderSide(
@@ -52,20 +62,17 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   10 * getResponsive(context),
                 ),
               ),
-
-              prefix: SizedBox(
-                height: 0.02 * getHeight(context),
-                width: 0.05 * getWidth(context),
-                child: SvgPicture.asset(
-                  AppAssets.assetBookmark,
-                  fit: BoxFit.scaleDown,
-                ),
+              prefix: SvgPicture.asset(
+                AppAssets.assetBookmark,
+                fit: BoxFit.scaleDown,
               ),
             ),
             LabeledTextField(
+              textAlignment: TextAlign.start,
               label: 'Date Of Birth',
               hint: 'Select Date',
               widthFactor: getWidth(context),
+              isSuffixIconOn: true,
               onClick: () async {
                 await showModalBottomSheet<Map<String, int>>(
                   context: context,
@@ -90,13 +97,9 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   10 * getResponsive(context),
                 ),
               ),
-              prefix: SizedBox(
-                height: 0.02 * getHeight(context),
-                width: 0.05 * getWidth(context),
-                child: SvgPicture.asset(
-                  AppAssets.assetNoteFavorite,
-                  fit: BoxFit.scaleDown,
-                ),
+              prefix: SvgPicture.asset(
+                AppAssets.assetNoteFavorite,
+                fit: BoxFit.scaleDown,
               ),
             ),
 
@@ -109,6 +112,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
             CustomPopupDropdownStyled<String>(
               items: leavetype,
               hintText: 'Select',
+              height: 0.07 * getHeight(context),
               prefix: SvgPicture.asset(
                 AppAssets.assetCard_Edit,
                 fit: BoxFit.scaleDown,
@@ -116,8 +120,9 @@ class _AddExpensePageState extends State<AddExpensePage> {
               hintTextStyle: TextStyle(
                 fontSize: 18 * getResponsiveText(context),
                 color: AppTheme.getColor(context).outline,
+                fontWeight: FontWeight.w600,
               ),
-
+              spacing: 0.02 * getWidth(context),
               // width: double.infinity,
               selectedItem: selectedleavetype,
               itemToString: (item) => item,
@@ -139,6 +144,8 @@ class _AddExpensePageState extends State<AddExpensePage> {
             CustomPopupDropdownStyled<String>(
               items: leavetype,
               hintText: 'Select',
+              spacing: 0.02 * getWidth(context),
+              height: 0.07 * getHeight(context),
               prefix: SvgPicture.asset(
                 AppAssets.assetGlobal,
                 fit: BoxFit.scaleDown,
@@ -146,6 +153,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
               hintTextStyle: TextStyle(
                 fontSize: 18 * getResponsiveText(context),
                 color: AppTheme.getColor(context).outline,
+                fontWeight: FontWeight.w600,
               ),
               border: BoxBorder.all(color: AppTheme.getColor(context).outline),
 
@@ -159,75 +167,28 @@ class _AddExpensePageState extends State<AddExpensePage> {
               },
               useRadioList: true,
             ),
-            // LabeledTextField(
-            //   label: 'Expense Type',
-            //   hint: 'Select',
-            //   widthFactor: getWidth(context),
 
-            //   border: OutlineInputBorder(
-            //     borderSide: BorderSide(
-            //       color: AppTheme.getColor(context).outline,
-            //     ),
-            //     borderRadius: BorderRadius.circular(
-            //       10 * getResponsive(context),
-            //     ),
-            //   ),
-            //   prefix: SizedBox(
-            //     height: 0.02 * getHeight(context),
-            //     width: 0.05 * getWidth(context),
-            //     child: SvgPicture.asset(
-            //       AppAssets.assetCard_Edit,
-            //       fit: BoxFit.scaleDown,
-            //     ),
-            //   ),
-            // ),
-            // LabeledTextField(
-            //   label: 'Site',
-            //   isSuffixIconOn: true,
-            //   suffix: IconButton(
-            //     color: Colors.black,
-            //     onPressed: () {},
-            //     icon: Icon(Icons.abc),
-            //   ),
-            //   hint: 'Select',
-            //   widthFactor: getWidth(context),
-
-            //   border: OutlineInputBorder(
-            //     borderSide: BorderSide(
-            //       color: AppTheme.getColor(context).outline,
-            //     ),
-            //     borderRadius: BorderRadius.circular(
-            //       10 * getResponsive(context),
-            //     ),
-            //   ),
-            //   isReadOnly: true,
-            //   prefix: SizedBox(
-            //     height: 0.02 * getHeight(context),
-            //     width: 0.05 * getWidth(context),
-            //     child: SvgPicture.asset(
-            //       AppAssets.assetGlobal,
-            //       fit: BoxFit.scaleDown,
-            //     ),
-            //   ),
-            // ),
-            LabeledTextField(
-              label: 'Description',
-              hint: 'Enter Description',
-              widthFactor: getWidth(context),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: AppTheme.getColor(context).outline,
-                ),
-                borderRadius: BorderRadius.circular(
-                  10 * getResponsive(context),
-                ),
+            CustomText(
+              'Description',
+              fontSize: 16 * getResponsiveText(context),
+              color: AppTheme.getColor(context).onSurfaceVariant,
+              fontWeight: FontWeight.w700,
+            ),
+            BigMyCoTextField(
+              hintText: 'Enter Description',
+              
+              hintStyle: TextStyle(
+                fontSize: 18 * getResponsiveText(context),
+                color: AppTheme.getColor(context).outline,
+                fontWeight: FontWeight.w600,
               ),
-              textFieldHeight: 40,
-              prefix: SvgPicture.asset(
+              
+              prefixImage: SvgPicture.asset(
                 AppAssets.assetStickyNote,
                 fit: BoxFit.scaleDown,
               ),
             ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -262,12 +223,25 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SvgPicture.asset(
-                      AppAssets.assetBookmark_2,
-                      fit: BoxFit.scaleDown,
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        showMediaFilePicker(
+                          isDialog: false,
+                          isCameraShow: true,
+                          isGalleryShow: true,
+                          isDocumentShow: true,
+                          context: context,
+                        );
+                      },
+                      child: SvgPicture.asset(
+                        AppAssets.assetBookmark_2,
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
 
                     SizedBox(height: 0.010 * getHeight(context)),
+
                     CustomText(
                       'Select Attachment',
                       fontSize: 14 * getResponsive(context),
@@ -306,7 +280,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       selectedGender = val;
                     });
                   },
-                  height: 44,
+                  height: 0.07 * getHeight(context),
                   width: 155,
                 ),
 
@@ -329,12 +303,12 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       selectedGender = val;
                     });
                   },
-                  height: 44,
+                  height: 0.07 * getHeight(context),
                   width: 155,
                 ),
               ],
             ),
-            SizedBox(height: 0.02 * getHeight(context)),
+            SizedBox(height: 0.09 * getHeight(context)),
             MyCoButton(
               onTap: () {
                 Navigator.push(

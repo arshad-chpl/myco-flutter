@@ -7,7 +7,7 @@ class AppAssets {
   static const String dashboard = '$basePath/dashboard';
   static const String iconsPath = '$basePath/icons';
   static const String splash = '$basePath/splash';
-   static const String assetVisit = '$basePath/add_expense';
+  static const String assetVisit = '$basePath/add_expense';
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -39,7 +39,7 @@ class AppAssets {
   // Animations (if using Lottie or similar)
   static const String loadingAnimation = 'assets/animations/loading.json';
 
-    //images visit
+  //images visit
   static const String assetBookmark = '$assetVisit/bookmark.svg';
   static const String assetNoteFavorite = '$assetVisit/note-favorite.svg';
   static const String assetCard_Edit = '$assetVisit/card-edit.svg';

@@ -32,4 +32,5 @@ class RoutePaths {
   static const String employees = '/employees';
 
   static const String lostAndFound = '/lost-and-found';
+  static const String AddExpense= '/add_Expense';
 }

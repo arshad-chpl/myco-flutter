@@ -24,6 +24,7 @@ class BigMyCoTextField extends StatelessWidget {
   final TextInputType? textInputType;
   final InputBorder? border;
   final bool obscureText;
+  
 
   const BigMyCoTextField({
     super.key,

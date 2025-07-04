@@ -4,13 +4,10 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/visit/presentation/pages/test_new_visit.dart';
-
 import 'package:myco_flutter/widgets/custom_calendar_bottom_sheet.dart';
-
+import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_popup_drop_down_styled.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
@@ -27,12 +24,11 @@ class _VisitTemplateState extends State<VisitTemplate> {
   @override
   Widget build(BuildContext context) => Scaffold(
     body: Container(
-      padding: EdgeInsets.all(18),
-
-      // padding: EdgeInsets.symmetric(
-      //   horizontal: 0.08 * getWidth(context),
-      //   // vertical: 0.02 * getHeight(context),
-      // ),
+      //padding: EdgeInsets.all(0.08*getResponsive(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.08 * getWidth(context),
+        vertical: 0.02 * getHeight(context),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -61,6 +57,7 @@ class _VisitTemplateState extends State<VisitTemplate> {
           LabeledTextField(
             label: 'Q1',
             hint: 'Type here',
+            textAlignment: TextAlign.start,
             widthFactor: getWidth(context),
             border: OutlineInputBorder(
               borderSide: BorderSide(color: AppTheme.getColor(context).outline),
@@ -74,7 +71,7 @@ class _VisitTemplateState extends State<VisitTemplate> {
           SizedBox(height: 0.02 * getHeight(context)),
           CustomText(
             'Branch',
-            fontSize: 12 * getResponsiveText(context),
+            fontSize: 16 * getResponsiveText(context),
             color: AppTheme.getColor(context).onSurfaceVariant,
             fontWeight: FontWeight.w700,
           ),
@@ -83,6 +80,8 @@ class _VisitTemplateState extends State<VisitTemplate> {
           CustomPopupDropdownStyled<String>(
             items: leavetype,
             hintText: 'Select',
+            spacing: 0.04 * getWidth(context),
+            height: 0.07 * getHeight(context),
             prefix: SvgPicture.asset(
               AppAssets.assetData,
               fit: BoxFit.scaleDown,
@@ -90,6 +89,7 @@ class _VisitTemplateState extends State<VisitTemplate> {
             hintTextStyle: TextStyle(
               fontSize: 18 * getResponsiveText(context),
               color: AppTheme.getColor(context).outline,
+              fontWeight: FontWeight.w600,
             ),
             border: BoxBorder.all(color: AppTheme.getColor(context).outline),
 
@@ -103,23 +103,16 @@ class _VisitTemplateState extends State<VisitTemplate> {
             },
             useRadioList: true,
           ),
-          // const CustomDropdownMenu(
-          //   widthFactor: 0.9,
-          //   hintText: 'Select',
-          //   initialSelection: '1',
-          //   dropdownItems: [DropdownMenuEntry(value: '1', label: 'Select')],
-          //   leadingIcon: Icon(Icons.notes),
-          //   trailingPngAsset: AppAssets.assetVector,
-          // ),
+
           SizedBox(height: 0.10 * getHeight(context)),
           MyCoButton(
             boarderRadius: 30 * getResponsive(context),
             isShadowBottomLeft: true,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const TestNewVisit()),
-              );
+              // Navigator.push(
+              //   context,
+              //  MaterialPageRoute(builder: (context) => const TestNewVisit()),
+              // );
             },
             title: 'SUBMIT',
           ),
