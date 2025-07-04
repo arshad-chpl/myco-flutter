@@ -21,8 +21,11 @@ class RoutePaths {
   static const String allDistributor = '/all-distributor';
   static const String orderHistory = '/order-history';
   static const String editOrder = '/edit-order';
-  static const String distributorVisitor = 'distributor-visitor';
-  static const String noOrder = 'no-order';
+  static const String distributorVisitor = '/distributor-visitor';
+  static const String noOrder = '/no-order';
+  static const String faceDetection = '/face-detection';
+  // static const String distributorVisitor = 'distributor-visitor';
+  // static const String noOrder = 'no-order';
   static const String selectOtherCompany = '/select-other-company';
   static const String signUpForm = '/sign-up-form';
 

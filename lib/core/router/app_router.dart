@@ -35,6 +35,8 @@ import 'package:myco_flutter/features/visit/presentation/pages/my_visit_page.dar
 import 'package:myco_flutter/features/visits/presentation/pages/visit_report.dart';
 
 import 'route_paths.dart';
+import 'package:myco_flutter/features/visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
+import 'package:myco_flutter/features/visit/presentation/pages/face_detection.dart';
 
 import 'package:myco_flutter/features/visits/presentation/pages/details_page.dart';
 
@@ -42,11 +44,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter router = GoRouter(
-    navigatorKey: _rootNavigatorKe
-    initialLocation: RoutePaths.employees,
-    observers: [
-      // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
-    ],
+    navigatorKey: _rootNavigatorKey,
+    initialLocation: RoutePaths.dashboard,
     routes: [
       GoRoute(
         path: RoutePaths.splash,
@@ -157,7 +156,19 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-      ), // Add all modular routes here
+      ),
+
+
+      GoRoute(
+        path: RoutePaths.faceDetection,
+        name: 'faceDetection',
+        builder: (context, state) => BlocProvider(
+            create: (context) => GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+          child: const FaceDetectionPage(),
+        )
+      ),
+      // Add all modular routes here
+     // Add all modular routes here
       // GoRoute(
       //   path: RoutePaths.takeOrder,
       //   name: 'take-order',
