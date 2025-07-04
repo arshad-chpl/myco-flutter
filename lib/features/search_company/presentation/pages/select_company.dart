@@ -182,7 +182,7 @@ class TermsAndConditions extends StatelessWidget {
   //                  CircleAvatar(
   //                   radius: 54 * getResponsive(context),
   //                   backgroundImage: const AssetImage(
-  //                     'assets/search_society/placeholder.png',
+  //                     'visit/search_society/placeholder.png',
   //                   ),
   //                 ),
   //                  SizedBox(height: 0.01 * getHeight(context)),
@@ -258,7 +258,7 @@ class TermsAndConditions extends StatelessWidget {
   //           ),
   //         ),
   //         SizedBox(height: 0.03 * getHeight(context),),
-  //         Image.asset('assets/search_society/contact_admin.png',height: 0.35 * getHeight(context),),
+  //         Image.asset('visit/search_society/contact_admin.png',height: 0.35 * getHeight(context),),
   //       ],
   //     ),
   //   ),

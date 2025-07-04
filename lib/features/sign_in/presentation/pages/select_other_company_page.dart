@@ -59,7 +59,7 @@ class _SelectOtherCompanyPageState extends State<SelectOtherCompanyPage> {
                     Row(
                       children: [
                         Image.asset(
-                          "assets/sign_in/back_arrow.png",
+                          "visit/sign_in/back_arrow.png",
                           height: 0.015 * getHeight(context),
                           fit: BoxFit.cover,
                         ),
@@ -167,7 +167,7 @@ class _SelectOtherCompanyPageState extends State<SelectOtherCompanyPage> {
                         fontWeight: FontWeight.w900,
                       ),
                       image: Image.asset(
-                        "assets/sign_in/google_logo.png",
+                        "visit/sign_in/google_logo.png",
                         fit: BoxFit.contain,
                         height: 0.02 * getHeight(context),
                       ),
@@ -190,7 +190,7 @@ class _SelectOtherCompanyPageState extends State<SelectOtherCompanyPage> {
                         fontWeight: FontWeight.w900,
                       ),
                       image: Image.asset(
-                        "assets/sign_in/apple_logo.png",
+                        "visit/sign_in/apple_logo.png",
                         fit: BoxFit.contain,
                         height: 0.02 * getHeight(context),
                       ),

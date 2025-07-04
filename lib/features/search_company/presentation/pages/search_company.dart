@@ -30,7 +30,7 @@ class SearchCompanyScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               Image.asset("assets/search_society/search-company.png",
+               Image.asset("visit/search_society/search-company.png",
                width: 0.8 * getWidth(context),),
               SizedBox(height: 0.055 * getHeight(context)),
               CustomText(
@@ -70,7 +70,7 @@ class SearchCompanyScreen extends StatelessWidget {
                   fontSize: 18 * getResponsiveText(context),
                   color: AppTheme.getColor(context).outline,
                 ),
-                preFixImage: 'assets/search_society/company_icon.png',
+                preFixImage: 'visit/search_society/company_icon.png',
         
                 border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),

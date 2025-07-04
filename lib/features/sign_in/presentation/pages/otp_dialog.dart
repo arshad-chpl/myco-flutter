@@ -52,7 +52,7 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
         //       child: Column(
         //         children: [
         //           Image.asset(
-        //             'assets/sign_in/myco_logo.png',
+        //             'visit/sign_in/myco_logo.png',
         //             height: .095 * getHeight(context),
         //             width: .5 * getWidth(context),
         //           ),
@@ -96,7 +96,7 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
         // otp and email bottom sheet
 
         // showCustomEmailVerificationSheet(
-        //   imageUrl: 'assets/sign_in/email.png',
+        //   imageUrl: 'visit/sign_in/email.png',
         //   imageHeight: 0.035 * getHeight(context),
         //   imageWidth: 0.09 * getWidth(context),
         //   // isDialog: true,
@@ -131,7 +131,7 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
           builder: (_) => MyCoDialog(
             isBottomSheet: true,
             image: Image.asset(
-              'assets/sign_in/update.png',
+              'visit/sign_in/update.png',
               height: .15 * getHeight(context),
               width: .5 * getWidth(context),
             ),

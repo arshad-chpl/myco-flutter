@@ -226,13 +226,13 @@ class OrderHistoryCard extends StatelessWidget {
                   InkWell(
                     onTap: () => context.pushNamed('edit-order'),
                     child: Image.asset(
-                      'assets/take_order/message-edit.png',
+                      'visit/take_order/message-edit.png',
                       height: 0.023 * getHeight(context),
                     ),
                   ),
                   SizedBox(width: 0.01 * getWidth(context)),
                   Image.asset(
-                    'assets/take_order/fluent_share.png',
+                    'visit/take_order/fluent_share.png',
                     height: 0.023 * getHeight(context),
                   ),
                 ],
@@ -278,7 +278,7 @@ class OrderHistoryCard extends StatelessWidget {
                     InkWell(
                       onTap: () => Navigator.pop(context),
                       child: Image.asset(
-                        'assets/take_order/down_arrow.png',
+                        'visit/take_order/down_arrow.png',
                         width: 0.05 * getWidth(context),
                       ),
                     ),
@@ -326,7 +326,7 @@ class OrderHistoryCard extends StatelessWidget {
                 child: Column(
                   children: [
                     Image.asset(
-                      'assets/take_order/apple_image.png',
+                      'visit/take_order/apple_image.png',
                       height: 0.025 * getHeight(context),
                     ),
                     SizedBox(height: 0.01 * getHeight(context)),
@@ -492,7 +492,7 @@ class OrderHistoryCard extends StatelessWidget {
           SizedBox(height: 0.02 * getHeight(context)),
           Center(
             child: Image.asset(
-              'assets/take_order/cancel_order.png',
+              'visit/take_order/cancel_order.png',
               height: 0.2 * getHeight(context),
             ),
           ),
@@ -535,7 +535,7 @@ class OrderHistoryCard extends StatelessWidget {
     child: Column(
       children: [
         Image.asset(
-          'assets/take_order/apple_image.png',
+          'visit/take_order/apple_image.png',
           height: 0.025 * getHeight(context),
         ),
         SizedBox(height: 0.01 * getHeight(context)),

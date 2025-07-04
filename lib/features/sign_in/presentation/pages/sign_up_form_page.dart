@@ -57,12 +57,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
                         end: -15 * getResponsive(context),
                       ),
                       badgeContent: Image.asset(
-                        "assets/sign_in/camera_icon.png",
+                        "visit/sign_in/camera_icon.png",
                         fit: BoxFit.contain,
                         height: 0.04 * getHeight(context),
                       ),
                       child: Image.asset(
-                        "assets/sign_in/contact_frame.png",
+                        "visit/sign_in/contact_frame.png",
                         fit: BoxFit.contain,
                         height: 0.11 * getHeight(context),
                       ),
@@ -80,7 +80,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       });
                     },
                     prefix: Image.asset(
-                      "assets/sign_in/branch_icon.png",
+                      "visit/sign_in/branch_icon.png",
                       height: 0.025 * getHeight(context),
                       fit: BoxFit.contain,
                     ),
@@ -99,7 +99,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       });
                     },
                     prefix: Image.asset(
-                      "assets/sign_in/branch_icon.png",
+                      "visit/sign_in/branch_icon.png",
                       height: 0.025 * getHeight(context),
                       fit: BoxFit.contain,
                     ),
@@ -118,7 +118,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       });
                     },
                     prefix: Image.asset(
-                      "assets/sign_in/branch_icon.png",
+                      "visit/sign_in/branch_icon.png",
                       height: 0.025 * getHeight(context),
                       fit: BoxFit.contain,
                     ),
@@ -137,7 +137,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       });
                     },
                     prefix: Image.asset(
-                      "assets/sign_in/branch_icon.png",
+                      "visit/sign_in/branch_icon.png",
                       height: 0.025 * getHeight(context),
                       fit: BoxFit.contain,
                     ),
@@ -157,7 +157,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       });
                     },
                     prefix: Image.asset(
-                      "assets/sign_in/branch_icon.png",
+                      "visit/sign_in/branch_icon.png",
                       height: 0.025 * getHeight(context),
                       fit: BoxFit.contain,
                     ),
@@ -176,7 +176,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       });
                     },
                     prefix: Image.asset(
-                      "assets/sign_in/branch_icon.png",
+                      "visit/sign_in/branch_icon.png",
                       height: 0.025 * getHeight(context),
                       fit: BoxFit.contain,
                     ),
@@ -295,7 +295,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       ),
                       borderSide: BorderSide(color: AppColors.gray),
                     ),
-                    preFixImage: "assets/sign_in/email_icon.png",
+                    preFixImage: "visit/sign_in/email_icon.png",
                   ),
                   SizedBox(height: 0.015 * getHeight(context)),
                   Row(
@@ -373,10 +373,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   ),
                   SizedBox(height: 0.1 * getWidth(context)),
                   MyCoButton(
-                    textStyle:TextStyle(
+                    textStyle: TextStyle(
                       color: AppColors.white,
-                      fontSize: 20*getResponsiveText(context),
-                      fontWeight: FontWeight.bold
+                      fontSize: 20 * getResponsiveText(context),
+                      fontWeight: FontWeight.bold,
                     ),
                     onTap: () {},
                     title: "Sign Up",
@@ -388,20 +388,26 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Already have an account?",style: TextStyle(
-                          fontSize: 18*getResponsiveText(context),
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.black
-                        ),),
-                        Text("Sign in here",style: TextStyle(
-                            fontSize: 18*getResponsiveText(context),
+                        Text(
+                          "Already have an account?",
+                          style: TextStyle(
+                            fontSize: 18 * getResponsiveText(context),
                             fontWeight: FontWeight.bold,
-                            color: AppColors.primary
-                        ),),
+                            color: AppColors.black,
+                          ),
+                        ),
+                        Text(
+                          "Sign in here",
+                          style: TextStyle(
+                            fontSize: 18 * getResponsiveText(context),
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 0.015*getHeight(context),)
+                  SizedBox(height: 0.015 * getHeight(context)),
                 ],
               ),
             ),

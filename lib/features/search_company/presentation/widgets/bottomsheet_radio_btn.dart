@@ -120,7 +120,7 @@ class _BottomsheetRadioButtonState extends State<BottomsheetRadioButton> {
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   borderSide: BorderSide(color: Color(0xFF98A2B3), width: 1),
                 ),
-            preFixImage: 'assets/search_society/company_icon.png',
+            preFixImage: 'visit/search_society/company_icon.png',
             onChanged: (value) {
               setState(() {
                 searchQuery = value;

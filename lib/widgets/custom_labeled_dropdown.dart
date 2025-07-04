@@ -54,8 +54,7 @@ class LabeledDropdown<T> extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
@@ -85,7 +84,6 @@ class LabeledDropdown<T> extends StatelessWidget {
           prefixImage: prefixImage,
           height: height ?? 0.06 * getHeight(context),
           width: width ?? 0.9 * getWidth(context),
-          spacing: spacing ?? 0.02 * getWidth(context),
           hintText: hintText,
           hintTextStyle:
               hintTextStyle ??
@@ -110,5 +108,4 @@ class LabeledDropdown<T> extends StatelessWidget {
         ),
       ],
     );
-  }
 }
