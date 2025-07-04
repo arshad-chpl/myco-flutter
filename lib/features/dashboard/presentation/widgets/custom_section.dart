@@ -115,7 +115,7 @@ class CustomSection extends StatelessWidget {
               GestureDetector(
                 onTap: onViewMore,
                 child: Container(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 10.0,
                     vertical: 6.0,
                   ),
