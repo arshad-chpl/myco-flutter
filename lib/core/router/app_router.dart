@@ -9,6 +9,7 @@ import 'package:myco_flutter/features/company_selector/presentation/bloc/company
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
@@ -29,7 +30,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.addCustomer,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -42,6 +43,13 @@ class AppRouter {
           child: const SplashPage(),
         ),
       ),
+
+      GoRoute(
+        path: RoutePaths.addCustomer,
+        name: 'add_Customer',
+        builder: (context, state) => const AddCustomer(),
+      ),
+
       GoRoute(
         path: RoutePaths.language,
         name: 'language',
