@@ -30,6 +30,8 @@ import 'package:myco_flutter/features/search_company/presentation/pages/select_c
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
+import 'package:myco_flutter/features/visit/presentation/bloc/visit_bloc.dart';
+import 'package:myco_flutter/features/visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/visits/presentation/pages/visit_report.dart';
 
 import 'route_paths.dart';
@@ -40,7 +42,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter router = GoRouter(
-    navigatorKey: _rootNavigatorKey,
+    navigatorKey: _rootNavigatorKe
     initialLocation: RoutePaths.employees,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -123,6 +125,15 @@ class AppRouter {
         name: 'leave',
         builder: (context, state) => const LeaveScreen(),
       ),
+      GoRoute(
+        path: RoutePaths.myVisit,
+        name: 'myVisit',
+        builder: (context, state) => BlocProvider(
+          create: (_) => GetIt.I<VisitBloc>(),
+          child: const MyVisitPage(),
+        ),
+      ),
+
       // GoRoute(
       //   path: RoutePaths.language,
       //   name: 'language',
