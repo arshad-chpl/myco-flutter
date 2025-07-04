@@ -28,14 +28,23 @@ import 'package:myco_flutter/features/search_company/presentation/pages/select_c
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
+import 'package:myco_flutter/features/visits/presentation/pages/visit_report.dart';
+
 import 'route_paths.dart';
+
+import 'package:myco_flutter/features/visits/presentation/pages/details_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.dashboard,
+
+    initialLocation: RoutePaths.details,
+
+    observers: [
+      // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+    ],
     routes: [
       GoRoute(
         path: RoutePaths.splash,
@@ -56,6 +65,17 @@ class AppRouter {
         builder: (context, state) => const OtpVerifyDialog(),
       ),
       GoRoute(
+        path: RoutePaths.details,
+        name: 'details',
+        builder: (context, state) => const DetailsPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.visitReport,
+        name: 'visit_report',
+        builder: (context, state) => const VisitReport(),
+      ),
+
+      GoRoute(
         path: RoutePaths.selectCompany,
         name: 'selectCompany',
         builder: (context, state) => BlocProvider(
@@ -68,7 +88,6 @@ class AppRouter {
         name: 'dashboard',
         builder: (context, state) => DashBoardPage(),
       ),
-
 
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
@@ -116,6 +135,7 @@ class AppRouter {
               create: (_) => TakeOrderBloc(),
               child: const TakeOrderPage(),
             ),
+
             routes: takeOrderRoutes,
           ),
         ],
