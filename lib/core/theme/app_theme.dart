@@ -17,7 +17,7 @@ class AppTheme {
     splashColor: AppColors.splashBg,
     dividerColor: AppColors.textfieldBorder,
 
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       surfaceTintColor: Colors.transparent,
       backgroundColor: AppColors.backgroundPrimary,
       foregroundColor: AppColors.black,

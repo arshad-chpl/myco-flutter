@@ -7,11 +7,14 @@ import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
+import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
@@ -27,14 +30,18 @@ import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bl
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
 import 'package:myco_flutter/features/visit/presentation/bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/visit/presentation/pages/my_visit_page.dart';
+import 'package:myco_flutter/features/visits/presentation/pages/visit_report.dart';
+
 import 'route_paths.dart';
+
+import 'package:myco_flutter/features/visits/presentation/pages/details_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.myVisit,
+    initialLocation: RoutePaths.getStarted,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -58,6 +65,17 @@ class AppRouter {
         builder: (context, state) => const OtpVerifyDialog(),
       ),
       GoRoute(
+        path: RoutePaths.details,
+        name: 'details',
+        builder: (context, state) => const DetailsPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.visitReport,
+        name: 'visit_report',
+        builder: (context, state) => const VisitReport(),
+      ),
+
+      GoRoute(
         path: RoutePaths.selectCompany,
         name: 'selectCompany',
         builder: (context, state) => BlocProvider(
@@ -70,7 +88,6 @@ class AppRouter {
         name: 'dashboard',
         builder: (context, state) => DashBoardPage(),
       ),
-
 
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
@@ -130,17 +147,26 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-
       ), // Add all modular routes here
-
-
+      // GoRoute(
+      //   path: RoutePaths.takeOrder,
+      //   name: 'take-order',
+      //   builder: (context, state) => BlocProvider(
+      //     create: (_) => TakeOrderBloc(),
+      //     child: TakeOrderPage(),
+      //   ),
+      // ),
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
         builder: (context, state) => SignupFormPage(),
-
       ),
-       GoRoute(
+      GoRoute(
+        path: RoutePaths.lostAndFound,
+        name: 'lost-and-found',
+        builder: (context, state) => LostAndFound(),
+      ),
+      GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
@@ -148,7 +174,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.companySearch,
         name: 'companySearch',
-        builder: (context, state) => const SearchCompanyScreen(),
+        builder: (context, state) => const TermsAndConditions(),
       ),
       GoRoute(
         path: RoutePaths.payslip,
@@ -167,7 +193,11 @@ class AppRouter {
           ),
         ],
       ),
-
+      GoRoute(
+        path: RoutePaths.employees,
+        name: 'employees',
+        builder: (context, state) => const EmployeesScreen(),
+      ),
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,

@@ -138,7 +138,6 @@ class CommonCard extends StatelessWidget {
                           ),
                         ],
                       ),
-
                   ],
                 ),
               ),

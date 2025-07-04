@@ -26,6 +26,7 @@ class AppColors {
   static const Color gray5 = Color(0xFFF2F2F2);
   static const Color gray10 = Color(0xFFE6E6E6);
   static const Color error = Color(0xFFE53935);
+  static const Color removeBackground = Color(0xFFFFE5E5);
   static const Color splashBg = Color(0xFFFBFBFB);
   static const Color blueLightShade = Color(
     0xFFeef1f9,
