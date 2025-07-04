@@ -25,8 +25,6 @@ class CommonCard extends StatelessWidget {
   final double? headerPrefixIconWidth;
   final bool? showBlackShadowInChild;
   final Widget? subTitleIcon;
-  final bool? showBlackShadowInChild;
-  final Widget? subTitleIcon;
   const CommonCard({
     required this.title,
     required this.bottomWidget,
@@ -47,8 +45,6 @@ class CommonCard extends StatelessWidget {
     this.suffixIcon,
     this.headerPrefixIconHeight,
     this.headerPrefixIconWidth,
-    this.showBlackShadowInChild,
-    this.subTitleIcon,
     this.showBlackShadowInChild,
     this.subTitleIcon,
   });
