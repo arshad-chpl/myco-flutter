@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/features/visit/presentation/bloc/camera_bloc/camera_bloc.dart';
-import 'package:myco_flutter/features/visit/presentation/bloc/date_time_bloc/date_time_bloc.dart';
+import 'package:myco_flutter/features/visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/visit/presentation/widgets/warnings_alerts_messages.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/custom_face_detection_widgets.dart';
@@ -23,12 +22,6 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
   late Animation<double> _bottomLineAlignment;
 
   String scanningSate = 'scanning';
-
-  void onRetryFaceScan() {
-    setState(() {
-      scanningSate == 'scanning';
-    });
-  }
 
   Future<void> cameraPermission() async {
     final status = await Permission.camera.status;
@@ -67,11 +60,11 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
       duration: const Duration(seconds: 2),
     );
 
-    _topLineAlignment = Tween<double>(begin: 50, end: 100).animate(
+    _topLineAlignment = Tween<double>(begin: 30, end: 120).animate(
       CurvedAnimation(parent: _scanController, curve: Curves.easeInOut),
     );
 
-    _bottomLineAlignment = Tween<double>(begin: 200, end: 150).animate(
+    _bottomLineAlignment = Tween<double>(begin: 200, end: 110).animate(
       CurvedAnimation(parent: _scanController, curve: Curves.easeInOut),
     );
 
@@ -88,19 +81,16 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {},
             icon: const Icon(Icons.arrow_back),
         ),
-        title: const Text(
+        title: const CustomText(
           'Hello, AJAJ',
-          style: TextStyle(
             fontSize: 19,
             fontWeight: FontWeight.bold
-          ),
         ),
       ),
       body: SafeArea(
@@ -114,11 +104,11 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomText(
+                      const CustomText(
                         'Welcome To Work',
                         color: AppColors.white,
                       ),
-                      SizedBox(height: 10,),
+                      const SizedBox(height: 10,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -127,75 +117,166 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
                                 color: AppColors.spanishYellow,
                               borderRadius: BorderRadius.circular(10)
                             ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                              child: const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                                 child: CustomText(
                                   'Flutter Developer'
                                 ),
                               ),
                           ),
 
-                          BlocBuilder<DateTimeBLoc, DateTimeState>(
+
+                          BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
                               builder: (context, state) {
-                                if(state is DateTimeUpdated) {
+                                if(state is FaceDetectionLoaded) {
+
                                   return CustomText(
-                                    state.dateTime,
+                                    state.dateTime.trim().isEmpty ? 'EMPTY' : state.dateTime,
                                     color: AppColors.white,
                                     fontSize: 14,
                                   );
                                 }
-                                return CustomText("Loading...", color: AppColors.white,);
+                                return const CustomText('Loading...', color: AppColors.white,);
                               },
-                          )
+                          ),
+
+                          // BlocBuilder<DateTimeBLoc, DateTimeState>(
+                          //     builder: (context, state) {
+                          //       if(state is DateTimeUpdated) {
+                          //         return CustomText(
+                          //           state.dateTime,
+                          //           color: AppColors.white,
+                          //           fontSize: 14,
+                          //         );
+                          //       }
+                          //       return const CustomText('Loading...', color: AppColors.white,);
+                          //     },
+                          // )
                         ],
                       ),
                     ],
                   ),
               ),
-              SizedBox(height: 23,),
-              BlocBuilder<CameraBloc, CameraState>(
-                builder: (context, state) {
-                  if(state is OpenCamera) {
-                    return CustomFaceDetectionWidgets(
-                      controller: state.controller,
-                      scanningState: 'success',
-                      topLineAlignment: _topLineAlignment,
+              const SizedBox(height: 23,),
+              BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
+                  builder: (context, state) {
+
+                    if(state is FaceDetectionLoaded) {
+                      if(state.scanningState != 'scanning') {
+                        _scanController.stop();
+                      } else if(!_scanController.isAnimating) {
+                        _scanController.repeat(reverse: true);
+                      }
+
+                      return CustomFaceDetectionWidgets(
+                        controller: state.controller,
+                        scanningState: state.scanningState,
+                        topLineAlignment: _topLineAlignment,
                         bottomLineAlignment: _bottomLineAlignment,
-                      retry: onRetryFaceScan,
-                    );
-                  } else if (state is LoadingCamera) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is CameraErrorState) {
-                    return Center(child: Text('Camera Error'));
-                  }
-                  return Center(child: Text('Camera error'),);
-                },
+                        retry: () {
+                          context.read<FaceDetectionBloc>().add(UpdateScanningState(scanningState: 'scanning'));
+                          context.read<FaceDetectionBloc>().add(StartScanningTimer());
+                        },
+                      );
+
+                    } else if (state is FaceDetectionLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state is FaceDetectionError) {
+                      return Center(child: Text(state.message));
+                    }
+                    return const Center(child: Text('Camera error'),);
+                  },
               ),
-              SizedBox(height: 13,),
-              CustomText(
+              // BlocBuilder<CameraBloc, CameraState>(
+              //   builder: (context, state) {
+              //     if(state is OpenCamera) {
+              //       return CustomFaceDetectionWidgets(
+              //         controller: state.controller,
+              //         scanningState: 'success',
+              //         topLineAlignment: _topLineAlignment,
+              //           bottomLineAlignment: _bottomLineAlignment,
+              //         retry: onRetryFaceScan,
+              //       );
+              //     } else if (state is LoadingCamera) {
+              //       return const Center(child: CircularProgressIndicator());
+              //     } else if (state is CameraErrorState) {
+              //       return Center(child: Text('Camera Error'));
+              //     }
+              //     return Center(child: Text('Camera error'),);
+              //   },
+              // ),
+              const SizedBox(height: 13,),
+              const CustomText(
                 'Align your face within the frame',
                 fontWeight: FontWeight.bold,
               ),
-              SizedBox(height: 40,),
-              Container(
-                height: 15,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 2, color: AppTheme.getColor(context).primary),
-                  borderRadius: BorderRadius.circular(13),
-                ),
-                child: LinearProgressIndicator(
-                ),
+              const SizedBox(height: 40,),
+
+
+
+              BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
+                  builder: (context, state) {
+                    if(state is FaceDetectionLoaded) {
+                      return Container(
+                        height: 19,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 2, color: AppTheme.getColor(context).primary),
+                          borderRadius: BorderRadius.circular(13),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadiusGeometry.circular(11),
+                          child: LinearProgressIndicator(
+                            value: state.progress,
+                            backgroundColor: Color.fromARGB(1, 220, 239, 255),
+                            color: AppTheme.getColor(context).primary,
+                          ),
+                        )
+                      );
+                    }
+                    return const SizedBox();
+                  },
               ),
-              SizedBox(height: 19,),
-              CustomText(
-                'Auto close in 01:59',
-                color: AppTheme.getColor(context).primary,
+
+
+              // Container(
+              //   height: 15,
+              //   decoration: BoxDecoration(
+              //     border: Border.all(width: 2, color: AppTheme.getColor(context).primary),
+              //     borderRadius: BorderRadius.circular(13),
+              //   ),
+              //   child: const LinearProgressIndicator(
+              //   ),
+              // ),
+
+
+              const SizedBox(height: 19,),
+
+
+              BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
+                  builder: (context, state) {
+                    if(state is FaceDetectionLoaded) {
+                      return CustomText(
+                        'Auto close in ${state.remainingTime}',
+                        color: AppTheme.getColor(context).primary,
+                      );
+                    }
+                    return const SizedBox();
+                  },
               ),
-              SizedBox(height: 10,),
+
+              // CustomText(
+              //   'Auto close in 01:59',
+              //   color: AppTheme.getColor(context).primary,
+              // ),
+
+
+
+
+              const SizedBox(height: 10,),
               BorderContainerWraper(
                 width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Column(
                       children: [
                         WarningsAlertsMessages(imagePath: 'assets/face_detection/danger.png', msg: 'Remove before scanning'),
@@ -212,5 +293,4 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
         ),
       ),
     );
-  }
 }

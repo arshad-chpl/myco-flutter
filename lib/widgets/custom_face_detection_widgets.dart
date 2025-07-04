@@ -70,9 +70,8 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
   }
 
   Widget scanningLines(BuildContext context) {
-    if(scanningState != 'scanning' && scanningState == 'success' && scanningState == 'failure') return const SizedBox();
-
-    return AnimatedBuilder(
+    if(scanningState == 'scanning') {
+      return AnimatedBuilder(
         animation: topLineAlignment,
         builder: (context, child) => Stack(
           children: [
@@ -81,9 +80,9 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-                height: 3,
-                margin: const EdgeInsets.symmetric(horizontal: 40),
-                color: AppTheme.getColor(context).primary
+                  height: 3,
+                  margin: const EdgeInsets.symmetric(horizontal: 40),
+                  color: AppTheme.getColor(context).primary
               ),
             ),
             Positioned(
@@ -91,31 +90,71 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-                height: 3,
-                margin: const EdgeInsets.symmetric(horizontal: 40),
+                  height: 3,
+                  margin: const EdgeInsets.symmetric(horizontal: 40),
                   color: AppTheme.getColor(context).primary
               ),
             ),
           ],
         ),
+      );
+    }
+
+    return Stack(
+      children: [
+        Positioned(
+          top: 40,
+          left: 0,
+          right: 0,
+          child: Container(
+              height: 3,
+              margin: const EdgeInsets.symmetric(horizontal: 40),
+              color: AppTheme.getColor(context).primary
+          ),
+        ),
+        Positioned(
+          top: 180,
+          left: 0,
+          right: 0,
+          child: Container(
+              height: 3,
+              margin: const EdgeInsets.symmetric(horizontal: 40),
+              color: AppTheme.getColor(context).primary
+          ),
+        ),
+      ],
     );
+
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 0.35 * getHeight(context),
+      height: 0.30 * getHeight(context),
       width: double.infinity,
       decoration: BoxDecoration(
-          border: Border.all(color: getBorderColor(context), width: 4),
+          border: Border.all(color: getBorderColor(context), width: 6),
           borderRadius: BorderRadius.circular(27)
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(23),
+        borderRadius: BorderRadius.circular(21),
         child: Stack(
           fit: StackFit.expand,
           children: [
-            CameraPreview(controller),
+            if (controller.value.isInitialized)
+              ClipRect(
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: SizedBox(
+                    width: controller.value.previewSize!.height,
+                    height: controller.value.previewSize!.width,
+                    child: CameraPreview(controller),
+                  ),
+                ),
+              )
+            else
+              const Center(child: CircularProgressIndicator()),
             scanningLines(context),
           buildOverLay(),
             Align(alignment: Alignment.bottomCenter, child: labelMessage(context))

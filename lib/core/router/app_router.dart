@@ -11,8 +11,7 @@ import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart'
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
-import 'package:myco_flutter/features/visit/presentation/bloc/camera_bloc/camera_bloc.dart';
-import 'package:myco_flutter/features/visit/presentation/bloc/date_time_bloc/date_time_bloc.dart';
+import 'package:myco_flutter/features/visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/visit/presentation/pages/face_detection.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -75,15 +74,8 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
-        builder: (context, state) => MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (_) => GetIt.I<DateTimeBLoc>()..add(StartDateTime()),
-            ),
-            BlocProvider(
-                create: (_) => CameraBloc()..add(LaunchCamera()),
-            ),
-          ],
+        builder: (context, state) => BlocProvider(
+            create: (context) => GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
           child: const FaceDetectionPage(),
         )
       )
