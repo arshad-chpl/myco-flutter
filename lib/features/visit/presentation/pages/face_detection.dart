@@ -125,7 +125,6 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
                               ),
                           ),
 
-
                           BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
                               builder: (context, state) {
                                 if(state is FaceDetectionLoaded) {
@@ -139,19 +138,6 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
                                 return const CustomText('Loading...', color: AppColors.white,);
                               },
                           ),
-
-                          // BlocBuilder<DateTimeBLoc, DateTimeState>(
-                          //     builder: (context, state) {
-                          //       if(state is DateTimeUpdated) {
-                          //         return CustomText(
-                          //           state.dateTime,
-                          //           color: AppColors.white,
-                          //           fontSize: 14,
-                          //         );
-                          //       }
-                          //       return const CustomText('Loading...', color: AppColors.white,);
-                          //     },
-                          // )
                         ],
                       ),
                     ],
@@ -187,32 +173,12 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
                     return const Center(child: Text('Camera error'),);
                   },
               ),
-              // BlocBuilder<CameraBloc, CameraState>(
-              //   builder: (context, state) {
-              //     if(state is OpenCamera) {
-              //       return CustomFaceDetectionWidgets(
-              //         controller: state.controller,
-              //         scanningState: 'success',
-              //         topLineAlignment: _topLineAlignment,
-              //           bottomLineAlignment: _bottomLineAlignment,
-              //         retry: onRetryFaceScan,
-              //       );
-              //     } else if (state is LoadingCamera) {
-              //       return const Center(child: CircularProgressIndicator());
-              //     } else if (state is CameraErrorState) {
-              //       return Center(child: Text('Camera Error'));
-              //     }
-              //     return Center(child: Text('Camera error'),);
-              //   },
-              // ),
               const SizedBox(height: 13,),
               const CustomText(
                 'Align your face within the frame',
                 fontWeight: FontWeight.bold,
               ),
               const SizedBox(height: 40,),
-
-
 
               BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
                   builder: (context, state) {
@@ -237,20 +203,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
                   },
               ),
 
-
-              // Container(
-              //   height: 15,
-              //   decoration: BoxDecoration(
-              //     border: Border.all(width: 2, color: AppTheme.getColor(context).primary),
-              //     borderRadius: BorderRadius.circular(13),
-              //   ),
-              //   child: const LinearProgressIndicator(
-              //   ),
-              // ),
-
-
               const SizedBox(height: 19,),
-
 
               BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
                   builder: (context, state) {
@@ -263,14 +216,6 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
                     return const SizedBox();
                   },
               ),
-
-              // CustomText(
-              //   'Auto close in 01:59',
-              //   color: AppTheme.getColor(context).primary,
-              // ),
-
-
-
 
               const SizedBox(height: 10,),
               BorderContainerWraper(
