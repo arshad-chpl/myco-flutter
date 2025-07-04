@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
-import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/timer_and_slider.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class DashboardAppBar extends StatelessWidget {
@@ -18,7 +18,7 @@ class DashboardAppBar extends StatelessWidget {
         children: [
           // TODO: Add NetworkImage for profile picture
           CircleAvatar(
-            radius: 55 * getResponsiveOnWidth(context),
+            radius: 22 * getDashboardResponsiveText(context),
             backgroundImage: NetworkImage(
               'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
             ),
@@ -34,7 +34,7 @@ class DashboardAppBar extends StatelessWidget {
                       child: CustomText(
                         'Person Name',
                         fontWeight: FontWeight.w700,
-                        fontSize: 14 * getResponsiveText(context),
+                        fontSize: 14 * getDashboardResponsiveText(context),
                       ),
                     ),
                     WidgetSpan(child: SizedBox(width: 10)),
@@ -46,15 +46,20 @@ class DashboardAppBar extends StatelessWidget {
               CustomText(
                 'Designation',
                 fontWeight: FontWeight.w600,
-                fontSize: 12,
+                fontSize: 12 * getDashboardResponsiveText(context),
                 color: AppColors.spanishYellow,
               ),
-              CustomText(
-                'date and time now',
-                fontWeight: FontWeight.w500,
-                fontSize: 10,
-                color: AppTheme.getColor(context).onSurfaceVariant,
+              LiveClock(
+                isAppBar: true,
+                fontSize: 10 * getDashboardResponsiveText(context),
               ),
+
+              // CustomText(
+              //   'date and time now',
+              //   fontWeight: FontWeight.w500,
+              //   fontSize: 10,
+              //   color: AppTheme.getColor(context).onSurfaceVariant,
+              // ),
             ],
           ),
 

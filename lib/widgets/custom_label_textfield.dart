@@ -115,8 +115,7 @@ class LabeledTextField extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomText(
@@ -171,6 +170,7 @@ class LabeledTextField extends StatelessWidget {
             iconWidth: iconWidth,
             image1: image1,
             image2: image2,
+            isSuffixIconOn: isSuffixIconOn ?? false, /////
             isSuffixIconOn: isSuffixIconOn ?? false,
             labelTextStyle: labelTextStyle,
             onClick: onClick,

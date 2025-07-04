@@ -60,7 +60,7 @@ class NoOrderPage extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.only(top: 0.01 * getHeight(context)),
                   child: Image.asset(
-                    'assets/take_order/message-edit.png',
+                    'visit/take_order/message-edit.png',
                     height: 0.025 * getHeight(context),
                   ),
                 ),
