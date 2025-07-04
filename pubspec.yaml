@@ -112,6 +112,8 @@ flutter:
     - assets/search_society/
     - assets/ideabox/
     - assets/payslip/
+    - assets/visit/
+    - assets/visit/svgs/
     - assets/media_picker/
     - assets/lost_and_found/
     - assets/face_detection/
