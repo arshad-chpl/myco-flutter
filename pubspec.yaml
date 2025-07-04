@@ -98,6 +98,7 @@ flutter:
     - assets/sign_in/
     - assets/search_society/
     - assets/payslip/
+    - assets/visit_svgs/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
