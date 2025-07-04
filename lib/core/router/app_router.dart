@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
+import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
 import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
@@ -48,20 +49,18 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-<<<<<<< HEAD
-    // initialLocation: RoutePaths.getStarted,
-    initialLocation: RoutePaths.test,
-    observers: [
-      // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
-    ],
-=======
-    initialLocation: RoutePaths.AddExpense,
->>>>>>> main
+    // initialLocation: RoutePaths.AddExpense,
+    initialLocation: RoutePaths.assetsHome,
     routes: [
       GoRoute(
-        path: RoutePaths.test,
-        name: 'test',
+        path: RoutePaths.assetsHome,
+        name: 'assets-home',
         builder: (context, state) => const Testing(),
+      ),
+      GoRoute(
+        path: RoutePaths.qrScanner,
+        name: 'qr-scanner',
+        builder: (context, state) => const QRScannerPage(),
       ),
       GoRoute(
         path: RoutePaths.splash,
@@ -112,7 +111,6 @@ class AppRouter {
         name: 'dashboard',
         builder: (context, state) => DashBoardPage(),
       ),
-
 
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
@@ -172,22 +170,19 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-<<<<<<< HEAD
-      ), // Add all modular routes here
-=======
       ),
-
 
       GoRoute(
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
         builder: (context, state) => BlocProvider(
-            create: (context) => GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+          create: (context) =>
+              GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
           child: const FaceDetectionPage(),
-        )
+        ),
       ),
       // Add all modular routes here
-     // Add all modular routes here
+      // Add all modular routes here
       // GoRoute(
       //   path: RoutePaths.takeOrder,
       //   name: 'take-order',
@@ -196,21 +191,17 @@ class AppRouter {
       //     child: TakeOrderPage(),
       //   ),
       // ),
->>>>>>> main
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
         builder: (context, state) => SignupFormPage(),
       ),
       GoRoute(
-<<<<<<< HEAD
-=======
         path: RoutePaths.lostAndFound,
         name: 'lost-and-found',
         builder: (context, state) => LostAndFound(),
       ),
       GoRoute(
->>>>>>> main
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
@@ -251,7 +242,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.AddExpense,
         name: 'addExpense',
-        builder: (context, state) =>  const AddExpensePage(),
+        builder: (context, state) => const AddExpensePage(),
       ),
       // Add all modular routes here
       // ...authRoutes,

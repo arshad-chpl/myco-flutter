@@ -1,6 +1,5 @@
 class RoutePaths {
   static const String splash = '/';
-  static const String test = '/test';
   static const String login = '/login';
   static const String home = '/home';
   static const String home1 = '/home1';
@@ -8,6 +7,8 @@ class RoutePaths {
   static const String selectCompany = '/select-company';
   static const String dashboard = '/dashboard';
   static const String takeOrder = '/take-order';
+  static const String qrScanner = '/qr-scanner';
+  static const String assetsHome = '/assets-home';
 
   static const String getStarted = '/get-started';
   static const String companySearch = '/search-company';
