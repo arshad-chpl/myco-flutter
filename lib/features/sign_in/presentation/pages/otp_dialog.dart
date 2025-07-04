@@ -7,6 +7,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/custom_dialog.dart';
+import 'package:myco_flutter/features/sign_in/presentation/widgets/custom_request_bottom_sheet.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/customotp_bottomsheet.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
@@ -128,36 +129,7 @@ class _OtpVerifyDialogState extends State<OtpVerifyDialog> {
               top: Radius.circular(20 * getResponsive(context)),
             ),
           ),
-          builder: (_) => MyCoDialog(
-            isBottomSheet: true,
-            image: Image.asset(
-              'assets/sign_in/update.png',
-              height: .15 * getHeight(context),
-              width: .5 * getWidth(context),
-            ),
-            isDescriptionThere: false,
-            title:
-                'You were registered with Google - sdk_gphonr64_arm64, please contact to \nadmin or request for new phone registration.',
-            actions: [
-              MyCoButton(
-                onTap: () {},
-                title: 'Close',
-                height: 0.068 * getHeight(context),
-                width: .7 * getWidth(context),
-                backgroundColor: AppTheme.getColor(context).onPrimary,
-                textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(context),
-                boarderRadius: 30 * getResponsive(context),
-              ),
-              MyCoButton(
-                onTap: () {},
-                title: 'Request',
-                height: 0.068 * getHeight(context),
-                width: .7 * getWidth(context),
-                boarderRadius: 30 * getResponsive(context),
-                isShadowBottomLeft: true,
-              ),
-            ],
-          ),
+          builder: (_) => CustomRequestBottomSheet()
         );
       },
       child: const Icon(Icons.message),

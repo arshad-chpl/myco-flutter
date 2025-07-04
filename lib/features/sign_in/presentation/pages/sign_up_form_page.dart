@@ -203,6 +203,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       LabeledTextField(
                         label: "First Name",
                         hint: "First Name",
+                        textAlignment: TextAlign.start,
                         // controller: _firstNameController,
                         validator: (val) =>
                         val == null || val.isEmpty ? "Required" : null,
@@ -220,6 +221,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       LabeledTextField(
                         label: "Last Name",
                         hint: "Last Name",
+                        textAlignment: TextAlign.start,
                         // controller: _firstNameController,
                         validator: (val) =>
                             val == null || val.isEmpty ? "Required" : null,
@@ -300,6 +302,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   ),
                   SizedBox(height: 0.015 * getHeight(context)),
                   MyCoTextfield(
+                    textAlignment: TextAlign.start,
                     hintText: "abc@gmail.com",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(

@@ -142,7 +142,7 @@ class _MyCoButtonMobile extends StatelessWidget {
           fontFamily: Util.getFontFamily(fontWeight ?? FontWeight.w500),
         );
 
-    final double radius = boarderRadius ?? MyCoButtonTheme.borderRadius;
+    final double radius = boarderRadius ?? MyCoButtonTheme.borderRadius??8;
 
     return InkWell(
       onTap: onTap,

@@ -86,7 +86,7 @@ class BigMyCoTextField extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(
                           right: 8.0 * getResponsive(context),
-                          top: 4 * getResponsive(context),
+                          // top: 1 * getResponsive(context),
                         ),
                         child: prefixImage,
                       ),

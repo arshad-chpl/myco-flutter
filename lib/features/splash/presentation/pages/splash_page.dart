@@ -41,7 +41,7 @@ class _SplashPageState extends State<SplashPage>
     setState(() {});
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed && _canNavigate) {
-        // _navigateNext();
+        _navigateNext();
       }
     });
     _preference.clearSecureStorageOnFreshInstall();
@@ -50,7 +50,7 @@ class _SplashPageState extends State<SplashPage>
   Future<void> _navigateNext() async {
     final isLoggedIn = await _preference.getLoginSession();
     if (!mounted) return;
-    context.go(isLoggedIn ?? false ? '/home' : RoutePaths.selectCompany);
+    context.go(isLoggedIn ?? false ? '/dashboard' : "/get-started");
   }
 
   @override

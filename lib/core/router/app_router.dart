@@ -19,6 +19,7 @@ import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
+import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
@@ -35,7 +36,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.dashboard,
+    initialLocation: RoutePaths.splash,
     routes: [
       GoRoute(
         path: RoutePaths.splash,
@@ -146,7 +147,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.companySearch,
         name: 'companySearch',
-        builder: (context, state) => const TermsAndConditions(),
+        builder: (context, state) => SearchCompanyScreen(),
       ),
       GoRoute(
         path: RoutePaths.payslip,
@@ -169,6 +170,11 @@ class AppRouter {
         path: RoutePaths.employees,
         name: 'employees',
         builder: (context, state) => const EmployeesScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.contactAdmin,
+        name: 'contact-admin',
+        builder: (context, state) => const ContactAdminPage(),
       ),
       // Add all modular routes here
       // ...authRoutes,

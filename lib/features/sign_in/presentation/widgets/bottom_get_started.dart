@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -9,8 +10,7 @@ class BottomGetStarted extends StatelessWidget {
   const BottomGetStarted({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
+  Widget build(BuildContext context) => Container(
       height: .52 * getHeight(context),
       width: getWidth(context),
       child: Padding(
@@ -41,14 +41,20 @@ class BottomGetStarted extends StatelessWidget {
             ),
             SizedBox(height: .035 * getHeight(context)),
             MyCoButton(
-              onTap: () {},
+              onTap: () {
+                context.pop();
+                context.pop();
+                context.push("/contact-admin");
+              },
               title: 'Set Up My Profile',
               boarderRadius: 30 * getResponsive(context),
               isShadowBottomLeft: true,
             ),
             SizedBox(height: .02 * getHeight(context)),
             MyCoButton(
-              onTap: () {},
+              onTap: () {
+                context.go("/dashboard");
+              },
               boarderRadius: 30 * getResponsive(context),
               title: 'Explore The App First',
               backgroundColor: AppTheme.getColor(context).onPrimary,
@@ -60,5 +66,4 @@ class BottomGetStarted extends StatelessWidget {
         ),
       ),
     );
-  }
 }

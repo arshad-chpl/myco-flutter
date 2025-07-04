@@ -129,11 +129,14 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                 emailAddress: "example@example.com",
                 onSubmit: (String otp) {
                   dev.log("OTP submitted: $otp");
+                  context.push("/dashboard");
                 },
                 onResend: () {
                   //for here
                   dev.log("Resend OTP");
-                  context.pushNamed("select-other-company");
+                  context.pop();
+                  context.pop();
+                  context.push("/sign-up-form");
                 },
                 onVerifyButtonPressed: () {
                   dev.log("Verify button pressed");
