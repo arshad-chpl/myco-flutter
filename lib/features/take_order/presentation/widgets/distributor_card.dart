@@ -26,7 +26,9 @@ class DistributorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+      borderRadius: BorderRadius.circular(
+        12 * Responsive.getResponsive(context),
+      ),
       side: BorderSide(color: AppTheme.getColor(context).outline),
     ),
     color: AppTheme.getColor(context).onPrimary,
@@ -38,17 +40,23 @@ class DistributorCard extends StatelessWidget {
           children: [
             Material(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12 * getResponsive(context)),
-                topRight: Radius.circular(12 * getResponsive(context)),
+                topLeft: Radius.circular(
+                  12 * Responsive.getResponsive(context),
+                ),
+                topRight: Radius.circular(
+                  12 * Responsive.getResponsive(context),
+                ),
               ),
               elevation: 3.0,
               child: Container(
-                height: headerHeight ?? 0.06 * getHeight(context),
-                padding: EdgeInsets.all(10 * getResponsive(context)),
+                height: headerHeight ?? 0.06 * Responsive.getHeight(context),
+                padding: EdgeInsets.all(10 * Responsive.getResponsive(context)),
                 decoration: BoxDecoration(
                   color: AppTheme.getColor(context).secondary,
                   borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(12 * getResponsive(context)),
+                    top: Radius.circular(
+                      12 * Responsive.getResponsive(context),
+                    ),
                   ),
                 ),
                 child: Row(
@@ -59,15 +67,15 @@ class DistributorCard extends StatelessWidget {
                     if (isHeaderIconEnabled!)
                       Image.asset(
                         'visit/take_order/profile-circle.png',
-                        height: 0.1 * getHeight(context),
-                        width: 0.06 * getWidth(context),
+                        height: 0.1 * Responsive.getHeight(context),
+                        width: 0.06 * Responsive.getWidth(context),
                       ),
                     if (isHeaderIconEnabled!)
-                      SizedBox(width: 0.02 * getWidth(context)),
+                      SizedBox(width: 0.02 * Responsive.getWidth(context)),
                     CustomText(
                       title,
                       color: AppTheme.getColor(context).onPrimary,
-                      fontSize: 17 * getResponsiveText(context),
+                      fontSize: 17 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.bold,
                     ),
                     isButton
@@ -75,12 +83,14 @@ class DistributorCard extends StatelessWidget {
                             onTap: onTap,
                             title: buttonText,
                             textStyle: TextStyle(
-                              fontSize: 13 * getResponsiveText(context),
+                              fontSize:
+                                  13 * Responsive.getResponsiveText(context),
                               color: AppTheme.getColor(context).onPrimary,
                             ),
-                            width: 0.16 * getWidth(context),
-                            boarderRadius: 30 * getResponsive(context),
-                            height: 0.03 * getHeight(context),
+                            width: 0.16 * Responsive.getWidth(context),
+                            boarderRadius:
+                                30 * Responsive.getResponsive(context),
+                            height: 0.03 * Responsive.getHeight(context),
                             isShadowBottomLeft: true,
                             enabled: true,
                           )

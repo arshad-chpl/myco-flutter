@@ -165,13 +165,18 @@ class _MonthYearPickerBottomSheetState
         MyCoButton(
           boarderRadius: 50,
           isShadowBottomLeft: true,
-          textStyle: TextStyle(letterSpacing: 1.2, color: AppColors.white,
-            fontSize: 14 * getResponsiveText(context),fontWeight: FontWeight.bold),
+          textStyle: TextStyle(
+            letterSpacing: 1.2,
+            color: AppColors.white,
+            fontSize: 14 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.bold,
+          ),
           onTap: () {
             widget.onSubmit(selectedMonth, selectedYear);
             Navigator.pop(context);
-          },title: 'SUMMIT',),
-
+          },
+          title: 'SUMMIT',
+        ),
       ],
     ),
   );

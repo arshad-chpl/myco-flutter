@@ -92,7 +92,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
           flex: widget.scannerFlex.toInt(),
           child: Container(
             margin: EdgeInsets.all(
-              widget.containerMargin ?? 0.12 * getWidth(context),
+              widget.containerMargin ?? 0.12 * Responsive.getWidth(context),
             ),
             child: CustomPaint(
               painter: CornerStylePainter(),

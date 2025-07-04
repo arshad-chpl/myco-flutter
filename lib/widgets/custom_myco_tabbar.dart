@@ -46,8 +46,8 @@ class MyCustomTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-    height: height ?? 0.06 * getHeight(context),
-    width: width ?? 0.9 * getWidth(context),
+    height: height ?? 0.06 * Responsive.getHeight(context),
+    width: width ?? 0.9 * Responsive.getWidth(context),
     decoration: BoxDecoration(
       border: Border.all(color: tabBarBorderColor),
       borderRadius: BorderRadius.circular(borderRadius ?? 50),
@@ -82,13 +82,13 @@ class MyCustomTabBar extends StatelessWidget {
               boarderRadius: borderRadius ?? 50,
               textStyle: isSelected
                   ? TextStyle(
-                      fontSize: 13 * getResponsiveText(context),
+                      fontSize: 13 * Responsive.getResponsiveText(context),
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                     )
                   : TextStyle(
                       color: selectedBgColors[index],
-                      fontSize: 13 * getResponsiveText(context),
+                      fontSize: 13 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w500,
                     ),
             ),

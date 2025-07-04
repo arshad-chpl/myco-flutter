@@ -44,29 +44,32 @@ class VisitReport extends StatelessWidget {
                       children: [
                         CustomText(
                           'Test New Visit',
-                          fontSize: 16 * getResponsiveText(context),
+                          fontSize: 16 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w700,
                         ),
-                        SizedBox(height: 0.001 * getHeight(context)),
+                        SizedBox(height: 0.001 * Responsive.getHeight(context)),
                         CustomText(
                           'Submitted on:05 Jun 2025 10:20 AM',
-                          fontSize: 14 * getResponsiveText(context),
+                          fontSize: 14 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w500,
                         ),
-                        SizedBox(height: 0.008 * getHeight(context)),
+                        SizedBox(height: 0.008 * Responsive.getHeight(context)),
                         HorizontalDashedLine(
                           width: double.maxFinite,
                           thickness: 2,
                           color: AppTheme.getColor(context).outline,
                         ),
 
-                        SizedBox(height: 0.0055 * getHeight(context)),
+                        SizedBox(
+                          height: 0.0055 * Responsive.getHeight(context),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             CustomText(
                               'Download Report',
-                              fontSize: 12 * getResponsiveText(context),
+                              fontSize:
+                                  12 * Responsive.getResponsiveText(context),
                               color: AppTheme.getColor(context).secondary,
                               decoration: TextDecoration.underline,
                               fontWeight: FontWeight.w700,

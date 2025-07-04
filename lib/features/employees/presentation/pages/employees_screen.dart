@@ -25,7 +25,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
             const SizedBox(width: 16),
             CustomText(
               'Junagadh',
-              fontSize: 18 * getResponsiveText(context),
+              fontSize: 18 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w700,
             ),
           ],

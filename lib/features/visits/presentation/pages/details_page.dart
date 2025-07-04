@@ -25,7 +25,9 @@ class DetailsPage extends StatelessWidget {
         title: CustomText('Visit Details', fontWeight: FontWeight.w700),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 0.055 * getWidth(context)),
+        padding: EdgeInsets.symmetric(
+          horizontal: 0.055 * Responsive.getWidth(context),
+        ),
         child: SingleChildScrollView(
           child: CommonCard(
             showBlackShadowInChild: true,
@@ -41,8 +43,8 @@ class DetailsPage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 0.01 * getWidth(context),
-                      vertical: 0.001 * getHeight(context),
+                      horizontal: 0.01 * Responsive.getWidth(context),
+                      vertical: 0.001 * Responsive.getHeight(context),
                     ),
                     child: Column(
                       children: [
@@ -60,14 +62,17 @@ class DetailsPage extends StatelessWidget {
                               text: '+91 ',
                               style: TextStyle(
                                 color: AppTheme.getColor(context).primary,
-                                fontSize: 12 * getResponsiveText(context),
+                                fontSize:
+                                    12 * Responsive.getResponsiveText(context),
                               ),
                               children: [
                                 TextSpan(
                                   text: '9356326355',
                                   style: TextStyle(
                                     color: AppTheme.getColor(context).onSurface,
-                                    fontSize: 12 * getResponsiveText(context),
+                                    fontSize:
+                                        12 *
+                                        Responsive.getResponsiveText(context),
                                   ),
                                 ),
                               ],
@@ -103,12 +108,14 @@ class DetailsPage extends StatelessWidget {
                             children: [
                               CustomText(
                                 '101, Sarkhej-sanand cross road Makaraba, Ahmedabad, Sarkhej-Gandhinagar Gujarat, 385431, India',
-                                fontSize: 10 * getResponsiveText(context),
+                                fontSize:
+                                    10 * Responsive.getResponsiveText(context),
                                 fontWeight: FontWeight.w500,
                               ),
                               CustomText(
                                 '(you are in range)',
-                                fontSize: 12 * getResponsiveText(context),
+                                fontSize:
+                                    12 * Responsive.getResponsiveText(context),
                                 color: AppTheme.getColor(context).secondary,
                               ),
                             ],
@@ -116,12 +123,12 @@ class DetailsPage extends StatelessWidget {
                           onTap: () {},
                           value: '',
                         ),
-                        SizedBox(height: 0.007 * getHeight(context)),
+                        SizedBox(height: 0.007 * Responsive.getHeight(context)),
                         Divider(color: AppTheme.getColor(context).primary),
                         Padding(
                           padding: EdgeInsets.symmetric(
-                            horizontal: 0.006 * getWidth(context),
-                            vertical: 0.0015 * getHeight(context),
+                            horizontal: 0.006 * Responsive.getWidth(context),
+                            vertical: 0.0015 * Responsive.getHeight(context),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,32 +139,42 @@ class DetailsPage extends StatelessWidget {
                                   children: [
                                     CustomText(
                                       'Start Visit date & Time',
-                                      fontSize: 14 * getResponsiveText(context),
+                                      fontSize:
+                                          14 *
+                                          Responsive.getResponsiveText(context),
                                       fontWeight: FontWeight.w700,
                                     ),
                                     SizedBox(height: 4),
                                     CustomText(
                                       '09:45AM, 21st May 2025',
-                                      fontSize: 14 * getResponsiveText(context),
+                                      fontSize:
+                                          14 *
+                                          Responsive.getResponsiveText(context),
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ],
                                 ),
                               ),
-                              SizedBox(width: 0.16 * getWidth(context)),
+                              SizedBox(
+                                width: 0.16 * Responsive.getWidth(context),
+                              ),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     CustomText(
                                       'End Visit date & Time',
-                                      fontSize: 14 * getResponsiveText(context),
+                                      fontSize:
+                                          14 *
+                                          Responsive.getResponsiveText(context),
                                       fontWeight: FontWeight.w700,
                                     ),
                                     SizedBox(height: 4),
                                     CustomText(
                                       '12:45PM, 21st May 2025',
-                                      fontSize: 14 * getResponsiveText(context),
+                                      fontSize:
+                                          14 *
+                                          Responsive.getResponsiveText(context),
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ],
@@ -167,7 +184,7 @@ class DetailsPage extends StatelessWidget {
                           ),
                         ),
 
-                        SizedBox(height: 0.004 * getHeight(context)),
+                        SizedBox(height: 0.004 * Responsive.getHeight(context)),
                         Divider(color: AppTheme.getColor(context).primary),
 
                         getCommonRow(
@@ -196,14 +213,17 @@ class DetailsPage extends StatelessWidget {
                               text: '+91 ',
                               style: TextStyle(
                                 color: AppTheme.getColor(context).primary,
-                                fontSize: 12 * getResponsiveText(context),
+                                fontSize:
+                                    12 * Responsive.getResponsiveText(context),
                               ),
                               children: [
                                 TextSpan(
                                   text: '9356326355',
                                   style: TextStyle(
                                     color: AppTheme.getColor(context).onSurface,
-                                    fontSize: 12 * getResponsiveText(context),
+                                    fontSize:
+                                        12 *
+                                        Responsive.getResponsiveText(context),
                                   ),
                                 ),
                               ],
@@ -216,28 +236,30 @@ class DetailsPage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 0.018 * getWidth(context)),
+                    padding: EdgeInsets.only(
+                      left: 0.018 * Responsive.getWidth(context),
+                    ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         CustomText(
                           'Visit With',
-                          fontSize: 14 * getResponsiveText(context),
+                          fontSize: 14 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w600,
                         ),
-                        SizedBox(width: 0.015 * getWidth(context)),
+                        SizedBox(width: 0.015 * Responsive.getWidth(context)),
                         CustomText(':'),
                       ],
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 0.016 * getWidth(context),
+                      horizontal: 0.016 * Responsive.getWidth(context),
                     ),
                     child: Column(
                       children: [
                         CustomTableWidget(),
-                        SizedBox(height: 0.020 * getHeight(context)),
+                        SizedBox(height: 0.020 * Responsive.getHeight(context)),
                         Row(
                           children: [
                             MyCoButton(
@@ -246,8 +268,8 @@ class DetailsPage extends StatelessWidget {
                                 context,
                               ).onPrimary,
                               title: 'Visit Complete',
-                              width: 0.28 * getWidth(context),
-                              height: 0.030 * getHeight(context),
+                              width: 0.28 * Responsive.getWidth(context),
+                              height: 0.030 * Responsive.getHeight(context),
                               boarderRadius: 20,
                               textStyle: TextStyle(
                                 color: AppTheme.getColor(context).secondary,
@@ -258,7 +280,8 @@ class DetailsPage extends StatelessWidget {
                             CustomText(
                               'View Attachment',
                               color: AppTheme.getColor(context).secondary,
-                              fontSize: 12 * getResponsiveText(context),
+                              fontSize:
+                                  12 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w600,
                               decoration: TextDecoration.underline,
                               decorationColor: AppTheme.getColor(
@@ -267,11 +290,13 @@ class DetailsPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 0.017 * getHeight(context)),
+                        SizedBox(height: 0.017 * Responsive.getHeight(context)),
                         Row(
                           children: [
                             SvgPicture.asset('assets/visit_svgs/whats.svg'),
-                            SizedBox(width: 0.045 * getWidth(context)),
+                            SizedBox(
+                              width: 0.045 * Responsive.getWidth(context),
+                            ),
                             SvgPicture.asset('assets/visit_svgs/share.svg'),
                             Spacer(),
                             MyCoButton(
@@ -285,13 +310,13 @@ class DetailsPage extends StatelessWidget {
                               },
                               title: 'View Report',
                               isShadowBottomLeft: true,
-                              width: 0.33 * getWidth(context),
-                              height: 0.030 * getHeight(context),
+                              width: 0.33 * Responsive.getWidth(context),
+                              height: 0.030 * Responsive.getHeight(context),
                               boarderRadius: 20,
                             ),
                           ],
                         ),
-                        SizedBox(height: 0.020 * getHeight(context)),
+                        SizedBox(height: 0.020 * Responsive.getHeight(context)),
                       ],
                     ),
                   ),

@@ -160,7 +160,7 @@ class _ImagePreviewState extends State<_ImagePreview> {
       appBar: AppBar(
         title: CustomText(
           'Assets',
-          fontSize: 20 * getResponsiveText(context),
+          fontSize: 20 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
         ),
         titleSpacing: 0,
@@ -190,7 +190,7 @@ class _ImagePreviewState extends State<_ImagePreview> {
 
             if (widget.showIndicators)
               Positioned(
-                bottom: 0.03 * getHeight(context),
+                bottom: 0.03 * Responsive.getHeight(context),
                 left: 0,
                 right: 0,
                 child: Visibility(

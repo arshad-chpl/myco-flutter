@@ -48,15 +48,11 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-<<<<<<< HEAD
     // initialLocation: RoutePaths.getStarted,
     initialLocation: RoutePaths.test,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
-=======
-    initialLocation: RoutePaths.AddExpense,
->>>>>>> main
     routes: [
       GoRoute(
         path: RoutePaths.test,
@@ -172,9 +168,6 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-<<<<<<< HEAD
-      ), // Add all modular routes here
-=======
       ),
 
 
@@ -196,21 +189,17 @@ class AppRouter {
       //     child: TakeOrderPage(),
       //   ),
       // ),
->>>>>>> main
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
         builder: (context, state) => SignupFormPage(),
       ),
       GoRoute(
-<<<<<<< HEAD
-=======
         path: RoutePaths.lostAndFound,
         name: 'lost-and-found',
         builder: (context, state) => LostAndFound(),
       ),
       GoRoute(
->>>>>>> main
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),

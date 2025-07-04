@@ -21,8 +21,8 @@ void showLeaveDatesBottomSheet(
   BuildContext context,
   List<LeaveDetail> leaveList,
 ) {
-  final responsive = getResponsive(context);
-  final textResponsive = getResponsiveText(context);
+  final responsive = Responsive.getResponsive(context);
+  final textResponsive = Responsive.getResponsiveText(context);
 
   showModalBottomSheet(
     context: context,
@@ -56,8 +56,8 @@ void showLeaveDatesBottomSheet(
             ),
 
             Container(
-              height: 0.03 * getHeight(context),
-              width: getWidth(context),
+              height: 0.03 * Responsive.getHeight(context),
+              width: Responsive.getWidth(context),
               decoration: BoxDecoration(
                 color: AppColors.primary,
                 borderRadius: BorderRadius.circular(5),

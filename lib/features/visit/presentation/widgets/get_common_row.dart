@@ -5,19 +5,19 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 Row getCommonRow(
-    BuildContext context, {
-      required String title,
-      required String value,
-      required VoidCallback onTap,
-      Widget? valueWidget,
-      Color textColor = AppColors.black,
-      TextDecoration? decoration,
-      bool showMap = false,
-    }) {
-  final double multiplier = getResponsiveText(context);
-  final double spacing = 0.03 * getWidth(context);
-  final double screenHeight = getHeight(context);
-  final double screenWidth = getWidth(context);
+  BuildContext context, {
+  required String title,
+  required String value,
+  required VoidCallback onTap,
+  Widget? valueWidget,
+  Color textColor = AppColors.black,
+  TextDecoration? decoration,
+  bool showMap = false,
+}) {
+  final double multiplier = Responsive.getResponsiveText(context);
+  final double spacing = 0.03 * Responsive.getWidth(context);
+  final double screenHeight = Responsive.getHeight(context);
+  final double screenWidth = Responsive.getWidth(context);
 
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,17 +59,17 @@ Row getCommonRow(
         flex: 9,
         child: InkWell(
           onTap: onTap,
-          child: valueWidget??
-          CustomText(
-            value,
-            color: textColor,
-            fontSize: 13.5 * multiplier,
-            fontWeight: FontWeight.w500,
-            decoration: decoration,
-          ),
+          child:
+              valueWidget ??
+              CustomText(
+                value,
+                color: textColor,
+                fontSize: 13.5 * multiplier,
+                fontWeight: FontWeight.w500,
+                decoration: decoration,
+              ),
         ),
       ),
     ],
   );
 }
-

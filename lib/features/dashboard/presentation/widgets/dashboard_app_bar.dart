@@ -18,7 +18,7 @@ class DashboardAppBar extends StatelessWidget {
         children: [
           // TODO: Add NetworkImage for profile picture
           CircleAvatar(
-            radius: 22 * getDashboardResponsiveText(context),
+            radius: 22 * Responsive.getDashboardResponsiveText(context),
             backgroundImage: NetworkImage(
               'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
             ),
@@ -34,7 +34,8 @@ class DashboardAppBar extends StatelessWidget {
                       child: CustomText(
                         'Person Name',
                         fontWeight: FontWeight.w700,
-                        fontSize: 14 * getDashboardResponsiveText(context),
+                        fontSize:
+                            14 * Responsive.getDashboardResponsiveText(context),
                       ),
                     ),
                     WidgetSpan(child: SizedBox(width: 10)),
@@ -46,12 +47,12 @@ class DashboardAppBar extends StatelessWidget {
               CustomText(
                 'Designation',
                 fontWeight: FontWeight.w600,
-                fontSize: 12 * getDashboardResponsiveText(context),
+                fontSize: 12 * Responsive.getDashboardResponsiveText(context),
                 color: AppColors.spanishYellow,
               ),
               LiveClock(
                 isAppBar: true,
-                fontSize: 10 * getDashboardResponsiveText(context),
+                fontSize: 10 * Responsive.getDashboardResponsiveText(context),
               ),
 
               // CustomText(

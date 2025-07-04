@@ -33,7 +33,7 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
             'Lost And Found',
             fontWeight: FontWeight.w700,
             color: AppTheme.getColor(context).onSurface,
-            fontSize: 18 * getResponsive(context),
+            fontSize: 18 * Responsive.getResponsive(context),
           ),
         ],
       ),
@@ -214,11 +214,11 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
   );
 
   Widget _prefixIcon(String assetPath) => Padding(
-    padding: const EdgeInsets.all(12.0) * getResponsive(context),
+    padding: const EdgeInsets.all(12.0) * Responsive.getResponsive(context),
     child: Image.asset(
       assetPath,
-      width: 0.020 * getWidth(context),
-      height: 0.20 * getHeight(context),
+      width: 0.020 * Responsive.getWidth(context),
+      height: 0.20 * Responsive.getHeight(context),
       fit: BoxFit.contain,
     ),
   );
@@ -265,7 +265,7 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     double res = getResponsive(context);
+//     double res = Responsive.getResponsive(context);
 //
 //     return Scaffold(
 //       backgroundColor: AppColors.scaffoldBackgroundColor,
@@ -431,13 +431,13 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
 //   }
 //
 //   Widget _prefixIcon(String assetPath) {
-//     double res = getResponsive(context);
+//     double res = Responsive.getResponsive(context);
 //     return Padding(
 //       padding: EdgeInsets.all(12.0 * res),
 //       child: Image.asset(
 //         assetPath,
-//         width: 0.020 * getWidth(context),
-//         height: 0.20 * getHeight(context),
+//         width: 0.020 * Responsive.getWidth(context),
+//         height: 0.20 * Responsive.getHeight(context),
 //         fit: BoxFit.contain,
 //       ),
 //     );
