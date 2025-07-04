@@ -22,6 +22,7 @@ Dio createDio(credentials) {
   dio.interceptors.add(
     InterceptorsWrapper(
       onRequest: (options, handler) {
+        print(options.baseUrl);
         print("🚀 Request[${options.method}] => PATH: ${options.path}");
         return handler.next(options);
       },

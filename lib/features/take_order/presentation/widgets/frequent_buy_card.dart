@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/add_order_bottomsheet.dart';
+import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -42,15 +43,17 @@ class FrequentBuyCard extends StatelessWidget {
         children: [
           MyCoButton(
             onTap: () {
-              showModalBottomSheet(
-                shape: BeveledRectangleBorder(
-                  borderRadius: BorderRadiusGeometry.circular(
-                    12 * getResponsive(context),
-                  ),
-                ),
-                context: context,
-                builder: (context) => const AddOrderBottomsheet(),
-              );
+              // showModalBottomSheet(
+              //   shape: RoundedRectangleBorder(
+              //     borderRadius: BorderRadiusGeometry.circular(20),
+              //   ),
+              //   clipBehavior: Clip.hardEdge,
+              //   useSafeArea: true,
+
+              //   context: context,
+              //   builder: (context) => const AddOrderBottomsheet(),
+              // );
+              getBottomSheet(context, const AddOrderBottomsheet());
             },
             title: 'Add',
             textStyle: TextStyle(

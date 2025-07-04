@@ -1,3 +1,5 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 enum Flavor { dev, staging, prod }
 
 class Environment {
@@ -16,3 +18,19 @@ class Environment {
     }
   }
 }
+
+// class EnvironmentConfig {
+  // static final String _env = dotenv.env['env'] ?? 'dev';
+
+  // static String get mainURL {
+  //   switch (_env) {
+  //     case 'prod':
+  //       return 'https://master.my-company.app/mainApiEnc/';
+  //     case 'staging':
+  //       return 'https://staging.my-company.app/mainApiEnc/';
+  //     case 'dev':
+  //     default:
+  //       return 'https://dev.my-company.app/mainApiEnc/';
+  //   }
+  // }
+// }

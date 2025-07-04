@@ -10,14 +10,16 @@ class TakeOrderBloc extends Bloc<TakeOrderEvent, TakeOrderState> {
   Timer? _timer;
   Duration _duration = Duration.zero;
   TakeOrderBloc() : super(TakeOrderInitial()) {
-    // on<TakeOrderEvent>((event, emit) {
-    //   // TODO: implement event handler
-    // });
+    // Tab Event
     on<TabChangeEvent>(tabChangeEvent);
+
+    // Visit Timer Event
     on<StartVisitEvent>(onStart);
     on<StopVisitEvent>(onStop);
     on<RefreshTimerEvent>(onRefresh);
     on<TickEvent>(onTick);
+
+    on<SearchQueryChangeEvent>(onSearch);
   }
 
   void tabChangeEvent(TabChangeEvent event, Emitter<TakeOrderState> emit) {
@@ -46,5 +48,19 @@ class TakeOrderBloc extends Bloc<TakeOrderEvent, TakeOrderState> {
   void onTick(TickEvent event, Emitter<TakeOrderState> emit) {
     _duration += const Duration(seconds: 1);
     emit(VisitRunning(_duration));
+  }
+
+  void onSearch(SearchQueryChangeEvent event, Emitter<TakeOrderState> emit) {
+    final query = event.query.toLowerCase();
+
+    if (query == '') {
+      emit(ProductSearchState(fileteredProducts: event.allProducts));
+    } else {
+      final filtered = event.allProducts
+          .where((product) => product.toLowerCase().contains(query))
+          .toList();
+
+      emit(ProductSearchState(fileteredProducts: filtered));
+    }
   }
 }

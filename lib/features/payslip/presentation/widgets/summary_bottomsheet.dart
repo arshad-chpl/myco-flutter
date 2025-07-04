@@ -1,0 +1,227 @@
+import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/payslip/presentation/widgets/payslip_card.dart';
+import 'package:myco_flutter/widgets/common_card.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
+
+class SummaryBottomsheet extends StatelessWidget {
+  const SummaryBottomsheet({super.key});
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: EdgeInsets.symmetric(horizontal: 0.06 * getWidth(context)),
+    child: Column(
+      children: [
+        AppBar(
+          leading: const BackButton(),
+          title: const CustomText('Summary', fontWeight: FontWeight.w700),
+          centerTitle: false,
+        ),
+        Padding(
+          padding: EdgeInsets.all(16.0 * getResponsive(context)),
+          child: Column(
+            children: [
+              CommonCard(
+                title: 'Earnings',
+                bottomWidget: Container(
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0 * getResponsive(context)),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              'Basic',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontSize: 15 * getResponsiveText(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            CustomText(
+                              '₹190,780.78',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontSize: 15 * getResponsiveText(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              'HRA',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontSize: 15 * getResponsiveText(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            CustomText(
+                              '₹87,780.78',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontSize: 15 * getResponsiveText(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              'Conveyance',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontSize: 15 * getResponsiveText(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            CustomText(
+                              '₹103,930.29',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontSize: 15 * getResponsiveText(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              'Paid Leave Allowance',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontSize: 15 * getResponsiveText(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            CustomText(
+                              '₹13,525.08',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontSize: 15 * getResponsiveText(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              'Leave Encashment',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontSize: 15 * getResponsiveText(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            CustomText(
+                              '₹928.00',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontSize: 15 * getResponsiveText(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                        const DottedLineWidget(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              'Total Earnings',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15 * getResponsiveText(context),
+                            ),
+                            CustomText(
+                              '₹395,086.90',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15 * getResponsiveText(context),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: .025 * getHeight(context)),
+              CommonCard(
+                title: 'Deductions',
+                headerColor: AppTheme.getColor(context).error,
+                bottomWidget: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 0.04 * getWidth(context),
+                    vertical: 0.01 * getHeight(context),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomText(
+                            'Professional Tax',
+                            color: AppTheme.getColor(context).onSurface,
+                            fontSize: 16 * getResponsiveText(context),
+                            fontWeight: FontWeight.w500,
+                          ),
+                          CustomText(
+                            '₹2,222.00',
+                            color: AppTheme.getColor(context).onSurface,
+                            fontSize: 16 * getResponsiveText(context),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ],
+                      ),
+                      const DottedLineWidget(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomText(
+                            'Total Deduction',
+                            color: AppTheme.getColor(context).onSurface,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16 * getResponsiveText(context),
+                          ),
+                          CustomText(
+                            '₹2,222.00',
+                            color: AppTheme.getColor(context).onSurface,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16 * getResponsiveText(context),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: .03 * getHeight(context)),
+              CommonCard(
+                title: 'Employee’s Contribution',
+                headerColor: AppTheme.getColor(context).primary,
+                bottomWidget: Container(
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0 * getResponsive(context)),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              'Total Employee’s Contribution',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15 * getResponsiveText(context),
+                            ),
+                            CustomText(
+                              '₹0.00',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15 * getResponsiveText(context),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
