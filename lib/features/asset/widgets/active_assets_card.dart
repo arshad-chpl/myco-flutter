@@ -32,12 +32,17 @@ class ActiveAssetsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => CommonCard(
+    showBlackShadowInChild: true,
     title: title,
     subTitle: subTitle,
     headerColor: titleColor,
     borderColor: AppTheme.lightTheme(context).dividerColor,
+    headerPadding: EdgeInsets.symmetric(
+      horizontal: 16 * getResponsive(context),
+      vertical: 8 * getResponsive(context),
+    ),
     bottomWidget: Padding(
-      padding: childPadding ?? EdgeInsets.all(10 * getResponsive(context)),
+      padding: childPadding ?? EdgeInsets.all(16 * getResponsive(context)),
       child: IntrinsicHeight(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -60,11 +65,11 @@ class ActiveAssetsCard extends StatelessWidget {
                   SizedBox(
                     height: spaceBetweenData ?? 0.02 * getHeight(context),
                   ),
-                  AssetsVerticalData( title: 'Sr.No./MAC/Sim', data: srNo),
+                  AssetsVerticalData(title: 'Sr.No./MAC/Sim', data: srNo),
                   SizedBox(
                     height: spaceBetweenData ?? 0.02 * getHeight(context),
                   ),
-                  AssetsVerticalData( title: 'Handover', data: handOverDate),
+                  AssetsVerticalData(title: 'Handover', data: handOverDate),
                 ],
               ),
             ),

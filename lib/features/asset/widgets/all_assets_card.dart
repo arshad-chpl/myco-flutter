@@ -21,6 +21,9 @@ class AllAssetsCard extends StatelessWidget {
   final Color? titleColor;
   final Color? dashLineColor;
   final double? dashLinewidth;
+  final VoidCallback? onEditTap;
+  final VoidCallback? onScannerTap;
+  final VoidCallback? onViewDetailsTap;
   const AllAssetsCard({
     required this.title,
     required this.subTitle,
@@ -36,6 +39,9 @@ class AllAssetsCard extends StatelessWidget {
     this.dashLinewidth,
     this.titleColor,
     this.custodian,
+    this.onViewDetailsTap,
+    this.onEditTap,
+    this.onScannerTap,
   });
 
   @override
@@ -46,10 +52,35 @@ class AllAssetsCard extends StatelessWidget {
       subTitle: subTitle,
       headerColor: const Color(0xFF08A4BB),
       borderColor: AppTheme.lightTheme(context).dividerColor,
+      suffixIcon: Row(
+        children: [
+          GestureDetector(
+            onTap: onEditTap,
+            child: Image.asset(
+              'assets/images/message-edit.png',
+              width: 0.07 * getWidth(context),
+            ),
+          ),
+          SizedBox(width: 0.045 * getWidth(context)),
+          GestureDetector(
+            onTap: onScannerTap,
+            child: Image.asset(
+              'assets/images/scan.png',
+              width: 0.07 * getWidth(context),
+              color: AppTheme.getColor(context).onPrimary,
+            ),
+          ),
+        ],
+      ),
+      headerPadding: EdgeInsets.symmetric(
+        horizontal: 16 * getResponsive(context),
+        vertical: 8 * getResponsive(context),
+      ),
       bottomWidget: Padding(
-        padding: childPadding ?? const EdgeInsets.all(12.0),
+        padding: childPadding ?? EdgeInsets.all(16.0 * getResponsive(context)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             IntrinsicHeight(
               child: Row(
@@ -81,6 +112,7 @@ class AllAssetsCard extends StatelessWidget {
                               VerticalDivider(
                                 width: 0.08 * getWidth(context),
                                 color: AppTheme.getColor(context).primary,
+                                thickness: 0.8,
                               ),
                               Expanded(
                                 child: AssetsVerticalData(
@@ -91,10 +123,15 @@ class AllAssetsCard extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(height: spaceBetweenData ?? 8),
+                        SizedBox(
+                          height: spaceBetweenData ?? 0.02 * getHeight(context),
+                        ),
                         AssetsVerticalData(title: 'Sr.No./MAC/Sim', data: srNo),
                         if (custodian != null)
-                          SizedBox(height: spaceBetweenData ?? 8),
+                          SizedBox(
+                            height:
+                                spaceBetweenData ?? 0.02 * getHeight(context),
+                          ),
                         if (custodian != null)
                           AssetsVerticalData(
                             title: 'Custodian',
@@ -106,7 +143,7 @@ class AllAssetsCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: spaceBetweenData ?? 8),
+            SizedBox(height: spaceBetweenData ?? 0.02 * getHeight(context)),
             Row(
               children: [
                 Expanded(
@@ -131,7 +168,7 @@ class AllAssetsCard extends StatelessWidget {
                   ),
                 ),
                 MyCoButton(
-                  onTap: () {},
+                  onTap: onViewDetailsTap,
                   title: 'View Details',
                   textStyle: TextStyle(
                     fontFamily: 'Gilroy-semiBold',

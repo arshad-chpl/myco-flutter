@@ -1,13 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/asset/view/dropdowm.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
 import 'package:myco_flutter/features/asset/widgets/all_assets_card.dart';
+import 'package:myco_flutter/features/asset/widgets/past_assets_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -181,13 +179,14 @@ class _TestingState extends State<Testing> {
               itemCount: 5,
               separatorBuilder: (_, __) =>
                   SizedBox(height: 0.02 * getHeight(context)),
-              itemBuilder: (_, index) => const ActiveAssetsCard(
-                title: 'Mouse',
-                subTitle: '(AS104)',
+              itemBuilder: (_, index) => const PastAssetsCard(
+                title: 'Desktop',
+                subTitle: '(AS101)',
                 image: 'assets/images/laptop.png',
                 brand: 'HP',
-                srNo: 'HP098765',
-                handOverDate: '20-04-2023',
+                srNo: 'DELL123456',
+                handover: '02-05-2025',
+                takeover: '02-05-2025',
               ),
             ),
           ),
@@ -214,7 +213,7 @@ class _TestingState extends State<Testing> {
                     custodian: 'Arth Sorthiya',
                   );
                 } else {
-                  return const AllAssetsCard(
+                  return AllAssetsCard(
                     title: 'Desktop',
                     subTitle: '(AS101)',
                     image: 'assets/images/laptop.png',
@@ -222,6 +221,7 @@ class _TestingState extends State<Testing> {
                     srNo: 'DELL123456',
                     category: 'Desktop',
                     createdBy: 'Parth Jadav',
+                    onViewDetailsTap: () => print('on Tap'),
                   );
                 }
               },
