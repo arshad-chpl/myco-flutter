@@ -7,6 +7,7 @@ import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
+import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
@@ -28,19 +29,22 @@ import 'package:myco_flutter/features/search_company/presentation/pages/select_c
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
+import 'package:myco_flutter/features/visits/presentation/pages/visit_report.dart';
+
 import 'route_paths.dart';
+
+import 'package:myco_flutter/features/visits/presentation/pages/details_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.addVisit,
+    initialLocation: RoutePaths.employees,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
     routes: [
-
       GoRoute(
         path: RoutePaths.splash,
         name: 'splash',
@@ -66,6 +70,17 @@ class AppRouter {
         name: 'login',
         builder: (context, state) => const OtpVerifyDialog(),
       ),
+      GoRoute(
+        path: RoutePaths.details,
+        name: 'details',
+        builder: (context, state) => const DetailsPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.visitReport,
+        name: 'visit_report',
+        builder: (context, state) => const VisitReport(),
+      ),
+
       GoRoute(
         path: RoutePaths.selectCompany,
         name: 'selectCompany',
@@ -107,7 +122,6 @@ class AppRouter {
         name: 'leave',
         builder: (context, state) => const LeaveScreen(),
       ),
-
       // GoRoute(
       //   path: RoutePaths.language,
       //   name: 'language',
