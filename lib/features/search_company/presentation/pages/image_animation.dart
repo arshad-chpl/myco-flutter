@@ -39,7 +39,7 @@ class _BouncingImageState extends State<BouncingImage>
       builder: (context, child) => Transform.translate(
           offset: Offset(0, -_animation.value),
           child: Image.asset(
-            'assets/search_society/get-started.png',
+            'visit/search_society/get-started.png',
             width: getWidth(context) * 0.85,
           ),
         ),

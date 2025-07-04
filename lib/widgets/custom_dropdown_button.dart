@@ -157,6 +157,7 @@ class CustomPopupDropdownStyled<T> extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
+              
               Icon(icon?.icon ?? Icons.keyboard_arrow_down, color:iconColor??  AppTheme.getColor(context).primary, size:iconSize?? 30 * getResponsive(context)),
             ],
           ),

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 import 'package:myco_flutter/core/theme/app_theme.dart';
 
-
 // if we do not implement the preferredSizeWidget then it will not let our custom app to be place at appbar:
 // ignore: must_be_immutable
 class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
@@ -105,7 +104,9 @@ class _CustomAppbarState extends State<CustomAppbar> {
                 widget.appbartxtcolor ?? AppTheme.getColor(context).onPrimary,
           ),
         ),
-    backgroundColor: widget.appBarBackgoundColor ?? AppTheme.getColor(context).surface,
+
+    backgroundColor:
+        widget.appBarBackgoundColor ?? AppTheme.getColor(context).surface,
     leading:
         widget.leading ??
         (widget.automaticallyImplyLeading
@@ -130,10 +131,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
     toolbarTextStyle: widget.toolbarTextStyle,
     foregroundColor: widget.foregroundColor,
     clipBehavior: widget.clipBehavior,
-    actions: widget.actions ??
-          [
-         
-          ],
+    actions: widget.actions ?? [],
     bottom: widget.bottom,
     bottomOpacity: widget.bottomOpacity,
     flexibleSpace: widget.flexibleSpace,

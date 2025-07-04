@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+  import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -86,7 +86,7 @@ class LabeledTextField extends StatelessWidget {
     this.width,
     this.labelText,
     this.hintText,
-    this.isSuffixIconOn=false,
+    this.isSuffixIconOn,
     this.image1,
     this.image2,
     this.color,
@@ -115,8 +115,7 @@ class LabeledTextField extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomText(
@@ -171,7 +170,7 @@ class LabeledTextField extends StatelessWidget {
             iconWidth: iconWidth,
             image1: image1,
             image2: image2,
-            isSuffixIconOn: isSuffixIconOn,
+            isSuffixIconOn: isSuffixIconOn ?? false,
             labelTextStyle: labelTextStyle,
             onClick: onClick,
             onTap1: onTap1,
@@ -184,4 +183,3 @@ class LabeledTextField extends StatelessWidget {
       ],
     );
   }
-}
