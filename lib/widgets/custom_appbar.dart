@@ -104,6 +104,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
                 widget.appbartxtcolor ?? AppTheme.getColor(context).onPrimary,
           ),
         ),
+
     backgroundColor:
         widget.appBarBackgoundColor ?? AppTheme.getColor(context).surface,
     leading:
