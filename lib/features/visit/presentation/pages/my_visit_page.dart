@@ -5,13 +5,15 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
+import 'package:myco_flutter/features/visit/presentation/widgets/build_other_employee_visit_tab.dart';
 import 'package:myco_flutter/features/visit/presentation/widgets/custom_visit_calender.dart';
-import 'package:myco_flutter/features/visit/presentation/widgets/get_common_row.dart';
 import 'package:myco_flutter/features/visit/presentation/widgets/visit_card.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
+import 'package:myco_flutter/widgets/common_card.dart';
+import 'package:myco_flutter/widgets/floating_action_btn.dart';
 
 class MyVisitPage extends StatefulWidget {
   const MyVisitPage({super.key});
@@ -228,14 +230,15 @@ class _VisitPageState extends State<MyVisitPage> {
 
     return Scaffold(
       backgroundColor: AppTheme.getColor(context).onPrimary,
-      appBar: AppBar(
-        backgroundColor: AppTheme.getColor(context).onPrimary,
+      appBar: CustomAppbar(
+        appBarBackgoundColor: AppTheme.getColor(context).onPrimary,
         elevation: 0,
         centerTitle: false,
-        leading: Icon(
-          Icons.arrow_back,
-          color: AppTheme.getColor(context).onSurface,
-          size: 28 * multiplier,
+        leading: IconButton(
+            onPressed: (){},
+            icon: SvgPicture.asset(
+            'assets/visit/svgs/backarrow.svg'
+          ),
         ),
         title: CustomText(
           'Visit',
@@ -253,13 +256,13 @@ class _VisitPageState extends State<MyVisitPage> {
                 CustomText(
                   'Latitude: 22.938088',
                   fontSize: 10 * multiplier,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                   color: AppTheme.getColor(context).primary,
                 ),
                 CustomText(
                   'Longitude: 72.938088',
                   fontSize: 10 * multiplier,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                   color: AppTheme.getColor(context).primary,
                 ),
               ],
@@ -267,9 +270,10 @@ class _VisitPageState extends State<MyVisitPage> {
           ),
         ],
       ),
+
       body: Column(
         children: [
-          SizedBox(height: 10 * multiplier),
+          SizedBox(height: 0.10 * multiplier),
           MyCustomTabBar(
             tabs: const ['My Visit', 'Other Employee Visit'],
             selectedIndex: selectedTabIndex,
@@ -287,25 +291,44 @@ class _VisitPageState extends State<MyVisitPage> {
           Expanded(
             child: selectedTabIndex == 0
                 ? buildMyVisitTab(screenSize, multiplier)
-                : buildOtherEmployeeVisitTab(screenSize,multiplier),
+                : buildOtherEmployeeVisitTab(
+              context,
+              screenSize,
+              multiplier,
+              searchController: searchController,
+              searchFocus: searchFocus,
+              formattedDate: formattedDate,
+              goToPreviousDate: goToPreviousDate,
+              goToNextDate: goToNextDate,
+              selectDateFromPicker: selectDateFromPicker,
+            ),
           ),
+
         ],
       ),
       floatingActionButton: selectedTabIndex == 0
-          ? MyCoButton(
-        onTap: () {},
-        title: '',
-        height: 66 * multiplier,
-        width: 66 * multiplier,
-        boarderRadius: 33 * multiplier,
-        backgroundColor: AppTheme.getColor(context).primary,
-        image: Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 24 * multiplier,
-        ),
-        wantBorder: false,
-        isShadowBottomLeft: true,
+          ? ExpandableFab(
+
+        openIcon: Icons.add,
+        closeIcon: Icons.close,
+        actions: [
+          ExpandableFabAction(
+            label: 'Add Visit',
+            icon: Icons.location_on,
+            onTap: () {},
+          ),
+          ExpandableFabAction(
+            label: 'Add Expense',
+            icon: Icons.money,
+            onTap: () {},
+          ),
+        ],
+        imageSize: 66 * multiplier,
+        innericonsize: 20 * multiplier,
+        circleavataradius: 22 * multiplier,
+        innericonbgr: Colors.white,
+        margin: EdgeInsets.only(right: 10 * multiplier),
+        padding: EdgeInsets.symmetric(horizontal: 14 * multiplier, vertical: 8 * multiplier),
       )
           : null,
 
@@ -372,6 +395,7 @@ class _VisitPageState extends State<MyVisitPage> {
               fontSize: 14 * multiplier,
               color: AppColors.textPrimary,
             ),
+            textAlignment: TextAlign.start,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10 * multiplier)),
               borderSide: BorderSide(color: AppTheme.getColor(context).outline),
@@ -392,73 +416,39 @@ class _VisitPageState extends State<MyVisitPage> {
     ),
   );
 
-  Widget buildAutoExpenseCard(double multiplier) => Stack(
-    children: [
-      Material(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(12 * multiplier),
-          topRight: Radius.circular(12 * multiplier),
-        ),
-        child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12 * multiplier),
-            border: Border.all(color: AppTheme.getColor(context).outline),
-            color: AppTheme.getColor(context).onPrimary,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(12 * multiplier),
-                decoration: BoxDecoration(
-                  color: AppColors.myCoCyan,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(12 * multiplier)),
-                ),
-                child: CustomText(
-                  'Auto Expense Category',
-                  fontSize: 16 * multiplier,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                ),
+  Widget buildAutoExpenseCard(double multiplier) => CommonCard(
+      title: 'Auto Expense Category',
+      headerColor: AppColors.myCoCyan,
+      borderColor: AppTheme.getColor(context).outline,
+      showHeaderPrefixIcon: false,
+      showBlackShadowInChild: true,
+      bottomWidget: Padding(
+        padding: EdgeInsets.all(12 * multiplier),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 8 * multiplier,
+              horizontal: 12 * multiplier,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8 * multiplier),
+              border: Border.all(color: AppTheme.getColor(context).tertiary),
+            ),
+            child: IntrinsicWidth(
+              child: CustomText(
+                'Mukund - Visit Expense',
+                fontSize: 12 * multiplier,
+                fontWeight: FontWeight.w700,
+                color: AppColors.black,
               ),
-              Padding(
-                padding: EdgeInsets.all(12 * multiplier),
-                child: Container(
-                  padding: EdgeInsets.all(8 * multiplier),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8 * multiplier),
-                    border: Border.all(color: AppTheme.getColor(context).tertiary),
-                  ),
-                  child: CustomText(
-                    'Mukund - Visit Expense',
-                    fontSize: 12 * multiplier,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.black,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      Positioned.fill(
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.white.withOpacity(0.3),
-                Colors.transparent,
-              ],
             ),
           ),
+
         ),
+
       ),
-    ],
-  );
+    );
 
   Widget dateArrowButton(IconData icon, VoidCallback onTap, double multiplier) =>
       GestureDetector(
@@ -467,317 +457,10 @@ class _VisitPageState extends State<MyVisitPage> {
           padding: EdgeInsets.all(8 * multiplier),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15 * multiplier),
-            color: Util.instance.applyOpacity(AppColors.primary, 0.25),
+            color: Util.applyOpacity(AppColors.primary, 0.25),
           ),
           child: Icon(icon, size: 22 * multiplier),
         ),
       );
 
-  Widget buildOtherEmployeeVisitTab(Size screenSize, double multiplier)=> SingleChildScrollView(
-    padding: EdgeInsets.all(screenSize.width * 0.04),
-    child: Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            dateArrowButton(Icons.chevron_left_rounded, goToPreviousDate, multiplier),
-            GestureDetector(
-              onTap: selectDateFromPicker,
-              child: Row(
-                children: [
-                  Baseline(
-                    baselineType: TextBaseline.alphabetic,
-                    baseline: 20 * multiplier,
-                    child: CustomText(
-                      formattedDate,
-                      fontSize: 16 * multiplier,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.black,
-                    ),
-                  ),
-                  Baseline(
-                    baselineType: TextBaseline.alphabetic,
-                    baseline: 20 * multiplier,
-                    child: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      size: 22 * multiplier,
-                      color: AppColors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            dateArrowButton(Icons.chevron_right_rounded, goToNextDate, multiplier),
-          ],
-        ),
-        SizedBox(height: 16 * multiplier),
-        SizedBox(
-          height: 45 * multiplier,
-          child: MyCoTextfield(
-            controller: searchController,
-            focusNode: searchFocus,
-            hintText: 'Search with Customer',
-            fillColor: Colors.white,
-            boarderRadius: 10,
-            contentPadding: EdgeInsets.symmetric(vertical: 12 * multiplier),
-            prefix: Padding(
-              padding: EdgeInsets.only(left: 12 * multiplier, right: 8 * multiplier),
-              child: Icon(
-                CupertinoIcons.search,
-                color: AppColors.primary,
-                size: 24 * multiplier,
-              ),
-            ),
-            typingtextStyle: TextStyle(fontSize: 14 * multiplier),
-            hintTextStyle: TextStyle(
-              fontSize: 14 * multiplier,
-              color: AppColors.textPrimary,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10 * multiplier)),
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-            ),
-          ),
-        ),
-        SizedBox(height: screenSize.height * 0.012),
-        Stack(
-      children: [
-        Material(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(12),
-            topRight: Radius.circular(12),
-          ),
-          elevation: 3.0,
-          child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(screenSize.height * 0.015),
-            decoration: BoxDecoration(
-              color: AppTheme.getColor(context).primary,
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(12),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(
-                  'Supreme Auto garge - Kadodra(RT67542) ',
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16 * multiplier,
-                ),
-                SizedBox(height: screenSize.height * 0.01),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/visit/svgs/calendar.svg',
-                      height: screenSize.height * 0.025,
-                      width: screenSize.width * 0.025,
-                    ),
-                    const SizedBox(width: 4),
-                    Expanded(
-                      child: CustomText(
-                        '03:42 PM 05th Jun 2025',
-                        fontSize: 13 * multiplier,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        Positioned.fill(
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.white.withAlpha(76),
-                  Colors.transparent,
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    ),
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(screenSize.width * 0.035),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: AppColors.textfieldBorder),
-            borderRadius: const BorderRadius.vertical(
-              bottom: Radius.circular(12),
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Top Row: Visit Added For & Reschedule
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.02),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomText(
-                      'Visit Added For',
-                      color: AppColors.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14 * multiplier,
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: CustomText(
-                        'Reschedule Visit?',
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14 * multiplier,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Profile Tile
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.02),
-                child: ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: Image.asset(
-                    'assets/visit/svgs/user.png',
-                    fit: BoxFit.contain,
-                    width: 80 * multiplier,
-                    height: 80 * multiplier,
-                  ),
-                  title: CustomText(
-                    'Ajju k',
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14 * multiplier,
-                  ),
-                  subtitle: CustomText(
-                    'QA',
-                    color: AppColors.textfieldBorder,
-                    fontSize: 12 * multiplier,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-
-              // Divider
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: screenSize.height * 0.0020),
-                child: const Divider(
-                  color: AppColors.primary,
-                  thickness: 1.2,
-                ),
-              ),
-
-              // Visit Details
-              getCommonRow(
-                context,
-                title: "Visit",
-                value: "Physical",
-                onTap: () {},
-              ),
-              SizedBox(height: screenSize.height * 0.015),
-              getCommonRow(
-                context,
-                title: "Visit Type",
-                value: "Visit Type",
-                onTap: () {},
-              ),
-              SizedBox(height: screenSize.height * 0.015),
-              getCommonRow(
-                context,
-                title: "Visit Purpose",
-                value: "Visit Purpose",
-                onTap: () {},
-              ),
-              SizedBox(height: screenSize.height * 0.015),
-              getCommonRow(
-                context,
-                title: "Address",
-                value: "5XJ6F9J, Haripura, Gujarat 394325, India",
-                onTap: () {},
-              ),
-
-              SizedBox(height: screenSize.height * 0.015),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Start: 3 SVG icons (wrapped in Flexible)
-                  Flexible(
-                    flex: 6,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/visit/svgs/whatsapp.svg',
-                          height: 25 * multiplier,
-                          width: 25 * multiplier,
-                        ),
-                        SizedBox(width: screenSize.width * 0.03),
-                        SvgPicture.asset(
-                          'assets/visit/svgs/share.svg',
-                          height: 25 * multiplier,
-                          width: 25 * multiplier,
-                        ),
-                        SizedBox(width: screenSize.width * 0.03),
-                        SvgPicture.asset(
-                          'assets/visit/svgs/delete.svg',
-                          height: 25 * multiplier,
-                          width: 25 * multiplier,
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  // End: Visit Not Started Button (Flexible or Expanded)
-                  Flexible(
-                    flex: 5,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: MyCoButton(
-                        onTap: () {
-                          // handle tap
-                        },
-                        title: 'Visit Not Started',
-                        textStyle: TextStyle(
-                          color: AppColors.spanishYellow,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13 * multiplier,
-                        ),
-                        boarderRadius: 30,
-                        borderColor: AppColors.spanishYellow,
-                        borderWidth: 1.2,
-                        backgroundColor: Colors.transparent,
-                        height: 36 * multiplier,
-                        wantBorder: true,
-                        width: screenSize.width * 0.4, // button width responsive
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-            ],
-          ),
-        ),
-
-
-
-      ],
-    ),
-  );
 }

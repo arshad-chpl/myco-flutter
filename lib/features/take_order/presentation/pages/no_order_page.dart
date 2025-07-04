@@ -10,7 +10,11 @@ class NoOrderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      title: const CustomText('No Order', fontWeight: FontWeight.w600),
+      title: CustomText(
+        'No Order',
+        fontSize: 20 * getResponsiveText(context),
+        fontWeight: FontWeight.w700,
+      ),
       leading: const BackButton(),
     ),
     body: Container(

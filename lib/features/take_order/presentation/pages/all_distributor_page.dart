@@ -14,7 +14,11 @@ class AllDistributorPage extends StatelessWidget {
     appBar: AppBar(
       leading: const BackButton(),
       centerTitle: false,
-      title: const CustomText('All Distributor', fontWeight: FontWeight.w600),
+      title: CustomText(
+        'All Distributor',
+        fontSize: 20 * getResponsiveText(context),
+        fontWeight: FontWeight.w700,
+      ),
     ),
 
     body: Container(

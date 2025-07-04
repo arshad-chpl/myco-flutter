@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 
-
 class DialDatePickerWidget extends StatefulWidget {
-  final void Function(DateTime selectedDate) onSubmit;
   final DateTime initialDate;
+  final void Function(DateTime selectedDate) onSubmit;
   final DateTime? minDate;
   final DateTime? maxDate;
   final bool pickDay;
-  final bool timePicker;
+  final bool timePicker; // NEW
   final Widget? image;
   final double? bottomSheetHeight;
   final double? height;
@@ -53,126 +52,70 @@ class _DialDatePickerWidgetState extends State<DialDatePickerWidget> {
     }
   }
 
-  void _showPicker(BuildContext context) {
-    showCupertinoModalPopup(
-      context: context,
-      builder:
-          (_) => Container(
-        height:
-        widget.bottomSheetHeight ??
-            MediaQuery.of(context).size.height * 0.4,
-        width: double.infinity,
-        color: CupertinoColors.systemBackground.resolveFrom(context),
-        child: Column(
-          children: [
-            Expanded(
-              child:
-              widget.timePicker
-                  ? CupertinoDatePicker(
-                mode: CupertinoDatePickerMode.time,
-                initialDateTime: _selectedDate,
-                use24hFormat: widget.use24hFormat ?? false,
-                onDateTimeChanged: (DateTime newTime) {
-                  setState(() {
-                    _selectedDate = DateTime(
-                      _selectedDate.year,
-                      _selectedDate.month,
-                      _selectedDate.day,
-                      newTime.hour,
-                      newTime.minute,
-                    );
-                  });
-                },
-              )
-                  : CustomDatePicker(
-                initialDate: _selectedDate,
-                minDate: widget.minDate ?? DateTime(1900),
-                maxDate: widget.maxDate ?? DateTime(2100, 12, 31),
-                pickDay: widget.pickDay,
-                onDateChanged: (date) {
-                  setState(() {
-                    _selectedDate = DateTime(
-                      date.year,
-                      date.month,
-                      date.day,
-                      _selectedDate.hour,
-                      _selectedDate.minute,
-                    );
-                  });
-                },
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.only(
-                left: 16,
-                right: 16,
-                bottom: 16,
-              ),
-              child: CupertinoButton(
-                padding: const EdgeInsets.all(0),
-                borderRadius: BorderRadius.circular(50),
-                color: AppColors.primary,
-                child: Center(
-                  child: Text(
-                    'Submit',
-                    style: MyCoButtonTheme.getMobileTextStyle(context),
-                  ),
-                ),
-                onPressed: () {
-                  widget.onSubmit(_selectedDate);
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  String _formatDate(DateTime date) {
-    if (widget.timePicker) {
-      return DateFormat('hh:mm a').format(date);
-    } else if (widget.pickDay) {
-      return '${_monthName(date.month)} ${date.day}, ${date.year}';
-    } else {
-      return '${_monthName(date.month)} ${date.year}';
-    }
-  }
-
-  String _monthName(int month) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    if (month < 1 || month > 12) return '';
-    return months[month - 1];
-  }
-
   @override
-  Widget build(BuildContext context) => MyCoButton(
-    onTap: () => _showPicker(context),
-    title: _formatDate(_selectedDate),
-    textStyle: const TextStyle(
-      color: AppColors.black,
-      fontWeight: FontWeight.w500,
+  Widget build(BuildContext context) => Container(
+    height:
+        widget.bottomSheetHeight ?? MediaQuery.of(context).size.height * 0.4,
+    width: double.infinity,
+    color: CupertinoColors.systemBackground.resolveFrom(context),
+    child: Column(
+      children: [
+        Expanded(
+          child: widget.timePicker
+              ? CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.time,
+                  initialDateTime: _selectedDate,
+                  use24hFormat: widget.use24hFormat ?? false,
+                  onDateTimeChanged: (DateTime newTime) {
+                    setState(() {
+                      _selectedDate = DateTime(
+                        _selectedDate.year,
+                        _selectedDate.month,
+                        _selectedDate.day,
+                        newTime.hour,
+                        newTime.minute,
+                      );
+                    });
+                  },
+                )
+              : CustomDatePicker(
+                  initialDate: _selectedDate,
+                  minDate: widget.minDate ?? DateTime(1900, 1, 1),
+                  maxDate: widget.maxDate ?? DateTime(2100, 12, 31),
+                  pickDay: widget.pickDay,
+                  onDateChanged: (date) {
+                    setState(() {
+                      _selectedDate = DateTime(
+                        date.year,
+                        date.month,
+                        date.day,
+                        _selectedDate.hour,
+                        _selectedDate.minute,
+                      );
+                    });
+                  },
+                ),
+        ),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+          child: CupertinoButton(
+            padding: const EdgeInsets.all(0),
+            borderRadius: BorderRadius.circular(50),
+            color: AppColors.primary,
+            child: Center(
+              child: Text(
+                'Submit',
+                style: MyCoButtonTheme.getMobileTextStyle(context),
+              ),
+            ),
+            onPressed: () {
+              widget.onSubmit(_selectedDate);
+            },
+          ),
+        ),
+      ],
     ),
-    image: widget.image,
-    width: widget.width,
-    height: widget.height,
-    backgroundColor: AppColors.white,
-    border: Border.all(color: AppColors.borderColor, width: 1.2),
   );
 }
 
@@ -215,13 +158,13 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     // Month labels
     monthNames = List.generate(
       12,
-          (i) => DateFormat.MMM().format(DateTime(0, i + 1)),
+      (i) => DateFormat.MMM().format(DateTime(0, i + 1)),
     );
 
     // Year range
     yearList = List.generate(
       widget.maxDate.year - widget.minDate.year + 1,
-          (i) => widget.minDate.year + i,
+      (i) => widget.minDate.year + i,
     );
 
     _generateDayList();
@@ -230,10 +173,10 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   void _generateDayList() {
     final isMinMonth =
         selectedYear == widget.minDate.year &&
-            selectedMonth == widget.minDate.month;
+        selectedMonth == widget.minDate.month;
     final isMaxMonth =
         selectedYear == widget.maxDate.year &&
-            selectedMonth == widget.maxDate.month;
+        selectedMonth == widget.maxDate.month;
 
     final int startDay = isMinMonth ? widget.minDate.day : 1;
     int endDay = DateTime(selectedYear, selectedMonth + 1, 0).day;
@@ -284,15 +227,15 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
           controller: FixedExtentScrollController(
             initialItem: dayList.indexOf(selectedDay),
           ),
-          children:
-          dayList
+          children: dayList
               .map(
                 (d) => Center(
-              child: Text(d.toString(), textAlign: TextAlign.center),
-            ),
-          )
+                  child: Text(d.toString(), textAlign: TextAlign.center),
+                ),
+              )
               .toList(),
           onChanged: (index) {
+            HapticFeedback.lightImpact();
             setState(() {
               selectedDay = dayList[index];
               _notifyChange();
@@ -304,6 +247,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         controller: FixedExtentScrollController(initialItem: selectedMonth - 1),
         children: monthNames.map((m) => Center(child: Text(m))).toList(),
         onChanged: (index) {
+          HapticFeedback.lightImpact();
           setState(() {
             selectedMonth = index + 1;
             _generateDayList();
@@ -316,9 +260,11 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         controller: FixedExtentScrollController(
           initialItem: selectedYear - widget.minDate.year,
         ),
-        children:
-        yearList.map((y) => Center(child: Text(y.toString()))).toList(),
+        children: yearList
+            .map((y) => Center(child: Text(y.toString())))
+            .toList(),
         onChanged: (index) {
+          HapticFeedback.lightImpact();
           setState(() {
             selectedYear = yearList[index];
             _generateDayList();
@@ -329,4 +275,3 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     ],
   );
 }
-

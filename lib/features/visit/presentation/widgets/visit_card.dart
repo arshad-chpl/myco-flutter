@@ -7,6 +7,8 @@ import 'package:myco_flutter/features/visit/presentation/widgets/get_common_row.
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/common_card.dart';
+
 
 Widget buildVisitCard(
     BuildContext context,
@@ -34,126 +36,63 @@ Widget buildVisitCard(
         borderRadius: BorderRadius.circular(12.8),
         border: Border.all(color: AppColors.textfieldBorder),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header
-          Stack(
-            children: [
-              Material(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  topRight: Radius.circular(12),
-                ),
-                elevation: 3.0,
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(screenHeight * 0.015),
-                  decoration: BoxDecoration(
-                    color: AppTheme.getColor(context).primary,
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(12),
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        visit['title'],
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16 * multiplier,
-                      ),
-                      SizedBox(height: screenHeight * 0.01),
-                      Row(
-                        children: [
-                          SvgPicture.asset('assets/visit/svgs/calendar.svg',height: 0.025 * screenHeight,width: 0.025 * screenWidth),
-                          const SizedBox(width: 4),
-                          Expanded(
-                            child: CustomText(
-                              visit['time'],
-                              fontSize: 13 * multiplier,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.white.withAlpha(76),
-                        Colors.transparent,
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
+        child: CommonCard(
+          title: visit['title'],
+          subTitle: visit['time'],
+          subTitleIcon: SvgPicture.asset(
+            'assets/visit/svgs/calendar.svg',
           ),
-
-          // Status + View Details
-          SizedBox(height: screenHeight * 0.015),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: screenWidth * 0.03),
-                child: MyCoButton(
-                  onTap: () {},
-                  title: visit['status'] ?? '',
-                  backgroundColor: Colors.transparent,
-                  textStyle: TextStyle(
-                    color: statusColor,
-                    fontSize: 13 * multiplier,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  boarderRadius: 20,
-                  borderColor: statusColor,
-                  borderWidth: 1,
-                  height: screenHeight * 0.04,
-                  width: screenWidth * 0.35,
-                  wantBorder: true,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(right: screenWidth * 0.03),
-                child: MyCoButton(
-                  onTap: () {},
-                  title: 'View Details',
-                  backgroundColor: AppTheme.getColor(context).primary,
-                  textStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: 13 * multiplier,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  boarderRadius: 20,
-                  height: screenHeight * 0.04,
-                  width: screenWidth * 0.35,
-                  wantBorder: false,
-                  isShadowBottomLeft: true,
-                ),
-              ),
-            ],
-          ),
-
-          // Visit Details using getCommonRow
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.03),
+          onTap: () {},
+          headerColor: AppTheme.getColor(context).primary,
+          borderColor: AppTheme.getColor(context).outline,
+          showBlackShadowInChild: true,
+          bottomWidget: Padding(
+            padding: EdgeInsets.all(screenWidth * 0.03),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: screenHeight * 0.015),
+                // Status + View Details
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Expanded(
+                      child: MyCoButton(
+                        onTap: () {},
+                        title: visit['status'] ?? '',
+                        backgroundColor: Colors.transparent,
+                        textStyle: TextStyle(
+                          color: statusColor,
+                          fontSize: 13 * multiplier,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        boarderRadius: 40,
+                        borderColor: statusColor,
+                        borderWidth: 1,
+                        wantBorder: true,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: MyCoButton(
+                        onTap: () {},
+                        title: 'View Details',
+                        backgroundColor: AppTheme.getColor(context).primary,
+                        textStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 13 * multiplier,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        boarderRadius: 40,
+                        wantBorder: false,
+                        isShadowBottomLeft: true,
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: screenHeight * 0.02),
+
+                // details
                 ...visit['details'].entries.map((e) {
                   final key = e.key.trim();
                   final value = e.value.toString();
@@ -169,21 +108,19 @@ Widget buildVisitCard(
                   }
 
                   return Padding(
-                  padding: EdgeInsets.only(bottom: screenHeight * 0.015),
-                  child: getCommonRow(
-                    context,
-                    title: key,
-                    value: value,
-                    textColor: valueColor,
-                    onTap: () {},
-                    showMap: lowerKey == 'address' && visit['showImage'] == true,
-                  ),
+                    padding: EdgeInsets.only(bottom: screenHeight * 0.015),
+                    child: getCommonRow(
+                      context,
+                      title: key,
+                      value: value,
+                      textColor: valueColor,
+                      onTap: () {},
+                      showMap: lowerKey == 'address' && visit['showImage'] == true,
+                    ),
                   );
-
                 }).toList(),
 
-
-                // Reschedule Visit
+                // Reschedule Row
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -197,76 +134,34 @@ Widget buildVisitCard(
                     ),
                     Row(
                       children: [
-                        if (visit['showWhatsapp'] == true) ...[
-                          SvgPicture.asset('assets/visit/svgs/whatsapp.svg',height: 0.025 * screenHeight,width: 0.025 * screenWidth,),
-                          SizedBox(width: screenWidth * 0.03),
-                        ],
-                        if (visit['showShare'] == true) ...[
-                          SvgPicture.asset('assets/visit/svgs/share.svg',height: 0.025 * screenHeight,width: 0.025 * screenWidth,),
-                          SizedBox(width: screenWidth * 0.03),
-                        ],
+                        if (visit['showWhatsapp'] == true)
+                          ...[
+                            SvgPicture.asset('assets/visit/svgs/whatsapp.svg'),
+                            SizedBox(width: screenWidth * 0.03),
+                          ],
+                        if (visit['showShare'] == true)
+                          ...[
+                            SvgPicture.asset('assets/visit/svgs/share.svg'),
+                            SizedBox(width: screenWidth * 0.03),
+                          ],
                         if (visit['showDelete'] == true)
-                          SvgPicture.asset('assets/visit/svgs/delete.svg',height: 0.025 * screenHeight,width: 0.025 * screenWidth,),
+                          SvgPicture.asset('assets/visit/svgs/delete.svg'),
                       ],
                     ),
-
                   ],
                 ),
 
-                // End Visit Info (if already sent)
-                if (visit['isSeventhContainer'] == true && visit['isEighthContainer'] != true) ...[
-                  SizedBox(height: screenHeight * 0.03),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        'You Already Have sent End Visit Request',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14 * multiplier,
-                        color: AppColors.primary,
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: screenHeight * 0.01),
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          style: TextStyle(
-                            fontSize: 14 * multiplier,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          children: const [
-                            TextSpan(
-                              text: 'Requested On : ',
-                              style: TextStyle(color: AppColors.black),
-                            ),
-                            TextSpan(
-                              text: '03:58 PM , 03 Jun 2025',
-                              style: TextStyle(color: AppColors.primary),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ],
-            ),
-          ),
+                SizedBox(height: screenHeight * 0.02),
 
-          // Buttons (End Visit, Take Order, etc.)
-          Padding(
-            padding: EdgeInsets.all(screenWidth * 0.03),
-            child: Column(
-              children: [
-                if (index == 2 || index == 3) ...[
+                // Buttons
+                if (index == 2 || index == 3)
                   Row(
                     children: [
                       Expanded(
                         child: MyCoButton(
                           onTap: () {},
-                          height: screenHeight * 0.040,
                           boarderRadius: 40,
-                          backgroundColor: Util.instance.applyOpacity(AppColors.red, 0.1),
+                          backgroundColor: Util.applyOpacity(AppColors.red, 0.1),
                           isShadowBottomLeft: true,
                           title: 'END VISIT',
                           textStyle: TextStyle(
@@ -276,62 +171,50 @@ Widget buildVisitCard(
                           ),
                         ),
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Expanded(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            shape: const StadiumBorder(),
-                            padding: EdgeInsets.symmetric(vertical: screenHeight * 0.014),
-                          ),
-                          onPressed: () {},
-                          child: CustomText(
-                            'TAKE ORDER',
+                        child: MyCoButton(
+                          onTap: () {},
+                          title: 'TAKE ORDER',
+                          backgroundColor: AppColors.primary,
+                          boarderRadius: 40,
+                          textStyle: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 13.5 * multiplier,
                           ),
+                          isShadowBottomLeft: true,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: screenHeight * 0.02),
-                ],
-                if (visit['isSeventhContainer'] != true)
-                  SizedBox(
-                    width: double.infinity,
-                    height: screenHeight * 0.05,
-                    child: MyCoButton(
-                      onTap: () {},
-                      title: isSixthContainer
-                          ? 'ADD REQUEST TO END VISIT'
-                          : showExtraButtons
-                          ? (visit['hideOrderButtons'] != true && showStartedVisit
-                          ? 'ADD REQUEST TO END VISIT'
-                          : 'ADD EXPENSES')
-                          : 'START VISIT',
-                      backgroundColor: AppColors.secondary,
-                      textStyle: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14 * multiplier,
-                      ),
-                      boarderRadius: 30,
-                      wantBorder: false,
-                      isShadowBottomLeft: true,
-                    ),
-                  ),
-              ],
-            ),
-          ),
 
-          // Rejection Info (if 8th container)
-          if (visit['isEighthContainer'] == true)
-            Padding(
-              padding: EdgeInsets.all(screenWidth * 0.03),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                SizedBox(height: screenHeight * 0.02),
+
+                if (visit['isSeventhContainer'] != true)
+                  MyCoButton(
+                    onTap: () {},
+                    title: isSixthContainer
+                        ? 'ADD REQUEST TO END VISIT'
+                        : showExtraButtons
+                        ? (visit['hideOrderButtons'] != true && showStartedVisit
+                        ? 'ADD REQUEST TO END VISIT'
+                        : 'ADD EXPENSES')
+                        : 'START VISIT',
+                    backgroundColor: AppColors.secondary,
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14 * multiplier,
+                    ),
+                    boarderRadius: 30,
+                    wantBorder: false,
+                    isShadowBottomLeft: true,
+                  ),
+
+                // Rejection Message
+                if (visit['isEighthContainer'] == true) ...[
+                  SizedBox(height: screenHeight * 0.03),
                   CustomText(
                     'End Visit Request',
                     fontWeight: FontWeight.w600,
@@ -339,7 +222,6 @@ Widget buildVisitCard(
                     color: AppColors.primary,
                   ),
                   SizedBox(height: screenHeight * 0.015),
-
                   getCommonRow(
                     context,
                     title: 'Rejected By',
@@ -347,17 +229,13 @@ Widget buildVisitCard(
                     onTap: () {},
                     textColor: AppTheme.getColor(context).onSurface,
                   ),
-                  SizedBox(height: screenHeight * 0.01),
-
                   getCommonRow(
                     context,
                     title: 'Date',
                     value: '03:58 PM , 03 Jun 2025',
                     onTap: () {},
-                    textColor:AppTheme.getColor(context).onSurface,
+                    textColor: AppTheme.getColor(context).onSurface,
                   ),
-                  SizedBox(height: screenHeight * 0.01),
-
                   getCommonRow(
                     context,
                     title: 'Reason',
@@ -366,11 +244,11 @@ Widget buildVisitCard(
                     textColor: AppTheme.getColor(context).onSurface,
                   ),
                 ],
-              ),
-            )
+              ],
+            ),
+          ),
+        )
 
-        ],
-      ),
     ),
   );
 }
