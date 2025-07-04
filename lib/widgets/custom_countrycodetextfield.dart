@@ -51,7 +51,7 @@ class PhoneNumberField extends StatelessWidget {
               onChanged: onCountryChanged,
               height: 40,
               width: 70,
-              hintTextStyle: AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
+              hintTextStyle: AppTheme.lightTheme(context).textTheme.bodyMedium?.copyWith(
                 color: AppColors.primary,
                   ),
               // useRadioList: false,
@@ -61,7 +61,7 @@ class PhoneNumberField extends StatelessWidget {
             countryDialCodes[selectedCountry] ?? '',
             style: TextStyle(
               color: AppColors.primary,
-              fontSize: AppTheme.lightTheme.textTheme.bodyMedium?.fontSize ,
+              fontSize: AppTheme.lightTheme(context).textTheme.bodyMedium?.fontSize ,
             ),
           ),
           Expanded(

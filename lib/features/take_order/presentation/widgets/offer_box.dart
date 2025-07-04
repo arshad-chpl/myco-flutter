@@ -37,7 +37,7 @@ class OfferBox extends StatelessWidget {
           child: Row(
             children: [
               Image.asset(
-                'assets/take_order/offer.png',
+                'visit/take_order/offer.png',
                 height: 0.02 * getHeight(context),
               ),
               SizedBox(width: 0.02 * getWidth(context)),

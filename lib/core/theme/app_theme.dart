@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/core/theme/text_theme.dart';
-import 'package:myco_flutter/core/utils/util.dart';
 
 class AppTheme {
   static ColorScheme getColor(BuildContext context) =>

@@ -24,7 +24,7 @@ class FrequentBuyCard extends StatelessWidget {
       ),
       // isThreeLine: true,
       leading: Image.asset(
-        'assets/take_order/apple_image.png',
+        'visit/take_order/apple_image.png',
         width: 0.12 * getWidth(context),
       ),
       title: CustomText(
