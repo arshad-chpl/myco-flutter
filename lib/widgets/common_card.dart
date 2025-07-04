@@ -25,6 +25,8 @@ class CommonCard extends StatelessWidget {
   final double? headerPrefixIconWidth;
   final bool? showBlackShadowInChild;
   final Widget? subTitleIcon;
+  final bool? showBlackShadowInChild;
+  final Widget? subTitleIcon;
   const CommonCard({
     required this.title,
     required this.bottomWidget,
@@ -45,6 +47,8 @@ class CommonCard extends StatelessWidget {
     this.suffixIcon,
     this.headerPrefixIconHeight,
     this.headerPrefixIconWidth,
+    this.showBlackShadowInChild,
+    this.subTitleIcon,
     this.showBlackShadowInChild,
     this.subTitleIcon,
   });
@@ -73,6 +77,12 @@ class CommonCard extends StatelessWidget {
               ),
             ),
             boxShadow: [
+              if (showBlackShadowInChild == true)
+                const BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(0, 2),
+                  blurRadius: 4,
+                ),
               if (showBlackShadowInChild == true)
                 const BoxShadow(
                   color: Colors.black26,
@@ -125,9 +135,10 @@ class CommonCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (subTitleIcon != null)
-                            subTitleIcon!,
+                            subTitleIcon ?? const SizedBox.shrink(),
                           if (subTitleIcon != null)
                             SizedBox(width: 0.01 * getWidth(context)),
+
                           Expanded(
                             child: CustomText(
                               '$subTitle',

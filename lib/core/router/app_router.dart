@@ -4,6 +4,8 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
+import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
+import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
@@ -46,8 +48,21 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
+<<<<<<< HEAD
+    // initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.test,
+    observers: [
+      // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+    ],
+=======
     initialLocation: RoutePaths.AddExpense,
+>>>>>>> main
     routes: [
+      GoRoute(
+        path: RoutePaths.test,
+        name: 'test',
+        builder: (context, state) => const Testing(),
+      ),
       GoRoute(
         path: RoutePaths.splash,
         name: 'splash',
@@ -157,6 +172,9 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
+<<<<<<< HEAD
+      ), // Add all modular routes here
+=======
       ),
 
 
@@ -178,17 +196,21 @@ class AppRouter {
       //     child: TakeOrderPage(),
       //   ),
       // ),
+>>>>>>> main
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
         builder: (context, state) => SignupFormPage(),
       ),
       GoRoute(
+<<<<<<< HEAD
+=======
         path: RoutePaths.lostAndFound,
         name: 'lost-and-found',
         builder: (context, state) => LostAndFound(),
       ),
       GoRoute(
+>>>>>>> main
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
