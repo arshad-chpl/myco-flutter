@@ -19,7 +19,7 @@ class QuickActionSection extends StatelessWidget {
                   subtitle: 'All Your Work Related Tools.',
                   icon: Image.asset(
                     AppAssets.quickAccessGif,
-                    height: 70 * getResponsiveOnWidth(context),
+                    height: 70 * Responsive.getResponsiveOnWidth(context),
                   ),
                   hasViewMoreButton: true,
                   count: '04',

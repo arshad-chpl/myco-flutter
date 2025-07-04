@@ -70,7 +70,7 @@ class NoOrderPage extends StatelessWidget {
                     top: 0.01 * Responsive.getHeight(context),
                   ),
                   child: Image.asset(
-                    'visit/take_order/message-edit.png',
+                    'assets/take_order/message-edit.png',
                     height: 0.025 * Responsive.getHeight(context),
                   ),
                 ),

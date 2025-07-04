@@ -19,8 +19,8 @@ class ChangeRequestBottomSheet extends StatelessWidget {
       child: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            vertical: 20 * getResponsive(context),
-            horizontal: 20 * getResponsive(context),
+            vertical: 20 * Responsive.getResponsive(context),
+            horizontal: 20 * Responsive.getResponsive(context),
           ),
           child: Form(
             key: formKey,
@@ -31,14 +31,14 @@ class ChangeRequestBottomSheet extends StatelessWidget {
                   children: [
                     CustomText(
                       'Change Request Reason ',
-                      fontSize: 18 * getResponsiveText(context),
+                      fontSize: 18 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w700,
 
                     ),
                     CustomText(
                       '*',
                       color: AppTheme.getColor(context).error,
-                      fontSize: 20 * getResponsiveText(context),
+                      fontSize: 20 * Responsive.getResponsiveText(context),
                     ),
                   ],
                 ),
@@ -46,7 +46,7 @@ class ChangeRequestBottomSheet extends StatelessWidget {
                   hintText: 'Enter your reason',
                   prefixImage: Image.asset(
                     'assets/sign_in/message_edit.png',
-                    height: 0.03*getHeight(context),
+                    height: 0.03*Responsive.getHeight(context),
                   ),
                   maxLines: 5,
                   validator: (value) {
@@ -56,7 +56,7 @@ class ChangeRequestBottomSheet extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 0.02 * getHeight(context)),
+                SizedBox(height: 0.02 * Responsive.getHeight(context)),
                 Row(
                   children: [
                     Expanded(
@@ -66,13 +66,13 @@ class ChangeRequestBottomSheet extends StatelessWidget {
                         },
                         title: 'CLOSE',
                         backgroundColor: AppTheme.getColor(context).onPrimary,
-                        boarderRadius: 30 * getResponsive(context),
+                        boarderRadius: 30 * Responsive.getResponsive(context),
                         textStyle:
                         MyCoButtonTheme.getWhiteBackgroundTextStyle(
                             context),
                       ),
                     ),
-                    SizedBox(width: 0.09 * getWidth(context)),
+                    SizedBox(width: 0.09 * Responsive.getWidth(context)),
                     Expanded(
                       child: MyCoButton(
                         onTap: () {
@@ -82,7 +82,7 @@ class ChangeRequestBottomSheet extends StatelessWidget {
                           context.go("/dashboard");
                         },
                         title: 'SUBMIT',
-                        boarderRadius: 30 * getResponsive(context),
+                        boarderRadius: 30 * Responsive.getResponsive(context),
                         isShadowBottomLeft: true,
                       ),
                     ),

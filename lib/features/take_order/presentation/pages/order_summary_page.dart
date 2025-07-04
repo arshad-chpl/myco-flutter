@@ -86,7 +86,7 @@ class OrderSummaryPage extends StatelessWidget {
                     leading: Container(
                       decoration: getCommonDecoration(context),
                       child: Image.asset(
-                        'visit/take_order/apple_image.png',
+                        'assets/take_order/apple_image.png',
                         height: 0.045 * Responsive.getHeight(context),
                         width: 0.1 * Responsive.getWidth(context),
                       ),
@@ -135,7 +135,7 @@ class OrderSummaryPage extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Image.asset(
-                                    'visit/take_order/message-edit.png',
+                                    'assets/take_order/message-edit.png',
                                     fit: BoxFit.cover,
                                     height:
                                         0.015 * Responsive.getHeight(context),
@@ -157,7 +157,7 @@ class OrderSummaryPage extends StatelessWidget {
                               width: 0.01 * Responsive.getWidth(context),
                             ),
                             Image.asset(
-                              'visit/take_order/xcircle.png',
+                              'assets/take_order/xcircle.png',
                               width: 0.06 * Responsive.getWidth(context),
                               height: 0.025 * Responsive.getHeight(context),
                             ),
@@ -270,7 +270,7 @@ class OrderSummaryPage extends StatelessWidget {
                       top: 0.01 * Responsive.getHeight(context),
                     ),
                     child: Image.asset(
-                      'visit/take_order/message-edit.png',
+                      'assets/take_order/message-edit.png',
                       height: 0.022 * Responsive.getHeight(context),
                     ),
                   ),

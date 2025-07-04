@@ -16,9 +16,9 @@ class CustomRequestBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) => MyCoDialog(
       isBottomSheet: true,
       image: Image.asset(
-        'assets/sign_in/message_edit.png',
-        height: .15 * getHeight(context),
-        width: .5 * getWidth(context),
+        'assets/sign_in/update.png',
+        height: .15 * Responsive.getHeight(context),
+        width: .5 * Responsive.getWidth(context),
       ),
       isDescriptionThere: false,
       title:
@@ -27,11 +27,11 @@ class CustomRequestBottomSheet extends StatelessWidget {
         MyCoButton(
           onTap: () {},
           title: 'Close',
-          height: 0.068 * getHeight(context),
-          width: .7 * getWidth(context),
+          height: 0.068 * Responsive.getHeight(context),
+          width: .7 * Responsive.getWidth(context),
           backgroundColor: AppTheme.getColor(context).onPrimary,
           textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(context),
-          boarderRadius: 30 * getResponsive(context),
+          boarderRadius: 30 * Responsive.getResponsive(context),
         ),
         MyCoButton(
           onTap: () {
@@ -42,16 +42,16 @@ class CustomRequestBottomSheet extends StatelessWidget {
                 backgroundColor: AppTheme.getColor(context).onPrimary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(20 * getResponsive(context)),
+                    top: Radius.circular(20 * Responsive.getResponsive(context)),
                   ),
                 ),
                 builder: (_) => ChangeRequestBottomSheet()
             );
           },
           title: 'Request',
-          height: 0.068 * getHeight(context),
-          width: .7 * getWidth(context),
-          boarderRadius: 30 * getResponsive(context),
+          height: 0.068 * Responsive.getHeight(context),
+          width: .7 * Responsive.getWidth(context),
+          boarderRadius: 30 * Responsive.getResponsive(context),
           isShadowBottomLeft: true,
         ),
       ],

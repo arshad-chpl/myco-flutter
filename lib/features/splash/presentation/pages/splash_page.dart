@@ -118,7 +118,7 @@ class _SplashPageState extends State<SplashPage>
           children: [
             Center(
               child: Lottie.asset(
-                'visit/splash/myco_splash.json',
+                'assets/splash/myco_splash.json',
                 controller: _controller,
                 onLoaded: (composition) {
                   _controller

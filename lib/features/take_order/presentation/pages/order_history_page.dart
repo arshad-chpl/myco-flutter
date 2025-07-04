@@ -237,13 +237,13 @@ class OrderHistoryCard extends StatelessWidget {
                   InkWell(
                     onTap: () => context.pushNamed('edit-order'),
                     child: Image.asset(
-                      'visit/take_order/message-edit.png',
+                      'assets/take_order/message-edit.png',
                       height: 0.023 * Responsive.getHeight(context),
                     ),
                   ),
                   SizedBox(width: 0.01 * Responsive.getWidth(context)),
                   Image.asset(
-                    'visit/take_order/fluent_share.png',
+                    'assets/take_order/fluent_share.png',
                     height: 0.023 * Responsive.getHeight(context),
                   ),
                 ],
@@ -289,7 +289,7 @@ class OrderHistoryCard extends StatelessWidget {
                     InkWell(
                       onTap: () => Navigator.pop(context),
                       child: Image.asset(
-                        'visit/take_order/down_arrow.png',
+                        'assets/take_order/down_arrow.png',
                         width: 0.05 * Responsive.getWidth(context),
                       ),
                     ),
@@ -339,7 +339,7 @@ class OrderHistoryCard extends StatelessWidget {
                 child: Column(
                   children: [
                     Image.asset(
-                      'visit/take_order/apple_image.png',
+                      'assets/take_order/apple_image.png',
                       height: 0.025 * Responsive.getHeight(context),
                     ),
                     SizedBox(height: 0.01 * Responsive.getHeight(context)),
@@ -507,7 +507,7 @@ class OrderHistoryCard extends StatelessWidget {
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
           Center(
             child: Image.asset(
-              'visit/take_order/cancel_order.png',
+              'assets/take_order/cancel_order.png',
               height: 0.2 * Responsive.getHeight(context),
             ),
           ),
@@ -556,7 +556,7 @@ class OrderHistoryCard extends StatelessWidget {
     child: Column(
       children: [
         Image.asset(
-          'visit/take_order/apple_image.png',
+          'assets/take_order/apple_image.png',
           height: 0.025 * Responsive.getHeight(context),
         ),
         SizedBox(height: 0.01 * Responsive.getHeight(context)),
