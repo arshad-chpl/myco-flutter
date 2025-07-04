@@ -36,7 +36,7 @@ class LeaveDetailBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Responsive.init(context);
-    double textScale = getResponsiveText(context);
+    double textScale = Responsive.getResponsiveText(context);
 
     return Container(
       decoration: const BoxDecoration(
@@ -102,8 +102,7 @@ class LeaveDetailBottomSheet extends StatelessWidget {
               Center(
                 child: GestureDetector(
                   onTap: () {
-
-                      Fluttertoast.showToast(msg: 'No Attachment attached');
+                    Fluttertoast.showToast(msg: 'No Attachment attached');
                   },
                   child: Text(
                     'View attachments',
@@ -134,7 +133,7 @@ class LeaveDetailBottomSheet extends StatelessWidget {
           ),
           title: requestDate,
           secondTitle: 'By, $approvedDate',
-          headerHeight: 0.1 * getHeight(context),
+          headerHeight: 0.1 * Responsive.getHeight(context),
           suffixIcon: StatusBadge(
             status: status,
 
@@ -152,7 +151,7 @@ class LeaveDetailBottomSheet extends StatelessWidget {
     String label,
     String value,
   ) {
-    double textScale = getResponsiveText(context);
+    double textScale = Responsive.getResponsiveText(context);
     return Padding(
       padding: EdgeInsets.only(bottom: Responsive.scaleHeight(8)),
       child: Row(
@@ -176,7 +175,7 @@ class LeaveDetailBottomSheet extends StatelessWidget {
   }
 
   Widget _buildTabHeader(BuildContext context) {
-    double textScale = getResponsiveText(context);
+    double textScale = Responsive.getResponsiveText(context);
     return Row(
       children: [
         Expanded(
@@ -201,7 +200,7 @@ class LeaveDetailBottomSheet extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 0.059 * getHeight(context),
+          height: 0.059 * Responsive.getHeight(context),
           child: const VerticalDivider(
             color: AppColors.gray10,
             width: 1,
@@ -233,7 +232,7 @@ class LeaveDetailBottomSheet extends StatelessWidget {
   }
 
   Widget _buildLabelValueRow(BuildContext context, String label, String value) {
-    final double textScale = getResponsiveText(context);
+    final double textScale = Responsive.getResponsiveText(context);
     return Padding(
       padding: EdgeInsets.only(bottom: Responsive.scaleHeight(12)),
       child: Row(
@@ -266,7 +265,7 @@ class LeaveDetailBottomSheet extends StatelessWidget {
     String label,
     String value,
   ) {
-    final double textScale = getResponsiveText(context);
+    final double textScale = Responsive.getResponsiveText(context);
     return Padding(
       padding: EdgeInsets.only(bottom: Responsive.scaleHeight(12)),
       child: Column(
@@ -311,7 +310,7 @@ class StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double scale = getResponsiveText(context);
+    double scale = Responsive.getResponsiveText(context);
 
     return Container(
       padding: EdgeInsets.symmetric(

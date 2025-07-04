@@ -6,7 +6,8 @@ class CommonContainer extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
-  const CommonContainer(BuildContext context, {
+  const CommonContainer(
+    BuildContext context, {
     super.key,
     required this.child,
     this.padding,
@@ -20,7 +21,9 @@ class CommonContainer extends StatelessWidget {
     decoration: BoxDecoration(
       color: AppTheme.getColor(context).onPrimary,
       border: Border.all(color: AppTheme.getColor(context).outline),
-      borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+      borderRadius: BorderRadius.circular(
+        12 * Responsive.getResponsive(context),
+      ),
     ),
     child: child,
   );

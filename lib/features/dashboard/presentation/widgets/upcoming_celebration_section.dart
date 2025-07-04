@@ -16,12 +16,12 @@ class UpcomingCelebrationSection extends StatelessWidget {
       subtitle: 'Spread smiles — celebrate someone today!',
       icon: Image.asset(
         AppAssets.quickAccessGif,
-        height: 70 * getResponsiveOnWidth(context),
+        height: 70 * Responsive.getResponsiveOnWidth(context),
       ),
       count: '04',
       hasViewMoreButton: true,
       child: SizedBox(
-        width: getWidth(context),
+        width: Responsive.getWidth(context),
         height: 248,
         child: ListView.builder(
           itemCount: 3,
@@ -37,11 +37,12 @@ class UpcomingCelebrationSection extends StatelessWidget {
                   'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
               chipLabel: 'BirthDay',
               onButtonPressed: () {},
-              cardWidth: 300 * getDashboardResponsiveText(context),
+              cardWidth: 300 * Responsive.getDashboardResponsiveText(context),
               cardPadding: EdgeInsets.zero,
               // contentPadding: EdgeInsets.zero,
               buttonLabel: 'Celebrate',
-              buttonBorderRadius: 32 * getDashboardResponsiveText(context),
+              buttonBorderRadius:
+                  32 * Responsive.getDashboardResponsiveText(context),
             );
           },
         ),

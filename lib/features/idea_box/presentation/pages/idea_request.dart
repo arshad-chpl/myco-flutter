@@ -21,18 +21,20 @@ class IdeaRequest extends StatelessWidget {
     ),
     body: Column(
       children: [
-                 Container(
-          padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 0.08 * Responsive.getWidth(context),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 8 * getResponsive(context),
+                  horizontal: 8 * Responsive.getResponsive(context),
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
-                    6 * getResponsive(context),
+                    6 * Responsive.getResponsive(context),
                   ),
                   color: AppColors.gray10,
                 ),
@@ -54,23 +56,23 @@ class IdeaRequest extends StatelessWidget {
                   children: [
                     CustomText(
                       '2024-2025',
-                      fontSize: 16 * getResponsiveText(context),
+                      fontSize: 16 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w700,
                     ),
                     Icon(
                       Icons.keyboard_arrow_down,
-                      size: 25 * getResponsive(context),
+                      size: 25 * Responsive.getResponsive(context),
                     ),
                   ],
                 ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 8 * getResponsive(context),
+                  horizontal: 8 * Responsive.getResponsive(context),
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
-                    6 * getResponsive(context),
+                    6 * Responsive.getResponsive(context),
                   ),
                   color: AppColors.gray10,
                 ),
@@ -81,33 +83,31 @@ class IdeaRequest extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 0.74* getHeight(context)),
-        
+        SizedBox(height: 0.74 * Responsive.getHeight(context)),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             MyCoButton(
-              height: 0.05 * getHeight(context),
-              boarderRadius: 
-              40 * getResponsive(context),
-              width: 0.45 * getWidth(context),
+              height: 0.05 * Responsive.getHeight(context),
+              boarderRadius: 40 * Responsive.getResponsive(context),
+              width: 0.45 * Responsive.getWidth(context),
               onTap: () {},
               title: 'SHORT BY',
               textStyle: TextStyle(
-                fontSize: 14 * getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onPrimary,
               ),
             ),
-            
-             MyCoButton(
-              height: 0.05 * getHeight(context),
-              boarderRadius: 
-              40 * getResponsive(context),
-              width: 0.45 * getWidth(context),
+
+            MyCoButton(
+              height: 0.05 * Responsive.getHeight(context),
+              boarderRadius: 40 * Responsive.getResponsive(context),
+              width: 0.45 * Responsive.getWidth(context),
               onTap: () {},
               title: 'FILTER',
               textStyle: TextStyle(
-                fontSize: 14 * getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onPrimary,
               ),
             ),

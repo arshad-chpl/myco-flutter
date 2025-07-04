@@ -11,48 +11,45 @@ class MyTeamSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomSection(
-                  title: 'My Team',
-                  subtitle: 'It’s Team That can Make it Happen',
-                  icon: Image.asset(
-                    AppAssets.quickAccessGif,
-                    height: 70 * getResponsiveOnWidth(context),
-                  ),
-                  hasViewMoreButton: true,
-                  count: '04',
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                  child: BorderContainerWraper(
-                    child: OverlappingPeopleCard(
-                      people: [
-                        PersonData(
-                          firstName: "person",
-                          lastName: "name",
-                          imagePath:
-                              'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
-                        ),
-                        PersonData(
-                          firstName: "person",
-                          lastName: "name",
-                          imagePath:
-                              'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
-                        ),
-                        PersonData(
-                          firstName: "person",
-                          lastName: "name",
-                          imagePath:
-                              'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
-                        ),
-                        PersonData(
-                          firstName: "person",
-                          lastName: "name",
-                          imagePath:
-                              'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+      title: 'My Team',
+      subtitle: 'It’s Team That can Make it Happen',
+      icon: Image.asset(
+        AppAssets.quickAccessGif,
+        height: 70 * Responsive.getResponsiveOnWidth(context),
+      ),
+      hasViewMoreButton: true,
+      count: '04',
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: BorderContainerWraper(
+        child: OverlappingPeopleCard(
+          people: [
+            PersonData(
+              firstName: "person",
+              lastName: "name",
+              imagePath:
+                  'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
+            ),
+            PersonData(
+              firstName: "person",
+              lastName: "name",
+              imagePath:
+                  'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
+            ),
+            PersonData(
+              firstName: "person",
+              lastName: "name",
+              imagePath:
+                  'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
+            ),
+            PersonData(
+              firstName: "person",
+              lastName: "name",
+              imagePath:
+                  'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

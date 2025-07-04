@@ -29,7 +29,7 @@ class _TestingState extends State<AssetsHomePage> {
     appBar: AppBar(
       title: CustomText(
         'Assets',
-        fontSize: 20 * getResponsiveText(context),
+        fontSize: 20 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
       ),
       titleSpacing: 0,
@@ -48,14 +48,16 @@ class _TestingState extends State<AssetsHomePage> {
               ),
               CustomText(
                 'Add Assets',
-                fontSize: 16 * getResponsiveText(context),
+                fontSize: 16 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
               ),
             ],
           ),
         ),
       ],
-      actionsPadding: EdgeInsets.only(right: 0.04 * getWidth(context)),
+      actionsPadding: EdgeInsets.only(
+        right: 0.04 * Responsive.getWidth(context),
+      ),
     ),
     body: CustomScrollView(
       slivers: [
@@ -67,7 +69,9 @@ class _TestingState extends State<AssetsHomePage> {
           automaticallyImplyLeading: false,
           titleSpacing: 0,
           title: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0.04 * getWidth(context)),
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.04 * Responsive.getWidth(context),
+            ),
             child: MyCoTextfield(
               hintText: 'Search',
               hintTextStyle: AppTheme.getTextStyle(
@@ -80,8 +84,10 @@ class _TestingState extends State<AssetsHomePage> {
                 context,
                 MaterialPageRoute(builder: (context) => const QRScannerPage()),
               ),
-              contentPadding: EdgeInsets.only(top: 0.012 * getHeight(context)),
-              boarderRadius: 12 * getResponsive(context),
+              contentPadding: EdgeInsets.only(
+                top: 0.012 * Responsive.getHeight(context),
+              ),
+              boarderRadius: 12 * Responsive.getResponsive(context),
             ),
           ),
         ),
@@ -93,9 +99,9 @@ class _TestingState extends State<AssetsHomePage> {
             height: 60,
             child: Padding(
               padding: EdgeInsets.only(
-                left: 0.04 * getWidth(context),
-                right: 0.04 * getWidth(context),
-                bottom: 0.015 * getHeight(context),
+                left: 0.04 * Responsive.getWidth(context),
+                right: 0.04 * Responsive.getWidth(context),
+                bottom: 0.015 * Responsive.getHeight(context),
               ),
               child: MyCustomTabBar(
                 isShadowBottomLeft: true,
@@ -127,11 +133,11 @@ class _TestingState extends State<AssetsHomePage> {
         // Asset List
         ..._buildAssetListByTab(),
         // SliverPadding(
-        //   padding: EdgeInsets.symmetric(horizontal: 0.04 * getWidth(context)),
+        //   padding: EdgeInsets.symmetric(horizontal: 0.04 * Responsive.getWidth(context)),
         //   sliver: SliverList.separated(
         //     itemCount: 5,
         //     separatorBuilder: (context, index) =>
-        //         SizedBox(height: 0.02 * getHeight(context)),
+        //         SizedBox(height: 0.02 * Responsive.getHeight(context)),
         //     itemBuilder: (context, index) => const ActiveAssetsCard(
         //       title: 'Desktop',
         //       subTitle: '(AS100)',
@@ -144,7 +150,9 @@ class _TestingState extends State<AssetsHomePage> {
         // ),
 
         // Extra spacing at the bottom
-        SliverToBoxAdapter(child: SizedBox(height: 0.02 * getHeight(context))),
+        SliverToBoxAdapter(
+          child: SizedBox(height: 0.02 * Responsive.getHeight(context)),
+        ),
       ],
     ),
   );
@@ -154,11 +162,13 @@ class _TestingState extends State<AssetsHomePage> {
       case 0: // Active Assets
         return [
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 0.04 * getWidth(context)),
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.04 * Responsive.getWidth(context),
+            ),
             sliver: SliverList.separated(
               itemCount: 8,
               separatorBuilder: (_, __) =>
-                  SizedBox(height: 0.02 * getHeight(context)),
+                  SizedBox(height: 0.02 * Responsive.getHeight(context)),
               itemBuilder: (_, index) => const ActiveAssetsCard(
                 title: 'Laptop',
                 subTitle: '(AS101)',
@@ -174,11 +184,13 @@ class _TestingState extends State<AssetsHomePage> {
       case 1: // Past Assets
         return [
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 0.04 * getWidth(context)),
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.04 * Responsive.getWidth(context),
+            ),
             sliver: SliverList.separated(
               itemCount: 5,
               separatorBuilder: (_, __) =>
-                  SizedBox(height: 0.02 * getHeight(context)),
+                  SizedBox(height: 0.02 * Responsive.getHeight(context)),
               itemBuilder: (_, index) => const PastAssetsCard(
                 title: 'Desktop',
                 subTitle: '(AS101)',
@@ -195,11 +207,13 @@ class _TestingState extends State<AssetsHomePage> {
       case 2: // All Assets
         return [
           SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 0.04 * getWidth(context)),
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.04 * Responsive.getWidth(context),
+            ),
             sliver: SliverList.separated(
               itemCount: 10,
               separatorBuilder: (_, __) =>
-                  SizedBox(height: 0.02 * getHeight(context)),
+                  SizedBox(height: 0.02 * Responsive.getHeight(context)),
               itemBuilder: (_, index) {
                 if (index % 2 != 0) {
                   return const AllAssetsCard(

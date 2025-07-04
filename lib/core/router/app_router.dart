@@ -54,7 +54,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.dashboard,
+    // initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.test,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -168,7 +169,19 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-      ), // Add all modular routes here
+      ),
+
+
+      GoRoute(
+        path: RoutePaths.faceDetection,
+        name: 'faceDetection',
+        builder: (context, state) => BlocProvider(
+            create: (context) => GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+          child: const FaceDetectionPage(),
+        )
+      ),
+      // Add all modular routes here
+     // Add all modular routes here
       // GoRoute(
       //   path: RoutePaths.takeOrder,
       //   name: 'take-order',
@@ -177,14 +190,6 @@ class AppRouter {
       //     child: TakeOrderPage(),
       //   ),
       // ),
-      GoRoute(
-          path: RoutePaths.faceDetection,
-          name: 'faceDetection',
-          builder: (context, state) => BlocProvider(
-            create: (context) => GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
-            child: const FaceDetectionPage(),
-          )
-      ),
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',

@@ -14,8 +14,8 @@ class PhoneNumberField extends StatelessWidget {
   final TextEditingController phoneController;
   final Map<String, String> countryDialCodes;
   final Decoration? decoration;
-  final String ? hintText;
-  final TextStyle ? hintTextStyle;
+  final String? hintText;
+  final TextStyle? hintTextStyle;
 
   const PhoneNumberField({
     super.key,
@@ -58,7 +58,7 @@ class PhoneNumberField extends StatelessWidget {
               height: 40,
               width: 70,
               hintTextStyle: TextStyle(
-                fontSize: 14 * getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
               ),
               // hintTextStyle: AppTheme.lightTheme(context).textTheme.bodyMedium?.copyWith(
@@ -71,7 +71,7 @@ class PhoneNumberField extends StatelessWidget {
             countryDialCodes[selectedCountry] ?? '',
             style: TextStyle(
               color: AppTheme.getColor(context).outline,
-              fontSize: 14 * getResponsiveText(context),
+              fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
               // fontSize: AppTheme.lightTheme(context).textTheme.bodyMedium?.fontSize ,
             ),
@@ -81,12 +81,16 @@ class PhoneNumberField extends StatelessWidget {
               textAlignment: TextAlign.start,
               isSuffixIconOn: false,
               controller: phoneController,
-              hintText: hintText?? '1234567890',
-              hintTextStyle: hintTextStyle ?? TextStyle(
-                fontFamily: "Gilroy-Bold",
-                color:AppTheme.getColor(context).outline,
-                fontSize: AppTheme.getTextStyle(context).bodyMedium?.fontSize ?? 14.0 * getResponsiveText(context),
-              ),
+              hintText: hintText ?? '1234567890',
+              hintTextStyle:
+                  hintTextStyle ??
+                  TextStyle(
+                    fontFamily: "Gilroy-Bold",
+                    color: AppTheme.getColor(context).outline,
+                    fontSize:
+                        AppTheme.getTextStyle(context).bodyMedium?.fontSize ??
+                        14.0 * Responsive.getResponsiveText(context),
+                  ),
               textInputType: TextInputType.phone,
               border: InputBorder.none,
             ),

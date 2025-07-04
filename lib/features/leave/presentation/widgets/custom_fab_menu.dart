@@ -58,8 +58,8 @@ class _CustomFabMenuState extends State<CustomFabMenu> {
     spacing: 0,
     spaceBetweenChildren: 0,
     childrenButtonSize: Size(
-      0.09 * getWidth(context),
-      0.09 * getHeight(context),
+      0.09 * Responsive.getWidth(context),
+      0.09 * Responsive.getHeight(context),
     ),
     elevation: 4.0,
     animationCurve: Curves.easeInOut,
@@ -70,15 +70,15 @@ class _CustomFabMenuState extends State<CustomFabMenu> {
                 ? ClipOval(
                     child: Image.asset(
                       button.imagePath!,
-                      width: 0.04 * getWidth(context),
-                      height: 0.04 * getHeight(context),
+                      width: 0.04 * Responsive.getWidth(context),
+                      height: 0.04 * Responsive.getHeight(context),
                       fit: BoxFit.contain,
                     ),
                   )
                 : Icon(
                     button.icon,
                     color: button.labelColor,
-                    size: 0.02 * getHeight(context),
+                    size: 0.02 * Responsive.getHeight(context),
                   ),
             label: button.label,
             labelBackgroundColor: button.backgroundColor,

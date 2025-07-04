@@ -48,11 +48,13 @@ class PastAssetsCard extends StatelessWidget {
       headerColor: AppTheme.getColor(context).primary,
       borderColor: AppTheme.lightTheme(context).dividerColor,
       headerPadding: EdgeInsets.symmetric(
-        horizontal: 16 * getResponsive(context),
-        vertical: 8 * getResponsive(context),
+        horizontal: 16 * Responsive.getResponsive(context),
+        vertical: 8 * Responsive.getResponsive(context),
       ),
       bottomWidget: Padding(
-        padding: childPadding ?? EdgeInsets.all(16.0 * getResponsive(context)),
+        padding:
+            childPadding ??
+            EdgeInsets.all(16.0 * Responsive.getResponsive(context)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +63,7 @@ class PastAssetsCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Image.asset(image, width: 0.3 * getWidth(context)),
+                  Image.asset(image, width: 0.3 * Responsive.getWidth(context)),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: DashedLine(
@@ -77,7 +79,9 @@ class PastAssetsCard extends StatelessWidget {
                       children: [
                         AssetsVerticalData(title: 'Brand', data: brand),
                         SizedBox(
-                          height: spaceBetweenData ?? 0.02 * getHeight(context),
+                          height:
+                              spaceBetweenData ??
+                              0.02 * Responsive.getHeight(context),
                         ),
                         AssetsVerticalData(title: 'Sr.No./MAC/Sim', data: srNo),
                       ],
@@ -86,17 +90,19 @@ class PastAssetsCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: spaceBetweenData ?? 0.02 * getHeight(context)),
+            SizedBox(
+              height: spaceBetweenData ?? 0.02 * Responsive.getHeight(context),
+            ),
             Row(
               children: [
                 SizedBox(
-                  width: 0.36 * getWidth(context),
+                  width: 0.36 * Responsive.getWidth(context),
                   child: AssetsVerticalData(title: 'Handover', data: srNo),
                 ),
                 Expanded(
                   child: ImageGridPreviewWidget(
-                    boxHeight: 0.14 * getWidth(context),
-                    boxWidth: 0.14 * getWidth(context),
+                    boxHeight: 0.14 * Responsive.getWidth(context),
+                    boxWidth: 0.14 * Responsive.getWidth(context),
                     borderRadius: 10,
                     imageList:
                         handoverImageList ?? //[],
@@ -110,7 +116,9 @@ class PastAssetsCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: spaceBetweenData ?? 0.02 * getHeight(context)),
+            SizedBox(
+              height: spaceBetweenData ?? 0.02 * Responsive.getHeight(context),
+            ),
             AssetsVerticalData(title: 'Takeover', data: srNo),
           ],
         ),

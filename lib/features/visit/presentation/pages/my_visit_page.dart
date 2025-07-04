@@ -30,7 +30,6 @@ class _VisitPageState extends State<MyVisitPage> {
   final FocusNode searchFocus = FocusNode();
   int selectedTabIndex = 0;
 
-
   final List<Map<String, dynamic>> visitList = [
     {
       'title': "Mahakali Tractor ( RT4567 )",
@@ -41,7 +40,7 @@ class _VisitPageState extends State<MyVisitPage> {
         "Visit": "Physical",
         "Visit Status": "Approved",
         "Address":
-        "101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India"
+            "101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India"
             "\n(You are in Range)",
       },
       "showWhatsapp": true,
@@ -56,8 +55,7 @@ class _VisitPageState extends State<MyVisitPage> {
       "details": {
         "Visit": "Demo",
         "Visit Status": "Pending",
-        "Address":
-        "Plot 22, Phase-3 GIDC, Vatva, Ahmedabad, Gujarat, 382445",
+        "Address": "Plot 22, Phase-3 GIDC, Vatva, Ahmedabad, Gujarat, 382445",
       },
       "showWhatsapp": true,
       "showShare": true,
@@ -71,8 +69,7 @@ class _VisitPageState extends State<MyVisitPage> {
       'details': {
         'Visit': "Service",
         "Visit Status": "Approved",
-        "Address":
-        "SG Highway, Near Infocity, Gandhinagar, Gujarat",
+        "Address": "SG Highway, Near Infocity, Gandhinagar, Gujarat",
       },
       "showWhatsapp": true,
       "showShare": true,
@@ -88,7 +85,7 @@ class _VisitPageState extends State<MyVisitPage> {
       'details': {
         'Visit': "Installation",
         "Visit Status": "Approved",
-        "Address": "Bapunagar, Ahmedabad, Gujarat - 380024"
+        "Address": "Bapunagar, Ahmedabad, Gujarat - 380024",
       },
       "showWhatsapp": true,
       "showShare": true,
@@ -105,7 +102,8 @@ class _VisitPageState extends State<MyVisitPage> {
       'details': {
         'Visit': "Service",
         "Visit Status": "Approved",
-        "Address": "101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India"
+        "Address":
+            "101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India",
       },
       "showWhatsapp": true,
       "showShare": true,
@@ -125,12 +123,13 @@ class _VisitPageState extends State<MyVisitPage> {
       'details': {
         'Visit': "Inspection",
         "Visit Status": "Approved",
-        "Address": "101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India"
+        "Address":
+            "101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India",
       },
       "showWhatsapp": true,
       "showShare": true,
     },
-//7th
+    //7th
     {
       "title": "Late Visit End ( LV2025 )",
       "time": "07th April, 2025(01:30 PM) TO 07th April, 2025(03:30 PM)",
@@ -146,7 +145,8 @@ class _VisitPageState extends State<MyVisitPage> {
       'details': {
         'Visit': "Inspection",
         "Visit Status": "Approved",
-        "Address": "101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India"
+        "Address":
+            "101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India",
       },
       "showWhatsapp": true,
       "showShare": true,
@@ -168,12 +168,11 @@ class _VisitPageState extends State<MyVisitPage> {
       'details': {
         'Visit': "Inspection",
         "Visit Status": "Approved",
-        "Address": "Maninagar, Ahmedabad, Gujarat"
+        "Address": "Maninagar, Ahmedabad, Gujarat",
       },
       "showWhatsapp": true,
       "showShare": true,
     },
-
   ];
 
   String get formattedDate =>
@@ -181,8 +180,18 @@ class _VisitPageState extends State<MyVisitPage> {
 
   String monthName(int month) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return months[month - 1];
   }
@@ -204,15 +213,16 @@ class _VisitPageState extends State<MyVisitPage> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => CustomVisitCupertinoDatePicker(
-        initialDate: selectedDate,
-      ),
+      builder: (_) => CustomVisitCupertinoDatePicker(initialDate: selectedDate),
     );
 
     if (result != null) {
       setState(() {
-        selectedDate =
-            DateTime(result['year']!, result['month']!, result['day']!);
+        selectedDate = DateTime(
+          result['year']!,
+          result['month']!,
+          result['day']!,
+        );
       });
     }
   }
@@ -226,7 +236,7 @@ class _VisitPageState extends State<MyVisitPage> {
         : AppColors.secondary;
 
     final screenSize = MediaQuery.of(context).size;
-    final multiplier = getResponsiveText(context);
+    final multiplier = Responsive.getResponsiveText(context);
 
     return Scaffold(
       backgroundColor: AppTheme.getColor(context).onPrimary,
@@ -235,10 +245,8 @@ class _VisitPageState extends State<MyVisitPage> {
         elevation: 0,
         centerTitle: false,
         leading: IconButton(
-            onPressed: (){},
-            icon: SvgPicture.asset(
-            'assets/visit/svgs/backarrow.svg'
-          ),
+          onPressed: () {},
+          icon: SvgPicture.asset('assets/visit/svgs/backarrow.svg'),
         ),
         title: CustomText(
           'Visit',
@@ -292,57 +300,64 @@ class _VisitPageState extends State<MyVisitPage> {
             child: selectedTabIndex == 0
                 ? buildMyVisitTab(screenSize, multiplier)
                 : buildOtherEmployeeVisitTab(
-              context,
-              screenSize,
-              multiplier,
-              searchController: searchController,
-              searchFocus: searchFocus,
-              formattedDate: formattedDate,
-              goToPreviousDate: goToPreviousDate,
-              goToNextDate: goToNextDate,
-              selectDateFromPicker: selectDateFromPicker,
-            ),
+                    context,
+                    screenSize,
+                    multiplier,
+                    searchController: searchController,
+                    searchFocus: searchFocus,
+                    formattedDate: formattedDate,
+                    goToPreviousDate: goToPreviousDate,
+                    goToNextDate: goToNextDate,
+                    selectDateFromPicker: selectDateFromPicker,
+                  ),
           ),
-
         ],
       ),
       floatingActionButton: selectedTabIndex == 0
           ? ExpandableFab(
-
-        openIcon: Icons.add,
-        closeIcon: Icons.close,
-        actions: [
-          ExpandableFabAction(
-            label: 'Add Visit',
-            icon: Icons.location_on,
-            onTap: () {},
-          ),
-          ExpandableFabAction(
-            label: 'Add Expense',
-            icon: Icons.money,
-            onTap: () {},
-          ),
-        ],
-        imageSize: 66 * multiplier,
-        innericonsize: 20 * multiplier,
-        circleavataradius: 22 * multiplier,
-        innericonbgr: Colors.white,
-        margin: EdgeInsets.only(right: 10 * multiplier),
-        padding: EdgeInsets.symmetric(horizontal: 14 * multiplier, vertical: 8 * multiplier),
-      )
+              openIcon: Icons.add,
+              closeIcon: Icons.close,
+              actions: [
+                ExpandableFabAction(
+                  label: 'Add Visit',
+                  icon: Icons.location_on,
+                  onTap: () {},
+                ),
+                ExpandableFabAction(
+                  label: 'Add Expense',
+                  icon: Icons.money,
+                  onTap: () {},
+                ),
+              ],
+              imageSize: 66 * multiplier,
+              innericonsize: 20 * multiplier,
+              circleavataradius: 22 * multiplier,
+              innericonbgr: Colors.white,
+              margin: EdgeInsets.only(right: 10 * multiplier),
+              padding: EdgeInsets.symmetric(
+                horizontal: 14 * multiplier,
+                vertical: 8 * multiplier,
+              ),
+            )
           : null,
-
     );
   }
 
-  Widget buildMyVisitTab(Size screenSize, double multiplier) => SingleChildScrollView(
+  Widget buildMyVisitTab(
+    Size screenSize,
+    double multiplier,
+  ) => SingleChildScrollView(
     padding: EdgeInsets.all(screenSize.width * 0.04),
     child: Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            dateArrowButton(Icons.chevron_left_rounded, goToPreviousDate, multiplier),
+            dateArrowButton(
+              Icons.chevron_left_rounded,
+              goToPreviousDate,
+              multiplier,
+            ),
             GestureDetector(
               onTap: selectDateFromPicker,
               child: Row(
@@ -369,7 +384,11 @@ class _VisitPageState extends State<MyVisitPage> {
                 ],
               ),
             ),
-            dateArrowButton(Icons.chevron_right_rounded, goToNextDate, multiplier),
+            dateArrowButton(
+              Icons.chevron_right_rounded,
+              goToNextDate,
+              multiplier,
+            ),
           ],
         ),
         SizedBox(height: 16 * multiplier),
@@ -383,7 +402,10 @@ class _VisitPageState extends State<MyVisitPage> {
             boarderRadius: 10,
             contentPadding: EdgeInsets.symmetric(vertical: 12 * multiplier),
             prefix: Padding(
-              padding: EdgeInsets.only(left: 12 * multiplier, right: 8 * multiplier),
+              padding: EdgeInsets.only(
+                left: 12 * multiplier,
+                right: 8 * multiplier,
+              ),
               child: Icon(
                 CupertinoIcons.search,
                 color: AppColors.primary,
@@ -417,50 +439,50 @@ class _VisitPageState extends State<MyVisitPage> {
   );
 
   Widget buildAutoExpenseCard(double multiplier) => CommonCard(
-      title: 'Auto Expense Category',
-      headerColor: AppColors.myCoCyan,
-      borderColor: AppTheme.getColor(context).outline,
-      showHeaderPrefixIcon: false,
-      showBlackShadowInChild: true,
-      bottomWidget: Padding(
-        padding: EdgeInsets.all(12 * multiplier),
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              vertical: 8 * multiplier,
-              horizontal: 12 * multiplier,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8 * multiplier),
-              border: Border.all(color: AppTheme.getColor(context).tertiary),
-            ),
-            child: IntrinsicWidth(
-              child: CustomText(
-                'Mukund - Visit Expense',
-                fontSize: 12 * multiplier,
-                fontWeight: FontWeight.w700,
-                color: AppColors.black,
-              ),
-            ),
-          ),
-
-        ),
-
-      ),
-    );
-
-  Widget dateArrowButton(IconData icon, VoidCallback onTap, double multiplier) =>
-      GestureDetector(
-        onTap: onTap,
+    title: 'Auto Expense Category',
+    headerColor: AppColors.myCoCyan,
+    borderColor: AppTheme.getColor(context).outline,
+    showHeaderPrefixIcon: false,
+    showBlackShadowInChild: true,
+    bottomWidget: Padding(
+      padding: EdgeInsets.all(12 * multiplier),
+      child: Align(
+        alignment: Alignment.centerLeft,
         child: Container(
-          padding: EdgeInsets.all(8 * multiplier),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15 * multiplier),
-            color: Util.applyOpacity(AppColors.primary, 0.25),
+          padding: EdgeInsets.symmetric(
+            vertical: 8 * multiplier,
+            horizontal: 12 * multiplier,
           ),
-          child: Icon(icon, size: 22 * multiplier),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8 * multiplier),
+            border: Border.all(color: AppTheme.getColor(context).tertiary),
+          ),
+          child: IntrinsicWidth(
+            child: CustomText(
+              'Mukund - Visit Expense',
+              fontSize: 12 * multiplier,
+              fontWeight: FontWeight.w700,
+              color: AppColors.black,
+            ),
+          ),
         ),
-      );
+      ),
+    ),
+  );
 
+  Widget dateArrowButton(
+    IconData icon,
+    VoidCallback onTap,
+    double multiplier,
+  ) => GestureDetector(
+    onTap: onTap,
+    child: Container(
+      padding: EdgeInsets.all(8 * multiplier),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15 * multiplier),
+        color: Util.applyOpacity(AppColors.primary, 0.25),
+      ),
+      child: Icon(icon, size: 22 * multiplier),
+    ),
+  );
 }

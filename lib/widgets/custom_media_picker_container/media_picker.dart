@@ -184,7 +184,7 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
       children: [
         CustomText(
           'Select option',
-          fontSize: 18 * getResponsiveText(context),
+          fontSize: 18 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
           color: AppTheme.getColor(context).outline,
         ),

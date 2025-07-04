@@ -313,19 +313,23 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
     return OverlayEntry(
       builder: (context) => Positioned(
         left: offset.dx,
-        top: offset.dy + size.height + 4 * getResponsive(context),
-        width: widget.dropdownWidth ?? 200 * getWidth(context) / 360,
+        top: offset.dy + size.height + 4 * Responsive.getResponsive(context),
+        width: widget.dropdownWidth ?? 200 * Responsive.getWidth(context) / 360,
         child: CompositedTransformFollower(
           link: _layerLink,
           showWhenUnlinked: false,
           child: Material(
             elevation: 4,
-            borderRadius: BorderRadius.circular(8 * getResponsive(context)),
+            borderRadius: BorderRadius.circular(
+              8 * Responsive.getResponsive(context),
+            ),
             child: SizedBox(
-              height: widget.dropdownHeight ?? 200 * getHeight(context) / 800,
+              height:
+                  widget.dropdownHeight ??
+                  200 * Responsive.getHeight(context) / 800,
               child: ListView(
                 padding: EdgeInsets.symmetric(
-                  vertical: 4 * getResponsive(context),
+                  vertical: 4 * Responsive.getResponsive(context),
                 ),
                 children: widget.countries.map((country) {
                   return ListTile(
@@ -359,7 +363,7 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: widget.width ?? double.infinity,
-      height: widget.height ?? 40 * getHeight(context) / 800,
+      height: widget.height ?? 40 * Responsive.getHeight(context) / 800,
       child: CompositedTransformTarget(
         link: _layerLink,
         child: Container(
@@ -369,7 +373,9 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                 color: widget.fillColor ?? Colors.white,
                 borderRadius:
                     widget.borderRadius ??
-                    BorderRadius.circular(7.0 * getResponsive(context)),
+                    BorderRadius.circular(
+                      7.0 * Responsive.getResponsive(context),
+                    ),
                 border:
                     widget.border ??
                     Border.all(
@@ -385,8 +391,8 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                     : null,
               ),
           padding: EdgeInsets.symmetric(
-            horizontal: 14 * getResponsive(context),
-            vertical: 12 * getResponsive(context),
+            horizontal: 14 * Responsive.getResponsive(context),
+            vertical: 12 * Responsive.getResponsive(context),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -412,17 +418,17 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                               color: Colors.black,
                             ),
                       ),
-                      SizedBox(width: 6 * getResponsive(context)),
+                      SizedBox(width: 6 * Responsive.getResponsive(context)),
                       Icon(
                         Icons.keyboard_arrow_down_outlined,
                         color: AppTheme.getColor(context).primary,
-                        size: 30 * getResponsive(context),
+                        size: 30 * Responsive.getResponsive(context),
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(width: 10 * getResponsive(context)),
+              SizedBox(width: 10 * Responsive.getResponsive(context)),
               Text(
                 _selectedCountry.dialCode,
                 style:
@@ -433,7 +439,7 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                       color: Colors.black,
                     ),
               ),
-              SizedBox(width: 6 * getResponsive(context)),
+              SizedBox(width: 6 * Responsive.getResponsive(context)),
               Expanded(
                 child: TextField(
                   controller: widget.controller,

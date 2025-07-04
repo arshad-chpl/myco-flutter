@@ -71,13 +71,13 @@
 //       centerTitle: false,
 //     ),
 //     body: Padding(
-//       padding: EdgeInsets.symmetric(horizontal: 16 * getResponsive(context)),
+//       padding: EdgeInsets.symmetric(horizontal: 16 * Responsive.getResponsive(context)),
 //       child: SingleChildScrollView(
 //         child: Column(
 //           crossAxisAlignment: CrossAxisAlignment.stretch,
 //           children: [
 //             Container(
-//               height: 0.18 * getHeight(context),
+//               height: 0.18 * Responsive.getHeight(context),
 //               decoration: BoxDecoration(
 //                 color: const Color(0xFFEEF7FD),
 //                 borderRadius: BorderRadius.circular(10),
@@ -207,7 +207,7 @@
 //               prefix: _prefixIcon('assets/lost_and_found/note-favorite.png'),
 //               contentPadding: _contentPadding(context),
 //             ),
-//             SizedBox(height: 0.03 * getHeight(context)),
+//             SizedBox(height: 0.03 * Responsive.getHeight(context)),
 //
 //             Padding(
 //               padding: const EdgeInsets.all(8.0),
@@ -246,31 +246,31 @@
 //   );
 //
 //   EdgeInsets _contentPadding(BuildContext context) =>
-//       EdgeInsets.symmetric(vertical: 14 * getResponsive(context));
+//       EdgeInsets.symmetric(vertical: 14 * Responsive.getResponsive(context));
 //
 //   Widget _prefixIcon(String assetPath) => Padding(
-//     padding: const EdgeInsets.all(12.0) * getResponsive(context),
+//     padding: const EdgeInsets.all(12.0) * Responsive.getResponsive(context),
 //     child: Image.asset(
 //       assetPath,
-//       width: 0.020 * getWidth(context),
-//       height: 0.20 * getHeight(context),
+//       width: 0.020 * Responsive.getWidth(context),
+//       height: 0.20 * Responsive.getHeight(context),
 //       fit: BoxFit.contain,
 //     ),
 //   );
 //
 //   Widget _buildLabel(BuildContext context, String label) => CustomText(
 //     label,
-//     fontSize: 12 * getResponsive(context),
+//     fontSize: 12 * Responsive.getResponsive(context),
 //     fontWeight: FontWeight.w700,
 //     color: AppTheme.getColor(context).onSurface,
 //   );
 //
 //   Widget _buildHeader(BuildContext context, String header) => Padding(
-//     padding: EdgeInsets.only(bottom: 0.01 * getHeight(context)),
+//     padding: EdgeInsets.only(bottom: 0.01 * Responsive.getHeight(context)),
 //     child: CustomText(
 //       header,
 //       color: AppTheme.getColor(context).onPrimaryFixedVariant,
-//       fontSize: 18 * getResponsive(context),
+//       fontSize: 18 * Responsive.getResponsive(context),
 //       fontWeight: FontWeight.w700,
 //     ),
 //   );
@@ -338,7 +338,9 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
       centerTitle: false,
     ),
     body: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16 * getResponsive(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 16 * Responsive.getResponsive(context),
+      ),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -378,7 +380,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
               departmentController,
               'assets/lost_and_found/note-favorite.png',
             ),
-            SizedBox(height: 0.03 * getHeight(context)),
+            SizedBox(height: 0.03 * Responsive.getHeight(context)),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MyCoButton(
@@ -400,7 +402,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
   );
 
   Widget _imagePreview(File image) => Container(
-    height: 0.18 * getHeight(context),
+    height: 0.18 * Responsive.getHeight(context),
     decoration: BoxDecoration(
       color: const Color(0xFFEEF7FD),
       borderRadius: BorderRadius.circular(10),
@@ -484,31 +486,31 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
   );
 
   EdgeInsets _contentPadding(BuildContext context) =>
-      EdgeInsets.symmetric(vertical: 14 * getResponsive(context));
+      EdgeInsets.symmetric(vertical: 14 * Responsive.getResponsive(context));
 
   Widget _prefixIcon(String assetPath) => Padding(
     padding: const EdgeInsets.all(12.0),
     child: Image.asset(
       assetPath,
-      width: 0.020 * getWidth(context),
-      height: 0.20 * getHeight(context),
+      width: 0.020 * Responsive.getWidth(context),
+      height: 0.20 * Responsive.getHeight(context),
       fit: BoxFit.contain,
     ),
   );
 
   Widget _buildLabel(BuildContext context, String label) => CustomText(
     label,
-    fontSize: 12 * getResponsive(context),
+    fontSize: 12 * Responsive.getResponsive(context),
     fontWeight: FontWeight.w700,
     color: AppTheme.getColor(context).onSurface,
   );
 
   Widget _buildHeader(BuildContext context, String header) => Padding(
-    padding: EdgeInsets.only(bottom: 0.01 * getHeight(context)),
+    padding: EdgeInsets.only(bottom: 0.01 * Responsive.getHeight(context)),
     child: CustomText(
       header,
       color: AppTheme.getColor(context).onPrimaryFixedVariant,
-      fontSize: 18 * getResponsive(context),
+      fontSize: 18 * Responsive.getResponsive(context),
       fontWeight: FontWeight.w700,
     ),
   );
@@ -569,7 +571,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     double res = getResponsive(context);
+//     double res = Responsive.getResponsive(context);
 //
 //     return Scaffold(
 //       backgroundColor: const Color(0xFFF6F7FB),
@@ -599,7 +601,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
 //             crossAxisAlignment: CrossAxisAlignment.stretch,
 //             children: [
 //               Container(
-//                 height: 0.18 * getHeight(context),
+//                 height: 0.18 * Responsive.getHeight(context),
 //                 decoration: BoxDecoration(
 //                   color: const Color(0xFFEEF7FD),
 //                   borderRadius: BorderRadius.circular(10 * res),
@@ -715,7 +717,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
 //                 prefix: _prefixIcon('assets/lost_and_found/note-favorite.png'),
 //                 contentPadding: _contentPadding(context),
 //               ),
-//               SizedBox(height: 0.03 * getHeight(context)),
+//               SizedBox(height: 0.03 * Responsive.getHeight(context)),
 //               Padding(
 //                 padding: EdgeInsets.all(8.0 * res),
 //                 child: MyCoButton(
@@ -754,14 +756,14 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
 //   );
 //
 //   EdgeInsets _contentPadding(BuildContext context) =>
-//       EdgeInsets.symmetric(vertical: 14 * getResponsive(context));
+//       EdgeInsets.symmetric(vertical: 14 * Responsive.getResponsive(context));
 //
 //   Widget _prefixIcon(String assetPath) => Padding(
-//     padding: EdgeInsets.all(12.0 * getResponsive(context)),
+//     padding: EdgeInsets.all(12.0 * Responsive.getResponsive(context)),
 //     child: Image.asset(
 //       assetPath,
-//       width: 0.020 * getWidth(context),
-//       height: 0.20 * getHeight(context),
+//       width: 0.020 * Responsive.getWidth(context),
+//       height: 0.20 * Responsive.getHeight(context),
 //       fit: BoxFit.contain,
 //     ),
 //   );
@@ -777,7 +779,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
 //   );
 //
 //   Widget _buildHeader(BuildContext context, String header) => Padding(
-//     padding: EdgeInsets.only(bottom: 0.01 * getHeight(context)),
+//     padding: EdgeInsets.only(bottom: 0.01 * Responsive.getHeight(context)),
 //     child: Text(
 //       header,
 //       style: TextStyle(
