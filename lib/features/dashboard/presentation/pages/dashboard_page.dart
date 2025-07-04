@@ -55,7 +55,7 @@ class DashBoardPage extends StatelessWidget {
                 CircularAndDiscussion(),
                 // My Team Section
                 MyTeamSection(),
-                // Your Department Section
+// Your Department Section 
                 YourDepartmentSection(),
                 MomentsSection(),
               ],
@@ -91,14 +91,15 @@ class DashBoardPage extends StatelessWidget {
           CircularAndDiscussion(),
           // My Team Section
           MyTeamSection(),
-
+          
           // Quick Access Section
-          QuickActionSection(),
+           QuickActionSection(),
 
           // Upcoming Celebrations Section
           UpcomingCelebrationSection(),
 
           //Your Department Section
+          //Your Department Section 
           YourDepartmentSection(),
 
           // Moments Section

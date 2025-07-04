@@ -8,6 +8,10 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 
 
 part 'custom_upcoming_celebration_card.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_section.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_upcomingcelebrationcard.dart';
+
 class UpcomingCelebrationSection extends StatelessWidget {
   const UpcomingCelebrationSection({super.key});
 
