@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 
 class MyCoButton extends StatelessWidget {
@@ -138,7 +139,7 @@ class _MyCoButtonMobile extends StatelessWidget {
 
     final TextStyle finalStyle =
         (textStyle ?? MyCoButtonTheme.getMobileTextStyle(context)).copyWith(
-          fontFamily: fontFamily,
+          fontFamily: Util.getFontFamily(fontWeight ?? FontWeight.w500),
         );
 
     final double radius = boarderRadius ?? MyCoButtonTheme.borderRadius;

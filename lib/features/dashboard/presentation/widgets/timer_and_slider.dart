@@ -48,7 +48,7 @@ Widget punchInAndTimeCard({required BuildContext context}) =>
           Row(
             spacing: 12,
             children: [
-              LiveClock(),
+              LiveClock(isAppBar: false),
               Spacer(),
               SvgPicture.asset(AppAssets.scanQR),
               SvgPicture.asset(AppAssets.refresh),
@@ -146,7 +146,17 @@ Widget punchInAndTimeCard({required BuildContext context}) =>
     );
 
 class LiveClock extends StatefulWidget {
-  const LiveClock({super.key});
+  final bool isAppBar;
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  // final Color? color;
+
+  const LiveClock({
+    super.key,
+    required this.isAppBar,
+    this.fontSize,
+    this.fontWeight,
+  });
 
   @override
   State<LiveClock> createState() => _LiveClockState();
@@ -165,7 +175,9 @@ class _LiveClockState extends State<LiveClock> {
 
   void _updateTime() {
     final now = DateTime.now();
-    final formattedTime = DateFormat('hh:mm a dd-MM-yyyy').format(now);
+    final formattedTime = DateFormat(
+      widget.isAppBar ? 'dd-MM-yyyy hh:mm a' : 'hh:mm a dd-MM-yyyy',
+    ).format(now);
     setState(() {
       _timeString = formattedTime;
     });
@@ -181,8 +193,8 @@ class _LiveClockState extends State<LiveClock> {
   Widget build(BuildContext context) {
     return CustomText(
       _timeString,
-      fontSize: 13 * getResponsiveText(context),
-      fontWeight: FontWeight.w500,
+      fontSize: widget.fontSize ?? 13 * getResponsiveText(context),
+      fontWeight:widget.fontWeight?? FontWeight.w500,
     );
   }
 }

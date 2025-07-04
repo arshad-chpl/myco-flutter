@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+part of 'upcoming_celebration_section.dart';
 
-class CustomProfileCard extends StatelessWidget {
+class UpcomingCelebrationCard extends StatelessWidget {
   final String name;
   final String description;
   final String imagePath;
@@ -10,7 +8,7 @@ class CustomProfileCard extends StatelessWidget {
   final String buttonLabel;
   final VoidCallback onButtonPressed;
   final EdgeInsetsGeometry? cardPadding;
-  final double? borderRadius;
+  final double? buttonBorderRadius;
   final double? cardHeight;
   final double? cardWidth;
   final double? imageHeight;
@@ -27,7 +25,7 @@ class CustomProfileCard extends StatelessWidget {
   final double? imageRadius;
   final double? elevation;
 
-  const CustomProfileCard({
+  const UpcomingCelebrationCard({
     super.key,
     required this.name,
     required this.description,
@@ -35,7 +33,7 @@ class CustomProfileCard extends StatelessWidget {
     required this.chipLabel,
     required this.buttonLabel,
     required this.onButtonPressed,
-    this.borderRadius,
+    this.buttonBorderRadius,
     this.cardPadding,
     this.cardHeight,
     this.cardWidth,
@@ -81,21 +79,20 @@ class CustomProfileCard extends StatelessWidget {
                   children: [
                     Spacer(),
                     Chip(
-                      label: Text(
+                      label: CustomText(
                         chipLabel,
-                        style:
-                            chipTextStyle ??
-                            TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.getColor(context).secondary,
-                            ),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        color: AppTheme.getColor(context).onPrimary,
                       ),
                       avatar:
                           chipIcon ??
                           Icon(
                             Icons.card_giftcard,
                             size: 16,
-                            color: AppTheme.getColor(context).secondary,
+                            color: AppTheme.getColor(context).onPrimary,
                           ),
                       padding:
                           chipPadding ??
@@ -123,7 +120,7 @@ class CustomProfileCard extends StatelessWidget {
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: AppTheme.getColor(context).primary,
-                              width: 1.5,
+                              width: 1.5 * getDashboardResponsiveText(context),
                             ),
                           ),
                       child: CircleAvatar(
@@ -137,39 +134,42 @@ class CustomProfileCard extends StatelessWidget {
                     Expanded(
                       child: ListTile(
                         contentPadding: EdgeInsets.all(0),
-                        title: Text(
+                        title: CustomText(
                           name,
-                          style:
-                              nameTextStyle ??
-                              TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color: AppTheme.getColor(context).primary,
-                              ),
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          color: AppTheme.getColor(context).primary,
                         ),
-                        subtitle: Text(
-                          description,
-                          style:
-                              descTextStyle ??
-                              TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-
-                                color: AppTheme.getColor(context).onSurface,
-                              ),
+                        subtitle: SizedBox(
+                          height: 40,
+                          child: CustomText(
+                            description,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            color: AppTheme.getColor(context).onSurfaceVariant,
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
                 SizedBox(height: 13),
-                Divider(height: 10, color: Colors.grey.shade400),
+                Divider(
+                  height: 8,
+                  radius: BorderRadius.circular(4),
+                  color: AppTheme.getColor(context).outlineVariant,
+                ),
                 const SizedBox(height: 12),
                 MyCoButton(
-                  height: 40,
+                  height: 40 * getDashboardResponsiveText(context),
                   onTap: onButtonPressed,
                   title: buttonLabel,
-                  boarderRadius: borderRadius,
+                  fontWeight: FontWeight.w600,
+                  boarderRadius: buttonBorderRadius,
                 ),
               ],
             ),
