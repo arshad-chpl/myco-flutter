@@ -11,13 +11,15 @@ import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart'
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
+import 'package:myco_flutter/features/visit/presentation/bloc/visit_bloc.dart';
+import 'package:myco_flutter/features/visit/presentation/pages/my_visit_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.takeOrder,
+    initialLocation: RoutePaths.myVisit,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -43,6 +45,15 @@ class AppRouter {
           child: const SelectCompanyPage(),
         ),
       ),
+      GoRoute(
+        path: RoutePaths.myVisit,
+        name: 'myVisit',
+        builder: (context, state) => BlocProvider(
+          create: (_) => GetIt.I<VisitBloc>(),
+          child: const MyVisitPage(),
+        ),
+      ),
+
       // GoRoute(
       //   path: RoutePaths.language,
       //   name: 'language',
@@ -67,6 +78,8 @@ class AppRouter {
           ),
         ],
       ), // Add all modular routes here
+
+
       // ...authRoutes,
       // ...homeRoutes,
     ],

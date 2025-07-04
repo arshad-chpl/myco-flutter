@@ -38,6 +38,7 @@ class AppTheme {
       onSurfaceVariant: AppColors.textSecondary, //0xFF475467
       onError: AppColors.white, //0xFFFFFFFF
       outline: AppColors.textfieldBorder, //0xFF98A2B3
+      tertiary: AppColors.myCoCyan //0xFF08A4BB
     ),
 
     // text theme
