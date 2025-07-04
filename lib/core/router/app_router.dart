@@ -30,6 +30,7 @@ import 'package:myco_flutter/features/search_company/presentation/pages/select_c
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
+import 'package:myco_flutter/features/visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/visit/presentation/bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/visits/presentation/pages/visit_report.dart';
@@ -45,7 +46,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.dashboard,
+    initialLocation: RoutePaths.AddExpense,
     routes: [
       GoRoute(
         path: RoutePaths.splash,
@@ -223,6 +224,12 @@ class AppRouter {
         path: RoutePaths.addCustomer,
         name: 'addCustomer',
         builder: (context, state) => const AddCustomer(),
+      ),
+
+      GoRoute(
+        path: RoutePaths.AddExpense,
+        name: 'addExpense',
+        builder: (context, state) =>  const AddExpensePage(),
       ),
       // Add all modular routes here
       // ...authRoutes,
