@@ -9,6 +9,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_term_and_condition.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/customotp_bottomsheet.dart';
+import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -245,7 +246,7 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              customCheckbox(
+              CustomCheckbox(
                 value: isChecked,
                 onChanged: (val) {
                   setState(() {
@@ -255,10 +256,11 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                 borderColor: isChecked
                     ? AppColors.primary
                     : Colors.grey, // 🔁 dynamic
-                activeColor: AppColors.lightPurple,
-                checkColor: AppColors.primary,
+                activeColor: AppTheme.getColor(context).primaryContainer,
+                checkColor: AppTheme.getColor(context).primary,
                 height: 0.026 * getHeight(context),
                 width: 0.056 * getWidth(context),
+                unCheckedBackground: AppTheme.getColor(context).primaryContainer,
               ),
               SizedBox(width: 0.015 * getWidth(context)),
               Expanded(
@@ -348,26 +350,3 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
   );
 }
 
-Widget customCheckbox({
-  required bool value,
-  required Function(bool) onChanged,
-  required Color borderColor,
-  required Color activeColor,
-  required Color checkColor,
-  required double height,
-  required double width,
-}) {
-  return GestureDetector(
-    onTap: () => onChanged(!value),
-    child: Container(
-      height: height,
-      width: width,
-      decoration: BoxDecoration(
-        color: value ? activeColor : Colors.transparent,
-        border: Border.all(color: borderColor, width: 1),
-        borderRadius: BorderRadius.circular(4),
-      ),
-      child: value ? Icon(Icons.check, size: 18, color: checkColor) : null,
-    ),
-  );
-}

@@ -27,4 +27,9 @@ class RoutePaths {
   static const String payslipDetail = '/payslip-detail';
 
   static const String addCustomer = '/add_Customer';
+  static const String ideabox = '/idea-box';
+  static const String ideaRequest = '/idea-request';
+  static const String leave = '/leave';
+
+  static const String employees = '/employees';
 }
