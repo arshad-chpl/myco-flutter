@@ -37,8 +37,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
           shape: const CircleBorder(),
           child: Image.asset(
             state.isMenuSelected
-                ? 'assets/images/menu-selected.png'
-                : 'assets/images/menu.png',
+                ? 'visit/images/menu-selected.png'
+                : 'visit/images/menu.png',
             height: 0.04 * getHeight(context),
           ),
         ),
@@ -59,16 +59,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   index: 0,
                   text: 'Home',
                   isSelected: state.currentIndex == 0,
-                  imagePath: 'assets/images/home.png',
-                  selectedImagePath: 'assets/images/home-selected.png',
+                  imagePath: 'visit/images/home.png',
+                  selectedImagePath: 'visit/images/home-selected.png',
                 ),
                 navItem(
                   context,
                   index: 1,
                   text: 'Community',
                   isSelected: state.currentIndex == 1,
-                  imagePath: 'assets/images/blog.png',
-                  selectedImagePath: 'assets/images/blog-selected.png',
+                  imagePath: 'visit/images/blog.png',
+                  selectedImagePath: 'visit/images/blog-selected.png',
                 ),
                 SizedBox(width: 0.07 * getWidth(context)),
                 Padding(
@@ -86,16 +86,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   index: 2,
                   text: 'Chat',
                   isSelected: state.currentIndex == 2,
-                  imagePath: 'assets/images/chat.png',
-                  selectedImagePath: 'assets/images/chat-selected.png',
+                  imagePath: 'visit/images/chat.png',
+                  selectedImagePath: 'visit/images/chat-selected.png',
                 ),
                 navItem(
                   context,
                   index: 3,
                   text: 'Profile',
                   isSelected: state.currentIndex == 3,
-                  imagePath: 'assets/images/user.png',
-                  selectedImagePath: 'assets/images/user-selected.png',
+                  imagePath: 'visit/images/user.png',
+                  selectedImagePath: 'visit/images/user-selected.png',
                 ),
               ],
             ),

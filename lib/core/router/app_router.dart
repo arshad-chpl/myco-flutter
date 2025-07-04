@@ -14,6 +14,7 @@ import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
@@ -40,8 +41,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter router = GoRouter(
-    navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.getStarted,
+    navigatorKey: _rootNavigatorKe
+    initialLocation: RoutePaths.employees,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -54,6 +55,13 @@ class AppRouter {
           child: const SplashPage(),
         ),
       ),
+
+      GoRoute(
+        path: RoutePaths.addVisit,
+        name: 'add visit',
+        builder: (context, state) => const Visit(),
+      ),
+
       GoRoute(
         path: RoutePaths.language,
         name: 'language',
@@ -88,6 +96,7 @@ class AppRouter {
         name: 'dashboard',
         builder: (context, state) => DashBoardPage(),
       ),
+
 
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(

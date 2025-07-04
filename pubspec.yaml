@@ -109,6 +109,7 @@ flutter:
     - assets/take_order/
     - assets/sign_in/
     - assets/search_society/
+    - assets/visit/
     - assets/ideabox/
     - assets/payslip/
     - assets/visit/svgs/
