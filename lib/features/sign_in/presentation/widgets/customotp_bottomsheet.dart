@@ -320,7 +320,7 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                       width: widget.imageWidth,
                     )
                   : Image.asset(
-                      'visit/images/chpl_logo.png',
+                      'assets/images/chpl_logo.png',
                       height: widget.imageHeight,
                       width: widget.imageWidth,
                     ),

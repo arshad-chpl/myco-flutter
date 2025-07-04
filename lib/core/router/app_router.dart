@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
+import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
 import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
@@ -16,6 +17,10 @@ import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
@@ -23,6 +28,7 @@ import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
+import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
@@ -49,16 +55,11 @@ class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     // initialLocation: RoutePaths.getStarted,
-    initialLocation: RoutePaths.test,
+    initialLocation: RoutePaths.splash,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
     routes: [
-      GoRoute(
-        path: RoutePaths.test,
-        name: 'test',
-        builder: (context, state) => const Testing(),
-      ),
       GoRoute(
         path: RoutePaths.splash,
         name: 'splash',
@@ -195,11 +196,6 @@ class AppRouter {
         builder: (context, state) => SignupFormPage(),
       ),
       GoRoute(
-        path: RoutePaths.lostAndFound,
-        name: 'lost-and-found',
-        builder: (context, state) => LostAndFound(),
-      ),
-      GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
@@ -207,7 +203,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.companySearch,
         name: 'companySearch',
-        builder: (context, state) => const TermsAndConditions(),
+        builder: (context, state) => SearchCompanyScreen(),
       ),
       GoRoute(
         path: RoutePaths.payslip,
@@ -232,6 +228,11 @@ class AppRouter {
         builder: (context, state) => const EmployeesScreen(),
       ),
       GoRoute(
+        path: RoutePaths.contactAdmin,
+        name: 'contact-admin',
+        builder: (context, state) => const ContactAdminPage(),
+      ),
+      GoRoute(
         path: RoutePaths.addCustomer,
         name: 'addCustomer',
         builder: (context, state) => const AddCustomer(),
@@ -241,6 +242,42 @@ class AppRouter {
         path: RoutePaths.AddExpense,
         name: 'addExpense',
         builder: (context, state) =>  const AddExpensePage(),
+      ),
+      GoRoute(
+        path: RoutePaths.lostAndFoundAddScreen,
+        name: 'lost-and-found-add-screen',
+        builder: (context, state) => const LostAndFoundAddScreen(),
+      ),
+
+      GoRoute(
+        path: RoutePaths.lostAndFoundChatScreen,
+        name: 'lost-and-found-chat-screen',
+        builder: (context, state) => ChatScreen(),
+      ),
+      //TODO
+      GoRoute(
+        path: RoutePaths.lostAndFoundItemDetails,
+        name: 'lost-and-found-item-details',
+        builder: (context, state) {
+          LostAndFoundItemModel lostitem= state.extra as LostAndFoundItemModel;
+          return ItemDetailsScreen(item: lostitem,);
+        }
+      ),
+
+      GoRoute(
+        path: RoutePaths.lostAndFound,
+        name: 'lost-and-found',
+        builder: (context, state) => const LostAndFound(),
+      ),
+      GoRoute(
+        path: RoutePaths.assetsHome,
+        name: 'assets-home',
+        builder: (context, state) => const AssetsHomePage(),
+      ),
+      GoRoute(
+        path: RoutePaths.qrScanner,
+        name: 'qr-scanner',
+        builder: (context, state) => const QRScannerPage(),
       ),
       // Add all modular routes here
       // ...authRoutes,

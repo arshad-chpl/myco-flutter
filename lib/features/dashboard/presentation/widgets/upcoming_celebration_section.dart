@@ -5,15 +5,13 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_section.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-
 part 'custom_upcoming_celebration_card.dart';
 
 class UpcomingCelebrationSection extends StatelessWidget {
   const UpcomingCelebrationSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return CustomSection(
+  Widget build(BuildContext context) => CustomSection(
       title: 'Upcoming Celebrations',
       subtitle: 'Spread smiles — celebrate someone today!',
       icon: Image.asset(
@@ -50,5 +48,4 @@ class UpcomingCelebrationSection extends StatelessWidget {
         ),
       ),
     );
-  }
 }

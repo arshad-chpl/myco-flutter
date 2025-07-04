@@ -48,6 +48,12 @@ class RoutePaths {
   static const String employees = '/employees';
 
   static const String lostAndFound = '/lost-and-found';
+  static const String lostAndFoundAddScreen = '/lost-and-found-add-screen';
+  static const String lostAndFoundChatScreen = '/lost-and-found-chat-screen';
+  static const String lostAndFoundItemDetails = '/lost-and-found-item-details';
   static const String AddExpense= '/add_Expense';
   static const String myVisit = '/myVisit';
+  static const String contactAdmin = '/contact-admin';
+  static const String qrScanner = '/qr-scanner';
+  static const String assetsHome = '/assets-home';
 }

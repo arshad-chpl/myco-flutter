@@ -48,7 +48,7 @@ class DistributorVisitorPage extends StatelessWidget {
                     Row(
                       children: [
                         Image.asset(
-                          'visit/take_order/call-calling.png',
+                          'assets/take_order/call-calling.png',
                           width: 0.04 * Responsive.getWidth(context),
                         ),
                         SizedBox(width: 0.02 * Responsive.getWidth(context)),
@@ -65,7 +65,7 @@ class DistributorVisitorPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Image.asset(
-                          'visit/take_order/location.png',
+                          'assets/take_order/location.png',
                           width: 0.04 * Responsive.getWidth(context),
                         ),
                         SizedBox(width: 0.02 * Responsive.getWidth(context)),
@@ -84,7 +84,7 @@ class DistributorVisitorPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Image.asset(
-                          'visit/take_order/geo_location.png',
+                          'assets/take_order/geo_location.png',
                           // height: 0.01 * Responsive.getHeight(context),
                           width: 0.06 * Responsive.getWidth(context),
                         ),
@@ -174,11 +174,11 @@ class DistributorVisitorPage extends StatelessWidget {
                         isShadowBottomLeft: true,
                         image: isRunning
                             ? Image.asset(
-                                'visit/take_order/stop-button.png',
+                                'assets/take_order/stop-button.png',
                                 width: 0.05 * Responsive.getWidth(context),
                               )
                             : Image.asset(
-                                'visit/take_order/play-button.png',
+                                'assets/take_order/play-button.png',
                                 width: 0.03 * Responsive.getWidth(context),
                               ),
 
@@ -241,7 +241,7 @@ class DistributorVisitorPage extends StatelessWidget {
               children: [
                 getCommonColumn(
                   context,
-                  imagePath: 'visit/take_order/place_order.png',
+                  imagePath: 'assets/take_order/place_order.png',
                   name: 'Place Order',
                   onTap: () {
                     context.pushNamed('take-order');
@@ -249,7 +249,7 @@ class DistributorVisitorPage extends StatelessWidget {
                 ),
                 getCommonColumn(
                   context,
-                  imagePath: 'visit/take_order/order_history.png',
+                  imagePath: 'assets/take_order/order_history.png',
                   name: 'Order History',
                   onTap: () {
                     context.pushNamed('order-history');
@@ -257,7 +257,7 @@ class DistributorVisitorPage extends StatelessWidget {
                 ),
                 getCommonColumn(
                   context,
-                  imagePath: 'visit/take_order/no_order.png',
+                  imagePath: 'assets/take_order/no_order.png',
                   name: 'No Order',
                   onTap: () {
                     context.pushNamed('no-order');
@@ -410,7 +410,7 @@ class DistributorVisitorPage extends StatelessWidget {
                     top: 0.01 * Responsive.getHeight(context),
                   ),
                   child: Image.asset(
-                    'visit/take_order/message-edit.png',
+                    'assets/take_order/message-edit.png',
                     height: 0.022 * Responsive.getHeight(context),
                   ),
                 ),
@@ -507,8 +507,8 @@ class DistributorVisitorPage extends StatelessWidget {
             child: const MyCoTextfield(
               hintText: 'Search',
               isSuffixIconOn: true,
-              image1: 'visit/take_order/microphone-2.png',
-              preFixImage: 'visit/take_order/search-normal.png',
+              image1: 'assets/take_order/microphone-2.png',
+              preFixImage: 'assets/take_order/search-normal.png',
             ),
           ),
 

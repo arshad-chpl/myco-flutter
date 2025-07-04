@@ -68,7 +68,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
               width: 0.1 * Responsive.getWidth(context),
               decoration: const BoxDecoration(shape: BoxShape.circle),
               child: Image.asset(
-                'visit/take_order/offer.png',
+                'assets/take_order/offer.png',
                 fit: BoxFit.contain,
               ),
             ),
@@ -76,7 +76,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
         ),
         SizedBox(width: 0.02 * Responsive.getWidth(context)),
         Image.asset(
-          'visit/take_order/cart.png',
+          'assets/take_order/cart.png',
           width: 0.06 * Responsive.getWidth(context),
         ),
         SizedBox(width: 0.06 * Responsive.getWidth(context)),
