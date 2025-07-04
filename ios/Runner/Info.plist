@@ -2,6 +2,35 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<key>NSCameraUsageDescription</key>
+<string>Need camera access to take pictures</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>Need photo access to select images</string>
+<key>NSDocumentsFolderUsageDescription</key>
+<string>Need access to select documents</string>
+<!-- Required Permissions -->
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to take pictures or record videos.</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to select images and videos.</string>
+
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app needs permission to save photos and videos to your library.</string>
+
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+
+	<!-- Optional: Required if using background fetch/location -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+	</array>
+
+<key>NSDocumentsFolderUsageDescription</key>
+<string>This app needs access to documents.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

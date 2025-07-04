@@ -9,6 +9,7 @@ import 'package:myco_flutter/features/company_selector/presentation/bloc/company
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
@@ -29,7 +30,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.payslip,
+    initialLocation: RoutePaths.lostAndFound,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -88,23 +89,26 @@ class AppRouter {
             routes: takeOrderRoutes,
           ),
         ],
-
       ), // Add all modular routes here
-      GoRoute(
-        path: RoutePaths.takeOrder,
-        name: 'take-order',
-        builder: (context, state) => BlocProvider(
-          create: (_) => TakeOrderBloc(),
-          child: TakeOrderPage(),
-        ),
-      ),
+      // GoRoute(
+      //   path: RoutePaths.takeOrder,
+      //   name: 'take-order',
+      //   builder: (context, state) => BlocProvider(
+      //     create: (_) => TakeOrderBloc(),
+      //     child: TakeOrderPage(),
+      //   ),
+      // ),
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
         builder: (context, state) => SignupFormPage(),
-               
-      ), 
-       GoRoute(
+      ),
+      GoRoute(
+        path: RoutePaths.lostAndFound,
+        name: 'lost-and-found',
+        builder: (context, state) => LostAndFound(),
+      ),
+      GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
