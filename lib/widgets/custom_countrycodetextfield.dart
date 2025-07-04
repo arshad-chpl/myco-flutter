@@ -14,6 +14,8 @@ class PhoneNumberField extends StatelessWidget {
   final TextEditingController phoneController;
   final Map<String, String> countryDialCodes;
   final Decoration? decoration;
+  final String ? hintText;
+  final TextStyle ? hintTextStyle;
 
   const PhoneNumberField({
     super.key,
@@ -23,6 +25,8 @@ class PhoneNumberField extends StatelessWidget {
     required this.phoneController,
     required this.countryDialCodes,
     this.decoration,
+    this.hintText,
+    this.hintTextStyle,
   });
 
   @override
@@ -42,7 +46,7 @@ class PhoneNumberField extends StatelessWidget {
       child: Row(
         children: [
           SizedBox(
-            width: 80,
+            width: 85,
             height: 45,
             child: CustomPopupDropdownStyled<String>(
               // border: InputBorder.none,
@@ -66,7 +70,7 @@ class PhoneNumberField extends StatelessWidget {
           Text(
             countryDialCodes[selectedCountry] ?? '',
             style: TextStyle(
-              color: AppColors.primary,
+              color: AppTheme.getColor(context).outline,
               fontSize: 14 * getResponsiveText(context),
               fontWeight: FontWeight.w600,
               // fontSize: AppTheme.lightTheme(context).textTheme.bodyMedium?.fontSize ,
@@ -77,7 +81,12 @@ class PhoneNumberField extends StatelessWidget {
               textAlignment: TextAlign.start,
               isSuffixIconOn: false,
               controller: phoneController,
-              hintText: 'Enter phone number',
+              hintText: hintText?? '1234567890',
+              hintTextStyle: hintTextStyle ?? TextStyle(
+                fontFamily: "Gilroy-Bold",
+                color:AppTheme.getColor(context).outline,
+                fontSize: AppTheme.getTextStyle(context).bodyMedium?.fontSize ?? 14.0 * getResponsiveText(context),
+              ),
               textInputType: TextInputType.phone,
               border: InputBorder.none,
             ),

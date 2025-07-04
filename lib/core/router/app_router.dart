@@ -16,6 +16,7 @@ import 'package:myco_flutter/features/employees/presentation/pages/employees_scr
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
@@ -206,6 +207,11 @@ class AppRouter {
         path: RoutePaths.employees,
         name: 'employees',
         builder: (context, state) => const EmployeesScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.addCustomer,
+        name: 'addCustomer',
+        builder: (context, state) => const AddCustomer(),
       ),
       // Add all modular routes here
       // ...authRoutes,

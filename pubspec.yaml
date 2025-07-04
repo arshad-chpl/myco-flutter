@@ -112,6 +112,7 @@ flutter:
     - assets/visit/
     - assets/ideabox/
     - assets/payslip/
+    - assets/visit/
     - assets/visit/svgs/
     - assets/media_picker/
     - assets/lost_and_found/
