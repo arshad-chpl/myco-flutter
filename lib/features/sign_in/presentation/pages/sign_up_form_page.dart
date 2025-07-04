@@ -1,5 +1,6 @@
 import 'dart:developer' as dev;
 
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
