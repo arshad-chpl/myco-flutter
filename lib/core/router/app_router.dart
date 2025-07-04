@@ -36,7 +36,7 @@ import 'package:myco_flutter/features/visits/presentation/pages/visit_report.dar
 
 import 'route_paths.dart';
 import 'package:myco_flutter/features/visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
-import 'package:myco_flutter/features/visit/presentation/pages/face_detection.dart';
+import 'package:myco_flutter/features/visit/presentation/pages/face_detection_page.dart';
 
 import 'package:myco_flutter/features/visits/presentation/pages/details_page.dart';
 
@@ -45,7 +45,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.dashboard,
+    initialLocation: RoutePaths.faceDetection,
     routes: [
       GoRoute(
         path: RoutePaths.splash,

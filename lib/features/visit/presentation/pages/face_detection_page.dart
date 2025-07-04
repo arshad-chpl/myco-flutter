@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/visit/presentation/widgets/warnings_alerts_messages.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
@@ -68,7 +69,6 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
       CurvedAnimation(parent: _scanController, curve: Curves.easeInOut),
     );
 
-    // Start the animation after initializing both
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scanController.repeat(reverse: true);
     });
@@ -87,15 +87,15 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
           onPressed: () {},
             icon: const Icon(Icons.arrow_back),
         ),
-        title: const CustomText(
+        title: CustomText(
           'Hello, AJAJ',
-            fontSize: 19,
+            fontSize: 23 * getResponsiveText(context),
             fontWeight: FontWeight.bold
         ),
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(23.0),
+          padding:  EdgeInsets.all(23.0 * getResponsive(context)),
           child: Column(
             children: [
               BorderContainerWraper(
@@ -104,9 +104,9 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const CustomText(
+                      CustomText(
                         'Welcome To Work',
-                        color: AppColors.white,
+                        color: AppTheme.getColor(context).onSecondary
                       ),
                       const SizedBox(height: 10,),
                       Row(
@@ -117,9 +117,9 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
                                 color: AppColors.spanishYellow,
                               borderRadius: BorderRadius.circular(10)
                             ),
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                                child: CustomText(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 10 * getResponsive(context), vertical: 3 * getResponsive(context)),
+                                child: const CustomText(
                                   'Flutter Developer'
                                 ),
                               ),
@@ -131,8 +131,8 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
 
                                   return CustomText(
                                     state.dateTime.trim().isEmpty ? 'EMPTY' : state.dateTime,
-                                    color: AppColors.white,
-                                    fontSize: 14,
+                                    color: AppTheme.getColor(context).onSecondary,
+                                    fontSize: 19 * getResponsiveText(context),
                                   );
                                 }
                                 return const CustomText('Loading...', color: AppColors.white,);
@@ -184,16 +184,16 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
                   builder: (context, state) {
                     if(state is FaceDetectionLoaded) {
                       return Container(
-                        height: 19,
+                        height: 0.021 * getHeight(context),
                         decoration: BoxDecoration(
-                          border: Border.all(width: 2, color: AppTheme.getColor(context).primary),
+                          border: Border.all(width: 5 * getResponsiveOnWidth(context), color: AppTheme.getColor(context).primary),
                           borderRadius: BorderRadius.circular(13),
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadiusGeometry.circular(11),
+                          borderRadius: BorderRadius.circular(11),
                           child: LinearProgressIndicator(
                             value: state.progress,
-                            backgroundColor: Color.fromARGB(1, 220, 239, 255),
+                            backgroundColor: Color.fromARGB(255, 220, 239, 255),
                             color: AppTheme.getColor(context).primary,
                           ),
                         )
@@ -220,9 +220,9 @@ class _FaceDetectionPageState extends State<FaceDetectionPage> with SingleTicker
               const SizedBox(height: 10,),
               BorderContainerWraper(
                 width: double.infinity,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Column(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0 * getResponsive(context)),
+                    child: const Column(
                       children: [
                         WarningsAlertsMessages(imagePath: 'assets/face_detection/danger.png', msg: 'Remove before scanning'),
                         SizedBox(height: 13,),
