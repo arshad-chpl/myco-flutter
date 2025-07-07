@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/core/theme/text_theme.dart';
-import 'package:myco_flutter/core/utils/util.dart';
 
 class AppTheme {
   static ColorScheme getColor(BuildContext context) =>
@@ -17,7 +15,7 @@ class AppTheme {
     splashColor: AppColors.splashBg,
     dividerColor: AppColors.textfieldBorder,
 
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       surfaceTintColor: Colors.transparent,
       backgroundColor: AppColors.backgroundPrimary,
       foregroundColor: AppColors.black,
@@ -35,10 +33,11 @@ class AppTheme {
       onPrimary: AppColors.white, //0xFFFFFFFF
       onSecondary: AppColors.white, //0xFFFFFFFF
       onSurface: AppColors.textPrimary, //0xFF101828
-      
+
       onSurfaceVariant: AppColors.textSecondary, //0xFF475467
       onError: AppColors.white, //0xFFFFFFFF
       outline: AppColors.textfieldBorder, //0xFF98A2B3
+      tertiary: AppColors.myCoCyan, //0xFF08A4BB
       onSecondaryContainer: AppColors.containerGrey, //0xFFF9FAFB
       outlineVariant: AppColors.textGrey200, // 0xFFEAECF0
       primaryContainer: AppColors.lightPurple //0xFFF4F3FF

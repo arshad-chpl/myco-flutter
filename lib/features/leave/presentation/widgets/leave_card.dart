@@ -34,8 +34,8 @@ class LeaveCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final responsive = getResponsive(context);
-    final textResponsive = getResponsiveText(context);
+    final responsive = Responsive.getResponsive(context);
+    final textResponsive = Responsive.getResponsiveText(context);
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8 * responsive),
@@ -62,7 +62,7 @@ class LeaveCard extends StatelessWidget {
 
                         icon: Icon(
                           Icons.edit_outlined,
-                          size: 0.022 * getHeight(context),
+                          size: 0.022 * Responsive.getHeight(context),
                           color: AppColors.white,
                         ),
                       ),
@@ -76,7 +76,7 @@ class LeaveCard extends StatelessWidget {
                             ),
                         icon: Icon(
                           Icons.delete_outline,
-                          size: 0.022 * getHeight(context),
+                          size: 0.022 * Responsive.getHeight(context),
                           color: AppColors.white,
                         ),
                       ),
@@ -180,9 +180,7 @@ class LeaveCard extends StatelessWidget {
                                   ),
                                 ),
                                 builder: (_) => Padding(
-                                  padding: EdgeInsets.all(
-                                    20 * responsive,
-                                  ),
+                                  padding: EdgeInsets.all(20 * responsive),
                                   child: leave.onViewDetailWidget,
                                 ),
                               );

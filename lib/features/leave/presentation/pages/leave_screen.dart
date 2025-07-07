@@ -1,9 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:myco_flutter/core/router/app_router.dart';
-import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/add_short_leave_screen.dart';
@@ -129,12 +126,12 @@ class _LeaveScreenState extends State<LeaveScreen> {
             },
 
             textStyle: TextStyle(
-              fontSize: 12 * getResponsiveText(context),
+              fontSize: 12 * Responsive.getResponsiveText(context),
               color: MyCoButtonTheme.whitemobileBackgroundColor,
             ),
             title: selectedValue,
-            height: 0.035 * getHeight(context),
-            width: 0.3 * getWidth(context),
+            height: 0.035 * Responsive.getHeight(context),
+            width: 0.3 * Responsive.getWidth(context),
             imagePosition: AxisDirection.right,
             image: const Icon(
               Icons.keyboard_arrow_down,
@@ -148,7 +145,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
       child: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
-          spacing: 0.015 * getHeight(context),
+          spacing: 0.015 * Responsive.getHeight(context),
           children: [
             MonthYearHeader(
               onChanged: (month, year) {
@@ -162,13 +159,23 @@ class _LeaveScreenState extends State<LeaveScreen> {
                 LeaveActionButton(
                   title: 'My Leave Balance',
                   onTap: () {
-                    context.push(RoutePaths.myLeaveBalanceScreen);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MyLeaveBalanceScreen(),
+                      ),
+                    );
                   },
                 ),
                 LeaveActionButton(
                   title: 'My Team Leaves',
                   onTap: () {
-                    context.push(RoutePaths.myTeamLeavesScreen);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MyTeamLeavesScreen(),
+                      ),
+                    );
                   },
                 ),
               ],
@@ -179,6 +186,39 @@ class _LeaveScreenState extends State<LeaveScreen> {
         ),
       ),
     ),
+    // floatingActionButton: LeaveFloatingActionButton(
+    //   actions: [
+    //     LeaveFloatingActionButtonModel(
+    //       label: 'Apply Short Leave',
+    //       onTap: () {
+    //         Navigator.push(
+    //           context,
+    //           MaterialPageRoute(builder: (context) => AddShortLeaveScreen()),
+    //         );
+    //       },
+    //       icon: Icons.add,
+    //       iconPath: 'assets/images/short_apply_leave.png',
+    //     ),
+    //     LeaveFloatingActionButtonModel(
+    //       label: 'Apply Leave',
+    //       onTap: () {
+    //         showModalBottomSheet(
+    //           context: context,
+    //           builder: (context) => Container(),
+    //         );
+    //       },
+    //
+    //       icon: Icons.add,
+    //     ),
+    //   ],
+    //   innericonsize: 25,
+    //   circleavataradius: 25,
+    //   imageSize: 0.050 * getHeight(context),
+    //   openIcon: Icons.add,
+    //   innerimageheight: 0.02 * getHeight(context),
+    //   innerimagewidth: 0.02 * getHeight(context),
+    //   closeIcon: Icons.close_outlined,
+    // ),
     floatingActionButton: CustomFabMenu(
       buttons: [
         FabButtonModel(
@@ -195,7 +235,10 @@ class _LeaveScreenState extends State<LeaveScreen> {
           label: 'Apply Short Leave',
           imagePath: 'assets/images/short_apply_leave.png',
           onTap: () {
-            context.push(RoutePaths.addShortLeaveScreen);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddShortLeaveScreen()),
+            );
           },
         ),
       ],
