@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/visits/presentation/pages/visit_report.dart'
-    hide Padding;
+import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -11,12 +11,11 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/get_common_row.dart';
 import 'package:myco_flutter/widgets/custom_table.dart';
 
-class DetailsPage extends StatelessWidget {
-  const DetailsPage({super.key});
+class ViewVisitDetailsPage extends StatelessWidget {
+  const ViewVisitDetailsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: CustomAppbar(
         leading: IconButton(
           onPressed: () {},
@@ -301,12 +300,7 @@ class DetailsPage extends StatelessWidget {
                             Spacer(),
                             MyCoButton(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => VisitReport(),
-                                  ),
-                                );
+                               context.push("/visit_report");
                               },
                               title: 'View Report',
                               isShadowBottomLeft: true,
@@ -327,5 +321,4 @@ class DetailsPage extends StatelessWidget {
         ),
       ),
     );
-  }
 }

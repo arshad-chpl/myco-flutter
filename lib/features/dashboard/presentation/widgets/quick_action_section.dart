@@ -10,11 +10,10 @@ class QuickActionSection extends StatelessWidget {
   QuickActionSection({super.key});
 
   List quickAccessOptions = ["Employee","Leave","Assets","Take Order","Lost and Found","Sales","Visits","CRM","Documents","Attendance","Work Allocation","IdeaBox"];
-  List quickAccessOptionsNavigation = ["/employees","/leave","/assets-home","/take-order","/lost-and-found","","","","","","",""];
+  List quickAccessOptionsNavigation = ["/employees","/leave","/assets-home","/take-order","/lost-and-found","","/my-visit","","","","",""];
 
   @override
-  Widget build(BuildContext context) {
-    return CustomSection(
+  Widget build(BuildContext context) => CustomSection(
                   title: 'Quick Access',
                   subtitle: 'All Your Work Related Tools.',
                   icon: Image.asset(
@@ -54,5 +53,4 @@ class QuickActionSection extends StatelessWidget {
                     ),
                   ),
                 );
-  }
 }
