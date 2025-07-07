@@ -112,7 +112,6 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
         IconButton(
           onPressed: () {
             final faceDetectionBloc = context.read<FaceDetectionBloc>();
-            bool hasBlur;
 
             showModalBottomSheet(
               context: context,
