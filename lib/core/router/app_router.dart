@@ -17,6 +17,7 @@ import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/add_leave_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
@@ -156,6 +157,11 @@ class AppRouter {
         path: RoutePaths.addShortLeaveScreen,
         name: '/add_short_leave_screen',
         builder: (context, state) => AddShortLeaveScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.addLeaveScreen,
+        name: '/add_leave_screen',
+        builder: (context, state) => const AddLeaveScreen(),
       ),
       // GoRoute(
       //   path: RoutePaths.language,

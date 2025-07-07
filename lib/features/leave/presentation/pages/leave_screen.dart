@@ -1,6 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/router/app_router.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/add_short_leave_screen.dart';
@@ -108,7 +111,9 @@ class _LeaveScreenState extends State<LeaveScreen> {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       leading: IconButton(
-        onPressed: () {},
+        onPressed: () {
+          context.pop();
+        },
         icon: const Icon(Icons.arrow_back_outlined),
       ),
       title: const Text('Leave balance'),
@@ -186,59 +191,21 @@ class _LeaveScreenState extends State<LeaveScreen> {
         ),
       ),
     ),
-    // floatingActionButton: LeaveFloatingActionButton(
-    //   actions: [
-    //     LeaveFloatingActionButtonModel(
-    //       label: 'Apply Short Leave',
-    //       onTap: () {
-    //         Navigator.push(
-    //           context,
-    //           MaterialPageRoute(builder: (context) => AddShortLeaveScreen()),
-    //         );
-    //       },
-    //       icon: Icons.add,
-    //       iconPath: 'assets/images/short_apply_leave.png',
-    //     ),
-    //     LeaveFloatingActionButtonModel(
-    //       label: 'Apply Leave',
-    //       onTap: () {
-    //         showModalBottomSheet(
-    //           context: context,
-    //           builder: (context) => Container(),
-    //         );
-    //       },
-    //
-    //       icon: Icons.add,
-    //     ),
-    //   ],
-    //   innericonsize: 25,
-    //   circleavataradius: 25,
-    //   imageSize: 0.050 * getHeight(context),
-    //   openIcon: Icons.add,
-    //   innerimageheight: 0.02 * getHeight(context),
-    //   innerimagewidth: 0.02 * getHeight(context),
-    //   closeIcon: Icons.close_outlined,
-    // ),
+
     floatingActionButton: CustomFabMenu(
       buttons: [
         FabButtonModel(
           label: 'Apply Leave',
           icon: Icons.event_available_outlined,
           onTap: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) => Container(),
-            );
+            context.push(RoutePaths.addLeaveScreen);
           },
         ),
         FabButtonModel(
           label: 'Apply Short Leave',
           imagePath: 'assets/images/short_apply_leave.png',
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AddShortLeaveScreen()),
-            );
+            context.push(RoutePaths.addShortLeaveScreen);
           },
         ),
       ],
