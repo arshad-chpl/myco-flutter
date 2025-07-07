@@ -36,30 +36,30 @@ class _AddExpensePageState extends State<AddExpensePage> {
       title: CustomText(
         'Add Expense',
         fontWeight: FontWeight.w700,
-        fontSize: 16 * getResponsiveText(context),
+        fontSize: 16 * Responsive.getResponsiveText(context),
       ),
       leading: const BackButton(),
     ),
     body: Container(
-      //      padding: EdgeInsets.symmetric(horizontal: 0.080 * getWidth(context)),
+      //      padding: EdgeInsets.symmetric(horizontal: 0.080 * Responsive.getWidth(context)),
       padding: EdgeInsets.all(22),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 10 * getResponsive(context),
+          spacing: 10 * Responsive.getResponsive(context),
           children: [
             LabeledTextField(
               textAlignment: TextAlign.start,
               label: 'Title',
               hint: 'Type here',
               isSuffixIconOn: false,
-              widthFactor: getWidth(context),
+              widthFactor: Responsive.getWidth(context),
               border: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: AppTheme.getColor(context).outline,
                 ),
                 borderRadius: BorderRadius.circular(
-                  10 * getResponsive(context),
+                  10 * Responsive.getResponsive(context),
                 ),
               ),
               prefix: SvgPicture.asset(
@@ -71,7 +71,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
               textAlignment: TextAlign.start,
               label: 'Date Of Birth',
               hint: 'Select Date',
-              widthFactor: getWidth(context),
+              widthFactor: Responsive.getWidth(context),
               isSuffixIconOn: true,
               onClick: () async {
                 await showModalBottomSheet<Map<String, int>>(
@@ -94,7 +94,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   color: AppTheme.getColor(context).outline,
                 ),
                 borderRadius: BorderRadius.circular(
-                  10 * getResponsive(context),
+                  10 * Responsive.getResponsive(context),
                 ),
               ),
               prefix: SvgPicture.asset(
@@ -107,22 +107,22 @@ class _AddExpensePageState extends State<AddExpensePage> {
               'Expense Type',
               fontWeight: FontWeight.w700,
               color: AppTheme.getColor(context).onSurfaceVariant,
-              fontSize: 16 * getResponsiveText(context),
+              fontSize: 16 * Responsive.getResponsiveText(context),
             ),
             CustomPopupDropdownStyled<String>(
               items: leavetype,
               hintText: 'Select',
-              height: 0.07 * getHeight(context),
+              height: 0.07 * Responsive.getHeight(context),
               prefix: SvgPicture.asset(
                 AppAssets.assetCard_Edit,
                 fit: BoxFit.scaleDown,
               ),
               hintTextStyle: TextStyle(
-                fontSize: 18 * getResponsiveText(context),
+                fontSize: 18 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).outline,
                 fontWeight: FontWeight.w600,
               ),
-              spacing: 0.02 * getWidth(context),
+              spacing: 0.02 * Responsive.getWidth(context),
               // width: double.infinity,
               selectedItem: selectedleavetype,
               itemToString: (item) => item,
@@ -139,19 +139,19 @@ class _AddExpensePageState extends State<AddExpensePage> {
               'Site',
               fontWeight: FontWeight.w700,
               color: AppTheme.getColor(context).onSurfaceVariant,
-              fontSize: 16 * getResponsiveText(context),
+              fontSize: 16 * Responsive.getResponsiveText(context),
             ),
             CustomPopupDropdownStyled<String>(
               items: leavetype,
               hintText: 'Select',
-              spacing: 0.02 * getWidth(context),
-              height: 0.07 * getHeight(context),
+              spacing: 0.02 * Responsive.getWidth(context),
+              height: 0.07 * Responsive.getHeight(context),
               prefix: SvgPicture.asset(
                 AppAssets.assetGlobal,
                 fit: BoxFit.scaleDown,
               ),
               hintTextStyle: TextStyle(
-                fontSize: 18 * getResponsiveText(context),
+                fontSize: 18 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).outline,
                 fontWeight: FontWeight.w600,
               ),
@@ -170,19 +170,19 @@ class _AddExpensePageState extends State<AddExpensePage> {
 
             CustomText(
               'Description',
-              fontSize: 16 * getResponsiveText(context),
+              fontSize: 16 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).onSurfaceVariant,
               fontWeight: FontWeight.w700,
             ),
             BigMyCoTextField(
               hintText: 'Enter Description',
-              
+
               hintStyle: TextStyle(
-                fontSize: 18 * getResponsiveText(context),
+                fontSize: 18 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).outline,
                 fontWeight: FontWeight.w600,
               ),
-              
+
               prefixImage: SvgPicture.asset(
                 AppAssets.assetStickyNote,
                 fit: BoxFit.scaleDown,
@@ -196,7 +196,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   'Attachment',
                   fontWeight: FontWeight.w700,
                   color: AppTheme.getColor(context).onSurfaceVariant,
-                  fontSize: 16 * getResponsiveText(context),
+                  fontSize: 16 * Responsive.getResponsiveText(context),
                 ),
                 Row(
                   children: [
@@ -205,10 +205,10 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       fit: BoxFit.scaleDown,
                     ),
 
-                    SizedBox(width: 0.01 * getWidth(context)),
+                    SizedBox(width: 0.01 * Responsive.getWidth(context)),
                     CustomText(
                       'Add More',
-                      fontSize: 16 * getResponsiveText(context),
+                      fontSize: 16 * Responsive.getResponsiveText(context),
                     ),
                   ],
                 ),
@@ -218,7 +218,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
             Container(
               width: double.infinity,
               color: AppTheme.getColor(context).surfaceContainer,
-              height: 0.11 * getHeight(context),
+              height: 0.11 * Responsive.getHeight(context),
               child: DashedBorderContainer(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -240,11 +240,11 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       ),
                     ),
 
-                    SizedBox(height: 0.010 * getHeight(context)),
+                    SizedBox(height: 0.010 * Responsive.getHeight(context)),
 
                     CustomText(
                       'Select Attachment',
-                      fontSize: 14 * getResponsive(context),
+                      fontSize: 14 * Responsive.getResponsive(context),
                       fontWeight: FontWeight.w600,
                     ),
                   ],
@@ -255,7 +255,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
             CustomText(
               'Is GST Invoice?',
               fontWeight: FontWeight.w700,
-              fontSize: 16 * getResponsiveText(context),
+              fontSize: 16 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).onSurfaceVariant,
             ),
             Row(
@@ -270,7 +270,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       color: AppTheme.getColor(context).outline,
                     ),
                     borderRadius: BorderRadius.circular(
-                      10 * getResponsive(context),
+                      10 * Responsive.getResponsive(context),
                     ),
                   ),
                   gender: 'Yes',
@@ -280,7 +280,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       selectedGender = val;
                     });
                   },
-                  height: 0.07 * getHeight(context),
+                  height: 0.07 * Responsive.getHeight(context),
                   width: 155,
                 ),
 
@@ -293,7 +293,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       color: AppTheme.getColor(context).outline,
                     ),
                     borderRadius: BorderRadius.circular(
-                      10 * getResponsive(context),
+                      10 * Responsive.getResponsive(context),
                     ),
                   ),
                   gender: 'No',
@@ -303,12 +303,12 @@ class _AddExpensePageState extends State<AddExpensePage> {
                       selectedGender = val;
                     });
                   },
-                  height: 0.07 * getHeight(context),
+                  height: 0.07 * Responsive.getHeight(context),
                   width: 155,
                 ),
               ],
             ),
-            SizedBox(height: 0.09 * getHeight(context)),
+            SizedBox(height: 0.09 * Responsive.getHeight(context)),
             MyCoButton(
               onTap: () {
                 Navigator.push(
@@ -319,10 +319,10 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 );
               },
               title: 'SUBMIT',
-              boarderRadius: 30 * getResponsive(context),
+              boarderRadius: 30 * Responsive.getResponsive(context),
               isShadowBottomLeft: true,
             ),
-            SizedBox(height: 0.02 * getHeight(context)),
+            SizedBox(height: 0.02 * Responsive.getHeight(context)),
           ],
         ),
       ),

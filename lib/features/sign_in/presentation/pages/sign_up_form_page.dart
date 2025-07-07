@@ -5,14 +5,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_get_started.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_term_and_condition.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/customotp_bottomsheet.dart';
 import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
-import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -57,10 +55,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
         backgroundColor: AppTheme.getColor(context).surface,
         body: Padding(
           padding: EdgeInsets.only(
-            left: 20 * getResponsive(context),
-            right: 20 * getResponsive(context),
-            top: 20 * getResponsive(context),
-            bottom: 20 * getResponsive(context),
+            left: 20 * Responsive.getResponsive(context),
+            right: 20 * Responsive.getResponsive(context),
+            top: 20 * Responsive.getResponsive(context),
+            bottom: 20 * Responsive.getResponsive(context),
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -72,18 +70,18 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       badgeColor: Colors.transparent,
                     ),
                     position: badges.BadgePosition.bottomEnd(
-                      bottom: -22 * getResponsive(context),
-                      end: -15 * getResponsive(context),
+                      bottom: -22 * Responsive.getResponsive(context),
+                      end: -15 * Responsive.getResponsive(context),
                     ),
                     badgeContent: Image.asset(
                       "assets/sign_in/camera_icon.png",
                       fit: BoxFit.contain,
-                      height: 0.04 * getHeight(context),
+                      height: 0.04 * Responsive.getHeight(context),
                     ),
                     child: Image.asset(
                       "assets/sign_in/contact_frame.png",
                       fit: BoxFit.contain,
-                      height: 0.11 * getHeight(context),
+                      height: 0.11 * Responsive.getHeight(context),
                     ),
                   ),
                 ),
@@ -100,12 +98,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   },
                   prefix: Image.asset(
                     "assets/sign_in/branch_icon.png",
-                    height: 0.025 * getHeight(context),
+                    height: 0.025 * Responsive.getHeight(context),
                     fit: BoxFit.contain,
                   ),
                   border: Border.all(color: AppTheme.getColor(context).outline),
                 ),
-                SizedBox(height: 0.015 * getHeight(context)),
+                SizedBox(height: 0.015 * Responsive.getHeight(context)),
                 LabeledDropdown<String>(
                   label: "Select Department",
                   isRequired: false,
@@ -119,12 +117,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   },
                   prefix: Image.asset(
                     "assets/sign_in/department_icon.png",
-                    height: 0.025 * getHeight(context),
+                    height: 0.025 * Responsive.getHeight(context),
                     fit: BoxFit.contain,
                   ),
                   border: Border.all(color: AppTheme.getColor(context).outline),
                 ),
-                SizedBox(height: 0.015 * getHeight(context)),
+                SizedBox(height: 0.015 * Responsive.getHeight(context)),
                 LabeledDropdown<String>(
                   label: "Select Sub Department",
                   isRequired: false,
@@ -138,12 +136,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   },
                   prefix: Image.asset(
                     "assets/sign_in/sub_department_icon.png",
-                    height: 0.025 * getHeight(context),
+                    height: 0.025 * Responsive.getHeight(context),
                     fit: BoxFit.contain,
                   ),
                   border: Border.all(color: AppTheme.getColor(context).outline),
                 ),
-                SizedBox(height: 0.015 * getHeight(context)),
+                SizedBox(height: 0.015 * Responsive.getHeight(context)),
                 LabeledDropdown<String>(
                   label: "Shift Time",
                   isRequired: false,
@@ -157,12 +155,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   },
                   prefix: Image.asset(
                     "assets/sign_in/clock_icon.png",
-                    height: 0.025 * getHeight(context),
+                    height: 0.025 * Responsive.getHeight(context),
                     fit: BoxFit.contain,
                   ),
                   border: Border.all(color: AppTheme.getColor(context).outline),
                 ),
-                SizedBox(height: 0.015 * getHeight(context)),
+                SizedBox(height: 0.015 * Responsive.getHeight(context)),
                 LabeledDropdown<String>(
                   border: Border.all(color: AppTheme.getColor(context).outline),
                   label: "Designation",
@@ -177,11 +175,11 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   },
                   prefix: Image.asset(
                     "assets/sign_in/designation_icon.png",
-                    height: 0.025 * getHeight(context),
+                    height: 0.025 * Responsive.getHeight(context),
                     fit: BoxFit.contain,
                   ),
                 ),
-                SizedBox(height: 0.015 * getHeight(context)),
+                SizedBox(height: 0.015 * Responsive.getHeight(context)),
                 LabeledDropdown<String>(
                   border: Border.all(color: AppTheme.getColor(context).outline),
                   label: "Joining Date",
@@ -196,11 +194,11 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   },
                   prefix: Image.asset(
                     "assets/sign_in/joining_date_icon.png",
-                    height: 0.025 * getHeight(context),
+                    height: 0.025 * Responsive.getHeight(context),
                     fit: BoxFit.contain,
                   ),
                 ),
-                SizedBox(height: 0.015 * getHeight(context)),
+                SizedBox(height: 0.015 * Responsive.getHeight(context)),
                 Row(
                   children: [
                     LabeledTextField(
@@ -210,14 +208,14 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       validator: (val) =>
                           val == null || val.isEmpty ? "Required" : null,
                       textInputType: TextInputType.name,
-                      widthFactor: 0.42 * getWidth(context),
-                      textFieldHeight: 0.0165 * getHeight(context),
+                      widthFactor: 0.42 * Responsive.getWidth(context),
+                      textFieldHeight: 0.0165 * Responsive.getHeight(context),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: AppTheme.getColor(context).outline,
                         ),
                         borderRadius: BorderRadius.circular(
-                          10 * getResponsive(context),
+                          10 * Responsive.getResponsive(context),
                         ),
                       ),
                     ),
@@ -229,27 +227,27 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       validator: (val) =>
                           val == null || val.isEmpty ? "Required" : null,
                       textInputType: TextInputType.name,
-                      widthFactor: 0.42 * getWidth(context),
-                      textFieldHeight: 0.0165 * getHeight(context),
+                      widthFactor: 0.42 * Responsive.getWidth(context),
+                      textFieldHeight: 0.0165 * Responsive.getHeight(context),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: AppTheme.getColor(context).outline,
                         ),
                         borderRadius: BorderRadius.circular(
-                          10 * getResponsive(context),
+                          10 * Responsive.getResponsive(context),
                         ),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 0.015 * getHeight(context)),
+                SizedBox(height: 0.015 * Responsive.getHeight(context)),
                 CustomText(
                   "Gender",
                   color: AppTheme.getColor(context).onSurface,
-                  fontSize: 16 * getResponsiveText(context),
+                  fontSize: 16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 0.005 * getHeight(context)),
+                SizedBox(height: 0.005 * Responsive.getHeight(context)),
                 Row(
                   children: [
                     CustomTextRadioButton(
@@ -260,8 +258,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
                           selectedGender = val;
                         });
                       },
-                      height: 0.063 * getHeight(context),
-                      width: 0.43 * getWidth(context),
+                      height: 0.063 * Responsive.getHeight(context),
+                      width: 0.43 * Responsive.getWidth(context),
                     ),
                     Spacer(),
                     CustomTextRadioButton(
@@ -272,19 +270,19 @@ class _SignupFormPageState extends State<SignupFormPage> {
                           selectedGender = val;
                         });
                       },
-                      height: 0.06 * getHeight(context),
-                      width: 0.42 * getWidth(context),
+                      height: 0.06 * Responsive.getHeight(context),
+                      width: 0.42 * Responsive.getWidth(context),
                     ),
                   ],
                 ),
-                SizedBox(height: 0.015 * getHeight(context)),
+                SizedBox(height: 0.015 * Responsive.getHeight(context)),
                 CustomText(
                   "Phone Number",
                   color: AppTheme.getColor(context).onSurface,
-                  fontSize: 16 * getResponsiveText(context),
+                  fontSize: 16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 0.005 * getHeight(context)),
+                SizedBox(height: 0.005 * Responsive.getHeight(context)),
                 PhoneNumberField(
                   selectedCountry: selectedCountry,
                   countries: countryMap.keys.toList(),
@@ -299,7 +297,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   phoneController: phoneController,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(
-                      15 * getResponsive(context),
+                      15 * Responsive.getResponsive(context),
                     ),
                     border: Border.all(
                       color: AppTheme.getColor(context).outline,
@@ -307,12 +305,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     color: AppTheme.getColor(context).onPrimary,
                   ),
                 ),
-                SizedBox(height: 0.015 * getHeight(context)),
+                SizedBox(height: 0.015 * Responsive.getHeight(context)),
                 MyCoTextfield(
                   hintText: "abc@gmail.com",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
-                      10 * getResponsive(context),
+                      10 * Responsive.getResponsive(context),
                     ),
                     borderSide: BorderSide(
                       color: AppTheme.getColor(context).outline,
@@ -320,7 +318,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   ),
                   preFixImage: "assets/sign_in/email_icon.png",
                 ),
-                SizedBox(height: 0.015 * getHeight(context)),
+                SizedBox(height: 0.015 * Responsive.getHeight(context)),
                 Row(
                   children: [
                     CustomCheckbox(
@@ -335,27 +333,29 @@ class _SignupFormPageState extends State<SignupFormPage> {
                           : AppTheme.getColor(context).primary, // 🔁 dynamic
                       activeColor: AppTheme.getColor(context).primaryContainer,
                       checkColor: AppTheme.getColor(context).primary,
-                      height: 0.026 * getHeight(context),
-                      width: 0.056 * getWidth(context),
+                      height: 0.026 * Responsive.getHeight(context),
+                      width: 0.056 * Responsive.getWidth(context),
                       unCheckedBackground: AppTheme.getColor(
                         context,
                       ).primaryContainer,
                     ),
-                    SizedBox(width: 0.015 * getWidth(context)),
+                    SizedBox(width: 0.015 * Responsive.getWidth(context)),
                     SizedBox(
-                      width: 0.82 * getWidth(context),
+                      width: 0.82 * Responsive.getWidth(context),
                       child: RichText(
                         text: TextSpan(
                           style: TextStyle(
                             color: AppTheme.getColor(context).onSurface,
-                            fontSize: 14 * getResponsiveText(context),
+                            fontSize:
+                                14 * Responsive.getResponsiveText(context),
                           ),
                           children: [
                             TextSpan(
                               text: "Please confirm that you agree to our ",
                               style: TextStyle(
                                 color: AppTheme.getColor(context).onSurface,
-                                fontSize: 14 * getResponsiveText(context),
+                                fontSize:
+                                    14 * Responsive.getResponsiveText(context),
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -363,7 +363,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
                               text: "Privacy Policy",
                               style: TextStyle(
                                 color: AppTheme.getColor(context).primary,
-                                fontSize: 14 * getResponsiveText(context),
+                                fontSize:
+                                    14 * Responsive.getResponsiveText(context),
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
@@ -395,7 +396,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
                               text: " & ",
                               style: TextStyle(
                                 color: AppTheme.getColor(context).onSurface,
-                                fontSize: 14 * getResponsiveText(context),
+                                fontSize:
+                                    14 * Responsive.getResponsiveText(context),
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -418,7 +420,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
                               text: ".",
                               style: TextStyle(
                                 color: AppTheme.getColor(context).onSurface,
-                                fontSize: 14 * getResponsiveText(context),
+                                fontSize:
+                                    14 * Responsive.getResponsiveText(context),
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
@@ -428,18 +431,18 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 0.1 * getWidth(context)),
+                SizedBox(height: 0.1 * Responsive.getWidth(context)),
                 MyCoButton(
                   textStyle: TextStyle(
                     color: AppTheme.getColor(context).onPrimary,
-                    fontSize: 20 * getResponsiveText(context),
+                    fontSize: 20 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.bold,
                   ),
                   onTap: () {
                     showCustomEmailVerificationSheet(
                       imageUrl: 'assets/sign_in/email.png',
-                      imageHeight: 0.035 * getHeight(context),
-                      imageWidth: 0.09 * getWidth(context),
+                      imageHeight: 0.035 * Responsive.getHeight(context),
+                      imageWidth: 0.09 * Responsive.getWidth(context),
                       // isDialog: true,
                       context: context,
                       title: 'Email Verification Sent!',
@@ -471,10 +474,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     );
                   },
                   title: "Sign Up",
-                  boarderRadius: 30 * getResponsive(context),
+                  boarderRadius: 30 * Responsive.getResponsive(context),
                   isShadowBottomLeft: true,
                 ),
-                SizedBox(height: 0.1 * getWidth(context)),
+                SizedBox(height: 0.1 * Responsive.getWidth(context)),
                 Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -482,21 +485,21 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       CustomText(
                         "Already have an account?",
 
-                        fontSize: 18 * getResponsiveText(context),
+                        fontSize: 18 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.bold,
                         color: AppTheme.getColor(context).onSurface,
                       ),
                       CustomText(
                         "Sign in here",
 
-                        fontSize: 18 * getResponsiveText(context),
+                        fontSize: 18 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.bold,
                         color: AppTheme.getColor(context).primary,
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 0.015 * getHeight(context)),
+                SizedBox(height: 0.015 * Responsive.getHeight(context)),
               ],
             ),
           ),

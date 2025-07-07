@@ -13,17 +13,19 @@ class ProductsPage extends StatelessWidget {
     appBar: AppBar(
       title: CustomText(
         'Products',
-        fontSize: 20 * getResponsiveText(context),
+        fontSize: 20 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
       ),
       leading: const BackButton(),
       backgroundColor: AppTheme.getColor(context).surface,
     ),
     body: Container(
-      padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.08 * Responsive.getWidth(context),
+      ),
       child: Column(
         children: [
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
           const Expanded(child: FrequentsBuyScreen()),
         ],
       ),

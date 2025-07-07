@@ -25,8 +25,8 @@ class LeaveSummarySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final responsive = getResponsive(context);
-    final textResponsive = getResponsiveText(context);
+    final responsive = Responsive.getResponsive(context);
+    final textResponsive = Responsive.getResponsiveText(context);
 
     return Padding(
       padding: EdgeInsets.only(

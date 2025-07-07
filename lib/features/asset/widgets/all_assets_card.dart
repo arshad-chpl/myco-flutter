@@ -58,26 +58,29 @@ class AllAssetsCard extends StatelessWidget {
             onTap: onEditTap,
             child: Image.asset(
               'assets/images/message-edit.png',
-              width: 0.07 * getWidth(context),
+              width: 0.07 * Responsive.getWidth(context),
             ),
           ),
-          SizedBox(width: 0.045 * getWidth(context)),
+          SizedBox(width: 0.045 * Responsive.getWidth(context)),
           GestureDetector(
             onTap: onScannerTap,
             child: Image.asset(
               'assets/images/scan.png',
-              width: 0.07 * getWidth(context),
+              width: 0.07 * Responsive.getWidth(context),
               color: AppTheme.getColor(context).onPrimary,
             ),
           ),
         ],
       ),
       headerPadding: EdgeInsets.symmetric(
-        horizontal: 16 * getResponsive(context),
-        vertical: 8 * getResponsive(context),
+        horizontal: 16 * Responsive.getResponsive(context),
+        vertical: 8 * Responsive.getResponsive(context),
       ),
+      showBlackShadowInChild: true,
       bottomWidget: Padding(
-        padding: childPadding ?? EdgeInsets.all(16.0 * getResponsive(context)),
+        padding:
+            childPadding ??
+            EdgeInsets.all(16.0 * Responsive.getResponsive(context)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +89,17 @@ class AllAssetsCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Image.asset(image, width: 0.3 * getWidth(context)),
+                  if (image.startsWith('http') || image.startsWith('https'))
+                    Image.network(
+                      image,
+                      width: 0.3 * Responsive.getWidth(context),
+                    )
+                  else
+                    Image.asset(
+                      image,
+                      width: 0.3 * Responsive.getWidth(context),
+                    ),
+
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: DashedLine(
@@ -110,7 +123,7 @@ class AllAssetsCard extends StatelessWidget {
                                 ),
                               ),
                               VerticalDivider(
-                                width: 0.08 * getWidth(context),
+                                width: 0.08 * Responsive.getWidth(context),
                                 color: AppTheme.getColor(context).primary,
                                 thickness: 0.8,
                               ),
@@ -124,13 +137,16 @@ class AllAssetsCard extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          height: spaceBetweenData ?? 0.02 * getHeight(context),
+                          height:
+                              spaceBetweenData ??
+                              0.02 * Responsive.getHeight(context),
                         ),
                         AssetsVerticalData(title: 'Sr.No./MAC/Sim', data: srNo),
                         if (custodian != null)
                           SizedBox(
                             height:
-                                spaceBetweenData ?? 0.02 * getHeight(context),
+                                spaceBetweenData ??
+                                0.02 * Responsive.getHeight(context),
                           ),
                         if (custodian != null)
                           AssetsVerticalData(
@@ -143,7 +159,9 @@ class AllAssetsCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: spaceBetweenData ?? 0.02 * getHeight(context)),
+            SizedBox(
+              height: spaceBetweenData ?? 0.02 * Responsive.getHeight(context),
+            ),
             Row(
               children: [
                 Expanded(
@@ -156,13 +174,13 @@ class AllAssetsCard extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: 'Gilroy-Bold',
                           fontStyle: FontStyle.italic,
-                          fontSize: 18 * getResponsiveText(context),
+                          fontSize: 18 * Responsive.getResponsiveText(context),
                         ),
                       ),
                       CustomText(
                         createdBy,
                         fontWeight: FontWeight.w500,
-                        fontSize: 18 * getResponsiveText(context),
+                        fontSize: 18 * Responsive.getResponsiveText(context),
                       ),
                     ],
                   ),
@@ -172,12 +190,12 @@ class AllAssetsCard extends StatelessWidget {
                   title: 'View Details',
                   textStyle: TextStyle(
                     fontFamily: 'Gilroy-semiBold',
-                    fontSize: 14 * getResponsiveText(context),
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                     color: AppTheme.getColor(context).onPrimary,
                   ),
-                  width: 0.26 * getWidth(context),
-                  height: 0.09 * getWidth(context),
-                  boarderRadius: 50,
+                  width: 0.26 * Responsive.getWidth(context),
+                  height: 0.09 * Responsive.getWidth(context),
+                  boarderRadius: 50 * Responsive.getResponsive(context),
                   borderColor: const Color(0xFF08A4BB),
                   backgroundColor: const Color(0xFF08A4BB),
                   isShadowBottomLeft: true,

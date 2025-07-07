@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -67,8 +68,7 @@ class ImageGridPreviewWidget extends StatelessWidget {
   }) {
     final height = boxHeight ?? MediaQuery.of(context).size.width * 0.20;
     final width = boxWidth ?? MediaQuery.of(context).size.width * 0.20;
-
-    final ImageProvider backgroundImage = _getImageProvider(images[index]);
+    final String imageUrl = images[index];
 
     return GestureDetector(
       onTap: () {
@@ -86,38 +86,99 @@ class ImageGridPreviewWidget extends StatelessWidget {
           ),
         );
       },
-      child: Container(
+      child: SizedBox(
         width: width,
         height: height,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade300,
+        child: ClipRRect(
           borderRadius: BorderRadius.circular(borderRadius),
-          image: DecorationImage(
-            image: backgroundImage,
-            fit: BoxFit.cover,
-            colorFilter: isExtraBox
-                ? const ColorFilter.mode(
-                    Color.fromRGBO(0, 0, 0, 0.4),
-                    BlendMode.darken,
-                  )
-                : null,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              imageUrl.startsWith('http')
+                  ? CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          Container(color: Colors.grey.shade300),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      color: isExtraBox ? Colors.black.withOpacity(0.4) : null,
+                      colorBlendMode: isExtraBox
+                          ? BlendMode.darken
+                          : BlendMode.srcIn,
+                    )
+                  : Image.asset(imageUrl, fit: BoxFit.cover),
+              if (isExtraBox)
+                Center(child: CustomText('+$extraCount', color: Colors.white)),
+            ],
           ),
         ),
-        alignment: Alignment.center,
-        child: isExtraBox
-            ? CustomText('+$extraCount', color: Colors.white)
-            : null,
       ),
     );
   }
 
-  ImageProvider _getImageProvider(String path) {
-    if (path.startsWith('http://') || path.startsWith('https://')) {
-      return NetworkImage(path);
-    } else {
-      return AssetImage(path);
-    }
-  }
+  // Widget _imageBox(
+  //   BuildContext context,
+  //   List<String> images,
+  //   int index, {
+  //   bool isExtraBox = false,
+  //   int extraCount = 0,
+  // }) {
+  //   final height = boxHeight ?? MediaQuery.of(context).size.width * 0.20;
+  //   final width = boxWidth ?? MediaQuery.of(context).size.width * 0.20;
+
+  //   final ImageProvider backgroundImage = _getImageProvider(images[index]);
+
+  //   return GestureDetector(
+  //     onTap: () {
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (_) => _ImagePreview(
+  //             containersLength: containersLength,
+  //             images: images,
+  //             startIndex: index,
+  //             showIndicators: showIndicators,
+  //             selectColor: selectIndicatorColor,
+  //             unselectColor: unselectIndicatorColor,
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //     child: Container(
+  //       width: width,
+  //       height: height,
+  //       decoration: BoxDecoration(
+  //         color: Colors.grey.shade300,
+  //         borderRadius: BorderRadius.circular(borderRadius),
+  //         image: DecorationImage(
+  //           image: backgroundImage,
+  //           fit: BoxFit.cover,
+  //           colorFilter: isExtraBox
+  //               ? const ColorFilter.mode(
+  //                   Color.fromRGBO(0, 0, 0, 0.4),
+  //                   BlendMode.darken,
+  //                 )
+  //               : null,
+  //         ),
+  //       ),
+  //       alignment: Alignment.center,
+  //       child: isExtraBox
+  //           ? CustomText('+$extraCount', color: Colors.white)
+  //           : null,
+  //     ),
+  //   );
+  // }
+
+  //   ImageProvider _getImageProvider(String path) {
+  //     if (path.startsWith('http') ||
+  //         path.startsWith('http://') ||
+  //         path.startsWith('https://')) {
+  //       return NetworkImage(path);
+  //     } else {
+  //       return AssetImage(path);
+  //     }
+  //   }
 }
 
 class _ImagePreview extends StatefulWidget {
@@ -160,7 +221,7 @@ class _ImagePreviewState extends State<_ImagePreview> {
       appBar: AppBar(
         title: CustomText(
           'Assets',
-          fontSize: 20 * getResponsiveText(context),
+          fontSize: 20 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
         ),
         titleSpacing: 0,
@@ -190,7 +251,7 @@ class _ImagePreviewState extends State<_ImagePreview> {
 
             if (widget.showIndicators)
               Positioned(
-                bottom: 0.03 * getHeight(context),
+                bottom: 0.03 * Responsive.getHeight(context),
                 left: 0,
                 right: 0,
                 child: Visibility(

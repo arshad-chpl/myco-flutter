@@ -4,9 +4,9 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
+import 'package:myco_flutter/features/asset/view/assets_details_page.dart';
 import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
-import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
@@ -49,19 +49,11 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    // initialLocation: RoutePaths.AddExpense,
     initialLocation: RoutePaths.assetsHome,
+    observers: [
+      // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+    ],
     routes: [
-      GoRoute(
-        path: RoutePaths.assetsHome,
-        name: 'assets-home',
-        builder: (context, state) => const Testing(),
-      ),
-      GoRoute(
-        path: RoutePaths.qrScanner,
-        name: 'qr-scanner',
-        builder: (context, state) => const QRScannerPage(),
-      ),
       GoRoute(
         path: RoutePaths.splash,
         name: 'splash',
@@ -244,6 +236,23 @@ class AppRouter {
         name: 'addExpense',
         builder: (context, state) => const AddExpensePage(),
       ),
+        GoRoute(
+        path: RoutePaths.assetsHome,
+        name: 'assets-home',
+        builder: (context, state) => const AssetsHomePage(),
+      ),
+      GoRoute(
+        path: RoutePaths.qrScanner,
+        name: 'qr-scanner',
+        builder: (context, state) => const QRScannerPage(),
+      ),
+    
+      GoRoute(
+        path: RoutePaths.assetsDetails,
+        name: 'assets-details',
+        builder: (context, state) => const AssetsDetailsPage(),
+      ),
+    
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,

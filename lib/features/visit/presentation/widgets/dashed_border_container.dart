@@ -14,10 +14,12 @@ class DashedBorderContainer extends StatelessWidget {
   Widget build(BuildContext context) => CustomPaint(
     painter: DashedBorderPainter(
       color: AppColors.primary,
-      radius: 12 * getResponsive(context),
+      radius: 12 * Responsive.getResponsive(context),
     ),
     child: Container(
-      padding: EdgeInsets.symmetric(horizontal: 0.018 * getWidth(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.018 * Responsive.getWidth(context),
+      ),
       child: child,
     ),
   );
@@ -37,11 +39,10 @@ class DashedBorderPainter extends CustomPainter {
   });
   @override
   void paint(Canvas canvas, Size size) {
-    final paint =
-        Paint()
-          ..color = color
-          ..strokeWidth = 1
-          ..style = PaintingStyle.stroke;
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 1
+      ..style = PaintingStyle.stroke;
 
     final rect = RRect.fromRectAndRadius(
       Offset.zero & size,

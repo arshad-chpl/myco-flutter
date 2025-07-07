@@ -38,16 +38,21 @@ class ActiveAssetsCard extends StatelessWidget {
     headerColor: titleColor,
     borderColor: AppTheme.lightTheme(context).dividerColor,
     headerPadding: EdgeInsets.symmetric(
-      horizontal: 16 * getResponsive(context),
-      vertical: 8 * getResponsive(context),
+      horizontal: 16 * Responsive.getResponsive(context),
+      vertical: 8 * Responsive.getResponsive(context),
     ),
     bottomWidget: Padding(
-      padding: childPadding ?? EdgeInsets.all(16 * getResponsive(context)),
+      padding:
+          childPadding ??
+          EdgeInsets.all(16 * Responsive.getResponsive(context)),
       child: IntrinsicHeight(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.asset(image, width: 0.3 * getWidth(context)),
+            if (image.startsWith('http') || image.startsWith('https'))
+              Image.network(image, width: 0.3 * Responsive.getWidth(context))
+            else
+              Image.asset(image, width: 0.3 * Responsive.getWidth(context)),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: DashedLine(
@@ -63,11 +68,15 @@ class ActiveAssetsCard extends StatelessWidget {
                 children: [
                   AssetsVerticalData(title: 'Brand', data: brand),
                   SizedBox(
-                    height: spaceBetweenData ?? 0.02 * getHeight(context),
+                    height:
+                        spaceBetweenData ??
+                        0.02 * Responsive.getHeight(context),
                   ),
                   AssetsVerticalData(title: 'Sr.No./MAC/Sim', data: srNo),
                   SizedBox(
-                    height: spaceBetweenData ?? 0.02 * getHeight(context),
+                    height:
+                        spaceBetweenData ??
+                        0.02 * Responsive.getHeight(context),
                   ),
                   AssetsVerticalData(title: 'Handover', data: handOverDate),
                 ],
@@ -83,26 +92,34 @@ class ActiveAssetsCard extends StatelessWidget {
 class AssetsVerticalData extends StatelessWidget {
   final String title;
   final String data;
+  final Color? titleColor;
+  final CrossAxisAlignment? crossAxisAlignment;
+  final MainAxisAlignment? mainAxisAlignment;
   const AssetsVerticalData({
     required this.title,
     required this.data,
     super.key,
+    this.crossAxisAlignment,
+    this.mainAxisAlignment,
+    this.titleColor,
   });
 
   @override
   Widget build(BuildContext context) => Column(
     mainAxisSize: MainAxisSize.min,
-    crossAxisAlignment: CrossAxisAlignment.start,
+    crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
+    mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
     children: [
       CustomText(
         title,
-        fontSize: 18 * getResponsiveText(context),
+        color: titleColor,
+        fontSize: 18 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
       ),
       CustomText(
         data,
         fontWeight: FontWeight.w500,
-        fontSize: 18 * getResponsiveText(context),
+        fontSize: 18 * Responsive.getResponsiveText(context),
       ),
     ],
   );

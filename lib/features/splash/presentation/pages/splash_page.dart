@@ -112,7 +112,7 @@ class _SplashPageState extends State<SplashPage>
           //   end: Alignment.bottomRight,
           //   colors: [AppColors.secondary, AppColors.white, AppColors.secondary],
           // ),
-          color: AppTheme.getColor(context).onPrimary
+          color: AppTheme.getColor(context).onPrimary,
         ),
         child: Stack(
           children: [
@@ -125,13 +125,15 @@ class _SplashPageState extends State<SplashPage>
                     ..duration = composition.duration
                     ..forward();
                 },
-                height: 0.3 * getHeight(context),
-                // width: 0.5 * getWidth(context),
+                height: 0.3 * Responsive.getHeight(context),
+                // width: 0.5 * Responsive.getWidth(context),
               ),
             ),
             Container(
               alignment: Alignment.bottomCenter,
-              padding: EdgeInsets.only(bottom: 0.05 * getHeight(context)),
+              padding: EdgeInsets.only(
+                bottom: 0.05 * Responsive.getHeight(context),
+              ),
               child: CustomText(
                 'Version ${version} (${buildNumber})',
                 color: AppColors.white,

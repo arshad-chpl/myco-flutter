@@ -54,12 +54,12 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
             },
 
             textStyle: TextStyle(
-              fontSize: 12 * getResponsiveText(context),
+              fontSize: 12 * Responsive.getResponsiveText(context),
               color: MyCoButtonTheme.whitemobileBackgroundColor,
             ),
             title: selectedValue,
-            height: 0.035 * getHeight(context),
-            width: 0.2 * getWidth(context),
+            height: 0.035 * Responsive.getHeight(context),
+            width: 0.2 * Responsive.getWidth(context),
             imagePosition: AxisDirection.right,
             image: const Icon(
               Icons.keyboard_arrow_down,
@@ -73,7 +73,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
       child: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
-          spacing: 0.015 * getHeight(context),
+          spacing: 0.015 * Responsive.getHeight(context),
           children: [
             ExpandableCommonCard(
               headerColor: AppColors.secondary,

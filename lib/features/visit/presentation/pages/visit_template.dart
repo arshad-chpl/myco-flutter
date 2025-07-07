@@ -24,27 +24,27 @@ class _VisitTemplateState extends State<VisitTemplate> {
   @override
   Widget build(BuildContext context) => Scaffold(
     body: Container(
-      //padding: EdgeInsets.all(0.08*getResponsive(context)),
+      //padding: EdgeInsets.all(0.08*Responsive.getResponsive(context)),
       padding: EdgeInsets.symmetric(
-        horizontal: 0.08 * getWidth(context),
-        vertical: 0.02 * getHeight(context),
+        horizontal: 0.08 * Responsive.getWidth(context),
+        vertical: 0.02 * Responsive.getHeight(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
-          SizedBox(height: 0.05 * getHeight(context)),
+          SizedBox(height: 0.05 * Responsive.getHeight(context)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
                 'Visit Template',
                 fontWeight: FontWeight.w600,
-                fontSize: 16 * getResponsiveText(context),
+                fontSize: 16 * Responsive.getResponsiveText(context),
               ),
               SizedBox(
-                height: 0.02 * getHeight(context),
-                width: 0.05 * getWidth(context),
+                height: 0.02 * Responsive.getHeight(context),
+                width: 0.05 * Responsive.getWidth(context),
                 child: SvgPicture.asset(
                   AppAssets.assetVector,
                   fit: BoxFit.scaleDown,
@@ -52,42 +52,44 @@ class _VisitTemplateState extends State<VisitTemplate> {
               ),
             ],
           ),
-          SizedBox(height: 0.03 * getHeight(context)),
+          SizedBox(height: 0.03 * Responsive.getHeight(context)),
 
           LabeledTextField(
             label: 'Q1',
             hint: 'Type here',
             textAlignment: TextAlign.start,
-            widthFactor: getWidth(context),
+            widthFactor: Responsive.getWidth(context),
             border: OutlineInputBorder(
               borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(10 * getResponsive(context)),
+              borderRadius: BorderRadius.circular(
+                10 * Responsive.getResponsive(context),
+              ),
             ),
             prefix: SvgPicture.asset(
               AppAssets.assetNoteFavorite,
               fit: BoxFit.scaleDown,
             ),
           ),
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
           CustomText(
             'Branch',
-            fontSize: 16 * getResponsiveText(context),
+            fontSize: 16 * Responsive.getResponsiveText(context),
             color: AppTheme.getColor(context).onSurfaceVariant,
             fontWeight: FontWeight.w700,
           ),
-          SizedBox(height: 0.01 * getHeight(context)),
+          SizedBox(height: 0.01 * Responsive.getHeight(context)),
 
           CustomPopupDropdownStyled<String>(
             items: leavetype,
             hintText: 'Select',
-            spacing: 0.04 * getWidth(context),
-            height: 0.07 * getHeight(context),
+            spacing: 0.04 * Responsive.getWidth(context),
+            height: 0.07 * Responsive.getHeight(context),
             prefix: SvgPicture.asset(
               AppAssets.assetData,
               fit: BoxFit.scaleDown,
             ),
             hintTextStyle: TextStyle(
-              fontSize: 18 * getResponsiveText(context),
+              fontSize: 18 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).outline,
               fontWeight: FontWeight.w600,
             ),
@@ -104,9 +106,9 @@ class _VisitTemplateState extends State<VisitTemplate> {
             useRadioList: true,
           ),
 
-          SizedBox(height: 0.10 * getHeight(context)),
+          SizedBox(height: 0.10 * Responsive.getHeight(context)),
           MyCoButton(
-            boarderRadius: 30 * getResponsive(context),
+            boarderRadius: 30 * Responsive.getResponsive(context),
             isShadowBottomLeft: true,
             onTap: () {
               // Navigator.push(

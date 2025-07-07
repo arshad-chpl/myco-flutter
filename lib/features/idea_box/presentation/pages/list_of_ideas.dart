@@ -28,8 +28,8 @@ class ListOfIdeas extends StatelessWidget {
       leading: const BackButton(),
     ),
     floatingActionButton: ExpandableFab(
-      innericonsize: 30 * getResponsive(context),
-      imageSize: 50 * getResponsive(context),
+      innericonsize: 30 * Responsive.getResponsive(context),
+      imageSize: 50 * Responsive.getResponsive(context),
 
       openIcon: Icons.add,
       closeIcon: Icons.close,
@@ -53,7 +53,9 @@ class ListOfIdeas extends StatelessWidget {
     ),
 
     body: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.08 * Responsive.getWidth(context),
+      ),
       child: Column(
         children: [
           BlocBuilder<ListIdeaBloc, ListIdeaState>(
@@ -62,7 +64,7 @@ class ListOfIdeas extends StatelessWidget {
                   ? state.selectedIndex
                   : 0;
               return MyCustomTabBar(
-                width: 0.9 * getWidth(context),
+                width: 0.9 * Responsive.getWidth(context),
 
                 tabs: const ['My Ideas', 'All Ideas'],
 
@@ -91,7 +93,7 @@ class ListOfIdeas extends StatelessWidget {
               );
             },
           ),
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
           BlocBuilder<ListIdeaBloc, ListIdeaState>(
             builder: (context, state) {
               final selectedIndex = state is IdeaTabChangeState
@@ -130,7 +132,7 @@ class MyIdeas extends StatelessWidget {
   Widget build(BuildContext context) => Expanded(
     child: ListView.separated(
       separatorBuilder: (context, index) =>
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
       shrinkWrap: true,
       itemCount: list.length,
       itemBuilder: (context, index) => CommonCard(
@@ -140,31 +142,31 @@ class MyIdeas extends StatelessWidget {
         suffixIcon: Row(
           children: [
             MyCoButton(
-              height: 0.025 * getHeight(context),
-              width: 0.2 * getWidth(context),
-              boarderRadius: 20 * getResponsive(context),
+              height: 0.025 * Responsive.getHeight(context),
+              width: 0.2 * Responsive.getWidth(context),
+              boarderRadius: 20 * Responsive.getResponsive(context),
               borderColor: AppTheme.getColor(context).onPrimary,
               onTap: () {},
               title: 'Pending',
 
               backgroundColor: Colors.transparent,
               textStyle: TextStyle(
-                fontSize: 14 * getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onPrimary,
               ),
             ),
-            SizedBox(width: 0.03 * getWidth(context)),
+            SizedBox(width: 0.03 * Responsive.getWidth(context)),
             Icon(
               Icons.delete,
               color: AppTheme.getColor(context).onPrimary,
-              size: 22 * getResponsive(context),
+              size: 22 * Responsive.getResponsive(context),
             ),
           ],
         ),
         bottomWidget: Padding(
           padding: EdgeInsets.only(
-            left: 10 * getResponsive(context),
-            top: 5 * getResponsive(context),
+            left: 10 * Responsive.getResponsive(context),
+            top: 5 * Responsive.getResponsive(context),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,27 +176,29 @@ class MyIdeas extends StatelessWidget {
                 list[index]['title'],
                 color: AppTheme.getColor(context).primary,
                 fontWeight: FontWeight.bold,
-                fontSize: 15 * getResponsiveText(context),
+                fontSize: 15 * Responsive.getResponsiveText(context),
               ),
-              SizedBox(height: 0.004 * getHeight(context)),
+              SizedBox(height: 0.004 * Responsive.getHeight(context)),
               CustomText(
                 list[index]['text'],
                 color: AppTheme.getColor(context).outline,
-                fontSize: 15 * getResponsiveText(context),
+                fontSize: 15 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w500,
               ),
-              SizedBox(height: 0.005 * getHeight(context)),
+              SizedBox(height: 0.005 * Responsive.getHeight(context)),
               CustomText(
                 list[index]['date'],
                 color: AppTheme.getColor(context).onSurface,
-                fontSize: 15 * getResponsiveText(context),
+                fontSize: 15 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w500,
               ),
               Padding(
-                padding: EdgeInsets.only(right: 15 * getResponsive(context)),
+                padding: EdgeInsets.only(
+                  right: 15 * Responsive.getResponsive(context),
+                ),
                 child: const DottedLineWidget(bottomPadding: 0),
               ),
-              SizedBox(height: 0.01 * getHeight(context)),
+              SizedBox(height: 0.01 * Responsive.getHeight(context)),
               Row(
                 children: [
                   RowImageText(
@@ -202,13 +206,13 @@ class MyIdeas extends StatelessWidget {
                     list[index]['like'].toString(),
                     context,
                   ),
-                  SizedBox(width: 0.04 * getWidth(context)),
+                  SizedBox(width: 0.04 * Responsive.getWidth(context)),
                   RowImageText(
                     'assets/ideabox/message.png',
                     list[index]['comment'].toString(),
                     context,
                   ),
-                  SizedBox(width: 0.33 * getWidth(context)),
+                  SizedBox(width: 0.33 * Responsive.getWidth(context)),
                   RowImageText(
                     'assets/ideabox/attachment.png',
                     'Attechment',
@@ -216,7 +220,7 @@ class MyIdeas extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 0.013 * getHeight(context)),
+              SizedBox(height: 0.013 * Responsive.getHeight(context)),
             ],
           ),
         ),
@@ -229,17 +233,17 @@ Widget RowImageText(String imagePath, String text, BuildContext context) => Row(
   children: [
     Image.asset(
       imagePath,
-      height: 0.02 * getHeight(context),
-      width: 0.05 * getWidth(context),
+      height: 0.02 * Responsive.getHeight(context),
+      width: 0.05 * Responsive.getWidth(context),
     ),
-    SizedBox(width: 0.015 * getWidth(context)),
+    SizedBox(width: 0.015 * Responsive.getWidth(context)),
     CustomText(
       decoration: text == 'Attechment'
           ? TextDecoration.underline
           : TextDecoration.none,
 
       text,
-      fontSize: 15 * getResponsiveText(context),
+      fontSize: 15 * Responsive.getResponsiveText(context),
       color: AppTheme.getColor(context).primary,
     ),
   ],
@@ -278,7 +282,7 @@ class AllIdeas extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListView.separated(
     separatorBuilder: (context, index) =>
-        SizedBox(height: 0.02 * getHeight(context)),
+        SizedBox(height: 0.02 * Responsive.getHeight(context)),
     shrinkWrap: true,
     itemCount: list.length,
     itemBuilder: (context, index) => CommonCard(
@@ -289,8 +293,8 @@ class AllIdeas extends StatelessWidget {
 
       bottomWidget: Padding(
         padding: EdgeInsets.only(
-          left: 10 * getResponsive(context),
-          top: 5 * getResponsive(context),
+          left: 10 * Responsive.getResponsive(context),
+          top: 5 * Responsive.getResponsive(context),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -300,37 +304,39 @@ class AllIdeas extends StatelessWidget {
               list[index]['title'],
               color: AppTheme.getColor(context).primary,
               fontWeight: FontWeight.bold,
-              fontSize: 15 * getResponsiveText(context),
+              fontSize: 15 * Responsive.getResponsiveText(context),
             ),
-            SizedBox(height: 0.004 * getHeight(context)),
+            SizedBox(height: 0.004 * Responsive.getHeight(context)),
             CustomText(
               list[index]['text1'],
               color: AppTheme.getColor(context).outline,
-              fontSize: 15 * getResponsiveText(context),
+              fontSize: 15 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
             ),
-            SizedBox(height: 0.004 * getHeight(context)),
+            SizedBox(height: 0.004 * Responsive.getHeight(context)),
             CustomText(
               list[index]['text2'],
               color: AppTheme.getColor(context).onSurface,
               fontWeight: FontWeight.w500,
-              fontSize: 15 * getResponsiveText(context),
+              fontSize: 15 * Responsive.getResponsiveText(context),
             ),
-            SizedBox(height: 0.005 * getHeight(context)),
+            SizedBox(height: 0.005 * Responsive.getHeight(context)),
             CustomText(
               list[index]['date'],
               color: AppTheme.getColor(context).onSurface,
-              fontSize: 15 * getResponsiveText(context),
+              fontSize: 15 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
             ),
             Padding(
-              padding: EdgeInsets.only(right: 15 * getResponsive(context)),
+              padding: EdgeInsets.only(
+                right: 15 * Responsive.getResponsive(context),
+              ),
               child: DottedLineWidget(
                 bottomPadding: 0,
                 color: AppTheme.getColor(context).onSurface,
               ),
             ),
-            SizedBox(height: 0.01 * getHeight(context)),
+            SizedBox(height: 0.01 * Responsive.getHeight(context)),
             Row(
               children: [
                 RowImageText(
@@ -338,13 +344,13 @@ class AllIdeas extends StatelessWidget {
                   list[index]['like'].toString(),
                   context,
                 ),
-                SizedBox(width: 0.04 * getWidth(context)),
+                SizedBox(width: 0.04 * Responsive.getWidth(context)),
                 RowImageText(
                   'assets/ideabox/message.png',
                   list[index]['comment'].toString(),
                   context,
                 ),
-                SizedBox(width: 0.33 * getWidth(context)),
+                SizedBox(width: 0.33 * Responsive.getWidth(context)),
                 RowImageText(
                   'assets/ideabox/attachment.png',
                   'Attechment',
@@ -352,7 +358,7 @@ class AllIdeas extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 0.013 * getHeight(context)),
+            SizedBox(height: 0.013 * Responsive.getHeight(context)),
           ],
         ),
       ),

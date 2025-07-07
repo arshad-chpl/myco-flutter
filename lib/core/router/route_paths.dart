@@ -7,15 +7,11 @@ class RoutePaths {
   static const String selectCompany = '/select-company';
   static const String dashboard = '/dashboard';
   static const String takeOrder = '/take-order';
-  static const String qrScanner = '/qr-scanner';
-  static const String assetsHome = '/assets-home';
-
   static const String getStarted = '/get-started';
   static const String companySearch = '/search-company';
 
   static const String details = '/details';
   static const String visitReport = '/visit_report';
-
 
   static const String offers = '/offers';
   static const String products = '/products';
@@ -33,7 +29,6 @@ class RoutePaths {
 
   static const String addVisit = '/add-visit';
 
-
   // static const String distributorVisitor = '/distributor-visitor';
   // static const String noOrder = '/no-order';
 
@@ -49,6 +44,11 @@ class RoutePaths {
   static const String employees = '/employees';
 
   static const String lostAndFound = '/lost-and-found';
-  static const String AddExpense= '/add_Expense';
+  static const String AddExpense = '/add_Expense';
   static const String myVisit = '/myVisit';
+
+  //maulik
+  static const String qrScanner = '/qr-scanner';
+  static const String assetsHome = '/assets-home';
+  static const String assetsDetails = '/assets-details';
 }

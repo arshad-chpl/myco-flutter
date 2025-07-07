@@ -126,12 +126,12 @@ class _LeaveScreenState extends State<LeaveScreen> {
             },
 
             textStyle: TextStyle(
-              fontSize: 12 * getResponsiveText(context),
+              fontSize: 12 * Responsive.getResponsiveText(context),
               color: MyCoButtonTheme.whitemobileBackgroundColor,
             ),
             title: selectedValue,
-            height: 0.035 * getHeight(context),
-            width: 0.3 * getWidth(context),
+            height: 0.035 * Responsive.getHeight(context),
+            width: 0.3 * Responsive.getWidth(context),
             imagePosition: AxisDirection.right,
             image: const Icon(
               Icons.keyboard_arrow_down,
@@ -145,7 +145,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
       child: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
-          spacing: 0.015 * getHeight(context),
+          spacing: 0.015 * Responsive.getHeight(context),
           children: [
             MonthYearHeader(
               onChanged: (month, year) {
@@ -213,10 +213,10 @@ class _LeaveScreenState extends State<LeaveScreen> {
     //   ],
     //   innericonsize: 25,
     //   circleavataradius: 25,
-    //   imageSize: 0.050 * getHeight(context),
+    //   imageSize: 0.050 * Responsive.getHeight(context),
     //   openIcon: Icons.add,
-    //   innerimageheight: 0.02 * getHeight(context),
-    //   innerimagewidth: 0.02 * getHeight(context),
+    //   innerimageheight: 0.02 * Responsive.getHeight(context),
+    //   innerimagewidth: 0.02 * Responsive.getHeight(context),
     //   closeIcon: Icons.close_outlined,
     // ),
     floatingActionButton: CustomFabMenu(
