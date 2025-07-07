@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
@@ -28,7 +30,7 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
             return CustomText(
               state.dateTime.trim().isEmpty ? 'EMPTY' : state.dateTime,
               color: color,
-              fontSize: 17 * getResponsiveText(context),
+              fontSize: 17 * Responsive.getResponsiveText(context),
               fontWeight: weight,
             );
           }
@@ -43,7 +45,7 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
       bottom: MediaQuery.of(context).viewInsets.bottom,
     ),
     child: Container(
-        padding: EdgeInsets.all(29 * getResponsive(context)),
+        padding: EdgeInsets.all(29 * Responsive.getResponsive(context)),
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +60,7 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
               children: [
                 CustomText(
                   'You are Out of Range(Ahmedabad)',
-                  fontSize: 21 * getResponsiveText(context),
+                  fontSize: 21 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w700,
                   color: AppColors.textGray,
                 ),
@@ -69,7 +71,7 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
               '480.45 Meter Away (Air Distance)',
               color: AppTheme.getColor(context).onSurface,
               fontWeight: FontWeight.w600,
-              fontSize: 17 * getResponsiveText(context),
+              fontSize: 17 * Responsive.getResponsiveText(context),
             ),
             const SizedBox(height: 13),
             Row(
@@ -83,24 +85,24 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
                 CustomText(
                   'GPS Accuracy : ',
                   fontWeight: FontWeight.w600,
-                  fontSize: 17 * getResponsiveText(context),
+                  fontSize: 17 * Responsive.getResponsiveText(context),
                 ),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(
                       color: AppColors.spanishYellow,
-                      width: 5 * getResponsiveOnWidth(context),
+                      width: 5 * Responsive.getResponsiveOnWidth(context),
                     ),
                   ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 6 * getResponsive(context),
-                      vertical: 1 * getResponsive(context),
+                      horizontal: 6 * Responsive.getResponsive(context),
+                      vertical: 1 * Responsive.getResponsive(context),
                     ),
                     child: CustomText(
                       'Medium',
-                      fontSize: 13 * getResponsiveText(context),
+                      fontSize: 13 * Responsive.getResponsiveText(context),
                       color: AppColors.spanishYellow,
                       fontWeight: FontWeight.w600,
                     ),
@@ -112,7 +114,7 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
             CustomText(
                 'current location',
                 color: AppColors.textGray,
-                fontSize: 16 * getResponsiveText(context),
+                fontSize: 16 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.bold
             ),
             const SizedBox(height: 5,),
@@ -125,14 +127,14 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      top: 5 * getResponsive(context),
+                      top: 5 * Responsive.getResponsive(context),
                     ),
                     child: Image(
                       image: const AssetImage(
                         'assets/face_detection/location_icon.png',
                       ),
-                      height: 0.060 * getHeight(context),
-                      width: 0.060 * getWidth(context),
+                      height: 0.060 * Responsive.getHeight(context),
+                      width: 0.060 * Responsive.getWidth(context),
                       color: const Color.fromARGB(255, 34, 42, 110),
                     ),
                   ),
@@ -144,7 +146,7 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
                         '382210, India.',
                     color: const Color.fromARGB(255, 34, 42, 110),
                     fontWeight: FontWeight.w600,
-                    fontSize: 15 * getResponsiveText(context),
+                    fontSize: 15 * Responsive.getResponsiveText(context),
                   ),
                   const SizedBox(width: 19),
                   const Image(
@@ -161,15 +163,15 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
             CustomText(
                 'Visit Type',
                 color: AppColors.textGray,
-                fontSize: 16 * getResponsiveText(context),
+                fontSize: 16 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.bold
             ),
 
-            SizedBox(height: 5 * getResponsive(context)),
+            SizedBox(height: 5 * Responsive.getResponsive(context)),
 
             CustomPopupDropdownStyled<String>(
-              height: 60 * getResponsive(context),
-              spacing: 10 * getResponsive(context),
+              height: 60 * Responsive.getResponsive(context),
+              spacing: 10 * Responsive.getResponsive(context),
               prefix: SvgPicture.asset('assets/face_detection/svgs/result.svg'),
               items: dayType,
               hintText: 'Select',
@@ -183,21 +185,21 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
             ),
 
             const SizedBox(height: 13),
-            SizedBox(height: 13 * getResponsive(context)),
+            SizedBox(height: 13 * Responsive.getResponsive(context)),
 
 
             LabeledTextField(
-              heightFactor: 60 * getResponsive(context),
+              heightFactor: 60 * Responsive.getResponsive(context),
               textAlignment: TextAlign.start,
               label: 'Out of range Reason',
               hint: 'Select Date',
-              widthFactor: getWidth(context),
+              widthFactor: Responsive.getWidth(context),
               border: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: AppTheme.getColor(context).outline,
                 ),
                 borderRadius: BorderRadius.circular(
-                  10 * getResponsive(context),
+                  10 * Responsive.getResponsive(context),
                 ),
               ),
               prefix: SvgPicture.asset(
@@ -206,10 +208,10 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
               ),
             ),
 
-            SizedBox(height: 23 * getResponsive(context)),
+            SizedBox(height: 23 * Responsive.getResponsive(context)),
 
             Row(
-              spacing: 10 * getResponsive(context),
+              spacing: 10 * Responsive.getResponsive(context),
               children: [
                 Expanded(
                   child: MyCoButton(
@@ -219,11 +221,11 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
                     title: 'Prev',
                     textStyle: TextStyle(
                       color: Colors.white,
-                      fontSize: 16 * getResponsiveText(context),
+                      fontSize: 16 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w600,
                     ),
                     backgroundColor: AppTheme.getColor(context).primary,
-                    boarderRadius: 30 * getResponsive(context),
+                    boarderRadius: 30 * Responsive.getResponsive(context),
                     isShadowBottomLeft: true,
                   ),
                 ),
@@ -235,11 +237,11 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
                     title: 'Next',
                     textStyle: TextStyle(
                       color: Colors.white,
-                      fontSize: 16 * getResponsiveText(context),
+                      fontSize: 16 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w600,
                     ),
                     backgroundColor: AppTheme.getColor(context).primary,
-                    boarderRadius: 30 * getResponsive(context),
+                    boarderRadius: 30 * Responsive.getResponsive(context),
                     isShadowBottomLeft: true,
                   ),
                 ),

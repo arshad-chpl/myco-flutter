@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
-import 'package:myco_flutter/features/visit/presentation/widgets/show_out_of_range_bottom_sheet.dart';
-import 'package:myco_flutter/features/visit/presentation/widgets/warnings_alerts_messages.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/show_out_of_range_bottom_sheet.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/warnings_alerts_messages.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/custom_face_detection_widgets.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -61,7 +61,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
             return CustomText(
               state.dateTime.trim().isEmpty ? 'EMPTY' : state.dateTime,
               color: color,
-              fontSize: 17 * getResponsiveText(context),
+              fontSize: 17 * Responsive.getResponsiveText(context),
               fontWeight: weight,
             );
           }
@@ -105,7 +105,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
       leading: IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_back)),
       title: CustomText(
         'Hello, AJAJ',
-        fontSize: 23 * getResponsiveText(context),
+        fontSize: 23 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.bold,
       ),
       actions: [
@@ -131,7 +131,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                         Container(
                           decoration: BoxDecoration(
                             color: AppTheme.getColor(context).onSecondary,
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
                           ),
                           child: const ShowOutOfRangeBottomSheet(),
                         )
@@ -148,7 +148,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
     body: SingleChildScrollView(
       child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(23.0 * getResponsive(context)),
+          padding: EdgeInsets.all(23.0 * Responsive.getResponsive(context)),
           child: Column(
             children: [
               BorderContainerWraper(
@@ -159,7 +159,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                   children: [
                     CustomText(
                       'Welcome To Work',
-                      fontSize: 23 * getResponsiveText(context),
+                      fontSize: 23 * Responsive.getResponsiveText(context),
                       color: AppTheme.getColor(context).onSecondary,
                     ),
                     const SizedBox(height: 10),
@@ -173,8 +173,8 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                           ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 10 * getResponsive(context),
-                              vertical: 3 * getResponsive(context),
+                              horizontal: 10 * Responsive.getResponsive(context),
+                              vertical: 3 * Responsive.getResponsive(context),
                             ),
                             child: const CustomText('Flutter Developer'),
                           ),
@@ -233,10 +233,10 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                 builder: (context, state) {
                   if (state is FaceDetectionLoaded) {
                     return Container(
-                      height: 0.021 * getHeight(context),
+                      height: 0.021 * Responsive.getHeight(context),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          width: 5 * getResponsiveOnWidth(context),
+                          width: 5 * Responsive.getResponsiveOnWidth(context),
                           color: AppTheme.getColor(context).primary,
                         ),
                         borderRadius: BorderRadius.circular(13),
@@ -273,7 +273,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
               BorderContainerWraper(
                 width: double.infinity,
                 child: Padding(
-                  padding: EdgeInsets.all(8.0 * getResponsive(context)),
+                  padding: EdgeInsets.all(8.0 * Responsive.getResponsive(context)),
                   child: const Column(
                     children: [
                       WarningsAlertsMessages(

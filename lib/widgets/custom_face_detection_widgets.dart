@@ -137,14 +137,14 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-      height: 0.32 * getHeight(context),
-      width: double.infinity * getResponsiveOnWidth(context),
+      height: 0.32 * Responsive.getHeight(context),
+      width: double.infinity * Responsive.getResponsiveOnWidth(context),
       decoration: BoxDecoration(
-          border: Border.all(color: getBorderColor(context), width: 13 * getResponsiveOnWidth(context)),
-          borderRadius: BorderRadius.circular(27 * getResponsive(context))
+          border: Border.all(color: getBorderColor(context), width: 13 * Responsive.getResponsiveOnWidth(context)),
+          borderRadius: BorderRadius.circular(27 * Responsive.getResponsive(context))
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(19 * getResponsive(context)),
+        borderRadius: BorderRadius.circular(19 * Responsive.getResponsive(context)),
         child: Stack(
           fit: StackFit.expand,
           children: [

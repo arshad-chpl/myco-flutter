@@ -12,7 +12,7 @@ class WarningsAlertsMessages extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
       children: [
-        Image(image: AssetImage(imagePath), height: 0.023 * getHeight(context), width: 0.023 * getHeight(context), color: AppColors.black,),
+        Image(image: AssetImage(imagePath), height: 0.023 * Responsive.getHeight(context), width: 0.023 * Responsive.getHeight(context), color: AppColors.black,),
         const SizedBox(width: 10,),
         CustomText(msg, fontWeight: FontWeight.w600,)
       ],
