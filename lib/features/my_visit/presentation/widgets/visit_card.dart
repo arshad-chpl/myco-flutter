@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/util.dart';
-import 'package:myco_flutter/features/visit/presentation/widgets/get_common_row.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/get_common_row.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -71,7 +72,9 @@ Widget buildVisitCard(
                   const SizedBox(width: 10),
                   Expanded(
                     child: MyCoButton(
-                      onTap: () {},
+                      onTap: () {
+                        context.push("/view-visit-details");
+                      },
                       title: 'View Details',
                       backgroundColor: AppTheme.getColor(context).primary,
                       textStyle: TextStyle(
@@ -189,7 +192,9 @@ Widget buildVisitCard(
 
               if (visit['isSeventhContainer'] != true)
                 MyCoButton(
-                  onTap: () {},
+                  onTap: () {
+                    context.push("/");
+                  },
                   title: isSixthContainer
                       ? 'ADD REQUEST TO END VISIT'
                       : showExtraButtons

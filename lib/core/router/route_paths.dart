@@ -29,8 +29,8 @@ class RoutePaths {
   // static const String noOrder = 'no-order';
   static const String selectOtherCompany = '/select-other-company';
   static const String signUpForm = '/sign-up-form';
-
-  static const String addVisit = '/add-visit';
+  //
+  // static const String addVisit = '/add-visit';
 
 
   // static const String distributorVisitor = '/distributor-visitor';
@@ -52,8 +52,10 @@ class RoutePaths {
   static const String lostAndFoundChatScreen = '/lost-and-found-chat-screen';
   static const String lostAndFoundItemDetails = '/lost-and-found-item-details';
   static const String AddExpense= '/add_Expense';
-  static const String myVisit = '/myVisit';
+  static const String myVisit = '/my-visit';
   static const String contactAdmin = '/contact-admin';
   static const String qrScanner = '/qr-scanner';
   static const String assetsHome = '/assets-home';
+  static const String addVisit = '/add-visit';
+  static const String viewVisitDetails = '/view-visit-details';
 }

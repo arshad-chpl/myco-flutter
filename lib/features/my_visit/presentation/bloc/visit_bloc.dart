@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'visit_event.dart';
-import 'visit_state.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_event.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_state.dart';
 
 class VisitBloc extends Bloc<VisitEvent, VisitState> {
   VisitBloc() : super(VisitTabState(selectedIndex: 0)) {

@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
-import 'package:myco_flutter/features/visit/presentation/widgets/build_other_employee_visit_tab.dart';
-import 'package:myco_flutter/features/visit/presentation/widgets/custom_visit_calender.dart';
-import 'package:myco_flutter/features/visit/presentation/widgets/visit_card.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/build_other_employee_visit_tab.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/custom_visit_calender.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -321,7 +322,9 @@ class _VisitPageState extends State<MyVisitPage> {
                 ExpandableFabAction(
                   label: 'Add Visit',
                   icon: Icons.location_on,
-                  onTap: () {},
+                  onTap: () {
+                    context.push("/add-visit");
+                  },
                 ),
                 ExpandableFabAction(
                   label: 'Add Expense',
