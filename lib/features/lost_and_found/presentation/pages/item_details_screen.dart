@@ -275,21 +275,25 @@
 //     ),
 //   );
 // }
+
+
+//============================   with model class  ============================================
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/pages/country_code_txtf.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/text_field.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import '../../model/lost_and_found_item_model.dart';
-import 'chat_screen.dart';
-import 'country_code_txtf.dart';
 
 class ItemDetailsScreen extends StatefulWidget {
   final LostAndFoundItemModel item;
 
-  const ItemDetailsScreen({Key? key, required this.item}) : super(key: key);
+  const ItemDetailsScreen({required this.item, super.key});
 
   @override
   State<ItemDetailsScreen> createState() => _ItemDetailsScreenState();
@@ -323,7 +327,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
       scrolledUnderElevation: 0,
       elevation: 0,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.black),
+        icon: const Icon(Icons.arrow_back,),
         onPressed: () => Navigator.of(context).pop(),
       ),
       title: Text(
@@ -344,35 +348,37 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _imagePreview(widget.item.image),
-            const SizedBox(height: 16),
+             SizedBox(height: .016 * getHeight(context)),
             _itemDetails(context),
-            const SizedBox(height: 24),
+             SizedBox(height: .024 * getHeight(context)),
             _buildHeader(context, 'Contact Details'),
-            const SizedBox(height: 16),
+             SizedBox(height: .016 * getHeight(context)),
             _readOnlyField(
               'Contact Person Name',
               contactPersonNameController,
               'assets/lost_and_found/profile-circle.png',
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: .016 * getHeight(context)),
             _buildLabel(context, 'Contact Person Mobile Number'),
-            const SizedBox(height: 4),
+             SizedBox(height: .004 * getHeight(context)),
             CustomMobileNumberField(
+              numberTextStyle: _typingStyle(context),
+              hintTextStyle: _hintStyle(context),
               readOnly: true,
               width: 200,
               height: 44,
-              dropdownHeight: 200,
+              dropdownHeight: .200 * getHeight(context),
               countries: countryList,
               controller: phoneController,
               onCountryChanged: (selected) {},
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: .016 * getHeight(context)),
             _readOnlyField(
               'Branch',
               branchController,
               'assets/lost_and_found/data.png',
             ),
-            const SizedBox(height: 16),
+             SizedBox(height: .016 * getHeight(context)),
             _readOnlyField(
               'Department',
               departmentController,
@@ -407,7 +413,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
       border: Border.all(color: const Color(0xFF2F648E)),
     ),
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(9),
       child: Image.file(image, fit: BoxFit.cover, width: double.infinity),
     ),
   );
@@ -422,9 +428,9 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildLabel(context, 'Item Name'),
-        const SizedBox(height: 4),
+         SizedBox(height: .004 * getHeight(context)),
         MyCoTextField(
-          height: 44,
+          height: .048 * getHeight(context),
           controller: TextEditingController(text: widget.item.name),
           isReadOnly: true,
           typingtextStyle: _typingStyle(context),
@@ -432,11 +438,11 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
           prefix: _prefixIcon('assets/lost_and_found/item-name.png'),
           contentPadding: _contentPadding(context),
         ),
-        const SizedBox(height: 12),
+         SizedBox(height: .012 * getHeight(context)),
         _buildLabel(context, 'Description'),
-        const SizedBox(height: 4),
+         SizedBox(height: .004 * getHeight(context)),
         MyCoTextField(
-          height: 44,
+          height: .048 * getHeight(context),
           controller: TextEditingController(text: widget.item.description),
           isReadOnly: true,
           typingtextStyle: _typingStyle(context),
@@ -456,31 +462,31 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       _buildLabel(context, label),
-      const SizedBox(height: 4),
+       SizedBox(height: .004 * getHeight(context) ),
       MyCoTextField(
-        height: 44,
+        height: 44 * getResponsive(context),
         controller: controller,
-        isReadOnly: false,
+        isReadOnly: true,
         typingtextStyle: _typingStyle(context),
-        hintTextStyle: _hintStyle(context),
+        hintTextStyle: _typingStyle(context),
         prefix: _prefixIcon(iconPath),
         contentPadding: _contentPadding(context),
       ),
     ],
   );
 
-  TextStyle _hintStyle(BuildContext context) => const TextStyle(
+  TextStyle _hintStyle(BuildContext context) =>   TextStyle(
     fontFamily: 'Gilroy-SemiBold',
     fontWeight: FontWeight.w400,
-    fontSize: 14,
-    color: Colors.black54,
+    fontSize: 14 * getResponsive(context),
+    color: AppColors.textfieldBorder,
   );
 
-  TextStyle _typingStyle(BuildContext context) => TextStyle(
+  TextStyle _typingStyle(BuildContext context) =>  TextStyle(
     fontFamily: 'Gilroy-SemiBold',
     fontWeight: FontWeight.w400,
-    fontSize: 14,
-    color: AppTheme.getColor(context).onSurfaceVariant,
+    fontSize: 14 * getResponsive(context),
+    color: AppColors.textPrimary,
   );
 
   EdgeInsets _contentPadding(BuildContext context) =>
@@ -500,14 +506,14 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
     label,
     fontSize: 12 * getResponsive(context),
     fontWeight: FontWeight.w700,
-    color: AppTheme.getColor(context).onSurface,
+    color: AppTheme.getColor(context).onSurfaceVariant,
   );
 
   Widget _buildHeader(BuildContext context, String header) => Padding(
     padding: EdgeInsets.only(bottom: 0.01 * getHeight(context)),
     child: CustomText(
       header,
-      color: AppTheme.getColor(context).onPrimaryFixedVariant,
+      color: AppTheme.getColor(context).onSurface,
       fontSize: 18 * getResponsive(context),
       fontWeight: FontWeight.w700,
     ),
@@ -615,7 +621,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
 //                         )
 //                       : const Center(child: Text('No Image')),
 //                 ),
-//               ),
+//               ),ss
 //               SizedBox(height: 16 * res),
 //
 //               Container(

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -10,6 +11,7 @@ import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/text_field.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 class LostAndFoundAddScreen extends StatefulWidget {
   const LostAndFoundAddScreen({super.key});
@@ -42,20 +44,22 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 20),
+           SizedBox(height: .020 * getHeight(context)),
 
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding:  const EdgeInsets.symmetric(horizontal: 32),
             child: CustomImagePickerContainer(
               imagePath: 'assets/lost_and_found/gallery-export.png',
-              iconSize: 20,
+              iconSize: 22 * getResponsive(context),
               title: 'Select Image',
               isTitle: true,
               isGallaryShow: true,
               isCameraShow: true,
-              isDocumentShow: true,
+              isDocumentShow: false,
               borderRadius: 10,
-              containerHeight: 71,
+              containerHeight: 
+              // 71,
+              .079 * getHeight(context),
               imageTitle: 'Select image',
 
               onImageSelected: (file) {
@@ -66,13 +70,15 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
               },
             ),
           ),
-          const SizedBox(height: 24),
+           SizedBox(height: .024 * getHeight(context)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28),
             child: CustomRadioButton(
               title: 'Select',
               options: const ['Lost', 'Found'],
-              height: 44,
+              height: 
+              // 44, 
+              .049 * getHeight(context),
               initialValue: selectedOption,
               onChanged: (value) {
                 setState(() {
@@ -81,27 +87,25 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
               },
             ),
           ),
-          const SizedBox(height: 24),
+           SizedBox(height: .024 * getHeight(context)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Text(
+            child: CustomText(
               'Item Name',
-              style: TextStyle(
-                fontFamily: 'Gilroy-Bold',
-                fontWeight: FontWeight.w400,
-                color: AppTheme.getColor(context).onSurfaceVariant,
-                fontSize: 13,
-              ),
+              fontSize: 13 * getResponsive(context),
+              fontWeight: FontWeight.w700,
+              color: AppTheme.getColor(context).onSurfaceVariant,
+
+            
             ),
           ),
-          const SizedBox(height: 5),
+           SizedBox(height: .005 * getHeight(context)),
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: MyCoTextField(
-              maxLenght: 5,
               controller: itemNameController,
-              // height: 44,
+              height: .044 * getHeight(context),
               isSuffixIconOn: true,
               hintText: 'Type here',
               isLabelOn: true,
@@ -110,27 +114,28 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
               prefix: _prefixIcon('assets/lost_and_found/item-name.png'),
             ),
           ),
-          const SizedBox(height: 24),
+           SizedBox(height: .024 * getHeight(context) ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Text(
+            child: CustomText(
               'About Item',
-              style: TextStyle(
-                fontSize: 13,
-                fontFamily: 'Gilroy-Bold',
-                fontWeight: FontWeight.w400,
-                color: AppTheme.getColor(context).onSurfaceVariant,
-              ),
+              fontWeight: FontWeight.w700,
+              fontSize: 13 * getResponsive(context),
+              color: AppTheme.getColor(context).onSurfaceVariant,
+
+              
             ),
           ),
-          const SizedBox(height: 5),
+           SizedBox(height: .005 * getHeight(context)),
 
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+            padding:const EdgeInsets.symmetric(horizontal: 32),
             child: MyCoTextField(
-              // height: 200,
-              // height: 144,
-              // maxLenght: 5,
+              height: .044 * getHeight(context),
+              maxLenght: 500,
+              // contentPadding: EdgeInsets.all(),
+              color: Colors.amber,
+
               fillColor: Colors.white,
               controller: aboutItemController,
               isSuffixIconOn: true,
@@ -141,12 +146,12 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
               prefix: _prefixIcon('assets/lost_and_found/message-edit.png'),
             ),
           ),
-          const SizedBox(height: 80),
+           SizedBox(height: .080 * getHeight(context)),
         ],
       ),
     ),
     bottomNavigationBar: Padding(
-      padding: const EdgeInsets.fromLTRB(32, 0, 32, 32),
+      padding:  const EdgeInsets.fromLTRB(32, 0, 32, 32),
       child: MyCoButton(
         onTap: () {
           final itemName = itemNameController.text.trim();
@@ -173,6 +178,12 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
           //   });
           // }
           // In your Add screen's onTap:
+
+
+
+
+          //============================   with model class  ============================================
+
           if (selectedImage == null) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Please select an image')),
@@ -201,11 +212,13 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
         boarderRadius: 50,
         isShadowBottomLeft: true,
         backgroundColor: AppTheme.getColor(context).primary,
-        height: 50,
+        height:
+        //  50,
+        .056 * getHeight(context),
         width: double.infinity,
-        textStyle: const TextStyle(
+        textStyle:  TextStyle(
           color: Colors.white,
-          fontSize: 15,
+          fontSize: 15 * getResponsive(context),
           fontWeight: FontWeight.w500,
           fontFamily: 'Inter',
         ),
@@ -222,17 +235,17 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
       fit: BoxFit.contain,
     ),
   );
-  TextStyle _hintStyle(BuildContext context) => const TextStyle(
+  TextStyle _hintStyle(BuildContext context) =>   TextStyle(
     fontFamily: 'Gilroy-SemiBold',
     fontWeight: FontWeight.w400,
-    fontSize: 14,
-    color: Colors.black54,
+    fontSize: 14 * getResponsive(context),
+    color:AppColors.textfieldBorder,
   );
 
-  TextStyle _typingStyle(BuildContext context) => TextStyle(
+  TextStyle _typingStyle(BuildContext context) =>  TextStyle(
     fontFamily: 'Gilroy-SemiBold',
     fontWeight: FontWeight.w400,
-    fontSize: 14,
+    fontSize: 14 * getResponsive(context),
     color: AppColors.textPrimary,
   );
 }

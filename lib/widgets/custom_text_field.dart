@@ -542,7 +542,7 @@ class TextFieldFormMobile extends StatelessWidget {
 
     return SizedBox(
       width: width ?? double.infinity,
-      // height:,
+      height:height,
       child: TextFormField(
         readOnly: isReadOnly ?? false,
         onTap: onClick,
@@ -583,9 +583,9 @@ class TextFieldFormMobile extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(boarderRadius ?? 7.0),
               ),
-          contentPadding:
-              contentPadding ??
-              EdgeInsets.symmetric(horizontal: 12, vertical: height ?? 2),
+          // contentPadding:
+          //     contentPadding ??
+          //     EdgeInsets.symmetric(horizontal: 12, vertical: height ?? 2),
           labelText: isLabelOn == true ? labelText : null,
           hintText: hintText??"99092187876236",
           hintStyle:

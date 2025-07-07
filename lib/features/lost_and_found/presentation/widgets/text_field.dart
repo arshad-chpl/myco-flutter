@@ -251,8 +251,7 @@ class TextFieldFormTablet extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return TextFormField(
+  Widget build(BuildContext context) => TextFormField(
       readOnly: isReadOnly ?? false,
       onTap: onClick,
       onSaved: onSaved,
@@ -347,7 +346,6 @@ class TextFieldFormTablet extends StatelessWidget {
       obscuringCharacter: obscuringCharacter ?? '●',
       keyboardType: textInputType,
     );
-  }
 }
 
 class TextFieldFormMobile extends StatelessWidget {

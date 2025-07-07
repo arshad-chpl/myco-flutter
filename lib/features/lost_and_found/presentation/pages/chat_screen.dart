@@ -8,8 +8,7 @@ class ChatScreen extends StatelessWidget {
   ChatScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       extendBody: true,
       backgroundColor: Colors.transparent,
       body: Stack(
@@ -100,7 +99,6 @@ class ChatScreen extends StatelessWidget {
         ],
       ),
     );
-  }
 }
 
 //====================================responsive==================================

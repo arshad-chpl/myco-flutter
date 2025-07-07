@@ -218,19 +218,23 @@
 //   );
 // }
 // lost_and_found.dart
-import 'dart:io';
+
+
+//============================   with model class  ============================================
+
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_inner_shadow.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/text_field.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import '../../model/lost_and_found_item_model.dart';
 
 class LostAndFound extends StatefulWidget {
   const LostAndFound({super.key});
@@ -275,22 +279,22 @@ class _LostAndFoundState extends State<LostAndFound> {
       elevation: 0,
     ),
     body: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
+      padding:  const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
       child: Column(
         children: [
           MyCoTextField(
             isSuffixIconOn: false,
             preFixImage: 'assets/lost_and_found/search-normal.png',
-            iconHeight: 30,
-            iconWidth: 30,
+            iconHeight: .30 * getHeight(context),
+            iconWidth: .30 * getWidth(context),
             hintText: 'Search',
             fillColor: Colors.white,
             color: Colors.white,
             boarderRadius: 12,
             hintTextStyle: _hintStyle(context),
-            height: 44,
+            height: .044 * getHeight(context),
           ),
-          const SizedBox(height: 24),
+           SizedBox(height: .024 * getHeight(context)),
           Expanded(
             child: GridView.builder(
               itemCount: lostFoundItems.length,
@@ -312,15 +316,19 @@ class _LostAndFoundState extends State<LostAndFound> {
                     );
                   },
                   child: Container(
-                    height: 150,
-                    width: 155,
+                    height: 
+                    // 150,
+                    .150 * getHeight(context),
+                    width:
+                    //  155,
+                    .155 * getWidth(context),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: AppColors.primary, width: 0.75),
                       color: AppTheme.getColor(context).surfaceContainer,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
+                          color: Colors.grey.withValues(alpha: .1),
                           blurRadius: 6,
                           offset: const Offset(0, 2),
                         ),
@@ -330,13 +338,15 @@ class _LostAndFoundState extends State<LostAndFound> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(11 ),
                           child: Stack(
                             children: [
                               Image.file(
                                 item.image,
                                 width: double.infinity,
-                                height: 95,
+                                height: 
+                                // 95,
+                                0.106 * getHeight(context),
                                 fit: BoxFit.cover,
                               ),
                               Positioned(
@@ -346,9 +356,9 @@ class _LostAndFoundState extends State<LostAndFound> {
                                   backgroundColor: item.status == 'Found'
                                       ? AppTheme.getColor(context).secondary
                                       : const Color(0xffDD4646),
-                                  height: 17,
-                                  width: 46,
-                                  borderRadius: 50,
+                                  height: .017 * getHeight(context),
+                                  width: .100 * getWidth(context),
+                                  borderRadius: 50 * getResponsive(context),
                                   isShadowBottomLeft: true,
                                   child: CustomText(
                                     item.status,
@@ -380,6 +390,7 @@ class _LostAndFoundState extends State<LostAndFound> {
                             DateFormat(
                               'dd MMM yyyy (EEE)',
                             ).format(DateTime.now()),
+                            // ignore: avoid_redundant_argument_values
                             fontWeight: FontWeight.w400,
                             fontSize: 12 * getResponsive(context),
                             color: AppColors.textPrimary,
@@ -400,17 +411,17 @@ class _LostAndFoundState extends State<LostAndFound> {
       isShadowBottomLeft: true,
       onTap: _navigateToAddScreen,
       title: '',
-      image: const Icon(Icons.add, color: Colors.white, size: 40),
+      image:  Icon(Icons.add, color: Colors.white, size: 40 * getResponsive(context)),
       backgroundColor: AppColors.primary,
-      height: 63,
-      width: 63,
+      height: 0.063 * getHeight(context),
+      width:  0.063 * getHeight(context),
     ),
   );
 
-  TextStyle _hintStyle(BuildContext context) => const TextStyle(
+  TextStyle _hintStyle(BuildContext context) =>  TextStyle(
     fontFamily: 'Gilroy-SemiBold',
     fontWeight: FontWeight.w400,
-    fontSize: 14,
+    fontSize: 14 * getResponsive(context),
     color: Colors.black54,
   );
 }
