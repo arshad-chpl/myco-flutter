@@ -73,6 +73,9 @@ dependencies:
   # Permission
   permission_handler: ^12.0.0+1
 
+  # Google Map
+  google_maps_flutter: ^2.12.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

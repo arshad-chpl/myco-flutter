@@ -76,7 +76,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
         builder: (context, child) => Stack(
           children: [
             Positioned(
-              top: topLineAlignment.value,
+              top: topLineAlignment.value * getResponsive(context),
               left: 0,
               right: 0,
               child: Container(
@@ -86,7 +86,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: bottomLineAlignment.value,
+              top: bottomLineAlignment.value * getResponsive(context),
               left: 0,
               right: 0,
               child: Container(
@@ -97,13 +97,14 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
             ),
           ],
         ),
+
       );
     }
 
     return Stack(
       children: [
         Positioned(
-          top: 40,
+          top: 40 * getResponsive(context),
           left: 0,
           right: 0,
           child: Container(
@@ -113,7 +114,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 180,
+          top: 230 * getResponsive(context),
           left: 0,
           right: 0,
           child: Container(
@@ -128,16 +129,17 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
 
   }
 
+
   @override
   Widget build(BuildContext context) => Container(
-      height: 0.30 * getHeight(context),
-      width: double.infinity,
+      height: 0.32 * getHeight(context),
+      width: double.infinity * getResponsiveOnWidth(context),
       decoration: BoxDecoration(
           border: Border.all(color: getBorderColor(context), width: 13 * getResponsiveOnWidth(context)),
-          borderRadius: BorderRadius.circular(27)
+          borderRadius: BorderRadius.circular(27 * getResponsive(context))
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(21),
+        borderRadius: BorderRadius.circular(19 * getResponsive(context)),
         child: Stack(
           fit: StackFit.expand,
           children: [

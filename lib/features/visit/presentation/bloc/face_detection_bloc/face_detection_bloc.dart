@@ -24,9 +24,18 @@ class FaceDetectionBloc extends Bloc<FaceDetectionEvent, FaceDetectionState> {
   }
 
   void onOpenCamera(FaceDetectionEvent event, Emitter<FaceDetectionState> emit) async {
-    emit(FaceDetectionLoading());
+    if (controller != null && controller!.value.isInitialized) {
+      return;
+    }
 
+    emit(FaceDetectionLoading());
     try {
+
+      if (controller != null) {
+        await controller!.dispose();
+        controller = null;
+      }
+
       final camera = await availableCameras();
       final frontCamera = camera.firstWhere((cam) => cam.lensDirection == CameraLensDirection.front,);
 
@@ -142,8 +151,8 @@ class FaceDetectionBloc extends Bloc<FaceDetectionEvent, FaceDetectionState> {
 
 
   @override
-  Future<void> close() {
-    controller?.dispose();
+  Future<void> close() async {
+    await controller?.dispose();
     scanningTimer?.cancel();
     dateTimeTimer?.cancel();
     return super.close();
