@@ -18,7 +18,10 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
   final Color? activeColor;
 
   const CustomVisitTypeRadioButton({
-    required this.options, required this.selectedValue, required this.onChanged, super.key,
+    required this.options,
+    required this.selectedValue,
+    required this.onChanged,
+    super.key,
     this.height,
     this.width,
     this.backgroundColor,
@@ -32,7 +35,7 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.getColor(context);
-    final screenWidth = getWidth(context);
+    final screenWidth = Responsive.getWidth(context);
     final isTablet = screenWidth > 600;
 
     final responsiveWidth = isTablet ? screenWidth * 0.9 : screenWidth * 0.9;
@@ -45,28 +48,34 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
         border: Border.all(color: borderColor ?? theme.primary),
       ),
       padding: EdgeInsets.symmetric(
-        vertical: 10 * getResponsive(context),
-        horizontal: 16 * getResponsive(context),
+        vertical: 10 * Responsive.getResponsive(context),
+        horizontal: 16 * Responsive.getResponsive(context),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: options.map((option) => RadioListTile<String>(
-            dense: true,
-            contentPadding: tilePadding ?? const EdgeInsets.symmetric(horizontal: 0),
-            visualDensity: VisualDensity.compact,
-            activeColor: activeColor ?? theme.primary,
-            title: Text(
-              option,
-              style: textStyle ??
-                  TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18 * getResponsiveText(context),
-                  ),
-            ),
-            value: option,
-            groupValue: selectedValue,
-            onChanged: (value) => onChanged(value!),
-          )).toList(),
+        children: options
+            .map(
+              (option) => RadioListTile<String>(
+                dense: true,
+                contentPadding:
+                    tilePadding ?? const EdgeInsets.symmetric(horizontal: 0),
+                visualDensity: VisualDensity.compact,
+                activeColor: activeColor ?? theme.primary,
+                title: Text(
+                  option,
+                  style:
+                      textStyle ??
+                      TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18 * Responsive.getResponsiveText(context),
+                      ),
+                ),
+                value: option,
+                groupValue: selectedValue,
+                onChanged: (value) => onChanged(value!),
+              ),
+            )
+            .toList(),
       ),
     );
   }

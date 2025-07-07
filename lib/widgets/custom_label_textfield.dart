@@ -1,4 +1,4 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -116,70 +116,70 @@ class LabeledTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CustomText(
-          label,
-            color: AppColors.textGray,
-            fontSize: 16 * getResponsiveText(context),
-            fontWeight: FontWeight.bold
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      CustomText(
+        label,
+        color: AppColors.textGray,
+        fontSize: 16 * Responsive.getResponsiveText(context),
+        fontWeight: FontWeight.bold,
+      ),
+      SizedBox(height: 0.005 * Responsive.getHeight(context)),
+      SizedBox(
+        height: heightFactor,
+        width: widthFactor,
+        child: MyCoTextfield(
+          controller: controller,
+          hintText: hint,
+          hintTextStyle:
+              hintTextStyle ??
+              TextStyle(
+                fontSize: 18 * Responsive.getResponsiveText(context),
+                color: AppColors.gray,
+                fontWeight: FontWeight.bold,
+              ),
+          labelText: null,
+          isLabelOn: false,
+          isReadOnly: isReadOnly,
+          obscureText: obscureText,
+          obscuringCharacter: obscuringCharacter,
+          textInputType: textInputType,
+          validator: validator,
+          onChanged: onChanged,
+          onSaved: onSaved,
+          prefix: prefix,
+          suffix: suffix,
+          maxLenght: maxLength,
+          textAlignment: textAlignment,
+          inputFormater: inputFormatters,
+          fillColor: fillColor,
+          width: textFieldwidth,
+          height: textFieldHeight,
+          border: border,
+          titleColor: titleColor,
+          prefixImageWidth: prefixImageWidth,
+          prefixImageHeight: prefixImageHeight,
+          color: color,
+          boarderRadius: boarderRadius,
+          contentPadding: contentPadding,
+          autoFocus: autoFocus,
+          floatingLabelBehavior: floatingLabelBehavior,
+          focusNode: focusNode,
+          fontWeight: fontWeight,
+          iconHeight: iconHeight,
+          iconWidth: iconWidth,
+          image1: image1,
+          image2: image2,
+          isSuffixIconOn: isSuffixIconOn ?? false,
+          labelTextStyle: labelTextStyle,
+          onClick: onClick,
+          onTap1: onTap1,
+          onTap2: onTap2,
+          preFixImage: preFixImage,
+          titleTextSize: titleTextSize,
+          typingtextStyle: typingtextStyle,
         ),
-        SizedBox(height: 0.005 * getHeight(context)),
-        SizedBox(
-          height: heightFactor,
-          width: widthFactor,
-          child: MyCoTextfield(
-            controller: controller,
-            hintText: hint,
-            hintTextStyle:
-            hintTextStyle ??
-                TextStyle(
-                  fontSize: 18 * getResponsiveText(context),
-                  color: AppColors.gray,
-                  fontWeight: FontWeight.bold,
-                ),
-            labelText: null,
-            isLabelOn: false,
-            isReadOnly: isReadOnly,
-            obscureText: obscureText,
-            obscuringCharacter: obscuringCharacter,
-            textInputType: textInputType,
-            validator: validator,
-            onChanged: onChanged,
-            onSaved: onSaved,
-            prefix: prefix,
-            suffix: suffix,
-            maxLenght: maxLength,
-            textAlignment: textAlignment,
-            inputFormater: inputFormatters,
-            fillColor: fillColor,
-            width: textFieldwidth,
-            height: textFieldHeight,
-            border: border,
-            titleColor: titleColor,
-            prefixImageWidth: prefixImageWidth,
-            prefixImageHeight: prefixImageHeight,
-            color: color,
-            boarderRadius: boarderRadius,
-            contentPadding: contentPadding,
-            autoFocus: autoFocus,
-            floatingLabelBehavior: floatingLabelBehavior,
-            focusNode: focusNode,
-            fontWeight: fontWeight,
-            iconHeight: iconHeight,
-            iconWidth: iconWidth,
-            image1: image1,
-            image2: image2,
-            isSuffixIconOn: isSuffixIconOn ?? false,
-            labelTextStyle: labelTextStyle,
-            onClick: onClick,
-            onTap1: onTap1,
-            onTap2: onTap2,
-            preFixImage: preFixImage,
-            titleTextSize: titleTextSize,
-            typingtextStyle: typingtextStyle,
-          ),
-        ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}

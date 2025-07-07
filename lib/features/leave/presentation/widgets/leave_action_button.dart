@@ -16,8 +16,8 @@ class LeaveActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = getWidth(context);
-    final height = getHeight(context);
+    final width = Responsive.getWidth(context);
+    final height = Responsive.getHeight(context);
 
     return InkWell(
       onTap: onTap,

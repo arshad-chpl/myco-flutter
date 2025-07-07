@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
-
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -88,7 +87,7 @@ class CustomShadowContainer extends StatelessWidget {
           const SizedBox(height: 6),
           CustomText(
             title,
-            fontSize: 11 * getResponsive(context),
+            fontSize: 11 * Responsive.getResponsive(context),
             fontWeight: FontWeight.w600,
             color: AppColors.black,
           ),

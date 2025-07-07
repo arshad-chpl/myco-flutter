@@ -13,22 +13,31 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
   final VoidCallback? retry;
 
   const CustomFaceDetectionWidgets({
-    required this.controller, required this.scanningState, required this.topLineAlignment, required this.bottomLineAlignment, this.retry,  super.key,
+    required this.controller,
+    required this.scanningState,
+    required this.topLineAlignment,
+    required this.bottomLineAlignment,
+    this.retry,
+    super.key,
   });
 
   Color getBorderColor(BuildContext context) {
-    if(scanningState == 'success') return AppColors.spanishYellow;
-    if(scanningState == 'failure') return AppTheme.getColor(context).error;
+    if (scanningState == 'success') return AppColors.spanishYellow;
+    if (scanningState == 'failure') return AppTheme.getColor(context).error;
     return AppTheme.getColor(context).primary;
   }
 
   Widget buildOverLay(BuildContext context) {
-    if(scanningState == 'failure') {
+    if (scanningState == 'failure') {
       return GestureDetector(
         onTap: retry,
-        child:  Align(
+        child: Align(
           alignment: Alignment.center,
-          child: Icon(Icons.refresh, color: AppColors.white, size: 35 * getResponsive(context),),
+          child: Icon(
+            Icons.refresh,
+            color: AppColors.white,
+            size: 35 * Responsive.getResponsive(context),
+          ),
         ),
       );
     }
@@ -36,18 +45,16 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
   }
 
   Widget labelMessage(BuildContext context) {
-
-    if(scanningState == 'success') {
+    if (scanningState == 'success') {
       return Container(
         width: double.infinity,
         padding: const EdgeInsets.all(8),
         color: AppColors.spanishYellow,
-        child:  CustomText(
+        child: CustomText(
           'Face Scan',
           color: AppTheme.getColor(context).onPrimary,
           fontWeight: FontWeight.w700,
           textAlign: TextAlign.center,
-
         ),
       );
     } else if (scanningState == 'failure') {
@@ -55,9 +62,9 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.all(8),
         color: AppTheme.getColor(context).error,
-        child:  CustomText(
+        child: CustomText(
           'Failed to match current face with your registered face',
-          fontSize: 14 * getResponsiveText(context),
+          fontSize: 14 * Responsive.getResponsiveText(context),
           color: AppTheme.getColor(context).onPrimary,
           fontWeight: FontWeight.w700,
           textAlign: TextAlign.center,
@@ -70,57 +77,56 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
   }
 
   Widget scanningLines(BuildContext context) {
-    if(scanningState == 'scanning') {
+    if (scanningState == 'scanning') {
       return AnimatedBuilder(
         animation: topLineAlignment,
         builder: (context, child) => Stack(
           children: [
             Positioned(
-              top: topLineAlignment.value * getResponsive(context),
+              top: topLineAlignment.value,
               left: 0,
               right: 0,
               child: Container(
-                  height: 0.003 * getHeight(context),
-                  margin: const EdgeInsets.symmetric(horizontal: 40),
-                  color: AppTheme.getColor(context).primary
+                height: 0.003 * Responsive.getHeight(context),
+                margin: const EdgeInsets.symmetric(horizontal: 40),
+                color: AppTheme.getColor(context).primary,
               ),
             ),
             Positioned(
-              top: bottomLineAlignment.value * getResponsive(context),
+              top: bottomLineAlignment.value,
               left: 0,
               right: 0,
               child: Container(
-                  height: 0.003 * getHeight(context),
-                  margin: const EdgeInsets.symmetric(horizontal: 40),
-                  color: AppTheme.getColor(context).primary
+                height: 0.003 * Responsive.getHeight(context),
+                margin: const EdgeInsets.symmetric(horizontal: 40),
+                color: AppTheme.getColor(context).primary,
               ),
             ),
           ],
         ),
-
       );
     }
 
     return Stack(
       children: [
         Positioned(
-          top: 40 * getResponsive(context),
+          top: 40 * Responsive.getResponsive(context),
           left: 0,
           right: 0,
           child: Container(
-              height: 0.003 * getHeight(context),
-              margin: const EdgeInsets.symmetric(horizontal: 40),
-              color: AppTheme.getColor(context).primary
+            height: 0.003 * Responsive.getHeight(context),
+            margin: const EdgeInsets.symmetric(horizontal: 40),
+            color: AppTheme.getColor(context).primary,
           ),
         ),
         Positioned(
-          top: 230 * getResponsive(context),
+          top: 230 * Responsive.getResponsive(context),
           left: 0,
           right: 0,
           child: Container(
-              height: 0.003 * getHeight(context),
-              margin: const EdgeInsets.symmetric(horizontal: 40),
-              color: AppTheme.getColor(context).primary
+            height: 0.003 * Responsive.getHeight(context),
+            margin: const EdgeInsets.symmetric(horizontal: 40),
+            color: AppTheme.getColor(context).primary,
           ),
         ),
       ],
@@ -128,7 +134,6 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
 
 
   }
-
 
   @override
   Widget build(BuildContext context) => Container(
@@ -158,10 +163,12 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
               const Center(child: CircularProgressIndicator()),
             scanningLines(context),
           buildOverLay(context),
-            Align(alignment: Alignment.bottomCenter, child: labelMessage(context))
-          ],
-        )
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: labelMessage(context),
+          ),
+        ],
       ),
-    );
+    ),
+  );
 }
-

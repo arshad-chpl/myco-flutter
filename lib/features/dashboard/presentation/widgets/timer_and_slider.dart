@@ -16,12 +16,12 @@ import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart'
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 Widget timerAndSlider(BuildContext context) =>
-    // getWidth(context) > 600
+    // Responsive.getWidth(context) > 600
     //     ? Row(
     //         children: [
     //           punchInAndTimeCard(context: context),
     //           CustomSlider(
-    //             width: getWidth(context) / 2,
+    //             width: Responsive.getWidth(context) / 2,
     //             imagePaths: [AppAssets.mycobanner, AppAssets.mycobanner1],
     //           ),
     //         ],
@@ -84,7 +84,7 @@ Widget punchInAndTimeCard({required BuildContext context}) =>
                     title: 'Punch Out',
                     onTap: () {},
 
-                    // height: 0.18 * getWidth(context),
+                    // height: 0.18 * Responsive.getWidth(context),
                     width: 160,
                     height: 72,
                     image: SvgPicture.asset(AppAssets.punchIn),
@@ -134,7 +134,7 @@ Widget punchInAndTimeCard({required BuildContext context}) =>
             backgroundColor: AppTheme.getColor(context).secondary,
             textStyle: TextStyle(
               fontFamily: Util.getFontFamily(FontWeight.w600),
-              fontSize: 15 * getResponsiveText(context),
+              fontSize: 15 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).onSecondary,
             ),
             wantBorder: false,
@@ -193,8 +193,8 @@ class _LiveClockState extends State<LiveClock> {
   Widget build(BuildContext context) {
     return CustomText(
       _timeString,
-      fontSize: widget.fontSize ?? 13 * getResponsiveText(context),
-      fontWeight:widget.fontWeight?? FontWeight.w500,
+      fontSize: widget.fontSize ?? 13 * Responsive.getResponsiveText(context),
+      fontWeight: widget.fontWeight ?? FontWeight.w500,
     );
   }
 }

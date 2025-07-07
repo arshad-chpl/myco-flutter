@@ -21,11 +21,11 @@ Row getCommonRow(
       child: CustomText(
         title,
         fontWeight: FontWeight.w700,
-        fontSize: 17 * getResponsiveText(context),
+        fontSize: 17 * Responsive.getResponsiveText(context),
       ),
     ),
     const CustomText(':'),
-    SizedBox(width: 0.03 * getWidth(context)),
+    SizedBox(width: 0.03 * Responsive.getWidth(context)),
     Expanded(
       flex: 5,
       child: InkWell(
@@ -37,7 +37,7 @@ Row getCommonRow(
               decoration: decoration,
               color: textColor,
               fontWeight: FontWeight.w500,
-              fontSize: 13 * getResponsiveText(context),
+              fontSize: 13 * Responsive.getResponsiveText(context),
             ),
       ),
     ),

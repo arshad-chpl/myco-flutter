@@ -151,7 +151,7 @@ class _CustomImagePickerContainerState
                         child: Text(
                           path.basename(pickedFile!.path),
                           style: TextStyle(
-                            fontSize: 16 * getResponsive(context),
+                            fontSize: 16 * Responsive.getResponsive(context),
                             fontFamily: "Gilroy-Medium",
                             color: AppTheme.getColor(context).onSurfaceVariant,
                           ),
@@ -175,7 +175,7 @@ class _CustomImagePickerContainerState
                           child: Text(
                             "Remove",
                             style: TextStyle(
-                              fontSize: 14 * getResponsive(context),
+                              fontSize: 14 * Responsive.getResponsive(context),
                               color: AppTheme.getColor(context).error,
                             ),
                           ),
