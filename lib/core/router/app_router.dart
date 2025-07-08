@@ -11,8 +11,8 @@ import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
 import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
-import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
+import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
@@ -38,13 +38,13 @@ import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
+import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
+import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
+import 'package:myco_flutter/features/search_company/presentation/pages/select_company.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
-import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
-import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
-import 'package:myco_flutter/features/search_company/presentation/pages/select_company.dart';
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
@@ -152,7 +152,10 @@ class AppRouter {
       // Take Order Route
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
-          providers: [BlocProvider(create: (context) => TakeOrderBloc())],
+          providers: [
+            BlocProvider(create: (context) => TakeOrderBloc()),
+            BlocProvider(create: (context) => TabbarBloc()),
+          ],
           child: child,
         ),
         routes: [
@@ -191,8 +194,9 @@ class AppRouter {
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
         builder: (context, state) => SignupFormPage(),
-      ),
-      GoRoute(
+               
+      ), 
+       GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
@@ -202,10 +206,36 @@ class AppRouter {
         name: 'companySearch',
         builder: (context, state) => SearchCompanyScreen(),
       ),
+      ShellRoute(
+        builder: (context, state, child) => MultiBlocProvider(
+          providers: [BlocProvider(create: (_) => TabbarBloc())],
+          child: child,
+        ),
+        routes: [
+          GoRoute(
+            path: RoutePaths.payslip,
+            name: 'payslip',
+            builder: (context, state) => PayslipPage(),
+            routes: [
+              GoRoute(
+                path: RoutePaths.salaryBreakUp,
+                name: 'salary-break-up',
+                builder: (context, state) => const SalaryBreakUpPage(),
+              ),
+              GoRoute(
+                path: RoutePaths.payslipDetail,
+                name: 'payslip-detail',
+                builder: (context, state) => const PayslipDetail(),
+              ),
+            ],
+          ),
+        ],
+      ),
+
       GoRoute(
         path: RoutePaths.payslip,
         name: 'payslip',
-        builder: (context, state) => const PayslipPage(),
+        builder: (context, state) =>  PayslipPage(),
         routes: [
           GoRoute(
             path: RoutePaths.salaryBreakUp,
