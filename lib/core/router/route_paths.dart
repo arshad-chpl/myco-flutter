@@ -56,4 +56,5 @@ class RoutePaths {
   static const String contactAdmin = '/contact-admin';
   static const String qrScanner = '/qr-scanner';
   static const String assetsHome = '/assets-home';
+  static const String VisitWith = '/visit-with';
 }
