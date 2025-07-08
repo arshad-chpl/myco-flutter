@@ -7,7 +7,7 @@ class WarningsAlertsMessages extends StatelessWidget {
   final String imagePath;
   final String msg;
 
-  const WarningsAlertsMessages({super.key, required this.imagePath, required this.msg});
+  const WarningsAlertsMessages({required this.imagePath, required this.msg, super.key});
 
   @override
   Widget build(BuildContext context) => Row(

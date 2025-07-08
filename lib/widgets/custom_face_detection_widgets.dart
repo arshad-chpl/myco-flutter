@@ -48,7 +48,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
     if (scanningState == 'success') {
       return Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.all(8 * Responsive.getResponsive(context)),
         color: AppColors.spanishYellow,
         child: CustomText(
           'Face Scan',
@@ -60,7 +60,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
     } else if (scanningState == 'failure') {
       return Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.all(8 * Responsive.getResponsive(context)),
         color: AppTheme.getColor(context).error,
         child: CustomText(
           'Failed to match current face with your registered face',
@@ -88,7 +88,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
               right: 0,
               child: Container(
                 height: 0.003 * Responsive.getHeight(context),
-                margin: const EdgeInsets.symmetric(horizontal: 40),
+                margin: EdgeInsets.symmetric(horizontal: 40 * Responsive.getResponsive(context)),
                 color: AppTheme.getColor(context).primary,
               ),
             ),
@@ -98,7 +98,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
               right: 0,
               child: Container(
                 height: 0.003 * Responsive.getHeight(context),
-                margin: const EdgeInsets.symmetric(horizontal: 40),
+                margin: EdgeInsets.symmetric(horizontal: 40 * Responsive.getResponsive(context)),
                 color: AppTheme.getColor(context).primary,
               ),
             ),
@@ -115,7 +115,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
           right: 0,
           child: Container(
             height: 0.003 * Responsive.getHeight(context),
-            margin: const EdgeInsets.symmetric(horizontal: 40),
+            margin: EdgeInsets.symmetric(horizontal: 40 * Responsive.getResponsive(context)),
             color: AppTheme.getColor(context).primary,
           ),
         ),
@@ -125,7 +125,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
           right: 0,
           child: Container(
             height: 0.003 * Responsive.getHeight(context),
-            margin: const EdgeInsets.symmetric(horizontal: 40),
+            margin:   EdgeInsets.symmetric(horizontal: 40 * Responsive.getResponsive(context)),
             color: AppTheme.getColor(context).primary,
           ),
         ),

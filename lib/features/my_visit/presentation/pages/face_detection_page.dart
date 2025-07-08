@@ -245,7 +245,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                         borderRadius: BorderRadius.circular(11),
                         child: LinearProgressIndicator(
                           value: state.progress,
-                          backgroundColor: Color.fromARGB(255, 220, 239, 255),
+                          backgroundColor: const Color.fromARGB(255, 220, 239, 255),
                           color: AppTheme.getColor(context).primary,
                         ),
                       ),

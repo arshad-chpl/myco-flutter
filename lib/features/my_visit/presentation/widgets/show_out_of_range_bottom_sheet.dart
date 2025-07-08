@@ -232,7 +232,7 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
                 Expanded(
                   child: MyCoButton(
                     onTap: () {
-                      // Handle Start Visit
+                      // Handle  click event
                     },
                     title: 'Next',
                     textStyle: TextStyle(
