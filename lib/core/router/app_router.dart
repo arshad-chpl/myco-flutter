@@ -11,6 +11,7 @@ import 'package:myco_flutter/features/company_selector/presentation/bloc/company
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:myco_flutter/features/documents/presentation/pages/view_document_screen.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
@@ -282,6 +283,11 @@ class AppRouter {
         path: RoutePaths.viewVisitDetails,
         name: 'view-visit-details',
         builder: (context, state) => ViewVisitDetailsPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.viewDocumets,
+        name: 'view-documents',
+        builder: (context, state) => ViewDocumentScreen(),
       ),
       // Add all modular routes here
       // ...authRoutes,
