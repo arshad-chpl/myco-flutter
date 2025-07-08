@@ -25,7 +25,7 @@ class PayslipPage extends StatelessWidget {
       title: CustomText(
         'Payslip',
         fontWeight: FontWeight.w700,
-        fontSize: 20 * getResponsiveText(context),
+        fontSize: 20 * Responsive.getResponsiveText(context),
       ),
       centerTitle: false,
       leading: const BackButton(),
@@ -36,33 +36,35 @@ class PayslipPage extends StatelessWidget {
           },
           backgroundColor: AppTheme.getColor(context).secondary,
           borderColor: AppTheme.getColor(context).secondary,
-          boarderRadius: 30 * getResponsive(context),
+          boarderRadius: 30 * Responsive.getResponsive(context),
           title: 'View CTC',
           textStyle: TextStyle(
-            fontSize: 14 * getResponsiveText(context),
+            fontSize: 14 * Responsive.getResponsiveText(context),
             color: AppTheme.getColor(context).onSecondary,
           ),
-          width: 0.2 * getWidth(context),
-          height: 0.03 * getHeight(context),
+          width: 0.2 * Responsive.getWidth(context),
+          height: 0.03 * Responsive.getHeight(context),
           isShadowBottomLeft: true,
         ),
-        SizedBox(width: 0.06 * getWidth(context)),
+        SizedBox(width: 0.06 * Responsive.getWidth(context)),
       ],
     ),
     body: Column(
       children: [
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+          padding: EdgeInsets.symmetric(
+            horizontal: 0.08 * Responsive.getWidth(context),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 8 * getResponsive(context),
+                  horizontal: 8 * Responsive.getResponsive(context),
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
-                    6 * getResponsive(context),
+                    6 * Responsive.getResponsive(context),
                   ),
                   color: AppColors.gray10,
                 ),
@@ -91,23 +93,23 @@ class PayslipPage extends StatelessWidget {
                   children: [
                     CustomText(
                       '2024-2025',
-                      fontSize: 16 * getResponsiveText(context),
+                      fontSize: 16 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w700,
                     ),
                     Icon(
                       Icons.keyboard_arrow_down,
-                      size: 25 * getResponsive(context),
+                      size: 25 * Responsive.getResponsive(context),
                     ),
                   ],
                 ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 8 * getResponsive(context),
+                  horizontal: 8 * Responsive.getResponsive(context),
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
-                    6 * getResponsive(context),
+                    6 * Responsive.getResponsive(context),
                   ),
                   color: AppColors.gray10,
                 ),
@@ -119,9 +121,11 @@ class PayslipPage extends StatelessWidget {
           ),
         ),
 
-        SizedBox(height: 0.02 * getHeight(context)),
+        SizedBox(height: 0.02 * Responsive.getHeight(context)),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+          padding: EdgeInsets.symmetric(
+            horizontal: 0.08 * Responsive.getWidth(context),
+          ),
           child: BlocBuilder<TabbarBloc, TabbarState>(
             builder: (context, state) {
               final selectedIndex = state is TabChangeState
@@ -146,7 +150,7 @@ class PayslipPage extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(height: 0.02 * getHeight(context)),
+        SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
         BlocBuilder<TabbarBloc, TabbarState>(
           builder: (context, state) {
@@ -169,8 +173,10 @@ class PaySlip extends StatelessWidget {
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Container(
-        height: 0.63 * getHeight(context),
-        padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+        height: 0.63 * Responsive.getHeight(context),
+        padding: EdgeInsets.symmetric(
+          horizontal: 0.08 * Responsive.getWidth(context),
+        ),
         child: ListView.separated(
           itemCount: 8,
           itemBuilder: (context, index) => PayslipCard(
@@ -184,14 +190,14 @@ class PaySlip extends StatelessWidget {
             },
           ),
           separatorBuilder: (context, index) =>
-              SizedBox(height: 0.01 * getHeight(context)),
+              SizedBox(height: 0.01 * Responsive.getHeight(context)),
         ),
       ),
 
       Container(
         padding: EdgeInsets.symmetric(
-          horizontal: 0.08 * getWidth(context),
-          vertical: 0.02 * getHeight(context),
+          horizontal: 0.08 * Responsive.getWidth(context),
+          vertical: 0.02 * Responsive.getHeight(context),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -200,13 +206,13 @@ class PaySlip extends StatelessWidget {
               onTap: () {
                 showModalBottomSheet(
                   constraints: BoxConstraints(
-                    maxHeight: 0.67 * getHeight(context),
+                    maxHeight: 0.67 * Responsive.getHeight(context),
                   ),
                   useSafeArea: true,
                   isScrollControlled: true,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadiusGeometry.circular(
-                      8 * getResponsive(context),
+                      8 * Responsive.getResponsive(context),
                     ),
                   ),
                   clipBehavior: Clip.hardEdge,
@@ -215,11 +221,11 @@ class PaySlip extends StatelessWidget {
                 );
               },
               title: 'View Summary',
-              width: 0.4 * getWidth(context),
-              height: 0.04 * getHeight(context),
-              boarderRadius: 30 * getResponsive(context),
+              width: 0.4 * Responsive.getWidth(context),
+              height: 0.04 * Responsive.getHeight(context),
+              boarderRadius: 30 * Responsive.getResponsive(context),
               textStyle: TextStyle(
-                fontSize: 14 * getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
                 color: AppTheme.getColor(context).onPrimary,
               ),
@@ -227,7 +233,7 @@ class PaySlip extends StatelessWidget {
             ),
             CustomText(
               'Download All Payslip',
-              fontSize: 14 * getResponsiveText(context),
+              fontSize: 14 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).primary,
               decoration: TextDecoration.underline,
               decorationColor: AppTheme.getColor(context).primary,
@@ -246,7 +252,9 @@ class OtherEarnings extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Expanded(
     child: Container(
-      padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.08 * Responsive.getWidth(context),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -257,12 +265,12 @@ class OtherEarnings extends StatelessWidget {
                 title: '07 January, 2025',
                 showHeaderPrefixIcon: true,
                 headerPrefixIcon: 'assets/payslip/calendar.png',
-                headerPrefixIconHeight: 0.025 * getHeight(context),
+                headerPrefixIconHeight: 0.025 * Responsive.getHeight(context),
                 headerColor: AppTheme.getColor(context).primary,
                 bottomWidget: getCommonCardBottomWidget(context),
               ),
               separatorBuilder: (context, index) =>
-                  SizedBox(height: 0.02 * getHeight(context)),
+                  SizedBox(height: 0.02 * Responsive.getHeight(context)),
             ),
           ),
         ],
@@ -272,8 +280,8 @@ class OtherEarnings extends StatelessWidget {
 
   Container getCommonCardBottomWidget(BuildContext context) => Container(
     padding: EdgeInsets.symmetric(
-      horizontal: 0.04 * getWidth(context),
-      vertical: 0.01 * getHeight(context),
+      horizontal: 0.04 * Responsive.getWidth(context),
+      vertical: 0.01 * Responsive.getHeight(context),
     ),
     child: Column(
       children: [
@@ -282,28 +290,28 @@ class OtherEarnings extends StatelessWidget {
           children: [
             CustomText(
               'Casual Leave',
-              fontSize: 15 * getResponsiveText(context),
+              fontSize: 15 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w700,
             ),
             CustomText(
               'Net Pay',
-              fontSize: 15 * getResponsiveText(context),
+              fontSize: 15 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
             ),
           ],
         ),
-        SizedBox(height: 0.005 * getHeight(context)),
+        SizedBox(height: 0.005 * Responsive.getHeight(context)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomText(
               'Total Leaves Day: 0.50',
-              fontSize: 15 * getResponsiveText(context),
+              fontSize: 15 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
             ),
             CustomText(
               '₹928.57',
-              fontSize: 15 * getResponsiveText(context),
+              fontSize: 15 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
             ),
           ],

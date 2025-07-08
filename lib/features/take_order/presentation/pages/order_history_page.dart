@@ -17,12 +17,14 @@ class OrderHistoryPage extends StatelessWidget {
       leading: const BackButton(),
       title: CustomText(
         'Order History',
-        fontSize: 20 * getResponsiveText(context),
+        fontSize: 20 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
       ),
     ),
     body: Container(
-      padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.08 * Responsive.getWidth(context),
+      ),
       child: Column(
         children: [
           Expanded(
@@ -30,7 +32,7 @@ class OrderHistoryPage extends StatelessWidget {
               itemCount: 3,
               itemBuilder: (context, index) => const OrderHistoryCard(),
               separatorBuilder: (context, index) =>
-                  SizedBox(height: 0.01 * getHeight(context)),
+                  SizedBox(height: 0.01 * Responsive.getHeight(context)),
             ),
           ),
         ],
@@ -45,7 +47,9 @@ class OrderHistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+      borderRadius: BorderRadius.circular(
+        12 * Responsive.getResponsive(context),
+      ),
       side: BorderSide(color: AppTheme.getColor(context).outline),
     ),
 
@@ -57,18 +61,24 @@ class OrderHistoryCard extends StatelessWidget {
           children: [
             Material(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12 * getResponsive(context)),
-                topRight: Radius.circular(12 * getResponsive(context)),
+                topLeft: Radius.circular(
+                  12 * Responsive.getResponsive(context),
+                ),
+                topRight: Radius.circular(
+                  12 * Responsive.getResponsive(context),
+                ),
               ),
               elevation: 3.0,
               child: Container(
                 padding: EdgeInsets.symmetric(
-                  vertical: 10 * getResponsive(context),
+                  vertical: 10 * Responsive.getResponsive(context),
                 ),
                 decoration: BoxDecoration(
                   color: AppTheme.getColor(context).primary,
                   borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(12 * getResponsive(context)),
+                    top: Radius.circular(
+                      12 * Responsive.getResponsive(context),
+                    ),
                   ),
                 ),
                 child: Row(
@@ -80,21 +90,22 @@ class OrderHistoryCard extends StatelessWidget {
                         CustomText(
                           'Order Number : #230',
                           fontWeight: FontWeight.w800,
-                          fontSize: 17 * getResponsiveText(context),
+                          fontSize: 17 * Responsive.getResponsiveText(context),
                           color: AppTheme.getColor(context).onPrimary,
                         ),
-                        // SizedBox(height: 0.01 * getHeight(context)),
+                        // SizedBox(height: 0.01 * Responsive.getHeight(context)),
                         Row(
                           children: [
                             Icon(
                               Icons.calendar_month,
                               color: AppTheme.getColor(context).onPrimary,
-                              size: 18 * getResponsive(context),
+                              size: 18 * Responsive.getResponsive(context),
                             ),
                             CustomText(
                               '01st April, 2025( 09:45 AM)',
                               fontWeight: FontWeight.w600,
-                              fontSize: 13 * getResponsiveText(context),
+                              fontSize:
+                                  13 * Responsive.getResponsiveText(context),
                               color: AppTheme.getColor(context).onPrimary,
                             ),
                           ],
@@ -109,9 +120,9 @@ class OrderHistoryCard extends StatelessWidget {
                             color: AppTheme.getColor(context).onPrimary,
                           ),
                       backgroundColor: AppTheme.getColor(context).secondary,
-                      width: 0.2 * getWidth(context),
-                      height: 0.028 * getHeight(context),
-                      boarderRadius: 30 * getResponsive(context),
+                      width: 0.2 * Responsive.getWidth(context),
+                      height: 0.028 * Responsive.getHeight(context),
+                      boarderRadius: 30 * Responsive.getResponsive(context),
                       isShadowBottomLeft: true,
                     ),
                   ],
@@ -140,8 +151,8 @@ class OrderHistoryCard extends StatelessWidget {
 
         Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: 0.03 * getWidth(context),
-            vertical: 0.01 * getHeight(context),
+            horizontal: 0.03 * Responsive.getWidth(context),
+            vertical: 0.01 * Responsive.getHeight(context),
           ),
           child: Column(
             children: [
@@ -161,7 +172,7 @@ class OrderHistoryCard extends StatelessWidget {
                   changeProcessStatusBottomSheet(context);
                 },
               ),
-              SizedBox(height: 0.01 * getHeight(context)),
+              SizedBox(height: 0.01 * Responsive.getHeight(context)),
 
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -173,7 +184,7 @@ class OrderHistoryCard extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 0.005 * getHeight(context)),
+              SizedBox(height: 0.005 * Responsive.getHeight(context)),
               Row(
                 children: [
                   const Spacer(),
@@ -184,13 +195,13 @@ class OrderHistoryCard extends StatelessWidget {
                     child: CustomText(
                       'View Ordered Products',
                       fontWeight: FontWeight.w600,
-                      fontSize: 10 * getResponsiveText(context),
+                      fontSize: 10 * Responsive.getResponsiveText(context),
                       decoration: TextDecoration.underline,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 0.03 * getHeight(context)),
+              SizedBox(height: 0.03 * Responsive.getHeight(context)),
               Row(
                 children: [
                   MyCoButton(
@@ -198,26 +209,26 @@ class OrderHistoryCard extends StatelessWidget {
                       cancelOrderBottomSheet(context);
                     },
                     title: 'Cancel Order',
-                    width: 0.25 * getWidth(context),
-                    height: 0.028 * getHeight(context),
+                    width: 0.25 * Responsive.getWidth(context),
+                    height: 0.028 * Responsive.getHeight(context),
                     textStyle: AppTheme.getTextStyle(context).labelMedium!
                         .copyWith(color: AppTheme.getColor(context).onPrimary),
-                    boarderRadius: 30 * getResponsive(context),
+                    boarderRadius: 30 * Responsive.getResponsive(context),
                     backgroundColor: AppColors.red,
                     borderColor: AppColors.red,
                     isShadowBottomLeft: true,
                   ),
-                  SizedBox(width: 0.01 * getWidth(context)),
+                  SizedBox(width: 0.01 * Responsive.getWidth(context)),
                   MyCoButton(
                     onTap: () {
                       context.pushNamed('order-summary', extra: true);
                     },
                     title: 'Repeat Order',
-                    width: 0.25 * getWidth(context),
-                    height: 0.028 * getHeight(context),
+                    width: 0.25 * Responsive.getWidth(context),
+                    height: 0.028 * Responsive.getHeight(context),
                     textStyle: AppTheme.getTextStyle(context).labelMedium!
                         .copyWith(color: AppTheme.getColor(context).onPrimary),
-                    boarderRadius: 30 * getResponsive(context),
+                    boarderRadius: 30 * Responsive.getResponsive(context),
                     backgroundColor: AppTheme.getColor(context).secondary,
                     borderColor: AppTheme.getColor(context).secondary,
                     isShadowBottomLeft: true,
@@ -227,17 +238,17 @@ class OrderHistoryCard extends StatelessWidget {
                     onTap: () => context.pushNamed('edit-order'),
                     child: Image.asset(
                       'assets/take_order/message-edit.png',
-                      height: 0.023 * getHeight(context),
+                      height: 0.023 * Responsive.getHeight(context),
                     ),
                   ),
-                  SizedBox(width: 0.01 * getWidth(context)),
+                  SizedBox(width: 0.01 * Responsive.getWidth(context)),
                   Image.asset(
                     'assets/take_order/fluent_share.png',
-                    height: 0.023 * getHeight(context),
+                    height: 0.023 * Responsive.getHeight(context),
                   ),
                 ],
               ),
-              SizedBox(height: 0.003 * getHeight(context)),
+              SizedBox(height: 0.003 * Responsive.getHeight(context)),
             ],
           ),
         ),
@@ -258,11 +269,11 @@ class OrderHistoryCard extends StatelessWidget {
             children: [
               Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 0.04 * getWidth(context),
-                  vertical: 0.01 * getHeight(context),
+                  horizontal: 0.04 * Responsive.getWidth(context),
+                  vertical: 0.01 * Responsive.getHeight(context),
                 ),
-                width: getWidth(context),
-                height: 0.05 * getHeight(context),
+                width: Responsive.getWidth(context),
+                height: 0.05 * Responsive.getHeight(context),
                 decoration: BoxDecoration(
                   color: AppTheme.getColor(context).primary,
                 ),
@@ -272,14 +283,14 @@ class OrderHistoryCard extends StatelessWidget {
                     CustomText(
                       'Order #230',
                       fontWeight: FontWeight.w600,
-                      fontSize: 18 * getResponsiveText(context),
+                      fontSize: 18 * Responsive.getResponsiveText(context),
                       color: AppTheme.getColor(context).onPrimary,
                     ),
                     InkWell(
                       onTap: () => Navigator.pop(context),
                       child: Image.asset(
                         'assets/take_order/down_arrow.png',
-                        width: 0.05 * getWidth(context),
+                        width: 0.05 * Responsive.getWidth(context),
                       ),
                     ),
                   ],
@@ -304,9 +315,11 @@ class OrderHistoryCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 0.008 * getHeight(context)),
+          SizedBox(height: 0.008 * Responsive.getHeight(context)),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 0.04 * getWidth(context)),
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.04 * Responsive.getWidth(context),
+            ),
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
@@ -316,40 +329,40 @@ class OrderHistoryCard extends StatelessWidget {
               shrinkWrap: true,
               itemCount: 9,
               itemBuilder: (context, index) => Container(
-                padding: EdgeInsets.all(8 * getResponsive(context)),
+                padding: EdgeInsets.all(8 * Responsive.getResponsive(context)),
                 decoration: BoxDecoration(
                   border: Border.all(color: AppTheme.getColor(context).outline),
                   borderRadius: BorderRadius.circular(
-                    12 * getResponsive(context),
+                    12 * Responsive.getResponsive(context),
                   ),
                 ),
                 child: Column(
                   children: [
                     Image.asset(
                       'assets/take_order/apple_image.png',
-                      height: 0.025 * getHeight(context),
+                      height: 0.025 * Responsive.getHeight(context),
                     ),
-                    SizedBox(height: 0.01 * getHeight(context)),
+                    SizedBox(height: 0.01 * Responsive.getHeight(context)),
                     CustomText(
                       'Seven Up (7UP Soda) (500 ml)',
                       maxLines: 2,
                       fontWeight: FontWeight.w700,
-                      fontSize: 10 * getResponsiveText(context),
+                      fontSize: 10 * Responsive.getResponsiveText(context),
                       color: AppTheme.getColor(context).primary,
                     ),
-                    SizedBox(height: 0.03 * getHeight(context)),
+                    SizedBox(height: 0.03 * Responsive.getHeight(context)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomText(
                           'Unit: 25',
                           fontWeight: FontWeight.w600,
-                          fontSize: 10 * getResponsiveText(context),
+                          fontSize: 10 * Responsive.getResponsiveText(context),
                         ),
                         CustomText(
                           '₹2000.0',
                           fontWeight: FontWeight.w600,
-                          fontSize: 10 * getResponsiveText(context),
+                          fontSize: 10 * Responsive.getResponsiveText(context),
                         ),
                       ],
                     ),
@@ -367,22 +380,24 @@ class OrderHistoryCard extends StatelessWidget {
       getBottomSheet(
         context,
         Container(
-          width: getWidth(context),
+          width: Responsive.getWidth(context),
           color: AppTheme.getColor(context).onPrimary,
-          padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+          padding: EdgeInsets.symmetric(
+            horizontal: 0.08 * Responsive.getWidth(context),
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 0.02 * getHeight(context)),
+              SizedBox(height: 0.02 * Responsive.getHeight(context)),
               CustomText(
                 'Change Order Process Status',
                 fontWeight: FontWeight.w600,
-                fontSize: 14 * getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
               ),
-              // SizedBox(height: 0.02 * getHeight(context)),
+              // SizedBox(height: 0.02 * Responsive.getHeight(context)),
               DropdownMenu(
-                width: 0.8 * getWidth(context),
+                width: 0.8 * Responsive.getWidth(context),
                 hintText: 'Select',
                 leadingIcon: const Icon(Icons.notes),
                 dropdownMenuEntries: const [
@@ -393,14 +408,14 @@ class OrderHistoryCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 0.025 * getHeight(context)),
+              SizedBox(height: 0.025 * Responsive.getHeight(context)),
               SideBySideButtons(
                 button1Name: 'CANCEL',
                 button2Name: 'SUBMIT',
                 onTap1: () {},
                 onTap2: () {},
               ),
-              SizedBox(height: 0.035 * getHeight(context)),
+              SizedBox(height: 0.035 * Responsive.getHeight(context)),
             ],
           ),
         ),
@@ -420,11 +435,11 @@ class OrderHistoryCard extends StatelessWidget {
         child: CustomText(
           title,
           fontWeight: FontWeight.w700,
-          fontSize: 14 * getResponsiveText(context),
+          fontSize: 14 * Responsive.getResponsiveText(context),
         ),
       ),
       const CustomText(':'),
-      SizedBox(width: 0.03 * getWidth(context)),
+      SizedBox(width: 0.03 * Responsive.getWidth(context)),
       Expanded(
         flex: 5,
         child: InkWell(
@@ -434,7 +449,7 @@ class OrderHistoryCard extends StatelessWidget {
             decoration: decoration,
             color: textColor,
             fontWeight: FontWeight.w500,
-            fontSize: 13 * getResponsiveText(context),
+            fontSize: 13 * Responsive.getResponsiveText(context),
           ),
         ),
       ),
@@ -454,11 +469,11 @@ class OrderHistoryCard extends StatelessWidget {
             children: [
               Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 0.06 * getWidth(context),
-                  vertical: 0.01 * getHeight(context),
+                  horizontal: 0.06 * Responsive.getWidth(context),
+                  vertical: 0.01 * Responsive.getHeight(context),
                 ),
-                width: getWidth(context),
-                height: 0.05 * getHeight(context),
+                width: Responsive.getWidth(context),
+                height: 0.05 * Responsive.getHeight(context),
                 decoration: BoxDecoration(
                   color: AppTheme.getColor(context).primary,
                 ),
@@ -467,7 +482,7 @@ class OrderHistoryCard extends StatelessWidget {
                   'Order #232',
                   color: AppTheme.getColor(context).onPrimary,
                   fontWeight: FontWeight.w700,
-                  fontSize: 18 * getResponsiveText(context),
+                  fontSize: 18 * Responsive.getResponsiveText(context),
                 ),
               ),
               // Inner shadow simulation using a white gradient
@@ -489,24 +504,26 @@ class OrderHistoryCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
           Center(
             child: Image.asset(
               'assets/take_order/cancel_order.png',
-              height: 0.2 * getHeight(context),
+              height: 0.2 * Responsive.getHeight(context),
             ),
           ),
-          SizedBox(height: 0.015 * getHeight(context)),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
           Center(
             child: CustomText(
               'Do you Want ot Cancel this Order ?',
               fontWeight: FontWeight.w500,
-              fontSize: 18 * getResponsiveText(context),
+              fontSize: 18 * Responsive.getResponsiveText(context),
             ),
           ),
-          SizedBox(height: 0.015 * getHeight(context)),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.08 * Responsive.getWidth(context),
+            ),
             child: SideBySideButtons(
               button1Name: 'NO',
               button2Name: 'YES',
@@ -514,43 +531,47 @@ class OrderHistoryCard extends StatelessWidget {
               onTap2: () {},
             ),
           ),
-          SizedBox(height: 0.03 * getHeight(context)),
+          SizedBox(height: 0.03 * Responsive.getHeight(context)),
         ],
       ),
     ),
   );
 
   Container getOrderContainer(BuildContext context) => Container(
-    width: 0.23 * getWidth(context),
-    height: 0.09 * getHeight(context),
+    width: 0.23 * Responsive.getWidth(context),
+    height: 0.09 * Responsive.getHeight(context),
     padding: EdgeInsets.symmetric(
-      horizontal: 8 * getResponsive(context),
-      vertical: 4 * getResponsive(context),
+      horizontal: 8 * Responsive.getResponsive(context),
+      vertical: 4 * Responsive.getResponsive(context),
     ),
-    margin: EdgeInsets.symmetric(horizontal: 0.01 * getWidth(context)),
+    margin: EdgeInsets.symmetric(
+      horizontal: 0.01 * Responsive.getWidth(context),
+    ),
     decoration: BoxDecoration(
       border: Border.all(color: AppTheme.getColor(context).outline),
-      borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+      borderRadius: BorderRadius.circular(
+        12 * Responsive.getResponsive(context),
+      ),
     ),
     child: Column(
       children: [
         Image.asset(
           'assets/take_order/apple_image.png',
-          height: 0.025 * getHeight(context),
+          height: 0.025 * Responsive.getHeight(context),
         ),
-        SizedBox(height: 0.01 * getHeight(context)),
+        SizedBox(height: 0.01 * Responsive.getHeight(context)),
         CustomText(
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           'Appy Fizz (Apple)',
           color: AppTheme.getColor(context).primary,
-          fontSize: 11 * getResponsiveText(context),
+          fontSize: 11 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,
         ),
-        SizedBox(height: 0.005 * getHeight(context)),
+        SizedBox(height: 0.005 * Responsive.getHeight(context)),
         CustomText(
           'Unit: 25 ₹2000.0',
-          fontSize: 10 * getResponsiveText(context),
+          fontSize: 10 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w500,
         ),
       ],

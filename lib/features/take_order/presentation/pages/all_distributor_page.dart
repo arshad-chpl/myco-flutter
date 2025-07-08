@@ -16,15 +16,15 @@ class AllDistributorPage extends StatelessWidget {
       centerTitle: false,
       title: CustomText(
         'All Distributor',
-        fontSize: 20 * getResponsiveText(context),
+        fontSize: 20 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
       ),
     ),
 
     body: Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 0.08 * getWidth(context),
-        // vertical: 0.02 * getHeight(context),
+        horizontal: 0.08 * Responsive.getWidth(context),
+        // vertical: 0.02 * Responsive.getHeight(context),
       ),
       child: Column(
         children: [
@@ -34,23 +34,25 @@ class AllDistributorPage extends StatelessWidget {
             hintTextStyle: TextStyle(color: AppTheme.getColor(context).outline),
             border: OutlineInputBorder(
               borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+              borderRadius: BorderRadius.circular(
+                12 * Responsive.getResponsive(context),
+              ),
             ),
           ),
-          SizedBox(height: 0.015 * getHeight(context)),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
           Expanded(
             child: ListView.separated(
               itemCount: 3,
               itemBuilder: (context, index) => InkWell(
                 onTap: () => context.pushNamed('distributor-visitor'),
                 child: DistributorCard(
-                  headerHeight: 0.045 * getHeight(context),
+                  headerHeight: 0.045 * Responsive.getHeight(context),
                   title: 'Mukund',
                   bottomWidget: Padding(
                     padding: EdgeInsets.only(
-                      left: 0.02 * getWidth(context),
-                      right: 0.02 * getWidth(context),
-                      bottom: 0.01 * getHeight(context),
+                      left: 0.02 * Responsive.getWidth(context),
+                      right: 0.02 * Responsive.getWidth(context),
+                      bottom: 0.01 * Responsive.getHeight(context),
                     ),
                     child: Column(
                       children: [
@@ -65,7 +67,7 @@ class AllDistributorPage extends StatelessWidget {
                           icon: Icons.email,
                           title: 'Mukund@yopmail.com',
                         ),
-                        SizedBox(height: 0.01 * getHeight(context)),
+                        SizedBox(height: 0.01 * Responsive.getHeight(context)),
                         getCommonRow(
                           context,
                           icon: Icons.call,
@@ -78,7 +80,7 @@ class AllDistributorPage extends StatelessWidget {
                 ),
               ),
               separatorBuilder: (context, index) =>
-                  SizedBox(height: 0.01 * getHeight(context)),
+                  SizedBox(height: 0.01 * Responsive.getHeight(context)),
             ),
           ),
         ],
@@ -94,11 +96,11 @@ class AllDistributorPage extends StatelessWidget {
     bool isRadio = false,
   }) => Row(
     children: [
-      Icon(icon, size: 20 * getResponsive(context)),
-      SizedBox(width: 0.01 * getWidth(context)),
+      Icon(icon, size: 20 * Responsive.getResponsive(context)),
+      SizedBox(width: 0.01 * Responsive.getWidth(context)),
       CustomText(
         title,
-        fontSize: 14 * getResponsiveText(context),
+        fontSize: 14 * Responsive.getResponsiveText(context),
         decoration: decoration,
       ),
       const Spacer(),

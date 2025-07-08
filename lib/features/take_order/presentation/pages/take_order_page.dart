@@ -30,7 +30,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
       leading: const BackButton(),
       title: CustomText(
         'Take Order',
-        fontSize: 20 * getResponsiveText(context),
+        fontSize: 20 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
       ),
       actions: [
@@ -40,12 +40,12 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
           textStyle: AppTheme.getTextStyle(
             context,
           ).labelMedium!.copyWith(color: AppTheme.getColor(context).onPrimary),
-          width: 0.17 * getWidth(context),
-          height: 0.028 * getHeight(context),
-          boarderRadius: 20 * getResponsive(context),
+          width: 0.17 * Responsive.getWidth(context),
+          height: 0.028 * Responsive.getHeight(context),
+          boarderRadius: 20 * Responsive.getResponsive(context),
           isShadowBottomLeft: true,
         ),
-        SizedBox(width: 0.01 * getWidth(context)),
+        SizedBox(width: 0.01 * Responsive.getWidth(context)),
         Stack(
           alignment: const AlignmentGeometry.directional(1.5, -1.5),
           children: [
@@ -58,15 +58,15 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
                 color: AppTheme.getColor(context).onPrimary,
               ),
               backgroundColor: AppTheme.getColor(context).secondary,
-              width: 0.17 * getWidth(context),
-              height: 0.028 * getHeight(context),
-              boarderRadius: 20 * getResponsive(context),
+              width: 0.17 * Responsive.getWidth(context),
+              height: 0.028 * Responsive.getHeight(context),
+              boarderRadius: 20 * Responsive.getResponsive(context),
               borderColor: AppTheme.getColor(context).secondary,
               isShadowBottomLeft: true,
             ),
             Container(
-              height: 0.02 * getHeight(context),
-              width: 0.1 * getWidth(context),
+              height: 0.02 * Responsive.getHeight(context),
+              width: 0.1 * Responsive.getWidth(context),
               decoration: const BoxDecoration(shape: BoxShape.circle),
               child: Image.asset(
                 'assets/take_order/offer.png',
@@ -75,19 +75,21 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
             ),
           ],
         ),
-        SizedBox(width: 0.02 * getWidth(context)),
+        SizedBox(width: 0.02 * Responsive.getWidth(context)),
         Image.asset(
           'assets/take_order/cart.png',
-          width: 0.06 * getWidth(context),
+          width: 0.06 * Responsive.getWidth(context),
         ),
-        SizedBox(width: 0.06 * getWidth(context)),
+        SizedBox(width: 0.06 * Responsive.getWidth(context)),
       ],
     ),
     body: Container(
-      padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.08 * Responsive.getWidth(context),
+      ),
       child: Column(
         children: [
-          SizedBox(height: 0.01 * getHeight(context)),
+          SizedBox(height: 0.01 * Responsive.getHeight(context)),
           BlocBuilder<TabbarBloc, TabbarState>(
             builder: (context, state) {
               final selectedIndex = state is TabChangeState
@@ -112,7 +114,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
               );
             },
           ),
-          SizedBox(height: 0.015 * getHeight(context)),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
           Expanded(
             child: BlocBuilder<TabbarBloc, TabbarState>(
@@ -155,13 +157,15 @@ class AllProductsScreen extends StatelessWidget {
             context,
           ).labelLarge!.copyWith(color: AppColors.textSecondary),
           prefix: const Icon(Icons.search),
-          contentPadding: EdgeInsets.only(top: 0.012 * getHeight(context)),
-          boarderRadius: 12 * getResponsive(context),
+          contentPadding: EdgeInsets.only(
+            top: 0.012 * Responsive.getHeight(context),
+          ),
+          boarderRadius: 12 * Responsive.getResponsive(context),
           onChanged: (value) =>
               bloc.add(SearchQueryChangeEvent(value, productList)),
         ),
 
-        SizedBox(height: 0.025 * getHeight(context)),
+        SizedBox(height: 0.025 * Responsive.getHeight(context)),
 
         Expanded(
           child: BlocBuilder<TakeOrderBloc, TakeOrderState>(
@@ -185,12 +189,12 @@ class AllProductsScreen extends StatelessWidget {
                       color: AppTheme.getColor(context).outline,
                     ),
                     borderRadius: BorderRadius.circular(
-                      12 * getResponsive(context),
+                      12 * Responsive.getResponsive(context),
                     ),
                   ),
                 ),
                 separatorBuilder: (context, index) =>
-                    SizedBox(height: 0.01 * getHeight(context)),
+                    SizedBox(height: 0.01 * Responsive.getHeight(context)),
                 itemCount: products.length,
               );
             },
@@ -212,10 +216,10 @@ class FrequentsBuyScreen extends StatelessWidget {
           itemCount: 7,
           itemBuilder: (context, index) => const FrequentBuyCard(),
           separatorBuilder: (context, index) =>
-              SizedBox(height: 0.015 * getHeight(context)),
+              SizedBox(height: 0.015 * Responsive.getHeight(context)),
         ),
       ),
-      SizedBox(height: 0.02 * getHeight(context)),
+      SizedBox(height: 0.02 * Responsive.getHeight(context)),
       SideBySideButtons(
         button1Name: 'Reset Cart',
         button2Name: 'Add Order',
@@ -224,7 +228,7 @@ class FrequentsBuyScreen extends StatelessWidget {
           context.pushNamed('order-summary');
         },
       ),
-      SizedBox(height: 0.02 * getHeight(context)),
+      SizedBox(height: 0.02 * Responsive.getHeight(context)),
     ],
   );
 }
@@ -254,16 +258,16 @@ class FrequentsBuyScreen extends StatelessWidget {
 //       ],
 //     ),
 //     separatorBuilder: (context, index) =>
-//         SizedBox(height: 0.02 * getHeight(context)),
+//         SizedBox(height: 0.02 * Responsive.getHeight(context)),
 //   );
 
 //   Widget _buildMenuItem(BuildContext context, String title) => ListTile(
 //     title: CustomText(
 //       title,
 //       fontWeight: FontWeight.w600,
-//       fontSize: 14 * getResponsiveText(context),
+//       fontSize: 14 * Responsive.getResponsiveText(context),
 //     ),
-//     trailing: Icon(Icons.arrow_forward_ios, size: 18 * getResponsive(context)),
+//     trailing: Icon(Icons.arrow_forward_ios, size: 18 * Responsive.getResponsive(context)),
 //     onTap: () {
 //       // Handle tap
 //     },

@@ -23,105 +23,103 @@ Future<String?> showPicker(
 
   return await showCupertinoModalPopup<String>(
     context: context,
-    builder:
-        (_) => Container(
-          height: bottomSheetHeight ?? MediaQuery.of(context).size.height * 0.4,
-          width: double.infinity,
-          color: CupertinoColors.systemBackground.resolveFrom(context),
-          child: Column(
-            children: [
-              Expanded(
-                child:
-                    timePicker
-                        ? CustomTimePicker(
-                          key: _timePickerKey,
-                          initialDateTime: _selectedDate,
-                          use24hFormat: use24hFormat ?? false,
-                          onTimeChanged: (_) {},
-                        )
-                        : CustomDatePicker(
-                          key: _datePickerKey,
-                          initialDate: _selectedDate,
-                          minDate: minDate ?? DateTime(1900, 1, 1),
-                          maxDate: maxDate ?? DateTime(2100, 12, 31),
-                          pickDay: pickDay,
-                          onDateChanged: (_) {},
-                        ),
-              ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                child: CupertinoButton(
-                  padding: const EdgeInsets.all(0),
-                  borderRadius: BorderRadius.circular(50),
-                  color: AppColors.primary,
-                  child: Center(
-                    child: Text(
-                      'Submit',
-                      style: MyCoButtonTheme.getMobileTextStyle(context),
-                    ),
+    builder: (_) => Container(
+      height: bottomSheetHeight ?? MediaQuery.of(context).size.height * 0.4,
+      width: double.infinity,
+      color: CupertinoColors.systemBackground.resolveFrom(context),
+      child: Column(
+        children: [
+          Expanded(
+            child: timePicker
+                ? CustomTimePicker(
+                    key: _timePickerKey,
+                    initialDateTime: _selectedDate,
+                    use24hFormat: use24hFormat ?? false,
+                    onTimeChanged: (_) {},
+                  )
+                : CustomDatePicker(
+                    key: _datePickerKey,
+                    initialDate: _selectedDate,
+                    minDate: minDate ?? DateTime(1900, 1, 1),
+                    maxDate: maxDate ?? DateTime(2100, 12, 31),
+                    pickDay: pickDay,
+                    onDateChanged: (_) {},
                   ),
-                  onPressed: () {
-                    DateTime newDateTime;
-                    if (timePicker) {
-                      final selectedTime =
-                          _timePickerKey.currentState?.getSelectedTime();
-                      newDateTime = DateTime(
-                        _selectedDate.year,
-                        _selectedDate.month,
-                        _selectedDate.day,
-                        selectedTime?.hour ?? _selectedDate.hour,
-                        selectedTime?.minute ?? _selectedDate.minute,
-                      );
-                    } else {
-                      final selectedDate =
-                          _datePickerKey.currentState?.getSelectedDate();
-                      newDateTime = DateTime(
-                        selectedDate?.year ?? _selectedDate.year,
-                        selectedDate?.month ?? _selectedDate.month,
-                        selectedDate?.day ?? _selectedDate.day,
-                        _selectedDate.hour,
-                        _selectedDate.minute,
-                      );
-                    }
-
-                    String formatDate(DateTime date) {
-                      String monthName(int month) {
-                        const months = [
-                          'Jan',
-                          'Feb',
-                          'Mar',
-                          'Apr',
-                          'May',
-                          'Jun',
-                          'Jul',
-                          'Aug',
-                          'Sep',
-                          'Oct',
-                          'Nov',
-                          'Dec',
-                        ];
-                        return months[month - 1];
-                      }
-
-                      if (timePicker) {
-                        return DateFormat('hh:mm a').format(date);
-                      } else if (pickDay) {
-                        return '${monthName(date.month)} ${date.day}, ${date.year}';
-                      } else {
-                        return '${monthName(date.month)} ${date.year}';
-                      }
-                    }
-
-                    // ✅ Send formatted value
-                    final formatted = formatDate(newDateTime);
-                    Navigator.of(context).pop('$formatted');
-                  },
+          ),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+            child: CupertinoButton(
+              padding: const EdgeInsets.all(0),
+              borderRadius: BorderRadius.circular(50),
+              color: AppColors.primary,
+              child: Center(
+                child: Text(
+                  'Submit',
+                  style: MyCoButtonTheme.getMobileTextStyle(context),
                 ),
               ),
-            ],
+              onPressed: () {
+                DateTime newDateTime;
+                if (timePicker) {
+                  final selectedTime = _timePickerKey.currentState
+                      ?.getSelectedTime();
+                  newDateTime = DateTime(
+                    _selectedDate.year,
+                    _selectedDate.month,
+                    _selectedDate.day,
+                    selectedTime?.hour ?? _selectedDate.hour,
+                    selectedTime?.minute ?? _selectedDate.minute,
+                  );
+                } else {
+                  final selectedDate = _datePickerKey.currentState
+                      ?.getSelectedDate();
+                  newDateTime = DateTime(
+                    selectedDate?.year ?? _selectedDate.year,
+                    selectedDate?.month ?? _selectedDate.month,
+                    selectedDate?.day ?? _selectedDate.day,
+                    _selectedDate.hour,
+                    _selectedDate.minute,
+                  );
+                }
+
+                String formatDate(DateTime date) {
+                  String monthName(int month) {
+                    const months = [
+                      'Jan',
+                      'Feb',
+                      'Mar',
+                      'Apr',
+                      'May',
+                      'Jun',
+                      'Jul',
+                      'Aug',
+                      'Sep',
+                      'Oct',
+                      'Nov',
+                      'Dec',
+                    ];
+                    return months[month - 1];
+                  }
+
+                  if (timePicker) {
+                    return DateFormat('hh:mm a').format(date);
+                  } else if (pickDay) {
+                    return '${monthName(date.month)} ${date.day}, ${date.year}';
+                  } else {
+                    return '${monthName(date.month)} ${date.year}';
+                  }
+                }
+
+                // ✅ Send formatted value
+                final formatted = formatDate(newDateTime);
+                Navigator.of(context).pop('$formatted');
+              },
+            ),
           ),
-        ),
+        ],
+      ),
+    ),
   );
 }
 
@@ -371,18 +369,17 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
           margin: const EdgeInsets.symmetric(horizontal: 6),
         ),
         onSelectedItemChanged: onChanged,
-        children:
-            items
-                .map(
-                  (item) => Center(
-                    child: CustomText(
-                      displayText(item),
-                      fontSize: 22 * getResponsiveText(context),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                )
-                .toList(),
+        children: items
+            .map(
+              (item) => Center(
+                child: CustomText(
+                  displayText(item),
+                  fontSize: 22 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            )
+            .toList(),
       ),
     );
   }
@@ -567,7 +564,7 @@ Widget _buildLoopingPicker<T>({
         return Center(
           child: CustomText(
             displayText(item),
-            fontSize: 22 * getResponsiveText(context),
+            fontSize: 22 * Responsive.getResponsiveText(context),
             color: isSelected ? AppColors.primary : AppColors.textPrimary,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
           ),

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
@@ -40,7 +41,7 @@ class _SplashPageState extends State<SplashPage>
     setState(() {});
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed && _canNavigate) {
-        // _navigateNext();
+        _navigateNext();
       }
     });
     _preference.clearSecureStorageOnFreshInstall();
@@ -49,7 +50,7 @@ class _SplashPageState extends State<SplashPage>
   Future<void> _navigateNext() async {
     final isLoggedIn = await _preference.getLoginSession();
     if (!mounted) return;
-    context.go(isLoggedIn ?? false ? '/home' : RoutePaths.selectCompany);
+    context.go(isLoggedIn ?? false ? '/dashboard' : "/get-started");
   }
 
   @override
@@ -103,14 +104,15 @@ class _SplashPageState extends State<SplashPage>
       }
     },
     child: Scaffold(
-      backgroundColor: AppColors.splashBg,
+      backgroundColor: AppTheme.getColor(context).onPrimary,
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [AppColors.secondary, AppColors.white, AppColors.secondary],
-          ),
+          // gradient: LinearGradient(
+          //   begin: Alignment.topLeft,
+          //   end: Alignment.bottomRight,
+          //   colors: [AppColors.secondary, AppColors.white, AppColors.secondary],
+          // ),
+          color: AppTheme.getColor(context).onPrimary,
         ),
         child: Stack(
           children: [
@@ -123,13 +125,15 @@ class _SplashPageState extends State<SplashPage>
                     ..duration = composition.duration
                     ..forward();
                 },
-                height: 0.3 * getHeight(context),
-                // width: 0.5 * getWidth(context),
+                height: 0.3 * Responsive.getHeight(context),
+                // width: 0.5 * Responsive.getWidth(context),
               ),
             ),
             Container(
               alignment: Alignment.bottomCenter,
-              padding: EdgeInsets.only(bottom: 0.05 * getHeight(context)),
+              padding: EdgeInsets.only(
+                bottom: 0.05 * Responsive.getHeight(context),
+              ),
               child: CustomText(
                 'Version ${version} (${buildNumber})',
                 color: AppColors.white,

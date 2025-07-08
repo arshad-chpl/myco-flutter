@@ -14,29 +14,37 @@ class FrequentBuyCard extends StatelessWidget {
     decoration: BoxDecoration(
       color: AppTheme.getColor(context).onPrimary,
       border: Border.all(color: AppTheme.getColor(context).outline),
-      borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+      borderRadius: BorderRadius.circular(
+        12 * Responsive.getResponsive(context),
+      ),
     ),
     child: ListTile(
       contentPadding: EdgeInsets.only(
-        left: 12.0 * getResponsive(context),
-        right: 12.0 * getResponsive(context),
-        top: 6.0 * getResponsive(context),
+        left: 12.0 * Responsive.getResponsive(context),
+        right: 12.0 * Responsive.getResponsive(context),
+        top: 6.0 * Responsive.getResponsive(context),
       ),
       // isThreeLine: true,
       leading: Image.asset(
         'assets/take_order/apple_image.png',
-        width: 0.12 * getWidth(context),
+        width: 0.12 * Responsive.getWidth(context),
       ),
       title: CustomText(
         'Appy Fizz (Apple)',
         fontWeight: FontWeight.w500,
-        fontSize: 13 * getResponsiveText(context),
+        fontSize: 13 * Responsive.getResponsiveText(context),
       ),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomText('KG', fontSize: 12 * getResponsiveText(context)),
-          CustomText('2322342', fontSize: 10 * getResponsiveText(context)),
+          CustomText(
+            'KG',
+            fontSize: 12 * Responsive.getResponsiveText(context),
+          ),
+          CustomText(
+            '2322342',
+            fontSize: 10 * Responsive.getResponsiveText(context),
+          ),
         ],
       ),
       trailing: Column(
@@ -57,13 +65,13 @@ class FrequentBuyCard extends StatelessWidget {
             },
             title: 'Add',
             textStyle: TextStyle(
-              fontSize: 14 * getResponsiveText(context),
+              fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
               color: AppTheme.getColor(context).onPrimary,
             ),
-            boarderRadius: 30 * getResponsive(context),
-            width: 0.17 * getWidth(context),
-            height: 0.028 * getHeight(context),
+            boarderRadius: 30 * Responsive.getResponsive(context),
+            width: 0.17 * Responsive.getWidth(context),
+            height: 0.028 * Responsive.getHeight(context),
           ),
         ],
       ),
@@ -78,18 +86,18 @@ class FrequentBuyCard extends StatelessWidget {
   //   IconData? icon,
   //   String? textData,
   // }) => Container(
-  //   height: 0.045 * getHeight(context),
+  //   height: 0.045 * Responsive.getHeight(context),
   //   width: width,
   //   decoration: BoxDecoration(
   //     color: bgColor ?? AppTheme.getColor(context).primary,
-  //     borderRadius: BorderRadius.circular(8.0 * getResponsive(context)),
+  //     borderRadius: BorderRadius.circular(8.0 * Responsive.getResponsive(context)),
   //   ),
   //   child: Center(
   //     child: isIcon
   //         ? Icon(icon, color: AppTheme.getColor(context).onPrimary)
   //         : CustomText(
   //             textData ?? '',
-  //             fontSize: 20 * getResponsiveText(context),
+  //             fontSize: 20 * Responsive.getResponsiveText(context),
   //             fontWeight: FontWeight.bold,
   //           ),
   //   ),
