@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
+import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
+import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
 import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
 import 'package:myco_flutter/features/asset/view/testing.dart';
@@ -54,8 +57,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    // initialLocation: RoutePaths.getStarted,
-    initialLocation: RoutePaths.dashboard,
+    initialLocation: RoutePaths.getStarted,
+    // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -282,6 +285,15 @@ class AppRouter {
         path: RoutePaths.viewVisitDetails,
         name: 'view-visit-details',
         builder: (context, state) => ViewVisitDetailsPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.adminView,
+        name: 'admin-view',
+        builder: (context, state) => BlocProvider(
+          create: (_) => GetIt.I<AdminViewBloc>(),
+          child: const AdminViewPage(),
+        ),
+        routes: adminViewRoutes,
       ),
       // Add all modular routes here
       // ...authRoutes,
