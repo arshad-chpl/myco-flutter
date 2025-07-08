@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:myco_flutter/widgets/custom_text.dart';
+
+import '../../../asset/widgets/custom_appbar.dart';
 import '../../../lost_and_found/presentation/widgets/text_field.dart';
 
-class ViewDocumentScreen extends StatefulWidget {
-  const ViewDocumentScreen({super.key});
+class AddDocumentScreen extends StatefulWidget {
+  const AddDocumentScreen({super.key});
 
   @override
-  State<ViewDocumentScreen> createState() => _ViewDocumentScreenState();
+  State<AddDocumentScreen> createState() => _AddDocumentScreenState();
 }
 
-class _ViewDocumentScreenState extends State<ViewDocumentScreen> {
+class _AddDocumentScreenState extends State<AddDocumentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppbar(
-        backgroundColor: AppTheme.getColor(context).surface,
+        appBarBackgoundColor: AppTheme.getColor(context).surface,
         elevation: 0,
         title: CustomText(
-          'View Document',
+          'Employee Document',
           fontSize: 20 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
           color: AppTheme.getColor(context).onSurface,
@@ -39,27 +38,7 @@ class _ViewDocumentScreenState extends State<ViewDocumentScreen> {
             size: 0.025 * Responsive.getHeight(context),
           ),
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 0.025 * Responsive.getHeight(context),
-            ),
-            child: SvgPicture.asset('assets/documents/iv_more_bullets.svg'),
-          ),
-        ],
         leadingWidth: 60 * Responsive.getResponsive(context),
-      ),
-      floatingActionButton: MyCoButton(
-        boarderRadius: 50,
-        isShadowBottomLeft: true,
-        onTap: () {
-          context.push('/add-documents');
-        },
-        title: '',
-        image: const Icon(Icons.add, color: Colors.white, size: 40),
-        backgroundColor: AppColors.primary,
-        height: 63,
-        width: 63,
       ),
       body: Padding(
         padding: EdgeInsetsGeometry.symmetric(vertical: 16.0, horizontal: 16.0),
@@ -74,7 +53,7 @@ class _ViewDocumentScreenState extends State<ViewDocumentScreen> {
               fillColor: Colors.white,
               color: Colors.white,
               boarderRadius: 12,
-              hintTextStyle: _hintStyle(context),
+            
               height: 44,
             ),
           ],
@@ -82,11 +61,4 @@ class _ViewDocumentScreenState extends State<ViewDocumentScreen> {
       ),
     );
   }
-
-  TextStyle _hintStyle(BuildContext context) => const TextStyle(
-    fontFamily: 'Gilroy-SemiBold',
-    fontWeight: FontWeight.w400,
-    fontSize: 14,
-    color: Colors.black54,
-  );
 }

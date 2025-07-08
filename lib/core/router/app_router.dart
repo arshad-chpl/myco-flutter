@@ -11,6 +11,7 @@ import 'package:myco_flutter/features/company_selector/presentation/bloc/company
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:myco_flutter/features/documents/presentation/pages/add_document_screen.dart';
 import 'package:myco_flutter/features/documents/presentation/pages/view_document_screen.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
@@ -105,7 +106,6 @@ class AppRouter {
         builder: (context, state) => DashBoardPage(),
       ),
 
-
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
           providers: [BlocProvider(create: (context) => ListIdeaBloc())],
@@ -166,17 +166,17 @@ class AppRouter {
         ],
       ),
 
-
       GoRoute(
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
         builder: (context, state) => BlocProvider(
-            create: (context) => GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+          create: (context) =>
+              GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
           child: const FaceDetectionPage(),
-        )
+        ),
       ),
       // Add all modular routes here
-     // Add all modular routes here
+      // Add all modular routes here
       // GoRoute(
       //   path: RoutePaths.takeOrder,
       //   name: 'take-order',
@@ -236,7 +236,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.AddExpense,
         name: 'addExpense',
-        builder: (context, state) =>  const AddExpensePage(),
+        builder: (context, state) => const AddExpensePage(),
       ),
       GoRoute(
         path: RoutePaths.lostAndFoundAddScreen,
@@ -254,9 +254,9 @@ class AppRouter {
         path: RoutePaths.lostAndFoundItemDetails,
         name: 'lost-and-found-item-details',
         builder: (context, state) {
-          LostAndFoundItemModel lostitem= state.extra as LostAndFoundItemModel;
-          return ItemDetailsScreen(item: lostitem,);
-        }
+          LostAndFoundItemModel lostitem = state.extra as LostAndFoundItemModel;
+          return ItemDetailsScreen(item: lostitem);
+        },
       ),
 
       GoRoute(
@@ -285,9 +285,14 @@ class AppRouter {
         builder: (context, state) => ViewVisitDetailsPage(),
       ),
       GoRoute(
-        path: RoutePaths.viewDocumets,
+        path: RoutePaths.viewDocuments,
         name: 'view-documents',
         builder: (context, state) => ViewDocumentScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.addDocuments,
+        name: 'add-documents',
+        builder: (context, state) => AddDocumentScreen(),
       ),
       // Add all modular routes here
       // ...authRoutes,

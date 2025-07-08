@@ -58,5 +58,6 @@ class RoutePaths {
   static const String assetsHome = '/assets-home';
   static const String addVisit = '/add-visit';
   static const String viewVisitDetails = '/view-visit-details';
-  static const String viewDocumets = '/view-documents';
+  static const String viewDocuments = '/view-documents';
+  static const String addDocuments = '/add-documents';
 }
