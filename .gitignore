@@ -72,6 +72,7 @@ fastlane/readme.md
 
 # Files and directories created by pub
 .dart_tool/
+.idea/
 .packages
 .pub/
 build/
