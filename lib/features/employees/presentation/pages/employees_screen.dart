@@ -132,7 +132,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                           icon: const AssetImage(
                             'assets/employees/down_arrow.png',
                           ),
-                          btnTitle: 'Add',
+                          btnTitle: 'Submit',
                         );
                         if (selectedId != null) {
                           final selectedMap = departments.firstWhere(
@@ -158,8 +158,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
             ),
             const SizedBox(height: 10),
 
-            /// Employee List (Responsive GridView)
-            /// Responsive Employee List using Wrap
+            /// Employee List
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
@@ -174,8 +173,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                       : 3;
                   final itemWidth =
                       (screenWidth - (spacing * (itemCount - 1))) / itemCount;
-                  final itemHeight = 150.0;
-                  final childAspectRatio = 2 / 2.6;
+                  final itemHeight = screenWidth > 600 ? 180.0 : 150.0;
+                  final childAspectRatio = itemWidth / itemHeight;
 
                   return GridView.builder(
                     padding: const EdgeInsets.only(
@@ -197,6 +196,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                         name: emp['name']!,
                         department: emp['role']!,
                         image: NetworkImage(emp['image']!),
+                        showDelete: true,
+
                       );
                     },
                   );

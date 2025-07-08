@@ -149,7 +149,7 @@ class _MyCoButtonMobile extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            height: height ?? 0.04 * Responsive.getHeight(context),
+            height: height ?? 0.05 * Responsive.getHeight(context),
             width: width ?? 0.94 * Responsive.getWidth(context),
             decoration:
                 decoration ??

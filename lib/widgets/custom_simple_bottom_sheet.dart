@@ -106,8 +106,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                   borderRadius: BorderRadius.circular(12),
                   child: Image(
                     image: widget.icon!,
-                    height: 20 * Responsive.getResponsive(context),
-                    width: 20 * Responsive.getResponsive(context),
+                    width: 0.04 * Responsive.getWidth(context),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -150,7 +149,6 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
               if (id == null || name.isEmpty) return const SizedBox.shrink();
 
               return Container(
-                height: 40 * Responsive.getResponsive(context),
                 margin: EdgeInsets.symmetric(
                   vertical: 6 * Responsive.getResponsive(context),
                 ),
@@ -194,12 +192,13 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
           ),
         ),
 
-        SizedBox(height: 16 * Responsive.getResponsive(context)),
+        SizedBox(height: Responsive.getResponsive(context) * 0.16),
 
         // Submit button
         MyCoButton(
           title: widget.btnTitle ?? 'Select',
           boarderRadius: 50,
+          height: 0.05 * Responsive.getHeight(context),
           isShadowBottomLeft: true,
           fontFamily: 'Inter',
           fontWeight: FontWeight.w500,
@@ -211,7 +210,6 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
             }
           },
         ),
-        SizedBox(height: Responsive.getHeight(context) * 0.02),
       ],
     ),
   );
