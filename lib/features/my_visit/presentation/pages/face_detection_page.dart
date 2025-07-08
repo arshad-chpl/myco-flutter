@@ -9,6 +9,7 @@ import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_
 import 'package:myco_flutter/features/my_visit/presentation/widgets/show_out_of_range_bottom_sheet.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/warnings_alerts_messages.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_face_detection_widgets.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -26,6 +27,8 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
   late AnimationController _scanController;
   late Animation<double> _topLineAlignment;
   late Animation<double> _bottomLineAlignment;
+
+  final ScrollController scrollController = ScrollController();
 
   String scanningSate = 'scanning';
 
@@ -96,12 +99,13 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
   void dispose() {
     Theme.of(context);
     _scanController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
+    appBar: CustomAppbar(
       leading: IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_back)),
       title: CustomText(
         'Hello, AJAJ',
@@ -145,7 +149,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                                   color: AppTheme.getColor(context).onSecondary,
                                   borderRadius: const BorderRadius.vertical(top: Radius.circular(13)),
                                 ),
-                                child: const ShowOutOfRangeBottomSheet(),
+                                child: ShowOutOfRangeBottomSheet(scrollController: scrollController,),
                               ),
                             ),
                           )

@@ -24,9 +24,11 @@ class FaceDetectionBloc extends Bloc<FaceDetectionEvent, FaceDetectionState> {
   }
 
   void onOpenCamera(FaceDetectionEvent event, Emitter<FaceDetectionState> emit) async {
-    if (controller != null && controller!.value.isInitialized) {
-      return;
-    }
+    if (controller?.value.isInitialized ?? false) return;
+
+    // if (controller != null && controller!.value.isInitialized) {
+    //   return;
+    // }
 
     emit(FaceDetectionLoading());
     try {
@@ -70,7 +72,6 @@ class FaceDetectionBloc extends Bloc<FaceDetectionEvent, FaceDetectionState> {
   }
 
   void onUpdateDateTime(UpdateDateTime event, Emitter<FaceDetectionState> emit) {
-    print("🔁 Received new dateTime: ${event.formattedDateAndTime}");
     currentDateAndTime = event.formattedDateAndTime;
 
     if(state is FaceDetectionLoaded) {
@@ -116,7 +117,7 @@ class FaceDetectionBloc extends Bloc<FaceDetectionEvent, FaceDetectionState> {
 
         if (current.scanningState != 'success') {
           Future.microtask(() {
-            if(!isClosed) print("🔴 Timer expired — setting scanning state to failure"); add(UpdateScanningState(scanningState: 'failure'));
+            if(!isClosed)  add(UpdateScanningState(scanningState: 'failure'));
           },);
         }
         return;
