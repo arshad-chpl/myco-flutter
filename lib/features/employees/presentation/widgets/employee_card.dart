@@ -1,97 +1,251 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-class EmployeeCard extends StatelessWidget {
-  final String imageUrl;
+class EmployeeSelectionModel {
+  final ImageProvider image;
   final String name;
-  final String role;
+  final String department;
 
-  const EmployeeCard({
-    required this.imageUrl,
+  EmployeeSelectionModel({
+    required this.image,
     required this.name,
-    required this.role,
-    super.key,
+    required this.department,
   });
+}
+
+class EmployeeSelectionCard extends StatefulWidget {
+  final ImageProvider image;
+  final String name;
+  final String department;
+  final bool? showDelete;
+  final VoidCallback? onDeleteTap;
+  final TextStyle? nameTextStyle;
+  final TextStyle? departmentTextStyle;
+  final EdgeInsetsGeometry? boxPadding;
+  final double? boxHeight;
+  final double? boxWidth;
+  final Color? borderColor;
+  final double? borderRadius;
+  final double? imageWidth;
+  final double? imageHeight;
+  final double? spaceBetweenImageText;
+  final ValueChanged<EmployeeSelectionModel>? onSelected;
+
+  const EmployeeSelectionCard({
+    required this.image,
+    required this.name,
+    required this.department,
+    this.boxHeight,
+    this.boxWidth,
+    this.imageWidth,
+    this.imageHeight,
+    this.spaceBetweenImageText,
+    this.onSelected,
+    super.key,
+    this.borderRadius,
+    this.borderColor,
+    this.nameTextStyle,
+    this.departmentTextStyle,
+    this.boxPadding,
+    this.showDelete,
+    this.onDeleteTap,
+  });
+
+  @override
+  State<EmployeeSelectionCard> createState() => _EmployeeSelectionCardState();
+}
+
+class _EmployeeSelectionCardState extends State<EmployeeSelectionCard> {
+  bool isSelected = false;
+
+  void _toggleSelection() {
+    setState(() {
+      isSelected = !isSelected;
+    });
+
+    if (isSelected && widget.onSelected != null) {
+      widget.onSelected!(
+        EmployeeSelectionModel(
+          image: widget.image,
+          name: widget.name,
+          department: widget.department,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final themeColor = AppTheme.getColor(context);
-
-    return Container(
-      width: 140 * getResponsive(context),
-      padding: EdgeInsets.symmetric(
-        vertical: 16 * getResponsive(context),
-        horizontal: 10 * getResponsive(context),
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          color: AppTheme.getColor(context).primary,
-          width: 0.5,
-        ),
-        // boxShadow: const [
-        //   // BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 2)),
-        // ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+    return GestureDetector(
+      onTap: _toggleSelection,
+      child: Stack(
         children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                width: 76,
-                height: 76,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [Colors.white, Color(0xFFE0E6F3)],
-                    center: Alignment.center,
-                    radius: 0.8,
-                  ),
-                ),
+          Container(
+            width: widget.boxWidth,
+            height: widget.boxHeight,
+            padding:
+                widget.boxPadding ??
+                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+            decoration: BoxDecoration(
+              color: isSelected ? const Color(0xFFEEF7FD) : Colors.white,
+              borderRadius: BorderRadius.circular(widget.borderRadius ?? 20),
+              border: Border.all(
+                color: isSelected
+                    ? Colors.transparent
+                    : widget.borderColor ?? AppColors.primary,
               ),
-              Container(
-                width: 68,
-                height: 68,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: NetworkImage(imageUrl),
-                    fit: BoxFit.cover,
-                  ),
+              boxShadow: [
+                BoxShadow(
+                  color: isSelected ? Colors.grey.shade300 : Colors.transparent,
+                  spreadRadius: 3,
+                  blurRadius: 5,
                 ),
-              ),
-              Positioned(
-                bottom: 6,
-                right: 0,
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      width: widget.imageWidth ?? 90,
+                      height: widget.imageHeight ?? 90,
+                      child: Stack(
+                        children: [
+                          // Main outer circle
+                          Container(
+                            width: widget.imageWidth ?? 100,
+                            height: widget.imageHeight ?? 100,
+                            padding: const EdgeInsets.all(3.0),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                colors: isSelected
+                                    ? [
+                                        AppColors.primary,
+                                        AppColors.primary.withAlpha(150),
+                                        Colors.white,
+                                      ]
+                                    : [
+                                        Colors.grey.shade400,
+                                        Colors.grey.shade300,
+                                        Colors.white,
+                                      ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.all(12.0),
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.shade400,
+                                      spreadRadius: 2,
+                                      blurRadius: 3,
+                                    ),
+                                  ],
+                                ),
+                                child: CircleAvatar(
+                                  backgroundImage: widget.image,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          // Dot at bottom-right inside gradient ring
+                          Positioned(
+                            right: 6,
+                            bottom: 6,
+                            child: Container(
+                              width: 18,
+                              height: 18,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: isSelected
+                                      ? [
+                                          AppColors.primary,
+                                          AppColors.primary.withAlpha(150),
+                                          Colors.white,
+                                        ]
+                                      : [
+                                          Colors.grey.shade400,
+                                          Colors.grey.shade400,
+                                        ],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                ),
+                                shape: BoxShape.circle,
+                              ),
+                              padding: const EdgeInsets.all(2),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: isSelected
+                                      ? AppColors.primary
+                                      : Colors.grey.shade400,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: widget.spaceBetweenImageText ?? 5),
+                CustomText(
+                  widget.name,
+                  fontSize: 12 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+                const SizedBox(height: 6),
+                CustomText(
+                  widget.department,
+                  fontSize: 12 * Responsive.getResponsiveText(context),
+                  color: AppColors.textPrimary,
+                ),
+              ],
+            ),
+          ),
+          if (widget.showDelete == true)
+            Positioned(
+              top: 1.2,
+              right: 1.2,
+              child: GestureDetector(
+                onTap: widget.onDeleteTap,
                 child: Container(
-                  width: 18,
-                  height: 18,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFD8D8D8),
-                    shape: BoxShape.circle,
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: AppColors.error,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(
+                        (widget.borderRadius ?? 20) - 1,
+                      ),
+                      bottomLeft: Radius.circular(widget.borderRadius ?? 10),
+                    ),
+                  ),
+                  child: const Icon(
+                    CupertinoIcons.clear_circled,
+                    color: AppColors.white,
+                    size: 18,
                   ),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          CustomText(
-            name,
-            fontSize: 12 * getResponsiveText(context),
-            fontWeight: FontWeight.w600,
-            color: themeColor.onSurface,
-          ),
-          const SizedBox(height: 6),
-          CustomText(
-            role,
-            fontSize: 12 * getResponsiveText(context),
-            color: themeColor.onSurface,
-          ),
+            ),
         ],
       ),
     );

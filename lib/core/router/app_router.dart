@@ -102,7 +102,6 @@ class AppRouter {
         builder: (context, state) => DashBoardPage(),
       ),
 
-
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
           providers: [BlocProvider(create: (context) => ListIdeaBloc())],
@@ -163,17 +162,17 @@ class AppRouter {
         ],
       ),
 
-
       GoRoute(
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
         builder: (context, state) => BlocProvider(
-            create: (context) => GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+          create: (context) =>
+              GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
           child: const FaceDetectionPage(),
-        )
+        ),
       ),
       // Add all modular routes here
-     // Add all modular routes here
+      // Add all modular routes here
       // GoRoute(
       //   path: RoutePaths.takeOrder,
       //   name: 'take-order',
@@ -196,7 +195,6 @@ class AppRouter {
         path: RoutePaths.companySearch,
         name: 'companySearch',
         builder: (context, state) => SearchCompanyScreen(),
-        builder: (context, state) => const TermsAndConditions(),
       ),
       GoRoute(
         path: RoutePaths.payslip,
@@ -221,11 +219,6 @@ class AppRouter {
         builder: (context, state) => const EmployeesScreen(),
       ),
       GoRoute(
-        path: RoutePaths.employees,
-        name: 'employees',
-        builder: (context, state) => const EmployeesScreen(),
-      ),
-      GoRoute(
         path: RoutePaths.contactAdmin,
         name: 'contact-admin',
         builder: (context, state) => const ContactAdminPage(),
@@ -239,7 +232,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.AddExpense,
         name: 'addExpense',
-        builder: (context, state) =>  const AddExpensePage(),
+        builder: (context, state) => const AddExpensePage(),
       ),
       GoRoute(
         path: RoutePaths.lostAndFoundAddScreen,
@@ -257,9 +250,9 @@ class AppRouter {
         path: RoutePaths.lostAndFoundItemDetails,
         name: 'lost-and-found-item-details',
         builder: (context, state) {
-          LostAndFoundItemModel lostitem= state.extra as LostAndFoundItemModel;
-          return ItemDetailsScreen(item: lostitem,);
-        }
+          LostAndFoundItemModel lostitem = state.extra as LostAndFoundItemModel;
+          return ItemDetailsScreen(item: lostitem);
+        },
       ),
 
       GoRoute(
