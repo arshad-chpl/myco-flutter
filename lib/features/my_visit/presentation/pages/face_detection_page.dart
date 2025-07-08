@@ -113,32 +113,46 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
           onPressed: () {
             final faceDetectionBloc = context.read<FaceDetectionBloc>();
 
-            showModalBottomSheet(
-              context: context,
-                backgroundColor: Colors.transparent,
-                isScrollControlled: true,
-              builder: (_) => BlocProvider.value(
-                value: faceDetectionBloc,
-                child: DraggableScrollableSheet(
-                  expand: false,
-                  initialChildSize: 0.9,
-                  maxChildSize: 0.95,
-                  minChildSize: 0.6,
-                    builder: (context, scrollController) => Stack(
-                      children: [
-                        BackdropFilter(filter: ImageFilter.blur( sigmaX: 6,
-                          sigmaY: 6),),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppTheme.getColor(context).onSecondary,
-                            borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+            showGeneralDialog(
+                context: context,
+                barrierDismissible: true,
+                barrierLabel: 'Dismiss',
+                transitionDuration: const Duration(milliseconds: 300),
+                pageBuilder: (_, _, _) => BlocProvider.value(
+                    value: faceDetectionBloc,
+                    child: DraggableScrollableSheet(
+                      expand: false,
+                      initialChildSize: 0.9,
+                      maxChildSize: 0.95,
+                      minChildSize: 0.6,
+                      builder: (context, scrollController) => Stack(
+                        children: [
+                          BackdropFilter(
+                            filter: ImageFilter.blur(
+                                sigmaX: 2,
+                              sigmaY: 2
+                            ),
+                            child: Container(
+                              color: Colors.transparent,
+                            ),
                           ),
-                          child: const ShowOutOfRangeBottomSheet(),
-                        )
-                      ],
-                    ),
-                )
-              ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Material(
+                              color: Colors.transparent,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: AppTheme.getColor(context).onSecondary,
+                                  borderRadius: const BorderRadius.vertical(top: Radius.circular(13)),
+                                ),
+                                child: const ShowOutOfRangeBottomSheet(),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                ),
             );
           },
           icon: const Icon(Icons.more_vert),
