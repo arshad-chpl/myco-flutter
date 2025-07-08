@@ -9,14 +9,14 @@ sealed class TakeOrderState extends Equatable {
 
 final class TakeOrderInitial extends TakeOrderState {}
 
-class TabChangeState extends TakeOrderState {
-  final int selectedIndex;
+// class TabChangeState extends TakeOrderState {
+//   final int selectedIndex;
 
-  const TabChangeState({required this.selectedIndex});
+//   const TabChangeState({required this.selectedIndex});
 
-  @override
-  List<Object> get props => [selectedIndex];
-}
+//   @override
+//   List<Object> get props => [selectedIndex];
+// }
 
 final class VisitRunning extends TakeOrderState {
   final Duration duration;

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
+import 'package:myco_flutter/features/payslip/presentation/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/payslip_card.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/summary_bottomsheet.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
@@ -10,8 +13,12 @@ import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart'
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
+// ignore: must_be_immutable
 class PayslipPage extends StatelessWidget {
-  const PayslipPage({super.key});
+  PayslipPage({super.key});
+
+  List<Widget> screens = [const PaySlip(), const OtherEarnings()];
+
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
@@ -20,6 +27,7 @@ class PayslipPage extends StatelessWidget {
         fontWeight: FontWeight.w700,
         fontSize: 20 * getResponsiveText(context),
       ),
+      centerTitle: false,
       leading: const BackButton(),
       actions: [
         MyCoButton(
@@ -38,6 +46,7 @@ class PayslipPage extends StatelessWidget {
           height: 0.03 * getHeight(context),
           isShadowBottomLeft: true,
         ),
+        SizedBox(width: 0.06 * getWidth(context)),
       ],
     ),
     body: Column(
@@ -62,25 +71,21 @@ class PayslipPage extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () {
-                  // showModalBottomSheet(
-                  //   constraints: BoxConstraints(
-                  //     maxHeight: 0.67 * getHeight(context),
-                  //   ),
-                  //   useSafeArea: true,
-                  //   isScrollControlled: true,
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadiusGeometry.circular(
-                  //       8 * getResponsive(context),
-                  //     ),
-                  //   ),
-                  //   clipBehavior: Clip.hardEdge,
-                  //   context: context,
-                  //   builder: (context) => DialDatePickerWidget(
-                  //     onSubmit: (selectedDate) {},
-                  //     bottomSheetHeight: 0.5 * getHeight(context),
-                  //   ),
-                  // );
+                onTap: () async {
+                  // ignore: unused_local_variable
+                  final selectedDate = await showPicker(
+                    context,
+                    minDate: DateTime(2020),
+                    maxDate: DateTime(2030),
+                    pickDay: false,
+                    timePicker: false,
+                  );
+
+                  // if (selectedDate != null) {
+                  //   setState(() {
+                  //     myDate = selectedDate;
+                  //   });
+                  // }
                 },
                 child: Row(
                   children: [
@@ -117,22 +122,40 @@ class PayslipPage extends StatelessWidget {
         SizedBox(height: 0.02 * getHeight(context)),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
-          child: MyCustomTabBar(
-            tabs: const ['Paylsip', 'Other Earnings'],
-            selectedBgColors: [
-              AppTheme.getColor(context).secondary,
-              AppTheme.getColor(context).primary,
-            ],
-            unselectedBorderAndTextColor: AppTheme.getColor(context).primary,
-            tabBarBorderColor: AppColors.black,
-            selectedIndex: 0,
-            isShadowBottomLeft: true,
+          child: BlocBuilder<TabbarBloc, TabbarState>(
+            builder: (context, state) {
+              final selectedIndex = state is TabChangeState
+                  ? state.selectedIndex
+                  : 0;
+              return MyCustomTabBar(
+                tabs: const ['Paylsip', 'Other Earnings'],
+                selectedBgColors: [
+                  AppTheme.getColor(context).secondary,
+                  AppTheme.getColor(context).primary,
+                ],
+                unselectedBorderAndTextColor: AppTheme.getColor(
+                  context,
+                ).primary,
+                tabBarBorderColor: AppColors.black,
+                selectedIndex: selectedIndex,
+                isShadowBottomLeft: true,
+                onTabChange: (index) {
+                  context.read<TabbarBloc>().add(TabChangeEvent(index: index));
+                },
+              );
+            },
           ),
         ),
         SizedBox(height: 0.02 * getHeight(context)),
 
-        const PaySlip(),
-        // const OtherEarnings(),
+        BlocBuilder<TabbarBloc, TabbarState>(
+          builder: (context, state) {
+            final selectedIndex = state is TabChangeState
+                ? state.selectedIndex
+                : 0;
+            return screens[selectedIndex];
+          },
+        ),
       ],
     ),
   );
@@ -142,82 +165,78 @@ class PaySlip extends StatelessWidget {
   const PaySlip({super.key});
 
   @override
-  Widget build(BuildContext context) => Expanded(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          height: 0.63 * getHeight(context),
-          padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
-          child: Expanded(
-            child: ListView.separated(
-              itemCount: 8,
-              itemBuilder: (context, index) => PayslipCard(
-                month: 'March',
-                year: '2025',
-                netPay: '2,800.00',
-                grossSalary: '3000.00',
-                totalDeduction: '200.00',
-                onView: () {
-                  context.pushNamed('payslip-detail');
-                },
-              ),
-              separatorBuilder: (context, index) =>
-                  SizedBox(height: 0.01 * getHeight(context)),
-            ),
+  Widget build(BuildContext context) => Column(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Container(
+        height: 0.63 * getHeight(context),
+        padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+        child: ListView.separated(
+          itemCount: 8,
+          itemBuilder: (context, index) => PayslipCard(
+            month: 'March',
+            year: '2025',
+            netPay: '2,800.00',
+            grossSalary: '3000.00',
+            totalDeduction: '200.00',
+            onView: () {
+              context.pushNamed('payslip-detail');
+            },
           ),
+          separatorBuilder: (context, index) =>
+              SizedBox(height: 0.01 * getHeight(context)),
         ),
+      ),
 
-        Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 0.08 * getWidth(context),
-            vertical: 0.02 * getHeight(context),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              MyCoButton(
-                onTap: () {
-                  showModalBottomSheet(
-                    constraints: BoxConstraints(
-                      maxHeight: 0.67 * getHeight(context),
-                    ),
-                    useSafeArea: true,
-                    isScrollControlled: true,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadiusGeometry.circular(
-                        8 * getResponsive(context),
-                      ),
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    context: context,
-                    builder: (context) => const SummaryBottomsheet(),
-                  );
-                },
-                title: 'View Summary',
-                width: 0.4 * getWidth(context),
-                height: 0.04 * getHeight(context),
-                boarderRadius: 30 * getResponsive(context),
-                textStyle: TextStyle(
-                  fontSize: 14 * getResponsiveText(context),
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.getColor(context).onPrimary,
-                ),
-                isShadowBottomLeft: true,
-              ),
-              CustomText(
-                'Download All Payslip',
-                fontSize: 14 * getResponsiveText(context),
-                color: AppTheme.getColor(context).primary,
-                decoration: TextDecoration.underline,
-                decorationColor: AppTheme.getColor(context).primary,
-                fontWeight: FontWeight.w700,
-              ),
-            ],
-          ),
+      Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 0.08 * getWidth(context),
+          vertical: 0.02 * getHeight(context),
         ),
-      ],
-    ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            MyCoButton(
+              onTap: () {
+                showModalBottomSheet(
+                  constraints: BoxConstraints(
+                    maxHeight: 0.67 * getHeight(context),
+                  ),
+                  useSafeArea: true,
+                  isScrollControlled: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(
+                      8 * getResponsive(context),
+                    ),
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                  context: context,
+                  builder: (context) => const SummaryBottomsheet(),
+                );
+              },
+              title: 'View Summary',
+              width: 0.4 * getWidth(context),
+              height: 0.04 * getHeight(context),
+              boarderRadius: 30 * getResponsive(context),
+              textStyle: TextStyle(
+                fontSize: 14 * getResponsiveText(context),
+                fontWeight: FontWeight.w600,
+                color: AppTheme.getColor(context).onPrimary,
+              ),
+              isShadowBottomLeft: true,
+            ),
+            CustomText(
+              'Download All Payslip',
+              fontSize: 14 * getResponsiveText(context),
+              color: AppTheme.getColor(context).primary,
+              decoration: TextDecoration.underline,
+              decorationColor: AppTheme.getColor(context).primary,
+              fontWeight: FontWeight.w700,
+            ),
+          ],
+        ),
+      ),
+    ],
   );
 }
 
