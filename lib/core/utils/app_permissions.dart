@@ -6,6 +6,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '';
 
 enum AppPermission {
   camera,
@@ -87,7 +88,7 @@ class PermissionUtil {
             const SizedBox(width: 10),
             CustomText(
               'Permission Needed',
-              fontSize: 20 * getResponsiveText(context),
+              fontSize: 20 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
               color: AppTheme.getColor(context).onSurface,
             ),
@@ -95,7 +96,7 @@ class PermissionUtil {
         ),
         content: CustomText(
           message,
-          fontSize: 16 * getResponsiveText(context),
+          fontSize: 16 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,
           color: AppTheme.getColor(context).onSurfaceVariant,
         ),
@@ -109,7 +110,7 @@ class PermissionUtil {
             onPressed: () => Navigator.of(context).pop(),
             child: CustomText(
               'Cancel',
-              fontSize: 18 * getResponsiveText(context),
+              fontSize: 18 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
               color: AppTheme.getColor(context).outline,
             ),
@@ -131,7 +132,7 @@ class PermissionUtil {
             icon: const Icon(Icons.settings, size: 20),
             label: CustomText(
               'Open Settings',
-              fontSize: 14 * getResponsiveText(context),
+              fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
             ),
           ),

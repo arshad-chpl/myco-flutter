@@ -26,9 +26,9 @@ class SearchCompanyScreen extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.only(
-          left: 26 * getResponsive(context),
-          right: 26 * getResponsive(context),
-          top: 180 * getResponsive(context),
+          left: 26 * Responsive.getResponsive(context),
+          right: 26 * Responsive.getResponsive(context),
+          top: 180 * Responsive.getResponsive(context),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -36,44 +36,44 @@ class SearchCompanyScreen extends StatelessWidget {
           children: [
             Image.asset(
               "assets/search_society/search-company.png",
-              width: 0.8 * getWidth(context),
+              width: 0.8 * Responsive.getWidth(context),
             ),
-            SizedBox(height: 0.055 * getHeight(context)),
+            SizedBox(height: 0.055 * Responsive.getHeight(context)),
             CustomText(
               'Select Your Company',
 
-              fontSize: 30 * getResponsiveText(context),
+              fontSize: 30 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
               color: AppTheme.getColor(context).onSurface,
 
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 0.014 * getHeight(context)),
+            SizedBox(height: 0.014 * Responsive.getHeight(context)),
             CustomText(
               'Your Journey Starts Here! Select your Company to register or sign in.',
 
-              fontSize: 15 * getResponsiveText(context),
+              fontSize: 15 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).onSurfaceVariant,
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 0.04 * getHeight(context)),
+            SizedBox(height: 0.04 * Responsive.getHeight(context)),
             Align(
               alignment: Alignment.centerLeft,
               child: CustomText(
                 'Company Name',
 
-                fontSize: 15 * getResponsiveText(context),
+                fontSize: 15 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
                 color: AppTheme.getColor(context).onSurfaceVariant,
 
                 textAlign: TextAlign.start,
               ),
             ),
-            SizedBox(height: 0.017 * getHeight(context)),
+            SizedBox(height: 0.017 * Responsive.getHeight(context)),
             MyCoTextfield(
               hintText: 'Search Your Company',
               hintTextStyle: TextStyle(
-                fontSize: 18 * getResponsiveText(context),
+                fontSize: 18 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).outline,
               ),
               preFixImage: 'assets/search_society/company_icon.png',
@@ -82,9 +82,9 @@ class SearchCompanyScreen extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 borderSide: BorderSide(color: Color(0xFF98A2B3), width: 1),
               ),
-              height: 0.02 * getHeight(context),
+              height: 0.02 * Responsive.getHeight(context),
             ),
-            SizedBox(height: 0.02 * getHeight(context)),
+            SizedBox(height: 0.02 * Responsive.getHeight(context)),
             MyCoButton(
               onTap: () {
                 showModalBottomSheet(
@@ -93,7 +93,7 @@ class SearchCompanyScreen extends StatelessWidget {
 
                   backgroundColor: Colors.transparent,
                   builder: (_) => BottomsheetRadioButton(
-                    height: getHeight(context) * 0.9,
+                    height: Responsive.getHeight(context) * 0.9,
                     showSnackBar: true,
                     items: const [
                       {
@@ -137,11 +137,11 @@ class SearchCompanyScreen extends StatelessWidget {
                 );
               },
               title: 'Search',
-              width: getWidth(context),
-              height: 0.065 * getHeight(context),
+              width: Responsive.getWidth(context),
+              height: 0.065 * Responsive.getHeight(context),
               boarderRadius: 30,
               textStyle: TextStyle(
-                fontSize: 18 * getResponsiveText(context),
+                fontSize: 18 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
                 color: AppTheme.getColor(context).onPrimary,
               ),

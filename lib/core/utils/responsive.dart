@@ -38,43 +38,45 @@ class Responsive {
   static double responsivePadding() {
     return isTablet ? 24 : 16;
   }
-}
 
-double getHeight(context) {
-  return MediaQuery.of(context).size.height;
-}
-
-double getWidth(context) {
-  print(MediaQuery.of(context).size.width);
-  return MediaQuery.of(context).size.width;
-}
-
-double getResponsive(context) {
-  print(
-    '${MediaQuery.of(context).size.width} , ${MediaQuery.of(context).size.height}',
-  );
-  return MediaQuery.of(context).size.height * 0.001;
-}
-
-double getResponsiveOnWidth(context) {
-  kDebugMode
-      ? print('Responsive Width: ${MediaQuery.of(context).size.width * 0.001}')
-      : null;
-  return MediaQuery.of(context).size.width * 0.001;
-}
-
-double getResponsiveText(context) {
-  if (Platform.isAndroid) {
-    return getWidth(context) > 600 ? 1.5 : 0.8;
-  } else {
-    return getWidth(context) > 600 ? 1.5 : 0.9;
+  static double getHeight(context) {
+    return MediaQuery.of(context).size.height;
   }
-}
 
-double getDashboardResponsiveText(BuildContext context) {
-  if (getWidth(context) > 600) {
-    return 1.2;
-  } else {
-    return 1;
+  static double getWidth(context) {
+    print(MediaQuery.of(context).size.width);
+    return MediaQuery.of(context).size.width;
+  }
+
+  static double getResponsive(context) {
+    print(
+      '${MediaQuery.of(context).size.width} , ${MediaQuery.of(context).size.height}',
+    );
+    return MediaQuery.of(context).size.height * 0.001;
+  }
+
+  static double getResponsiveOnWidth(context) {
+    kDebugMode
+        ? print(
+            'Responsive Width: ${MediaQuery.of(context).size.width * 0.001}',
+          )
+        : null;
+    return MediaQuery.of(context).size.width * 0.001;
+  }
+
+  static double getResponsiveText(context) {
+    if (Platform.isAndroid) {
+      return Responsive.getWidth(context) > 600 ? 1.5 : 0.8;
+    } else {
+      return Responsive.getWidth(context) > 600 ? 1.5 : 0.9;
+    }
+  }
+
+  static double getDashboardResponsiveText(BuildContext context) {
+    if (Responsive.getWidth(context) > 600) {
+      return 1.2;
+    } else {
+      return 1;
+    }
   }
 }

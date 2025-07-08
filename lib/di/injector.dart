@@ -5,6 +5,7 @@ import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
 import 'package:myco_flutter/features/language_selector/presentation/di/language_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
+import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 
 final sl = GetIt.instance;
 
@@ -27,4 +28,7 @@ Future<void> init() async {
 
   //========Inquiry=========
   InquiryDi(sl);
+
+  //========Face Detection=========
+  faceDetectionDi(sl);
 }

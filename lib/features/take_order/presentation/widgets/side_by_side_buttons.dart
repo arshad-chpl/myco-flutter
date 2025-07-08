@@ -37,9 +37,9 @@ class SideBySideButtons extends StatelessWidget {
         child: MyCoButton(
           onTap: onTap1,
           title: button1Name,
-          height: height1 ?? 0.04 * getHeight(context),
+          height: height1 ?? 0.04 * Responsive.getHeight(context),
           backgroundColor: bgColor1 ?? AppTheme.getColor(context).onPrimary,
-          boarderRadius: 30 * getResponsive(context),
+          boarderRadius: 30 * Responsive.getResponsive(context),
           textStyle: AppTheme.getTextStyle(
             context,
           ).bodyLarge!.copyWith(color: AppTheme.getColor(context).primary),
@@ -49,9 +49,9 @@ class SideBySideButtons extends StatelessWidget {
         child: MyCoButton(
           onTap: onTap2,
           title: button2Name,
-          height: height2 ?? 0.04 * getHeight(context),
+          height: height2 ?? 0.04 * Responsive.getHeight(context),
           backgroundColor: bgColor2 ?? AppColors.primary,
-          boarderRadius: 30 * getResponsive(context),
+          boarderRadius: 30 * Responsive.getResponsive(context),
           textStyle: AppTheme.getTextStyle(
             context,
           ).bodyLarge!.copyWith(color: AppTheme.getColor(context).onPrimary),

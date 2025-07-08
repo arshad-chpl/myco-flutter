@@ -22,24 +22,26 @@ class DistributorVisitorPage extends StatelessWidget {
       backgroundColor: AppTheme.getColor(context).surface,
       title: CustomText(
         'Mahakali Tractors (RT43575)',
-        fontSize: 20 * getResponsiveText(context),
+        fontSize: 20 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
       ),
     ),
     body: SingleChildScrollView(
       child: Container(
-        height: getHeight(context),
-        padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+        height: Responsive.getHeight(context),
+        padding: EdgeInsets.symmetric(
+          horizontal: 0.08 * Responsive.getWidth(context),
+        ),
         child: Column(
           children: [
             DistributorCard(
-              headerHeight: 0.055 * getHeight(context),
+              headerHeight: 0.055 * Responsive.getHeight(context),
               title: 'No Name',
               isHeaderIconEnabled: true,
               bottomWidget: Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 0.04 * getWidth(context),
-                  vertical: 0.01 * getHeight(context),
+                  horizontal: 0.04 * Responsive.getWidth(context),
+                  vertical: 0.01 * Responsive.getHeight(context),
                 ),
                 child: Column(
                   children: [
@@ -47,49 +49,50 @@ class DistributorVisitorPage extends StatelessWidget {
                       children: [
                         Image.asset(
                           'assets/take_order/call-calling.png',
-                          width: 0.04 * getWidth(context),
+                          width: 0.04 * Responsive.getWidth(context),
                         ),
-                        SizedBox(width: 0.02 * getWidth(context)),
+                        SizedBox(width: 0.02 * Responsive.getWidth(context)),
                         CustomText(
                           '+91 9909945983',
                           decoration: TextDecoration.underline,
-                          fontSize: 14 * getResponsiveText(context),
+                          fontSize: 14 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w600,
                         ),
                       ],
                     ),
-                    SizedBox(height: 0.01 * getHeight(context)),
+                    SizedBox(height: 0.01 * Responsive.getHeight(context)),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Image.asset(
                           'assets/take_order/location.png',
-                          width: 0.04 * getWidth(context),
+                          width: 0.04 * Responsive.getWidth(context),
                         ),
-                        SizedBox(width: 0.02 * getWidth(context)),
+                        SizedBox(width: 0.02 * Responsive.getWidth(context)),
                         Expanded(
                           child: CustomText(
                             'A-809 World Trade Tower (WTT, Nr BMW Showroom, Sarkhej Gandhinagar Hwy, Makarba, Ahmedabad, Sarkhej-Okaf, Gujarat 380051, India',
-                            fontSize: 12 * getResponsiveText(context),
+                            fontSize:
+                                12 * Responsive.getResponsiveText(context),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 0.005 * getHeight(context)),
+                    SizedBox(height: 0.005 * Responsive.getHeight(context)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Image.asset(
                           'assets/take_order/geo_location.png',
-                          // height: 0.01 * getHeight(context),
-                          width: 0.06 * getWidth(context),
+                          // height: 0.01 * Responsive.getHeight(context),
+                          width: 0.06 * Responsive.getWidth(context),
                         ),
-                        SizedBox(width: 0.01 * getWidth(context)),
+                        SizedBox(width: 0.01 * Responsive.getWidth(context)),
                         CustomText(
                           'Get Direction',
                           decoration: TextDecoration.underline,
-                          fontSize: 12 * getResponsiveText(context),
+                          fontSize: 12 * Responsive.getResponsiveText(context),
                           color: AppTheme.getColor(context).primary,
                           fontWeight: FontWeight.w500,
                         ),
@@ -100,7 +103,7 @@ class DistributorVisitorPage extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: 0.01 * getHeight(context)),
+            SizedBox(height: 0.01 * Responsive.getHeight(context)),
             BlocBuilder<TakeOrderBloc, TakeOrderState>(
               builder: (context, state) {
                 final bool isRunning = state is VisitRunning;
@@ -122,15 +125,17 @@ class DistributorVisitorPage extends StatelessWidget {
                     .padLeft(8, '0');
 
                 return Container(
-                  padding: EdgeInsets.all(12 * getResponsive(context)),
-                  width: 0.83 * getWidth(context),
+                  padding: EdgeInsets.all(
+                    12 * Responsive.getResponsive(context),
+                  ),
+                  width: 0.83 * Responsive.getWidth(context),
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: AppTheme.getColor(context).outline,
                     ),
                     color: AppTheme.getColor(context).onPrimary,
                     borderRadius: BorderRadius.circular(
-                      12 * getResponsive(context),
+                      12 * Responsive.getResponsive(context),
                     ),
                   ),
                   child: Column(
@@ -161,23 +166,23 @@ class DistributorVisitorPage extends StatelessWidget {
                           }
                         },
                         title: isRunning ? 'Stop' : 'Start',
-                        width: 0.2 * getWidth(context),
-                        height: 0.035 * getHeight(context),
+                        width: 0.2 * Responsive.getWidth(context),
+                        height: 0.035 * Responsive.getHeight(context),
                         backgroundColor: AppTheme.getColor(context).secondary,
-                        boarderRadius: 30 * getResponsive(context),
+                        boarderRadius: 30 * Responsive.getResponsive(context),
                         borderColor: AppTheme.getColor(context).secondary,
                         isShadowBottomLeft: true,
                         image: isRunning
                             ? Image.asset(
                                 'assets/take_order/stop-button.png',
-                                width: 0.05 * getWidth(context),
+                                width: 0.05 * Responsive.getWidth(context),
                               )
                             : Image.asset(
                                 'assets/take_order/play-button.png',
-                                width: 0.03 * getWidth(context),
+                                width: 0.03 * Responsive.getWidth(context),
                               ),
 
-                        spacing: 3 * getResponsive(context),
+                        spacing: 3 * Responsive.getResponsive(context),
                       ),
 
                       if (state is VisitRunning || state is VisitStopped)
@@ -185,11 +190,15 @@ class DistributorVisitorPage extends StatelessWidget {
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  SizedBox(width: 0.08 * getWidth(context)),
+                                  SizedBox(
+                                    width: 0.08 * Responsive.getWidth(context),
+                                  ),
                                   CustomText(
                                     textAlign: TextAlign.center,
                                     formatted,
-                                    fontSize: 14 * getResponsiveText(context),
+                                    fontSize:
+                                        14 *
+                                        Responsive.getResponsiveText(context),
                                     fontWeight: FontWeight.bold,
                                     color: AppTheme.getColor(context).primary,
                                   ),
@@ -197,7 +206,9 @@ class DistributorVisitorPage extends StatelessWidget {
                                     icon: Icon(
                                       Icons.refresh,
                                       color: AppTheme.getColor(context).primary,
-                                      size: 20 * getResponsive(context),
+                                      size:
+                                          20 *
+                                          Responsive.getResponsive(context),
                                     ),
                                     onPressed: () {
                                       context.read<TakeOrderBloc>().add(
@@ -210,10 +221,12 @@ class DistributorVisitorPage extends StatelessWidget {
                             : const SizedBox.shrink(),
                       isRunning
                           ? const SizedBox.shrink()
-                          : SizedBox(height: 0.01 * getHeight(context)),
+                          : SizedBox(
+                              height: 0.01 * Responsive.getHeight(context),
+                            ),
                       CustomText(
                         'Click on ${isRunning ? "Stop" : "Start"} Button to ${isRunning ? "End" : "Start"} your Visit',
-                        fontSize: 14 * getResponsiveText(context),
+                        fontSize: 14 * Responsive.getResponsiveText(context),
                         color: AppColors.error,
                         fontWeight: FontWeight.w600,
                       ),
@@ -222,7 +235,7 @@ class DistributorVisitorPage extends StatelessWidget {
                 );
               },
             ),
-            SizedBox(height: 0.02 * getHeight(context)),
+            SizedBox(height: 0.02 * Responsive.getHeight(context)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -252,43 +265,43 @@ class DistributorVisitorPage extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 0.02 * getHeight(context)),
+            SizedBox(height: 0.02 * Responsive.getHeight(context)),
             Container(
               padding: EdgeInsets.symmetric(
-                vertical: 8 * getResponsive(context),
-                horizontal: 12 * getResponsive(context),
+                vertical: 8 * Responsive.getResponsive(context),
+                horizontal: 12 * Responsive.getResponsive(context),
               ),
-              width: 0.83 * getWidth(context),
+              width: 0.83 * Responsive.getWidth(context),
               decoration: BoxDecoration(
                 border: Border.all(color: AppTheme.getColor(context).outline),
                 color: AppTheme.getColor(context).onPrimary,
                 borderRadius: BorderRadius.circular(
-                  12 * getResponsive(context),
+                  12 * Responsive.getResponsive(context),
                 ),
               ),
               child: Column(
                 children: [
                   getCommonRow(context, title: 'Category', value: 'CHPL'),
-                  SizedBox(height: 0.01 * getHeight(context)),
+                  SizedBox(height: 0.01 * Responsive.getHeight(context)),
                   getCommonRow(context, title: 'Area', value: '-'),
-                  SizedBox(height: 0.01 * getHeight(context)),
+                  SizedBox(height: 0.01 * Responsive.getHeight(context)),
                   getCommonRow(context, title: 'GST', value: '-'),
-                  SizedBox(height: 0.01 * getHeight(context)),
+                  SizedBox(height: 0.01 * Responsive.getHeight(context)),
                   getCommonRow(
                     context,
                     title: 'Retailer Code',
                     value: 'RT43575',
                   ),
-                  SizedBox(height: 0.01 * getHeight(context)),
+                  SizedBox(height: 0.01 * Responsive.getHeight(context)),
                   getCommonRow(context, title: 'Credit Days', value: '0'),
-                  SizedBox(height: 0.01 * getHeight(context)),
+                  SizedBox(height: 0.01 * Responsive.getHeight(context)),
                   getCommonRow(context, title: 'Credit Limit', value: '0.00'),
                 ],
               ),
             ),
-            SizedBox(height: 0.01 * getHeight(context)),
+            SizedBox(height: 0.01 * Responsive.getHeight(context)),
             DistributorCard(
-              headerHeight: 0.055 * getHeight(context),
+              headerHeight: 0.055 * Responsive.getHeight(context),
               title: 'Distributor',
               isButton: true,
               buttonText: 'Change',
@@ -297,20 +310,23 @@ class DistributorVisitorPage extends StatelessWidget {
               },
               bottomWidget: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 8 * getResponsive(context),
+                  horizontal: 8 * Responsive.getResponsive(context),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      padding: EdgeInsets.only(left: 0.01 * getWidth(context)),
+                      padding: EdgeInsets.only(
+                        left: 0.01 * Responsive.getWidth(context),
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
                             'Mukund (M77)',
                             fontWeight: FontWeight.w600,
-                            fontSize: 16 * getResponsiveText(context),
+                            fontSize:
+                                16 * Responsive.getResponsiveText(context),
                           ),
                           Transform.scale(
                             scale: 0.7,
@@ -325,15 +341,15 @@ class DistributorVisitorPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 6.0 * getResponsive(context),
+                        horizontal: 6.0 * Responsive.getResponsive(context),
                       ),
                       child: CustomText(
                         'Contact Person :  Manish ( +91 7980239236 )',
-                        fontSize: 14 * getResponsiveText(context),
+                        fontSize: 14 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(height: 0.01 * getHeight(context)),
+                    SizedBox(height: 0.01 * Responsive.getHeight(context)),
                   ],
                 ),
               ),
@@ -351,44 +367,54 @@ class DistributorVisitorPage extends StatelessWidget {
     context,
     Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+        borderRadius: BorderRadius.circular(
+          12 * Responsive.getResponsive(context),
+        ),
         color: AppTheme.getColor(context).onPrimary,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 0.03 * getHeight(context)),
+          SizedBox(height: 0.03 * Responsive.getHeight(context)),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.08 * Responsive.getWidth(context),
+            ),
             child: CustomText(
               'Remark',
-              fontSize: 14 * getResponsiveText(context),
+              fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.bold,
             ),
           ),
-          // SizedBox(height: 0.01 * getHeight(context)),
+          // SizedBox(height: 0.01 * Responsive.getHeight(context)),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+            margin: EdgeInsets.symmetric(
+              horizontal: 0.08 * Responsive.getWidth(context),
+            ),
             decoration: BoxDecoration(
               color: AppTheme.getColor(context).onPrimary,
               border: Border.all(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+              borderRadius: BorderRadius.circular(
+                12 * Responsive.getResponsive(context),
+              ),
             ),
             padding: EdgeInsets.symmetric(
-              horizontal: 0.018 * getWidth(context),
+              horizontal: 0.018 * Responsive.getWidth(context),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: 0.01 * getHeight(context)),
+                  padding: EdgeInsets.only(
+                    top: 0.01 * Responsive.getHeight(context),
+                  ),
                   child: Image.asset(
                     'assets/take_order/message-edit.png',
-                    height: 0.022 * getHeight(context),
+                    height: 0.022 * Responsive.getHeight(context),
                   ),
                 ),
-                SizedBox(width: 0.01 * getWidth(context)),
+                SizedBox(width: 0.01 * Responsive.getWidth(context)),
                 Expanded(
                   child: TextFormField(
                     maxLines: 6,
@@ -406,10 +432,12 @@ class DistributorVisitorPage extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.08 * Responsive.getWidth(context),
+            ),
             child: SideBySideButtons(
               button1Name: 'CLOSE',
               button2Name: 'END VISIT',
@@ -417,7 +445,7 @@ class DistributorVisitorPage extends StatelessWidget {
               onTap2: onTap,
             ),
           ),
-          SizedBox(height: 0.03 * getHeight(context)),
+          SizedBox(height: 0.03 * Responsive.getHeight(context)),
         ],
       ),
     ),
@@ -437,18 +465,18 @@ class DistributorVisitorPage extends StatelessWidget {
             children: [
               Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 0.08 * getWidth(context),
-                  vertical: 0.01 * getHeight(context),
+                  horizontal: 0.08 * Responsive.getWidth(context),
+                  vertical: 0.01 * Responsive.getHeight(context),
                 ),
-                width: getWidth(context),
-                height: 0.05 * getHeight(context),
+                width: Responsive.getWidth(context),
+                height: 0.05 * Responsive.getHeight(context),
                 decoration: BoxDecoration(
                   color: AppTheme.getColor(context).primary,
                 ),
                 child: CustomText(
                   'Visit Purpose',
                   color: AppTheme.getColor(context).onPrimary,
-                  fontSize: 20 * getResponsiveText(context),
+                  fontSize: 20 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -471,9 +499,11 @@ class DistributorVisitorPage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.08 * Responsive.getWidth(context),
+            ),
             child: const MyCoTextfield(
               hintText: 'Search',
               isSuffixIconOn: true,
@@ -483,7 +513,9 @@ class DistributorVisitorPage extends StatelessWidget {
           ),
 
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 0.02 * getWidth(context)),
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.02 * Responsive.getWidth(context),
+            ),
             child: Column(
               children: [
                 RadioListTile(
@@ -493,7 +525,7 @@ class DistributorVisitorPage extends StatelessWidget {
                   onChanged: (value) {},
                   title: CustomText(
                     'Vendor Closed',
-                    fontSize: 18 * getResponsiveText(context),
+                    fontSize: 18 * Responsive.getResponsiveText(context),
                     color: AppTheme.getColor(context).primary,
                     fontWeight: FontWeight.bold,
                   ),
@@ -506,7 +538,7 @@ class DistributorVisitorPage extends StatelessWidget {
                   onChanged: (value) {},
                   title: CustomText(
                     'Shop Closed',
-                    fontSize: 18 * getResponsiveText(context),
+                    fontSize: 18 * Responsive.getResponsiveText(context),
                     color: AppTheme.getColor(context).primary,
                     fontWeight: FontWeight.bold,
                   ),
@@ -519,7 +551,7 @@ class DistributorVisitorPage extends StatelessWidget {
                   onChanged: (value) {},
                   title: CustomText(
                     'Approved',
-                    fontSize: 18 * getResponsiveText(context),
+                    fontSize: 18 * Responsive.getResponsiveText(context),
                     color: AppTheme.getColor(context).primary,
                     fontWeight: FontWeight.bold,
                   ),
@@ -528,9 +560,11 @@ class DistributorVisitorPage extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 0.01 * getHeight(context)),
+          SizedBox(height: 0.01 * Responsive.getHeight(context)),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.08 * Responsive.getWidth(context),
+            ),
             child: SideBySideButtons(
               button1Name: 'CLOSE',
               button2Name: 'DONE',
@@ -538,7 +572,7 @@ class DistributorVisitorPage extends StatelessWidget {
               onTap2: onTap,
             ),
           ),
-          SizedBox(height: 0.03 * getHeight(context)),
+          SizedBox(height: 0.03 * Responsive.getHeight(context)),
         ],
       ),
     ),
@@ -555,16 +589,16 @@ class DistributorVisitorPage extends StatelessWidget {
         child: CustomText(
           title,
           fontWeight: FontWeight.w700,
-          fontSize: 15 * getResponsiveText(context),
+          fontSize: 15 * Responsive.getResponsiveText(context),
         ),
       ),
       const CustomText(':'),
-      SizedBox(width: 0.03 * getWidth(context)),
+      SizedBox(width: 0.03 * Responsive.getWidth(context)),
       Expanded(
         flex: 5,
         child: CustomText(
           value,
-          fontSize: 15 * getResponsiveText(context),
+          fontSize: 15 * Responsive.getResponsiveText(context),
           color: AppTheme.getColor(context).outline,
         ),
       ),
@@ -579,12 +613,12 @@ class DistributorVisitorPage extends StatelessWidget {
     onTap: onTap,
     child: Column(
       children: [
-        Image.asset(imagePath, width: 0.13 * getWidth(context)),
-        SizedBox(height: 0.03 * getWidth(context)),
+        Image.asset(imagePath, width: 0.13 * Responsive.getWidth(context)),
+        SizedBox(height: 0.03 * Responsive.getWidth(context)),
         CustomText(
           name,
           fontWeight: FontWeight.bold,
-          fontSize: 16 * getResponsiveText(context),
+          fontSize: 16 * Responsive.getResponsiveText(context),
         ),
       ],
     ),

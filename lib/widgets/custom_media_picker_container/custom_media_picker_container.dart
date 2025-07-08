@@ -54,7 +54,8 @@ class _CustomMediaPickerContainerState
     children: [
       CustomText(
         widget.title,
-        fontSize: widget.titleFontSize ?? 14 * getResponsiveText(context),
+        fontSize:
+            widget.titleFontSize ?? 14 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
         color: widget.titleColor ?? AppTheme.getColor(context).onSurfaceVariant,
       ),
@@ -166,7 +167,7 @@ class _CustomMediaPickerContainerState
               Expanded(
                 child: CustomText(
                   path.basename(pickedFile!.path),
-                  fontSize: 16 * getResponsiveText(context),
+                  fontSize: 16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w500,
                   color: AppTheme.getColor(context).onSurfaceVariant,
                 ),
@@ -185,7 +186,7 @@ class _CustomMediaPickerContainerState
                   ),
                   child: CustomText(
                     'Remove',
-                    fontSize: 14 * getResponsiveText(context),
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w700,
                     color: AppColors.error,
                   ),
@@ -220,7 +221,8 @@ class _CustomMediaPickerContainerState
                 CustomText(
                   widget.imageTitle,
                   fontSize:
-                      widget.imageTitleSize ?? 16 * getResponsiveText(context),
+                      widget.imageTitleSize ??
+                      16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w600,
                   color:
                       widget.imageTitleColor ??

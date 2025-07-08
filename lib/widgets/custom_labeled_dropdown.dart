@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class LabeledDropdown<T> extends StatelessWidget {
   final String label;
@@ -54,61 +55,54 @@ class LabeledDropdown<T> extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                color: AppColors.textGray,
-                fontSize: 16 * getResponsiveText(context),
-                fontWeight: FontWeight.bold,
-              ),
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        children: [
+          CustomText(
+            label,
+            color: AppColors.textGray,
+            fontSize: 16 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.bold,
+          ),
+          if (isRequired)
+            CustomText(
+              "*",
+              color: AppColors.red,
+              fontSize: 20 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.bold,
             ),
-            if (isRequired)
-              Text(
-                "*",
-                style: TextStyle(
-                  color: AppColors.red,
-                  fontSize: 20 * getResponsiveText(context),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-          ],
-        ),
-        SizedBox(height: 0.005 * getHeight(context)),
-        CustomPopupDropdownStyled<T>(
-          prefix: prefix,
-          prefixImage: prefixImage,
-          height: height ?? 0.06 * getHeight(context),
-          width: width ?? 0.9 * getWidth(context),
-          spacing: spacing ?? 0.02 * getWidth(context),
-          hintText: hintText,
-          hintTextStyle:
-              hintTextStyle ??
-              TextStyle(
-                fontSize: 18 * getResponsiveText(context),
-                color: AppColors.gray,
-                fontWeight: FontWeight.bold,
-              ),
-          items: items,
-          selectedItem: selectedItem,
-          itemToString: itemToString,
-          onChanged: onChanged,
-          border: border,
-          prefixImageHeight: prefixImageHeight,
-          prefixImageWidth: prefixImageWidth,
-          colorBackground: colorBackground,
-          borderRadius: borderRadius,
-          onTapPrefix: onTapPrefix,
-          popupElevation: popupElevation,
-          popupShape: popupShape,
-          useRadioList: useRadioList??false,
-        ),
-      ],
-    );
-  }
+        ],
+      ),
+      SizedBox(height: 0.005 * Responsive.getHeight(context)),
+      CustomPopupDropdownStyled<T>(
+        prefix: prefix,
+        prefixImage: prefixImage,
+        height: height ?? 0.06 * Responsive.getHeight(context),
+        width: width ?? 0.9 * Responsive.getWidth(context),
+        hintText: hintText,
+        hintTextStyle:
+            hintTextStyle ??
+            TextStyle(
+              fontSize: 18 * Responsive.getResponsiveText(context),
+              color: AppColors.gray,
+              fontWeight: FontWeight.bold,
+            ),
+        items: items,
+        selectedItem: selectedItem,
+        itemToString: itemToString,
+        onChanged: onChanged,
+        border: border,
+        prefixImageHeight: prefixImageHeight,
+        prefixImageWidth: prefixImageWidth,
+        colorBackground: colorBackground,
+        borderRadius: borderRadius,
+        onTapPrefix: onTapPrefix,
+        popupElevation: popupElevation,
+        popupShape: popupShape,
+        useRadioList: useRadioList ?? false,
+      ),
+    ],
+  );
 }

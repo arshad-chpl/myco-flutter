@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
-
+import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class CustomShadowContainer extends StatelessWidget {
   final Widget image;
@@ -81,11 +85,11 @@ class CustomShadowContainer extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 6),
-          Text(
+          CustomText(
             title,
-            style:
-                titleStyle ??
-                const TextStyle(fontSize: 11, fontFamily: 'Gilroy-semiBold'),
+            fontSize: 11 * Responsive.getResponsive(context),
+            fontWeight: FontWeight.w600,
+            color: AppColors.black,
           ),
         ],
       ),
