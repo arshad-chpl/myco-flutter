@@ -14,7 +14,7 @@ import 'package:myco_flutter/features/company_selector/domain/usecases/search_co
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/inquiry/inquiry_bloc.dart';
 
-Future<void> companySelectorDi(GetIt sl) async {
+Future<void>  companySelectorDi(GetIt sl) async {
   // Register the CompanyRemoteDataSource
   sl.registerLazySingleton<CompanyRemoteDataSource>(
     CompanyRemoteDataSourceImpl.new,
