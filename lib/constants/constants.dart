@@ -33,6 +33,8 @@ class VariableBag {
   static const String masterAPICall = 'masterAPICall';
   static const String employeeMobileApi = 'employeeMobileApi';
   static const String residentApiNew = 'residentApiNew';
+  static const String employeeApi = 'employeeApi';
+  static const String residentAPI = 'residentAPI';
 
   /////////////////////////
   // Admin Menu

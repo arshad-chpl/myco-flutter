@@ -57,8 +57,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.getStarted,
-    // initialLocation: RoutePaths.dashboard,
+    // initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -228,24 +228,6 @@ class AppRouter {
                 builder: (context, state) => const PayslipDetail(),
               ),
             ],
-          ),
-        ],
-      ),
-
-      GoRoute(
-        path: RoutePaths.payslip,
-        name: 'payslip',
-        builder: (context, state) =>  PayslipPage(),
-        routes: [
-          GoRoute(
-            path: RoutePaths.salaryBreakUp,
-            name: 'salary-break-up',
-            builder: (context, state) => const SalaryBreakUpPage(),
-          ),
-          GoRoute(
-            path: RoutePaths.payslipDetail,
-            name: 'payslip-detail',
-            builder: (context, state) => const PayslipDetail(),
           ),
         ],
       ),
