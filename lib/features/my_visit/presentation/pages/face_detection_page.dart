@@ -133,8 +133,8 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                         children: [
                           BackdropFilter(
                             filter: ImageFilter.blur(
-                                sigmaX: 2,
-                              sigmaY: 2
+                                sigmaX: 3,
+                              sigmaY: 3
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadiusGeometry.vertical(top: Radius.circular(13 * Responsive.getResponsive(context))),
