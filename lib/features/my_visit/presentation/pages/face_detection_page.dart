@@ -1,14 +1,13 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/draggable_scrollable_sheet_widget.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/greeting_message_card_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/show_out_of_range_bottom_sheet.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/warnings_alerts_messages.dart';
-import 'package:myco_flutter/widgets/border_container_wraper.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/warning_message_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_face_detection_widgets.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -36,41 +35,20 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
     final status = await Permission.camera.status;
 
     if (status.isGranted) {
-      _showSnackBar('Camera permission granted');
+      Fluttertoast.showToast(msg: 'Camera permission granted');
     } else if (status.isDenied) {
       final result = await Permission.camera.request();
 
       if (result.isGranted) {
-        _showSnackBar('Granted after request');
+        Fluttertoast.showToast(msg: 'Granted after request');
       } else {
-        _showSnackBar('Permission Denied');
+        Fluttertoast.showToast(msg: 'Permission Denied');
       }
     } else if (status.isPermanentlyDenied) {
-      _showSnackBar('Permission permanently denied. Opening setting...');
+      Fluttertoast.showToast(msg: 'Permission permanently denied. Opening setting...');
       await openAppSettings();
     }
   }
-
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
-  }
-
-  Widget showDateTime(BuildContext context, Color color, FontWeight weight) =>
-      BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
-        builder: (context, state) {
-          if (state is FaceDetectionLoaded) {
-            return CustomText(
-              state.dateTime.trim().isEmpty ? 'EMPTY' : state.dateTime,
-              color: color,
-              fontSize: 17 * Responsive.getResponsiveText(context),
-              fontWeight: weight,
-            );
-          }
-          return const CustomText('Loading...', color: AppColors.white);
-        },
-      );
 
   @override
   void initState() {
@@ -124,39 +102,10 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                 transitionDuration: const Duration(milliseconds: 300),
                 pageBuilder: (_, _, _) => BlocProvider.value(
                     value: faceDetectionBloc,
-                    child: DraggableScrollableSheet(
-                      expand: false,
-                      initialChildSize: 0.9,
-                      maxChildSize: 0.95,
-                      minChildSize: 0.6,
-                      builder: (context, scrollController) => Stack(
-                        children: [
-                          BackdropFilter(
-                            filter: ImageFilter.blur(
-                                sigmaX: 3,
-                              sigmaY: 3
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadiusGeometry.vertical(top: Radius.circular(13 * Responsive.getResponsive(context))),
-                              child: Container(
-                                color: AppTheme.getColor(context).surface,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Material(
-                              color: Colors.transparent,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.vertical(top: Radius.circular(13)),
-                                ),
-                                child: ShowOutOfRangeBottomSheet(scrollController: scrollController,),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                    child: DraggableScrollableSheetWidget(
+                        showBottomSheet: ShowOutOfRangeBottomSheet(
+                          scrollController: scrollController,
+                        )
                     )
                 ),
             );
@@ -171,48 +120,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
           padding: EdgeInsets.all(23.0 * Responsive.getResponsive(context)),
           child: Column(
             children: [
-              BorderContainerWraper(
-                width: double.infinity,
-                backgroundColor: AppColors.secondary,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                      'Welcome To Work',
-                      fontSize: 21 * Responsive.getResponsiveText(context),
-                      color: AppTheme.getColor(context).onSecondary,
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.spanishYellow,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10 * Responsive.getResponsive(context),
-                              vertical: 3 * Responsive.getResponsive(context),
-                            ),
-                            child: CustomText(
-                                'Flutter Developer',
-                              fontSize: 21 * Responsive.getResponsiveText(context),
-                            ),
-                          ),
-                        ),
-
-                        showDateTime(
-                          context,
-                          AppTheme.getColor(context).onSecondary,
-                          FontWeight.w400,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              const GreetingMessageCardWidget(),
               const SizedBox(height: 23),
 
               BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
@@ -295,33 +203,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
               ),
               const SizedBox(height: 10),
 
-              BorderContainerWraper(
-                width: double.infinity,
-                child: Padding(
-                  padding: EdgeInsets.all(8.0 * Responsive.getResponsive(context)),
-                  child: const Column(
-                    children: [
-                      WarningsAlertsMessages(
-                        imagePath: 'assets/face_detection/danger.png',
-                        msg: 'Remove before scanning',
-                      ),
-                      SizedBox(height: 13),
-                      WarningsAlertsMessages(
-                        imagePath: 'assets/face_detection/circle.png',
-                        msg: 'Sunglasses',
-                      ),
-                      WarningsAlertsMessages(
-                        imagePath: 'assets/face_detection/circle.png',
-                        msg: 'Masks',
-                      ),
-                      WarningsAlertsMessages(
-                        imagePath: 'assets/face_detection/circle.png',
-                        msg: 'Cap/Hat',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              const WarningMessageCard(),
             ],
           ),
         ),
