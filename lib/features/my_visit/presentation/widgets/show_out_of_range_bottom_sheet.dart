@@ -47,6 +47,10 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
     child: Container(
         padding: EdgeInsets.all(29 * Responsive.getResponsive(context)),
         width: double.infinity,
+        decoration:  BoxDecoration(
+          color: AppTheme.getColor(context).surface,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(13 * Responsive.getResponsive(context))),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -57,6 +61,7 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
             ),
             const SizedBox(height: 10),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomText(
                   'You are Out of Range(Ahmedabad)',
@@ -64,6 +69,18 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
                   fontWeight: FontWeight.w700,
                   color: AppColors.textGray,
                 ),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Image(
+                      image: const AssetImage(
+                          'assets/face_detection/cross.png'
+
+                      ),
+                      color: AppTheme.getColor(context).onSurface,
+                      height: 0.030 * Responsive.getHeight(context),
+                      width:  0.030 *  Responsive.getWidth(context),
+                  ),
+                )
               ],
             ),
             const SizedBox(height: 4),
@@ -84,6 +101,7 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
                 const SizedBox(width: 14),
                 CustomText(
                   'GPS Accuracy : ',
+                  color: AppTheme.getColor(context).onSurface,
                   fontWeight: FontWeight.w600,
                   fontSize: 17 * Responsive.getResponsiveText(context),
                 ),
@@ -170,7 +188,7 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
             SizedBox(height: 5 * Responsive.getResponsive(context)),
 
             CustomPopupDropdownStyled<String>(
-              height: 60 * Responsive.getResponsive(context),
+              height: 0.060 * Responsive.getHeight(context),
               spacing: 10 * Responsive.getResponsive(context),
               prefix: SvgPicture.asset('assets/face_detection/svgs/result.svg'),
               items: dayType,
@@ -185,7 +203,6 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
             ),
 
             const SizedBox(height: 13),
-            SizedBox(height: 13 * Responsive.getResponsive(context)),
 
 
             LabeledTextField(

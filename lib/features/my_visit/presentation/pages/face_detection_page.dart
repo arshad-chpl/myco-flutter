@@ -136,8 +136,11 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                                 sigmaX: 2,
                               sigmaY: 2
                             ),
-                            child: Container(
-                              color: Colors.transparent,
+                            child: ClipRRect(
+                              borderRadius: BorderRadiusGeometry.vertical(top: Radius.circular(13 * Responsive.getResponsive(context))),
+                              child: Container(
+                                color: AppTheme.getColor(context).surface,
+                              ),
                             ),
                           ),
                           Align(
@@ -145,9 +148,8 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                             child: Material(
                               color: Colors.transparent,
                               child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppTheme.getColor(context).onSecondary,
-                                  borderRadius: const BorderRadius.vertical(top: Radius.circular(13)),
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.vertical(top: Radius.circular(13)),
                                 ),
                                 child: ShowOutOfRangeBottomSheet(scrollController: scrollController,),
                               ),
@@ -177,7 +179,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                   children: [
                     CustomText(
                       'Welcome To Work',
-                      fontSize: 23 * Responsive.getResponsiveText(context),
+                      fontSize: 21 * Responsive.getResponsiveText(context),
                       color: AppTheme.getColor(context).onSecondary,
                     ),
                     const SizedBox(height: 10),
@@ -194,7 +196,10 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                               horizontal: 10 * Responsive.getResponsive(context),
                               vertical: 3 * Responsive.getResponsive(context),
                             ),
-                            child: const CustomText('Flutter Developer'),
+                            child: CustomText(
+                                'Flutter Developer',
+                              fontSize: 21 * Responsive.getResponsiveText(context),
+                            ),
                           ),
                         ),
 
@@ -209,6 +214,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                 ),
               ),
               const SizedBox(height: 23),
+
               BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
                 builder: (context, state) {
                   if (state is FaceDetectionLoaded) {
@@ -241,9 +247,11 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                 },
               ),
               const SizedBox(height: 13),
-              const CustomText(
+
+              CustomText(
                 'Align your face within the frame',
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w700,
+                fontSize: 21 * Responsive.getResponsiveText(context),
               ),
               const SizedBox(height: 40),
 
@@ -272,7 +280,6 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                   return const SizedBox();
                 },
               ),
-
               const SizedBox(height: 19),
 
               BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
@@ -286,8 +293,8 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                   return const SizedBox();
                 },
               ),
-
               const SizedBox(height: 10),
+
               BorderContainerWraper(
                 width: double.infinity,
                 child: Padding(
