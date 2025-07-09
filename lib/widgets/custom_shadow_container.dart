@@ -28,8 +28,7 @@ class CustomShadowContainer extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
+  Widget build(BuildContext context) => SizedBox(
       width: width ?? 70,
       height: height,
       child: Column(
@@ -89,10 +88,8 @@ class CustomShadowContainer extends StatelessWidget {
             title,
             fontSize: 11 * Responsive.getResponsive(context),
             fontWeight: FontWeight.w600,
-            color: AppColors.black,
           ),
         ],
       ),
     );
-  }
 }

@@ -29,7 +29,7 @@ class QuickActionSection extends StatelessWidget {
                   child: GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3, // 2 columns
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
