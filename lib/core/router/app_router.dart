@@ -170,9 +170,9 @@ class AppRouter {
         name: 'faceDetection',
         builder: (context, state) => BlocProvider(
           create: (context) =>
-              GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
-          child: const FaceDetectionPage(),
-        ),
+          GetIt.I<FaceDetectionBloc>()
+            ..add(LaunchCamera()),
+          child: const FaceDetectionPage(),),
       ),
       // Add all modular routes here
       // Add all modular routes here
