@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:path/path.dart' as path;
 import 'dashed_border_container.dart';
 import 'image_picker.dart';
@@ -52,19 +53,16 @@ class _CustomImagePickerContainerState
   File? pickedFile;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.isTitle == true)
-          Text(
+          CustomText(
             widget.isTitle == true ? widget.title ?? "Title" : "",
-            style: TextStyle(
-              fontFamily: "Gilroy-Bold",
-              fontWeight: FontWeight.w400,
-              color: AppTheme.getColor(context).onSurfaceVariant,
-              fontSize: 13,
-            ),
+            fontWeight: FontWeight.w700,
+            fontSize: 13 * getResponsive(context),
+            color: AppTheme.getColor(context).onSurfaceVariant,
+
           ),
         SizedBox(height: 5),
 
@@ -208,7 +206,6 @@ class _CustomImagePickerContainerState
         ),
       ],
     );
-  }
 
   void openImagePicker(
     BuildContext context,

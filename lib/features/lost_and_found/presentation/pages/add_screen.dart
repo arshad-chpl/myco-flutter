@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -59,7 +58,7 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
               borderRadius: 10,
               containerHeight: 
               // 71,
-              .079 * getHeight(context),
+              .083 * getHeight(context),
               imageTitle: 'Select image',
 
               onImageSelected: (file) {
@@ -75,7 +74,7 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 28),
             child: CustomRadioButton(
               title: 'Select',
-              options: const ['Lost', 'Found'],
+              options: const ['Lost', 'Found' ] ,
               height: 
               // 44, 
               .049 * getHeight(context),
@@ -156,31 +155,6 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
         onTap: () {
           final itemName = itemNameController.text.trim();
           final aboutItem = aboutItemController.text.trim();
-
-          // if (selectedImage == null) {
-          //   ScaffoldMessenger.of(context).showSnackBar(
-          //     const SnackBar(content: Text('Please select an image')),
-          //   );
-          // } else if (itemName.isEmpty) {
-          //   ScaffoldMessenger.of(context).showSnackBar(
-          //     const SnackBar(content: Text('Please enter item name')),
-          //   );
-          // } else if (aboutItem.isEmpty) {
-          //   ScaffoldMessenger.of(context).showSnackBar(
-          //     const SnackBar(content: Text('Please enter item description')),
-          //   );
-          // } else {
-          //   Navigator.pop(context, {
-          //     'image': selectedImage,
-          //     'name': itemName,
-          //     'desc': aboutItem,
-          //     'status': selectedOption,
-          //   });
-          // }
-          // In your Add screen's onTap:
-
-
-
 
           //============================   with model class  ============================================
 

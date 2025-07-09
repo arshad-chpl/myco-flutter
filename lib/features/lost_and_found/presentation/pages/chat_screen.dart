@@ -38,12 +38,12 @@ class ChatScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
+                      const Row(
                         children: [
-                          const BackButton(color: Colors.black),
-                          const SizedBox(width: 4),
-                          const Text(
-                            "Manish Chandra",
+                          BackButton(color: Colors.black),
+                          SizedBox(width: 4),
+                          Text(
+                            'Manish Chandra',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
@@ -67,7 +67,7 @@ class ChatScreen extends StatelessWidget {
 
                 const Center(
                   child: Text(
-                    "Start Chat",
+                    'Start Chat',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
@@ -83,14 +83,14 @@ class ChatScreen extends StatelessWidget {
                     controller: messageController,
                     boarderRadius: 50,
                     height: 50,
-                    hintText: "Type Message",
+                    hintText: 'Type Message',
                     hintTextStyle: TextStyle(
                       color: AppTheme.getColor(context).outline,
                     ),
                     isSuffixIconOn: true,
-                    image1: "assets/lost_and_found/link.png",
+                    image1: 'assets/lost_and_found/link.png',
 
-                    image2: "assets/lost_and_found/send.png",
+                    image2: 'assets/lost_and_found/send.png',
                   ),
                 ),
               ],

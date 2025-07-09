@@ -224,7 +224,9 @@
 //======================================responsive==============================
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class CountryModel {
   final String name;
@@ -386,6 +388,7 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               GestureDetector(
@@ -396,17 +399,12 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      CustomText(
                         _selectedCountry.name,
-                        style:
-                            widget.countryTextStyle 
-                            ??
-                            const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                      ),
+                        fontWeight: FontWeight.w700,
+                         fontSize: 16 * getResponsive(context),
+                         color: AppColors.textPrimary,),
+                       
                       SizedBox(width: 6 * getResponsive(context)),
                       Icon(
                         Icons.keyboard_arrow_down_outlined,
@@ -418,15 +416,11 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                 ),
               ),
               SizedBox(width: 10 * getResponsive(context)),
-              Text(
+              CustomText(
                 _selectedCountry.dialCode,
-                style:
-                    widget.numberTextStyle ??
-                    const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
+                      fontSize: 16 * getResponsive(context),
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.w700,
               ),
               SizedBox(width: 6 * getResponsive(context)),
               Expanded(

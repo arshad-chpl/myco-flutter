@@ -106,7 +106,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.lostAndFound,
         name: 'lost-and-found',
-        builder: (context, state) => LostAndFound(),
+        builder: (context, state) =>const LostAndFound(),
       ),
       GoRoute(
         path: RoutePaths.getStarted,
