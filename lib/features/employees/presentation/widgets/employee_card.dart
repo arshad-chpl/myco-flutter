@@ -101,6 +101,7 @@ class EmployeeSelectionCard extends StatelessWidget {
                     width: imageWidth ?? 80,
                     height: imageHeight ?? 80,
                     child: Stack(
+                      fit: StackFit.expand,
                       children: [
                         Container(
                           width: imageWidth ?? 100,
@@ -187,18 +188,20 @@ class EmployeeSelectionCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 5),
+              SizedBox(height: 0.010 * Responsive.getHeight(context)),
               CustomText(
                 name,
                 fontSize: 12 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
+                overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(height: 6),
+              SizedBox(height: 0.010 * Responsive.getHeight(context)),
               CustomText(
                 department,
                 fontSize: 12 * Responsive.getResponsiveText(context),
                 color: AppColors.textPrimary,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
