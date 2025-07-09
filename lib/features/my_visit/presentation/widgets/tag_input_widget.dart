@@ -32,9 +32,9 @@ class _TagInputFieldState extends State<TagInputField> {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       margin: const EdgeInsets.only(top: 6),
       decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromARGB(255, 120, 146, 184)),
+        border: Border.all(color:  AppTheme.getColor(context).outline),
         borderRadius: BorderRadius.circular(
-          Responsive.getResponsive(context) * 18,
+          Responsive.getResponsive(context) * 8,
         ),
         color: Colors.white,
       ),

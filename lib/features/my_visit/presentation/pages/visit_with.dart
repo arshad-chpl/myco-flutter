@@ -116,7 +116,7 @@ class _VisitWithState extends State<VisitWith> {
                 textAlignment: TextAlign.start,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(
-                    Responsive.getResponsive(context) * 18,
+                    Responsive.getResponsive(context) * 8,
                   ),
                   borderSide: BorderSide(
                     color: AppTheme.getColor(context).outline,
