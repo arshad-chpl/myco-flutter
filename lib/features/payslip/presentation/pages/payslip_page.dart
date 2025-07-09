@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/payslip_card.dart';
@@ -21,14 +22,8 @@ class PayslipPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: CustomText(
-        'Payslip',
-        fontWeight: FontWeight.w700,
-        fontSize: 20 * Responsive.getResponsiveText(context),
-      ),
-      centerTitle: false,
-      leading: const BackButton(),
+    appBar: CustomAppbar(
+      appBarText: 'Payslip',
       actions: [
         MyCoButton(
           onTap: () {
