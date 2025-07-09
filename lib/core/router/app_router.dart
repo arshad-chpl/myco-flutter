@@ -57,7 +57,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.payslip,
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -106,7 +106,6 @@ class AppRouter {
         name: 'dashboard',
         builder: (context, state) => DashBoardPage(),
       ),
-
 
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
@@ -171,17 +170,17 @@ class AppRouter {
         ],
       ),
 
-
       GoRoute(
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
         builder: (context, state) => BlocProvider(
-            create: (context) => GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+          create: (context) =>
+              GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
           child: const FaceDetectionPage(),
-        )
+        ),
       ),
       // Add all modular routes here
-     // Add all modular routes here
+      // Add all modular routes here
       // GoRoute(
       //   path: RoutePaths.takeOrder,
       //   name: 'take-order',
@@ -194,9 +193,8 @@ class AppRouter {
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
         builder: (context, state) => SignupFormPage(),
-               
-      ), 
-       GoRoute(
+      ),
+      GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
@@ -233,23 +231,6 @@ class AppRouter {
       ),
 
       GoRoute(
-        path: RoutePaths.payslip,
-        name: 'payslip',
-        builder: (context, state) =>  PayslipPage(),
-        routes: [
-          GoRoute(
-            path: RoutePaths.salaryBreakUp,
-            name: 'salary-break-up',
-            builder: (context, state) => const SalaryBreakUpPage(),
-          ),
-          GoRoute(
-            path: RoutePaths.payslipDetail,
-            name: 'payslip-detail',
-            builder: (context, state) => const PayslipDetail(),
-          ),
-        ],
-      ),
-      GoRoute(
         path: RoutePaths.employees,
         name: 'employees',
         builder: (context, state) => const EmployeesScreen(),
@@ -268,7 +249,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.AddExpense,
         name: 'addExpense',
-        builder: (context, state) =>  const AddExpensePage(),
+        builder: (context, state) => const AddExpensePage(),
       ),
       GoRoute(
         path: RoutePaths.lostAndFoundAddScreen,
@@ -286,9 +267,9 @@ class AppRouter {
         path: RoutePaths.lostAndFoundItemDetails,
         name: 'lost-and-found-item-details',
         builder: (context, state) {
-          LostAndFoundItemModel lostitem= state.extra as LostAndFoundItemModel;
-          return ItemDetailsScreen(item: lostitem,);
-        }
+          LostAndFoundItemModel lostitem = state.extra as LostAndFoundItemModel;
+          return ItemDetailsScreen(item: lostitem);
+        },
       ),
 
       GoRoute(
