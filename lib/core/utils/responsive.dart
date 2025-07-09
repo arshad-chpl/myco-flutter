@@ -65,6 +65,11 @@ class Responsive {
   }
 
   static double getResponsiveText(context) {
+    double width = MediaQuery.of(context).size.width;
+      if (kIsWeb) {
+    // Web-specific logic
+    return width > 600 ? 1.5 : 1.0;
+  } 
     if (Platform.isAndroid) {
       return Responsive.getWidth(context) > 600 ? 1.5 : 0.8;
     } else {

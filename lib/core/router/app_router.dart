@@ -21,6 +21,8 @@ import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_m
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/extra_for_bottomsheet.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
@@ -56,7 +58,7 @@ class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     // initialLocation: RoutePaths.getStarted,
-    initialLocation: RoutePaths.VisitWith,
+    initialLocation: RoutePaths.Bottom,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -71,9 +73,15 @@ class AppRouter {
       ),
 
   GoRoute(
-        path: RoutePaths.VisitWith,
+        path: RoutePaths.Bottom,
+        name: 'visit-with-details',
+        builder: (context, state) => const Bottom(),
+      ),
+
+       GoRoute(
+        path: RoutePaths.assignedTo,
         name: 'visit-with',
-        builder: (context, state) => const VisitWith(),
+        builder: (context, state) => const AssignedTo(),
       ),
 
 
