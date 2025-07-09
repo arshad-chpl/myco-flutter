@@ -38,6 +38,7 @@ class AdminViewBloc extends Bloc<AdminViewEvent, AdminViewState> {
       languageId: event.languageId,
       isDashboard: true,
       shouldCache: true, // Conditionally cache the fresh data
+      accessTypeId: ''
     );
     final freshResult = await getAdminViewUseCase(params);
 

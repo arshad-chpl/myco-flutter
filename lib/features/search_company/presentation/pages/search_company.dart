@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
+import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/search_company/presentation/widgets/bottomsheet_radio_btn.dart';
+import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -88,51 +93,21 @@ class SearchCompanyScreen extends StatelessWidget {
             MyCoButton(
               onTap: () {
                 showModalBottomSheet(
-                  context: context,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadiusGeometry.circular(12),
+                  ),
+                  clipBehavior: Clip.hardEdge,
+                  useSafeArea: true,
                   isScrollControlled: true,
-
-                  backgroundColor: Colors.transparent,
-                  builder: (_) => BottomsheetRadioButton(
-                    height: Responsive.getHeight(context) * 0.9,
-                    showSnackBar: true,
-                    items: const [
-                      {
-                        'id': '1',
-                        'title': 'Delta Corporation Pvt. Ltd',
-                        'subtitle':
-                            'A-305 3rd Floor Azure Corporation Trade Tower Starlight Sarkhej, Ahmedabad Gujarat 380042',
-                      },
-                      {
-                        'id': '2',
-                        'title': 'Communities heritage Pvt. Ltd',
-                        'subtitle':
-                            'A-Block, 5th Floor, WTT, World Trade Tower, Makarba, Sarkhej, Ahmedabad Gujarat 380051',
-                      },
-                      {
-                        'id': '3',
-                        'title': 'Belta Corporation Pvt. Ltd',
-                        'subtitle':
-                            'A-305 3rd Floor Azure Corporation Trade Tower Starlight Sarkhej, Ahmedabad Gujarat 380042',
-                      },
-                      {
-                        'id': '4',
-                        'title': 'Zommunities heritage Pvt. Ltd',
-                        'subtitle':
-                            'A-Block, 5th Floor, WTT, World Trade Tower, Makarba, Sarkhej, Ahmedabad Gujarat 380051',
-                      },
-                      {
-                        'id': '5',
-                        'title': 'Aelta Corporation Pvt. Ltd',
-                        'subtitle':
-                            'A-305 3rd Floor Azure Corporation Trade Tower Starlight Sarkhej, Ahmedabad Gujarat 380042',
-                      },
-                      {
-                        'id': '6',
-                        'title': 'Jommunities heritage Pvt. Ltd',
-                        'subtitle':
-                            'A-Block, 5th Floor, WTT, World Trade Tower, Makarba, Sarkhej, Ahmedabad Gujarat 380051',
-                      },
-                    ],
+                  context: context,
+                  builder: (bottomSheetContext) => BlocProvider(
+                    create: (_) => GetIt.I<CompanyBloc>(),
+                    child: Container(
+                      constraints: BoxConstraints(
+                        maxHeight: 0.9 * Responsive.getHeight(context),
+                      ),
+                      child: const SelectCompanyPage(),
+                    ),
                   ),
                 );
               },

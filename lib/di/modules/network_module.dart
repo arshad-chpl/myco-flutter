@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get_it/get_it.dart';
-import 'package:dio/dio.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/core/network/dio_provider.dart';
@@ -15,11 +13,11 @@ import 'package:myco_flutter/core/utils/util.dart';
 Future<void> initNetworkModule(GetIt sl) async {
   sl.registerLazySingleton(() => SafeApiCall(sl()));
 
-  PreferenceManager preference = sl<PreferenceManager>();
-  final userId = await preference.getUserId();
+  final PreferenceManager preference = sl<PreferenceManager>();
+  final userId = preference.getUserId();
   final companyId = await preference.getCompanyId();
-  final userMobile = await preference.getUserMobile();
-  var baseUrl = await preference.getBaseUrl();
+  final userMobile = preference.getUserMobile();
+  final baseUrl = await preference.getBaseUrl();
   final password = Util.getCurrentPassword(
     companyId.toString(),
     userId,
@@ -35,7 +33,53 @@ Future<void> initNetworkModule(GetIt sl) async {
     sl,
     instanceName: VariableBag.masterAPICall,
   );
+
 }
+
+Future<void> refreshApiServiceCompany(GetIt sl) async {
+  final preference = sl<PreferenceManager>();
+  final userId = preference.getUserId();
+  final companyId = await preference.getCompanyId();
+  final userMobile = preference.getUserMobile();
+  var baseUrl = await preference.getBaseUrl();
+  final password = Util.getCurrentPassword(
+    companyId.toString(),
+    userId,
+    userMobile.toString(),
+  );
+
+  _registerOrReplace<ApiClient>(
+    ApiClient(sl(), baseUrl: baseUrl ?? ''),
+    sl,
+    instanceName: VariableBag.masterAPICall,
+  );
+
+  _registerOrReplace<ApiClient>(
+    ApiClient(sl(), baseUrl: baseUrl! + VariableBag.residentApiEnd),
+    sl,
+    instanceName: VariableBag.residentApiNew,
+  );
+
+  _registerOrReplace<ApiClient>(
+    ApiClient(sl(), baseUrl: baseUrl + VariableBag.subEnd),
+    sl,
+    instanceName: VariableBag.employeeMobileApi,
+  );
+
+  _registerOrReplace<ApiClient>(
+    ApiClient(sl(), baseUrl: baseUrl + VariableBag.subEnd),
+    sl,
+    instanceName: VariableBag.employeeApi,
+  );
+
+  _registerOrReplace<ApiClient>(
+    ApiClient(sl(), baseUrl: baseUrl + VariableBag.residentApiEnd),
+    sl,
+    instanceName: VariableBag.residentAPI,
+  );
+
+}
+
 
 void _registerOrReplace<T extends Object>(
   T instance,
