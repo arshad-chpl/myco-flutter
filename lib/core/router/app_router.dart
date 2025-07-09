@@ -21,6 +21,7 @@ import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_m
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
+import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
@@ -282,6 +283,11 @@ class AppRouter {
         path: RoutePaths.viewVisitDetails,
         name: 'view-visit-details',
         builder: (context, state) => ViewVisitDetailsPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.myProfile,
+        name: 'my-profile',
+        builder: (context, state) => MyProfilePage(),
       ),
       // Add all modular routes here
       // ...authRoutes,
