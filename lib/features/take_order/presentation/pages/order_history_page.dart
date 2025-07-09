@@ -5,6 +5,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -13,14 +14,7 @@ class OrderHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      leading: const BackButton(),
-      title: CustomText(
-        'Order History',
-        fontSize: 20 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-      ),
-    ),
+    appBar: CustomAppbar(appBarText: 'Order History'),
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),

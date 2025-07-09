@@ -3,6 +3,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -12,10 +13,7 @@ class EditOrderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
-    appBar: AppBar(
-      backgroundColor: AppTheme.getColor(context).surface,
-      leading: const BackButton(),
-      // centerTitle: false,
+    appBar: CustomAppbar(
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
