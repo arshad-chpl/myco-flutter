@@ -4,12 +4,13 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/frequent_buy_card.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 // ignore: must_be_immutable
@@ -25,13 +26,8 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      leading: const BackButton(),
-      title: CustomText(
-        'Take Order',
-        fontSize: 20 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-      ),
+    appBar: CustomAppbar(
+      appBarText: 'Take Order',
       actions: [
         MyCoButton(
           onTap: () {},
@@ -89,7 +85,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
       child: Column(
         children: [
           SizedBox(height: 0.01 * Responsive.getHeight(context)),
-          BlocBuilder<TakeOrderBloc, TakeOrderState>(
+          BlocBuilder<TabbarBloc, TabbarState>(
             builder: (context, state) {
               final selectedIndex = state is TabChangeState
                   ? state.selectedIndex
@@ -108,9 +104,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
                 isShadowBottomLeft: true,
                 selectedIndex: selectedIndex,
                 onTabChange: (index) {
-                  context.read<TakeOrderBloc>().add(
-                    TabChangeEvent(index: index),
-                  );
+                  context.read<TabbarBloc>().add(TabChangeEvent(index: index));
                 },
               );
             },
@@ -118,7 +112,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
           Expanded(
-            child: BlocBuilder<TakeOrderBloc, TakeOrderState>(
+            child: BlocBuilder<TabbarBloc, TabbarState>(
               builder: (context, state) {
                 final selectedIndex = state is TabChangeState
                     ? state.selectedIndex

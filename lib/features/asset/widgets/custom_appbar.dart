@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
+
 
 class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final double height;
@@ -34,7 +40,7 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final SystemUiOverlayStyle? systemOverlayStyle;
   final bool forceMaterialTransparency;
   final Clip? clipBehavior;
-  final Color appBarBackgoundColor;
+  final Color? appBarBackgoundColor;
   final String appBarText;
   final FontWeight? fontWeight;
   final double? size;
@@ -73,7 +79,7 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
     this.forceMaterialTransparency = false,
     this.clipBehavior,
     this.height = kToolbarHeight,
-    this.appBarBackgoundColor = const Color(0xFFe6e6e6),
+    this.appBarBackgoundColor,
     this.appBarText = '',
     this.fontWeight,
     this.size,
@@ -91,58 +97,41 @@ class _CustomAppbarState extends State<CustomAppbar> {
   Widget build(BuildContext context) => AppBar(
     title:
         widget.title ??
-        Text(
+        CustomText(
           widget.appBarText,
-          style: TextStyle(
-            fontSize: widget.size,
-            fontWeight: widget.fontWeight,
-            color: widget.appbartxtcolor ?? Colors.white,
-          ),
+          fontSize: widget.size ?? 19 * Responsive.getResponsiveText(context),
+          fontWeight: widget.fontWeight ?? FontWeight.w700,
+          color: widget.appbartxtcolor ?? AppTheme.getColor(context).onSurface,
         ),
-    backgroundColor: widget.appBarBackgoundColor,
-    leading:
-        widget.leading ??
-        (widget.automaticallyImplyLeading
-            ? IconButton(
-                icon: Image.asset(
-                  'assets/images/backArrow.png',
-                  color: Colors.white,
-                ),
-                onPressed: () {},
-              )
-            : null),
+    backgroundColor:
+        widget.appBarBackgoundColor ?? AppTheme.getColor(context).surface,
+    leading: widget.leading ?? const BackButton(),
 
     ///remove padding if leading is null
     surfaceTintColor: widget.surfaceTintColor,
     elevation: widget.elevation,
     shadowColor: widget.shadowColor,
     shape: widget.shape,
-    toolbarHeight: widget.toolbarHeight,
+    toolbarHeight:
+        widget.toolbarHeight ?? 0.045 * Responsive.getHeight(context),
     toolbarOpacity: widget.toolbarOpacity,
     titleTextStyle: widget.titleTextStyle,
-    centerTitle: widget.centerTitle,
+    centerTitle: widget.centerTitle ?? false,
     toolbarTextStyle: widget.toolbarTextStyle,
     foregroundColor: widget.foregroundColor,
     clipBehavior: widget.clipBehavior,
-    actions:
-        widget.actions ??
-        [
-          IconButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/home');
-            },
-            icon: const Icon(Icons.home, size: 7, color: Colors.white),
-          ),
-        ],
+    actions: widget.actions ?? [],
     bottom: widget.bottom,
     bottomOpacity: widget.bottomOpacity,
     flexibleSpace: widget.flexibleSpace,
     excludeHeaderSemantics: widget.excludeHeaderSemantics,
-    titleSpacing: widget.titleSpacing,
+    titleSpacing: widget.titleSpacing ?? 0.04 * Responsive.getWidth(context),
     primary: widget.primary,
     systemOverlayStyle:
         widget.systemOverlayStyle ??
-        const SystemUiOverlayStyle(statusBarColor: Colors.white),
+        SystemUiOverlayStyle(
+          statusBarColor: AppTheme.getColor(context).surface,
+        ),
     forceMaterialTransparency: widget.forceMaterialTransparency,
     key: widget.key,
     actionsIconTheme: widget.actionsIconTheme,

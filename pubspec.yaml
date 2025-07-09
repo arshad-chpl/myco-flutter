@@ -69,6 +69,8 @@ dependencies:
   image_picker: ^1.1.2
   file_picker: ^10.2.0
   permission_handler: ^12.0.0+1
+  highlight_text: ^1.8.0
+  shimmer: ^3.0.0
 
   # Google Map
   google_maps_flutter: ^2.12.3
@@ -119,6 +121,7 @@ flutter:
     - assets/lost_and_found/
     - assets/add_expense/
     - assets/face_detection/
+    - assets/dashboard/svgs/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
