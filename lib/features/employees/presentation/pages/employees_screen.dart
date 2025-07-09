@@ -5,6 +5,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 import 'package:myco_flutter/features/employees/presentation/widgets/employee_card.dart';
+import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -197,11 +198,26 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                         department: emp['role']!,
                         image: NetworkImage(emp['image']!),
                         showDelete: true,
-
                       );
                     },
                   );
                 },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomMediaPickerContainer(
+                title: 'Assets Image',
+                titleFontSize: 14,
+                imageTitle: 'Capture Image',
+                containerHeight: 100,
+                multipleImage: 5,
+                imagePath: 'assets/media_picker/gallery-export.png',
+                backgroundColor: Colors.blue.shade50,
+                isCameraShow: true,
+                isGalleryShow: true,
+                isDocumentShow: true,
+                isCropImage: true,
               ),
             ),
           ],
@@ -252,20 +268,3 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     color: AppTheme.getColor(context).primary,
   );
 }
-
-// Padding(
-//   padding: const EdgeInsets.all(8.0),
-//   child: CustomMediaPickerContainer(
-//     title: 'Assets Image',
-//     titleFontSize: 14,
-//     imageTitle: 'Capture Image',
-//     containerHeight: 100,
-//     multipleImage: 5,
-//     imagePath: 'assets/media_picker/gallery-export.png',
-//     backgroundColor: Colors.blue.shade50,
-//     isCameraShow: true,
-//     isGalleryShow: true,
-//     isDocumentShow: true,
-//     isCropImage: true,
-//   ),
-// ),

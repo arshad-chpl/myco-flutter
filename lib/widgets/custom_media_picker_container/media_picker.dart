@@ -217,8 +217,6 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
                   child: CustomShadowContainer(
                     image: Image.asset(
                       'assets/media_picker/document.png',
-                      width: 80,
-                      height: 80,
                       fit: BoxFit.contain,
                     ),
                     title: 'Documents',
