@@ -16,10 +16,11 @@ class EmployeeSelectionModel {
   });
 }
 
-class EmployeeSelectionCard extends StatefulWidget {
+class EmployeeSelectionCard extends StatelessWidget {
   final ImageProvider image;
   final String name;
   final String department;
+  final bool isSelected;
   final bool? showDelete;
   final VoidCallback? onDeleteTap;
   final TextStyle? nameTextStyle;
@@ -38,13 +39,14 @@ class EmployeeSelectionCard extends StatefulWidget {
     required this.image,
     required this.name,
     required this.department,
+    required this.isSelected,
+    super.key,
     this.boxHeight,
     this.boxWidth,
     this.imageWidth,
     this.imageHeight,
     this.spaceBetweenImageText,
     this.onSelected,
-    super.key,
     this.borderRadius,
     this.borderColor,
     this.nameTextStyle,
@@ -54,24 +56,13 @@ class EmployeeSelectionCard extends StatefulWidget {
     this.onDeleteTap,
   });
 
-  @override
-  State<EmployeeSelectionCard> createState() => _EmployeeSelectionCardState();
-}
-
-class _EmployeeSelectionCardState extends State<EmployeeSelectionCard> {
-  bool isSelected = false;
-
-  void _toggleSelection() {
-    setState(() {
-      isSelected = !isSelected;
-    });
-
-    if (isSelected && widget.onSelected != null) {
-      widget.onSelected!(
+  void _handleTap() {
+    if (onSelected != null) {
+      onSelected!(
         EmployeeSelectionModel(
-          image: widget.image,
-          name: widget.name,
-          department: widget.department,
+          name: name,
+          department: department,
+          image: image,
         ),
       );
     }
@@ -79,25 +70,21 @@ class _EmployeeSelectionCardState extends State<EmployeeSelectionCard> {
 
   @override
   Widget build(BuildContext context) => GestureDetector(
-    onTap: _toggleSelection,
+    onTap: _handleTap,
     child: Stack(
       fit: StackFit.expand,
       children: [
         Container(
-          // height: 126,width:102 ,
-          padding: const EdgeInsets.only(
-            top: 12,
-            left: 16,
-            right: 24,
-            bottom: 2,
-          ),
+          padding:
+              boxPadding ??
+              const EdgeInsets.only(top: 12, left: 16, right: 24, bottom: 2),
           decoration: BoxDecoration(
             color: isSelected ? const Color(0xFFEEF7FD) : Colors.white,
-            borderRadius: BorderRadius.circular(widget.borderRadius ?? 20),
+            borderRadius: BorderRadius.circular(borderRadius ?? 20),
             border: Border.all(
               color: isSelected
                   ? Colors.transparent
-                  : widget.borderColor ?? AppColors.primary,
+                  : borderColor ?? AppColors.primary,
             ),
             boxShadow: [
               BoxShadow(
@@ -108,20 +95,18 @@ class _EmployeeSelectionCardState extends State<EmployeeSelectionCard> {
             ],
           ),
           child: Column(
-            // mainAxisSize: MainAxisSize.min,
             children: [
               Stack(
                 alignment: Alignment.center,
                 children: [
                   SizedBox(
-                    width: widget.imageWidth ?? 80,
-                    height: widget.imageHeight ?? 80,
+                    width: imageWidth ?? 80,
+                    height: imageHeight ?? 80,
                     child: Stack(
                       children: [
-                        // Main outer circle
                         Container(
-                          width: widget.imageWidth ?? 100,
-                          height: widget.imageHeight ?? 100,
+                          width: imageWidth ?? 100,
+                          height: imageHeight ?? 100,
                           padding: const EdgeInsets.all(3.0),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -160,13 +145,11 @@ class _EmployeeSelectionCardState extends State<EmployeeSelectionCard> {
                               ),
                               child: CircleAvatar(
                                 backgroundColor: AppColors.white,
-                                backgroundImage: widget.image,
+                                backgroundImage: image,
                               ),
                             ),
                           ),
                         ),
-
-                        // Dot at bottom-right inside gradient ring
                         Positioned(
                           right: 6,
                           bottom: 6,
@@ -208,33 +191,33 @@ class _EmployeeSelectionCardState extends State<EmployeeSelectionCard> {
               ),
               const SizedBox(height: 5),
               CustomText(
-                widget.name,
+                name,
                 fontSize: 12 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
               const SizedBox(height: 6),
               CustomText(
-                widget.department,
+                department,
                 fontSize: 12 * Responsive.getResponsiveText(context),
                 color: AppColors.textPrimary,
               ),
             ],
           ),
         ),
-        if (widget.showDelete == true)
+        if (showDelete == true)
           Positioned(
             top: 0,
             right: 0,
             child: GestureDetector(
-              onTap: widget.onDeleteTap,
+              onTap: onDeleteTap,
               child: Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: AppColors.error,
                   borderRadius: BorderRadius.only(
-                    topRight: Radius.circular((widget.borderRadius ?? 20) - 1),
-                    bottomLeft: Radius.circular(widget.borderRadius ?? 10),
+                    topRight: Radius.circular((borderRadius ?? 20) - 1),
+                    bottomLeft: Radius.circular(borderRadius ?? 10),
                   ),
                 ),
                 child: const Icon(

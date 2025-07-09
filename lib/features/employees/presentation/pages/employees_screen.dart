@@ -20,6 +20,7 @@ class EmployeesScreen extends StatefulWidget {
 class _EmployeesScreenState extends State<EmployeesScreen> {
   final TextEditingController branchController = TextEditingController();
   final TextEditingController departmentController = TextEditingController();
+  final Set<int> selectedEmployeeIndexes = {};
 
   final List<Map<String, String>> branches = [
     {'id': '1', 'name': 'Ahmedabad'},
@@ -53,7 +54,6 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
         'image': 'https://i.pravatar.cc/150?img=${index + 1}',
       },
     );
-
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomAppbar(
@@ -198,6 +198,16 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                         department: emp['role']!,
                         image: NetworkImage(emp['image']!),
                         showDelete: true,
+                        isSelected: selectedEmployeeIndexes.contains(index),
+                        onSelected: (value) {
+                          setState(() {
+                            if (selectedEmployeeIndexes.contains(index)) {
+                              selectedEmployeeIndexes.remove(index);
+                            } else {
+                              selectedEmployeeIndexes.add(index);
+                            }
+                          });
+                        },
                       );
                     },
                   );
