@@ -228,7 +228,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
 
                           preference.setLoginSession(true);
 
-                          context.go('/login');
+                          context.pushNamed('login');
 
                           //   setState(() => _selectedCompany = company);
                         },

@@ -78,6 +78,7 @@ AdminSubMenuModel _$AdminSubMenuModelFromJson(Map<String, dynamic> json) =>
       isDepartmentWise: json['isDepartmentWise'] as bool?,
       isEmployeeWise: json['isEmployeeWise'] as bool?,
       modificationAccess: json['modification_access'] as bool?,
+      pendingCount: json['pending_count'] as String?,
     );
 
 Map<String, dynamic> _$AdminSubMenuModelToJson(AdminSubMenuModel instance) =>
@@ -95,6 +96,7 @@ Map<String, dynamic> _$AdminSubMenuModelToJson(AdminSubMenuModel instance) =>
       'isDepartmentWise': instance.isDepartmentWise,
       'isEmployeeWise': instance.isEmployeeWise,
       'modification_access': instance.modificationAccess,
+      'pending_count': instance.pendingCount,
     };
 
 BranchModel _$BranchModelFromJson(Map<String, dynamic> json) => BranchModel(
