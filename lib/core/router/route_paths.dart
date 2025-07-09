@@ -59,4 +59,53 @@ class RoutePaths {
   static const String addVisit = '/add-visit';
   static const String viewVisitDetails = '/view-visit-details';
   static const String myProfile = '/my-profile';
+
+
+  // ======== Admin View ========
+  static const String adminView = '/admin-view';
+
+  // --- Admin Sub-Routes ---
+  static const String adminPendingLeaves = 'pending-leaves';
+  static const String adminPendingExpenses = 'pending-expenses';
+  static const String adminWfhApproval = 'wfh-approval';
+  static const String adminPastDateAttendance = 'past-date-attendance';
+  static const String adminPunchOutMissing = 'punch-out-missing';
+  static const String adminEscalation = 'escalation';
+  static const String adminIdeaApproval = 'idea-approval';
+  static const String adminOutOfRangeRequest = 'out-of-range-request';
+  static const String adminApproveEmployee = 'approve-employee';
+  static const String adminOnboarding = 'onboarding';
+  static const String adminAbsentPresent = 'absent-present';
+  static const String adminMonthlyAttendance = 'monthly-attendance';
+  static const String adminDeviceChange = 'device-change';
+  static const String adminTrackEmployee = 'track-employee';
+  static const String adminPersonalInfo = 'personal-info';
+  static const String adminWorkReport = 'work-report';
+  static const String adminAdvanceSalaryRequest = 'advance-salary-request';
+  static const String adminLoanRequest = 'loan-request';
+  static const String adminPendingVisitApproval = 'pending-visit-approval';
+  static const String adminEndVisitApproval = 'end-visit-approval';
+  static const String adminViewEmployeeVisits = 'view-employee-visits';
+  static const String adminShiftChangeRequests = 'shift-change-requests';
+  static const String adminFaceChangeRequests = 'face-change-requests';
+  static const String adminAdvanceExpenseRequest = 'advance-expense-request';
+  static const String adminShortLeaveRequest = 'short-leave-request';
+  static const String adminBreakRequest = 'break-request';
+  static const String adminGpsInternetSummary = 'gps-internet-summary';
+  static const String adminAutoLeaves = 'auto-leaves';
+  static const String adminViewShortLeaves = 'view-short-leaves';
+  static const String adminSandwichLeaves = 'sandwich-leaves';
+  static const String adminReviewWorkReport = 'review-work-report';
+  static const String adminWorkReportSummary = 'work-report-summary';
+  static const String adminTrackingSetting = 'tracking-setting';
+  static const String adminLiveMapView = 'live-map-view';
+  static const String adminTravelSummary = 'travel-summary';
+  static const String adminPaidExpense = 'paid-expense';
+  static const String adminUnpaidExpense = 'unpaid-expense';
+  static const String adminOffboarding = 'offboarding';
+  static const String adminContactInfo = 'contact-info';
+  static const String adminPastExperience = 'past-experience';
+  static const String adminEducation = 'education';
+  static const String adminAchievements = 'achievements';
+  static const String adminEmployeesFace = 'employees-face';
 }
