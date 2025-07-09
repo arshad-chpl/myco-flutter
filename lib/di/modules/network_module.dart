@@ -34,6 +34,26 @@ Future<void> initNetworkModule(GetIt sl) async {
     instanceName: VariableBag.masterAPICall,
   );
 
+}
+
+Future<void> refreshApiServiceCompany(GetIt sl) async {
+  final preference = sl<PreferenceManager>();
+  final userId = preference.getUserId();
+  final companyId = await preference.getCompanyId();
+  final userMobile = preference.getUserMobile();
+  var baseUrl = await preference.getBaseUrl();
+  final password = Util.getCurrentPassword(
+    companyId.toString(),
+    userId,
+    userMobile.toString(),
+  );
+
+  _registerOrReplace<ApiClient>(
+    ApiClient(sl(), baseUrl: baseUrl ?? ''),
+    sl,
+    instanceName: VariableBag.masterAPICall,
+  );
+
   _registerOrReplace<ApiClient>(
     ApiClient(sl(), baseUrl: baseUrl! + VariableBag.residentApiEnd),
     sl,
@@ -57,7 +77,9 @@ Future<void> initNetworkModule(GetIt sl) async {
     sl,
     instanceName: VariableBag.residentAPI,
   );
+
 }
+
 
 void _registerOrReplace<T extends Object>(
   T instance,

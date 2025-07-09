@@ -10,6 +10,7 @@ import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/company_selector/domain/entites/society_response.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
@@ -222,8 +223,8 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                             'selectedCompany',
                             companyJson,
                           );
-                          // TODO: refreshApiServiceCompany
-                          // refreshApiServiceCompany();
+                          final sl = GetIt.instance;
+                          refreshApiServiceCompany(sl);
 
                           preference.setLoginSession(true);
 
