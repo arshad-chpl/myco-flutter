@@ -77,7 +77,7 @@ class EmployeeSelectionCard extends StatelessWidget {
               boxPadding ??
               const EdgeInsets.only(top: 12, left: 16, right: 24, bottom: 2),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFFEEF7FD) : Colors.white,
+            color: isSelected ? const Color(0xffEEF7FD) : Colors.white,
             borderRadius: BorderRadius.circular(borderRadius ?? 20),
             border: Border.all(
               color: isSelected
@@ -113,7 +113,8 @@ class EmployeeSelectionCard extends StatelessWidget {
                               colors: isSelected
                                   ? [
                                       selectedColor ?? AppColors.primary,
-                                      (selectedColor ?? AppColors.primary).withAlpha(150),
+                                      (selectedColor ?? AppColors.primary)
+                                          .withAlpha(150),
                                       Colors.white,
                                     ]
                                   : [

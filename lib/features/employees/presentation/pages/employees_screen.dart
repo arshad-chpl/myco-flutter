@@ -5,6 +5,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 import 'package:myco_flutter/features/employees/presentation/widgets/employee_card.dart';
+import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -198,6 +199,50 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                 },
               ),
             ),
+            // CommonCard(
+            //   title: 'Reporting Person',
+            //   bottomWidget: Row(
+            //     mainAxisSize: MainAxisSize.min,
+            //     children: [
+            //       Expanded(
+            //         child: GridView.builder(
+            //           padding: const EdgeInsets.only(
+            //             top: 6,
+            //             bottom: 5,
+            //             left: 5,
+            //             right: 5,
+            //           ),
+            //           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //             crossAxisCount: Responsive.getGridConfig(
+            //               context,
+            //             ).itemCount,
+            //             mainAxisSpacing: Responsive.getGridConfig(
+            //               context,
+            //             ).spacing,
+            //             crossAxisSpacing: Responsive.getGridConfig(
+            //               context,
+            //             ).spacing,
+            //             childAspectRatio: Responsive.getGridConfig(
+            //               context,
+            //             ).childAspectRatio,
+            //           ),
+            //           itemCount: 3,
+            //           itemBuilder: (context, index) =>
+            //               const EmployeeSelectionCard(
+            //                 image: AssetImage(
+            //                   'assets/dashboard/person_photo.png',
+            //                 ),
+            //                 name: 'Ajit Maurya',
+            //                 department: 'QA',
+            //                 isSelected: false,
+            //               ),
+            //           shrinkWrap: true,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+
             // Padding(
             //   padding: const EdgeInsets.all(8.0),
             //   child: CustomMediaPickerContainer(
