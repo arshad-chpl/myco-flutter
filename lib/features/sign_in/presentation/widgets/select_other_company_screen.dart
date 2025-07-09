@@ -25,6 +25,7 @@ class SelectOtherCompanyScreen extends StatefulWidget {
 class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
   String selectedCountry = 'IND';
   final TextEditingController phoneController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   bool isChecked = false;
 
   final Map<String, String> countryMap = {
@@ -34,7 +35,7 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
   };
   @override
   Widget build(BuildContext context) => Container(
-    height: 0.7 * Responsive.getHeight(context),
+    height: 0.8 * Responsive.getHeight(context),
     width: Responsive.getWidth(context),
     decoration: BoxDecoration(
       color: AppTheme.getColor(context).onPrimary,
@@ -53,21 +54,26 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Image.asset(
-                "assets/sign_in/back_arrow.png",
-                height: 0.015 * Responsive.getHeight(context),
-                fit: BoxFit.cover,
-              ),
-              SizedBox(width: 0.05 * Responsive.getWidth(context)),
-              CustomText(
-                "Select Other Company",
-                color: AppTheme.getColor(context).onSurface,
-                fontWeight: FontWeight.w800,
-                fontSize: 18 * Responsive.getResponsiveText(context),
-              ),
-            ],
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Row(
+              children: [
+                Image.asset(
+                  "assets/sign_in/back_arrow.png",
+                  height: 0.015 * Responsive.getHeight(context),
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(width: 0.05 * Responsive.getWidth(context)),
+                CustomText(
+                  "Select Other Company",
+                  color: AppTheme.getColor(context).onSurface,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 18 * Responsive.getResponsiveText(context),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
           Center(
@@ -91,7 +97,7 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
           CustomText(
-            "Phone number",
+            'Phone number',
             fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,
             color: AppTheme.getColor(context).onSurface,
@@ -116,6 +122,32 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
               color: AppTheme.getColor(context).onPrimary,
             ),
           ),
+          CustomText(
+            'Email Id',
+            fontSize: 16 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w600,
+            color: AppTheme.getColor(context).onSurface,
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                15 * Responsive.getResponsive(context),
+              ),
+              border: Border.all(color: AppColors.gray5),
+              color: AppTheme.getColor(context).onPrimary,
+            ),
+            child: TextField(
+              controller: emailController,
+              decoration: const InputDecoration(
+                hintText: 'Please Enter Email Id',
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
           MyCoButton(
             onTap: () {
@@ -127,7 +159,7 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                 context: context,
                 title: 'Sign In Phone Number',
                 description:
-                    'Sign in code has been sent to +6292121002200, check your inbox to continue the sign in process.',
+                'Sign in code has been sent to +6292121002200, check your inbox to continue the sign in process.',
                 emailAddress: "example@example.com",
                 onSubmit: (String otp) {
                   dev.log("OTP submitted: $otp");

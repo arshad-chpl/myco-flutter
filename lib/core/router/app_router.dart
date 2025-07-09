@@ -7,6 +7,9 @@ import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
 import 'package:myco_flutter/features/asset/view/testing.dart';
+import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
+import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_event.dart';
+import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
@@ -104,7 +107,6 @@ class AppRouter {
         builder: (context, state) => DashBoardPage(),
       ),
 
-
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
           providers: [BlocProvider(create: (context) => ListIdeaBloc())],
@@ -130,6 +132,14 @@ class AppRouter {
         path: RoutePaths.leave,
         name: 'leave',
         builder: (context, state) => const LeaveScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.companyInfo,
+        name: 'company-info',
+        builder: (context, state) => BlocProvider<CompanyInfoBloc>(
+          create: (_) => GetIt.I<CompanyInfoBloc>(),
+          child: const CompanyInfoPage(),
+        ),
       ),
       GoRoute(
         path: RoutePaths.myVisit,
@@ -165,17 +175,17 @@ class AppRouter {
         ],
       ),
 
-
       GoRoute(
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
         builder: (context, state) => BlocProvider(
-            create: (context) => GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+          create: (context) =>
+              GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
           child: const FaceDetectionPage(),
-        )
+        ),
       ),
       // Add all modular routes here
-     // Add all modular routes here
+      // Add all modular routes here
       // GoRoute(
       //   path: RoutePaths.takeOrder,
       //   name: 'take-order',
@@ -235,7 +245,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.AddExpense,
         name: 'addExpense',
-        builder: (context, state) =>  const AddExpensePage(),
+        builder: (context, state) => const AddExpensePage(),
       ),
       GoRoute(
         path: RoutePaths.lostAndFoundAddScreen,
@@ -253,9 +263,9 @@ class AppRouter {
         path: RoutePaths.lostAndFoundItemDetails,
         name: 'lost-and-found-item-details',
         builder: (context, state) {
-          LostAndFoundItemModel lostitem= state.extra as LostAndFoundItemModel;
-          return ItemDetailsScreen(item: lostitem,);
-        }
+          LostAndFoundItemModel lostitem = state.extra as LostAndFoundItemModel;
+          return ItemDetailsScreen(item: lostitem);
+        },
       ),
 
       GoRoute(
