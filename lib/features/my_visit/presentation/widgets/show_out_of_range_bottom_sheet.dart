@@ -8,8 +8,6 @@ import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_
 import 'package:myco_flutter/features/my_visit/presentation/widgets/current_location_with_label_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/gps_accuracy_status_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/out_of_range_image_message_widget.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/show_date_time_widget.dart';
-import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
