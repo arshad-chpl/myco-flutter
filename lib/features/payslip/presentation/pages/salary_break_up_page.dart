@@ -4,6 +4,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/payslip_card.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -12,11 +13,7 @@ class SalaryBreakUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      leading: const BackButton(),
-      title: const CustomText('Salary Break-Up', fontWeight: FontWeight.w700),
-      centerTitle: false,
-    ),
+    appBar: CustomAppbar(appBarText: 'Salary Break-Up'),
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),

@@ -54,7 +54,7 @@ class AdminMenuList extends StatelessWidget {
               final childMatches =
                   category?.adminSubMenu?.any(
                     (subMenu) =>
-                        subMenu?.accessType?.toLowerCase().contains(
+                        subMenu.accessType?.toLowerCase().contains(
                           searchQuery.toLowerCase(),
                         ) ??
                         false,
