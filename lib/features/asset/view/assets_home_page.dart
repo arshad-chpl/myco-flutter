@@ -35,7 +35,7 @@ class _AssetsHomePageState extends State<AssetsHomePage> {
         fontSize: 22 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
       ),
-      // titleSpacing: 0,
+      titleSpacing: 0,
       actions: [
         Padding(
           padding: EdgeInsets.only(right: 0.04 * Responsive.getWidth(context)),
