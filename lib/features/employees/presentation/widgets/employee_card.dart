@@ -196,7 +196,7 @@ class EmployeeSelectionCard extends StatelessWidget {
                 color: AppColors.textPrimary,
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(height: 0.010 * Responsive.getHeight(context)),
+              SizedBox(height: 0.005 * Responsive.getHeight(context)),
               CustomText(
                 department,
                 fontSize: 12 * Responsive.getResponsiveText(context),
