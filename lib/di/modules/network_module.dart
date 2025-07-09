@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get_it/get_it.dart';
-import 'package:dio/dio.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/core/network/dio_provider.dart';
@@ -15,11 +13,11 @@ import 'package:myco_flutter/core/utils/util.dart';
 Future<void> initNetworkModule(GetIt sl) async {
   sl.registerLazySingleton(() => SafeApiCall(sl()));
 
-  PreferenceManager preference = sl<PreferenceManager>();
-  final userId = await preference.getUserId();
+  final PreferenceManager preference = sl<PreferenceManager>();
+  final userId = preference.getUserId();
   final companyId = await preference.getCompanyId();
-  final userMobile = await preference.getUserMobile();
-  var baseUrl = await preference.getBaseUrl();
+  final userMobile = preference.getUserMobile();
+  final baseUrl = await preference.getBaseUrl();
   final password = Util.getCurrentPassword(
     companyId.toString(),
     userId,
