@@ -252,3 +252,4 @@ google-services.json
 .flutter-plugins
 .env
 .flutter-plugins-dependencies
+/.vscode
