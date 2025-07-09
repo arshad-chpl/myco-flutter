@@ -45,6 +45,7 @@ class RoutePaths {
   static const String ideaRequest = '/idea-request';
   static const String leave = '/leave';
   static const String companyInfo = '/company-info';
+  static const String holiday = '/holiday';
 
   static const String employees = '/employees';
 

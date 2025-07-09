@@ -1,3 +1,4 @@
+import 'package:easy_url_launcher/easy_url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -264,14 +265,14 @@ class CompanyInfoPage extends StatelessWidget {
                                       ),
                                       InkWell(
                                         onTap: () async {
-                                          final email = authority.adminEmail ?? '';
-                                          final uri = Uri(
-                                            scheme: 'mailto',
-                                            path: email,
-                                          );
-                                          if (await canLaunchUrl(uri)) {
-                                            await launchUrl(uri);
+                                          final email = authority.adminEmail?.trim() ?? '';
+                                          if (email.isEmpty || !email.contains('@')) {
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Invalid or missing email address')),
+                                            );
+                                            return;
                                           }
+                                          await EasyLauncher.email(email: email);
                                         },
                                         child: Text(
                                           authority.adminEmail ?? '',
@@ -281,7 +282,7 @@ class CompanyInfoPage extends StatelessWidget {
                                             fontSize: 14 * Responsive.getResponsiveText(context),
                                           ),
                                         ),
-                                      ),
+                                      )
                                     ],
                                   ),
                                 ),

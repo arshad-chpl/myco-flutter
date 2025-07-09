@@ -17,6 +17,7 @@ import 'package:myco_flutter/features/company_selector/presentation/bloc/company
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:myco_flutter/features/holiday/presentation/pages/holiday_list_page.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
@@ -61,8 +62,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.getStarted,
-    // initialLocation: RoutePaths.dashboard,
+    // initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -136,6 +137,14 @@ class AppRouter {
         path: RoutePaths.leave,
         name: 'leave',
         builder: (context, state) => const LeaveScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.holiday,
+        name: 'holiday',
+        builder: (context, state) {
+          final controller = TextEditingController();
+          return HolidayListPage(controller: controller);
+        },
       ),
       GoRoute(
         path: RoutePaths.companyInfo,
