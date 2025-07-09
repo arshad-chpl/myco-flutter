@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 part 'face_detection_event.dart';
+
 part 'face_detection_state.dart';
 
 class FaceDetectionBloc extends Bloc<FaceDetectionEvent, FaceDetectionState> {
@@ -23,7 +24,10 @@ class FaceDetectionBloc extends Bloc<FaceDetectionEvent, FaceDetectionState> {
     on<UpdateProgress>(onUpdateProgress);
   }
 
-  void onOpenCamera(FaceDetectionEvent event, Emitter<FaceDetectionState> emit) async {
+  void onOpenCamera(
+    FaceDetectionEvent event,
+    Emitter<FaceDetectionState> emit,
+  ) async {
     if (controller?.value.isInitialized ?? false) return;
 
     // if (controller != null && controller!.value.isInitialized) {
@@ -32,73 +36,100 @@ class FaceDetectionBloc extends Bloc<FaceDetectionEvent, FaceDetectionState> {
 
     emit(FaceDetectionLoading());
     try {
-
       if (controller != null) {
         await controller!.dispose();
         controller = null;
       }
 
       final camera = await availableCameras();
-      final frontCamera = camera.firstWhere((cam) => cam.lensDirection == CameraLensDirection.front,);
+      final frontCamera = camera.firstWhere(
+        (cam) => cam.lensDirection == CameraLensDirection.front,
+      );
 
-      controller = CameraController(frontCamera, ResolutionPreset.high);
+      controller = CameraController(
+        frontCamera,
+        ResolutionPreset.high,
+        enableAudio: false,
+      );
       await controller!.initialize();
 
-      emit(FaceDetectionLoaded(
-        controller: controller!,
-        dateTime: '',
-        scanningState: scanningState,
-        remainingTime: '02:00',
-        progress: 0.0,
-      ));
+      emit(
+        FaceDetectionLoaded(
+          controller: controller!,
+          dateTime: '',
+          scanningState: scanningState,
+          remainingTime: '02:00',
+          progress: 0.0,
+        ),
+      );
 
       add(StartDateTime());
 
       add(StartScanningTimer());
-
-    } catch (e){
+    } catch (e) {
       emit(FaceDetectionError(message: e.toString()));
     }
   }
 
-  void onStartDateTime(StartDateTime event, Emitter<FaceDetectionState> emit) async {
+  void onStartDateTime(
+    StartDateTime event,
+    Emitter<FaceDetectionState> emit,
+  ) async {
     dateTimeTimer?.cancel();
 
     dateTimeTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       final now = DateTime.now();
-      final formattedDateAndTime = DateFormat('d-MM-yyyy h:mm:ss a').format(now);
+      final formattedDateAndTime = DateFormat(
+        'd-MM-yyyy h:mm:ss a',
+      ).format(now);
       add(UpdateDateTime(formattedDateAndTime: formattedDateAndTime));
-    },);
+    });
   }
 
-  void onUpdateDateTime(UpdateDateTime event, Emitter<FaceDetectionState> emit) {
+  void onUpdateDateTime(
+    UpdateDateTime event,
+    Emitter<FaceDetectionState> emit,
+  ) {
     currentDateAndTime = event.formattedDateAndTime;
 
-    if(state is FaceDetectionLoaded) {
+    if (state is FaceDetectionLoaded) {
       final current = state as FaceDetectionLoaded;
 
       emit(current.copyWith(dateTime: currentDateAndTime));
     }
   }
 
-  void onUpdateScanningState(UpdateScanningState event, Emitter<FaceDetectionState> emit) {
+  void onUpdateScanningState(
+    UpdateScanningState event,
+    Emitter<FaceDetectionState> emit,
+  ) {
     scanningState = event.scanningState;
 
-    if(state is FaceDetectionLoaded) {
+    if (state is FaceDetectionLoaded) {
       final current = state as FaceDetectionLoaded;
-      emit(current.copyWith(scanningState: scanningState,  dateTime: currentDateAndTime,));
-    } else if(controller != null) {
-      emit(FaceDetectionLoaded(
-        controller: controller!,
-        dateTime: currentDateAndTime,
-        scanningState: scanningState,
-        progress: 0.0,
-        remainingTime: '02:00',
-      ));
+      emit(
+        current.copyWith(
+          scanningState: scanningState,
+          dateTime: currentDateAndTime,
+        ),
+      );
+    } else if (controller != null) {
+      emit(
+        FaceDetectionLoaded(
+          controller: controller!,
+          dateTime: currentDateAndTime,
+          scanningState: scanningState,
+          progress: 0.0,
+          remainingTime: '02:00',
+        ),
+      );
     }
   }
 
-  void onStartScanningTimer(StartScanningTimer event, Emitter<FaceDetectionState> emit) {
+  void onStartScanningTimer(
+    StartScanningTimer event,
+    Emitter<FaceDetectionState> emit,
+  ) {
     const int totalSeconds = 120;
     int secondsPassed = 0;
 
@@ -117,39 +148,52 @@ class FaceDetectionBloc extends Bloc<FaceDetectionEvent, FaceDetectionState> {
 
         if (current.scanningState != 'success') {
           Future.microtask(() {
-            if(!isClosed)  add(UpdateScanningState(scanningState: 'failure'));
-          },);
+            if (!isClosed) add(UpdateScanningState(scanningState: 'failure'));
+          });
         }
         return;
       }
 
       secondsPassed++;
 
-      final minutes = ((totalSeconds - secondsPassed) ~/ 60).toString().padLeft(2, '0');
-      final seconds = ((totalSeconds - secondsPassed) % 60).toString().padLeft(2, '0');
+      final minutes = ((totalSeconds - secondsPassed) ~/ 60).toString().padLeft(
+        2,
+        '0',
+      );
+      final seconds = ((totalSeconds - secondsPassed) % 60).toString().padLeft(
+        2,
+        '0',
+      );
       final progress = secondsPassed / totalSeconds;
 
       Future.microtask(() {
-        if(!isClosed) {
-          add(UpdateProgress(progress: progress, remainingTime: '$minutes:$seconds'));
+        if (!isClosed) {
+          add(
+            UpdateProgress(
+              progress: progress,
+              remainingTime: '$minutes:$seconds',
+            ),
+          );
         }
-      },);
+      });
     });
   }
 
-  void onUpdateProgress(UpdateProgress event, Emitter<FaceDetectionState> emit) {
+  void onUpdateProgress(
+    UpdateProgress event,
+    Emitter<FaceDetectionState> emit,
+  ) {
     if (state is FaceDetectionLoaded) {
       final current = state as FaceDetectionLoaded;
 
-      emit(current.copyWith(
-        progress: event.progress,
-        remainingTime: event.remainingTime,
-      ));
+      emit(
+        current.copyWith(
+          progress: event.progress,
+          remainingTime: event.remainingTime,
+        ),
+      );
     }
   }
-
-
-
 
   @override
   Future<void> close() async {
@@ -158,5 +202,4 @@ class FaceDetectionBloc extends Bloc<FaceDetectionEvent, FaceDetectionState> {
     dateTimeTimer?.cancel();
     return super.close();
   }
-
 }

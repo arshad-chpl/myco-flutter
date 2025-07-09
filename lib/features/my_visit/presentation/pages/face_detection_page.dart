@@ -32,21 +32,15 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
   String scanningSate = 'scanning';
 
   Future<void> cameraPermission() async {
-    final status = await Permission.camera.status;
+    final status = await [
+      Permission.camera,
+      Permission.microphone
+    ].request();
 
-    if (status.isGranted) {
-      Fluttertoast.showToast(msg: 'Camera permission granted');
-    } else if (status.isDenied) {
-      final result = await Permission.camera.request();
-
-      if (result.isGranted) {
-        Fluttertoast.showToast(msg: 'Granted after request');
-      } else {
-        Fluttertoast.showToast(msg: 'Permission Denied');
-      }
-    } else if (status.isPermanentlyDenied) {
-      Fluttertoast.showToast(msg: 'Permission permanently denied. Opening setting...');
-      await openAppSettings();
+    if (status[Permission.camera]!.isGranted && status[Permission.microphone]!.isGranted) {
+      Fluttertoast.showToast(msg: 'Camera and audio permission granted');
+    } else {
+      Fluttertoast.showToast(msg: 'Please allow both permission camera and audio');
     }
   }
 
