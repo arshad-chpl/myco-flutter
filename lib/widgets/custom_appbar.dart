@@ -20,7 +20,6 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final Color? shadowColor;
   final Color? surfaceTintColor;
   final ShapeBorder? shape;
-  final Color? backgroundColor;
   final Color? foregroundColor;
   final IconThemeData? iconTheme;
   final IconThemeData? actionsIconTheme;
@@ -58,7 +57,6 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
     this.shadowColor,
     this.surfaceTintColor,
     this.shape,
-    this.backgroundColor,
     this.foregroundColor,
     this.iconTheme,
     this.actionsIconTheme,

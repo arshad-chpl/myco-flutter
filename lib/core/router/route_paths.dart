@@ -58,6 +58,8 @@ class RoutePaths {
   static const String assetsHome = '/assets-home';
   static const String addVisit = '/add-visit';
   static const String viewVisitDetails = '/view-visit-details';
+  static const String myProfile = '/my-profile';
+
 
   // ======== Admin View ========
   static const String adminView = '/admin-view';
