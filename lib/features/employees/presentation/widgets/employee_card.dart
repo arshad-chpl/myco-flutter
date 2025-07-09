@@ -6,8 +6,7 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 
 class EmployeeSelectionModel {
   final ImageProvider image;
-  final String name;
-  final String department;
+  final String name, department;
 
   EmployeeSelectionModel({
     required this.image,
@@ -18,21 +17,19 @@ class EmployeeSelectionModel {
 
 class EmployeeSelectionCard extends StatelessWidget {
   final ImageProvider image;
-  final String name;
-  final String department;
+  final String name, department;
   final bool isSelected;
   final bool? showDelete;
   final VoidCallback? onDeleteTap;
-  final TextStyle? nameTextStyle;
-  final TextStyle? departmentTextStyle;
+  final TextStyle? nameTextStyle, departmentTextStyle;
   final EdgeInsetsGeometry? boxPadding;
-  final double? boxHeight;
-  final double? boxWidth;
-  final Color? borderColor;
-  final double? borderRadius;
-  final double? imageWidth;
-  final double? imageHeight;
-  final double? spaceBetweenImageText;
+  final Color? borderColor, selectedColor;
+  final double? boxHeight,
+      boxWidth,
+      borderRadius,
+      imageWidth,
+      imageHeight,
+      spaceBetweenImageText;
   final ValueChanged<EmployeeSelectionModel>? onSelected;
 
   const EmployeeSelectionCard({
@@ -54,6 +51,7 @@ class EmployeeSelectionCard extends StatelessWidget {
     this.boxPadding,
     this.showDelete,
     this.onDeleteTap,
+    this.selectedColor,
   });
 
   void _handleTap() {
@@ -113,8 +111,8 @@ class EmployeeSelectionCard extends StatelessWidget {
                             gradient: LinearGradient(
                               colors: isSelected
                                   ? [
-                                      AppColors.primary,
-                                      AppColors.primary.withAlpha(150),
+                                      selectedColor ?? AppColors.primary,
+                                      (selectedColor ?? AppColors.primary).withAlpha(150),
                                       Colors.white,
                                     ]
                                   : [

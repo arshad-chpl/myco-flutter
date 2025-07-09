@@ -5,7 +5,6 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 import 'package:myco_flutter/features/employees/presentation/widgets/employee_card.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -198,6 +197,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                         department: emp['role']!,
                         image: NetworkImage(emp['image']!),
                         showDelete: true,
+                        // selectedColor: Colors.red,
                         isSelected: selectedEmployeeIndexes.contains(index),
                         onSelected: (value) {
                           setState(() {
