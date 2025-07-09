@@ -169,8 +169,7 @@ class AppRouter {
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
         builder: (context, state) => BlocProvider(
-          create: (context) =>
-          GetIt.I<FaceDetectionBloc>()
+          create: (context) => GetIt.I<FaceDetectionBloc>()
             ..add(LaunchCamera()),
           child: const FaceDetectionPage(),),
       ),
