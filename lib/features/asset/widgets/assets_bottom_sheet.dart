@@ -98,9 +98,10 @@ class _AssetsBottomSheetState extends State<AssetsBottomSheet> {
             context,
           ).labelLarge!.copyWith(color: AppColors.textSecondary),
           preFixImage: 'assets/images/search.png',
+          prefixImageWidth: 0.02 * Responsive.getWidth(context),
           isSuffixIconOn: true,
           contentPadding: EdgeInsets.only(
-            top: 0.012 * Responsive.getHeight(context),
+            top: 0.012 * Responsive.getWidth(context),
           ),
           boarderRadius: 12 * Responsive.getResponsive(context),
         ),

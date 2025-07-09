@@ -4,9 +4,13 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
+import 'package:myco_flutter/features/asset/view/add_assets.dart';
 import 'package:myco_flutter/features/asset/view/assets_details_page.dart';
 import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
+import 'package:myco_flutter/features/asset/view/handover_assets.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
+import 'package:myco_flutter/features/asset/view/swap_assets.dart';
+import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
@@ -236,7 +240,8 @@ class AppRouter {
         name: 'addExpense',
         builder: (context, state) => const AddExpensePage(),
       ),
-        GoRoute(
+
+      GoRoute(
         path: RoutePaths.assetsHome,
         name: 'assets-home',
         builder: (context, state) => const AssetsHomePage(),
@@ -246,13 +251,32 @@ class AppRouter {
         name: 'qr-scanner',
         builder: (context, state) => const QRScannerPage(),
       ),
-    
       GoRoute(
         path: RoutePaths.assetsDetails,
         name: 'assets-details',
         builder: (context, state) => const AssetsDetailsPage(),
       ),
-    
+      GoRoute(
+        path: RoutePaths.addAssets,
+        name: 'add-assets',
+        builder: (context, state) => const AddAssets(),
+      ),
+      GoRoute(
+        path: RoutePaths.handoverAssets,
+        name: 'handover-assets',
+        builder: (context, state) => const HandoverAssetsPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.takeoverAssets,
+        name: 'takeover-assets',
+        builder: (context, state) => const TakeoverAssets(),
+      ),
+      GoRoute(
+        path: RoutePaths.swapAssets,
+        name: 'swap-assets',
+        builder: (context, state) => const SwapAssetsPage(),
+      ),
+
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,

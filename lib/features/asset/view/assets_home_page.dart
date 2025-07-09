@@ -4,13 +4,13 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
 import 'package:myco_flutter/features/asset/widgets/all_assets_card.dart';
 import 'package:myco_flutter/features/asset/widgets/assets_bottom_sheet.dart';
-import 'package:myco_flutter/features/asset/widgets/assets_holder_bottom_sheet.dart';
 import 'package:myco_flutter/features/asset/widgets/past_assets_card.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
+import 'package:myco_flutter/widgets/custom_shadow_container.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
@@ -27,146 +27,167 @@ class _AssetsHomePageState extends State<AssetsHomePage> {
   String allBrand = 'All Brand';
 
   @override
-  Widget build(BuildContext context) => SafeArea(
-    child: SafeArea(
-      child: Scaffold(
-        backgroundColor: AppTheme.getColor(context).surface,
-        appBar: AppBar(
-          title: CustomText(
-            'Assets',
-            fontSize: 22 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.w700,
-          ),
-          titleSpacing: 0,
-          leading: const BackButton(),
-          backgroundColor: AppTheme.getColor(context).surface,
-          actions: [
-            GestureDetector(
-              onTap: () {
-                showAssetsHoldersBottomSheet(context: context);
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.add,
-                    size: 0.035 * Responsive.getWidth(context),
-                    color: AppTheme.getColor(context).onSurface,
-                  ),
-                  CustomText(
-                    'Add Assets',
-                    fontSize: 16 * Responsive.getResponsiveText(context),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ],
-              ),
-            ),
-          ],
-          actionsPadding: EdgeInsets.only(
-            right: 0.04 * Responsive.getWidth(context),
-          ),
-        ),
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              expandedHeight: 70,
-              backgroundColor: AppTheme.getColor(context).surface,
-              floating: true,
-              snap: true,
-              automaticallyImplyLeading: false,
-              titleSpacing: 0,
-              title: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 0.04 * Responsive.getWidth(context),
-                ),
-                child: MyCoTextfield(
-                  hintText: 'Search',
-                  textAlignment: TextAlign.start,
-                  hintTextStyle: AppTheme.getTextStyle(
-                    context,
-                  ).labelLarge!.copyWith(color: AppColors.textSecondary),
-                  preFixImage: 'assets/images/search.png',
-                  isSuffixIconOn: true,
-                  suFixImage: 'assets/images/scan.png',
-                  suFixImageWidth: 25,
-                  onTap1: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const QRScannerPage(),
-                    ),
-                  ),
-                  contentPadding: EdgeInsets.only(
-                    top: 0.012 * Responsive.getHeight(context),
-                  ),
-                  boarderRadius: 12 * Responsive.getResponsive(context),
-                ),
-              ),
-            ),
-
-            // Pinned TabBar
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: _SliverTabBarDelegate(
-                height: 60,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 0.04 * Responsive.getWidth(context),
-                    right: 0.04 * Responsive.getWidth(context),
-                    bottom: 0.015 * Responsive.getHeight(context),
-                  ),
-                  child: MyCustomTabBar(
-                    isShadowBottomLeft: true,
-                    tabBarBorderColor: AppTheme.getColor(context).outline,
-                    selectedBgColors: [
-                      AppTheme.getColor(context).secondary,
-                      AppTheme.getColor(context).primary,
-                      const Color(0xFF08A4BB),
-                    ],
-                    selectedIndex: selectedIndex,
-                    tabs: const [
-                      'Active Assets (3)',
-                      'Past Assets (2)',
-                      'All Assets (2)',
-                    ],
-                    onTabChange: (int index) {
-                      setState(() {
-                        selectedIndex = index;
-                      });
-                    },
-                    unselectedBorderAndTextColor: AppTheme.getColor(
-                      context,
-                    ).outline,
-                  ),
-                ),
-              ),
-            ),
-
-            // Asset List
-            ..._buildAssetListByTab(),
-            // SliverPadding(
-            //   padding: EdgeInsets.symmetric(horizontal: 0.04 * Responsive.getWidth(context)),
-            //   sliver: SliverList.separated(
-            //     itemCount: 5,
-            //     separatorBuilder: (context, index) =>
-            //         SizedBox(height: 0.02 * Responsive.getHeight(context)),
-            //     itemBuilder: (context, index) => const ActiveAssetsCard(
-            //       title: 'Desktop',
-            //       subTitle: '(AS100)',
-            //       image: 'assets/images/laptop.png',
-            //       brand: 'Acer',
-            //       srNo: 'KJABLDBLDUE',
-            //       handOverDate: '02-05-2025',
-            //     ),
-            //   ),
-            // ),
-
-            // Extra spacing at the bottom
-            SliverToBoxAdapter(
-              child: SizedBox(height: 0.02 * Responsive.getHeight(context)),
-            ),
-          ],
-        ),
+  Widget build(BuildContext context) => Scaffold(
+    backgroundColor: AppTheme.getColor(context).surface,
+    appBar: CustomAppbar(
+      title: CustomText(
+        'Assets',
+        fontSize: 22 * Responsive.getResponsiveText(context),
+        fontWeight: FontWeight.w700,
       ),
+      // titleSpacing: 0,
+      actions: [
+        Padding(
+          padding: EdgeInsets.only(right: 0.04 * Responsive.getWidth(context)),
+          child: GestureDetector(
+            onTap: () => context.push('/add-assets'),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.add,
+                  size: 0.035 * Responsive.getWidth(context),
+                  color: AppTheme.getColor(context).onSurface,
+                ),
+                CustomText(
+                  'Add Assets',
+                  fontSize: 16 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w600,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+      backgroundColor: AppTheme.getColor(context).surface,
+    ),
+    // AppBar(
+    //   title: CustomText(
+    //     'Assets',
+    //     fontSize: 22 * Responsive.getResponsiveText(context),
+    //     fontWeight: FontWeight.w700,
+    //   ),
+    //   titleSpacing: 0,
+    //   leading: const BackButton(),
+    //   backgroundColor: AppTheme.getColor(context).surface,
+    //   actions: [
+    //     GestureDetector(
+    //       onTap: () => context.push('/add-assets'),
+    //       child: Row(
+    //         mainAxisSize: MainAxisSize.min,
+    //         children: [
+    //           Icon(
+    //             Icons.add,
+    //             size: 0.035 * Responsive.getWidth(context),
+    //             color: AppTheme.getColor(context).onSurface,
+    //           ),
+    //           CustomText(
+    //             'Add Assets',
+    //             fontSize: 16 * Responsive.getResponsiveText(context),
+    //             fontWeight: FontWeight.w600,
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   ],
+    //   actionsPadding: EdgeInsets.only(
+    //     right: 0.04 * Responsive.getWidth(context),
+    //   ),
+    // ),
+    body: CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          expandedHeight: 70,
+          backgroundColor: AppTheme.getColor(context).surface,
+          floating: true,
+          snap: true,
+          automaticallyImplyLeading: false,
+          titleSpacing: 0,
+          title: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.04 * Responsive.getWidth(context),
+            ),
+            child: MyCoTextfield(
+              hintText: 'Search',
+              textAlignment: TextAlign.start,
+              hintTextStyle: AppTheme.getTextStyle(
+                context,
+              ).labelLarge!.copyWith(color: AppColors.textSecondary),
+              preFixImage: 'assets/images/search.png',
+              isSuffixIconOn: true,
+              suFixImage: 'assets/images/scan.png',
+              suFixImageWidth: 25,
+              onTap1: () => context.push('/qr-scanner'),
+              contentPadding: EdgeInsets.only(
+                top: 0.012 * Responsive.getHeight(context),
+              ),
+              boarderRadius: 12 * Responsive.getResponsive(context),
+            ),
+          ),
+        ),
+
+        // Pinned TabBar
+        SliverPersistentHeader(
+          pinned: true,
+          delegate: _SliverTabBarDelegate(
+            height: 60,
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: 0.04 * Responsive.getWidth(context),
+                right: 0.04 * Responsive.getWidth(context),
+                bottom: 0.015 * Responsive.getHeight(context),
+              ),
+              child: MyCustomTabBar(
+                isShadowBottomLeft: true,
+                tabBarBorderColor: AppTheme.getColor(context).outline,
+                selectedBgColors: [
+                  AppTheme.getColor(context).secondary,
+                  AppTheme.getColor(context).primary,
+                  const Color(0xFF08A4BB),
+                ],
+                selectedIndex: selectedIndex,
+                tabs: const [
+                  'Active Assets (3)',
+                  'Past Assets (2)',
+                  'All Assets (2)',
+                ],
+                onTabChange: (int index) {
+                  setState(() {
+                    selectedIndex = index;
+                  });
+                },
+                unselectedBorderAndTextColor: AppTheme.getColor(
+                  context,
+                ).outline,
+              ),
+            ),
+          ),
+        ),
+
+        // Asset List
+        ..._buildAssetListByTab(),
+        // SliverPadding(
+        //   padding: EdgeInsets.symmetric(horizontal: 0.04 * Responsive.getWidth(context)),
+        //   sliver: SliverList.separated(
+        //     itemCount: 5,
+        //     separatorBuilder: (context, index) =>
+        //         SizedBox(height: 0.02 * Responsive.getHeight(context)),
+        //     itemBuilder: (context, index) => const ActiveAssetsCard(
+        //       title: 'Desktop',
+        //       subTitle: '(AS100)',
+        //       image: 'assets/images/laptop.png',
+        //       brand: 'Acer',
+        //       srNo: 'KJABLDBLDUE',
+        //       handOverDate: '02-05-2025',
+        //     ),
+        //   ),
+        // ),
+
+        // Extra spacing at the bottom
+        SliverToBoxAdapter(
+          child: SizedBox(height: 0.02 * Responsive.getHeight(context)),
+        ),
+      ],
     ),
   );
 

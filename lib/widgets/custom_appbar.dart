@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
 
 // if we do not implement the preferredSizeWidget then it will not let our custom app to be place at appbar:
 // ignore: must_be_immutable
 class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final double height;
-  @override
-  final Key? key;
   final Widget? leading;
   final bool automaticallyImplyLeading;
   final Widget? title;
@@ -44,8 +43,8 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final double? size;
   final Color? appbartxtcolor;
 
-  CustomAppbar({
-    this.key,
+  const CustomAppbar({
+    super.key,
     this.appbartxtcolor,
     this.leading,
     this.automaticallyImplyLeading = true,
@@ -112,8 +111,9 @@ class _CustomAppbarState extends State<CustomAppbar> {
         (widget.automaticallyImplyLeading
             ? IconButton(
                 icon: Image.asset(
-                  'assets/icons/sort.png',
+                  'assets/sign_in/back_arrow.png',
                   color: AppTheme.getColor(context).onSurface,
+                  width: 0.06 * Responsive.getWidth(context),
                 ),
                 onPressed: () {},
               )

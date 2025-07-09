@@ -12,10 +12,16 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:path/path.dart' as path;
 
 class CustomMediaPickerContainer extends StatefulWidget {
-  final double? imageMargin, containerHeight, titleFontSize, imageTitleSize;
+  final double? imageMargin,
+      containerHeight,
+      titleFontSize,
+      imageTitleSize,
+      titleWidgetBetweenSpace,
+      pickerBoxBorderRadius;
   final String title, imageTitle;
   final String imagePath;
   final int multipleImage;
+  final FontWeight? titleFontWeight;
   final Color? titleColor, backgroundColor, imageTitleColor;
   final bool isCameraShow, isGalleryShow, isDocumentShow, isCropImage;
 
@@ -36,6 +42,9 @@ class CustomMediaPickerContainer extends StatefulWidget {
     this.titleColor,
     this.imageTitleColor,
     this.imageTitleSize,
+    this.titleFontWeight,
+    this.titleWidgetBetweenSpace,
+    this.pickerBoxBorderRadius,
   });
 
   @override
@@ -56,10 +65,10 @@ class _CustomMediaPickerContainerState
         widget.title,
         fontSize:
             widget.titleFontSize ?? 14 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
+        fontWeight: widget.titleFontWeight ?? FontWeight.w700,
         color: widget.titleColor ?? AppTheme.getColor(context).onSurfaceVariant,
       ),
-      const SizedBox(height: 8),
+      SizedBox(height: widget.titleWidgetBetweenSpace ?? 8),
       _buildPickerContent(),
     ],
   );
@@ -67,7 +76,7 @@ class _CustomMediaPickerContainerState
   Widget _buildPickerContent() {
     if (_pickedImages.isNotEmpty) {
       return DesignBorderContainer(
-        borderRadius: 8,
+        borderRadius: widget.pickerBoxBorderRadius ?? 8,
         borderColor: AppTheme.getColor(context).primary,
         backgroundColor: AppTheme.getColor(context).onPrimary,
         padding: const EdgeInsets.all(0),

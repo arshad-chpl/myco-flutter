@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
@@ -13,330 +14,317 @@ class AssetsDetailsPage extends StatelessWidget {
   @override
   // ignore: prefer_expression_function_bodies
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: CustomText(
-            'Assets Details',
-            fontSize: 22 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.w700,
-          ),
-          titleSpacing: 0,
-          leading: const BackButton(),
-          backgroundColor: AppTheme.getColor(context).surface,
-          actions: [
-            GestureDetector(
-              onTap: () {},
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.add,
-                    size: 0.035 * Responsive.getWidth(context),
-                    color: AppTheme.getColor(context).onSurface,
-                  ),
-                  CustomText(
-                    'Handover Assets',
-                    fontSize: 16 * Responsive.getResponsiveText(context),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ],
-              ),
-            ),
-          ],
-          actionsPadding: EdgeInsets.only(
-            right: 0.04 * Responsive.getWidth(context),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: CustomText(
+          'Assets Details',
+          fontSize: 22 * Responsive.getResponsiveText(context),
+          fontWeight: FontWeight.w700,
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 0.04 * Responsive.getWidth(context),
-          ),
-          child: SingleChildScrollView(
-            child: Column(
+        titleSpacing: 0,
+        leading: const BackButton(),
+        backgroundColor: AppTheme.getColor(context).surface,
+        actions: [
+          GestureDetector(
+            onTap: () => context.push('/handover-assets'),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                detailsCard(context),
-                SizedBox(height: 0.03 * Responsive.getHeight(context)),
+                Icon(
+                  Icons.add,
+                  size: 0.035 * Responsive.getWidth(context),
+                  color: AppTheme.getColor(context).onSurface,
+                ),
+                CustomText(
+                  'Handover Assets',
+                  fontSize: 16 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w600,
+                ),
+              ],
+            ),
+          ),
+        ],
+        actionsPadding: EdgeInsets.only(
+          right: 0.04 * Responsive.getWidth(context),
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 0.04 * Responsive.getWidth(context),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              detailsCard(context),
+              SizedBox(height: 0.03 * Responsive.getHeight(context)),
 
-                // -- Assets History --
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(
-                    16 * Responsive.getResponsive(context),
+              // -- Assets History --
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(16 * Responsive.getResponsive(context)),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    12 * Responsive.getResponsive(context),
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      12 * Responsive.getResponsive(context),
+                  boxShadow: [
+                    const BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0, 2),
+                      blurRadius: 4,
                     ),
-                    boxShadow: [
-                      const BoxShadow(
-                        color: Colors.black26,
-                        offset: Offset(0, 2),
-                        blurRadius: 4,
-                      ),
-                      BoxShadow(
-                        color: AppTheme.getColor(
-                          context,
-                        ).primary.withAlpha(180),
-                      ),
-                      BoxShadow(
-                        color: AppTheme.getColor(context).primary,
-                        offset: const Offset(1, 4),
-                        spreadRadius: -6.0,
-                        blurRadius: 6.0,
-                      ),
-                    ],
-                  ),
-                  child: CustomText(
-                    'Assets History',
-                    color: AppTheme.getColor(context).onPrimary,
-                    fontSize: 20 * Responsive.getResponsiveText(context),
-                    fontWeight: FontWeight.bold,
+                    BoxShadow(
+                      color: AppTheme.getColor(context).primary.withAlpha(180),
+                    ),
+                    BoxShadow(
+                      color: AppTheme.getColor(context).primary,
+                      offset: const Offset(1, 4),
+                      spreadRadius: -6.0,
+                      blurRadius: 6.0,
+                    ),
+                  ],
+                ),
+                child: CustomText(
+                  'Assets History',
+                  color: AppTheme.getColor(context).onPrimary,
+                  fontSize: 20 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 0.03 * Responsive.getHeight(context)),
+
+              // -- First Box --
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppTheme.getColor(context).outline),
+                  borderRadius: BorderRadius.circular(
+                    12 * Responsive.getResponsive(context),
                   ),
                 ),
-                SizedBox(height: 0.03 * Responsive.getHeight(context)),
-
-                // -- First Box --
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16 * Responsive.getResponsive(context),
+                        vertical: 16 * Responsive.getResponsive(context),
+                      ),
+                      child: profileRowData(
+                        context: context,
+                        image:
+                            'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+                        title: 'Mukund Madhav',
+                        subTitle: 'QA',
+                        address: 'QA Technical - Junagadh',
+                      ),
+                    ),
+                    Divider(
                       color: AppTheme.getColor(context).outline,
+                      height: 0,
                     ),
-                    borderRadius: BorderRadius.circular(
-                      12 * Responsive.getResponsive(context),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16 * Responsive.getResponsive(context),
-                          vertical: 16 * Responsive.getResponsive(context),
-                        ),
-                        child: profileRowData(
-                          context: context,
-                          image:
-                              'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
-                          title: 'Mukund Madhav',
-                          subTitle: 'QA',
-                          address: 'QA Technical - Junagadh',
-                        ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16 * Responsive.getResponsive(context),
+                        vertical: 16 * Responsive.getResponsive(context),
                       ),
-                      Divider(
-                        color: AppTheme.getColor(context).outline,
-                        height: 0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16 * Responsive.getResponsive(context),
-                          vertical: 16 * Responsive.getResponsive(context),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 0.36 * Responsive.getWidth(context),
-                                  child: const AssetsVerticalData(
-                                    title: 'Handover',
-                                    data: '02-05-2025',
-                                  ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 0.36 * Responsive.getWidth(context),
+                                child: const AssetsVerticalData(
+                                  title: 'Handover',
+                                  data: '02-05-2025',
                                 ),
-                                Expanded(
-                                  child: ImageGridPreviewWidget(
-                                    boxHeight:
-                                        0.14 * Responsive.getWidth(context),
-                                    boxWidth:
-                                        0.14 * Responsive.getWidth(context),
-                                    borderRadius: 10,
-                                    imageList: const [
-                                      'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
-                                      'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                                      'assets/images/laptop.png',
-                                      'assets/images/laptop.png',
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 0.015 * Responsive.getHeight(context),
-                            ),
-                            Row(
-                              children: [
-                                const Spacer(),
-                                MyCoButton(
-                                  onTap: () {},
-                                  title: 'Takeover Assets',
-                                  textStyle: TextStyle(
-                                    fontFamily: 'Gilroy-semiBold',
-                                    fontSize:
-                                        14 *
-                                        Responsive.getResponsiveText(context),
-                                    color: AppTheme.getColor(context).onPrimary,
-                                  ),
-
-                                  width: 0.28 * Responsive.getWidth(context),
-                                  height: 0.08 * Responsive.getWidth(context),
-                                  boarderRadius:
-                                      50 * Responsive.getResponsive(context),
-                                  isShadowBottomLeft: true,
-                                ),
-                                const SizedBox(width: 10),
-                                MyCoButton(
-                                  onTap: () {},
-                                  title: 'Swap',
-                                  textStyle: TextStyle(
-                                    fontFamily: 'Gilroy-semiBold',
-                                    fontSize:
-                                        14 *
-                                        Responsive.getResponsiveText(context),
-                                    color: AppTheme.getColor(context).onPrimary,
-                                  ),
-
-                                  width: 0.28 * Responsive.getWidth(context),
-                                  height: 0.08 * Responsive.getWidth(context),
-                                  boarderRadius:
-                                      50 * Responsive.getResponsive(context),
-                                  borderColor: const Color(0xFF08A4BB),
-                                  backgroundColor: const Color(0xFF08A4BB),
-                                  isShadowBottomLeft: true,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 0.02 * Responsive.getHeight(context)),
-
-                // -- Second Box --
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: AppTheme.getColor(context).outline,
-                    ),
-                    borderRadius: BorderRadius.circular(
-                      12 * Responsive.getResponsive(context),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16 * Responsive.getResponsive(context),
-                          vertical: 16 * Responsive.getResponsive(context),
-                        ),
-                        child: profileRowData(
-                          context: context,
-                          image:
-                              'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
-                          title: 'Mukund Madhav',
-                          subTitle: 'QA',
-                          address: 'QA Technical - Junagadh',
-                        ),
-                      ),
-                      Divider(
-                        color: AppTheme.getColor(context).outline,
-                        height: 0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16 * Responsive.getResponsive(context),
-                          vertical: 16 * Responsive.getResponsive(context),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 0.36 * Responsive.getWidth(context),
-                                  child: const AssetsVerticalData(
-                                    title: 'Handover',
-                                    data: '02-05-2025',
-                                  ),
-                                ),
-                                Expanded(
-                                  child: ImageGridPreviewWidget(
-                                    boxHeight:
-                                        0.14 * Responsive.getWidth(context),
-                                    boxWidth:
-                                        0.14 * Responsive.getWidth(context),
-                                    borderRadius: 10,
-                                    imageList: const [
-                                      'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
-                                      'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                                      'assets/images/laptop.png',
-                                      'assets/images/laptop.png',
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 0.015 * Responsive.getHeight(context),
-                            ),
-
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 0.36 * Responsive.getWidth(context),
-                                  child: const AssetsVerticalData(
-                                    title: 'Takeover',
-                                    data: '02-05-2025',
-                                  ),
-                                ),
-                                Expanded(
-                                  child: ImageGridPreviewWidget(
-                                    boxHeight:
-                                        0.14 * Responsive.getWidth(context),
-                                    boxWidth:
-                                        0.14 * Responsive.getWidth(context),
-                                    borderRadius: 10,
-                                    imageList: const [
-                                      'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
-                                      'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                                      'assets/images/laptop.png',
-                                      'assets/images/laptop.png',
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 0.015 * Responsive.getHeight(context),
-                            ),
-                            Text(
-                              'Takeover By',
-                              style: TextStyle(
-                                fontFamily: 'Gilroy-Bold',
-                                fontStyle: FontStyle.italic,
-                                fontSize:
-                                    16 * Responsive.getResponsiveText(context),
                               ),
-                            ),
-                            CustomText(
-                              'Parth Jadav',
-                              fontWeight: FontWeight.w500,
+                              Expanded(
+                                child: ImageGridPreviewWidget(
+                                  boxHeight:
+                                      0.14 * Responsive.getWidth(context),
+                                  boxWidth: 0.14 * Responsive.getWidth(context),
+                                  borderRadius: 10,
+                                  imageList: const [
+                                    'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+                                    'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+                                    'assets/images/laptop.png',
+                                    'assets/images/laptop.png',
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 0.015 * Responsive.getHeight(context),
+                          ),
+                          Row(
+                            children: [
+                              const Spacer(),
+                              MyCoButton(
+                                onTap: () => context.push('/takeover-assets'),
+                                title: 'Takeover Assets',
+                                textStyle: TextStyle(
+                                  fontFamily: 'Gilroy-semiBold',
+                                  fontSize:
+                                      14 *
+                                      Responsive.getResponsiveText(context),
+                                  color: AppTheme.getColor(context).onPrimary,
+                                ),
+
+                                width: 0.28 * Responsive.getWidth(context),
+                                height: 0.08 * Responsive.getWidth(context),
+                                boarderRadius:
+                                    50 * Responsive.getResponsive(context),
+                                isShadowBottomLeft: true,
+                              ),
+                              const SizedBox(width: 10),
+                              MyCoButton(
+                                onTap: () => context.push('/swap-assets'),
+                                title: 'Swap',
+                                textStyle: TextStyle(
+                                  fontFamily: 'Gilroy-semiBold',
+                                  fontSize:
+                                      14 *
+                                      Responsive.getResponsiveText(context),
+                                  color: AppTheme.getColor(context).onPrimary,
+                                ),
+
+                                width: 0.28 * Responsive.getWidth(context),
+                                height: 0.08 * Responsive.getWidth(context),
+                                boarderRadius:
+                                    50 * Responsive.getResponsive(context),
+                                borderColor: const Color(0xFF08A4BB),
+                                backgroundColor: const Color(0xFF08A4BB),
+                                isShadowBottomLeft: true,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 0.02 * Responsive.getHeight(context)),
+
+              // -- Second Box --
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppTheme.getColor(context).outline),
+                  borderRadius: BorderRadius.circular(
+                    12 * Responsive.getResponsive(context),
+                  ),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16 * Responsive.getResponsive(context),
+                        vertical: 16 * Responsive.getResponsive(context),
+                      ),
+                      child: profileRowData(
+                        context: context,
+                        image:
+                            'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+                        title: 'Mukund Madhav',
+                        subTitle: 'QA',
+                        address: 'QA Technical - Junagadh',
+                      ),
+                    ),
+                    Divider(
+                      color: AppTheme.getColor(context).outline,
+                      height: 0,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16 * Responsive.getResponsive(context),
+                        vertical: 16 * Responsive.getResponsive(context),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 0.36 * Responsive.getWidth(context),
+                                child: const AssetsVerticalData(
+                                  title: 'Handover',
+                                  data: '02-05-2025',
+                                ),
+                              ),
+                              Expanded(
+                                child: ImageGridPreviewWidget(
+                                  boxHeight:
+                                      0.14 * Responsive.getWidth(context),
+                                  boxWidth: 0.14 * Responsive.getWidth(context),
+                                  borderRadius: 10,
+                                  imageList: const [
+                                    'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+                                    'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+                                    'assets/images/laptop.png',
+                                    'assets/images/laptop.png',
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 0.015 * Responsive.getHeight(context),
+                          ),
+
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 0.36 * Responsive.getWidth(context),
+                                child: const AssetsVerticalData(
+                                  title: 'Takeover',
+                                  data: '02-05-2025',
+                                ),
+                              ),
+                              Expanded(
+                                child: ImageGridPreviewWidget(
+                                  boxHeight:
+                                      0.14 * Responsive.getWidth(context),
+                                  boxWidth: 0.14 * Responsive.getWidth(context),
+                                  borderRadius: 10,
+                                  imageList: const [
+                                    'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+                                    'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+                                    'assets/images/laptop.png',
+                                    'assets/images/laptop.png',
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 0.015 * Responsive.getHeight(context),
+                          ),
+                          Text(
+                            'Takeover By',
+                            style: TextStyle(
+                              fontFamily: 'Gilroy-Bold',
+                              fontStyle: FontStyle.italic,
                               fontSize:
                                   16 * Responsive.getResponsiveText(context),
                             ),
-                          ],
-                        ),
+                          ),
+                          CustomText(
+                            'Parth Jadav',
+                            fontWeight: FontWeight.w500,
+                            fontSize:
+                                16 * Responsive.getResponsiveText(context),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 0.06 * Responsive.getHeight(context)),
-              ],
-            ),
+              ),
+              SizedBox(height: 0.06 * Responsive.getHeight(context)),
+            ],
           ),
         ),
       ),
@@ -517,12 +505,15 @@ class AssetsDetailsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              CustomText(
-                'INVOICE',
-                fontWeight: FontWeight.w700,
-                color: AppTheme.getColor(context).primary,
-                decoration: TextDecoration.underline,
-                decorationColor: AppTheme.getColor(context).primary,
+              GestureDetector(
+                onTap: () {},
+                child: CustomText(
+                  'INVOICE',
+                  fontWeight: FontWeight.w700,
+                  color: AppTheme.getColor(context).primary,
+                  decoration: TextDecoration.underline,
+                  decorationColor: AppTheme.getColor(context).primary,
+                ),
               ),
             ],
           ),
