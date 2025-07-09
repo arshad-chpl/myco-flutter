@@ -24,6 +24,7 @@ import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_m
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
+import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
@@ -57,8 +58,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    // initialLocation: RoutePaths.getStarted,
-    initialLocation: RoutePaths.dashboard,
+    initialLocation: RoutePaths.getStarted,
+    // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -106,7 +107,6 @@ class AppRouter {
         name: 'dashboard',
         builder: (context, state) => DashBoardPage(),
       ),
-
 
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
@@ -171,17 +171,17 @@ class AppRouter {
         ],
       ),
 
-
       GoRoute(
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
         builder: (context, state) => BlocProvider(
-            create: (context) => GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+          create: (context) =>
+              GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
           child: const FaceDetectionPage(),
-        )
+        ),
       ),
       // Add all modular routes here
-     // Add all modular routes here
+      // Add all modular routes here
       // GoRoute(
       //   path: RoutePaths.takeOrder,
       //   name: 'take-order',
@@ -194,9 +194,8 @@ class AppRouter {
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
         builder: (context, state) => SignupFormPage(),
-               
-      ), 
-       GoRoute(
+      ),
+      GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',
         builder: (context, state) => const GetStarted(),
@@ -231,6 +230,7 @@ class AppRouter {
           ),
         ],
       ),
+
       GoRoute(
         path: RoutePaths.employees,
         name: 'employees',
@@ -250,7 +250,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.AddExpense,
         name: 'addExpense',
-        builder: (context, state) =>  const AddExpensePage(),
+        builder: (context, state) => const AddExpensePage(),
       ),
       GoRoute(
         path: RoutePaths.lostAndFoundAddScreen,
@@ -268,9 +268,9 @@ class AppRouter {
         path: RoutePaths.lostAndFoundItemDetails,
         name: 'lost-and-found-item-details',
         builder: (context, state) {
-          LostAndFoundItemModel lostitem= state.extra as LostAndFoundItemModel;
-          return ItemDetailsScreen(item: lostitem,);
-        }
+          LostAndFoundItemModel lostitem = state.extra as LostAndFoundItemModel;
+          return ItemDetailsScreen(item: lostitem);
+        },
       ),
 
       GoRoute(
@@ -299,6 +299,11 @@ class AppRouter {
         builder: (context, state) => ViewVisitDetailsPage(),
       ),
       GoRoute(
+        path: RoutePaths.myProfile,
+        name: 'my-profile',
+        builder: (context, state) => MyProfilePage(),
+        ),
+        GoRoute(
         path: RoutePaths.adminView,
         name: 'admin-view',
         builder: (context, state) => BlocProvider(
