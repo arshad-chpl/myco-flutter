@@ -71,17 +71,17 @@ class Responsive {
     final screenWidth = screenWide ?? getWidth(context);
     final spacing = 12.0 * getResponsive(context);
 
-    final itemCount = screenWidth > 1200
+    final itemCount = screenWidth > 1500
         ? 12
-        : screenWidth > 1000
-        ? 9
+        : screenWidth > 1200
+        ? 5
         // : screenWidth > 600
         // ? 6
         : 3;
 
     final itemWidth = (screenWidth - (spacing * (itemCount - 1))) / itemCount;
 
-    final itemHeight = screenWidth > 600 ? 180.0 : screenWidth > 500 ? 160.0 : 150.0;
+    final itemHeight = screenWidth > 600 ? 180.0 : screenWidth > 500 ? 160.0 : 155.0;
 
 
     final childAspectRatio = itemWidth / itemHeight;
