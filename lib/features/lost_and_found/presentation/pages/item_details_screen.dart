@@ -71,13 +71,13 @@
 //       centerTitle: false,
 //     ),
 //     body: Padding(
-//       padding: EdgeInsets.symmetric(horizontal: 16 * getResponsive(context)),
+//       padding: EdgeInsets.symmetric(horizontal: 16 * Responsive.getResponsive(context)),
 //       child: SingleChildScrollView(
 //         child: Column(
 //           crossAxisAlignment: CrossAxisAlignment.stretch,
 //           children: [
 //             Container(
-//               height: 0.18 * getHeight(context),
+//               height: 0.18 * Responsive.getHeight(context),
 //               decoration: BoxDecoration(
 //                 color: const Color(0xFFEEF7FD),
 //                 borderRadius: BorderRadius.circular(10),
@@ -207,7 +207,7 @@
 //               prefix: _prefixIcon('assets/lost_and_found/note-favorite.png'),
 //               contentPadding: _contentPadding(context),
 //             ),
-//             SizedBox(height: 0.03 * getHeight(context)),
+//             SizedBox(height: 0.03 * Responsive.getHeight(context)),
 //
 //             Padding(
 //               padding: const EdgeInsets.all(8.0),
@@ -246,54 +246,50 @@
 //   );
 //
 //   EdgeInsets _contentPadding(BuildContext context) =>
-//       EdgeInsets.symmetric(vertical: 14 * getResponsive(context));
+//       EdgeInsets.symmetric(vertical: 14 * Responsive.getResponsive(context));
 //
 //   Widget _prefixIcon(String assetPath) => Padding(
-//     padding: const EdgeInsets.all(12.0) * getResponsive(context),
+//     padding: const EdgeInsets.all(12.0) * Responsive.getResponsive(context),
 //     child: Image.asset(
 //       assetPath,
-//       width: 0.020 * getWidth(context),
-//       height: 0.20 * getHeight(context),
+//       width: 0.020 * Responsive.getWidth(context),
+//       height: 0.20 * Responsive.getHeight(context),
 //       fit: BoxFit.contain,
 //     ),
 //   );
 //
 //   Widget _buildLabel(BuildContext context, String label) => CustomText(
 //     label,
-//     fontSize: 12 * getResponsive(context),
+//     fontSize: 12 * Responsive.getResponsive(context),
 //     fontWeight: FontWeight.w700,
 //     color: AppTheme.getColor(context).onSurface,
 //   );
 //
 //   Widget _buildHeader(BuildContext context, String header) => Padding(
-//     padding: EdgeInsets.only(bottom: 0.01 * getHeight(context)),
+//     padding: EdgeInsets.only(bottom: 0.01 * Responsive.getHeight(context)),
 //     child: CustomText(
 //       header,
 //       color: AppTheme.getColor(context).onPrimaryFixedVariant,
-//       fontSize: 18 * getResponsive(context),
+//       fontSize: 18 * Responsive.getResponsive(context),
 //       fontWeight: FontWeight.w700,
 //     ),
 //   );
 // }
-
-
-//============================   with model class  ============================================
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/pages/country_code_txtf.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/text_field.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import '../../model/lost_and_found_item_model.dart';
+import 'chat_screen.dart';
+import 'country_code_txtf.dart';
 
 class ItemDetailsScreen extends StatefulWidget {
   final LostAndFoundItemModel item;
 
-  const ItemDetailsScreen({required this.item, super.key});
+  const ItemDetailsScreen({Key? key, required this.item}) : super(key: key);
 
   @override
   State<ItemDetailsScreen> createState() => _ItemDetailsScreenState();
@@ -327,7 +323,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
       scrolledUnderElevation: 0,
       elevation: 0,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back,),
+        icon: const Icon(Icons.arrow_back, color: Colors.black),
         onPressed: () => Navigator.of(context).pop(),
       ),
       title: Text(
@@ -342,49 +338,49 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
       centerTitle: false,
     ),
     body: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16 * getResponsive(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 16 * Responsive.getResponsive(context),
+      ),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _imagePreview(widget.item.image),
-             SizedBox(height: .016 * getHeight(context)),
+            const SizedBox(height: 16),
             _itemDetails(context),
-             SizedBox(height: .024 * getHeight(context)),
+            const SizedBox(height: 24),
             _buildHeader(context, 'Contact Details'),
-             SizedBox(height: .016 * getHeight(context)),
+            const SizedBox(height: 16),
             _readOnlyField(
               'Contact Person Name',
               contactPersonNameController,
               'assets/lost_and_found/profile-circle.png',
             ),
-             SizedBox(height: .016 * getHeight(context)),
+            const SizedBox(height: 16),
             _buildLabel(context, 'Contact Person Mobile Number'),
-             SizedBox(height: .004 * getHeight(context)),
+            const SizedBox(height: 4),
             CustomMobileNumberField(
-              numberTextStyle: _typingStyle(context),
-              hintTextStyle: _hintStyle(context),
               readOnly: true,
               width: 200,
               height: 44,
-              dropdownHeight: .200 * getHeight(context),
+              dropdownHeight: 200,
               countries: countryList,
               controller: phoneController,
               onCountryChanged: (selected) {},
             ),
-             SizedBox(height: .016 * getHeight(context)),
+            const SizedBox(height: 16),
             _readOnlyField(
               'Branch',
               branchController,
               'assets/lost_and_found/data.png',
             ),
-             SizedBox(height: .016 * getHeight(context)),
+            const SizedBox(height: 16),
             _readOnlyField(
               'Department',
               departmentController,
               'assets/lost_and_found/note-favorite.png',
             ),
-            SizedBox(height: 0.03 * getHeight(context)),
+            SizedBox(height: 0.03 * Responsive.getHeight(context)),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: MyCoButton(
@@ -406,14 +402,14 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
   );
 
   Widget _imagePreview(File image) => Container(
-    height: 0.18 * getHeight(context),
+    height: 0.18 * Responsive.getHeight(context),
     decoration: BoxDecoration(
       color: const Color(0xFFEEF7FD),
       borderRadius: BorderRadius.circular(10),
       border: Border.all(color: const Color(0xFF2F648E)),
     ),
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(9),
+      borderRadius: BorderRadius.circular(10),
       child: Image.file(image, fit: BoxFit.cover, width: double.infinity),
     ),
   );
@@ -428,9 +424,9 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildLabel(context, 'Item Name'),
-         SizedBox(height: .004 * getHeight(context)),
+        const SizedBox(height: 4),
         MyCoTextField(
-          height: .048 * getHeight(context),
+          height: 44,
           controller: TextEditingController(text: widget.item.name),
           isReadOnly: true,
           typingtextStyle: _typingStyle(context),
@@ -438,11 +434,11 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
           prefix: _prefixIcon('assets/lost_and_found/item-name.png'),
           contentPadding: _contentPadding(context),
         ),
-         SizedBox(height: .012 * getHeight(context)),
+        const SizedBox(height: 12),
         _buildLabel(context, 'Description'),
-         SizedBox(height: .004 * getHeight(context)),
+        const SizedBox(height: 4),
         MyCoTextField(
-          height: .048 * getHeight(context),
+          height: 44,
           controller: TextEditingController(text: widget.item.description),
           isReadOnly: true,
           typingtextStyle: _typingStyle(context),
@@ -462,59 +458,59 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       _buildLabel(context, label),
-       SizedBox(height: .004 * getHeight(context) ),
+      const SizedBox(height: 4),
       MyCoTextField(
-        height: 44 * getResponsive(context),
+        height: 44,
         controller: controller,
-        isReadOnly: true,
+        isReadOnly: false,
         typingtextStyle: _typingStyle(context),
-        hintTextStyle: _typingStyle(context),
+        hintTextStyle: _hintStyle(context),
         prefix: _prefixIcon(iconPath),
         contentPadding: _contentPadding(context),
       ),
     ],
   );
 
-  TextStyle _hintStyle(BuildContext context) =>   TextStyle(
+  TextStyle _hintStyle(BuildContext context) => const TextStyle(
     fontFamily: 'Gilroy-SemiBold',
     fontWeight: FontWeight.w400,
-    fontSize: 14 * getResponsive(context),
-    color: AppColors.textfieldBorder,
+    fontSize: 14,
+    color: Colors.black54,
   );
 
-  TextStyle _typingStyle(BuildContext context) =>  TextStyle(
+  TextStyle _typingStyle(BuildContext context) => TextStyle(
     fontFamily: 'Gilroy-SemiBold',
     fontWeight: FontWeight.w400,
-    fontSize: 14 * getResponsive(context),
-    color: AppColors.textPrimary,
+    fontSize: 14,
+    color: AppTheme.getColor(context).onSurfaceVariant,
   );
 
   EdgeInsets _contentPadding(BuildContext context) =>
-      EdgeInsets.symmetric(vertical: 14 * getResponsive(context));
+      EdgeInsets.symmetric(vertical: 14 * Responsive.getResponsive(context));
 
   Widget _prefixIcon(String assetPath) => Padding(
     padding: const EdgeInsets.all(12.0),
     child: Image.asset(
       assetPath,
-      width: 0.020 * getWidth(context),
-      height: 0.20 * getHeight(context),
+      width: 0.020 * Responsive.getWidth(context),
+      height: 0.20 * Responsive.getHeight(context),
       fit: BoxFit.contain,
     ),
   );
 
   Widget _buildLabel(BuildContext context, String label) => CustomText(
     label,
-    fontSize: 12 * getResponsive(context),
+    fontSize: 12 * Responsive.getResponsive(context),
     fontWeight: FontWeight.w700,
-    color: AppTheme.getColor(context).onSurfaceVariant,
+    color: AppTheme.getColor(context).onSurface,
   );
 
   Widget _buildHeader(BuildContext context, String header) => Padding(
-    padding: EdgeInsets.only(bottom: 0.01 * getHeight(context)),
+    padding: EdgeInsets.only(bottom: 0.01 * Responsive.getHeight(context)),
     child: CustomText(
       header,
-      color: AppTheme.getColor(context).onSurface,
-      fontSize: 18 * getResponsive(context),
+      color: AppTheme.getColor(context).onPrimaryFixedVariant,
+      fontSize: 18 * Responsive.getResponsive(context),
       fontWeight: FontWeight.w700,
     ),
   );
@@ -575,7 +571,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     double res = getResponsive(context);
+//     double res = Responsive.getResponsive(context);
 //
 //     return Scaffold(
 //       backgroundColor: const Color(0xFFF6F7FB),
@@ -605,7 +601,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
 //             crossAxisAlignment: CrossAxisAlignment.stretch,
 //             children: [
 //               Container(
-//                 height: 0.18 * getHeight(context),
+//                 height: 0.18 * Responsive.getHeight(context),
 //                 decoration: BoxDecoration(
 //                   color: const Color(0xFFEEF7FD),
 //                   borderRadius: BorderRadius.circular(10 * res),
@@ -621,7 +617,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
 //                         )
 //                       : const Center(child: Text('No Image')),
 //                 ),
-//               ),ss
+//               ),
 //               SizedBox(height: 16 * res),
 //
 //               Container(
@@ -721,7 +717,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
 //                 prefix: _prefixIcon('assets/lost_and_found/note-favorite.png'),
 //                 contentPadding: _contentPadding(context),
 //               ),
-//               SizedBox(height: 0.03 * getHeight(context)),
+//               SizedBox(height: 0.03 * Responsive.getHeight(context)),
 //               Padding(
 //                 padding: EdgeInsets.all(8.0 * res),
 //                 child: MyCoButton(
@@ -760,14 +756,14 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
 //   );
 //
 //   EdgeInsets _contentPadding(BuildContext context) =>
-//       EdgeInsets.symmetric(vertical: 14 * getResponsive(context));
+//       EdgeInsets.symmetric(vertical: 14 * Responsive.getResponsive(context));
 //
 //   Widget _prefixIcon(String assetPath) => Padding(
-//     padding: EdgeInsets.all(12.0 * getResponsive(context)),
+//     padding: EdgeInsets.all(12.0 * Responsive.getResponsive(context)),
 //     child: Image.asset(
 //       assetPath,
-//       width: 0.020 * getWidth(context),
-//       height: 0.20 * getHeight(context),
+//       width: 0.020 * Responsive.getWidth(context),
+//       height: 0.20 * Responsive.getHeight(context),
 //       fit: BoxFit.contain,
 //     ),
 //   );
@@ -783,7 +779,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
 //   );
 //
 //   Widget _buildHeader(BuildContext context, String header) => Padding(
-//     padding: EdgeInsets.only(bottom: 0.01 * getHeight(context)),
+//     padding: EdgeInsets.only(bottom: 0.01 * Responsive.getHeight(context)),
 //     child: Text(
 //       header,
 //       style: TextStyle(

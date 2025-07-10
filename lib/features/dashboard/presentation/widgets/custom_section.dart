@@ -22,13 +22,14 @@ class CustomSection extends StatelessWidget {
   final bool? hasViewMoreButton;
   final VoidCallback? onViewMore;
   final TextStyle? titleStyle;
+
   const CustomSection({
-    super.key,
     required this.title,
+    required this.child,
+    super.key,
     this.subtitle,
     this.count,
     this.icon,
-    required this.child,
     this.padding,
     this.margin,
     this.backgroundColor,
@@ -83,7 +84,8 @@ class CustomSection extends StatelessWidget {
                   width: 160,
                   child: CustomText(
                     title,
-                    fontSize: 16 * getDashboardResponsiveText(context),
+                    fontSize:
+                        16 * Responsive.getDashboardResponsiveText(context),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -94,7 +96,7 @@ class CustomSection extends StatelessWidget {
                 // Display count if provided
                 if (count != null)
                   Container(
-                    padding: EdgeInsets.all(2),
+                    padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
                       color: Util.applyOpacity(
                         AppTheme.getColor(context).secondary,
@@ -104,7 +106,8 @@ class CustomSection extends StatelessWidget {
                     ),
                     child: CustomText(
                       '$count',
-                      fontSize: 12 * getDashboardResponsiveText(context),
+                      fontSize:
+                          12 * Responsive.getDashboardResponsiveText(context),
                       fontWeight: FontWeight.w500,
                       color: AppColors.spanishYellow,
                     ),
@@ -115,7 +118,7 @@ class CustomSection extends StatelessWidget {
               GestureDetector(
                 onTap: onViewMore,
                 child: Container(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 10.0,
                     vertical: 6.0,
                   ),
@@ -127,7 +130,8 @@ class CustomSection extends StatelessWidget {
 
                   child: CustomText(
                     'View All',
-                    fontSize: 13 * getDashboardResponsiveText(context),
+                    fontSize:
+                        13 * Responsive.getDashboardResponsiveText(context),
                     fontWeight: FontWeight.w500,
                     color: AppTheme.getColor(context).secondary,
                   ),
@@ -140,7 +144,7 @@ class CustomSection extends StatelessWidget {
             padding: const EdgeInsets.only(top: 4.0),
             child: CustomText(
               subtitle!,
-              fontSize: 12 * getDashboardResponsiveText(context),
+              fontSize: 12 * Responsive.getDashboardResponsiveText(context),
               fontWeight: FontWeight.w500,
             ),
           ),

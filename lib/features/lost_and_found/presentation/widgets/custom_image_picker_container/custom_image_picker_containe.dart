@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:path/path.dart' as path;
 import 'dashed_border_container.dart';
 import 'image_picker.dart';
@@ -53,16 +52,19 @@ class _CustomImagePickerContainerState
   File? pickedFile;
 
   @override
-  Widget build(BuildContext context) => Column(
+  Widget build(BuildContext context) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.isTitle == true)
-          CustomText(
+          Text(
             widget.isTitle == true ? widget.title ?? "Title" : "",
-            fontWeight: FontWeight.w700,
-            fontSize: 13 * getResponsive(context),
-            color: AppTheme.getColor(context).onSurfaceVariant,
-
+            style: TextStyle(
+              fontFamily: "Gilroy-Bold",
+              fontWeight: FontWeight.w400,
+              color: AppTheme.getColor(context).onSurfaceVariant,
+              fontSize: 13,
+            ),
           ),
         SizedBox(height: 5),
 
@@ -149,7 +151,7 @@ class _CustomImagePickerContainerState
                         child: Text(
                           path.basename(pickedFile!.path),
                           style: TextStyle(
-                            fontSize: 16 * getResponsive(context),
+                            fontSize: 16 * Responsive.getResponsive(context),
                             fontFamily: "Gilroy-Medium",
                             color: AppTheme.getColor(context).onSurfaceVariant,
                           ),
@@ -173,7 +175,7 @@ class _CustomImagePickerContainerState
                           child: Text(
                             "Remove",
                             style: TextStyle(
-                              fontSize: 14 * getResponsive(context),
+                              fontSize: 14 * Responsive.getResponsive(context),
                               color: AppTheme.getColor(context).error,
                             ),
                           ),
@@ -206,6 +208,7 @@ class _CustomImagePickerContainerState
         ),
       ],
     );
+  }
 
   void openImagePicker(
     BuildContext context,

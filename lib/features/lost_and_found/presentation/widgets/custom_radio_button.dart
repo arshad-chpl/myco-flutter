@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
 
 class CustomRadioButton extends StatefulWidget {
   final List<String> options;
@@ -10,17 +8,15 @@ class CustomRadioButton extends StatefulWidget {
   final ValueChanged<String> onChanged;
   final String? initialValue;
   final String? title;
-  final double? titleTextSize;
-  final Color? titleTextColor;
-  final FontWeight? titleFontWeight;
 
-  const  CustomRadioButton({
-    required this.options, required this.onChanged, super.key,
+  const CustomRadioButton({
+    super.key,
+    required this.options,
     this.height,
     this.width,
+    required this.onChanged,
     this.initialValue,
     this.title,
-     this.titleTextSize, this.titleTextColor, this.titleFontWeight,
   });
 
   @override
@@ -37,24 +33,26 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
   }
 
   @override
-  Widget build(BuildContext context) => Column(
+  Widget build(BuildContext context) {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.title != null) ...[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: CustomText(
+            child: Text(
               widget.title!,
-              fontWeight: FontWeight.w700,
-              fontSize: 13 * getResponsive(context),
-              color:AppTheme.getColor(context).onSurfaceVariant,
-
-             
+              style: TextStyle(
+                fontFamily: "Gilroy-Bold",
+                fontWeight: FontWeight.w400,
+                color:AppTheme.getColor(context).onSurfaceVariant,
+                fontSize: 13,
+              ),
             ),
           ),
           // const SizedBox(height: 10),
         ],
-        const SizedBox(height: 5),
+        SizedBox(height: 5),
 
         Row(
           children: widget.options.map((option) {
@@ -76,12 +74,12 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
                       color: isSelected
                           ? AppTheme.getColor(context).primary
                           : Colors.grey.shade400,
-                      // ignore: avoid_redundant_argument_values
                       width: 1,
                     ),
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
                         width: 24,
@@ -107,12 +105,14 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
                             : null,
                       ),
                       const SizedBox(width: 10),
-                      CustomText(
+                      Text(
                         option,
-                        fontSize: widget.titleTextSize ?? 14 * getResponsive(context),
-                        fontWeight: widget.titleFontWeight ?? FontWeight.w600,
-                        color: widget.titleTextColor ?? (isSelected ? AppTheme.getColor(context).primary : Colors.grey),
-
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Gilroy-SemiBold",
+                          color: isSelected ? AppTheme.getColor(context).primary : Colors.grey,
+                          fontSize: 14,
+                        ),
                       ),
                     ],
                   ),
@@ -123,4 +123,5 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
         ),
       ],
     );
+  }
 }

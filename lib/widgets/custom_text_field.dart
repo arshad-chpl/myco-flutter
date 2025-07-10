@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -46,12 +46,19 @@ class MyCoTextfield extends StatefulWidget {
   final TextStyle? typingtextStyle;
   final double? boarderRadius;
   final String? preFixImage;
+  final String? suFixImage;
   final InputBorder? border;
   final int? maxLenght;
   final TextAlign? textAlignment;
   final List<TextInputFormatter>? inputFormater;
   final double? prefixImageWidth;
   final double? prefixImageHeight;
+  final double? suFixImageHeight;
+  final double? suFixImageWidth;
+  final Decoration? decoration;
+  final TextAlignVertical? textAlignVertical;
+  final bool? alignLabelWithHint;
+  final int? maxLines;
 
   const MyCoTextfield({
     super.key,
@@ -98,6 +105,13 @@ class MyCoTextfield extends StatefulWidget {
     this.textAlignment,
     this.inputFormater,
     this.border,
+    this.decoration,
+    this.textAlignVertical,
+    this.alignLabelWithHint,
+    this.maxLines,
+    this.suFixImage,
+    this.suFixImageHeight,
+    this.suFixImageWidth,
   });
 
   @override
@@ -106,270 +120,63 @@ class MyCoTextfield extends StatefulWidget {
 
 class _MyCoTextfieldState extends State<MyCoTextfield> {
   @override
-  Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
-    return height < 1100
-        ? TextFieldFormMobile(
-            labelText: widget.labelText,
-            isSuffixIconOn: widget.isSuffixIconOn,
-            controller: widget.controller,
-            isLabelOn: widget.isLabelOn,
-            image1: widget.image1,
-            image2: widget.image2,
-            contentPadding: widget.contentPadding,
-            titleTextSize: widget.titleTextSize,
-            fontWeight: widget.fontWeight,
-            prefix: widget.prefix,
-            isReadOnly: widget.isReadOnly,
-            onClick: widget.onClick,
-            onSaved: widget.onSaved,
-            height: widget.height,
-            key: widget.key,
-            onTap1: widget.onTap1,
-            onTap2: widget.onTap2,
-            hintTextStyle: widget.hintTextStyle,
-            labelTextStyle: widget.labelTextStyle,
-            color: widget.color,
-            fillColor: widget.fillColor,
-            titleColor: widget.titleColor,
-            focusNode: widget.focusNode,
-            obscureText: widget.obscureText,
-            onChanged: widget.onChanged,
-            validator: widget.validator,
-            iconHeight: widget.iconHeight,
-            iconWidth: widget.iconWidth,
-            textInputType: widget.textInputType,
-            hintText: widget.hintText,
-            floatingLabelBehavior: widget.floatingLabelBehavior,
-            autoFocus: widget.autoFocus,
-            typingtextStyle: widget.typingtextStyle,
-            boarderRadius: widget.boarderRadius,
-            prefixImage: widget.preFixImage,
-            prefixImageHeight: widget.prefixImageHeight,
-            prefixImageWidth: widget.prefixImageWidth,
-            maxLenght: widget.maxLenght,
-            textAlignment: widget.textAlignment,
-            inputFormater: widget.inputFormater,
-            border: widget.border,
-          )
-        : TextfieldFormTablet(
-            labelText: widget.labelText,
-            isSuffixIconOn: widget.isSuffixIconOn ?? false,
-            controller: widget.controller,
-            isLabelOn: widget.isLabelOn,
-            image1: widget.image1,
-            image2: widget.image2,
-            contentPadding: widget.contentPadding,
-            fillColor: widget.fillColor,
-            titleTextSize: widget.titleTextSize,
-            fontWeight: widget.fontWeight,
-            prefix: widget.prefix,
-            color: widget.color,
-            isReadOnly: widget.isReadOnly,
-            onClick: widget.onClick,
-            titleColor: widget.titleColor,
-            onSaved: widget.onSaved,
-            height: widget.height,
-            key: widget.key,
-            onTap1: widget.onTap1,
-            onTap2: widget.onTap2,
-            hintTextStyle: widget.hintTextStyle,
-            labelTextStyle: widget.labelTextStyle,
-            focusNode: widget.focusNode,
-            obscureText: widget.obscureText,
-            onChanged: widget.onChanged,
-            validator: widget.validator,
-            iconHeight: widget.iconHeight,
-            iconWidth: widget.iconWidth,
-            autoFocus: widget.autoFocus,
-            textInputType: widget.textInputType,
-            hintText: widget.hintText,
-            floatingLabelBehavior: widget.floatingLabelBehavior,
-            typingtextStyle: widget.typingtextStyle,
-            textAlignment: widget.textAlignment,
-          );
-  }
-}
-
-class TextfieldFormTablet extends StatelessWidget {
-  final String? labelText;
-  final String? hintText;
-  final FloatingLabelBehavior? floatingLabelBehavior;
-  final TextEditingController? controller;
-  final void Function(String?)? onSaved;
-  final bool isSuffixIconOn;
-  final String? image1;
-  final String? image2;
-  final Color? color;
-  final Widget? prefix;
-  final EdgeInsetsGeometry? contentPadding;
-  final double? height;
-  final Color? fillColor;
-  final void Function()? onTap1;
-  final void Function()? onTap2;
-  final FontWeight? fontWeight;
-  final double? titleTextSize;
-  final Color? titleColor;
-  final bool? isLabelOn;
-  final void Function()? onClick;
-  final bool? isReadOnly;
-  final TextStyle? hintTextStyle;
-  final TextStyle? labelTextStyle;
-  final FocusNode? focusNode;
-  final bool? obscureText;
-  final void Function(String)? onChanged;
-  final String? Function(String?)? validator;
-  final double? iconHeight;
-  final double? iconWidth;
-  final String? obscuringCharacter;
-  final TextInputType? textInputType;
-  final bool? autoFocus;
-  final TextStyle? typingtextStyle;
-  final int? maxLenght;
-  final TextAlign? textAlignment;
-  final List<TextInputFormatter>? inputFormater;
-
-  const TextfieldFormTablet({
-    required this.labelText,
-    required this.isSuffixIconOn,
-    super.key,
-    this.controller,
-    this.onSaved,
-    this.image1,
-    this.image2,
-    this.color,
-    this.prefix,
-    this.contentPadding,
-    this.height,
-    this.fillColor,
-    this.onTap1,
-    this.onTap2,
-    this.fontWeight,
-    this.titleTextSize,
-    this.titleColor,
-    this.isLabelOn,
-    this.onClick,
-    this.isReadOnly,
-    this.hintTextStyle,
-    this.labelTextStyle,
-    this.focusNode,
-    this.obscureText,
-    this.onChanged,
-    this.validator,
-    this.iconHeight,
-    this.iconWidth,
-    this.obscuringCharacter,
-    this.textInputType,
-    this.hintText,
-    this.floatingLabelBehavior,
-    this.autoFocus,
-    this.typingtextStyle,
-    this.maxLenght,
-    this.textAlignment,
-    this.inputFormater,
-  });
-
-  @override
-  Widget build(BuildContext context) => TextFormField(
-    readOnly: isReadOnly ?? false,
-    onTap: onClick,
-    onSaved: onSaved,
-    controller: controller,
-    focusNode: focusNode,
-    autofocus: autoFocus ?? false,
-    maxLength: maxLenght,
-    textAlign: textAlignment ?? TextAlign.start,
-    inputFormatters: inputFormater,
-    decoration: InputDecoration(
-      floatingLabelBehavior: floatingLabelBehavior,
-      filled: true,
-      fillColor: fillColor ?? AppColors.white,
-      border: InputBorder.none,
-
-      // OutlineInputBorder(
-      //   borderSide: BorderSide(color: AppColors.borderColor, width: 1.2),
-      //   borderRadius: BorderRadius.circular(7.0),
-      // ),
-      // focusedBorder: OutlineInputBorder(
-      //   borderSide: BorderSide(
-      //     color: Theme.of(context).AppColors.primary,
-      //     width: 1.2,
-      //   ),
-      //   borderRadius: BorderRadius.circular(7.0),
-      // ),
-      // enabledBorder: OutlineInputBorder(
-      //   borderSide: BorderSide(color: AppColors.borderColor, width: 1.2),
-      //   borderRadius: BorderRadius.circular(7.0),
-      // ),
-      contentPadding:
-          contentPadding ??
-          EdgeInsets.only(
-            left: 0.003 * getResponsive(context),
-            top: 0.005 * getResponsive(context),
-          ),
-      labelText: isLabelOn == true ? labelText : null,
-
-      hintText: hintText,
-      hintStyle:
-          hintTextStyle ??
-          TextStyle(
-            fontSize: titleTextSize ?? 14 * getResponsiveText(context),
-            color: AppColors.primary,
-            fontWeight: fontWeight ?? FontWeight.w500,
-          ),
-      labelStyle:
-          labelTextStyle ??
-          TextStyle(
-            fontSize: titleTextSize ?? 14 * getResponsiveText(context),
-            color: AppColors.primary,
-            fontWeight: fontWeight ?? FontWeight.w500,
-          ),
-      prefixIcon: prefix,
-      suffixIcon: isSuffixIconOn
-          ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (image1 != null)
-                  GestureDetector(
-                    onTap: onTap1,
-                    child: Image.asset(
-                      image1!,
-                      height: iconHeight ?? 0.022 * getHeight(context),
-                    ),
-                  ),
-                SizedBox(width: 0.03 * getWidth(context)),
-                if (image2 != null)
-                  GestureDetector(
-                    onTap: onTap2,
-                    child: Image.asset(
-                      image2!,
-                      height: iconHeight ?? 0.022 * getHeight(context),
-                    ),
-                  ),
-                SizedBox(width: 0.03 * getWidth(context)),
-              ],
-            )
-          : null,
-    ),
-    style:
-        typingtextStyle ??
-        TextStyle(
-          fontWeight: fontWeight ?? FontWeight.w500,
-          fontSize: titleTextSize ?? 14 * getResponsiveText(context),
-          color: AppColors.primary,
-        ),
-    cursorColor: AppColors.primary,
-    validator: validator,
-    onChanged: onChanged,
-    obscureText: obscureText ?? false,
-    obscuringCharacter: obscuringCharacter ?? '●',
-    keyboardType: textInputType,
+  Widget build(BuildContext context) => TextFieldFormMobile(
+    labelText: widget.labelText,
+    isSuffixIconOn: widget.isSuffixIconOn,
+    controller: widget.controller,
+    isLabelOn: widget.isLabelOn,
+    image1: widget.image1,
+    image2: widget.image2,
+    contentPadding: widget.contentPadding,
+    titleTextSize: widget.titleTextSize,
+    fontWeight: widget.fontWeight,
+    prefix: widget.prefix,
+    isReadOnly: widget.isReadOnly,
+    onClick: widget.onClick,
+    onSaved: widget.onSaved,
+    height: widget.height,
+    key: widget.key,
+    onTap1: widget.onTap1,
+    onTap2: widget.onTap2,
+    hintTextStyle: widget.hintTextStyle,
+    labelTextStyle: widget.labelTextStyle,
+    color: widget.color,
+    fillColor: widget.fillColor,
+    titleColor: widget.titleColor,
+    focusNode: widget.focusNode,
+    obscureText: widget.obscureText,
+    onChanged: widget.onChanged,
+    validator: widget.validator,
+    iconHeight: widget.iconHeight,
+    iconWidth: widget.iconWidth,
+    textInputType: widget.textInputType,
+    hintText: widget.hintText,
+    floatingLabelBehavior: widget.floatingLabelBehavior,
+    autoFocus: widget.autoFocus,
+    typingtextStyle: widget.typingtextStyle,
+    boarderRadius: widget.boarderRadius,
+    prefixImage: widget.preFixImage,
+    prefixImageHeight: widget.prefixImageHeight,
+    prefixImageWidth: widget.prefixImageWidth,
+    maxLenght: widget.maxLenght,
+    textAlignment: widget.textAlignment??TextAlign.start,
+    inputFormater: widget.inputFormater,
+    border: widget.border,
+    suffix: widget.suffix,
+    decoration: widget.decoration,
+    textAlignVertical: widget.textAlignVertical,
+    alignLabelWithHint: widget.alignLabelWithHint,
+    maxLines: widget.maxLines,
+    suFixImage: widget.suFixImage,
+    suFixImageHeight: widget.suFixImageHeight,
+    suFixImageWidth: widget.suFixImageWidth,
   );
 }
 
 class TextFieldFormMobile extends StatelessWidget {
   final String? labelText;
   final String? hintText;
+  final Widget? suffix;
   final TextEditingController? controller;
   final void Function(String?)? onSaved;
   final bool? isSuffixIconOn;
@@ -412,6 +219,14 @@ class TextFieldFormMobile extends StatelessWidget {
   final int? maxLenght;
   final TextAlign? textAlignment;
   final List<TextInputFormatter>? inputFormater;
+  final Decoration? decoration;
+  final TextAlignVertical? textAlignVertical;
+  final bool? alignLabelWithHint;
+  final int? maxLines;
+  final String? suFixImage;
+  final double? suFixImageHeight;
+  final double? suFixImageWidth;
+
   const TextFieldFormMobile({
     super.key,
     this.labelText,
@@ -458,24 +273,44 @@ class TextFieldFormMobile extends StatelessWidget {
     this.textAlignment,
     this.inputFormater,
     this.border,
+    this.suffix,
+    this.decoration,
+    this.textAlignVertical,
+    this.alignLabelWithHint,
+    this.maxLines,
+    this.suFixImage,
+    this.suFixImageWidth,
+    this.suFixImageHeight,
   });
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    bool isTablet(BuildContext context) =>
+        MediaQuery.of(context).size.width > 600;
+    final bool isTab = isTablet(context);
+
     if (isRichClickableTextMode == true) {
       return Container(
         height: height,
         width: width,
-        padding: contentPadding ?? const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: fillColor ?? Colors.white,
-          border: Border.all(color: AppColors.textfieldBorder),
-          borderRadius: BorderRadius.circular(boarderRadius ?? 7.0),
-        ),
+        padding:
+            contentPadding ??
+            EdgeInsets.all(8 * Responsive.getResponsive(context)),
+        decoration:
+            decoration ??
+            BoxDecoration(
+              color: fillColor ?? Colors.white,
+              border: Border.all(color: AppTheme.getColor(context).primary),
+              borderRadius: BorderRadius.circular(
+                boarderRadius ?? 7.0 * Responsive.getResponsiveText(context),
+              ),
+            ),
         child: Row(
           children: [
-            if (prefix != null) ...[prefix!, const SizedBox(width: 8)],
+            if (prefix != null) ...[
+              prefix!,
+              SizedBox(width: 0.008 * Responsive.getWidth(context)),
+            ],
             Expanded(
               child: RichText(
                 text: TextSpan(
@@ -484,13 +319,7 @@ class TextFieldFormMobile extends StatelessWidget {
                       text: clickableText ?? '',
                       style:
                           typingtextStyle ??
-                          TextStyle(
-                            color: AppColors.primary,
-                            decoration: TextDecoration.underline,
-                            fontSize:
-                                titleTextSize ?? textTheme.bodyLarge?.fontSize,
-                            fontWeight: fontWeight ?? FontWeight.w500,
-                          ),
+                          AppTheme.getTextStyle(context).bodyMedium,
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
                           if (clickableText != null) {
@@ -514,18 +343,18 @@ class TextFieldFormMobile extends StatelessWidget {
                             }
 
                             if (uri != null) {
-                              log('Launching URI: $uri'); // Debug line
+                              log("Launching URI: $uri"); // Debug line
                               if (await canLaunchUrl(uri)) {
                                 await launchUrl(
                                   uri,
                                   mode: LaunchMode.externalApplication,
                                 );
                               } else {
-                                log('Could not launch: $uri');
+                                log("Could not launch: $uri");
                               }
                             } else {
                               log(
-                                'URI is null for clickableText: $clickableText',
+                                "URI is null for clickableText: $clickableText",
                               );
                             }
                           }
@@ -540,120 +369,151 @@ class TextFieldFormMobile extends StatelessWidget {
       );
     }
 
-    return SizedBox(
-      width: width ?? double.infinity,
-      height:height,
-      child: TextFormField(
-        readOnly: isReadOnly ?? false,
-        onTap: onClick,
-        onSaved: onSaved,
-        controller: controller,
-        focusNode: focusNode,
-        autofocus: autoFocus ?? false,
-        keyboardType: textInputType,
-        maxLength: maxLenght,
-        textAlign: textAlignment ?? TextAlign.start,
-        inputFormatters: inputFormater,
-        decoration: InputDecoration(
-          counterText: '',
-          floatingLabelBehavior: floatingLabelBehavior,
-          filled: true,
-          fillColor: fillColor ?? Colors.white,
-          border:
-              border ??
-              OutlineInputBorder(
-                borderSide: BorderSide(color: AppColors.gray10, width: 1.2),
-                borderRadius: BorderRadius.circular(boarderRadius ?? 7.0),
+    return TextFormField(
+      readOnly: isReadOnly ?? false,
+      onTap: onClick,
+      onSaved: onSaved,
+      controller: controller,
+      focusNode: focusNode,
+      maxLines: maxLines,
+      autofocus: autoFocus ?? false,
+      keyboardType: textInputType,
+      textAlignVertical: textAlignVertical,
+      maxLength: maxLenght,
+      textAlign: textAlignment ?? TextAlign.start,
+      inputFormatters: inputFormater,
+      decoration: InputDecoration(
+        counterText: '',
+        floatingLabelBehavior: floatingLabelBehavior,
+        filled: true,
+        alignLabelWithHint: alignLabelWithHint,
+        fillColor: fillColor ?? Colors.white,
+        border:
+            border ??
+            OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppTheme.getColor(context).outline,
+                width: 1.2 * Responsive.getResponsive(context),
               ),
-          focusedBorder:
-              border ??
-              OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: AppColors.primary,
-                  width: 1.2,
-                ),
-                borderRadius: BorderRadius.circular(boarderRadius ?? 7.0),
+              borderRadius: BorderRadius.circular(
+                boarderRadius ?? 7.0 * Responsive.getResponsiveText(context),
               ),
-          enabledBorder:
-              border ??
-              OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: AppColors.gray10,
-                  width: 1.2,
-                ),
-                borderRadius: BorderRadius.circular(boarderRadius ?? 7.0),
-              ),
-          // contentPadding:
-          //     contentPadding ??
-          //     EdgeInsets.symmetric(horizontal: 12, vertical: height ?? 2),
-          labelText: isLabelOn == true ? labelText : null,
-          hintText: hintText??"99092187876236",
-          hintStyle:
-              hintTextStyle ??
-              textTheme.bodyLarge?.copyWith(
-                color: AppColors.black,
-                fontWeight: fontWeight ?? FontWeight.w500,
-                fontSize: titleTextSize,
-              ),
-          labelStyle:
-              labelTextStyle ??
-              textTheme.labelLarge?.copyWith(
-                color: AppColors.primary,
-                fontWeight: fontWeight ?? FontWeight.w500,
-                fontSize: titleTextSize,
-              ),
-          prefixIcon: (prefix != null)
-              ? prefix
-              : (prefixImage != null && prefixImage!.isNotEmpty)
-              ? GestureDetector(
-                  onTap: onTap1,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12.0,
-                      vertical: 12.0,
-                    ),
-                    child: Image.asset(
-                      prefixImage!,
-                      height: prefixImageHeight ?? 18,
-                      width: prefixImageWidth ?? 18,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                )
-              : null,
-          suffixIcon: isSuffixIconOn ?? false
-              ? Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (image1 != null)
-                      GestureDetector(
-                        onTap: onTap1,
-                        child: Image.asset(image1!, height: iconHeight ?? 18),
-                      ),
-                    const SizedBox(width: 12),
-                    if (image2 != null)
-                      GestureDetector(
-                        onTap: onTap2,
-                        child: Image.asset(image2!, height: iconHeight ?? 18),
-                      ),
-                    const SizedBox(width: 12),
-                  ],
-                )
-              : null,
-        ),
-        style:
-            typingtextStyle ??
-            textTheme.bodyLarge?.copyWith(
-              fontWeight: fontWeight ?? FontWeight.w500,
-              fontSize: titleTextSize,
-              color: AppColors.primary,
             ),
-        cursorColor: AppColors.primary,
-        validator: validator,
-        onChanged: onChanged,
-        obscureText: obscureText ?? false,
-        obscuringCharacter: obscuringCharacter ?? '●',
+        focusedBorder:
+            border ??
+            OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppTheme.getColor(context).primary,
+                width: 0.002 * Responsive.getWidth(context),
+              ),
+              borderRadius: BorderRadius.circular(
+                boarderRadius ?? 7.0 * Responsive.getResponsive(context),
+              ),
+            ),
+        enabledBorder:
+            border ??
+            OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppTheme.getColor(context).outline,
+                width: 0.002 * Responsive.getWidth(context),
+              ),
+              borderRadius: BorderRadius.circular(
+                boarderRadius ?? 7.0 * Responsive.getResponsive(context),
+              ),
+            ),
+        contentPadding:
+            contentPadding ??
+            EdgeInsets.only(
+              top: 25 * Responsive.getResponsive(context),
+              left: 12 * Responsive.getResponsive(context),
+              right: 12 * Responsive.getResponsive(context),
+              bottom: 16 * Responsive.getResponsive(context),
+            ),
+        labelText: isLabelOn == true ? labelText : null,
+        hintText: hintText,
+        hintStyle:
+            hintTextStyle ??
+            AppTheme.getTextStyle(
+              context,
+            ).bodyLarge!.copyWith(color: AppTheme.getColor(context).outline),
+        labelStyle:
+            labelTextStyle ??
+            AppTheme.getTextStyle(
+              context,
+            ).bodySmall!.copyWith(color: AppTheme.getColor(context).primary),
+        prefixIcon: (prefix != null)
+            ? prefix
+            : (prefixImage != null && prefixImage!.isNotEmpty)
+            ? GestureDetector(
+                onTap: onTap1,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: isTab
+                        ? 20 * Responsive.getResponsive(context)
+                        : 16 * Responsive.getResponsive(context),
+                    right: isTab
+                        ? 12 * Responsive.getResponsive(context)
+                        : 8 * Responsive.getResponsive(context),
+                  ),
+                  child: Image.asset(
+                    prefixImage!,
+                    fit: BoxFit.contain,
+                    width:
+                        prefixImageWidth ??
+                        (isTab
+                            ? 0.5 * Responsive.getWidth(context)
+                            : 0.03 * Responsive.getWidth(context)),
+                    height:
+                        prefixImageHeight ??
+                        (isTab
+                            ? 0.5 * Responsive.getHeight(context)
+                            : 0.03 * Responsive.getHeight(context)),
+                  ),
+                ),
+              )
+            : null,
+        suffixIcon: (suffix != null)
+            ? suffix
+            : (suFixImage != null && suFixImage!.isNotEmpty)
+            ? GestureDetector(
+                onTap: onTap1,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    right: isTab
+                        ? 20 * Responsive.getResponsive(context)
+                        : 16 * Responsive.getResponsive(context),
+                    left: isTab
+                        ? 12 * Responsive.getResponsive(context)
+                        : 8 * Responsive.getResponsive(context),
+                  ),
+                  child: Image.asset(
+                    fit: BoxFit.contain,
+                    suFixImage!,
+                    width:
+                        suFixImageWidth ??
+                        (isTab
+                            ? 0.5 * Responsive.getWidth(context)
+                            : 0.05 * Responsive.getWidth(context)),
+                    height:
+                        suFixImageHeight ??
+                        (isTab
+                            ? 0.5 * Responsive.getHeight(context)
+                            : 0.05 * Responsive.getHeight(context)),
+                  ),
+                ),
+              )
+            : null,
       ),
+      style:
+          typingtextStyle ??
+          AppTheme.getTextStyle(
+            context,
+          ).bodyLarge!.copyWith(color: AppTheme.getColor(context).primary),
+      cursorColor: AppTheme.getColor(context).primary,
+      validator: validator,
+      onChanged: onChanged,
+      obscureText: obscureText ?? false,
+      obscuringCharacter: obscuringCharacter ?? '●',
     );
   }
 }

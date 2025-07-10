@@ -21,4 +21,3 @@ class MainActivity : FlutterActivity() {
             }
     }
 }
-

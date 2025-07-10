@@ -224,9 +224,7 @@
 //======================================responsive==============================
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
 
 class CountryModel {
   final String name;
@@ -253,12 +251,13 @@ class CustomMobileNumberField extends StatefulWidget {
   final bool? readOnly;
   final String? hintText;
   final TextStyle? hintTextStyle;
-    final TextStyle? typingTextStyle;
   final Color? fillColor;
   final Color? borderColor;
 
   const CustomMobileNumberField({
-    required this.countries, required this.controller, super.key,
+    super.key,
+    required this.countries,
+    required this.controller,
     this.isEditable = true,
     this.countryTextStyle,
     this.numberTextStyle,
@@ -275,7 +274,7 @@ class CustomMobileNumberField extends StatefulWidget {
     this.hintText,
     this.hintTextStyle,
     this.fillColor,
-    this.borderColor, this.typingTextStyle,
+    this.borderColor,
   });
 
   @override
@@ -306,7 +305,7 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
   }
 
   OverlayEntry _createOverlayEntry() {
-    final RenderBox renderBox =
+    RenderBox renderBox =
         _countryKey.currentContext!.findRenderObject() as RenderBox;
     final size = renderBox.size;
     final offset = renderBox.localToGlobal(Offset.zero);
@@ -314,23 +313,28 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
     return OverlayEntry(
       builder: (context) => Positioned(
         left: offset.dx,
-        top: offset.dy + size.height + 4 * getResponsive(context),
-        width: widget.dropdownWidth ?? 200 * getWidth(context) / 360,
+        top: offset.dy + size.height + 4 * Responsive.getResponsive(context),
+        width: widget.dropdownWidth ?? 200 * Responsive.getWidth(context) / 360,
         child: CompositedTransformFollower(
           link: _layerLink,
           showWhenUnlinked: false,
           child: Material(
             elevation: 4,
-            borderRadius: BorderRadius.circular(8 * getResponsive(context)),
+            borderRadius: BorderRadius.circular(
+              8 * Responsive.getResponsive(context),
+            ),
             child: SizedBox(
-              height: widget.dropdownHeight ?? 200 * getHeight(context) / 800,
+              height:
+                  widget.dropdownHeight ??
+                  200 * Responsive.getHeight(context) / 800,
               child: ListView(
                 padding: EdgeInsets.symmetric(
-                  vertical: 4 * getResponsive(context),
+                  vertical: 4 * Responsive.getResponsive(context),
                 ),
-                children: widget.countries.map((country) => ListTile(
+                children: widget.countries.map((country) {
+                  return ListTile(
                     dense: true,
-                    title: Text('${country.name} (${country.dialCode})'),
+                    title: Text("${country.name} (${country.dialCode})"),
                     onTap: () {
                       setState(() {
                         _selectedCountry = country;
@@ -339,7 +343,8 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                       _overlayEntry?.remove();
                       _overlayEntry = null;
                     },
-                  )).toList(),
+                  );
+                }).toList(),
               ),
             ),
           ),
@@ -355,9 +360,10 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
   }
 
   @override
-  Widget build(BuildContext context) => SizedBox(
+  Widget build(BuildContext context) {
+    return SizedBox(
       width: widget.width ?? double.infinity,
-      height: widget.height ?? 40 * getHeight(context) / 800,
+      height: widget.height ?? 40 * Responsive.getHeight(context) / 800,
       child: CompositedTransformTarget(
         link: _layerLink,
         child: Container(
@@ -367,7 +373,9 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                 color: widget.fillColor ?? Colors.white,
                 borderRadius:
                     widget.borderRadius ??
-                    BorderRadius.circular(7.0 * getResponsive(context)),
+                    BorderRadius.circular(
+                      7.0 * Responsive.getResponsive(context),
+                    ),
                 border:
                     widget.border ??
                     Border.all(
@@ -383,8 +391,8 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                     : null,
               ),
           padding: EdgeInsets.symmetric(
-            horizontal: 14 * getResponsive(context),
-            vertical: 12 * getResponsive(context),
+            horizontal: 14 * Responsive.getResponsive(context),
+            vertical: 12 * Responsive.getResponsive(context),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -398,31 +406,40 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CustomText(
+                      Text(
                         _selectedCountry.name,
-                        fontWeight: FontWeight.w700,
-                         fontSize: 16 * getResponsive(context),
-                         color: AppColors.textPrimary,),
-                       
-                      SizedBox(width: 6 * getResponsive(context)),
+                        style:
+                            widget.countryTextStyle ??
+                            const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                      ),
+                      SizedBox(width: 6 * Responsive.getResponsive(context)),
                       Icon(
                         Icons.keyboard_arrow_down_outlined,
                         color: AppTheme.getColor(context).primary,
-                        size: 25 * getResponsive(context),
+                        size: 30 * Responsive.getResponsive(context),
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(width: 10 * getResponsive(context)),
-              CustomText(
+              SizedBox(width: 10 * Responsive.getResponsive(context)),
+              Text(
                 _selectedCountry.dialCode,
-                      fontSize: 16 * getResponsive(context),
-                      color: AppColors.textPrimary,
-                      fontWeight: FontWeight.w700,
+                style:
+                    widget.numberTextStyle ??
+                    const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
               ),
-              SizedBox(width: 6 * getResponsive(context)),
+              SizedBox(width: 6 * Responsive.getResponsive(context)),
               Expanded(
                 child: TextField(
                   controller: widget.controller,
@@ -430,8 +447,7 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                   readOnly: widget.readOnly ?? false || !widget.isEditable,
                   style: widget.numberTextStyle,
                   decoration: InputDecoration.collapsed(
-                    
-                    hintText: widget.hintText ?? 'Enter phone number',
+                    hintText: widget.hintText ?? "Enter phone number",
                     hintStyle:
                         widget.hintTextStyle ??
                         TextStyle(color: AppTheme.getColor(context).outline),
@@ -443,4 +459,5 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
         ),
       ),
     );
+  }
 }

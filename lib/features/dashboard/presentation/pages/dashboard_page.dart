@@ -1,30 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/circular_and_discussion.dart';
-import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_department_container.dart';
-import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_myteam%20(1).dart';
-import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_section.dart';
-import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_slider.dart';
-import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_timer.dart';
-import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_upcomingcelebrationcard.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/dashboard_app_bar.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/moments_section.dart';
-import 'package:myco_flutter/features/dashboard/presentation/widgets/myTeamCard.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/my_team_section.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/quick_action_section.dart';
-import 'package:myco_flutter/features/dashboard/presentation/widgets/timerAndSlider.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/timer_and_slider.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/upcoming_celebration_section.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/your_department_section.dart';
-import 'package:myco_flutter/widgets/border_container_wraper.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_shadow_container.dart';
-import 'package:myco_flutter/widgets/custom_stepper.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
 
 class DashBoardPage extends StatelessWidget {
   const DashBoardPage({super.key});
@@ -36,17 +20,17 @@ class DashBoardPage extends StatelessWidget {
 
     body: SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 16,
           children: [
             // AppBar
-            DashboardAppBar(),
+            const DashboardAppBar(),
 
             // Body content
             Expanded(
-              child: getWidth(context) > 600
+              child: Responsive.getWidth(context) > 600
                   ? _tabview(context)
                   : _mobileView(context),
             ),
@@ -56,8 +40,7 @@ class DashBoardPage extends StatelessWidget {
     ),
   );
 
-  Widget _tabview(BuildContext context) {
-    return Row(
+  Widget _tabview(BuildContext context) => Row(
       children: [
         Expanded(
           child: SingleChildScrollView(
@@ -68,12 +51,12 @@ class DashBoardPage extends StatelessWidget {
                 timerAndSlider(context),
 
                 // Circulars and discussion section
-                CircularAndDiscussion(),
+                const CircularAndDiscussion(),
                 // My Team Section
-                MyTeamSection(),
-// Your Department Section 
-                YourDepartmentSection(),
-                MomentsSection(),
+                const MyTeamSection(),
+                // Your Department Section
+                const YourDepartmentSection(),
+                const MomentsSection(),
               ],
             ),
           ),
@@ -86,17 +69,15 @@ class DashBoardPage extends StatelessWidget {
                 QuickActionSection(),
 
                 // Upcoming Celebrations Section
-                UpcomingCelebrationSection(),
+                const UpcomingCelebrationSection(),
               ],
             ),
           ),
         ),
       ],
     );
-  }
 
-  Widget _mobileView(BuildContext context) {
-    return SingleChildScrollView(
+  Widget _mobileView(BuildContext context) => SingleChildScrollView(
       child: Column(
         spacing: 16,
         children: [
@@ -104,23 +85,23 @@ class DashBoardPage extends StatelessWidget {
           timerAndSlider(context),
 
           // Circulars and discussion section
-          CircularAndDiscussion(),
+          const CircularAndDiscussion(),
           // My Team Section
-          MyTeamSection(),
-          
+          const MyTeamSection(),
+
           // Quick Access Section
-           QuickActionSection(),
+          QuickActionSection(),
 
           // Upcoming Celebrations Section
-          UpcomingCelebrationSection(),
+          const UpcomingCelebrationSection(),
 
-          //Your Department Section 
-          YourDepartmentSection(),
+          //Your Department Section
+          //Your Department Section
+          const YourDepartmentSection(),
 
           // Moments Section
-          MomentsSection(),
+          const MomentsSection(),
         ],
       ),
     );
-  }
 }

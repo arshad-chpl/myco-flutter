@@ -1,12 +1,9 @@
-// ignore_for_file: unreachable_switch_default
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:io';
 
 enum AppPermission {
   camera,
@@ -52,7 +49,7 @@ class PermissionUtil {
   static Future<Map<AppPermission, bool>> requestMultiplePermissions(
     List<AppPermission> permissions,
   ) async {
-    final Map<AppPermission, bool> results = {};
+    Map<AppPermission, bool> results = {};
 
     for (AppPermission permission in permissions) {
       final status = await _getPermission(permission).request();
@@ -63,7 +60,9 @@ class PermissionUtil {
   }
 
   /// Open app settings
-  static Future<bool> openAppSettingsPage() async => await openAppSettings();
+  static Future<bool> openAppSettingsPage() async {
+    return await openAppSettings();
+  }
 
   /// Show dialog when permission is denied
   static void showPermissionDeniedDialog(
@@ -80,7 +79,7 @@ class PermissionUtil {
         contentPadding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
         title: Row(
           children: [
-            const Icon(
+            Icon(
               Icons.warning_amber_rounded,
               color: AppColors.spanishYellow,
               size: 28,
@@ -177,7 +176,7 @@ class PermissionUtil {
     if (type == 'camera') {
       granted = await PermissionUtil.requestPermission(AppPermission.camera);
     } else if (type == 'gallery') {
-      final int sdkInt = await PermissionUtil.getAndroidSdkInt();
+      int sdkInt = await PermissionUtil.getAndroidSdkInt();
 
       if (Platform.isAndroid && sdkInt < 33) {
         // Android 12 (API 32) and below

@@ -34,7 +34,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Myco Flutter</string>
+	<string>MyCo</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -70,9 +70,33 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+
+    <!-- Required Permissions -->
+    <key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to take pictures or record videos.</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to select images and videos.</string>
+
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app needs permission to save photos and videos to your library.</string>
+
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+
+	<!-- Optional: Required if using background fetch/location -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+    </array>
+
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+    <string>We need access to your camera for face detection</string>
 </dict>
 </plist>

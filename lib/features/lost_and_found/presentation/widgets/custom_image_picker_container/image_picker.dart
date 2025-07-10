@@ -78,7 +78,7 @@ class _ImageFilePickerWidgetState extends State<_ImageFilePickerWidget> {
           child: Text(
             'Select option',
             style: TextStyle(
-              fontSize: 20 * getResponsive(context),
+              fontSize: 20 * Responsive.getResponsive(context),
               color: AppTheme.getColor(context).outline,
             ),
           ),
