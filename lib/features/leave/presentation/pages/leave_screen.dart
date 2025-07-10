@@ -1,8 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/leave/domain/use_case/leave_use_case.dart';
+import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/add_short_leave_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/my_team_leaves_screen.dart';
@@ -105,143 +109,155 @@ class _LeaveScreenState extends State<LeaveScreen> {
     ),
   ];
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      leading: IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.arrow_back_outlined),
-      ),
-      title: const Text('Leave balance'),
-      centerTitle: true,
-      elevation: 0,
-      actions: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: MyCoButton(
-            onTap: () {
-              showLeaveFilterBottomSheet(context, selectedValue, (p0) {
-                selectedValue = p0;
-                setState(() {});
-              }, ['All Leaves', 'Paid Leaves', 'UnPaid Leaves']);
-            },
-
-            textStyle: TextStyle(
-              fontSize: 12 * Responsive.getResponsiveText(context),
-              color: MyCoButtonTheme.whitemobileBackgroundColor,
+  Widget build(BuildContext context) => BlocProvider(
+        create: (context) => LeaveBloc(GetIt.I<LeaveUseCase>()),
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.arrow_back_outlined),
             ),
-            title: selectedValue,
-            height: 0.035 * Responsive.getHeight(context),
-            width: 0.3 * Responsive.getWidth(context),
-            imagePosition: AxisDirection.right,
-            image: const Icon(
-              Icons.keyboard_arrow_down,
-              color: MyCoButtonTheme.whitemobileBackgroundColor,
+            title: const Text('Leave balance'),
+            centerTitle: true,
+            elevation: 0,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MyCoButton(
+                  onTap: () {
+                    showLeaveFilterBottomSheet(context, selectedValue, (p0) {
+                      selectedValue = p0;
+                      setState(() {});
+                    }, ['All Leaves', 'Paid Leaves', 'UnPaid Leaves']);
+                  },
+
+                  textStyle: TextStyle(
+                    fontSize: 12 * Responsive.getResponsiveText(context),
+                    color: MyCoButtonTheme.whitemobileBackgroundColor,
+                  ),
+                  title: selectedValue,
+                  height: 0.035 * Responsive.getHeight(context),
+                  width: 0.3 * Responsive.getWidth(context),
+                  imagePosition: AxisDirection.right,
+                  image: const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: MyCoButtonTheme.whitemobileBackgroundColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Column(
+                spacing: 0.015 * Responsive.getHeight(context),
+                children: [
+                  MonthYearHeader(
+                    onChanged: (month, year) {
+                      // Handle month/year change
+                      debugPrint('Selected: ${month + 1}, $year');
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      LeaveActionButton(
+                        title: 'My Leave Balance',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BlocProvider.value(
+                                value: BlocProvider.of<LeaveBloc>(context),
+                                child: const MyLeaveBalanceScreen(),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      LeaveActionButton(
+                        title: 'My Leave Balance',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  BlocProvider(
+                                    create: (context) =>
+                                        LeaveBloc(GetIt.I<LeaveUseCase>()),
+                                    child: const MyLeaveBalanceScreen(),
+                                  ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+
+                  ...leaveList.map((e) => LeaveCard(leave: e)),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
-    ),
-    body: SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: Column(
-          spacing: 0.015 * Responsive.getHeight(context),
-          children: [
-            MonthYearHeader(
-              onChanged: (month, year) {
-                // Handle month/year change
-                debugPrint('Selected: ${month + 1}, $year');
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                LeaveActionButton(
-                  title: 'My Leave Balance',
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MyLeaveBalanceScreen(),
-                      ),
-                    );
-                  },
-                ),
-                LeaveActionButton(
-                  title: 'My Team Leaves',
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MyTeamLeavesScreen(),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-
-            ...leaveList.map((e) => LeaveCard(leave: e)),
-          ],
-        ),
-      ),
-    ),
-    // floatingActionButton: LeaveFloatingActionButton(
-    //   actions: [
-    //     LeaveFloatingActionButtonModel(
-    //       label: 'Apply Short Leave',
-    //       onTap: () {
-    //         Navigator.push(
-    //           context,
-    //           MaterialPageRoute(builder: (context) => AddShortLeaveScreen()),
-    //         );
-    //       },
-    //       icon: Icons.add,
-    //       iconPath: 'assets/images/short_apply_leave.png',
-    //     ),
-    //     LeaveFloatingActionButtonModel(
-    //       label: 'Apply Leave',
-    //       onTap: () {
-    //         showModalBottomSheet(
-    //           context: context,
-    //           builder: (context) => Container(),
-    //         );
-    //       },
-    //
-    //       icon: Icons.add,
-    //     ),
-    //   ],
-    //   innericonsize: 25,
-    //   circleavataradius: 25,
-    //   imageSize: 0.050 * Responsive.getHeight(context),
-    //   openIcon: Icons.add,
-    //   innerimageheight: 0.02 * Responsive.getHeight(context),
-    //   innerimagewidth: 0.02 * Responsive.getHeight(context),
-    //   closeIcon: Icons.close_outlined,
-    // ),
-    floatingActionButton: CustomFabMenu(
-      buttons: [
-        FabButtonModel(
-          label: 'Apply Leave',
-          icon: Icons.event_available_outlined,
-          onTap: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) => Container(),
-            );
-          },
-        ),
-        FabButtonModel(
-          label: 'Apply Short Leave',
-          imagePath: 'assets/images/short_apply_leave.png',
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AddShortLeaveScreen()),
-            );
-          },
-        ),
-      ],
-    ),
-  );
+          // floatingActionButton: LeaveFloatingActionButton(
+          //   actions: [
+          //     LeaveFloatingActionButtonModel(
+          //       label: 'Apply Short Leave',
+          //       onTap: () {
+          //         Navigator.push(
+          //           context,
+          //           MaterialPageRoute(builder: (context) => AddShortLeaveScreen()),
+          //         );
+          //       },
+          //       icon: Icons.add,
+          //       iconPath: 'assets/images/short_apply_leave.png',
+          //     ),
+          //     LeaveFloatingActionButtonModel(
+          //       label: 'Apply Leave',
+          //       onTap: () {
+          //         showModalBottomSheet(
+          //           context: context,
+          //           builder: (context) => Container(),
+          //         );
+          //       },
+          //
+          //       icon: Icons.add,
+          //     ),
+          //   ],
+          //   innericonsize: 25,
+          //   circleavataradius: 25,
+          //   imageSize: 0.050 * Responsive.getHeight(context),
+          //   openIcon: Icons.add,
+          //   innerimageheight: 0.02 * Responsive.getHeight(context),
+          //   innerimagewidth: 0.02 * Responsive.getHeight(context),
+          //   closeIcon: Icons.close_outlined,
+          // ),
+          floatingActionButton: CustomFabMenu(
+            buttons: [
+              FabButtonModel(
+                label: 'Apply Leave',
+                icon: Icons.event_available_outlined,
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => Container(),
+                  );
+                },
+              ),
+              FabButtonModel(
+                label: 'Apply Short Leave',
+                imagePath: 'assets/images/short_apply_leave.png',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddShortLeaveScreen()),
+                  );
+                },
+              ),
+            ],
+          ),
+        )
+    );
 }

@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_summary_grid.dart';
 
 class LeaveSummaryCard extends StatelessWidget {
   final List<LeaveSummaryItem> chips;
   final List<LeaveRowData> rows;
 
-  const LeaveSummaryCard({super.key, required this.chips, required this.rows});
+  const LeaveSummaryCard({
+    super.key,
+    required this.chips,
+    required this.rows
+  });
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,29 +23,58 @@ class LeaveSummaryCard extends StatelessWidget {
         vertical: height * 0.02,
         horizontal: width * 0.04,
       ),
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Dynamic Top Info Chips
           LeaveSummarySection(
             summaryItems: chips,
             maxLeavesInMonth: 2,
             isOtherContainer: false,
             onViewDates: () {},
           ),
-          // SizedBox(height: height * 0.025),
 
           // Dynamic Dotted Rows
-          ...rows.map((row) => _dottedRow(row.label, row.value)),
+          ...rows.map((row) {
+            if (row.label == 'View Dates' || row.label == 'Apply for leave encashment?') {
+              return InkWell(
+                onTap: row.onTap,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        row.label,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: row.onTap != null ? Colors.blue : Colors.black,
+                          decoration: row.onTap != null ? TextDecoration.underline : TextDecoration.none,
+                        ),
+                      ),
+                      if (row.value.isNotEmpty)
+                        Text(
+                          row.value,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              return _dottedRow(row.label, row.value, onTap: row.onTap);
+            }
+          }),
         ],
       ),
     );
   }
-
-  Widget _dottedRow(String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+  Widget _dottedRow(String title, String value, {VoidCallback? onTap}) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: 6),
+    child: InkWell(
+      onTap: onTap,
       child: Row(
         children: [
           Expanded(
@@ -67,20 +102,7 @@ class LeaveSummaryCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
 }
 
-class LeaveChipData {
-  final String title;
-  final String value;
-
-  LeaveChipData({required this.title, required this.value});
-}
-
-class LeaveRowData {
-  final String label;
-  final String value;
-
-  LeaveRowData({required this.label, required this.value});
-}
