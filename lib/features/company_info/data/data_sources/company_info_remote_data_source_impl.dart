@@ -16,13 +16,13 @@ class CompanyInfoRemoteDataSourceImpl implements CompanyInfoRemoteDataSource {
   @override
   Future<CompanyInfoResponse> getCompanyInfo() async {
     final dataMap = {
-      'buildingDetails': 'buildingDetails',
+      'tag': 'buildingDetails',
       'society_id': '1',
       'language_id': '1',
     };
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
 
-    final controller = '${VariableBag.subEnd}buildingDetails_controller.php';
+    final controller = 'buildingDetails_controller.php';
 
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.masterAPICall,

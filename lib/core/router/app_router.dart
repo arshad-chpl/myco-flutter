@@ -57,8 +57,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.getStarted,
-    // initialLocation: RoutePaths.dashboard,
+    // initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -79,7 +79,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.login,
-        name: 'login',
+        name: RoutePaths.login,
         builder: (context, state) => const OtpVerifyDialog(),
       ),
       // GoRoute(
@@ -103,7 +103,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.dashboard,
-        name: 'dashboard',
+        name: RoutePaths.dashboard,
         builder: (context, state) => DashBoardPage(),
       ),
 
@@ -135,7 +135,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.holiday,
-        name: 'holiday',
+        name: RoutePaths.holiday,
         builder: (context, state) {
           final controller = TextEditingController();
           return HolidayListPage(controller: controller);
@@ -143,7 +143,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.companyInfo,
-        name: 'company-info',
+        name: RoutePaths.companyInfo,
         builder: (context, state) => BlocProvider<CompanyInfoBloc>(
           create: (_) => GetIt.I<CompanyInfoBloc>(),
           child: const CompanyInfoPage(),

@@ -22,10 +22,7 @@ class CompanyInfoPage extends StatelessWidget {
           ..add(FetchCompanyInfo()),
     child: Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_outlined),
-        ),
+        leading: const BackButton(),
         title: const Text('Company Info'),
       ),
       body: BlocBuilder<CompanyInfoBloc, CompanyInfoState>(
