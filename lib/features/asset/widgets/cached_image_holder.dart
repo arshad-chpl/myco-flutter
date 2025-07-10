@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CachedImage extends StatefulWidget {
   final String imageUrl;
@@ -59,7 +60,15 @@ class _CachedImageState extends State<CachedImage> {
 
     if (!_isLoaded) {
       return widget.placeholder ??
-          const Center(child: CircularProgressIndicator());
+          Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.grey.shade100,
+            child: Container(
+              width: widget.width,
+              height: widget.height,
+              color: Colors.white,
+            ),
+          );
     }
 
     return Image(
