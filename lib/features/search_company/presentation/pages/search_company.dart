@@ -42,7 +42,7 @@ class SearchCompanyScreen extends StatelessWidget {
             end: Alignment.center,
             colors: [
               AppTheme.getColor(context).primary,
-              AppTheme.getColor(context).onPrimary,
+              AppTheme.getColor(context).surface,
             ],
           ),
         ),

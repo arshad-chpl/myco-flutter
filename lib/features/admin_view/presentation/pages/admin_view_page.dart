@@ -92,10 +92,10 @@ class AdminViewPage extends StatelessWidget {
       // Dispatch a BLoC event to fetch admin view data.
       context.read<AdminViewBloc>().add(
         FetchAdminView(
-          companyId: '1',
+          companyId: companyId!,
           // Non-null assertion as ID is expected to exist.
           userId: '1401',
-          languageId: '1',
+          languageId: languageId!,
         ),
       );
     }
