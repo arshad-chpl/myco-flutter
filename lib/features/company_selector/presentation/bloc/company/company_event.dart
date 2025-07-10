@@ -12,3 +12,8 @@ class SearchCompany extends CompanyEvent {
 }
 
 class InitialView extends CompanyEvent {}
+
+class CompanyIndex extends CompanyEvent {
+  final int index;
+  const CompanyIndex(this.index);
+}

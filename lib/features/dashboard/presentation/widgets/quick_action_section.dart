@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_section.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
@@ -10,11 +11,10 @@ class QuickActionSection extends StatelessWidget {
   QuickActionSection({super.key});
 
   List quickAccessOptions = ["Employee","Leave","Assets","Take Order","Lost and Found","Sales","Visits","CRM","Documents","Attendance","Work Allocation","IdeaBox"];
-  List quickAccessOptionsNavigation = ["/employees","/leave","/assets-home","/take-order","/lost-and-found","","","","","","",""];
+  List quickAccessOptionsNavigation = ["/employees","/leave","/assets-home","/take-order","/lost-and-found","","/my-visit","","","","",RoutePaths.adminView];
 
   @override
-  Widget build(BuildContext context) {
-    return CustomSection(
+  Widget build(BuildContext context) => CustomSection(
                   title: 'Quick Access',
                   subtitle: 'All Your Work Related Tools.',
                   icon: Image.asset(
@@ -30,7 +30,7 @@ class QuickActionSection extends StatelessWidget {
                   child: GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3, // 2 columns
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
@@ -54,5 +54,4 @@ class QuickActionSection extends StatelessWidget {
                     ),
                   ),
                 );
-  }
 }
