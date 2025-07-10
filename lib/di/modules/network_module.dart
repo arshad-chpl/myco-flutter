@@ -29,7 +29,7 @@ Future<void> initNetworkModule(GetIt sl) async {
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(Connectivity()));
 
   _registerOrReplace<ApiClient>(
-    ApiClient(sl(), baseUrl: baseUrl ?? ''),
+    ApiClient(sl()),
     sl,
     instanceName: VariableBag.masterAPICall,
   );

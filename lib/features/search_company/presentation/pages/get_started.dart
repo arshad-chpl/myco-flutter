@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/image_animation.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -19,7 +19,7 @@ class GetStarted extends StatelessWidget {
           end: Alignment.center,
           colors: [
             AppTheme.getColor(context).primary, // Light Sky Blue
-            AppTheme.getColor(context).onPrimary, // Light Teal
+            AppTheme.getColor(context).surface, // Light Teal
             // Light Blue
           ],
         ),
@@ -42,7 +42,7 @@ class GetStarted extends StatelessWidget {
               const BouncingImage(),
               SizedBox(height: 0.12 * Responsive.getHeight(context)),
               CustomText(
-                'Welcome to MyCo!',
+                LanguageManager().get('welcome_to_myco'),
 
                 fontSize: 30 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
@@ -52,7 +52,7 @@ class GetStarted extends StatelessWidget {
               ),
               SizedBox(height: 0.014 * Responsive.getHeight(context)),
               CustomText(
-                'Make Smart Decisions! Set clear timelines for projects and celebrate your achievements!',
+                LanguageManager().get('get_started_desc'),
                 fontSize: 15 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurfaceVariant,
                 fontWeight: FontWeight.w500,
