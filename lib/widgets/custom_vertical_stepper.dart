@@ -160,11 +160,15 @@ class _MainStepWidget extends StatelessWidget {
     }
   }
 
-  Widget getIconWidgetForStatus(StepStatus status, {Widget? customIcon}) {
+  Widget getIconWidgetForStatus(
+    StepStatus status,
+    BuildContext context, {
+    Widget? customIcon,
+  }) {
     if (customIcon != null) {
       return SizedBox(
-        height: 17,
-        width: 17,
+        height: 0.045 * Responsive.getHeight(context),
+        width: 0.045 * Responsive.getWidth(context),
         child: FittedBox(fit: BoxFit.scaleDown, child: customIcon),
       );
     }
@@ -196,14 +200,12 @@ class _MainStepWidget extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         InnerShadowContainer(
-          // height: Responsive.screenWidth() > 600
-          //     ? 0.090 * Responsive.getHeight(context)
-          //     : 0.040 * Responsive.getHeight(context),
-          height: 40,
-          width: 40,
-          // width: Responsive.screenWidth() > 600
-          //     ? 0.040 * Responsive.getWidth(context)
-          //     : 0.090 * Responsive.getWidth(context),
+          height: Responsive.screenWidth() > 600
+              ? 0.042 * Responsive.getWidth(context)
+              : 0.042 * Responsive.getHeight(context),
+          width: Responsive.screenWidth() > 600
+              ? 0.042 * Responsive.getWidth(context)
+              : 0.042 * Responsive.getHeight(context),
           borderRadius: 20,
           backgroundColor: AppColors.white,
           isShadowTopLeft: true,
@@ -222,6 +224,7 @@ class _MainStepWidget extends StatelessWidget {
               ? Center(
                   child: getIconWidgetForStatus(
                     step.status,
+                    context,
                     customIcon: step.customStatusIcon,
                   ),
                 )

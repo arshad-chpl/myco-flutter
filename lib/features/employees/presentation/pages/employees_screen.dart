@@ -160,101 +160,101 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
               ),
             ),
             const SizedBox(height: 10),
-            const Text('Punch in-out Demo'),
-            Expanded(
-              child: SingleChildScrollView(
-                child: CustomVerticalStepper(
-                  steps: [
-                    StepData(
-                      title: 'PUNCH IN',
-                      // title: '',
-                      subTitle: '10:25:06 AM',
-                      status: StepStatus.pending,
-                      // isStepIconShow: false,
-                      customStatusIcon: const Icon(
-                        Icons.lunch_dining,
-                        color: Colors.white,
-                      ),
-                      subSteps: [
-                        SubStepData(
-                          title: 'Lunch Break',
-                          subTitle: '01:32:56 PM - 02:01:46 PM',
-                          trailingTitle: '28 min 50 sec',
-                          status: StepStatus.pending,
-                          // customStatusIcon: Icon(Icons.lunch_dining),
-                          // isSubStepIconShow: false,
-                        ),
-                        SubStepData(
-                          title: 'Tea Break',
-                          subTitle: '06:05:02 PM - 06:07:51 PM',
-                          trailingTitle: '2 min 49 sec',
-                          status: StepStatus.pending,
-                          // isSubStepIconShow: false,
-                        ),
-                      ],
-                    ),
-                    StepData(
-                      title: 'PUNCH OUT',
-                      subTitle: '06:08:39 PM',
-                      trillingTitle: '7 hour 43 min 33 sec',
-                      status: StepStatus.pending,
-                      // isStepIconShow: false,
-                    ),
-                    StepData(
-                      title: 'PUNCH IN & OUT',
-                      subTitle: '06:08:39 PM',
-                      trillingTitle: '1 min 18 sec',
-                      status: StepStatus.approved,
-                      // isStepIconShow: false,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            // /// Employee List
+            // const Text('Punch in-out Demo'),
             // Expanded(
-            //   child: GridView.builder(
-            //     padding: const EdgeInsets.only(
-            //       top: 6,
-            //       bottom: 5,
-            //       left: 5,
-            //       right: 5,
+            //   child: SingleChildScrollView(
+            //     child: CustomVerticalStepper(
+            //       steps: [
+            //         StepData(
+            //           title: 'PUNCH IN',
+            //           // title: '',
+            //           subTitle: '10:25:06 AM',
+            //           status: StepStatus.pending,
+            //           // isStepIconShow: false,
+            //           customStatusIcon: const Icon(
+            //             Icons.ac_unit,
+            //             color: Colors.white,
+            //           ),
+            //           subSteps: [
+            //             SubStepData(
+            //               title: 'Lunch Break',
+            //               subTitle: '01:32:56 PM - 02:01:46 PM',
+            //               trailingTitle: '28 min 50 sec',
+            //               status: StepStatus.pending,
+            //               // customStatusIcon: Icon(Icons.lunch_dining),
+            //               // isSubStepIconShow: false,
+            //             ),
+            //             SubStepData(
+            //               title: 'Tea Break',
+            //               subTitle: '06:05:02 PM - 06:07:51 PM',
+            //               trailingTitle: '2 min 49 sec',
+            //               status: StepStatus.pending,
+            //               // isSubStepIconShow: false,
+            //             ),
+            //           ],
+            //         ),
+            //         StepData(
+            //           title: 'PUNCH OUT',
+            //           subTitle: '06:08:39 PM',
+            //           trillingTitle: '7 hour 43 min 33 sec',
+            //           status: StepStatus.pending,
+            //           // isStepIconShow: false,
+            //         ),
+            //         StepData(
+            //           title: 'PUNCH IN & OUT',
+            //           subTitle: '06:08:39 PM',
+            //           trillingTitle: '1 min 18 sec',
+            //           status: StepStatus.approved,
+            //           // isStepIconShow: false,
+            //         ),
+            //       ],
             //     ),
-            //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //       crossAxisCount: Responsive.getGridConfig(
-            //         context,
-            //         // isBottomSheet: false,
-            //       ).itemCount,
-            //       mainAxisSpacing: Responsive.getGridConfig(context).spacing,
-            //       crossAxisSpacing: Responsive.getGridConfig(context).spacing,
-            //       childAspectRatio: Responsive.getGridConfig(
-            //         context,
-            //       ).childAspectRatio,
-            //     ),
-            //     itemCount: employees.length,
-            //     itemBuilder: (context, index) {
-            //       final emp = employees[index];
-            //       return EmployeeSelectionCard(
-            //         name: emp['name']!,
-            //         department: emp['role']!,
-            //         image: NetworkImage(emp['image']!),
-            //         showDelete: true,
-            //         // selectedColor: Colors.red,
-            //         isSelected: selectedEmployeeIndexes.contains(index),
-            //         onSelected: (value) {
-            //           setState(() {
-            //             if (selectedEmployeeIndexes.contains(index)) {
-            //               selectedEmployeeIndexes.remove(index);
-            //             } else {
-            //               selectedEmployeeIndexes.add(index);
-            //             }
-            //           });
-            //         },
-            //       );
-            //     },
             //   ),
             // ),
+
+            // /// Employee List
+            Expanded(
+              child: GridView.builder(
+                padding: const EdgeInsets.only(
+                  top: 6,
+                  bottom: 5,
+                  left: 5,
+                  right: 5,
+                ),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: Responsive.getGridConfig(
+                    context,
+                    // isBottomSheet: false,
+                  ).itemCount,
+                  mainAxisSpacing: Responsive.getGridConfig(context).spacing,
+                  crossAxisSpacing: Responsive.getGridConfig(context).spacing,
+                  childAspectRatio: Responsive.getGridConfig(
+                    context,
+                  ).childAspectRatio,
+                ),
+                itemCount: employees.length,
+                itemBuilder: (context, index) {
+                  final emp = employees[index];
+                  return EmployeeSelectionCard(
+                    name: emp['name']!,
+                    department: emp['role']!,
+                    image: NetworkImage(emp['image']!),
+                    showDelete: true,
+                    // selectedColor: Colors.red,
+                    isSelected: selectedEmployeeIndexes.contains(index),
+                    onSelected: (value) {
+                      setState(() {
+                        if (selectedEmployeeIndexes.contains(index)) {
+                          selectedEmployeeIndexes.remove(index);
+                        } else {
+                          selectedEmployeeIndexes.add(index);
+                        }
+                      });
+                    },
+                  );
+                },
+              ),
+            ),
             // CommonCard(
             //   title: 'Reporting Person',
             //   bottomWidget: Row(
