@@ -13,7 +13,9 @@ class _ApiClient implements ApiClient {
     this._dio, {
     this.baseUrl,
     this.errorLogger,
-  });
+  }) {
+    baseUrl ??= 'https://master.my-company.app/mainApiEnc/';
+  }
 
   final Dio _dio;
 

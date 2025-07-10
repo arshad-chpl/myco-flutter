@@ -41,7 +41,6 @@ class _AddCustomerState extends State<AddCustomer> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      backgroundColor: AppTheme.getColor(context).surface,
       elevation: 0,
       title: CustomText(
         'Add Customer',

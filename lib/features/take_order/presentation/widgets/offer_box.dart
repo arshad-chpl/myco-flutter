@@ -39,7 +39,7 @@ class OfferBox extends StatelessWidget {
           child: Row(
             children: [
               Image.asset(
-                'visit/take_order/offer.png',
+                'assets/take_order/offer.png',
                 height: 0.02 * Responsive.getHeight(context),
               ),
               SizedBox(width: 0.02 * Responsive.getWidth(context)),

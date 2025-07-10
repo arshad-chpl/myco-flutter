@@ -159,7 +159,7 @@ class _MyCoTextfieldState extends State<MyCoTextfield> {
     prefixImageHeight: widget.prefixImageHeight,
     prefixImageWidth: widget.prefixImageWidth,
     maxLenght: widget.maxLenght,
-    textAlignment: widget.textAlignment,
+    textAlignment: widget.textAlignment??TextAlign.start,
     inputFormater: widget.inputFormater,
     border: widget.border,
     suffix: widget.suffix,
@@ -380,7 +380,7 @@ class TextFieldFormMobile extends StatelessWidget {
       keyboardType: textInputType,
       textAlignVertical: textAlignVertical,
       maxLength: maxLenght,
-      textAlign: textAlignment ?? TextAlign.center,
+      textAlign: textAlignment ?? TextAlign.start,
       inputFormatters: inputFormater,
       decoration: InputDecoration(
         counterText: '',

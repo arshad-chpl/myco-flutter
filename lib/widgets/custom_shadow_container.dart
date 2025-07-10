@@ -34,16 +34,13 @@ class CustomShadowContainer extends StatelessWidget {
   });
 
   @override
-  // ignore: prefer_expression_function_bodies
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          width: width ?? 0.2 * Responsive.getWidth(context),
-          height: height,
-    
-          child: Stack(
+  Widget build(BuildContext context) => SizedBox(
+      width: width ?? 70,
+      height: height,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Stack(
             children: [
               Center(
                 child: Container(
@@ -98,25 +95,13 @@ class CustomShadowContainer extends StatelessWidget {
               ),
             ],
           ),
-        ),
-        if (title != null)
-          SizedBox(
-            height:
-                imageTitleBetweenSpace ??
-                0.008 * Responsive.getHeight(context),
+          const SizedBox(height: 6),
+          CustomText(
+            title,
+            fontSize: 11 * Responsive.getResponsive(context),
+            fontWeight: FontWeight.w600,
           ),
-        if (title != null)
-          titleStyle != null
-              ? Text(title ?? '', style: titleStyle)
-              : CustomText(
-                  title ?? '',
-                  fontSize:
-                      titleFontSize ??
-                      14 * Responsive.getDashboardResponsiveText(context),
-                  fontWeight: titleWeight ?? FontWeight.w600,
-                  color: titleColor ?? AppTheme.getColor(context).onSurface,
-                ),
-      ],
+        ],
+      ),
     );
-  }
 }

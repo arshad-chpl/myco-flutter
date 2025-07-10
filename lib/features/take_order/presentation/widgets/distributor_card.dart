@@ -66,7 +66,7 @@ class DistributorCard extends StatelessWidget {
                   children: [
                     if (isHeaderIconEnabled!)
                       Image.asset(
-                        'visit/take_order/profile-circle.png',
+                        'assets/take_order/profile-circle.png',
                         height: 0.1 * Responsive.getHeight(context),
                         width: 0.06 * Responsive.getWidth(context),
                       ),

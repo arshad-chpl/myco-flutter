@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -41,7 +40,7 @@ class _SplashPageState extends State<SplashPage>
     setState(() {});
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed && _canNavigate) {
-        // _navigateNext();
+        _navigateNext();
       }
     });
     _preference.clearSecureStorageOnFreshInstall();
@@ -50,7 +49,7 @@ class _SplashPageState extends State<SplashPage>
   Future<void> _navigateNext() async {
     final isLoggedIn = await _preference.getLoginSession();
     if (!mounted) return;
-    context.go(isLoggedIn ?? false ? '/home' : RoutePaths.selectCompany);
+    context.go(isLoggedIn ?? false ? '/dashboard' : '/get-started');
   }
 
   @override
@@ -118,7 +117,7 @@ class _SplashPageState extends State<SplashPage>
           children: [
             Center(
               child: Lottie.asset(
-                'visit/splash/myco_splash.json',
+                'assets/splash/myco_splash.json',
                 controller: _controller,
                 onLoaded: (composition) {
                   _controller
@@ -135,9 +134,8 @@ class _SplashPageState extends State<SplashPage>
                 bottom: 0.05 * Responsive.getHeight(context),
               ),
               child: CustomText(
-                'Version ${version} (${buildNumber})',
+                'Version $version ($buildNumber)',
                 color: AppColors.white,
-                fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
             ),
