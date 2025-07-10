@@ -98,8 +98,8 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.dashboard,
-        name: RoutePaths.dashboard,
-        builder: (context, state) => DashBoardPage(),
+        name: 'dashboard',
+        builder: (context, state) => const DashBoardPage(),
       ),
 
       ShellRoute(
