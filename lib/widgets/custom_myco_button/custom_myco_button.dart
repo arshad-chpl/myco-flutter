@@ -246,7 +246,7 @@ class _ButtonContent extends StatelessWidget {
     List<Widget> children;
 
     if (imagePosition == AxisDirection.left) {
-      children = [imageWidget, SizedBox(width: gap), Text(title, style: style)];
+      children = [imageWidget, SizedBox(width: gap), Text(title, style: style,)];
     } else if (imagePosition == AxisDirection.right) {
       children = [Text(title, style: style), SizedBox(width: gap), imageWidget];
     } else if (imagePosition == AxisDirection.up) {

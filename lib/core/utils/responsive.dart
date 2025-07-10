@@ -64,11 +64,23 @@ double getResponsiveOnWidth(context) {
   return MediaQuery.of(context).size.width * 0.001;
 }
 
-double getResponsiveText(context) {
+/*double getResponsiveText(context) {
   if (Platform.isAndroid) {
     return getWidth(context) > 600 ? 1.5 : 0.8;
   } else {
     return getWidth(context) > 600 ? 1.5 : 0.9;
+  }
+}*/
+
+double getResponsiveText(BuildContext context) {
+  double width = MediaQuery.of(context).size.width;
+
+  if (kIsWeb) {
+    // Web-specific logic
+    return width > 600 ? 1.5 : 1.0;
+  } else {
+    // Mobile or Desktop
+    return width > 600 ? 1.5 : 0.9;
   }
 }
 

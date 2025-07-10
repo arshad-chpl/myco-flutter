@@ -30,6 +30,7 @@ import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bl
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
 import 'package:myco_flutter/features/visit/presentation/bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/visit/presentation/pages/my_visit_page.dart';
+import 'package:myco_flutter/features/visit/presentation/pages/reschedule_visit_page.dart';
 import 'package:myco_flutter/features/visits/presentation/pages/visit_report.dart';
 
 import 'route_paths.dart';
@@ -41,7 +42,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.myVisit,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],

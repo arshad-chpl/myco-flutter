@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -33,89 +32,89 @@ class _VisitPageState extends State<MyVisitPage> {
 
   final List<Map<String, dynamic>> visitList = [
     {
-      'title': "Mahakali Tractor ( RT4567 )",
-      'time': "01st April, 2025(09:45 AM) TO 01st April, 2025(12:45 PM)",
-      'status': "Visit Not Started",
+      'title': 'Mahakali Tractor ( RT4567 )',
+      'time': '01st April, 2025(09:45 AM) TO 01st April, 2025(12:45 PM)',
+      'status': 'Visit Not Started',
       'showExtraButtons': false,
-      "details": {
-        "Visit": "Physical",
-        "Visit Status": "Approved",
-        "Address":
-        "101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India"
+      'details': {
+        'Visit': 'Physical',
+        'Visit Status': 'Approved',
+        'Address':
+        '101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India'
             "\n(You are in Range)",
       },
-      "showWhatsapp": true,
-      "showShare": true,
-      "showDelete": true,
+      'showWhatsapp': true,
+      'showShare': true,
+      'showDelete': true,
     },
     {
-      "title": "Rajdeep Implements ( RJ2020 )",
-      "time": "02nd April, 2025(10:00 AM) TO 02nd April, 2025(01:00 PM)",
-      "status": "Visit Not Started",
+      'title': 'Rajdeep Implements ( RJ2020 )',
+      'time': '02nd April, 2025(10:00 AM) TO 02nd April, 2025(01:00 PM)',
+      'status': 'Visit Not Started',
       'showExtraButtons': false,
-      "details": {
-        "Visit": "Demo",
-        "Visit Status": "Pending",
-        "Address":
-        "Plot 22, Phase-3 GIDC, Vatva, Ahmedabad, Gujarat, 382445",
+      'details': {
+        'Visit': 'Demo',
+        'Visit Status': 'Pending',
+        'Address':
+        'Plot 22, Phase-3 GIDC, Vatva, Ahmedabad, Gujarat, 382445',
       },
-      "showWhatsapp": true,
-      "showShare": true,
-      "showDelete": true,
+      'showWhatsapp': true,
+      'showShare': true,
+      'showDelete': true,
     },
     {
-      "title": "Special Customer ( SC2025 )",
-      "time": "03rd April, 2025(11:00 AM) TO 03rd April, 2025(02:00 PM)",
-      "status": "Visit Not Started",
+      'title': 'Special Customer ( SC2025 )',
+      'time': '03rd April, 2025(11:00 AM) TO 03rd April, 2025(02:00 PM)',
+      'status': 'Visit Not Started',
       'showExtraButtons': true,
       'details': {
-        'Visit': "Service",
-        "Visit Status": "Approved",
-        "Address":
-        "SG Highway, Near Infocity, Gandhinagar, Gujarat",
+        'Visit': 'Service',
+        'Visit Status': 'Approved',
+        'Address':
+        'SG Highway, Near Infocity, Gandhinagar, Gujarat',
       },
-      "showWhatsapp": true,
-      "showShare": true,
+      'showWhatsapp': true,
+      'showShare': true,
     },
     {
-      "title": "Final Customer ( FC2025 )",
-      "time": "05th April, 2025(03:00 PM) TO 05th April, 2025(05:00 PM)",
-      "status": "Visit Started",
+      'title': 'Final Customer ( FC2025 )',
+      'time': '05th April, 2025(03:00 PM) TO 05th April, 2025(05:00 PM)',
+      'status': 'Visit Started',
       'showExtraButtons': true,
       'showStartedVisit': true,
       'isOutOfRange': true,
       'showImage': true,
       'details': {
-        'Visit': "Installation",
-        "Visit Status": "Approved",
-        "Address": "Bapunagar, Ahmedabad, Gujarat - 380024"
+        'Visit': 'Installation',
+        'Visit Status': 'Approved',
+        'Address': 'Bapunagar, Ahmedabad, Gujarat - 380024'
       },
-      "showWhatsapp": true,
-      "showShare": true,
+      'showWhatsapp': true,
+      'showShare': true,
     },
     {
-      "title": "Hidden Buttons Visit ( HB2025 )",
-      "time": "06th April, 2025(11:00 AM) TO 06th April, 2025(02:00 PM)",
-      "status": "Visit Not Started",
+      'title': 'Hidden Buttons Visit ( HB2025 )',
+      'time': '06th April, 2025(11:00 AM) TO 06th April, 2025(02:00 PM)',
+      'status': 'Visit Not Started',
       'showExtraButtons': true,
       'showStartedVisit': false,
       'isOutOfRange': true,
       'hideOrderButtons': true,
       'showImage': true,
       'details': {
-        'Visit': "Service",
-        "Visit Status": "Approved",
-        "Address": "101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India"
+        'Visit': 'Service',
+        'Visit Status': 'Approved',
+        'Address': '101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India'
       },
-      "showWhatsapp": true,
-      "showShare": true,
-      "showDelete": true,
+      'showWhatsapp': true,
+      'showShare': true,
+      'showDelete': true,
     },
     // 6th Container
     {
-      "title": "Late Visit End ( LV2025 )",
-      "time": "07th April, 2025(01:30 PM) TO 07th April, 2025(03:30 PM)",
-      "status": "Visit Started",
+      'title': 'Late Visit End ( LV2025 )',
+      'time': '07th April, 2025(01:30 PM) TO 07th April, 2025(03:30 PM)',
+      'status': 'Visit Started',
       'showExtraButtons': true,
       'showStartedVisit': true,
       'isOutOfRange': true,
@@ -123,18 +122,18 @@ class _VisitPageState extends State<MyVisitPage> {
       'isSixthContainer': true,
       'hideOrderButtons': true,
       'details': {
-        'Visit': "Inspection",
-        "Visit Status": "Approved",
-        "Address": "101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India"
+        'Visit': 'Inspection',
+        'Visit Status': 'Approved',
+        'Address': '101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India'
       },
-      "showWhatsapp": true,
-      "showShare": true,
+      'showWhatsapp': true,
+      'showShare': true,
     },
 //7th
     {
-      "title": "Late Visit End ( LV2025 )",
-      "time": "07th April, 2025(01:30 PM) TO 07th April, 2025(03:30 PM)",
-      "status": "Visit Started",
+      'title': 'Late Visit End ( LV2025 )',
+      'time': '07th April, 2025(01:30 PM) TO 07th April, 2025(03:30 PM)',
+      'status': 'Visit Started',
       'showExtraButtons': true,
       'showStartedVisit': true,
       'isOutOfRange': true,
@@ -144,18 +143,18 @@ class _VisitPageState extends State<MyVisitPage> {
       'hideOrderButtons': true,
       'requestedOn': '03:58 PM , 03 Jun 2025',
       'details': {
-        'Visit': "Inspection",
-        "Visit Status": "Approved",
-        "Address": "101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India"
+        'Visit': 'Inspection',
+        'Visit Status': 'Approved',
+        'Address': '101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India'
       },
-      "showWhatsapp": true,
-      "showShare": true,
+      'showWhatsapp': true,
+      'showShare': true,
     },
     // 8th
     {
-      "title": "Late Visit End ( LV2025 )",
-      "time": "07th April, 2025(01:30 PM) TO 07th April, 2025(03:30 PM)",
-      "status": "Visit Started",
+      'title': 'Late Visit End ( LV2025 )',
+      'time': '07th April, 2025(01:30 PM) TO 07th April, 2025(03:30 PM)',
+      'status': 'Visit Started',
       'showExtraButtons': true,
       'showStartedVisit': true,
       'isOutOfRange': true,
@@ -166,12 +165,12 @@ class _VisitPageState extends State<MyVisitPage> {
       'hideOrderButtons': true,
       'requestedOn': '03:58 PM , 03 Jun 2025',
       'details': {
-        'Visit': "Inspection",
-        "Visit Status": "Approved",
-        "Address": "Maninagar, Ahmedabad, Gujarat"
+        'Visit': 'Inspection',
+        'Visit Status': 'Approved',
+        'Address': 'Maninagar, Ahmedabad, Gujarat'
       },
-      "showWhatsapp": true,
-      "showShare": true,
+      'showWhatsapp': true,
+      'showShare': true,
     },
 
   ];
@@ -229,21 +228,12 @@ class _VisitPageState extends State<MyVisitPage> {
     final multiplier = getResponsiveText(context);
 
     return Scaffold(
-      backgroundColor: AppTheme.getColor(context).onPrimary,
       appBar: CustomAppbar(
-        appBarBackgoundColor: AppTheme.getColor(context).onPrimary,
-        elevation: 0,
-        centerTitle: false,
-        leading: IconButton(
-            onPressed: (){},
-            icon: SvgPicture.asset(
-            'assets/visit/svgs/backarrow.svg'
-          ),
-        ),
+        leading: BackButton(),
         title: CustomText(
           'Visit',
-          fontSize: 24 * multiplier,
-          fontWeight: FontWeight.w700,
+          fontSize: 22 * multiplier,
+          fontWeight: FontWeight.w600,
           color: AppTheme.getColor(context).onSurface,
         ),
         actions: [
@@ -256,13 +246,13 @@ class _VisitPageState extends State<MyVisitPage> {
                 CustomText(
                   'Latitude: 22.938088',
                   fontSize: 10 * multiplier,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                   color: AppTheme.getColor(context).primary,
                 ),
                 CustomText(
                   'Longitude: 72.938088',
                   fontSize: 10 * multiplier,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                   color: AppTheme.getColor(context).primary,
                 ),
               ],
@@ -282,16 +272,15 @@ class _VisitPageState extends State<MyVisitPage> {
                 selectedTabIndex = index;
               });
             },
-            selectedBgColors: const [AppColors.primary, AppColors.secondary],
+            selectedBgColors: [AppTheme.getColor(context).primary, AppTheme.getColor(context).secondary],
             unselectedBorderAndTextColor: tabBorderColor,
             tabBarBorderColor: tabBorderColor,
-            borderRadius: 35,
             isShadowBottomLeft: true,
           ),
           Expanded(
             child: selectedTabIndex == 0
-                ? buildMyVisitTab(screenSize, multiplier)
-                : buildOtherEmployeeVisitTab(
+                ? buildMyVisitTab(screenSize, multiplier) //visit page
+                : buildOtherEmployeeVisitTab( // other emp page
               context,
               screenSize,
               multiplier,
@@ -308,7 +297,6 @@ class _VisitPageState extends State<MyVisitPage> {
       ),
       floatingActionButton: selectedTabIndex == 0
           ? ExpandableFab(
-
         openIcon: Icons.add,
         closeIcon: Icons.close,
         actions: [
@@ -326,7 +314,7 @@ class _VisitPageState extends State<MyVisitPage> {
         imageSize: 66 * multiplier,
         innericonsize: 20 * multiplier,
         circleavataradius: 22 * multiplier,
-        innericonbgr: Colors.white,
+        innericonbgr: AppColors.white,
         margin: EdgeInsets.only(right: 10 * multiplier),
         padding: EdgeInsets.symmetric(horizontal: 14 * multiplier, vertical: 8 * multiplier),
       )
@@ -354,7 +342,7 @@ class _VisitPageState extends State<MyVisitPage> {
                       formattedDate,
                       fontSize: 16 * multiplier,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.black,
+                      color: AppTheme.getColor(context).onSurface,
                     ),
                   ),
                   Baseline(
@@ -362,8 +350,8 @@ class _VisitPageState extends State<MyVisitPage> {
                     baseline: 20 * multiplier,
                     child: Icon(
                       Icons.keyboard_arrow_down_rounded,
+                      color: AppTheme.getColor(context).onSurface,
                       size: 22 * multiplier,
-                      color: AppColors.black,
                     ),
                   ),
                 ],
@@ -379,21 +367,20 @@ class _VisitPageState extends State<MyVisitPage> {
             controller: searchController,
             focusNode: searchFocus,
             hintText: 'Search with Customer',
-            fillColor: Colors.white,
+            fillColor: AppTheme.getColor(context).onPrimary,
             boarderRadius: 10,
             contentPadding: EdgeInsets.symmetric(vertical: 12 * multiplier),
             prefix: Padding(
               padding: EdgeInsets.only(left: 12 * multiplier, right: 8 * multiplier),
               child: Icon(
                 CupertinoIcons.search,
-                color: AppColors.primary,
+                color: AppTheme.getColor(context).primary,
                 size: 24 * multiplier,
               ),
             ),
             typingtextStyle: TextStyle(fontSize: 14 * multiplier),
             hintTextStyle: TextStyle(
               fontSize: 14 * multiplier,
-              color: AppColors.textPrimary,
             ),
             textAlignment: TextAlign.start,
             border: OutlineInputBorder(
@@ -410,7 +397,7 @@ class _VisitPageState extends State<MyVisitPage> {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) =>
-              buildVisitCard(context, visitList[index], index, screenSize),
+              buildVisitCard(context, visitList[index], index, screenSize,visitList.length,),
         ),
       ],
     ),
@@ -418,7 +405,7 @@ class _VisitPageState extends State<MyVisitPage> {
 
   Widget buildAutoExpenseCard(double multiplier) => CommonCard(
       title: 'Auto Expense Category',
-      headerColor: AppColors.myCoCyan,
+      headerColor: AppTheme.getColor(context).tertiary,
       borderColor: AppTheme.getColor(context).outline,
       showHeaderPrefixIcon: false,
       showBlackShadowInChild: true,
@@ -440,7 +427,7 @@ class _VisitPageState extends State<MyVisitPage> {
                 'Mukund - Visit Expense',
                 fontSize: 12 * multiplier,
                 fontWeight: FontWeight.w700,
-                color: AppColors.black,
+                color: AppTheme.getColor(context).onSurface,
               ),
             ),
           ),
@@ -457,10 +444,9 @@ class _VisitPageState extends State<MyVisitPage> {
           padding: EdgeInsets.all(8 * multiplier),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15 * multiplier),
-            color: Util.applyOpacity(AppColors.primary, 0.25),
+            color: Util.applyOpacity(AppTheme.getColor(context).primary, 0.25),
           ),
           child: Icon(icon, size: 22 * multiplier),
         ),
       );
-
 }

@@ -4,10 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/features/visit/presentation/widgets/get_common_row.dart';
+import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 Widget buildOtherEmployeeVisitTab(
@@ -28,7 +29,7 @@ Widget buildOtherEmployeeVisitTab(
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            dateArrowButton(Icons.chevron_left_rounded, goToPreviousDate, multiplier),
+            dateArrowButton(Icons.chevron_left_rounded, goToPreviousDate, multiplier,context),
             GestureDetector(
               onTap: selectDateFromPicker,
               child: Row(
@@ -40,7 +41,7 @@ Widget buildOtherEmployeeVisitTab(
                       formattedDate,
                       fontSize: 16 * multiplier,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.black,
+                      color: AppTheme.getColor(context).onSurface,
                     ),
                   ),
                   Baseline(
@@ -49,13 +50,13 @@ Widget buildOtherEmployeeVisitTab(
                     child: Icon(
                       Icons.keyboard_arrow_down_rounded,
                       size: 22 * multiplier,
-                      color: AppColors.black,
+                      color: AppTheme.getColor(context).onSurface,
                     ),
                   ),
                 ],
               ),
             ),
-            dateArrowButton(Icons.chevron_right_rounded, goToNextDate, multiplier),
+            dateArrowButton(Icons.chevron_right_rounded, goToNextDate, multiplier,context),
           ],
         ),
 
@@ -115,7 +116,7 @@ Widget buildOtherEmployeeVisitTab(
                     children: [
                       CustomText(
                         'Visit Added For',
-                        color: AppColors.black,
+                        color: AppTheme.getColor(context).onSurface,
                         fontWeight: FontWeight.w600,
                         fontSize: 14 * multiplier,
                       ),
@@ -155,7 +156,6 @@ Widget buildOtherEmployeeVisitTab(
                       'QA',
                       color: AppColors.textfieldBorder,
                       fontSize: 12 * multiplier,
-                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
@@ -168,24 +168,21 @@ Widget buildOtherEmployeeVisitTab(
                   ),
                 ),
 
-                getCommonRow(context, title: "Visit", value: "Physical", onTap: () {}),
-                SizedBox(height: screenSize.height * 0.015),
-                getCommonRow(context, title: "Visit Type", value: "Visit Type", onTap: () {}),
-                SizedBox(height: screenSize.height * 0.015),
-                getCommonRow(context, title: "Visit Purpose", value: "Visit Purpose", onTap: () {}),
-                SizedBox(height: screenSize.height * 0.015),
+                getCommonRow(context, title: 'Visit', value: 'Physical', onTap: () {}, textColor: AppTheme.getColor(context).outline),
+                getCommonRow(context, title: 'Visit Type', value: 'Visit Type', onTap: () {},textColor: AppTheme.getColor(context).outline),
+                getCommonRow(context, title: 'Visit Purpose', value: 'Visit Purpose', onTap: () {},textColor: AppTheme.getColor(context).outline),
                 getCommonRow(
                   context,
-                  title: "Address",
-                  value: "5XJ6F9J, Haripura, Gujarat 394325, India",
+                  title: 'Address',
+                  value: '5XJ6F9J, Raipur, Gujarat 394325, India',
                   onTap: () {},
+                    textColor: AppTheme.getColor(context).onSurface
                 ),
 
                 SizedBox(height: screenSize.height * 0.02),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // Icons
                     Flexible(
@@ -218,13 +215,11 @@ Widget buildOtherEmployeeVisitTab(
                           borderColor: AppColors.spanishYellow,
                           borderWidth: 1.2,
                           backgroundColor: Colors.transparent,
-                          wantBorder: true,
                       ),
                     ),
                     ),
                   ],
                 ),
-
               ],
             ),
           ),
@@ -234,11 +229,15 @@ Widget buildOtherEmployeeVisitTab(
   );
 
 //arrow btn for date
-Widget dateArrowButton(IconData icon, VoidCallback onTap, double multiplier) => InkWell(
-    onTap: onTap,
-    child: Icon(
-      icon,
-      size: 30 * multiplier,
-      color: AppColors.primary,
-    ),
-  );
+Widget dateArrowButton(IconData icon, VoidCallback onTap, double multiplier,BuildContext context) =>
+    GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(8 * multiplier),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15 * multiplier),
+          color: Util.applyOpacity(AppTheme.getColor(context).primary, 0.25),
+        ),
+        child: Icon(icon, size: 22 * multiplier),
+      ),
+    );

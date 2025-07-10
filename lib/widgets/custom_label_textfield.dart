@@ -171,7 +171,7 @@ class LabeledTextField extends StatelessWidget {
             iconWidth: iconWidth,
             image1: image1,
             image2: image2,
-            isSuffixIconOn: isSuffixIconOn!,
+            isSuffixIconOn: isSuffixIconOn?? false,
             labelTextStyle: labelTextStyle,
             onClick: onClick,
             onTap1: onTap1,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -53,7 +54,7 @@ Row getCommonRow(
           ],
         ),
       ),
-      const CustomText(':'),
+       const CustomText(':',),
       SizedBox(width: spacing),
       Expanded(
         flex: 9,
