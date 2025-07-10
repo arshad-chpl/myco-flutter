@@ -100,9 +100,7 @@ class SearchCompanyScreen extends StatelessWidget {
                     preFixImage: 'assets/search_society/company_icon.png',
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(
-                        color: Color(0xFF98A2B3),
-                      ),
+                      borderSide: BorderSide(color: Color(0xFF98A2B3)),
                     ),
                     height: 0.02 * Responsive.getHeight(context),
                     // These properties make it look like a button
