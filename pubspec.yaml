@@ -113,6 +113,7 @@ flutter:
     - assets/visit/svgs/
     - assets/media_picker/
     - assets/employees/
+    - assets/stepper/
     - assets/lost_and_found/
     - assets/add_expense/
     - assets/face_detection/

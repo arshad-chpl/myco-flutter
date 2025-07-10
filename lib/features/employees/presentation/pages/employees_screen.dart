@@ -6,9 +6,11 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 import 'package:myco_flutter/features/employees/presentation/widgets/employee_card.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
+import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
+import 'package:myco_flutter/widgets/custom_vertical_stepper.dart';
 
 class EmployeesScreen extends StatefulWidget {
   const EmployeesScreen({super.key});
@@ -158,47 +160,101 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
               ),
             ),
             const SizedBox(height: 10),
-
-            /// Employee List
+            const Text('Punch in-out Demo'),
             Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.only(
-                  top: 6,
-                  bottom: 5,
-                  left: 5,
-                  right: 5,
+              child: SingleChildScrollView(
+                child: CustomVerticalStepper(
+                  steps: [
+                    StepData(
+                      title: 'PUNCH IN',
+                      // title: '',
+                      subTitle: '10:25:06 AM',
+                      status: StepStatus.pending,
+                      // isStepIconShow: false,
+                      customStatusIcon: const Icon(
+                        Icons.lunch_dining,
+                        color: Colors.white,
+                      ),
+                      subSteps: [
+                        SubStepData(
+                          title: 'Lunch Break',
+                          subTitle: '01:32:56 PM - 02:01:46 PM',
+                          trailingTitle: '28 min 50 sec',
+                          status: StepStatus.pending,
+                          // customStatusIcon: Icon(Icons.lunch_dining),
+                          // isSubStepIconShow: false,
+                        ),
+                        SubStepData(
+                          title: 'Tea Break',
+                          subTitle: '06:05:02 PM - 06:07:51 PM',
+                          trailingTitle: '2 min 49 sec',
+                          status: StepStatus.pending,
+                          // isSubStepIconShow: false,
+                        ),
+                      ],
+                    ),
+                    StepData(
+                      title: 'PUNCH OUT',
+                      subTitle: '06:08:39 PM',
+                      trillingTitle: '7 hour 43 min 33 sec',
+                      status: StepStatus.pending,
+                      // isStepIconShow: false,
+                    ),
+                    StepData(
+                      title: 'PUNCH IN & OUT',
+                      subTitle: '06:08:39 PM',
+                      trillingTitle: '1 min 18 sec',
+                      status: StepStatus.approved,
+                      // isStepIconShow: false,
+                    ),
+                  ],
                 ),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: Responsive.getGridConfig(context).itemCount,
-                  mainAxisSpacing: Responsive.getGridConfig(context).spacing,
-                  crossAxisSpacing: Responsive.getGridConfig(context).spacing,
-                  childAspectRatio: Responsive.getGridConfig(
-                    context,
-                  ).childAspectRatio,
-                ),
-                itemCount: employees.length,
-                itemBuilder: (context, index) {
-                  final emp = employees[index];
-                  return EmployeeSelectionCard(
-                    name: emp['name']!,
-                    department: emp['role']!,
-                    image: NetworkImage(emp['image']!),
-                    showDelete: true,
-                    // selectedColor: Colors.red,
-                    isSelected: selectedEmployeeIndexes.contains(index),
-                    onSelected: (value) {
-                      setState(() {
-                        if (selectedEmployeeIndexes.contains(index)) {
-                          selectedEmployeeIndexes.remove(index);
-                        } else {
-                          selectedEmployeeIndexes.add(index);
-                        }
-                      });
-                    },
-                  );
-                },
               ),
             ),
+
+            // /// Employee List
+            // Expanded(
+            //   child: GridView.builder(
+            //     padding: const EdgeInsets.only(
+            //       top: 6,
+            //       bottom: 5,
+            //       left: 5,
+            //       right: 5,
+            //     ),
+            //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //       crossAxisCount: Responsive.getGridConfig(
+            //         context,
+            //         // isBottomSheet: false,
+            //       ).itemCount,
+            //       mainAxisSpacing: Responsive.getGridConfig(context).spacing,
+            //       crossAxisSpacing: Responsive.getGridConfig(context).spacing,
+            //       childAspectRatio: Responsive.getGridConfig(
+            //         context,
+            //       ).childAspectRatio,
+            //     ),
+            //     itemCount: employees.length,
+            //     itemBuilder: (context, index) {
+            //       final emp = employees[index];
+            //       return EmployeeSelectionCard(
+            //         name: emp['name']!,
+            //         department: emp['role']!,
+            //         image: NetworkImage(emp['image']!),
+            //         showDelete: true,
+            //         // selectedColor: Colors.red,
+            //         isSelected: selectedEmployeeIndexes.contains(index),
+            //         onSelected: (value) {
+            //           setState(() {
+            //             if (selectedEmployeeIndexes.contains(index)) {
+            //               selectedEmployeeIndexes.remove(index);
+            //             } else {
+            //               selectedEmployeeIndexes.add(index);
+            //             }
+            //           });
+            //         },
+            //       );
+            //     },
+            //   ),
+            // ),
             // CommonCard(
             //   title: 'Reporting Person',
             //   bottomWidget: Row(

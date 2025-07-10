@@ -67,21 +67,29 @@ class Responsive {
   static double getDashboardResponsiveText(BuildContext context) =>
       getWidth(context) > 600 ? 1.2 : 1;
 
-  static GridConfig getGridConfig(BuildContext context) {
-    final screenWidth = getWidth(context);
+  static GridConfig getGridConfig(
+    BuildContext context, {
+    double? screenWide,
+    bool? isBottomSheet,
+  }) {
+    final screenWidth = screenWide ?? getWidth(context);
     final spacing = 12.0 * getResponsive(context);
 
     final itemCount = screenWidth > 1200
-        ? 12
+        ? 10
         : screenWidth > 900
-        ? 9
+        ? 7
         : screenWidth > 600
-        ? 6
+        ? 5
         : 3;
 
     final itemWidth = (screenWidth - (spacing * (itemCount - 1))) / itemCount;
 
-    final itemHeight = screenWidth > 600 ? 180.0 : 150.0;
+    // final itemHeight = screenWidth > 600 ? 180.0 : 150.0
+    // final itemHeight = screenWidth > 600 ? 120.0 : screenWidth > 470 ? 170.0 : 160.0;
+    final itemHeight = screenWidth > 600
+        ? (isBottomSheet == true ? 120.0 : 180.0)
+        : (screenWidth > 470 ? 170.0 : 160.0);
 
     final childAspectRatio = itemWidth / itemHeight;
 
