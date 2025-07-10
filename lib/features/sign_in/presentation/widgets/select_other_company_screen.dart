@@ -76,6 +76,51 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
               ),
             ],
           ),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
+          Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CustomText(
+                  "Sign in",
+                  fontSize: 30 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w900,
+                  color: AppTheme.getColor(context).onSurface,
+                ),
+                CustomText(
+                  "Welcome To Delta Corporation",
+                  fontSize: 20 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w800,
+                  color: AppTheme.getColor(context).onSurface,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
+          CustomText(
+            "Phonenumber",
+            fontSize: 16 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w600,
+            color: AppTheme.getColor(context).onSurface,
+          ),
+          PhoneNumberField(
+            selectedCountry: selectedCountry,
+            countries: countryMap.keys.toList(),
+            onCountryChanged: (value, index) {
+              if (value != null) {
+                setState(() {
+                  selectedCountry = value;
+                });
+              }
+            },
+            countryDialCodes: countryMap,
+            phoneController: phoneController,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                15 * Responsive.getResponsive(context),
+              ),
+              border: Border.all(color: AppColors.gray5),
+              color: AppTheme.getColor(context).onPrimary,
         ),
         SizedBox(height: 0.015 * Responsive.getHeight(context)),
         Center(
