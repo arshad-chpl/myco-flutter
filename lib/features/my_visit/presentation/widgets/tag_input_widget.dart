@@ -25,10 +25,7 @@ class TagInputField extends StatefulWidget {
 
 class _TagInputFieldState extends State<TagInputField> {
   @override
-  Widget build(BuildContext context) {
-    double multiplier = Responsive.getResponsiveText(context);
-
-    return Container(
+  Widget build(BuildContext context) => Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       margin: const EdgeInsets.only(top: 6),
       decoration: BoxDecoration(
@@ -44,7 +41,6 @@ class _TagInputFieldState extends State<TagInputField> {
         children: [
           Expanded(
             child: Wrap(
-              alignment: WrapAlignment.start,
               spacing: 3,
               runSpacing: 4,
               crossAxisAlignment: WrapCrossAlignment.center,
@@ -75,7 +71,7 @@ class _TagInputFieldState extends State<TagInputField> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             GestureDetector(
                               onTap: () {
                                 widget.onRemove(tag);
@@ -94,8 +90,8 @@ class _TagInputFieldState extends State<TagInputField> {
                   ),
                 ),
                 ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    minWidth: 50,
+                  constraints: BoxConstraints(
+                    minWidth: Responsive.getResponsiveText(context) * 14,
                     maxWidth: 120,
                   ),
                   child: TextField(
@@ -149,5 +145,4 @@ class _TagInputFieldState extends State<TagInputField> {
         ],
       ),
     );
-  }
 }
