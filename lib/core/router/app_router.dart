@@ -18,6 +18,8 @@ import 'package:myco_flutter/features/employees/presentation/pages/employees_scr
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
+import 'package:myco_flutter/features/language_selector/presentation/bloc/language_bloc.dart';
+import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
@@ -52,7 +54,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.splash,
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -61,8 +63,19 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.splash,
         name: 'splash',
-        builder: (context, state) => BlocProvider(
-          create: (_) => GetIt.I<SplashBloc>()..add(LoadSplash()),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => GetIt.I<SplashBloc>()..add(LoadSplash()),
+            ),
+            BlocProvider(
+              create: (_) {
+                return GetIt.I<LanguageBloc>()
+                  ..add(LoadLanguageToPreferences());
+              },
+              lazy: false,
+            ),
+          ],
           child: const SplashPage(),
         ),
       ),

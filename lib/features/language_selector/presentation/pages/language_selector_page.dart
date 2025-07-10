@@ -41,11 +41,11 @@ class LanguageSelectorPage extends StatelessWidget {
                         groupValue: state.selected,
                         onChanged: (Language? value) {
                           if (value != null) {
-                            context.read<LanguageBloc>().add(SelectLanguage(value));
+                            context.read<LanguageBloc>().add(SelectLanguage(selectedLanguage:value));
                           }
                         },
                       ),
-                      onTap: () => context.read<LanguageBloc>().add(SelectLanguage(lang)),
+                      onTap: () => context.read<LanguageBloc>().add(SelectLanguage(selectedLanguage:lang)),
                     ),
                   );
                 },
