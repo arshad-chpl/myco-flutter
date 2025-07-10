@@ -8,6 +8,7 @@ import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bl
 import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -18,14 +19,7 @@ class DistributorVisitorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
-    appBar: AppBar(
-      backgroundColor: AppTheme.getColor(context).surface,
-      title: CustomText(
-        'Mahakali Tractors (RT43575)',
-        fontSize: 20 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-      ),
-    ),
+    appBar: CustomAppbar(appBarText: 'Mahakali Tractors (RT43575)'),
     body: SingleChildScrollView(
       child: Container(
         height: Responsive.getHeight(context),

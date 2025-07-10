@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
-// if we do not implement the preferredSizeWidget then it will not let our custom app to be place at appbar:
-// ignore: must_be_immutable
 class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final double height;
   @override
@@ -21,7 +20,6 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final Color? shadowColor;
   final Color? surfaceTintColor;
   final ShapeBorder? shape;
-  final Color? backgroundColor;
   final Color? foregroundColor;
   final IconThemeData? iconTheme;
   final IconThemeData? actionsIconTheme;
@@ -59,7 +57,6 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
     this.shadowColor,
     this.surfaceTintColor,
     this.shape,
-    this.backgroundColor,
     this.foregroundColor,
     this.iconTheme,
     this.actionsIconTheme,
@@ -95,39 +92,26 @@ class _CustomAppbarState extends State<CustomAppbar> {
   Widget build(BuildContext context) => AppBar(
     title:
         widget.title ??
-        Text(
+        CustomText(
           widget.appBarText,
-          style: TextStyle(
-            fontSize: widget.size,
-            fontWeight: widget.fontWeight,
-            color:
-                widget.appbartxtcolor ?? AppTheme.getColor(context).onPrimary,
-          ),
+          fontSize: widget.size ?? 19 * Responsive.getResponsiveText(context),
+          fontWeight: widget.fontWeight ?? FontWeight.w700,
+          color: widget.appbartxtcolor ?? AppTheme.getColor(context).onSurface,
         ),
-
     backgroundColor:
         widget.appBarBackgoundColor ?? AppTheme.getColor(context).surface,
-    leading:
-        widget.leading ??
-        (widget.automaticallyImplyLeading
-            ? IconButton(
-                icon: Image.asset(
-                  'assets/icons/sort.png',
-                  color: AppTheme.getColor(context).onSurface,
-                ),
-                onPressed: () {},
-              )
-            : null),
+    leading: widget.leading ?? const BackButton(),
 
     ///remove padding if leading is null
     surfaceTintColor: widget.surfaceTintColor,
     elevation: widget.elevation,
     shadowColor: widget.shadowColor,
     shape: widget.shape,
-    toolbarHeight: widget.toolbarHeight,
+    toolbarHeight:
+        widget.toolbarHeight ?? 0.045 * Responsive.getHeight(context),
     toolbarOpacity: widget.toolbarOpacity,
     titleTextStyle: widget.titleTextStyle,
-    centerTitle: widget.centerTitle,
+    centerTitle: widget.centerTitle ?? false,
     toolbarTextStyle: widget.toolbarTextStyle,
     foregroundColor: widget.foregroundColor,
     clipBehavior: widget.clipBehavior,
@@ -136,12 +120,12 @@ class _CustomAppbarState extends State<CustomAppbar> {
     bottomOpacity: widget.bottomOpacity,
     flexibleSpace: widget.flexibleSpace,
     excludeHeaderSemantics: widget.excludeHeaderSemantics,
-    titleSpacing: widget.titleSpacing,
+    titleSpacing: widget.titleSpacing ?? 0.04 * Responsive.getWidth(context),
     primary: widget.primary,
     systemOverlayStyle:
         widget.systemOverlayStyle ??
         SystemUiOverlayStyle(
-          statusBarColor: AppTheme.getColor(context).primary,
+          statusBarColor: AppTheme.getColor(context).surface,
         ),
     forceMaterialTransparency: widget.forceMaterialTransparency,
     key: widget.key,
