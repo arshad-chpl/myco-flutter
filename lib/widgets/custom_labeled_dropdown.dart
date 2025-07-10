@@ -27,6 +27,14 @@ class LabeledDropdown<T> extends StatelessWidget {
   final double? popupElevation;
   final double? borderRadius;
   final double? spacing;
+  final Color? textColor;
+  final FontWeight? textFontweight;
+  final double? textFontSize;
+  final TextDecoration? textDecoration;
+  final Color? textDecorationColor;
+  final TextAlign? textAlign;
+  final int? textMaxLine;
+  final TextOverflow? textOverflow;
 
   const LabeledDropdown({
     super.key,
@@ -51,7 +59,7 @@ class LabeledDropdown<T> extends StatelessWidget {
     this.popupShape,
     this.colorBackground,
     this.popupElevation,
-    this.borderRadius,
+    this.borderRadius, this.textColor, this.textFontweight, this.textFontSize, this.textDecoration, this.textDecorationColor, this.textAlign, this.textMaxLine, this.textOverflow,
   });
 
   @override
@@ -62,9 +70,14 @@ class LabeledDropdown<T> extends StatelessWidget {
         children: [
           CustomText(
             label,
-            color: AppColors.textGray,
-            fontSize: 16 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.bold,
+            color:textColor?? AppColors.textGray,
+            fontSize:textFontSize?? 16 * Responsive.getResponsiveText(context),
+            fontWeight:textFontweight?? FontWeight.bold,
+            decoration: textDecoration,
+            textAlign: textAlign,
+            decorationColor: textDecorationColor,
+            maxLines: textMaxLine,
+            overflow: textOverflow,
           ),
           if (isRequired)
             CustomText(

@@ -44,7 +44,7 @@ class CustomLabelGifs extends StatelessWidget {
         horizontal: paddingFactor ?? 14 * Responsive.getResponsive(context),
       ),
       height: heightFactor ?? 0.05 * Responsive.getHeight(context),
-      width: widthFactor ?? 0.9 * Responsive.getWidth(context),
+      width: widthFactor ?? 0.95 * Responsive.getWidth(context),
       decoration: BoxDecoration(
         color: backgroundColor ?? AppTheme.getColor(context).secondary,
         borderRadius: BorderRadius.circular(borderRadiusValue),
