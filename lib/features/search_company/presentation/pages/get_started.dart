@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/image_animation.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -19,7 +18,7 @@ class GetStarted extends StatelessWidget {
           end: Alignment.center,
           colors: [
             AppTheme.getColor(context).primary, // Light Sky Blue
-            AppTheme.getColor(context).onPrimary, // Light Teal
+            AppTheme.getColor(context).surface, // Light Teal
             // Light Blue
           ],
         ),

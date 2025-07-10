@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -169,7 +170,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                               ),
                             ),
                             // TODO: replace with actual text
-                            child: CustomText(
+                            child: const CustomText(
                               'Request Your Society',
                               // LanguageManager().get('request_your_society'),
                               color: Colors.white,
@@ -228,7 +229,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
 
                           preference.setLoginSession(true);
 
-                          context.pushNamed('login');
+                          context.pushNamed(RoutePaths.dashboard);
 
                           //   setState(() => _selectedCompany = company);
                         },
@@ -248,8 +249,8 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                       // Replace with your actual image path
                       Image.asset(AppAssets.searchCompany, height: 180),
                       const SizedBox(height: 20),
-                      CustomText(
-                        'Search Your Society',
+                      const CustomText(
+                        'Search Your Company',
                         // LanguageManager().get('search_your_society'),
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
