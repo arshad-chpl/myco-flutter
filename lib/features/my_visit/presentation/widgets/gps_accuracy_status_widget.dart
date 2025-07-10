@@ -40,7 +40,7 @@ class _GpsAccuracyStatusWidgetState extends State<GpsAccuracyStatusWidget> {
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: 6 * Responsive.getResponsive(context),
+              horizontal: 13 * Responsive.getResponsive(context),
               vertical: 1 * Responsive.getResponsive(context),
             ),
             child: CustomText(

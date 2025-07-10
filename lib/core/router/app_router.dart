@@ -53,7 +53,7 @@ class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     // initialLocation: RoutePaths.getStarted,
-    initialLocation: RoutePaths.dashboard,
+    initialLocation: RoutePaths.faceDetection,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],

@@ -182,6 +182,8 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(11),
                         child: LinearProgressIndicator(
+                          borderRadius: BorderRadius.horizontal(
+                              right: Radius.circular(13 * Responsive.getResponsive(context))),
                           value: state.progress,
                           backgroundColor: const Color.fromARGB(255, 220, 239, 255),
                           color: AppTheme.getColor(context).primary,
