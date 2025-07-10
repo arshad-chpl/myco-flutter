@@ -58,7 +58,7 @@ class MyCoButton extends StatelessWidget {
     return _MyCoButtonMobile(
       onTap: enabled ? onTap : null,
       title: title,
-      height: height ?? 0.06 * getHeight(context),
+      height: height ?? 0.06 * Responsive.getHeight(context),
       width: width,
       backgroundColor: backgroundColor,
       decoration: decoration,
@@ -142,15 +142,15 @@ class _MyCoButtonMobile extends StatelessWidget {
           fontFamily: Util.getFontFamily(fontWeight ?? FontWeight.w500),
         );
 
-    final double radius = boarderRadius ?? MyCoButtonTheme.borderRadius;
+    final double radius = boarderRadius ?? MyCoButtonTheme.borderRadius??8;
 
     return InkWell(
       onTap: onTap,
       child: Stack(
         children: [
           Container(
-            height: height ?? 0.04 * getHeight(context),
-            width: width ?? 0.94 * getWidth(context),
+            height: height ?? 0.04 * Responsive.getHeight(context),
+            width: width ?? 0.94 * Responsive.getWidth(context),
             decoration:
                 decoration ??
                 BoxDecoration(

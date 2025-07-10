@@ -30,11 +30,12 @@ class _MyTeamLeavesScreenState extends State<MyTeamLeavesScreen> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          spacing: 0.015 * getHeight(context),
+          spacing: 0.015 * Responsive.getHeight(context),
           children: [
             ExpandableCommonCard(
               headerColor: AppColors.primary,
-              title: 'Sick Leave (Total 7)', bottomWidget: Container(),
+              title: 'Sick Leave (Total 7)',
+              bottomWidget: Container(),
             ),
           ],
         ),

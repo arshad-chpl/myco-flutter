@@ -49,7 +49,7 @@
 //           CustomText(
 //             'Lost & Found',
 //
-//             fontSize: 18 * getResponsive(context),
+//             fontSize: 18 * Responsive.getResponsive(context),
 //             fontWeight: FontWeight.w700,
 //           ),
 //         ],
@@ -146,7 +146,7 @@
 //                                       isShadowBottomLeft: true,
 //                                       child: CustomText(
 //                                         status,
-//                                         fontSize: 10 * getResponsive(context),
+//                                         fontSize: 10 * Responsive.getResponsive(context),
 //                                         fontWeight: FontWeight.w500,
 //                                         color: AppColors.white,
 //                                       ),
@@ -165,7 +165,7 @@
 //                               maxLines: 1,
 //                               overflow: TextOverflow.ellipsis,
 //                               fontWeight: FontWeight.w600,
-//                               fontSize: 16 * getResponsive(context),
+//                               fontSize: 16 * Responsive.getResponsive(context),
 //                               color: AppColors.textPrimary,
 //                             ),
 //                           ),
@@ -177,7 +177,7 @@
 //                               'dd MMM yyyy (EEE)',
 //                             ).format(DateTime.now()),
 //                             fontWeight: FontWeight.w400,
-//                             fontSize: 12 * getResponsive(context),
+//                             fontSize: 12 * Responsive.getResponsive(context),
 //                             color: AppColors.textPrimary,
 //                           ),
 //                         ),
@@ -266,7 +266,7 @@ class _LostAndFoundState extends State<LostAndFound> {
           ),
           CustomText(
             'Lost & Found',
-            fontSize: 18 * getResponsive(context),
+            fontSize: 18 * Responsive.getResponsive(context),
             fontWeight: FontWeight.w700,
           ),
         ],
@@ -352,7 +352,8 @@ class _LostAndFoundState extends State<LostAndFound> {
                                   isShadowBottomLeft: true,
                                   child: CustomText(
                                     item.status,
-                                    fontSize: 10 * getResponsive(context),
+                                    fontSize:
+                                        10 * Responsive.getResponsive(context),
                                     fontWeight: FontWeight.w500,
                                     color: AppColors.white,
                                   ),
@@ -369,7 +370,7 @@ class _LostAndFoundState extends State<LostAndFound> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               fontWeight: FontWeight.w600,
-                              fontSize: 16 * getResponsive(context),
+                              fontSize: 16 * Responsive.getResponsive(context),
                               color: AppColors.textPrimary,
                             ),
                           ),
@@ -381,7 +382,7 @@ class _LostAndFoundState extends State<LostAndFound> {
                               'dd MMM yyyy (EEE)',
                             ).format(DateTime.now()),
                             fontWeight: FontWeight.w400,
-                            fontSize: 12 * getResponsive(context),
+                            fontSize: 12 * Responsive.getResponsive(context),
                             color: AppColors.textPrimary,
                           ),
                         ),
@@ -453,7 +454,7 @@ class _LostAndFoundState extends State<LostAndFound> {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     double res = getResponsive(context);
+//     double res = Responsive.getResponsive(context);
 //
 //     return Scaffold(
 //       backgroundColor: AppColors.scaffoldBackgroundColor,

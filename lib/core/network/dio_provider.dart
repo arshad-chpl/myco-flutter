@@ -5,7 +5,7 @@ import 'package:myco_flutter/constants/constants.dart';
 Dio createDio(credentials) {
   final dio = Dio(
     BaseOptions(
-      baseUrl: VariableBag.mainURL, // Replace with your API base URL
+      baseUrl: VariableBag.mainURL,
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
       headers: {'Content-Type': 'application/json'},

@@ -37,9 +37,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
           shape: const CircleBorder(),
           child: Image.asset(
             state.isMenuSelected
-                ? 'assets/images/menu-selected.png'
-                : 'assets/images/menu.png',
-            height: 0.04 * getHeight(context),
+                ? 'visit/images/menu-selected.png'
+                : 'visit/images/menu.png',
+            height: 0.04 * Responsive.getHeight(context),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -48,7 +48,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           alignment: Alignment.bottomCenter,
           children: [
             CustomPaint(
-              size: Size(double.infinity, 0.09 * getHeight(context)),
+              size: Size(double.infinity, 0.09 * Responsive.getHeight(context)),
               // painter: RPSCustomPainter(),
               painter: BNBCustomPainter(),
             ),
@@ -59,43 +59,45 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   index: 0,
                   text: 'Home',
                   isSelected: state.currentIndex == 0,
-                  imagePath: 'assets/images/home.png',
-                  selectedImagePath: 'assets/images/home-selected.png',
+                  imagePath: 'visit/images/home.png',
+                  selectedImagePath: 'visit/images/home-selected.png',
                 ),
                 navItem(
                   context,
                   index: 1,
                   text: 'Community',
                   isSelected: state.currentIndex == 1,
-                  imagePath: 'assets/images/blog.png',
-                  selectedImagePath: 'assets/images/blog-selected.png',
+                  imagePath: 'visit/images/blog.png',
+                  selectedImagePath: 'visit/images/blog-selected.png',
                 ),
-                SizedBox(width: 0.07 * getWidth(context)),
+                SizedBox(width: 0.07 * Responsive.getWidth(context)),
                 Padding(
-                  padding: EdgeInsets.only(top: 0.04 * getHeight(context)),
+                  padding: EdgeInsets.only(
+                    top: 0.04 * Responsive.getHeight(context),
+                  ),
                   child: CustomText(
                     'Menu',
                     color: AppTheme.getColor(context).onSurfaceVariant,
                     fontWeight: FontWeight.w700,
-                    fontSize: 14 * getResponsiveText(context),
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                   ),
                 ),
-                SizedBox(width: 0.03 * getWidth(context)),
+                SizedBox(width: 0.03 * Responsive.getWidth(context)),
                 navItem(
                   context,
                   index: 2,
                   text: 'Chat',
                   isSelected: state.currentIndex == 2,
-                  imagePath: 'assets/images/chat.png',
-                  selectedImagePath: 'assets/images/chat-selected.png',
+                  imagePath: 'visit/images/chat.png',
+                  selectedImagePath: 'visit/images/chat-selected.png',
                 ),
                 navItem(
                   context,
                   index: 3,
                   text: 'Profile',
                   isSelected: state.currentIndex == 3,
-                  imagePath: 'assets/images/user.png',
-                  selectedImagePath: 'assets/images/user-selected.png',
+                  imagePath: 'visit/images/user.png',
+                  selectedImagePath: 'visit/images/user-selected.png',
                 ),
               ],
             ),
@@ -119,20 +121,20 @@ class _BottomNavBarState extends State<BottomNavBar> {
       );
     },
     child: Container(
-      margin: EdgeInsets.only(left: 0.06 * getWidth(context)),
+      margin: EdgeInsets.only(left: 0.06 * Responsive.getWidth(context)),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
             isSelected ? selectedImagePath : imagePath,
-            height: 0.03 * getHeight(context),
-            width: 0.1 * getWidth(context),
+            height: 0.03 * Responsive.getHeight(context),
+            width: 0.1 * Responsive.getWidth(context),
           ),
-          SizedBox(height: 0.005 * getHeight(context)),
+          SizedBox(height: 0.005 * Responsive.getHeight(context)),
           CustomText(
             text,
             fontWeight: FontWeight.w700,
-            fontSize: 14 * getResponsiveText(context),
+            fontSize: 14 * Responsive.getResponsiveText(context),
             color: isSelected
                 ? AppTheme.getColor(context).primary
                 : AppTheme.getColor(context).onSurfaceVariant,

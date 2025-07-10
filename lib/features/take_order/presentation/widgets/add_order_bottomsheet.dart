@@ -10,7 +10,9 @@ class AddOrderBottomsheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+      borderRadius: BorderRadius.circular(
+        12 * Responsive.getResponsive(context),
+      ),
       color: AppTheme.getColor(context).onPrimary,
     ),
     child: Column(
@@ -21,17 +23,17 @@ class AddOrderBottomsheet extends StatelessWidget {
           children: [
             Container(
               padding: EdgeInsets.symmetric(
-                horizontal: 0.08 * getWidth(context),
-                vertical: 0.01 * getHeight(context),
+                horizontal: 0.08 * Responsive.getWidth(context),
+                vertical: 0.01 * Responsive.getHeight(context),
               ),
-              width: getWidth(context),
-              height: 0.05 * getHeight(context),
+              width: Responsive.getWidth(context),
+              height: 0.05 * Responsive.getHeight(context),
               decoration: BoxDecoration(
                 color: AppTheme.getColor(context).primary,
               ),
               child: CustomText(
                 'Appy Fizz (Apple)',
-                fontSize: 20 * getResponsiveText(context),
+                fontSize: 20 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
                 color: AppTheme.getColor(context).onPrimary,
               ),
@@ -58,40 +60,44 @@ class AddOrderBottomsheet extends StatelessWidget {
           ],
         ),
 
-        SizedBox(height: 0.02 * getHeight(context)),
+        SizedBox(height: 0.02 * Responsive.getHeight(context)),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+          padding: EdgeInsets.symmetric(
+            horizontal: 0.08 * Responsive.getWidth(context),
+          ),
           child: CustomText(
             'Add Quantity',
-            fontSize: 18 * getResponsiveText(context),
+            fontSize: 18 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w700,
           ),
         ),
-        SizedBox(height: 0.01 * getHeight(context)),
+        SizedBox(height: 0.01 * Responsive.getHeight(context)),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+          padding: EdgeInsets.symmetric(
+            horizontal: 0.08 * Responsive.getWidth(context),
+          ),
           child: Row(
             children: [
               CustomText(
                 'Price (₹)',
-                fontSize: 18 * getResponsiveText(context),
+                fontSize: 18 * Responsive.getResponsiveText(context),
               ),
               const Spacer(),
               Container(
-                height: 0.038 * getHeight(context),
-                width: 0.22 * getWidth(context),
+                height: 0.038 * Responsive.getHeight(context),
+                width: 0.22 * Responsive.getWidth(context),
                 decoration: BoxDecoration(
                   color: AppTheme.getColor(
                     context,
                   ).secondary.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(
-                    12 * getResponsive(context),
+                    12 * Responsive.getResponsive(context),
                   ),
                 ),
                 child: Center(
                   child: CustomText(
                     '17',
-                    fontSize: 18 * getResponsiveText(context),
+                    fontSize: 18 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -99,34 +105,39 @@ class AddOrderBottomsheet extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 0.025 * getHeight(context)),
+        SizedBox(height: 0.025 * Responsive.getHeight(context)),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+          padding: EdgeInsets.symmetric(
+            horizontal: 0.08 * Responsive.getWidth(context),
+          ),
           child: Row(
             children: [
-              CustomText('Units', fontSize: 18 * getResponsiveText(context)),
+              CustomText(
+                'Units',
+                fontSize: 18 * Responsive.getResponsiveText(context),
+              ),
               const Spacer(),
               Row(
                 children: [
                   buildContainer(
                     context,
-                    width: 0.09 * getWidth(context),
+                    width: 0.09 * Responsive.getWidth(context),
                     icon: Icons.remove,
                   ),
-                  SizedBox(width: 0.02 * getWidth(context)),
+                  SizedBox(width: 0.02 * Responsive.getWidth(context)),
                   buildContainer(
                     context,
-                    width: 0.17 * getWidth(context),
+                    width: 0.17 * Responsive.getWidth(context),
                     isIcon: false,
                     textData: 'Add',
                     bgColor: AppTheme.getColor(
                       context,
                     ).primary.withValues(alpha: 0.2),
                   ),
-                  SizedBox(width: 0.02 * getWidth(context)),
+                  SizedBox(width: 0.02 * Responsive.getWidth(context)),
                   buildContainer(
                     context,
-                    width: 0.09 * getWidth(context),
+                    width: 0.09 * Responsive.getWidth(context),
                     icon: Icons.add,
                   ),
                 ],
@@ -134,9 +145,11 @@ class AddOrderBottomsheet extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 0.045 * getHeight(context)),
+        SizedBox(height: 0.045 * Responsive.getHeight(context)),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+          padding: EdgeInsets.symmetric(
+            horizontal: 0.08 * Responsive.getWidth(context),
+          ),
           child: SideBySideButtons(
             button1Name: 'CANCEL',
             button2Name: 'ADD',
@@ -144,7 +157,7 @@ class AddOrderBottomsheet extends StatelessWidget {
             onTap2: () {},
           ),
         ),
-        SizedBox(height: 0.03 * getHeight(context)),
+        SizedBox(height: 0.03 * Responsive.getHeight(context)),
       ],
     ),
   );
@@ -157,22 +170,24 @@ class AddOrderBottomsheet extends StatelessWidget {
     IconData? icon,
     String? textData,
   }) => Container(
-    height: 0.035 * getHeight(context),
+    height: 0.035 * Responsive.getHeight(context),
     width: width,
     decoration: BoxDecoration(
       color: bgColor ?? AppTheme.getColor(context).primary,
-      borderRadius: BorderRadius.circular(8.0 * getResponsive(context)),
+      borderRadius: BorderRadius.circular(
+        8.0 * Responsive.getResponsive(context),
+      ),
     ),
     child: Center(
       child: isIcon
           ? Icon(
               icon,
               color: AppTheme.getColor(context).onPrimary,
-              size: 20 * getResponsive(context),
+              size: 20 * Responsive.getResponsive(context),
             )
           : CustomText(
               textData ?? '',
-              fontSize: 18 * getResponsiveText(context),
+              fontSize: 18 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
             ),
     ),

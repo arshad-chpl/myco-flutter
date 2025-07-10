@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/core/theme/text_theme.dart';
-import 'package:myco_flutter/core/utils/util.dart';
 
 class AppTheme {
   static ColorScheme getColor(BuildContext context) =>
@@ -42,7 +40,9 @@ class AppTheme {
       tertiary: AppColors.myCoCyan, //0xFF08A4BB
       onSecondaryContainer: AppColors.containerGrey, //0xFFF9FAFB
       outlineVariant: AppColors.textGrey200, // 0xFFEAECF0
-      primaryContainer: AppColors.lightPurple //0xFFF4F3FF
+      primaryContainer: AppColors.lightPurple, //0xFFF4F3FF
+      onTertiary: AppColors.darksecondary, //0xFF2FBBA4
+      onTertiaryContainer: AppColors.spanishYellow, //0xFFFDB913
     ),
   );
 

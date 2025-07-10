@@ -49,7 +49,8 @@ class _ExpandableCommonCardState extends State<ExpandableCommonCard> {
 
   @override
   Widget build(BuildContext context) {
-    final radius = (widget.borderRadius ?? 12) * getResponsive(context);
+    final radius =
+        (widget.borderRadius ?? 12) * Responsive.getResponsive(context);
     final colors = AppTheme.getColor(context);
 
     return Container(
@@ -64,10 +65,11 @@ class _ExpandableCommonCardState extends State<ExpandableCommonCard> {
           ClipRRect(
             borderRadius: BorderRadius.circular(_expanded ? 0 : radius),
             child: Container(
-              height: widget.headerHeight ?? 0.06 * getHeight(context),
+              height:
+                  widget.headerHeight ?? 0.06 * Responsive.getHeight(context),
               padding:
                   widget.headerPadding ??
-                  EdgeInsets.all(10 * getResponsive(context)),
+                  EdgeInsets.all(10 * Responsive.getResponsive(context)),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(radius),
@@ -90,12 +92,12 @@ class _ExpandableCommonCardState extends State<ExpandableCommonCard> {
                   if (widget.showHeaderPrefixIcon == true)
                     Image.asset(
                       widget.headerPrefixIcon ?? 'assets/images/calendar.png',
-                      height: 0.1 * getHeight(context),
-                      width: 0.06 * getWidth(context),
+                      height: 0.1 * Responsive.getHeight(context),
+                      width: 0.06 * Responsive.getWidth(context),
                       color: widget.headerPrefixIconColor,
                     ),
                   if (widget.showHeaderPrefixIcon == true)
-                    SizedBox(width: 0.02 * getWidth(context)),
+                    SizedBox(width: 0.02 * Responsive.getWidth(context)),
                   Expanded(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -104,39 +106,41 @@ class _ExpandableCommonCardState extends State<ExpandableCommonCard> {
                         CustomText(
                           widget.title,
                           color: colors.onPrimary,
-                          fontSize: 17 * getResponsiveText(context),
+                          fontSize: 17 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.bold,
                         ),
                         if (widget.secondTitle != null)
                           CustomText(
                             '${widget.secondTitle}',
                             color: colors.onPrimary,
-                            fontSize: 17 * getResponsiveText(context),
+                            fontSize:
+                                17 * Responsive.getResponsiveText(context),
                             fontWeight: FontWeight.bold,
                           ),
                         if (widget.subTitle != null)
                           CustomText(
                             '${widget.subTitle}',
                             color: colors.onPrimary,
-                            fontSize: 15 * getResponsiveText(context),
+                            fontSize:
+                                15 * Responsive.getResponsiveText(context),
                             fontWeight: FontWeight.bold,
                           ),
                       ],
                     ),
                   ),
                   if (widget.isButton)
-                    SizedBox(width: 0.02 * getWidth(context)),
+                    SizedBox(width: 0.02 * Responsive.getWidth(context)),
                   if (widget.isButton)
                     MyCoButton(
                       onTap: widget.onTap,
                       title: widget.buttonText,
                       textStyle: TextStyle(
-                        fontSize: 13 * getResponsiveText(context),
+                        fontSize: 13 * Responsive.getResponsiveText(context),
                         color: colors.onPrimary,
                       ),
-                      width: 0.16 * getWidth(context),
-                      boarderRadius: 30 * getResponsive(context),
-                      height: 0.03 * getHeight(context),
+                      width: 0.16 * Responsive.getWidth(context),
+                      boarderRadius: 30 * Responsive.getResponsive(context),
+                      height: 0.03 * Responsive.getHeight(context),
                       isShadowBottomLeft: true,
                       enabled: true,
                     ),

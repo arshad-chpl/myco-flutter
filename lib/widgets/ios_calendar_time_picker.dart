@@ -247,7 +247,7 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
             (item) => Center(
               child: CustomText(
                 displayText(item),
-                fontSize: 22 * getResponsiveText(context),
+                fontSize: 22 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -427,7 +427,7 @@ Widget _buildLoopingPicker<T>({
         return Center(
           child: CustomText(
             displayText(item),
-            fontSize: 22 * getResponsiveText(context),
+            fontSize: 22 * Responsive.getResponsiveText(context),
             color: isSelected ? AppColors.primary : AppColors.textPrimary,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
           ),

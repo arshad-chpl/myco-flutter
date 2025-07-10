@@ -209,7 +209,7 @@ class _GalleryPickerScreenState extends State<GalleryPickerScreen> {
         valueListenable: selectedAssets,
         builder: (_, selected, __) => CustomText(
           'Selected: ${selected.length}/$_currentMaxSelection',
-          fontSize: 18 * getResponsiveText(context),
+          fontSize: 18 * Responsive.getResponsiveText(context),
           color: AppTheme.getColor(context).onPrimary,
           fontWeight: FontWeight.w600,
         ),
@@ -223,7 +223,7 @@ class _GalleryPickerScreenState extends State<GalleryPickerScreen> {
                 : null,
             child: CustomText(
               'Done',
-              fontSize: 16 * getResponsiveText(context),
+              fontSize: 16 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w700,
               color: selected.isNotEmpty
                   ? AppTheme.getColor(context).onPrimary
@@ -364,14 +364,14 @@ class _GalleryPickerBottomSheet {
                 children: [
                   CustomText(
                     'File(s) Restriction',
-                    fontSize: 18 * getResponsiveText(context),
+                    fontSize: 18 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w700,
                     color: AppTheme.getColor(context).primary,
                   ),
                   const SizedBox(height: 15),
                   CustomText(
                     'Some files were discarded because they are either WebP format or larger than 5MB.',
-                    fontSize: 14 * getResponsiveText(context),
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w500,
                     color: AppTheme.getColor(context).error,
                   ),
@@ -413,7 +413,9 @@ class _GalleryPickerBottomSheet {
                                   reason == 'format'
                                       ? 'due to .webp'
                                       : 'due to size',
-                                  fontSize: 12 * getResponsiveText(context),
+                                  fontSize:
+                                      12 *
+                                      Responsive.getResponsiveText(context),
                                   fontWeight: FontWeight.w500,
                                   color: Colors.red,
                                   textAlign: TextAlign.center,
