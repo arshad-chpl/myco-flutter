@@ -98,7 +98,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.dashboard,
-        name: 'dashboard',
+        name: RoutePaths.dashboard,
         builder: (context, state) => const DashBoardPage(),
       ),
 
@@ -119,7 +119,7 @@ class AppRouter {
           GoRoute(
             path: RoutePaths.ideaRequest,
             name: '/idea-request',
-            builder: (context, state) => IdeaRequest(),
+            builder: (context, state) => const IdeaRequest(),
           ),
         ],
       ),
@@ -187,7 +187,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
-        builder: (context, state) => SignupFormPage(),
+        builder: (context, state) => const SignupFormPage(),
       ),
       GoRoute(
         path: RoutePaths.getStarted,
@@ -197,7 +197,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.companySearch,
         name: 'companySearch',
-        builder: (context, state) => SearchCompanyScreen(),
+        builder: (context, state) => const SearchCompanyScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
@@ -285,21 +285,21 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.addVisit,
         name: 'add-visit',
-        builder: (context, state) => AddNewVisit(),
+        builder: (context, state) => const AddNewVisit(),
       ),
       GoRoute(
         path: RoutePaths.viewVisitDetails,
         name: 'view-visit-details',
-        builder: (context, state) => ViewVisitDetailsPage(),
+        builder: (context, state) => const ViewVisitDetailsPage(),
       ),
       GoRoute(
         path: RoutePaths.myProfile,
         name: 'my-profile',
-        builder: (context, state) => MyProfilePage(),
+        builder: (context, state) => const MyProfilePage(),
       ),
       GoRoute(
         path: RoutePaths.adminView,
-        name: 'admin-view',
+        name: RoutePaths.adminView,
         builder: (context, state) => BlocProvider(
           create: (_) => GetIt.I<AdminViewBloc>(),
           child: const AdminViewPage(),
