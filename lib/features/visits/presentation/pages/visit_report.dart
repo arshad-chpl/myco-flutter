@@ -2,26 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/widgets/bottom_sheet.dart';
+import 'package:myco_flutter/features/visits/presentation/pages/bottom_sheet.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/horizontal_border.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
+
+
+//Visit Report page
 class VisitReport extends StatelessWidget {
   const VisitReport({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: CustomAppbar(
         leading: BackButton(),
-        title: CustomText('Visit Report', fontWeight: FontWeight.w700),
+        title: CustomText(
+          'Visit Report',
+          fontWeight: FontWeight.w700,
+          fontSize: 18 * getResponsiveText(context),
+        ),
       ),
       body: ListView.builder(
         itemCount: 2,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(12),
             child: CommonCard(
               showBlackShadowInChild: true,
               title: '05 June 2025',
@@ -29,6 +37,11 @@ class VisitReport extends StatelessWidget {
                 onTap: () {
                   showModalBottomSheet(
                     context: context,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(10),
+                      ),
+                    ),
                     builder: (context) => TestNewVisit(),
                   );
                 },

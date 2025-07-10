@@ -55,6 +55,7 @@ class DesignBorderContainer extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
+          alignment: Alignment.center,
           height: height,
           width: width,
           padding: padding,

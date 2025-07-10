@@ -32,7 +32,7 @@ import 'package:myco_flutter/features/visits/presentation/pages/visit_report.dar
 
 import 'route_paths.dart';
 
-import 'package:myco_flutter/features/visits/presentation/pages/details_page.dart';
+import 'package:myco_flutter/features/visits/presentation/pages/visit_details.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -40,7 +40,7 @@ class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
 
-    initialLocation: RoutePaths.details,
+    initialLocation: RoutePaths.visitDetails,
 
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -65,8 +65,8 @@ class AppRouter {
         builder: (context, state) => const OtpVerifyDialog(),
       ),
       GoRoute(
-        path: RoutePaths.details,
-        name: 'details',
+        path: RoutePaths.visitDetails,
+        name: 'visit_details',
         builder: (context, state) => const DetailsPage(),
       ),
       GoRoute(

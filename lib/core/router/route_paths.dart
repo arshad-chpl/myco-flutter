@@ -11,7 +11,7 @@ class RoutePaths {
   static const String getStarted = '/get-started';
   static const String companySearch = '/search-company';
 
-  static const String details = '/details';
+  static const String visitDetails = '/visit_details';
   static const String visitReport = '/visit_report';
 
   static const String offers = '/offers';
