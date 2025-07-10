@@ -58,7 +58,8 @@ class AssetsHomePage extends StatelessWidget {
               ),
             ),
           ],
-          backgroundColor: AppTheme.getColor(context).surface,
+          
+          appBarBackgoundColor: AppTheme.getColor(context).surface,
         ),
         body: CustomScrollView(
           slivers: [

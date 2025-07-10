@@ -6,7 +6,7 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
 import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/asset/widgets/image_gredal.dart';
-import 'package:myco_flutter/features/visit/presentation/widgets/dashed_border_container.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/dashed_border_container.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
