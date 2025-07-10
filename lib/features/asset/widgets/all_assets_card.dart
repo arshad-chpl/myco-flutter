@@ -1,11 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
+import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_dash_line.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+
+class AllAssetsListPage extends StatelessWidget {
+  const AllAssetsListPage({super.key});
+
+  @override
+  Widget build(BuildContext context) => SliverPadding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 0.04 * Responsive.getWidth(context),
+    ),
+    sliver: SliverList.separated(
+      itemCount: 10,
+      separatorBuilder: (_, __) =>
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
+      itemBuilder: (_, index) {
+        if (index % 2 != 0) {
+          return AllAssetsCard(
+            title: 'Desktop',
+            subTitle: '(AS101)',
+            image: 'assets/images/laptop.png',
+            brand: 'HP',
+            srNo: 'DELL123456',
+            category: 'Desktop',
+            createdBy: 'Parth Jadav',
+            custodian: 'Arth Sorthiya',
+            onViewDetailsTap: () => context.push('/assets-details'),
+            onEditTap: () => context.push('/edit-assets'),
+          );
+        } else {
+          return AllAssetsCard(
+            onEditTap: () => context.push('/edit-assets'),
+            title: 'Desktop',
+            subTitle: '(AS101)',
+            image: 'assets/images/laptop.png',
+            brand: 'Dell',
+            srNo: 'DELL123456',
+            category: 'Desktop',
+            createdBy: 'Parth Jadav',
+            onViewDetailsTap: () => context.push('/assets-details'),
+          );
+        }
+      },
+    ),
+  );
+}
 
 class AllAssetsCard extends StatelessWidget {
   final String title;
@@ -59,6 +105,7 @@ class AllAssetsCard extends StatelessWidget {
             child: Image.asset(
               'assets/images/message-edit.png',
               width: 0.07 * Responsive.getWidth(context),
+              color: AppTheme.getColor(context).onPrimary,
             ),
           ),
           SizedBox(width: 0.045 * Responsive.getWidth(context)),
@@ -90,8 +137,8 @@ class AllAssetsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   if (image.startsWith('http') || image.startsWith('https'))
-                    Image.network(
-                      image,
+                    CachedImage(
+                      imageUrl: image,
                       width: 0.3 * Responsive.getWidth(context),
                     )
                   else

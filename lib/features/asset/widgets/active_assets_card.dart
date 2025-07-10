@@ -1,9 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_dash_line.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+
+class AssetsListPage extends StatelessWidget {
+  const AssetsListPage({super.key});
+
+  @override
+  Widget build(BuildContext context) => SliverPadding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 0.04 * Responsive.getWidth(context),
+    ),
+    sliver: SliverList.separated(
+      itemCount: 8,
+      separatorBuilder: (_, __) =>
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
+      itemBuilder: (_, index) => const ActiveAssetsCard(
+        title: 'Laptop',
+        subTitle: '(AS101)',
+        image: 'assets/images/laptop.png',
+        brand: 'Dell',
+        srNo: 'DELL123456',
+        handOverDate: '01-01-2024',
+      ),
+    ),
+  );
+}
 
 class ActiveAssetsCard extends StatelessWidget {
   final String title;
@@ -50,7 +75,10 @@ class ActiveAssetsCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             if (image.startsWith('http') || image.startsWith('https'))
-              Image.network(image, width: 0.3 * Responsive.getWidth(context))
+              CachedImage(
+                imageUrl: image,
+                width: 0.3 * Responsive.getWidth(context),
+              )
             else
               Image.asset(image, width: 0.3 * Responsive.getWidth(context)),
             Padding(

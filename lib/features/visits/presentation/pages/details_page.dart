@@ -15,6 +15,7 @@ class DetailsPage extends StatelessWidget {
   const DetailsPage({super.key});
 
   @override
+  // ignore: prefer_expression_function_bodies
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppbar(

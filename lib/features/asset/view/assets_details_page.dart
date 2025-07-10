@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
+import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/asset/widgets/image_gredal.dart';
+import 'package:myco_flutter/features/visit/presentation/widgets/dashed_border_container.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -371,8 +374,10 @@ class AssetsDetailsPage extends StatelessWidget {
       children: [
         GestureDetector(
           // onTap: onEditTap,
+          onTap: () => context.push('/edit-assets'),
           child: Image.asset(
             'assets/images/message-edit.png',
+            color: AppTheme.getColor(context).onPrimary,
             width: 0.07 * Responsive.getWidth(context),
           ),
         ),
@@ -506,7 +511,112 @@ class AssetsDetailsPage extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(
+                          20 * Responsive.getResponsive(context),
+                        ),
+                      ),
+                    ),
+                    // isScrollControlled: true,
+                    builder: (context) => Padding(
+                      padding: EdgeInsets.all(
+                        16 * Responsive.getResponsive(context),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CustomText(
+                            'Attachment',
+                            fontSize:
+                                22 * Responsive.getResponsiveText(context),
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.getColor(context).onSurfaceVariant,
+                          ),
+                          SizedBox(
+                            height: 0.012 * Responsive.getHeight(context),
+                          ),
+                          CustomPaint(
+                            painter: DashedBorderPainter(
+                              color: AppColors.primary,
+                              radius: 12 * Responsive.getResponsive(context),
+                            ),
+                            child: Container(
+                              width: 0.40 * Responsive.getWidth(context),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFEEF7FD),
+                                borderRadius: BorderRadius.circular(
+                                  13 * Responsive.getResponsive(context),
+                                ),
+                              ),
+                              padding: EdgeInsets.all(
+                                12 * Responsive.getResponsive(context),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    width: 0.35 * Responsive.getWidth(context),
+                                    height: 0.35 * Responsive.getWidth(context),
+                                    padding: EdgeInsets.all(
+                                      12 * Responsive.getResponsive(context),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black26,
+                                      borderRadius: BorderRadius.circular(
+                                        12 * Responsive.getResponsive(context),
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: Image.asset(
+                                        'assets/images/laptop.png',
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height:
+                                        0.01 * Responsive.getHeight(context),
+                                  ),
+                                  CustomText(
+                                    'File Name',
+                                    maxLines: 1,
+                                    fontSize:
+                                        18 *
+                                        Responsive.getResponsiveText(context),
+                                    fontWeight: FontWeight.w600,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 0.012 * Responsive.getHeight(context),
+                          ),
+                          // Submit Button
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: 12.0 * Responsive.getResponsive(context),
+                            ),
+                            child: MyCoButton(
+                              onTap: () {},
+                              title: 'Close',
+                              isShadowBottomLeft: true,
+                              boarderRadius:
+                                  50 * Responsive.getResponsive(context),
+                              fontFamily: 'Gilroy-Bold',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
                 child: CustomText(
                   'INVOICE',
                   fontWeight: FontWeight.w700,
@@ -544,12 +654,18 @@ class AssetsDetailsPage extends StatelessWidget {
         child: CircleAvatar(
           radius: 0.06 * Responsive.getWidth(context),
           child: ClipOval(
-            child: Image.network(
-              image,
-              fit: BoxFit.cover,
-              width: 0.34 * Responsive.getWidth(context),
-              height: 0.34 * Responsive.getWidth(context),
-            ),
+            child: image.startsWith('http')
+                ? CachedImage(
+                    imageUrl: image,
+                    width: 0.34 * Responsive.getWidth(context),
+                    height: 0.34 * Responsive.getWidth(context),
+                  )
+                : Image.asset(
+                    image,
+                    fit: BoxFit.cover,
+                    width: 0.34 * Responsive.getWidth(context),
+                    height: 0.34 * Responsive.getWidth(context),
+                  ),
           ),
         ),
       ),

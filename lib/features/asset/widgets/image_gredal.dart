@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class ImageGridPreviewWidget extends StatelessWidget {
@@ -95,18 +95,7 @@ class ImageGridPreviewWidget extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               imageUrl.startsWith('http')
-                  ? CachedNetworkImage(
-                      imageUrl: imageUrl,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) =>
-                          Container(color: Colors.grey.shade300),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                      color: isExtraBox ? Colors.black.withOpacity(0.4) : null,
-                      colorBlendMode: isExtraBox
-                          ? BlendMode.darken
-                          : BlendMode.srcIn,
-                    )
+                  ? CachedImage(imageUrl: imageUrl)
                   : Image.asset(imageUrl, fit: BoxFit.cover),
               if (isExtraBox)
                 Center(child: CustomText('+$extraCount', color: Colors.white)),
@@ -116,69 +105,6 @@ class ImageGridPreviewWidget extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _imageBox(
-  //   BuildContext context,
-  //   List<String> images,
-  //   int index, {
-  //   bool isExtraBox = false,
-  //   int extraCount = 0,
-  // }) {
-  //   final height = boxHeight ?? MediaQuery.of(context).size.width * 0.20;
-  //   final width = boxWidth ?? MediaQuery.of(context).size.width * 0.20;
-
-  //   final ImageProvider backgroundImage = _getImageProvider(images[index]);
-
-  //   return GestureDetector(
-  //     onTap: () {
-  //       Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (_) => _ImagePreview(
-  //             containersLength: containersLength,
-  //             images: images,
-  //             startIndex: index,
-  //             showIndicators: showIndicators,
-  //             selectColor: selectIndicatorColor,
-  //             unselectColor: unselectIndicatorColor,
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //     child: Container(
-  //       width: width,
-  //       height: height,
-  //       decoration: BoxDecoration(
-  //         color: Colors.grey.shade300,
-  //         borderRadius: BorderRadius.circular(borderRadius),
-  //         image: DecorationImage(
-  //           image: backgroundImage,
-  //           fit: BoxFit.cover,
-  //           colorFilter: isExtraBox
-  //               ? const ColorFilter.mode(
-  //                   Color.fromRGBO(0, 0, 0, 0.4),
-  //                   BlendMode.darken,
-  //                 )
-  //               : null,
-  //         ),
-  //       ),
-  //       alignment: Alignment.center,
-  //       child: isExtraBox
-  //           ? CustomText('+$extraCount', color: Colors.white)
-  //           : null,
-  //     ),
-  //   );
-  // }
-
-  //   ImageProvider _getImageProvider(String path) {
-  //     if (path.startsWith('http') ||
-  //         path.startsWith('http://') ||
-  //         path.startsWith('https://')) {
-  //       return NetworkImage(path);
-  //     } else {
-  //       return AssetImage(path);
-  //     }
-  //   }
 }
 
 class _ImagePreview extends StatefulWidget {
@@ -239,12 +165,17 @@ class _ImagePreviewState extends State<_ImagePreview> {
               },
               itemBuilder: (context, index) => Center(
                 child: InteractiveViewer(
-                  child: Image(
-                    image: _getImageProvider(widget.images[index]),
-                    fit: BoxFit.contain,
-                    width: screenSize.width,
-                    height: screenSize.height,
+                  child: _buildImage(
+                    widget.images[index],
+                    screenSize.width,
+                    screenSize.height,
                   ),
+                  // Image(
+                  //   image: _getImageProvider(widget.images[index]),
+                  //   fit: BoxFit.contain,
+                  //   width: screenSize.width,
+                  //   height: screenSize.height,
+                  // ),
                 ),
               ),
             ),
@@ -290,11 +221,28 @@ class _ImagePreviewState extends State<_ImagePreview> {
     ),
   );
 
-  ImageProvider _getImageProvider(String path) {
+  // ImageProvider _getImageProvider(String path) {
+  //   if (path.startsWith('http://') || path.startsWith('https://')) {
+  //     return NetworkImage(path);
+  //   } else {
+  //     return AssetImage(path);
+  //   }
+  // }
+  Widget _buildImage(String path, double width, double height) {
     if (path.startsWith('http://') || path.startsWith('https://')) {
-      return NetworkImage(path);
+      return CachedImage(
+        imageUrl: path,
+        fit: BoxFit.contain,
+        width: width,
+        height: height,
+      );
     } else {
-      return AssetImage(path);
+      return Image.asset(
+        path,
+        fit: BoxFit.contain,
+        width: width,
+        height: height,
+      );
     }
   }
 

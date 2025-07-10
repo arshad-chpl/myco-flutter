@@ -4,9 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
+import 'package:myco_flutter/features/asset/bloc/assets_bloc.dart';
 import 'package:myco_flutter/features/asset/view/add_assets.dart';
 import 'package:myco_flutter/features/asset/view/assets_details_page.dart';
 import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
+import 'package:myco_flutter/features/asset/view/edit_assets_page.dart';
 import 'package:myco_flutter/features/asset/view/handover_assets.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
 import 'package:myco_flutter/features/asset/view/swap_assets.dart';
@@ -241,11 +243,28 @@ class AppRouter {
         builder: (context, state) => const AddExpensePage(),
       ),
 
-      GoRoute(
-        path: RoutePaths.assetsHome,
-        name: 'assets-home',
-        builder: (context, state) => const AssetsHomePage(),
+      // GoRoute(
+      //   path: RoutePaths.assetsHome,
+      //   name: 'assets-home',
+      //   builder: (context, state) => const AssetsHomePage(),
+      // ),
+     GoRoute(
+  path: RoutePaths.assetsHome,
+  name: 'assets-home',
+  builder: (context, state) => MultiBlocProvider(
+    providers: [
+      BlocProvider<AssetsTabBloc>(
+        create: (_) => AssetsTabBloc(),
       ),
+      BlocProvider<AssetsFilterBloc>(
+        create: (_) => AssetsFilterBloc(),
+      ),
+    ],
+    child: const AssetsHomePage(),
+  ),
+),
+
+
       GoRoute(
         path: RoutePaths.qrScanner,
         name: 'qr-scanner',
@@ -260,6 +279,11 @@ class AppRouter {
         path: RoutePaths.addAssets,
         name: 'add-assets',
         builder: (context, state) => const AddAssets(),
+      ),
+      GoRoute(
+        path: RoutePaths.editAssets,
+        name: 'edit-assets',
+        builder: (context, state) => const EditAssetsPage(),
       ),
       GoRoute(
         path: RoutePaths.handoverAssets,

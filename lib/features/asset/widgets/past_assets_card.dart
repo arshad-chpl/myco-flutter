@@ -2,9 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
+import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_dash_line.dart';
 import 'package:myco_flutter/features/asset/widgets/image_gredal.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
+
+class PastAssetsListPage extends StatelessWidget {
+  const PastAssetsListPage({super.key});
+
+  @override
+  Widget build(BuildContext context) => SliverPadding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 0.04 * Responsive.getWidth(context),
+    ),
+    sliver: SliverList.separated(
+      itemCount: 5,
+      separatorBuilder: (_, __) =>
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
+      itemBuilder: (_, index) => const PastAssetsCard(
+        title: 'Desktop',
+        subTitle: '(AS101)',
+        image: 'assets/images/laptop.png',
+        brand: 'HP',
+        srNo: 'DELL123456',
+        handover: '02-05-2025',
+        takeover: '02-05-2025',
+        handoverImageList: [
+          'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+          'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+          'assets/images/laptop.png',
+          'assets/images/laptop.png',
+        ],
+        takeoverImageList: [
+          'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+          'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+          'assets/images/laptop.png',
+          'assets/images/laptop.png',
+        ],
+      ),
+    ),
+  );
+}
 
 class PastAssetsCard extends StatelessWidget {
   final String title;
@@ -65,8 +103,8 @@ class PastAssetsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   if (image.startsWith('http') || image.startsWith('https'))
-                    Image.network(
-                      image,
+                    CachedImage(
+                      imageUrl: image,
                       width: 0.3 * Responsive.getWidth(context),
                     )
                   else

@@ -112,6 +112,7 @@ class RoutePaths {
   //maulik
   static const String assetsDetails = '/assets-details';
   static const String addAssets = '/add-assets';
+  static const String editAssets = '/edit-assets';
   static const String handoverAssets = '/handover-assets';
   static const String takeoverAssets = '/takeover-assets';
   static const String swapAssets = '/swap-assets';
