@@ -17,51 +17,48 @@ import 'package:myco_flutter/features/company_selector/presentation/bloc/company
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
+import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
-import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
+import 'package:myco_flutter/features/language_selector/presentation/bloc/language_bloc.dart';
+import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
-import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
-import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
+import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
-import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
-import 'package:myco_flutter/features/search_company/presentation/pages/select_company.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
-
-import 'route_paths.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.splash,
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -70,8 +67,19 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.splash,
         name: 'splash',
-        builder: (context, state) => BlocProvider(
-          create: (_) => GetIt.I<SplashBloc>()..add(LoadSplash()),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => GetIt.I<SplashBloc>()..add(LoadSplash()),
+            ),
+            BlocProvider(
+              create: (_) {
+                return GetIt.I<LanguageBloc>()
+                  ..add(LoadLanguageToPreferences());
+              },
+              lazy: false,
+            ),
+          ],
           child: const SplashPage(),
         ),
       ),
@@ -107,8 +115,8 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.dashboard,
-        name: 'dashboard',
-        builder: (context, state) => DashBoardPage(),
+        name: RoutePaths.dashboard,
+        builder: (context, state) => const DashBoardPage(),
       ),
 
       ShellRoute(
@@ -128,7 +136,7 @@ class AppRouter {
           GoRoute(
             path: RoutePaths.ideaRequest,
             name: '/idea-request',
-            builder: (context, state) => IdeaRequest(),
+            builder: (context, state) => const IdeaRequest(),
           ),
         ],
       ),
@@ -204,7 +212,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
-        builder: (context, state) => SignupFormPage(),
+        builder: (context, state) => const SignupFormPage(),
       ),
       GoRoute(
         path: RoutePaths.getStarted,
@@ -214,7 +222,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.companySearch,
         name: 'companySearch',
-        builder: (context, state) => SearchCompanyScreen(),
+        builder: (context, state) => const SearchCompanyScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
@@ -302,21 +310,21 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.addVisit,
         name: 'add-visit',
-        builder: (context, state) => AddNewVisit(),
+        builder: (context, state) => const AddNewVisit(),
       ),
       GoRoute(
         path: RoutePaths.viewVisitDetails,
         name: 'view-visit-details',
-        builder: (context, state) => ViewVisitDetailsPage(),
+        builder: (context, state) => const ViewVisitDetailsPage(),
       ),
       GoRoute(
         path: RoutePaths.myProfile,
         name: 'my-profile',
-        builder: (context, state) => MyProfilePage(),
-        ),
-        GoRoute(
+        builder: (context, state) => const MyProfilePage(),
+      ),
+      GoRoute(
         path: RoutePaths.adminView,
-        name: 'admin-view',
+        name: RoutePaths.adminView,
         builder: (context, state) => BlocProvider(
           create: (_) => GetIt.I<AdminViewBloc>(),
           child: const AdminViewPage(),

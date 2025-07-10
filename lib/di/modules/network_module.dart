@@ -29,11 +29,10 @@ Future<void> initNetworkModule(GetIt sl) async {
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(Connectivity()));
 
   _registerOrReplace<ApiClient>(
-    ApiClient(sl(), baseUrl: baseUrl ?? ''),
+    ApiClient(sl()),
     sl,
     instanceName: VariableBag.masterAPICall,
   );
-
 }
 
 Future<void> refreshApiServiceCompany(GetIt sl) async {
@@ -49,12 +48,6 @@ Future<void> refreshApiServiceCompany(GetIt sl) async {
   );
 
   _registerOrReplace<ApiClient>(
-    ApiClient(sl(), baseUrl: baseUrl ?? ''),
-    sl,
-    instanceName: VariableBag.masterAPICall,
-  );
-
-  _registerOrReplace<ApiClient>(
     ApiClient(sl(), baseUrl: baseUrl! + VariableBag.residentApiEnd),
     sl,
     instanceName: VariableBag.residentApiNew,
@@ -65,21 +58,7 @@ Future<void> refreshApiServiceCompany(GetIt sl) async {
     sl,
     instanceName: VariableBag.employeeMobileApi,
   );
-
-  _registerOrReplace<ApiClient>(
-    ApiClient(sl(), baseUrl: baseUrl + VariableBag.subEnd),
-    sl,
-    instanceName: VariableBag.employeeApi,
-  );
-
-  _registerOrReplace<ApiClient>(
-    ApiClient(sl(), baseUrl: baseUrl + VariableBag.residentApiEnd),
-    sl,
-    instanceName: VariableBag.residentAPI,
-  );
-
 }
-
 
 void _registerOrReplace<T extends Object>(
   T instance,
