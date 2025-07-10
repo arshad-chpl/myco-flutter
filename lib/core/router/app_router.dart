@@ -25,7 +25,9 @@ import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_bloc.dart';
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
@@ -330,6 +332,14 @@ class AppRouter {
           child: const AdminViewPage(),
         ),
         routes: adminViewRoutes,
+      ),
+      GoRoute(
+        path: RoutePaths.leaveBalance,
+        name: RoutePaths.leaveBalance,
+        builder: (context, state) => BlocProvider<LeaveBloc>(
+          create: (_) => GetIt.I<LeaveBloc>(),
+          child: const MyLeaveBalanceScreen(),
+        ),
       ),
       // Add all modular routes here
       // ...authRoutes,

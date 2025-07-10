@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
@@ -161,15 +163,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
                 LeaveActionButton(
                   title: 'My Leave Balance',
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BlocProvider.value(
-                          value: BlocProvider.of<LeaveBloc>(context),
-                          child: const MyLeaveBalanceScreen(),
-                        ),
-                      ),
-                    );
+                   context.go(RoutePaths.leaveBalance);
                   },
                 ),
                 LeaveActionButton(
