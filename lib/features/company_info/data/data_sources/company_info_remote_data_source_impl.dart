@@ -25,7 +25,7 @@ class CompanyInfoRemoteDataSourceImpl implements CompanyInfoRemoteDataSource {
     final controller = 'buildingDetails_controller.php';
 
     final response = await GetIt.I<ApiClient>(
-      instanceName: VariableBag.masterAPICall,
+      instanceName: VariableBag.employeeMobileApi,
     ).postDynamic(controller, encryptedBody);
     return CompanyInfoResponse.fromJson(
       json.decode(GzipUtil.decryptAES(response)),

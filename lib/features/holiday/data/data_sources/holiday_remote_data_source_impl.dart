@@ -31,7 +31,7 @@ class HolidayRemoteDataSourceImpl implements HolidayRemoteDataSource {
     const controller = 'holiday_controller.php';
 
     final response = await GetIt.I<ApiClient>(
-      instanceName: VariableBag.masterAPICall,
+      instanceName: VariableBag.employeeMobileApi,
     ).postDynamic(controller, encryptedBody);
 
     return HolidayListResponse.fromJson(
@@ -53,7 +53,7 @@ class HolidayRemoteDataSourceImpl implements HolidayRemoteDataSource {
     const controller = 'holiday_controller.php';
 
     await GetIt.I<ApiClient>(
-      instanceName: VariableBag.masterAPICall,
+      instanceName: VariableBag.employeeMobileApi,
     ).postDynamic(controller, encryptedBody);
   }
 
@@ -70,7 +70,7 @@ class HolidayRemoteDataSourceImpl implements HolidayRemoteDataSource {
     const controller = 'holiday_controller.php';
 
     await GetIt.I<ApiClient>(
-      instanceName: VariableBag.masterAPICall,
+      instanceName: VariableBag.employeeMobileApi,
     ).postDynamic(controller, encryptedBody);
   }
 }
