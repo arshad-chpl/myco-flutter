@@ -128,6 +128,16 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
 
                     return CustomFaceDetectionWidgets(
                       controller: state.controller,
+                      /**
+                       * Sets the scanning state use for UI display
+                       *
+                       * Valid values:
+                       * - 'scanning' -> When scanning is in progress.
+                       * - 'success' -> When the face has been successfully scanned.
+                       * - 'failure' -> When the scan failed or timed out.
+                       *
+                       * @param scanningState The state of scan
+                       * */
                       scanningState: state.scanningState,
                       topLineAlignment: _topLineAlignment,
                       bottomLineAlignment: _bottomLineAlignment,
