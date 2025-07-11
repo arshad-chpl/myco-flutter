@@ -230,6 +230,7 @@ import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/text_field.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field.dart';
 import '../../model/lost_and_found_item_model.dart';
 
 class LostAndFound extends StatefulWidget {
@@ -255,15 +256,23 @@ class _LostAndFoundState extends State<LostAndFound> {
     }
   }
 
+  String _searchQuery = '';
+
+  List<LostAndFoundItemModel> get _filteredItems {
+    if (_searchQuery.isEmpty) return lostFoundItems;
+    return lostFoundItems
+        .where(
+          (item) =>
+              item.name.toLowerCase().contains(_searchQuery.toLowerCase()),
+        )
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       title: Row(
         children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context),
-          ),
           CustomText(
             'Lost & Found',
             fontSize: 18 * Responsive.getResponsive(context),
@@ -278,29 +287,39 @@ class _LostAndFoundState extends State<LostAndFound> {
       padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
       child: Column(
         children: [
-          MyCoTextField(
+          MyCoTextfield(
             isSuffixIconOn: false,
             preFixImage: 'assets/lost_and_found/search-normal.png',
-            iconHeight: 30,
-            iconWidth: 30,
+            prefixImageHeight: .020 * Responsive.getHeight(context),
+            prefixImageWidth: .020 * Responsive.getWidth(context),
+            contentPadding: EdgeInsets.all(
+              10 * Responsive.getResponsive(context),
+            ),
             hintText: 'Search',
             fillColor: Colors.white,
             color: Colors.white,
             boarderRadius: 12,
             hintTextStyle: _hintStyle(context),
-            height: 44,
+
+            // height: .040 * Responsive.getHeight(context),
+            onChanged: (val) {
+              setState(() {
+                _searchQuery = val ?? '';
+              });
+            },
           ),
           const SizedBox(height: 24),
           Expanded(
             child: GridView.builder(
-              itemCount: lostFoundItems.length,
+              itemCount: _filteredItems.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
               ),
+
               itemBuilder: (context, index) {
-                final item = lostFoundItems[index];
+                final item = _filteredItems[index];
 
                 return GestureDetector(
                   onTap: () {

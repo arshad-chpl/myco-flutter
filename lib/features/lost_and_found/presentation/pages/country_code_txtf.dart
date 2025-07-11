@@ -331,20 +331,22 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                 padding: EdgeInsets.symmetric(
                   vertical: 4 * Responsive.getResponsive(context),
                 ),
-                children: widget.countries.map((country) {
-                  return ListTile(
-                    dense: true,
-                    title: Text("${country.name} (${country.dialCode})"),
-                    onTap: () {
-                      setState(() {
-                        _selectedCountry = country;
-                      });
-                      widget.onCountryChanged?.call(country);
-                      _overlayEntry?.remove();
-                      _overlayEntry = null;
-                    },
-                  );
-                }).toList(),
+                children: widget.countries
+                    .map(
+                      (country) => ListTile(
+                        dense: true,
+                        title: Text("${country.name} (${country.dialCode})"),
+                        onTap: () {
+                          setState(() {
+                            _selectedCountry = country;
+                          });
+                          widget.onCountryChanged?.call(country);
+                          _overlayEntry?.remove();
+                          _overlayEntry = null;
+                        },
+                      ),
+                    )
+                    .toList(),
               ),
             ),
           ),
@@ -360,104 +362,102 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: widget.width ?? double.infinity,
-      height: widget.height ?? 40 * Responsive.getHeight(context) / 800,
-      child: CompositedTransformTarget(
-        link: _layerLink,
-        child: Container(
-          decoration:
-              widget.boxDecoration ??
-              BoxDecoration(
-                color: widget.fillColor ?? Colors.white,
-                borderRadius:
-                    widget.borderRadius ??
-                    BorderRadius.circular(
-                      7.0 * Responsive.getResponsive(context),
-                    ),
-                border:
-                    widget.border ??
-                    Border.all(
-                      color:
-                          widget.borderColor ??
-                          AppTheme.getColor(context).outline,
-                    ),
-                image: widget.backgroundImage != null
-                    ? DecorationImage(
-                        image: widget.backgroundImage!,
-                        fit: BoxFit.cover,
-                      )
-                    : null,
-              ),
-          padding: EdgeInsets.symmetric(
-            horizontal: 14 * Responsive.getResponsive(context),
-            vertical: 12 * Responsive.getResponsive(context),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              GestureDetector(
-                onTap: widget.readOnly ?? false ? null : _toggleDropdown,
-                child: Container(
-                  key: _countryKey,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        _selectedCountry.name,
-                        style:
-                            widget.countryTextStyle ??
-                            const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                      ),
-                      SizedBox(width: 6 * Responsive.getResponsive(context)),
-                      Icon(
-                        Icons.keyboard_arrow_down_outlined,
-                        color: AppTheme.getColor(context).primary,
-                        size: 30 * Responsive.getResponsive(context),
-                      ),
-                    ],
+  Widget build(BuildContext context) => SizedBox(
+    width: widget.width ?? double.infinity,
+    height: widget.height ?? 40 * Responsive.getHeight(context) / 800,
+    child: CompositedTransformTarget(
+      link: _layerLink,
+      child: Container(
+        decoration:
+            widget.boxDecoration ??
+            BoxDecoration(
+              color: widget.fillColor ?? Colors.white,
+              borderRadius:
+                  widget.borderRadius ??
+                  BorderRadius.circular(
+                    7.0 * Responsive.getResponsive(context),
                   ),
+              border:
+                  widget.border ??
+                  Border.all(
+                    color:
+                        widget.borderColor ??
+                        AppTheme.getColor(context).outline,
+                  ),
+              image: widget.backgroundImage != null
+                  ? DecorationImage(
+                      image: widget.backgroundImage!,
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+            ),
+        padding: EdgeInsets.symmetric(
+          horizontal: 14 * Responsive.getResponsive(context),
+          vertical: 12 * Responsive.getResponsive(context),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: widget.readOnly ?? false ? null : _toggleDropdown,
+              child: Container(
+                key: _countryKey,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      _selectedCountry.name,
+                      style:
+                          widget.countryTextStyle ??
+                          const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                    ),
+                    SizedBox(width: 6 * Responsive.getResponsive(context)),
+                    Icon(
+                      Icons.keyboard_arrow_down_outlined,
+                      color: AppTheme.getColor(context).primary,
+                      size: 30 * Responsive.getResponsive(context),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(width: 10 * Responsive.getResponsive(context)),
-              Text(
-                _selectedCountry.dialCode,
-                style:
-                    widget.numberTextStyle ??
-                    const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
-              ),
-              SizedBox(width: 6 * Responsive.getResponsive(context)),
-              Expanded(
-                child: TextField(
-                  controller: widget.controller,
-                  keyboardType: TextInputType.phone,
-                  readOnly: widget.readOnly ?? false || !widget.isEditable,
-                  style: widget.numberTextStyle,
-                  decoration: InputDecoration.collapsed(
-                    hintText: widget.hintText ?? "Enter phone number",
-                    hintStyle:
-                        widget.hintTextStyle ??
-                        TextStyle(color: AppTheme.getColor(context).outline),
+            ),
+            SizedBox(width: 10 * Responsive.getResponsive(context)),
+            Text(
+              _selectedCountry.dialCode,
+              style:
+                  widget.numberTextStyle ??
+                  const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: Colors.black,
                   ),
+            ),
+            SizedBox(width: 6 * Responsive.getResponsive(context)),
+            Expanded(
+              child: TextField(
+                controller: widget.controller,
+                keyboardType: TextInputType.phone,
+                readOnly: widget.readOnly ?? false || !widget.isEditable,
+                style: widget.numberTextStyle,
+                decoration: InputDecoration.collapsed(
+                  hintText: widget.hintText ?? "Enter phone number",
+                  hintStyle:
+                      widget.hintTextStyle ??
+                      TextStyle(color: AppTheme.getColor(context).outline),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
 }

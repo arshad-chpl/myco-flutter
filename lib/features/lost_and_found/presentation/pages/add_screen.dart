@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -8,8 +9,10 @@ import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_m
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_image_picker_container/custom_image_picker_containe.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/text_field.dart';
+import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 class LostAndFoundAddScreen extends StatefulWidget {
   const LostAndFoundAddScreen({super.key});
@@ -98,16 +101,19 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: MyCoTextField(
-              maxLenght: 5,
+            child: MyCoTextfield(
               controller: itemNameController,
-              // height: 44,
               isSuffixIconOn: true,
               hintText: 'Type here',
               isLabelOn: true,
               hintTextStyle: _hintStyle(context),
               typingtextStyle: _typingStyle(context),
-              prefix: _prefixIcon('assets/lost_and_found/item-name.png'),
+              preFixImage: 'assets/lost_and_found/item-name.png',
+              prefixImageHeight: .020 * Responsive.getHeight(context),
+              prefixImageWidth: .020 * Responsive.getWidth(context),
+              contentPadding: EdgeInsets.all(
+                10 * Responsive.getResponsive(context),
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -123,22 +129,33 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
               ),
             ),
           ),
+
           const SizedBox(height: 5),
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: MyCoTextField(
-              // height: 200,
-              // height: 144,
-              // maxLenght: 5,
-              fillColor: Colors.white,
+            child: BigMyCoTextField(
               controller: aboutItemController,
-              isSuffixIconOn: true,
               hintText: 'Type here',
-              hintTextStyle: _hintStyle(context),
-              typingtextStyle: _typingStyle(context),
-              isLabelOn: true,
-              prefix: _prefixIcon('assets/lost_and_found/message-edit.png'),
+              hintStyle: _hintStyle(context),
+
+              // typingtextStyle: _typingStyle(context),
+              // isLabelOn: true,
+              prefixImage: SvgPicture.asset(
+                'assets/lost_and_found/message-edit.png',
+              ),
+
+              // Image.asset(
+              //   'assets/lost_and_found/message-edit.png',
+              //   height: .050 * Responsive.getHeight(context),
+              //   width: .050 * Responsive.getWidth(context),
+              // ),
+
+              // prefixImageHeight: .020 * Responsive.getHeight(context),
+              // prefixImageWidth: .020 * Responsive.getWidth(context),
+              // contentPadding: EdgeInsets.all(
+              //   10 * Responsive.getResponsive(context),
+              // ),
             ),
           ),
           const SizedBox(height: 80),
@@ -213,15 +230,6 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
     ),
   );
 
-  Widget _prefixIcon(String assetPath) => Padding(
-    padding: const EdgeInsets.all(12.0) * Responsive.getResponsive(context),
-    child: Image.asset(
-      assetPath,
-      width: 0.020 * Responsive.getWidth(context),
-      height: 0.20 * Responsive.getHeight(context),
-      fit: BoxFit.contain,
-    ),
-  );
   TextStyle _hintStyle(BuildContext context) => const TextStyle(
     fontFamily: 'Gilroy-SemiBold',
     fontWeight: FontWeight.w400,

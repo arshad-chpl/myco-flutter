@@ -282,6 +282,7 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/text_field.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field.dart';
 import '../../model/lost_and_found_item_model.dart';
 import 'chat_screen.dart';
 import 'country_code_txtf.dart';
@@ -425,7 +426,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
       children: [
         _buildLabel(context, 'Item Name'),
         const SizedBox(height: 4),
-        MyCoTextField(
+        MyCoTextfield(
           height: 44,
           controller: TextEditingController(text: widget.item.name),
           isReadOnly: true,
@@ -437,7 +438,21 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
         const SizedBox(height: 12),
         _buildLabel(context, 'Description'),
         const SizedBox(height: 4),
-        MyCoTextField(
+        MyCoTextfield(
+          isSuffixIconOn: false,
+          preFixImage: 'assets/lost_and_found/search-normal.png',
+          prefixImageHeight: .020 * Responsive.getHeight(context),
+          prefixImageWidth: .020 * Responsive.getWidth(context),
+          contentPadding: EdgeInsets.all(
+            10 * Responsive.getResponsive(context),
+          ),
+          hintText: 'Search',
+          fillColor: Colors.white,
+          color: Colors.white,
+          boarderRadius: 12,
+          hintTextStyle: _hintStyle(context),
+        ),
+        MyCoTextfield(
           height: 44,
           controller: TextEditingController(text: widget.item.description),
           isReadOnly: true,
@@ -459,7 +474,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
     children: [
       _buildLabel(context, label),
       const SizedBox(height: 4),
-      MyCoTextField(
+      MyCoTextfield(
         height: 44,
         controller: controller,
         isReadOnly: false,
