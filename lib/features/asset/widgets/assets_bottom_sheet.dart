@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -97,7 +98,7 @@ class _AssetsBottomSheetState extends State<AssetsBottomSheet> {
           hintTextStyle: AppTheme.getTextStyle(
             context,
           ).labelLarge!.copyWith(color: AppColors.textSecondary),
-          preFixImage: 'assets/images/search.png',
+          preFixImage: AppAssets.imageSearch,
           prefixImageWidth: 0.02 * Responsive.getWidth(context),
           isSuffixIconOn: true,
           contentPadding: EdgeInsets.only(

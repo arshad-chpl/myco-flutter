@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -58,6 +59,7 @@ class AssetsDetailsPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              //
               detailsCard(context),
               SizedBox(height: 0.03 * Responsive.getHeight(context)),
 
@@ -150,8 +152,8 @@ class AssetsDetailsPage extends StatelessWidget {
                                   imageList: const [
                                     'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
                                     'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                                    'assets/images/laptop.png',
-                                    'assets/images/laptop.png',
+                                   AppAssets.imageLaptop, 
+                                   AppAssets.imageLaptop
                                   ],
                                 ),
                               ),
@@ -266,8 +268,8 @@ class AssetsDetailsPage extends StatelessWidget {
                                   imageList: const [
                                     'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
                                     'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                                    'assets/images/laptop.png',
-                                    'assets/images/laptop.png',
+                                   AppAssets.imageLaptop, 
+                                   AppAssets.imageLaptop
                                   ],
                                 ),
                               ),
@@ -295,8 +297,8 @@ class AssetsDetailsPage extends StatelessWidget {
                                   imageList: const [
                                     'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
                                     'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                                    'assets/images/laptop.png',
-                                    'assets/images/laptop.png',
+                                  AppAssets.imageLaptop, 
+                                  AppAssets.imageLaptop
                                   ],
                                 ),
                               ),
@@ -376,7 +378,7 @@ class AssetsDetailsPage extends StatelessWidget {
           // onTap: onEditTap,
           onTap: () => context.push('/edit-assets'),
           child: Image.asset(
-            'assets/images/message-edit.png',
+            AppAssets.imageMassageEdit,
             color: AppTheme.getColor(context).onPrimary,
             width: 0.07 * Responsive.getWidth(context),
           ),
@@ -385,7 +387,7 @@ class AssetsDetailsPage extends StatelessWidget {
         GestureDetector(
           // onTap: onScannerTap,
           child: Image.asset(
-            'assets/images/scan.png',
+            AppAssets.imageScanner,
             width: 0.07 * Responsive.getWidth(context),
             color: AppTheme.getColor(context).onPrimary,
           ),
@@ -415,14 +417,14 @@ class AssetsDetailsPage extends StatelessWidget {
                 12 * Responsive.getResponsive(context),
               ),
             ),
-            child: Center(child: Image.asset('assets/images/laptop.png')),
+            child: Center(child: Image.asset(AppAssets.imageLaptop)),
           ),
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
           Row(
             children: [
               SizedBox(
                 width: 0.32 * Responsive.getWidth(context),
-                child: Column(
+                child: Column( 
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -573,7 +575,7 @@ class AssetsDetailsPage extends StatelessWidget {
                                     ),
                                     child: Center(
                                       child: Image.asset(
-                                        'assets/images/laptop.png',
+                                        AppAssets.imageLaptop
                                       ),
                                     ),
                                   ),

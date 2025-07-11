@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
@@ -8,39 +9,54 @@ import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-Future<void> showAssetsHoldersBottomSheet({required BuildContext context}) =>
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20 * Responsive.getResponsive(context)),
-        ),
-      ),
-      isScrollControlled: true,
-      builder: (context) => SizedBox(
-        height:
-            0.7 * Responsive.getHeight(context) +
-            MediaQuery.of(context).viewInsets.bottom,
-        child: const AssetsHoldersBottomSheet(
-          deviceName: 'HP AS112',
-          image: 'assets/images/laptop.png',
-          brand: 'Acer',
-          srNo: 'KJJVKGDWD66t',
-          handover: '03-04-2025',
-          handoverImageList: [],
-          takeoverImageList: [],
-          historyImageList: [
+Future<void> showAssetsHoldersBottomSheet({
+  required BuildContext context,
+  required String image,
+  deviceName,
+  brand,
+  srNo,
+  handover,
+  handoverDate,
+  takeoverDate,
+  String? takeover,
+  bool? notAssign,
+  required List<String>? handoverImageList,
+  takeoverImageList,
+  historyImageList,
+}) => showModalBottomSheet(
+  context: context,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.vertical(
+      top: Radius.circular(20 * Responsive.getResponsive(context)),
+    ),
+  ),
+  isScrollControlled: true,
+  builder: (context) => SizedBox(
+    height:
+        0.7 * Responsive.getHeight(context) +
+        MediaQuery.of(context).viewInsets.bottom,
+    child: AssetsHoldersBottomSheet(
+      deviceName: deviceName ?? 'HP AS112',
+      image: image ?? AppAssets.imageLaptop,
+      brand: brand ?? 'Acer',
+      srNo: srNo ?? 'KJJVKGDWD66t',
+      handover: handover ?? '03-04-2025',
+      handoverImageList: handoverImageList ?? [],
+      takeoverImageList: takeoverImageList ?? [],
+      historyImageList:
+          historyImageList ??
+          [
             'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
             'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-            'assets/images/laptop.png',
-            'assets/images/laptop.png',
+            AppAssets.imageLaptop,
+            AppAssets.imageLaptop,
           ],
-          handoverDate: '02-05-2025',
-          takeoverDate: '02-05-2025',
-          notAssign: true,
-        ),
-      ),
-    );
+      handoverDate: handoverDate ?? '02-05-2025',
+      takeoverDate: takeoverDate ?? '02-05-2025',
+      notAssign: notAssign ?? false,
+    ),
+  ),
+);
 
 class AssetsHoldersBottomSheet extends StatelessWidget {
   final String deviceName;
@@ -102,7 +118,7 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
                         ? Row(
                             children: [
                               Image.asset(
-                                'assets/images/noAssets.png',
+                                AppAssets.imageNoAssets,
                                 width: 0.12 * Responsive.getWidth(context),
                               ),
                               const SizedBox(width: 16),

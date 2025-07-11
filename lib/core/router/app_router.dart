@@ -279,16 +279,7 @@ class AppRouter {
         name: 'lost-and-found',
         builder: (context, state) => const LostAndFound(),
       ),
-      GoRoute(
-        path: RoutePaths.assetsHome,
-        name: 'assets-home',
-        builder: (context, state) => const AssetsHomePage(),
-      ),
-      GoRoute(
-        path: RoutePaths.qrScanner,
-        name: 'qr-scanner',
-        builder: (context, state) => const QRScannerPage(),
-      ),
+    
       GoRoute(
         path: RoutePaths.addVisit,
         name: 'add-visit',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
@@ -22,7 +23,7 @@ class PastAssetsListPage extends StatelessWidget {
       itemBuilder: (_, index) => const PastAssetsCard(
         title: 'Desktop',
         subTitle: '(AS101)',
-        image: 'assets/images/laptop.png',
+        image: AppAssets.imageLaptop,
         brand: 'HP',
         srNo: 'DELL123456',
         handover: '02-05-2025',
@@ -30,14 +31,14 @@ class PastAssetsListPage extends StatelessWidget {
         handoverImageList: [
           'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
           'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-          'assets/images/laptop.png',
-          'assets/images/laptop.png',
+          AppAssets.imageLaptop, 
+          AppAssets.imageLaptop
         ],
         takeoverImageList: [
           'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
           'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-          'assets/images/laptop.png',
-          'assets/images/laptop.png',
+         AppAssets.imageLaptop, 
+         AppAssets.imageLaptop
         ],
       ),
     ),

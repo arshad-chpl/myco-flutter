@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/controllers/add_assets_controllers.dart';
@@ -63,91 +64,91 @@ class _EditAssetsPage extends State<EditAssetsPage> {
               LabelTextFieldWidget(
                 label: 'Assets Category',
                 hintText: 'Select',
-                image: 'assets/assets/element.png',
+                image: AppAssets.assetsElement,
                 controller: addAssetsControllers.categoryController,
               ),
               LabelTextFieldWidget(
                 label: 'Item Name',
                 hintText: 'Type Name',
-                image: 'assets/assets/shopping-bag.png',
+                image: AppAssets.assetsShoppingBag,
                 controller: addAssetsControllers.itemNameController,
               ),
               LabelTextFieldWidget(
                 label: 'Brand Name',
                 hintText: 'Type Here',
-                image: 'assets/assets/group.png',
+                image: AppAssets.assetsGroup,
                 controller: addAssetsControllers.brandNameController,
               ),
               LabelTextFieldWidget(
                 label: 'Location',
                 hintText: 'Type Here',
-                image: 'assets/take_order/location.png',
+                image: AppAssets.location,
                 controller: addAssetsControllers.locationController,
               ),
               LabelTextFieldWidget(
                 label: 'Item Code',
                 hintText: 'Select Section',
-                image: 'assets/assets/password-check.png',
+                image: AppAssets.assetsPasswordCheck,
                 controller: addAssetsControllers.itemCodeController,
               ),
               LabelTextFieldWidget(
                 label: 'Description',
                 hintText: 'Type Here',
-                image: 'assets/assets/stickynote.png',
+                image: AppAssets.assetsStickyNote,
                 controller: addAssetsControllers.descriptionController,
               ),
               LabelTextFieldWidget(
                 label: 'Purchase Date',
                 hintText: 'Select',
-                image: 'assets/images/note-favorite.png',
+                image: AppAssets.imageNoteFavorite,
                 controller: addAssetsControllers.purchaseDateController,
               ),
               LabelTextFieldWidget(
                 label: 'Sr.No./MAC/Sim',
                 hintText: 'Type Here',
-                image: 'assets/assets/simcard.png',
+                image: AppAssets.assetsSimCard,
                 controller: addAssetsControllers.simController,
               ),
               LabelTextFieldWidget(
                 label: 'Price',
                 hintText: 'Type Here',
-                image: 'assets/assets/dollar-square.png',
+                image: AppAssets.assetsDollar,
                 controller: addAssetsControllers.priceController,
               ),
               LabelTextFieldWidget(
                 label: 'Credential',
                 hintText: 'Type Here',
-                image: 'assets/lost_and_found/data.png',
+                image: AppAssets.lostFoundData,
                 controller: addAssetsControllers.credentialController,
               ),
               LabelTextFieldWidget(
                 label: 'Branch',
                 hintText: 'Select',
-                image: 'assets/lost_and_found/data.png',
+                image: AppAssets.lostFoundData,
                 controller: addAssetsControllers.branchController,
               ),
               LabelTextFieldWidget(
                 label: 'Department',
                 hintText: 'Select',
-                image: 'assets/images/note-favorite.png',
+                image: AppAssets.imageNoteFavorite,
                 controller: addAssetsControllers.departmentController,
               ),
               LabelTextFieldWidget(
                 label: 'Custodian',
                 hintText: 'Select',
-                image: 'assets/assets/user-tick.png',
+                image: AppAssets.assetsUserTick,
                 controller: addAssetsControllers.custodianController,
               ),
               LabelTextFieldWidget(
                 label: 'Handover Date',
                 hintText: 'Select',
-                image: 'assets/images/note-favorite.png',
+                image:AppAssets.imageNoteFavorite,
                 controller: addAssetsControllers.handoverDateController,
               ),
 
               // -- Assets Image --
               CustomMediaPickerContainer(
-                imagePath: 'assets/images/gallery-export.png',
+                imagePath:AppAssets.imageGalleryExport,
                 imageTitle: 'Assets Images',
                 multipleImage: 1,
                 title: 'Assets Image',
@@ -167,7 +168,7 @@ class _EditAssetsPage extends State<EditAssetsPage> {
 
               // -- Invoice --
               CustomMediaPickerContainer(
-                imagePath: 'assets/images/gallery-export.png',
+                imagePath: AppAssets.imageGalleryExport,
                 imageTitle: 'Assets Images',
                 multipleImage: 1,
                 title: 'Invoice',

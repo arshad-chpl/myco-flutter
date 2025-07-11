@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
@@ -21,7 +22,7 @@ class AssetsListPage extends StatelessWidget {
       itemBuilder: (_, index) => const ActiveAssetsCard(
         title: 'Laptop',
         subTitle: '(AS101)',
-        image: 'assets/images/laptop.png',
+        image: AppAssets.imageLaptop,
         brand: 'Dell',
         srNo: 'DELL123456',
         handOverDate: '01-01-2024',

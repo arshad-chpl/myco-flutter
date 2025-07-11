@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -73,25 +74,25 @@ class _HandoverAssetsPageState extends State<HandoverAssetsPage> {
               LabelTextFieldWidget(
                 label: 'Handover Date',
                 hintText: 'Select',
-                image: 'assets/images/note-favorite.png',
+                image: AppAssets.imageNoteFavorite,
                 controller: handoverController.takeoverDateController,
               ),
               LabelTextFieldWidget(
                 label: 'Branch',
                 hintText: 'Select',
-                image: 'assets/lost_and_found/data.png',
+                image: AppAssets.lostFoundData,
                 controller: handoverController.branchController,
               ),
               LabelTextFieldWidget(
                 label: 'Department',
                 hintText: 'Select',
-                image: 'assets/images/note-favorite.png',
+                image: AppAssets.imageNoteFavorite,
                 controller: handoverController.departmentController,
               ),
               LabelTextFieldWidget(
                 label: 'Custodian',
                 hintText: 'Select',
-                image: 'assets/assets/user-tick.png',
+                image: AppAssets.assetsUserTick,
                 controller: handoverController.custodianController,
               ),
 
@@ -125,7 +126,7 @@ class _HandoverAssetsPageState extends State<HandoverAssetsPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.asset(
-                        'assets/assets/element-equal.png',
+                        AppAssets.assetsElementEqual,
                         height: 0.06 * Responsive.getWidth(context),
                         fit: BoxFit.contain,
                       ),
@@ -153,13 +154,13 @@ class _HandoverAssetsPageState extends State<HandoverAssetsPage> {
               LabelTextFieldWidget(
                 label: 'Handover Remark',
                 hintText: 'Type Here',
-                image: 'assets/lost_and_found/message-edit.png',
+                image: AppAssets.lostFoundMessageEdit,
                 controller: handoverController.handoverRemarkController,
               ),
 
               CustomMediaPickerContainer(
                 title: 'Assets Image',
-                imagePath: 'assets/images/gallery-export.png',
+                imagePath: AppAssets.imageGalleryExport,
                 imageTitle: 'Attach Asset Images',
                 multipleImage: 1,
                 isCameraShow: true,

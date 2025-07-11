@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 
@@ -90,37 +90,32 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
       children: [
         Expanded(
           flex: widget.scannerFlex.toInt(),
-          child: Container(
-            margin: EdgeInsets.all(
-              widget.containerMargin ?? 0.12 * Responsive.getWidth(context),
-            ),
-            child: CustomPaint(
-              painter: CornerStylePainter(),
-              child: Container(
-                margin: EdgeInsets.all(widget.imageMargin ?? 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    widget.imageBorderRadius ?? 12,
-                  ),
-                  border: Border.all(color: AppColors.borderColor, width: 2),
+          child: CustomPaint(
+            painter: CornerStylePainter(),
+            child: Container(
+              margin: EdgeInsets.all(widget.imageMargin ?? 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  widget.imageBorderRadius ?? 12,
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(widget.imageRadius ?? 10),
-                  child: MobileScanner(
-                    key: scannerKey,
-
-                    controller: controller,
-                    onDetect: (barcodes) {
-                      if (hasScanned) return;
-                      for (final barcode in barcodes.barcodes) {
-                        final String? code = barcode.rawValue;
-                        if (code != null) {
-                          setState(() => hasScanned = true);
-                          widget.onScanned(code);
-                        }
+                border: Border.all(color: AppColors.borderColor, width: 2),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(widget.imageRadius ?? 10),
+                child: MobileScanner(
+                  key: scannerKey,
+          
+                  controller: controller,
+                  onDetect: (barcodes) {
+                    if (hasScanned) return;
+                    for (final barcode in barcodes.barcodes) {
+                      final String? code = barcode.rawValue;
+                      if (code != null) {
+                        setState(() => hasScanned = true);
+                        widget.onScanned(code);
                       }
-                    },
-                  ),
+                    }
+                  },
                 ),
               ),
             ),
@@ -137,7 +132,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
               onTap: pickImageAndScan,
               image:
                   widget.image ??
-                  Image.asset('assets/images/gallery-export.png', width: 24),
+                  Image.asset(AppAssets.imageGalleryExport, width: 24),
               spacing: 10,
               boarderRadius: widget.boarderRadius ?? 50,
               title: 'Select Photo',

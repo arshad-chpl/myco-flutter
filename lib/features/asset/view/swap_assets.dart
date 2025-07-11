@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/label_text_field.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -39,13 +40,13 @@ class _SwapAssetsPageState extends State<SwapAssetsPage> {
             LabelTextFieldWidget(
               label: 'Custodian',
               hintText: 'Select',
-              image: 'assets/assets/user-tick.png',
+              image: AppAssets.assetsUserTick,
               controller: custodian1,
             ),
             LabelTextFieldWidget(
               label: 'Custodian',
               hintText: 'Select',
-              image: 'assets/assets/element.png',
+              image: AppAssets.assetsElement,
               controller: custodian2,
             ),
             const Spacer(),

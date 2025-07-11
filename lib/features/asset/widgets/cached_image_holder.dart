@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CachedImage extends StatefulWidget {
@@ -10,8 +11,8 @@ class CachedImage extends StatefulWidget {
   final Widget? errorWidget;
 
   const CachedImage({
-    super.key,
     required this.imageUrl,
+    super.key,
     this.fit = BoxFit.cover,
     this.width,
     this.height,
@@ -55,7 +56,11 @@ class _CachedImageState extends State<CachedImage> {
   Widget build(BuildContext context) {
     if (_hasError) {
       return widget.errorWidget ??
-          const Icon(Icons.broken_image, size: 40, color: Colors.grey);
+          Icon(
+            Icons.broken_image,
+            size: 30 * Responsive.getResponsive(context),
+            color: Colors.grey,
+          );
     }
 
     if (!_isLoaded) {

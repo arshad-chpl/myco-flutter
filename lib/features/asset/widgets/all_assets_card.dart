@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
+import 'package:myco_flutter/features/asset/widgets/assets_holder_bottom_sheet.dart';
 import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_dash_line.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
@@ -26,7 +28,7 @@ class AllAssetsListPage extends StatelessWidget {
           return AllAssetsCard(
             title: 'Desktop',
             subTitle: '(AS101)',
-            image: 'assets/images/laptop.png',
+            image: AppAssets.imageLaptop,
             brand: 'HP',
             srNo: 'DELL123456',
             category: 'Desktop',
@@ -34,18 +36,38 @@ class AllAssetsListPage extends StatelessWidget {
             custodian: 'Arth Sorthiya',
             onViewDetailsTap: () => context.push('/assets-details'),
             onEditTap: () => context.push('/edit-assets'),
+            onScannerTap: () => showAssetsHoldersBottomSheet(
+              context: context,
+              handoverImageList: [
+                'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+                'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+              AppAssets.imageLaptop, 
+              AppAssets.imageLaptop
+              ],
+              image: AppAssets.imageLaptop, 
+            ),
           );
         } else {
           return AllAssetsCard(
             onEditTap: () => context.push('/edit-assets'),
             title: 'Desktop',
             subTitle: '(AS101)',
-            image: 'assets/images/laptop.png',
+            image: AppAssets.imageLaptop, 
             brand: 'Dell',
             srNo: 'DELL123456',
             category: 'Desktop',
             createdBy: 'Parth Jadav',
             onViewDetailsTap: () => context.push('/assets-details'),
+            onScannerTap: () => showAssetsHoldersBottomSheet(
+              context: context,
+              handoverImageList: [
+                'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+                'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+               AppAssets.imageLaptop, 
+               AppAssets.imageLaptop
+              ],
+              image: AppAssets.imageLaptop, 
+            ),
           );
         }
       },
@@ -103,7 +125,7 @@ class AllAssetsCard extends StatelessWidget {
           GestureDetector(
             onTap: onEditTap,
             child: Image.asset(
-              'assets/images/message-edit.png',
+              AppAssets.imageMassageEdit,
               width: 0.07 * Responsive.getWidth(context),
               color: AppTheme.getColor(context).onPrimary,
             ),
@@ -112,7 +134,7 @@ class AllAssetsCard extends StatelessWidget {
           GestureDetector(
             onTap: onScannerTap,
             child: Image.asset(
-              'assets/images/scan.png',
+              AppAssets.imageScanner,
               width: 0.07 * Responsive.getWidth(context),
               color: AppTheme.getColor(context).onPrimary,
             ),
