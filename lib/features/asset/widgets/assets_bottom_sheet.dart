@@ -83,6 +83,7 @@ class _AssetsBottomSheetState extends State<AssetsBottomSheet> {
       mainAxisSize: MainAxisSize.min,
       children: [
         CustomText(
+          isKey: true,
           widget.heading,
           fontSize: 22 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,

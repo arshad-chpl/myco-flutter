@@ -44,7 +44,8 @@ class _AddAssets extends State<AddAssets> {
       // backgroundColor: const Color(0xFFF6F7FB),
       appBar: AppBar(
         title: CustomText(
-          'Add Assets',
+          isKey: true,
+          'add_assets',
           fontSize: 22 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
           color: AppTheme.getColor(context).onSurface,
@@ -142,13 +143,13 @@ class _AddAssets extends State<AddAssets> {
               LabelTextFieldWidget(
                 label: 'handover_date',
                 hintText: 'select',
-                image:AppAssets.imageNoteFavorite,
+                image: AppAssets.imageNoteFavorite,
                 controller: addAssetsControllers.handoverDateController,
               ),
 
               // -- Assets Image --
               CustomMediaPickerContainer(
-                imagePath:AppAssets.imageGalleryExport,
+                imagePath: AppAssets.imageGalleryExport,
                 imageTitle: 'assets_image',
                 multipleImage: 1,
                 title: 'assets_image',
@@ -189,7 +190,7 @@ class _AddAssets extends State<AddAssets> {
               //Submit button
               MyCoButton(
                 onTap: () {},
-                title: 'submit',
+                title: 'Submit',
                 isShadowBottomLeft: true,
                 boarderRadius: 50,
                 fontFamily: 'Gilroy-Bold',

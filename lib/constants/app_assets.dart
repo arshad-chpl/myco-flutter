@@ -63,19 +63,18 @@ class AppAssets {
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
 
   // assets folder
-  static const String assetsDollar = '$assets/dollar-square.png';
-  static const String assetsElementEqual = '$assets/element-equal.png';
-  static const String assetsElement = '$assets/element.png';
-  static const String assetsGroup = '$assets/group.png';
-  static const String assetsPasswordCheck = '$assets/password-check.png';
-  static const String assetsShoppingBag = '$assets/shopping-bag.png';
-  static const String assetsStickyNote = '$assets/stickynote.png';
-  static const String assetsSimCard = '$assets/simcard.png';
-  static const String assetsVector = '$assets/Vector.png';
-  static const String assetsUserTick = '$assets/user-tick.png';
+  static const String assetsDollar = '$assets/dollar-square.svg';
+  static const String assetsElementEqual = '$assets/element-equal.svg';
+  static const String assetsElement = '$assets/element.svg';
+  static const String assetsGroup = '$assets/group.svg';
+  static const String assetsPasswordCheck = '$assets/password-check.svg';
+  static const String assetsShoppingBag = '$assets/shopping-bag.svg';
+  static const String assetsStickyNote = '$assets/stickynote.svg';
+  static const String assetsSimCard = '$assets/simcard.svg';
+  static const String assetsVector = '$assets/Vector.svg';
+  static const String assetsUserTick = '$assets/user-tick.svg';
 
   static const String lostFoundData = '$lostFound/data.png';
   static const String lostFoundMessageEdit = '$lostFound/message-edit.png';
   static const String location = '$basePath/take_order/location.png';
-
 }

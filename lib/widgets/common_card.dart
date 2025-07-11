@@ -113,6 +113,7 @@ class CommonCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomText(
+                      isKey: true,
                       title,
                       color: AppTheme.getColor(context).onPrimary,
                       fontSize: 18 * Responsive.getResponsiveText(context),
@@ -120,6 +121,7 @@ class CommonCard extends StatelessWidget {
                     ),
                     if (secondTitle != null)
                       CustomText(
+                        isKey: true,
                         '$secondTitle',
                         color: AppTheme.getColor(context).onPrimary,
                         fontSize: 18 * Responsive.getResponsiveText(context),
@@ -138,6 +140,7 @@ class CommonCard extends StatelessWidget {
 
                           Expanded(
                             child: CustomText(
+                              isKey: true,
                               '$subTitle',
                               color: AppTheme.getColor(context).onPrimary,
                               fontSize:

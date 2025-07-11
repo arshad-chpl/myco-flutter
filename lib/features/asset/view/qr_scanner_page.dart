@@ -20,7 +20,8 @@ class _QRScannerPageState extends State<QRScannerPage> {
     return Scaffold(
       appBar: CustomAppbar(
         title: CustomText(
-          'Scan Asset',
+          isKey: true,
+          'scan_asset',
           fontSize: 22 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
         ),

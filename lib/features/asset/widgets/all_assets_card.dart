@@ -41,10 +41,10 @@ class AllAssetsListPage extends StatelessWidget {
               handoverImageList: [
                 'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
                 'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-              AppAssets.imageLaptop, 
-              AppAssets.imageLaptop
+                AppAssets.imageLaptop,
+                AppAssets.imageLaptop,
               ],
-              image: AppAssets.imageLaptop, 
+              image: AppAssets.imageLaptop,
             ),
           );
         } else {
@@ -52,7 +52,7 @@ class AllAssetsListPage extends StatelessWidget {
             onEditTap: () => context.push('/edit-assets'),
             title: 'Desktop',
             subTitle: '(AS101)',
-            image: AppAssets.imageLaptop, 
+            image: AppAssets.imageLaptop,
             brand: 'Dell',
             srNo: 'DELL123456',
             category: 'Desktop',
@@ -63,10 +63,10 @@ class AllAssetsListPage extends StatelessWidget {
               handoverImageList: [
                 'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
                 'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-               AppAssets.imageLaptop, 
-               AppAssets.imageLaptop
+                AppAssets.imageLaptop,
+                AppAssets.imageLaptop,
               ],
-              image: AppAssets.imageLaptop, 
+              image: AppAssets.imageLaptop,
             ),
           );
         }
@@ -187,7 +187,7 @@ class AllAssetsCard extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: AssetsVerticalData(
-                                  title: 'Brand',
+                                  title: 'brand',
                                   data: brand,
                                 ),
                               ),
@@ -198,7 +198,7 @@ class AllAssetsCard extends StatelessWidget {
                               ),
                               Expanded(
                                 child: AssetsVerticalData(
-                                  title: 'Brand',
+                                  title: 'brand',
                                   data: brand,
                                 ),
                               ),
@@ -210,7 +210,7 @@ class AllAssetsCard extends StatelessWidget {
                               spaceBetweenData ??
                               0.02 * Responsive.getHeight(context),
                         ),
-                        AssetsVerticalData(title: 'Sr.No./MAC/Sim', data: srNo),
+                        AssetsVerticalData(title: 'sr_no', data: srNo),
                         if (custodian != null)
                           SizedBox(
                             height:
@@ -219,7 +219,7 @@ class AllAssetsCard extends StatelessWidget {
                           ),
                         if (custodian != null)
                           AssetsVerticalData(
-                            title: 'Custodian',
+                            title: 'custodian',
                             data: custodian ?? '',
                           ),
                       ],
@@ -234,24 +234,10 @@ class AllAssetsCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Created By',
-                        style: TextStyle(
-                          fontFamily: 'Gilroy-Bold',
-                          fontStyle: FontStyle.italic,
-                          fontSize: 18 * Responsive.getResponsiveText(context),
-                        ),
-                      ),
-                      CustomText(
-                        createdBy,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18 * Responsive.getResponsiveText(context),
-                      ),
-                    ],
+                  child: AssetsVerticalData(
+                    title: 'created_by',
+                    data: createdBy,
+                    titleFontStyle: FontStyle.italic,
                   ),
                 ),
                 MyCoButton(

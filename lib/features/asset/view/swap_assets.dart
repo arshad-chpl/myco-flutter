@@ -23,7 +23,8 @@ class _SwapAssetsPageState extends State<SwapAssetsPage> {
       // backgroundColor: const Color(0xFFF6F7FB),
       appBar: AppBar(
         title: CustomText(
-          'Swap Assets',
+          isKey: true,
+          'swap_asset',
           fontSize: 22 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
         ),
@@ -38,14 +39,14 @@ class _SwapAssetsPageState extends State<SwapAssetsPage> {
         child: Column(
           children: [
             LabelTextFieldWidget(
-              label: 'Custodian',
-              hintText: 'Select',
+              label: 'custodian',
+              hintText: 'select',
               image: AppAssets.assetsUserTick,
               controller: custodian1,
             ),
             LabelTextFieldWidget(
-              label: 'Custodian',
-              hintText: 'Select',
+              label: 'custodian',
+              hintText: 'select',
               image: AppAssets.assetsElement,
               controller: custodian2,
             ),

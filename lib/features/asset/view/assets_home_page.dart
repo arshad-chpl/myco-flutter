@@ -29,7 +29,8 @@ class AssetsHomePage extends StatelessWidget {
         backgroundColor: AppTheme.getColor(context).surface,
         appBar: CustomAppbar(
           title: CustomText(
-            'Assets',
+            isKey: true,
+            'assets',
             fontSize: 22 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w700,
           ),
@@ -50,7 +51,8 @@ class AssetsHomePage extends StatelessWidget {
                       color: AppTheme.getColor(context).onSurface,
                     ),
                     CustomText(
-                      'Add Assets',
+                      isKey: true,
+                      'add_assets',
                       fontSize: 16 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w600,
                     ),
@@ -260,6 +262,7 @@ class AssetsHomePage extends StatelessWidget {
         children: [
           Expanded(
             child: CustomText(
+              isKey: true,
               title,
               fontWeight: FontWeight.w600,
               color: AppTheme.getColor(context).secondary,

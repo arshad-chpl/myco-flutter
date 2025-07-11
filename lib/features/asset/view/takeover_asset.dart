@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -59,7 +60,8 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
       // backgroundColor: const Color(0xFFF6F7FB),
       appBar: AppBar(
         title: CustomText(
-          'Takeover Assets',
+          isKey: true,
+          'takeover_assets',
           fontSize: 22 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
         ),
@@ -80,22 +82,22 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     LabelTextFieldWidget(
-                      label: 'Takeover Date',
-                      hintText: 'Select',
+                      label: 'takeover_date',
+                      hintText: 'select',
                       image: AppAssets.imageNoteFavorite,
                       controller: takeoverController.takeoverDateController,
                     ),
                     LabelTextFieldWidget(
-                      label: 'Takeover Remark',
-                      hintText: 'Type Here',
+                      label: 'takeover_remark',
+                      hintText: 'type_here',
                       image: AppAssets.lostFoundMessageEdit,
                       controller: takeoverController.takeoverRemarkController,
                     ),
 
                     CustomMediaPickerContainer(
-                      title: 'Takeover Assets Image',
-                      imagePath:AppAssets.imageGalleryExport,
-                      imageTitle: 'Attach Asset Images',
+                      title: 'takeover_assets_image',
+                      imagePath: AppAssets.imageGalleryExport,
+                      imageTitle: 'attach_Image',
                       multipleImage: 5,
                       isCameraShow: true,
                       isGalleryShow: true,
@@ -122,7 +124,8 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                     SizedBox(height: 0.024 * Responsive.getHeight(context)),
 
                     CustomText(
-                      'Handover Asset to Other Employee',
+                      isKey: true,
+                      'handover_asset_to_other_employee',
                       fontSize: 16 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w600,
                       color: AppTheme.getColor(context).onSurfaceVariant,
@@ -200,32 +203,32 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                       SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
                       LabelTextFieldWidget(
-                        label: 'Handover Date',
-                        hintText: 'Select',
+                        label: 'handover_date',
+                        hintText: 'select',
                         image: AppAssets.imageNoteFavorite,
                         controller: takeoverController.handoverDateController,
                       ),
                       LabelTextFieldWidget(
-                        label: 'Branch',
-                        hintText: 'Select',
+                        label: 'branch',
+                        hintText: 'select',
                         image: AppAssets.lostFoundData,
                         controller: takeoverController.branchController,
                       ),
                       LabelTextFieldWidget(
-                        label: 'Department',
-                        hintText: 'Select',
+                        label: 'departement',
+                        hintText: 'select',
                         image: AppAssets.imageNoteFavorite,
                         controller: takeoverController.departmentController,
                       ),
                       LabelTextFieldWidget(
-                        label: 'Custodian',
-                        hintText: 'Select',
+                        label: 'custodian',
+                        hintText: 'select',
                         image: AppAssets.assetsUserTick,
                         controller: takeoverController.custodianController,
                       ),
 
                       CustomText(
-                        'Condition Type',
+                        'condition_type',
                         fontSize: 16 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w600,
                         color: AppTheme.getColor(context).onSurfaceVariant,
@@ -253,8 +256,8 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Image.asset(
-                              AppAssets.assetsElementEqual,
+                              SvgPicture.asset(
+                                AppAssets.assetsElementEqual,
                                 height: 0.06 * Responsive.getWidth(context),
                                 fit: BoxFit.contain,
                               ),
@@ -264,7 +267,8 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                               ),
                               Expanded(
                                 child: CustomText(
-                                  selectedConditionType ?? 'Type Type',
+                                  isKey: true,
+                                  selectedConditionType ?? 'type',
                                   color: selectedConditionType == null
                                       ? AppColors.gray
                                       : AppTheme.getColor(context).onSurface,
@@ -285,16 +289,16 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                       SizedBox(height: 0.024 * Responsive.getHeight(context)),
 
                       LabelTextFieldWidget(
-                        label: 'Handover Remark',
-                        hintText: 'Type Here',
+                        label: 'handover_remark',
+                        hintText: 'type_here',
                         image: AppAssets.lostFoundMessageEdit,
                         controller: takeoverController.handoverRemarkController,
                       ),
 
                       CustomMediaPickerContainer(
-                        title: 'Assets Image',
+                        title: 'assets_image',
                         imagePath: AppAssets.imageGalleryExport,
-                        imageTitle: 'Attach Asset Images',
+                        imageTitle: 'attach_Image',
                         multipleImage: 1,
                         isCameraShow: true,
                         isGalleryShow: true,

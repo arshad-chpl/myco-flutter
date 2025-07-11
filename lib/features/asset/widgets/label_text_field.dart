@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -25,6 +27,7 @@ class LabelTextFieldWidget extends StatelessWidget {
     children: [
       CustomText(
         label,
+        isKey: true,
         fontSize: 16 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w600,
         color: AppTheme.getColor(context).onSurfaceVariant,
@@ -33,7 +36,7 @@ class LabelTextFieldWidget extends StatelessWidget {
 
       MyCoTextfield(
         controller: controller,
-        hintText: hintText,
+        hintText: LanguageManager().get(hintText),
         boarderRadius: 10,
         textAlignment: TextAlign.start,
         hintTextStyle: TextStyle(
@@ -47,11 +50,16 @@ class LabelTextFieldWidget extends StatelessWidget {
           padding: EdgeInsets.all(
             16.0 * Responsive.getResponsive(context),
           ), // Adjust as needed
-          child: Image.asset(
-            image,
-            height: 0.01 * Responsive.getWidth(context),
-            fit: BoxFit.contain,
-          ),
+          child: image.endsWith('.svg')
+              ? SvgPicture.asset(
+                  image,
+                  height: 0.01 * Responsive.getWidth(context),
+                )
+              : Image.asset(
+                  image,
+                  height: 0.01 * Responsive.getWidth(context),
+                  fit: BoxFit.contain,
+                ),
         ),
         contentPadding: EdgeInsets.symmetric(
           vertical: 14 * Responsive.getResponsive(context),

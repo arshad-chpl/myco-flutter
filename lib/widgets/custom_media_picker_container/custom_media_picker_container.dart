@@ -64,6 +64,7 @@ class _CustomMediaPickerContainerState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
+            isKey: true,
             widget.title,
             fontSize:
                 widget.titleFontSize ?? 14 * Responsive.getResponsiveText(context),
@@ -235,6 +236,7 @@ class _CustomMediaPickerContainerState
                 ),
                 const SizedBox(height: 5),
                 CustomText(
+                  isKey: true,
                   widget.imageTitle,
                   fontSize: widget.imageTitleSize ??
                       16 * Responsive.getResponsiveText(context),

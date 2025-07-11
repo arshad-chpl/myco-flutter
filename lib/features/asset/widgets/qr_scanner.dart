@@ -104,7 +104,6 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                 borderRadius: BorderRadius.circular(widget.imageRadius ?? 10),
                 child: MobileScanner(
                   key: scannerKey,
-          
                   controller: controller,
                   onDetect: (barcodes) {
                     if (hasScanned) return;
@@ -128,7 +127,6 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
             child: MyCoButton(
               width: widget.buttonWidth ?? 200,
               backgroundColor: AppColors.white,
-
               onTap: pickImageAndScan,
               image:
                   widget.image ??
@@ -238,61 +236,3 @@ class CornerStylePainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:mobile_scanner/mobile_scanner.dart';
-
-// class QRScannerWidget extends StatefulWidget {
-//   final Function(String) onScanned;
-//   final double scannerFlex;
-//   final double resultFlex;
-
-//   const QRScannerWidget({
-//     Key? key,
-//     required this.onScanned,
-//     this.scannerFlex = 4,
-//     this.resultFlex = 1,
-//   }) : super(key: key);
-
-//   @override
-//   State<QRScannerWidget> createState() => _QRScannerWidgetState();
-// }
-
-// class _QRScannerWidgetState extends State<QRScannerWidget> {
-//   bool hasScanned = false;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         Expanded(
-//           flex: widget.scannerFlex.toInt(),
-//           child: MobileScanner(
-
-//             // allowDuplicates: false,
-//             onDetect: (barcodes) {
-//               if (hasScanned) return;
-
-//               for (final barcode in barcodes.barcodes) {
-//                 final String? code = barcode.rawValue;
-//                 if (code != null) {
-//                   setState(() => hasScanned = true);
-//                   widget.onScanned(code);
-//                 }
-//               }
-//             },
-//           ),
-//         ),
-//         Expanded(
-//           flex: widget.resultFlex.toInt(),
-//           child: Center(
-//             child: Text(
-//               hasScanned ? 'QR Code Scanned!' : 'Scan a QR code',
-//               style: const TextStyle(fontSize: 18),
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }

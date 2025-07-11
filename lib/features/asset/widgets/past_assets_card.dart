@@ -126,13 +126,13 @@ class PastAssetsCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AssetsVerticalData(title: 'Brand', data: brand),
+                        AssetsVerticalData(title: 'brand', data: brand),
                         SizedBox(
                           height:
                               spaceBetweenData ??
                               0.02 * Responsive.getHeight(context),
                         ),
-                        AssetsVerticalData(title: 'Sr.No./MAC/Sim', data: srNo),
+                        AssetsVerticalData(title: 'sr_no', data: srNo),
                         SizedBox(
                           height:
                               spaceBetweenData ??
@@ -143,7 +143,7 @@ class PastAssetsCard extends StatelessWidget {
                             if (handoverImageList.isEmpty)
                               Expanded(
                                 child: AssetsVerticalData(
-                                  title: 'Handover',
+                                  title: 'handover',
                                   data: handover,
                                 ),
                               ),
@@ -155,7 +155,7 @@ class PastAssetsCard extends StatelessWidget {
                             if (takeoverImageList.isEmpty)
                               Expanded(
                                 child: AssetsVerticalData(
-                                  title: 'Takeover',
+                                  title: 'takeover',
                                   data: takeover,
                                 ),
                               ),
@@ -176,7 +176,7 @@ class PastAssetsCard extends StatelessWidget {
                   SizedBox(
                     width: 0.36 * Responsive.getWidth(context),
                     child: AssetsVerticalData(
-                      title: 'Handover',
+                      title: 'handover',
                       data: handover,
                     ),
                   ),
@@ -201,7 +201,7 @@ class PastAssetsCard extends StatelessWidget {
                   SizedBox(
                     width: 0.36 * Responsive.getWidth(context),
                     child: AssetsVerticalData(
-                      title: 'Takeover',
+                      title: 'takeover',
                       data: takeover,
                     ),
                   ),

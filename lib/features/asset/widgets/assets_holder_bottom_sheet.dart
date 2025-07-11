@@ -124,7 +124,8 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
                               const SizedBox(width: 16),
                               Expanded(
                                 child: CustomText(
-                                  'Not assigned to any user',
+                                  isKey: true,
+                                  'not_assigned_to_any_user',
                                   fontWeight: FontWeight.w700,
                                   color: AppTheme.getColor(context).primary,
                                 ),
@@ -190,7 +191,7 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     AssetsVerticalData(
-                                      title: 'Brand',
+                                      title: 'brand',
                                       data: brand,
                                     ),
                                     SizedBox(
@@ -198,7 +199,7 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
                                           0.02 * Responsive.getHeight(context),
                                     ),
                                     AssetsVerticalData(
-                                      title: 'Sr.No./MAC/Sim',
+                                      title: 'sr_no',
                                       data: srNo,
                                     ),
                                     SizedBox(
@@ -207,7 +208,7 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
                                     ),
                                     if (handoverImageList.isEmpty)
                                       AssetsVerticalData(
-                                        title: 'Handover',
+                                        title: 'handover',
                                         data: handover,
                                       ),
                                   ],
@@ -223,7 +224,7 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
                               SizedBox(
                                 width: 0.36 * Responsive.getWidth(context),
                                 child: AssetsVerticalData(
-                                  title: 'Handover',
+                                  title: 'handover',
                                   data: handover,
                                 ),
                               ),
@@ -249,7 +250,7 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
                               SizedBox(
                                 width: 0.36 * Responsive.getWidth(context),
                                 child: AssetsVerticalData(
-                                  title: 'Takeover',
+                                  title: 'takeover',
                                   data: takeover ?? '',
                                 ),
                               ),
@@ -311,13 +312,13 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             AssetsVerticalData(
-                              title: 'Takeover Date',
+                              title: 'takeover_date',
                               data: takeoverDate,
                               titleColor: AppTheme.getColor(context).primary,
                             ),
                             AssetsVerticalData(
                               titleColor: AppTheme.getColor(context).primary,
-                              title: 'Handover Date',
+                              title: 'handover_date',
                               data: handoverDate,
                             ),
                           ],
@@ -391,12 +392,14 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
+            isKey: true,
             title,
             fontSize: 20 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w700,
             color: AppTheme.getColor(context).primary,
           ),
           CustomText(
+            isKey: true,
             subTitle,
             fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,

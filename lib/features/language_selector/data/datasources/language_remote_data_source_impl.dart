@@ -51,6 +51,7 @@ class LanguageRemoteDataSourceImpl implements LanguageRemoteDataSource {
         final preference = GetIt.I<PreferenceManager>();
         preference.writeString(VariableBag.appLanguage, jsonEncode(jsonMap));
         preference.setLanguageId(languageId);
+        // load language 6
         LanguageManager().loadTranslations(jsonMap);
         return true;
       } else {

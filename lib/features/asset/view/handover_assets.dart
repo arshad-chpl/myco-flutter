@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -54,7 +55,8 @@ class _HandoverAssetsPageState extends State<HandoverAssetsPage> {
       // backgroundColor: const Color(0xFFF6F7FB),
       appBar: AppBar(
         title: CustomText(
-          'Handover Assets',
+          isKey: true,
+          'handover_assets',
           fontSize: 22 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
         ),
@@ -72,32 +74,33 @@ class _HandoverAssetsPageState extends State<HandoverAssetsPage> {
 
             children: [
               LabelTextFieldWidget(
-                label: 'Handover Date',
-                hintText: 'Select',
+                label: 'handover_date',
+                hintText: 'select',
                 image: AppAssets.imageNoteFavorite,
                 controller: handoverController.takeoverDateController,
               ),
               LabelTextFieldWidget(
-                label: 'Branch',
-                hintText: 'Select',
+                label: 'branch',
+                hintText: 'select',
                 image: AppAssets.lostFoundData,
                 controller: handoverController.branchController,
               ),
               LabelTextFieldWidget(
-                label: 'Department',
-                hintText: 'Select',
+                label: 'departement',
+                hintText: 'select',
                 image: AppAssets.imageNoteFavorite,
                 controller: handoverController.departmentController,
               ),
               LabelTextFieldWidget(
-                label: 'Custodian',
-                hintText: 'Select',
+                label: 'custodian',
+                hintText: 'select',
                 image: AppAssets.assetsUserTick,
                 controller: handoverController.custodianController,
               ),
 
               CustomText(
-                'Condition Type',
+                isKey: true,
+                'condition_type',
                 fontSize: 16 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
                 color: AppTheme.getColor(context).onSurfaceVariant,
@@ -125,7 +128,7 @@ class _HandoverAssetsPageState extends State<HandoverAssetsPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset(
+                      SvgPicture.asset(
                         AppAssets.assetsElementEqual,
                         height: 0.06 * Responsive.getWidth(context),
                         fit: BoxFit.contain,
@@ -133,7 +136,7 @@ class _HandoverAssetsPageState extends State<HandoverAssetsPage> {
                       SizedBox(width: 12 * Responsive.getResponsive(context)),
                       Expanded(
                         child: CustomText(
-                          selectedConditionType ?? 'Type Type',
+                          selectedConditionType ?? 'types',
                           color: selectedConditionType == null
                               ? AppColors.gray
                               : AppTheme.getColor(context).onSurface,
@@ -152,16 +155,16 @@ class _HandoverAssetsPageState extends State<HandoverAssetsPage> {
               SizedBox(height: 0.024 * Responsive.getHeight(context)),
 
               LabelTextFieldWidget(
-                label: 'Handover Remark',
-                hintText: 'Type Here',
+                label: 'handover_remark',
+                hintText: 'type_here',
                 image: AppAssets.lostFoundMessageEdit,
                 controller: handoverController.handoverRemarkController,
               ),
 
               CustomMediaPickerContainer(
-                title: 'Assets Image',
+                title: 'assets_image',
                 imagePath: AppAssets.imageGalleryExport,
-                imageTitle: 'Attach Asset Images',
+                imageTitle: 'attach_Image',
                 multipleImage: 1,
                 isCameraShow: true,
                 isGalleryShow: true,

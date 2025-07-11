@@ -95,19 +95,19 @@ class ActiveAssetsCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AssetsVerticalData(title: 'Brand', data: brand),
+                  AssetsVerticalData(title: 'brand', data: brand),
                   SizedBox(
                     height:
                         spaceBetweenData ??
                         0.02 * Responsive.getHeight(context),
                   ),
-                  AssetsVerticalData(title: 'Sr.No./MAC/Sim', data: srNo),
+                  AssetsVerticalData(title: 'sr_no', data: srNo),
                   SizedBox(
                     height:
                         spaceBetweenData ??
                         0.02 * Responsive.getHeight(context),
                   ),
-                  AssetsVerticalData(title: 'Handover', data: handOverDate),
+                  AssetsVerticalData(title: 'handover', data: handOverDate),
                 ],
               ),
             ),
@@ -124,13 +124,14 @@ class AssetsVerticalData extends StatelessWidget {
   final Color? titleColor;
   final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisAlignment? mainAxisAlignment;
+  final FontStyle? titleFontStyle;
   const AssetsVerticalData({
     required this.title,
     required this.data,
     super.key,
     this.crossAxisAlignment,
     this.mainAxisAlignment,
-    this.titleColor,
+    this.titleColor, this.titleFontStyle,
   });
 
   @override
@@ -140,10 +141,12 @@ class AssetsVerticalData extends StatelessWidget {
     mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
     children: [
       CustomText(
+        isKey: true,
         title,
         color: titleColor,
         fontSize: 18 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
+        fontStyle: titleFontStyle,
       ),
       CustomText(
         data,

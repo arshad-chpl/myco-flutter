@@ -159,7 +159,7 @@ class _MyCoTextfieldState extends State<MyCoTextfield> {
     prefixImageHeight: widget.prefixImageHeight,
     prefixImageWidth: widget.prefixImageWidth,
     maxLenght: widget.maxLenght,
-    textAlignment: widget.textAlignment??TextAlign.start,
+    textAlignment: widget.textAlignment ?? TextAlign.start,
     inputFormater: widget.inputFormater,
     border: widget.border,
     suffix: widget.suffix,

@@ -21,7 +21,8 @@ class AssetsDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          'Assets Details',
+          isKey: true,
+          'assets_details',
           fontSize: 22 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
         ),
@@ -40,7 +41,8 @@ class AssetsDetailsPage extends StatelessWidget {
                   color: AppTheme.getColor(context).onSurface,
                 ),
                 CustomText(
-                  'Handover Assets',
+                  isKey: true,
+                  'handover_assets',
                   fontSize: 16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w600,
                 ),
@@ -89,7 +91,8 @@ class AssetsDetailsPage extends StatelessWidget {
                   ],
                 ),
                 child: CustomText(
-                  'Assets History',
+                  isKey: true,
+                  'assets_history',
                   color: AppTheme.getColor(context).onPrimary,
                   fontSize: 20 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
@@ -139,7 +142,7 @@ class AssetsDetailsPage extends StatelessWidget {
                               SizedBox(
                                 width: 0.36 * Responsive.getWidth(context),
                                 child: const AssetsVerticalData(
-                                  title: 'Handover',
+                                  title: 'handover',
                                   data: '02-05-2025',
                                 ),
                               ),
@@ -152,8 +155,8 @@ class AssetsDetailsPage extends StatelessWidget {
                                   imageList: const [
                                     'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
                                     'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                                   AppAssets.imageLaptop, 
-                                   AppAssets.imageLaptop
+                                    AppAssets.imageLaptop,
+                                    AppAssets.imageLaptop,
                                   ],
                                 ),
                               ),
@@ -255,7 +258,7 @@ class AssetsDetailsPage extends StatelessWidget {
                               SizedBox(
                                 width: 0.36 * Responsive.getWidth(context),
                                 child: const AssetsVerticalData(
-                                  title: 'Handover',
+                                  title: 'handover',
                                   data: '02-05-2025',
                                 ),
                               ),
@@ -268,8 +271,8 @@ class AssetsDetailsPage extends StatelessWidget {
                                   imageList: const [
                                     'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
                                     'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                                   AppAssets.imageLaptop, 
-                                   AppAssets.imageLaptop
+                                    AppAssets.imageLaptop,
+                                    AppAssets.imageLaptop,
                                   ],
                                 ),
                               ),
@@ -284,7 +287,7 @@ class AssetsDetailsPage extends StatelessWidget {
                               SizedBox(
                                 width: 0.36 * Responsive.getWidth(context),
                                 child: const AssetsVerticalData(
-                                  title: 'Takeover',
+                                  title: 'takeover',
                                   data: '02-05-2025',
                                 ),
                               ),
@@ -297,8 +300,8 @@ class AssetsDetailsPage extends StatelessWidget {
                                   imageList: const [
                                     'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
                                     'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                                  AppAssets.imageLaptop, 
-                                  AppAssets.imageLaptop
+                                    AppAssets.imageLaptop,
+                                    AppAssets.imageLaptop,
                                   ],
                                 ),
                               ),
@@ -307,20 +310,10 @@ class AssetsDetailsPage extends StatelessWidget {
                           SizedBox(
                             height: 0.015 * Responsive.getHeight(context),
                           ),
-                          Text(
-                            'Takeover By',
-                            style: TextStyle(
-                              fontFamily: 'Gilroy-Bold',
-                              fontStyle: FontStyle.italic,
-                              fontSize:
-                                  16 * Responsive.getResponsiveText(context),
-                            ),
-                          ),
-                          CustomText(
-                            'Parth Jadav',
-                            fontWeight: FontWeight.w500,
-                            fontSize:
-                                16 * Responsive.getResponsiveText(context),
+                          const AssetsVerticalData(
+                            title: 'takeover_by',
+                            data: 'Parth Jadav',
+                            titleFontStyle: FontStyle.italic,
                           ),
                         ],
                       ),
@@ -346,6 +339,7 @@ class AssetsDetailsPage extends StatelessWidget {
       SizedBox(
         width: 0.4 * Responsive.getWidth(context),
         child: CustomText(
+          isKey: true,
           title,
           color: AppTheme.getColor(context).onSurface,
           fontWeight: FontWeight.w700,
@@ -424,46 +418,19 @@ class AssetsDetailsPage extends StatelessWidget {
             children: [
               SizedBox(
                 width: 0.32 * Responsive.getWidth(context),
-                child: Column( 
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Created By',
-                      style: TextStyle(
-                        fontFamily: 'Gilroy-Bold',
-                        fontStyle: FontStyle.italic,
-                        fontSize: 18 * Responsive.getResponsiveText(context),
-                      ),
-                    ),
-                    CustomText(
-                      'Parth Jadav',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18 * Responsive.getResponsiveText(context),
-                    ),
-                  ],
+                child: const AssetsVerticalData(
+                  title: 'created_by',
+                  data: 'Parth Jadav',
+                  titleFontStyle: FontStyle.italic,
                 ),
               ),
               const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+              const Expanded(
+                child: AssetsVerticalData(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Created Date',
-                      style: TextStyle(
-                        fontFamily: 'Gilroy-Bold',
-                        fontStyle: FontStyle.italic,
-                        fontSize: 18 * Responsive.getResponsiveText(context),
-                      ),
-                    ),
-                    CustomText(
-                      '22nd May 2025, 06:20 PM',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18 * Responsive.getResponsiveText(context),
-                    ),
-                  ],
+                  title: 'created_date',
+                  data: '22nd May 2025, 06:30 PM',
+                  titleFontStyle: FontStyle.italic,
                 ),
               ),
             ],
@@ -472,18 +439,14 @@ class AssetsDetailsPage extends StatelessWidget {
             color: AppTheme.getColor(context).secondary,
             height: 25 * Responsive.getResponsive(context),
           ),
-          rowData(context: context, title: 'Category', data: 'Desktop'),
+          rowData(context: context, title: 'category', data: 'Desktop'),
           SizedBox(height: 0.012 * Responsive.getHeight(context)),
-          rowData(context: context, title: 'Brand Name', data: 'Dell'),
-          rowData(
-            context: context,
-            title: 'Sr.No./MAC/SIM',
-            data: 'sansxbnaisn',
-          ),
+          rowData(context: context, title: 'brand_name', data: 'Dell'),
+          rowData(context: context, title: 'sr_no', data: 'sansxbnaisn'),
           SizedBox(height: 0.012 * Responsive.getHeight(context)),
-          rowData(context: context, title: 'Purchase Date', data: '21-05-2025'),
+          rowData(context: context, title: 'purchase_date', data: '21-05-2025'),
           SizedBox(height: 0.012 * Responsive.getHeight(context)),
-          rowData(context: context, title: 'Item Price', data: '₹ 500.00'),
+          rowData(context: context, title: 'item_price', data: '₹ 500.00'),
           Divider(
             color: AppTheme.getColor(context).secondary,
             height: 25 * Responsive.getResponsive(context),
@@ -491,25 +454,11 @@ class AssetsDetailsPage extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Created By',
-                      style: TextStyle(
-                        fontFamily: 'Gilroy-Bold',
-                        fontStyle: FontStyle.italic,
-                        fontSize: 18 * Responsive.getResponsiveText(context),
-                      ),
-                    ),
-                    CustomText(
-                      'Parth Jadav',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18 * Responsive.getResponsiveText(context),
-                    ),
-                  ],
+              const Expanded(
+                child: AssetsVerticalData(
+                  title: 'created_by',
+                  data: 'Parth Jadav',
+                  titleFontStyle: FontStyle.italic,
                 ),
               ),
               GestureDetector(
@@ -533,7 +482,8 @@ class AssetsDetailsPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           CustomText(
-                            'Attachment',
+                            isKey: true,
+                            'attachment',
                             fontSize:
                                 22 * Responsive.getResponsiveText(context),
                             fontWeight: FontWeight.w600,
@@ -574,9 +524,7 @@ class AssetsDetailsPage extends StatelessWidget {
                                       ),
                                     ),
                                     child: Center(
-                                      child: Image.asset(
-                                        AppAssets.imageLaptop
-                                      ),
+                                      child: Image.asset(AppAssets.imageLaptop),
                                     ),
                                   ),
                                   SizedBox(
@@ -584,7 +532,8 @@ class AssetsDetailsPage extends StatelessWidget {
                                         0.01 * Responsive.getHeight(context),
                                   ),
                                   CustomText(
-                                    'File Name',
+                                    isKey: true,
+                                    'file_name',
                                     maxLines: 1,
                                     fontSize:
                                         18 *
@@ -620,7 +569,8 @@ class AssetsDetailsPage extends StatelessWidget {
                   );
                 },
                 child: CustomText(
-                  'INVOICE',
+                  isKey: true,
+                  'invoice',
                   fontWeight: FontWeight.w700,
                   color: AppTheme.getColor(context).primary,
                   decoration: TextDecoration.underline,
@@ -677,12 +627,14 @@ class AssetsDetailsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
+            isKey: true,
             title,
             fontSize: 20 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w700,
             color: AppTheme.getColor(context).primary,
           ),
           CustomText(
+            isKey: true,
             subTitle,
             fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,
