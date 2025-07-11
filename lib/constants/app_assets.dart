@@ -1,6 +1,7 @@
 class AppAssets {
   // commmon paths for visit in the application
   static const String basePath = 'assets';
+
   // static const String fontsPath = '$basePath/fonts';
   static const String imagesPath = '$basePath/images';
   static const String svgsPath = '$basePath/svgs';
@@ -8,6 +9,8 @@ class AppAssets {
   static const String iconsPath = '$basePath/icons';
   static const String splash = '$basePath/splash';
   static const String assetVisit = '$basePath/add_expense';
+  static const String employees = '$basePath/employees';
+  static const String stepper = '$basePath/stepper';
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -51,4 +54,10 @@ class AppAssets {
   static const String assetVector = '$assetVisit/Vector.svg';
   static const String assetDocumentText = '$assetVisit/document-text.svg';
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
+
+  //images employees
+  static const String downArrow = '$employees/down_arrow.png';
+
+  //images stepper
+  static const String rightIcon = '$stepper/right.png';
 }

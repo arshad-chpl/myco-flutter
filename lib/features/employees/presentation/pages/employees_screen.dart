@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -61,7 +62,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
       appBar: CustomAppbar(
         leading: const Icon(CupertinoIcons.arrow_left, size: 20),
         title: CustomText(
-          branchController.text.isEmpty ? 'Branch' : branchController.text,
+          branchController.text.isEmpty ? 'branch' : branchController.text,
           fontSize: 18 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
         ),
@@ -100,9 +101,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                         final selectedId = await showCustomSimpleBottomSheet(
                           context: context,
                           heading: 'Select Branch',
-                          icon: const AssetImage(
-                            'assets/employees/down_arrow.png',
-                          ),
+                          icon: const AssetImage(AppAssets.downArrow),
                           dataList: branches,
                         );
                         if (selectedId != null) {
@@ -255,6 +254,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                 },
               ),
             ),
+
             // CommonCard(
             //   title: 'Reporting Person',
             //   bottomWidget: Row(
@@ -298,23 +298,22 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
             //     ],
             //   ),
             // ),
-
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: CustomMediaPickerContainer(
-            //     title: 'Assets Image',
-            //     titleFontSize: 14,
-            //     imageTitle: 'Capture Image',
-            //     containerHeight: 100,
-            //     multipleImage: 5,
-            //     imagePath: 'assets/media_picker/gallery-export.png',
-            //     backgroundColor: Colors.blue.shade50,
-            //     isCameraShow: true,
-            //     isGalleryShow: true,
-            //     isDocumentShow: true,
-            //     isCropImage: true,
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomMediaPickerContainer(
+                title: 'Assets Image',
+                titleFontSize: 14,
+                imageTitle: 'Capture Image',
+                containerHeight: 100,
+                multipleImage: 5,
+                imagePath: 'assets/media_picker/gallery-export.png',
+                backgroundColor: Colors.blue.shade50,
+                isCameraShow: true,
+                isGalleryShow: true,
+                isDocumentShow: true,
+                isCropImage: true,
+              ),
+            ),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_inner_shadow.dart';
@@ -177,7 +178,7 @@ class _MainStepWidget extends StatelessWidget {
       case StepStatus.approved:
       case StepStatus.completed:
         return Image.asset(
-          'assets/stepper/right.png',
+          AppAssets.rightIcon,
           height: 17,
           width: 17,
           color: AppColors.white,
