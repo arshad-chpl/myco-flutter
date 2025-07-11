@@ -259,56 +259,46 @@ class _VisitWithState extends State<AssignedTo> {
               // Employee selection grid
                SizedBox(
                 height: Responsive.getHeight(context) * 0.48,
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    final screenWidth = constraints.maxWidth;
-                    final spacing = 12.0 * Responsive.getResponsive(context);
-                    final itemCount = screenWidth > 1200
-                        ? 12
-                        : screenWidth > 900
-                        ? 9
-                        : screenWidth > 500
-                        ? 5
-                        : screenWidth > 400
-                        ? 4
-                        : 3;
-                    final itemWidth =
-                        (screenWidth - (spacing * (itemCount - 1))) / itemCount;
-                    final itemHeight = screenWidth > 500 ? 170.0 : 143.0;
-                    final childAspectRatio = itemWidth / itemHeight;
+                 child: LayoutBuilder(
+                   builder: (context, constraints) => GridView.builder(
+                       padding: const EdgeInsets.all(5),
+                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                         crossAxisCount: Responsive.getGridConfig(context ,screenWide: constraints.maxWidth ).itemCount,
+                         mainAxisSpacing: Responsive.getGridConfig(context, screenWide: constraints.maxWidth).spacing,
+                         crossAxisSpacing: Responsive.getGridConfig(context, screenWide: constraints.maxWidth).spacing,
+                         childAspectRatio: Responsive.getGridConfig(
+                             context,screenWide: constraints.maxWidth
+                         ).childAspectRatio,
+                       ),
+                       itemCount: employees.length,
+                       itemBuilder: (context, index) {
 
-                    return GridView.builder(
-                      padding: const EdgeInsets.all(5),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: itemCount,
-                        crossAxisSpacing: spacing,
-                        mainAxisSpacing: spacing,
-                        childAspectRatio: childAspectRatio,
-                      ),
-                      itemCount: employees.length,
-                      itemBuilder: (context, index) {
-                        final emp = employees[index];
-                        return EmployeeSelectionCard(
-                          selectedColor: const Color.fromARGB(255, 148, 47, 47),
-                          name: emp['name']!,
-                          department: emp['role']!,
-                          image: NetworkImage(emp['image']!),
-                          showDelete: false,
-                          isSelected: selectedEmployeeIndexes.contains(index),
-                          onSelected: (value) {
-                            setState(() {
-                              if (selectedEmployeeIndexes.contains(index)) {
-                                selectedEmployeeIndexes.remove(index);
-                              } else {
-                                selectedEmployeeIndexes.add(index);
-                              }
-                            });
-                          },
-                        );
-                      },
-                    );
-                  },
-                ),
+                         final emp = employees[index];
+                         return EmployeeSelectionCard(
+                           selectedColor: const Color.fromARGB(
+                             255,
+                             89,
+                             129,
+                             161,
+                           ),
+                           name: emp['name']!,
+                           department: emp['role']!,
+                           image: NetworkImage(emp['image']!),
+                           showDelete: false,
+                           isSelected: selectedEmployeeIndexes.contains(index),
+                           onSelected: (value) {
+                             setState(() {
+                               if (selectedEmployeeIndexes.contains(index)) {
+                                 selectedEmployeeIndexes.remove(index);
+                               } else {
+                                 selectedEmployeeIndexes.add(index);
+                               }
+                             });
+                           },
+                         );
+                       },
+                     ),
+                 ),
               ),
 
               //Add button

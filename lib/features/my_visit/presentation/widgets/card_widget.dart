@@ -74,10 +74,10 @@ class EmployeeSelectionCard extends StatelessWidget {
       children: [
         Container(
           padding:
-              boxPadding ??
+          boxPadding ??
               const EdgeInsets.only(top: 12, left: 16, right: 24, bottom: 2),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFFEEF7FD) : Colors.white,
+            color: isSelected ? const Color(0xffEEF7FD) : Colors.white,
             borderRadius: BorderRadius.circular(borderRadius ?? 20),
             border: Border.all(
               color: isSelected
@@ -101,6 +101,7 @@ class EmployeeSelectionCard extends StatelessWidget {
                     width: imageWidth ?? 80,
                     height: imageHeight ?? 80,
                     child: Stack(
+                      fit: StackFit.expand,
                       children: [
                         Container(
                           width: imageWidth ?? 100,
@@ -111,15 +112,16 @@ class EmployeeSelectionCard extends StatelessWidget {
                             gradient: LinearGradient(
                               colors: isSelected
                                   ? [
-                                      selectedColor ?? AppColors.primary,
-                                      (selectedColor ?? AppColors.primary).withAlpha(150),
-                                      Colors.white,
-                                    ]
+                                selectedColor ?? AppColors.primary,
+                                (selectedColor ?? AppColors.primary)
+                                    .withAlpha(150),
+                                Colors.white,
+                              ]
                                   : [
-                                      Colors.grey.shade400,
-                                      Colors.grey.shade300,
-                                      Colors.white,
-                                    ],
+                                Colors.grey.shade400,
+                                Colors.grey.shade300,
+                                Colors.white,
+                              ],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                             ),
@@ -158,14 +160,14 @@ class EmployeeSelectionCard extends StatelessWidget {
                               gradient: LinearGradient(
                                 colors: isSelected
                                     ? [
-                                        AppColors.primary,
-                                        AppColors.primary.withAlpha(150),
-                                        Colors.white,
-                                      ]
+                                  AppColors.primary,
+                                  AppColors.primary.withAlpha(150),
+                                  Colors.white,
+                                ]
                                     : [
-                                        Colors.grey.shade400,
-                                        Colors.grey.shade400,
-                                      ],
+                                  Colors.grey.shade400,
+                                  Colors.grey.shade400,
+                                ],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                               ),
@@ -187,18 +189,20 @@ class EmployeeSelectionCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 0.0020 * Responsive.getHeight(context)),
+              SizedBox(height: 0.010 * Responsive.getHeight(context)),
               CustomText(
                 name,
                 fontSize: 12 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
+                overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(height: 0.0010 * Responsive.getHeight(context)),
+              SizedBox(height: 0.002 * Responsive.getHeight(context)),
               CustomText(
                 department,
                 fontSize: 12 * Responsive.getResponsiveText(context),
                 color: AppColors.textPrimary,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),

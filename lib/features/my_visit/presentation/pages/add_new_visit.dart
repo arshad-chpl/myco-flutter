@@ -70,7 +70,8 @@ class _AddNewVisitState extends State<AddNewVisit> {
               borderColor: AppTheme.getColor(context).primary,
               options: visitTypes,
               selectedValue: selectedVisitType,
-              onChanged: (value) => setState(() => selectedVisitType = value),
+              onChanged: (value) =>
+                  setState(() => selectedVisitType = value),
             ),
             CustomText(
               'Customer to visit',

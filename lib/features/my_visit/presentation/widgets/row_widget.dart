@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -24,7 +25,7 @@ class LabelRow extends StatelessWidget {
       child: Row(
         children: [
           CustomText(
-            title,
+              LanguageManager().get('${title}'),
             fontWeight: FontWeight.w700,
             fontSize: 15 * Responsive.getResponsiveText(context),
             color: AppTheme.getColor(context).onSurfaceVariant
@@ -40,7 +41,8 @@ class LabelRow extends StatelessWidget {
           ),
           SizedBox(width: 0.01 * Responsive.getWidth(context)),
           CustomText(
-            actionLabel,
+            LanguageManager().get('${actionLabel}'),
+            isKey: true,
             fontWeight: FontWeight.w700,
             fontSize: 15 * Responsive.getResponsiveText(context),
             color:AppTheme.getColor(context).onSurfaceVariant,

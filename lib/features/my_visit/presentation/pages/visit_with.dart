@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -65,272 +66,247 @@ class _VisitWithState extends State<VisitWith> {
   ];
 
   @override
-  Widget build(BuildContext context) {
-    double multiplier = Responsive.getResponsiveText(context);
-    return SafeArea(
+  Widget build(BuildContext context) => SafeArea(
       child: Container(
         padding: EdgeInsets.only(
-          left: 20 * multiplier,
-          right: 20 * multiplier,
-          top: 20 * multiplier,
-          bottom: 5 * multiplier,
+          left: 20 *  Responsive.getResponsiveText(context),
+          right: 20 *  Responsive.getResponsiveText(context),
+          top: 20 *  Responsive.getResponsiveText(context),
+          bottom: 5 *  Responsive.getResponsiveText(context),
         ),
-        height: MediaQuery.of(context).size.height * 0.97,
-        width: MediaQuery.of(context).size.width * 1,
-        child: Stack(
-          fit: StackFit.expand,
+        height: Responsive.getHeight(context) * 0.97,
+        width: Responsive.getWidth(context) * 1,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 20 * Responsive.getResponsive(context),
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomText(
+                  'visit_with',
+                isKey: true,
+                  fontWeight: FontWeight.bold,
+                  color: AppTheme.getColor(context).onSurface,
+                ),
+                IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: SvgPicture.asset('assets/visit/dropdown_visit.svg'),
+                  color: AppTheme.getColor(context).primary,
+                ),
+              ],
+            ),
+            MyCoTextfield(
+              controller: searchController,
+              focusNode: searchFocus,
+              hintText: 'search',
+              boarderRadius: 10,
+              contentPadding: EdgeInsets.symmetric(vertical: 2 *  Responsive.getResponsiveText(context)),
+             prefix: SvgPicture.asset(AppAssets.Search,fit: BoxFit.scaleDown,),
+              typingtextStyle: TextStyle(fontSize: 14 *  Responsive.getResponsiveText(context)),
+              hintTextStyle: TextStyle(
+                fontSize: 15 *  Responsive.getResponsiveText(context),
+                color: AppTheme.getColor(context).outline,
+              ),
+              textAlignment: TextAlign.start,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  Responsive.getResponsive(context) * 8,
+                ),
+                borderSide: BorderSide(
+                  color: AppTheme.getColor(context).outline,
+                ),
+              ),
+            ),
+
+            //Branch selection
             Column(
               mainAxisSize: MainAxisSize.min,
-              spacing: 20 * Responsive.getResponsive(context),
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomText(
-                      'Visit With',
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.getColor(context).onSurface,
-                    ),
-                    IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: SvgPicture.asset('assets/visit/dropdown_visit.svg'),
-                      color: AppTheme.getColor(context).primary,
-                    ),
-                  ],
+                LabelRow(
+                  title: 'blocks',
+                  actionLabel: 'select_branch',
+                  onTap: () async {
+                    final selectedId = await showCustomSimpleBottomSheet(
+                      context: context,
+                      btnTitle: 'ADD',
+                      heading: 'Select Branch',
+                      dataList: branches,
+                    );
+                    if (selectedId != null) {
+                      final selectedMap = branches.firstWhere(
+                        (e) => e['id'] == selectedId,
+                        orElse: () => {'id': '', 'name': ''},
+                      );
+                      setState(() {
+                        _branchTags.add(selectedMap['name'] ?? '');
+                      });
+                    }
+                  },
                 ),
-                MyCoTextfield(
-                  controller: searchController,
-                  focusNode: searchFocus,
-                  hintText: 'Search',
-                  boarderRadius: 10,
-                  contentPadding: EdgeInsets.symmetric(vertical: 2 * multiplier),
-                  prefix: Icon(
-                    CupertinoIcons.search,
-                    color: AppColors.primary,
-                    size: 20 * multiplier,
-                  ),
-                  typingtextStyle: TextStyle(fontSize: 14 * multiplier),
-                  hintTextStyle: TextStyle(
-                    fontSize: 15 * multiplier,
-                    color: AppTheme.getColor(context).outline,
-                  ),
-                  textAlignment: TextAlign.start,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(
-                      Responsive.getResponsive(context) * 8,
-                    ),
-                    borderSide: BorderSide(
-                      color: AppTheme.getColor(context).outline,
-                    ),
-                  ),
+                //Tag input field for branches
+                TagInputField(
+                  tags: _branchTags,
+                  hint: "Branch",
+                  onAdd: (value) {
+                    final cleanValue = value.replaceAll(',', '').trim();
+                    if (cleanValue.isNotEmpty &&
+                        !_branchTags.contains(cleanValue)) {
+                      setState(() {
+                        _branchTags.add(cleanValue);
+                      });
+                    }
+                  },
+                  onRemove: (tag) {
+                    setState(() {
+                      _branchTags.remove(tag);
+                    });
+                  },
+                  onarrowbtn: () async {
+                    final selectedId = await showCustomSimpleBottomSheet(
+                      context: context,
+                      btnTitle: 'ADD',
+                      heading: 'Select Branch',
+                      dataList: branches,
+                    );
+                    if (selectedId != null) {
+                      final selectedMap = branches.firstWhere(
+                        (e) => e['id'] == selectedId,
+                        orElse: () => {'id': '', 'name': ''},
+                      );
+                      setState(() {
+                        _branchTags.add(selectedMap['name'] ?? '');
+                      });
+                    }
+                  },
                 ),
+              ],
+            ),
+            //Department selection
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                LabelRow(
+                  title: 'department',
+                  actionLabel: 'select_department',
+                  onTap: () async {
+                    final selectedId = await showCustomSimpleBottomSheet(
+                      context: context,
+                      heading: 'Select Department',
+                      dataList: Department,
+                      btnTitle: 'ADD',
+                    );
+                    if (selectedId != null) {
+                      final selectedMap = Department.firstWhere(
+                        (e) => e['id'] == selectedId,
+                        orElse: () => {'id': '', 'name': ''},
+                      );
+                      setState(() {
+                        _departmentTags.add(selectedMap['name'] ?? '');
+                      });
+                    }
+                  },
+                ),
+                //Tag input field for department
+                TagInputField(
+                  tags: _departmentTags,
+                  hint: 'Department',
+                  onAdd: (value) {
+                    final cleanValue = value.replaceAll(',', '').trim();
+                    if (cleanValue.isNotEmpty &&
+                        !_departmentTags.contains(cleanValue)) {
+                      setState(() {
+                        _departmentTags.add(cleanValue);
+                      });
+                    }
+                  },
+                  onRemove: (tag) {
+                    setState(() {
+                      _departmentTags.remove(tag);
+                    });
+                  },
+                  onarrowbtn: () async {
+                    final selectedId = await showCustomSimpleBottomSheet(
+                      context: context,
+                      heading: 'Select Department',
+                      dataList: Department,
+                      btnTitle: 'ADD',
+                    );
+                    if (selectedId != null) {
+                      final selectedMap = Department.firstWhere(
+                        (e) => e['id'] == selectedId,
+                        orElse: () => {'id': '', 'name': ''},
+                      );
+                      setState(() {
+                        _departmentTags.add(selectedMap['name'] ?? '');
+                      });
+                    }
+                  },
+                ),
+              ],
+            ),
 
-                //Branch selection
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    LabelRow(
-                      title: 'Branches',
-                      actionLabel: 'Select Branch',
-                      onTap: () async {
-                        final selectedId = await showCustomSimpleBottomSheet(
-                          context: context,
-                          btnTitle: 'ADD',
-                          heading: 'Select Branch',
-                          dataList: branches,
-                        );
-                        if (selectedId != null) {
-                          final selectedMap = branches.firstWhere(
-                            (e) => e['id'] == selectedId,
-                            orElse: () => {'id': '', 'name': ''},
-                          );
-                          setState(() {
-                            _branchTags.add(selectedMap['name'] ?? '');
-                          });
-                        }
-                      },
+            //Employee selection grid
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, constraints) => GridView.builder(
+                    padding: const EdgeInsets.all(5),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: Responsive.getGridConfig(context ,screenWide: constraints.maxWidth ).itemCount,
+                      mainAxisSpacing: Responsive.getGridConfig(context, screenWide: constraints.maxWidth).spacing,
+                      crossAxisSpacing: Responsive.getGridConfig(context, screenWide: constraints.maxWidth).spacing,
+                      childAspectRatio: Responsive.getGridConfig(
+                        context,screenWide: constraints.maxWidth
+                      ).childAspectRatio,
                     ),
-                    //Tag input field for branches
-                    TagInputField(
-                      tags: _branchTags,
-                      hint: "Branch",
-                      onAdd: (value) {
-                        final cleanValue = value.replaceAll(',', '').trim();
-                        if (cleanValue.isNotEmpty &&
-                            !_branchTags.contains(cleanValue)) {
-                          setState(() {
-                            _branchTags.add(cleanValue);
-                          });
-                        }
-                      },
-                      onRemove: (tag) {
-                        setState(() {
-                          _branchTags.remove(tag);
-                        });
-                      },
-                      onarrowbtn: () async {
-                        final selectedId = await showCustomSimpleBottomSheet(
-                          context: context,
-                          btnTitle: 'ADD',
-                          heading: 'Select Branch',
-                          dataList: branches,
-                        );
-                        if (selectedId != null) {
-                          final selectedMap = branches.firstWhere(
-                            (e) => e['id'] == selectedId,
-                            orElse: () => {'id': '', 'name': ''},
-                          );
-                          setState(() {
-                            _branchTags.add(selectedMap['name'] ?? '');
-                          });
-                        }
-                      },
-                    ),
-                  ],
-                ),
-                //Department selection
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    LabelRow(
-                      title: 'Department',
-                      actionLabel: 'Select Department',
-                      onTap: () async {
-                        final selectedId = await showCustomSimpleBottomSheet(
-                          context: context,
-                          heading: 'Select Department',
-                          dataList: Department,
-                          btnTitle: 'ADD',
-                        );
-                        if (selectedId != null) {
-                          final selectedMap = Department.firstWhere(
-                            (e) => e['id'] == selectedId,
-                            orElse: () => {'id': '', 'name': ''},
-                          );
-                          setState(() {
-                            _departmentTags.add(selectedMap['name'] ?? '');
-                          });
-                        }
-                      },
-                    ),
-                    //Tag input field for department
-                    TagInputField(
-                      tags: _departmentTags,
-                      hint: 'Department',
-                      onAdd: (value) {
-                        final cleanValue = value.replaceAll(',', '').trim();
-                        if (cleanValue.isNotEmpty &&
-                            !_departmentTags.contains(cleanValue)) {
-                          setState(() {
-                            _departmentTags.add(cleanValue);
-                          });
-                        }
-                      },
-                      onRemove: (tag) {
-                        setState(() {
-                          _departmentTags.remove(tag);
-                        });
-                      },
-                      onarrowbtn: () async {
-                        final selectedId = await showCustomSimpleBottomSheet(
-                          context: context,
-                          heading: 'Select Department',
-                          dataList: Department,
-                          btnTitle: 'ADD',
-                        );
-                        if (selectedId != null) {
-                          final selectedMap = Department.firstWhere(
-                            (e) => e['id'] == selectedId,
-                            orElse: () => {'id': '', 'name': ''},
-                          );
-                          setState(() {
-                            _departmentTags.add(selectedMap['name'] ?? '');
-                          });
-                        }
-                      },
-                    ),
-                  ],
-                ),
+                    itemCount: employees.length,
+                    itemBuilder: (context, index) {
 
-                //Employee selection grid
-                Expanded(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      // final screenWidth = constraints.maxWidth;
-                      // final spacing = 12.0 * Responsive.getResponsive(context);
-                      // print('......0.....0${screenWidth}................>>>>>P)))');
-                      // final itemCount = screenWidth > 1200
-                      //     ? 12
-                      //     : screenWidth > 900
-                      //     ? 9
-                      //     : screenWidth > 500
-                      //     ? 5
-                      //     : 3;
-                      // final itemWidth =
-                      //     (screenWidth - (spacing * (itemCount - 1))) / itemCount;
-                      // final itemHeight = screenWidth > 600 ? 180 : screenWidth > 470 ? 140.0 : 143.0;
-                      // final childAspectRatio = itemWidth / itemHeight;
-
-                      return GridView.builder(
-                        padding: const EdgeInsets.all(5),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: Responsive.getGridConfig(context).itemCount,
-                          mainAxisSpacing: Responsive.getGridConfig(context).spacing,
-                          crossAxisSpacing: Responsive.getGridConfig(context).spacing,
-                          childAspectRatio: Responsive.getGridConfig(
-                            context,screenWide: constraints.maxWidth
-                          ).childAspectRatio,
+                      final emp = employees[index];
+                      return EmployeeSelectionCard(
+                        selectedColor: const Color.fromARGB(
+                          255,
+                          89,
+                          129,
+                          161,
                         ),
-                        itemCount: employees.length,
-                        itemBuilder: (context, index) {
-
-                          final emp = employees[index];
-                          return EmployeeSelectionCard(
-                            selectedColor: const Color.fromARGB(
-                              255,
-                              89,
-                              129,
-                              161,
-                            ),
-                            name: emp['name']!,
-                            department: emp['role']!,
-                            image: NetworkImage(emp['image']!),
-                            showDelete: false,
-                            isSelected: selectedEmployeeIndexes.contains(index),
-                            onSelected: (value) {
-                              setState(() {
-                                if (selectedEmployeeIndexes.contains(index)) {
-                                  selectedEmployeeIndexes.remove(index);
-                                } else {
-                                  selectedEmployeeIndexes.add(index);
-                                }
-                              });
-                            },
-                          );
+                        name: emp['name']!,
+                        department: emp['role']!,
+                        image: NetworkImage(emp['image']!),
+                        showDelete: false,
+                        isSelected: selectedEmployeeIndexes.contains(index),
+                        onSelected: (value) {
+                          setState(() {
+                            if (selectedEmployeeIndexes.contains(index)) {
+                              selectedEmployeeIndexes.remove(index);
+                            } else {
+                              selectedEmployeeIndexes.add(index);
+                            }
+                          });
                         },
                       );
                     },
                   ),
-                ),
+              ),
+            ),
 
-                // Add button
-                MyCoButton(
-                  title: 'ADD',
-                  boarderRadius: 50,
-                  height: 0.05 * Responsive.getHeight(context),
-                  isShadowBottomLeft: true,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w500,
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
+            // Add button
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: MyCoButton(
+                title: 'ADD',
+                boarderRadius: 50,
+                height: 0.05 * Responsive.getHeight(context),
+                isShadowBottomLeft: true,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w500,
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
             ),
           ],
         ),
       ),
     );
-  }
 }

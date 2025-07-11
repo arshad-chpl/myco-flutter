@@ -8,6 +8,8 @@ class AppAssets {
   static const String iconsPath = '$basePath/icons';
   static const String splash = '$basePath/splash';
   static const String assetVisit = '$basePath/add_expense';
+  static const String svgsVisit = '$svgsPath/visit';
+
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -51,4 +53,6 @@ class AppAssets {
   static const String assetVector = '$assetVisit/Vector.svg';
   static const String assetDocumentText = '$assetVisit/document-text.svg';
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
+  static const String Search = '$svgsVisit/search.svg';
+
 }

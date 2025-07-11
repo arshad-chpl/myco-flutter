@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/visit_with.dart';
 
 class CustomVisitTypeRadioButton extends StatelessWidget {
   final List<String> options;
@@ -32,6 +33,18 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
     this.activeColor,
   });
 
+  void _openVisitWithBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppTheme.getColor(context).surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) => const VisitWith(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.getColor(context);
@@ -53,29 +66,33 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: options
-            .map(
-              (option) => RadioListTile<String>(
-                dense: true,
-                contentPadding:
-                    tilePadding ?? const EdgeInsets.symmetric(horizontal: 0),
-                visualDensity: VisualDensity.compact,
-                activeColor: activeColor ?? theme.primary,
-                title: Text(
-                  option,
-                  style:
-                      textStyle ??
-                      TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18 * Responsive.getResponsiveText(context),
-                      ),
-                ),
-                value: option,
-                groupValue: selectedValue,
-                onChanged: (value) => onChanged(value!),
-              ),
-            )
-            .toList(),
+        children: options.asMap().entries.map((entry) {
+          final index = entry.key;
+          final option = entry.value;
+
+          return RadioListTile<String>(
+            dense: true,
+            contentPadding: tilePadding ?? const EdgeInsets.symmetric(horizontal: 0),
+            visualDensity: VisualDensity.compact,
+            activeColor: activeColor ?? theme.primary,
+            title: Text(
+              option,
+              style: textStyle ??
+                  TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18 * Responsive.getResponsiveText(context),
+                  ),
+            ),
+            value: option,
+            groupValue: selectedValue,
+            onChanged: (value) {
+              onChanged(value!);
+              if (index == options.length - 1) {
+                _openVisitWithBottomSheet(context);
+              }
+            },
+          );
+        }).toList(),
       ),
     );
   }
