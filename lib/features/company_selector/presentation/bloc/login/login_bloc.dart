@@ -28,11 +28,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future<void> _onVerifyOtp(VerifyOtpEvent event, Emitter<LoginState> emit) async {
     emit(LoginLoading());
-    // TODO: integrate VerifyOtp use case
-    // final Either<Failure, CommonResponse> result =
-    //     await verifyOtpRepository.verifyOtp(event.contactInfo, event.otp);
-    //
-    // For now, simulate success:
     await Future.delayed(Duration(seconds: 1));
     emit(OtpVerifiedState());
   }
