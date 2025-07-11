@@ -13,19 +13,19 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
     final dataMap = {
       'getLeaveTypeList': 'getLeaveTypeList',
       'society_id': '1',
-      'unit_id': '1',
+      'unit_id': '1387',
       'user_id': '1365',
       'floor_id': '1',
       'currentYear': query,
       'language_id': '1',
     };
 
-    final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
+    final encryptedBody = (jsonEncode(dataMap));
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.residentApiNew,
     ).postDynamic('leave_controller.php', encryptedBody);
     return GetNewListTypeResponse.fromJson(
-      json.decode(GzipUtil.decryptAES(response)),
+      json.decode((response)),
     );
   }
 
