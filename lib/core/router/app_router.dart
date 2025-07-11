@@ -76,10 +76,8 @@ class AppRouter {
               create: (_) => GetIt.I<SplashBloc>()..add(LoadSplash()),
             ),
             BlocProvider(
-              create: (_) {
-                return GetIt.I<LanguageBloc>()
-                  ..add(LoadLanguageToPreferences());
-              },
+              create: (_) =>
+                  GetIt.I<LanguageBloc>()..add(LoadLanguageToPreferences()),
               lazy: false,
             ),
           ],

@@ -1,10 +1,10 @@
 import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-
 import 'package:url_launcher/url_launcher.dart';
 
 class MyCoTextfield extends StatefulWidget {
@@ -299,7 +299,7 @@ class TextFieldFormMobile extends StatelessWidget {
         decoration:
             decoration ??
             BoxDecoration(
-              color: fillColor ?? Colors.white,
+              color: fillColor ?? AppTheme.getColor(context).surfaceBright,
               border: Border.all(color: AppTheme.getColor(context).primary),
               borderRadius: BorderRadius.circular(
                 boarderRadius ?? 7.0 * Responsive.getResponsiveText(context),
@@ -387,7 +387,7 @@ class TextFieldFormMobile extends StatelessWidget {
         floatingLabelBehavior: floatingLabelBehavior,
         filled: true,
         alignLabelWithHint: alignLabelWithHint,
-        fillColor: fillColor ?? Colors.white,
+        fillColor: fillColor ?? AppTheme.getColor(context).surfaceBright,
         border:
             border ??
             OutlineInputBorder(

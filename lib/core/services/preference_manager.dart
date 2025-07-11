@@ -130,7 +130,7 @@ class PreferenceManager {
     await writeString(userId, value);
   }
 
-  // Dummy static return for now
+  //TODO: Dummy static return for now
   String getUserId() => "40";
   String getUserMobile() => "8401565883";
 
