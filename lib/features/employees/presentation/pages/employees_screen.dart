@@ -2,9 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 import 'package:myco_flutter/features/employees/presentation/widgets/employee_card.dart';
@@ -83,6 +85,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                 scale: 20,
               ),
               hintText: 'search',
+              maxLines: 1,
               hintTextStyle: TextStyle(
                 fontSize: 14 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
@@ -104,7 +107,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                         final selectedId = await showCustomSimpleBottomSheet(
                           context: context,
                           heading: 'select_branch',
-                          isKey: true,
+                          // isKey: true,
                           icon: const AssetImage(AppAssets.downArrow),
                           dataList: branches,
                         );
@@ -122,7 +125,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                         context,
                         (branchController.text.isEmpty
                             ? 'select_branch'
-                            : branchController.text), isKey: true,
+                            : branchController.text),
                       ),
                     ),
                   ),
@@ -134,12 +137,11 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                         final selectedId = await showCustomSimpleBottomSheet(
                           context: context,
                           heading: 'select_department',
-                          isKey: true,
                           dataList: departments,
                           icon: const AssetImage(
                             'assets/employees/down_arrow.png',
                           ),
-                          btnTitle: 'Submit',
+                          btnTitle: 'crm_submit',
                         );
                         if (selectedId != null) {
                           final selectedMap = departments.firstWhere(
@@ -157,7 +159,6 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                         departmentController.text.isEmpty
                             ? 'select_department'
                             : departmentController.text,
-                        isKey: true
                       ),
                     ),
                   ),
@@ -165,172 +166,132 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
               ),
             ),
             const SizedBox(height: 10),
-            // const Text('Punch in-out Demo'),
-            // Expanded(
-            //   child: SingleChildScrollView(
-            //     child: CustomVerticalStepper(
-            //       steps: [
-            //         StepData(
-            //           title: 'PUNCH IN',
-            //           // title: '',
-            //           subTitle: '10:25:06 AM',
-            //           status: StepStatus.pending,
-            //           // isStepIconShow: false,
-            //           customStatusIcon: const Icon(
-            //             Icons.ac_unit,
-            //             color: Colors.white,
-            //           ),
-            //           subSteps: [
-            //             SubStepData(
-            //               title: 'Lunch Break',
-            //               subTitle: '01:32:56 PM - 02:01:46 PM',
-            //               trailingTitle: '28 min 50 sec',
-            //               status: StepStatus.pending,
-            //               // customStatusIcon: Icon(Icons.lunch_dining),
-            //               // isSubStepIconShow: false,
-            //             ),
-            //             SubStepData(
-            //               title: 'Tea Break',
-            //               subTitle: '06:05:02 PM - 06:07:51 PM',
-            //               trailingTitle: '2 min 49 sec',
-            //               status: StepStatus.pending,
-            //               // isSubStepIconShow: false,
-            //             ),
-            //           ],
-            //         ),
-            //         StepData(
-            //           title: 'PUNCH OUT',
-            //           subTitle: '06:08:39 PM',
-            //           trillingTitle: '7 hour 43 min 33 sec',
-            //           status: StepStatus.pending,
-            //           // isStepIconShow: false,
-            //         ),
-            //         StepData(
-            //           title: 'PUNCH IN & OUT',
-            //           subTitle: '06:08:39 PM',
-            //           trillingTitle: '1 min 18 sec',
-            //           status: StepStatus.approved,
-            //           // isStepIconShow: false,
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-
-            // /// Employee List
+            const Text('Punch in-out Demo'),
             Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.only(
-                  top: 6,
-                  bottom: 5,
-                  left: 5,
-                  right: 5,
+              child: SingleChildScrollView(
+                child: CustomVerticalStepper(
+                  steps: [
+                    StepData(
+                      title: 'PUNCH IN',
+                      // title: '',
+                      subTitle: '10:25:06 AM',
+                      status: StepStatus.inActive,
+                      // isStepIconShow: false,
+                      customStatusIcon: SvgPicture.asset(AppAssets.assetGalleryExport),
+                      // customStatusIcon: const Icon(
+                      //   Icons.ac_unit,
+                      //   color: Colors.white,
+                      // ),
+                      subSteps: [
+                        SubStepData(
+                          title: 'Lunch Break',
+                          subTitle: '01:32:56 PM - 02:01:46 PM',
+                          trailingTitle: '28 min 50 sec',
+                          status: StepStatus.pending,
+                          customStatusIcon: Icon(Icons.lunch_dining),
+                          // isSubStepIconShow: false,
+                        ),
+                        SubStepData(
+                          title: 'Tea Break',
+                          subTitle: '06:05:02 PM - 06:07:51 PM',
+                          trailingTitle: '2 min 49 sec',
+                          status: StepStatus.approved,
+                          // isSubStepIconShow: false,
+                        ),
+                      ],
+                    ),
+                    StepData(
+                      title: 'PUNCH OUT',
+                      subTitle: '06:08:39 PM',
+                      trillingTitle: '7 hour 43 min 33 sec',
+                      status: StepStatus.pending,
+                      // isStepIconShow: false,
+                    ),
+                    StepData(
+                      title: 'PUNCH IN & OUT',
+                      subTitle: '06:08:39 PM',
+                      trillingTitle: '1 min 18 sec',
+                      status: StepStatus.approved,
+                      // isStepIconShow: true,
+                    ),
+                  ],
                 ),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: Responsive.getGridConfig(
-                    context,
-                    // isBottomSheet: false,
-                  ).itemCount,
-                  mainAxisSpacing: Responsive.getGridConfig(context).spacing,
-                  crossAxisSpacing: Responsive.getGridConfig(context).spacing,
-                  childAspectRatio: Responsive.getGridConfig(
-                    context,
-                  ).childAspectRatio,
-                ),
-                itemCount: employees.length,
-                itemBuilder: (context, index) {
-                  final emp = employees[index];
-                  return EmployeeSelectionCard(
-                    name: emp['name']!,
-                    department: emp['role']!,
-                    image: NetworkImage(emp['image']!),
-                    showDelete: true,
-                    // selectedColor: Colors.red,
-                    isSelected: selectedEmployeeIndexes.contains(index),
-                    onSelected: (value) {
-                      setState(() {
-                        if (selectedEmployeeIndexes.contains(index)) {
-                          selectedEmployeeIndexes.remove(index);
-                        } else {
-                          selectedEmployeeIndexes.add(index);
-                        }
-                      });
-                    },
-                  );
-                },
               ),
             ),
 
-            // CommonCard(
-            //   title: 'Reporting Person',
-            //   bottomWidget: Row(
-            //     mainAxisSize: MainAxisSize.min,
-            //     children: [
-            //       Expanded(
-            //         child: GridView.builder(
-            //           padding: const EdgeInsets.only(
-            //             top: 6,
-            //             bottom: 5,
-            //             left: 5,
-            //             right: 5,
-            //           ),
-            //           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //             crossAxisCount: Responsive.getGridConfig(
-            //               context,
-            //             ).itemCount,
-            //             mainAxisSpacing: Responsive.getGridConfig(
-            //               context,
-            //             ).spacing,
-            //             crossAxisSpacing: Responsive.getGridConfig(
-            //               context,
-            //             ).spacing,
-            //             childAspectRatio: Responsive.getGridConfig(
-            //               context,
-            //             ).childAspectRatio,
-            //           ),
-            //           itemCount: 3,
-            //           itemBuilder: (context, index) =>
-            //               const EmployeeSelectionCard(
-            //                 image: AssetImage(
-            //                   'assets/dashboard/person_photo.png',
-            //                 ),
-            //                 name: 'Ajit Maurya',
-            //                 department: 'QA',
-            //                 isSelected: false,
-            //               ),
-            //           shrinkWrap: true,
-            //         ),
-            //       ),
-            //     ],
+            /// Employee List
+            // Expanded(
+            //   child: GridView.builder(
+            //     padding: const EdgeInsets.only(
+            //       top: 6,
+            //       bottom: 5,
+            //       left: 5,
+            //       right: 5,
+            //     ),
+            //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //       crossAxisCount: Responsive.getGridConfig(
+            //         context,
+            //         // isBottomSheet: false,
+            //       ).itemCount,
+            //       mainAxisSpacing: Responsive.getGridConfig(context).spacing,
+            //       crossAxisSpacing: Responsive.getGridConfig(context).spacing,
+            //       childAspectRatio: Responsive.getGridConfig(
+            //         context,
+            //       ).childAspectRatio,
+            //     ),
+            //     itemCount: employees.length,
+            //     itemBuilder: (context, index) {
+            //       final emp = employees[index];
+            //       return EmployeeSelectionCard(
+            //         name: emp['name']!,
+            //         department: emp['role']!,
+            //         image: NetworkImage(emp['image']!),
+            //         showDelete: true,
+            //         // selectedColor: Colors.red,
+            //         isSelected: selectedEmployeeIndexes.contains(index),
+            //         onSelected: (value) {
+            //           setState(() {
+            //             if (selectedEmployeeIndexes.contains(index)) {
+            //               selectedEmployeeIndexes.remove(index);
+            //             } else {
+            //               selectedEmployeeIndexes.add(index);
+            //             }
+            //           });
+            //         },
+            //       );
+            //     },
             //   ),
             // ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CustomMediaPickerContainer(
-                title: 'Assets Image',
-                titleFontSize: 14,
-                imageTitle: 'Capture Image',
-                containerHeight: 100,
-                multipleImage: 5,
-                imagePath: 'assets/media_picker/gallery-export.png',
-                backgroundColor: Colors.blue.shade50,
-                isCameraShow: true,
-                isGalleryShow: true,
-                isDocumentShow: true,
-                isCropImage: true,
-                onSelectedMedia: (files) {
-                  final paths = files.map((file) => file.path).toList();
-                  log('Selected file paths: $paths');
-                },
-              ),
-            ),
+
+            /// Media picker container
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: CustomMediaPickerContainer(
+            //     title: 'Assets Image',
+            //     titleFontSize: 14 * Responsive.getResponsiveText(context),
+            //     imageTitle: 'Capture Image',
+            //     // imageTitleSize: 10,
+            //     // containerHeight: 100,
+            //     multipleImage: 5,
+            //     imagePath: AppAssets.assetGalleryExport,
+            //     backgroundColor: Colors.blue.shade50,
+            //     isCameraShow: true,
+            //     isGalleryShow: true,
+            //     isDocumentShow: true,
+            //     isCropImage: true,
+            //     onSelectedMedia: (files) {
+            //       final paths = files.map((file) => file.path).toList();
+            //       log('Selected file paths: $paths');
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildDropdownBox(BuildContext context, String text, {bool isKey = false}) {
+  Widget _buildDropdownBox(BuildContext context, String text) {
     final isWide = Responsive.screenWidth() > 600;
     final boxHeight = isWide ? 48.0 : 44 * Responsive.getResponsive(context);
     final horizontalPadding = isWide ? 16.0 : 10.0;
@@ -348,8 +309,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
         children: [
           Expanded(
             child: CustomText(
-              text,
-              isKey: isKey,
+              LanguageManager().get(text),
               fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
               textAlign: TextAlign.left,

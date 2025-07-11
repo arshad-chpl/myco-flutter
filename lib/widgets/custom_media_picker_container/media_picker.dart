@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -183,7 +185,8 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         CustomText(
-          'Select option',
+          'select_option',
+          isKey: true,
           fontSize: 18 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
           color: AppTheme.getColor(context).outline,
@@ -197,29 +200,26 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
                 GestureDetector(
                   onTap: () => _pickImage(ImageSource.camera),
                   child: CustomShadowContainer(
-                    image: Image.asset('assets/media_picker/camera.png'),
-                    title: 'Camera',
+                    image: SvgPicture.asset(AppAssets.mediaPickerCamera, height: 0.32 * Responsive.getHeight(context),),
+                    title: 'camera',
                   ),
                 ),
-              if (widget.isCameraShow) const SizedBox(width: 20),
+              if (widget.isCameraShow) SizedBox(width: 0.05 * Responsive.getWidth(context)),
               if (widget.isGalleryShow)
                 GestureDetector(
                   onTap: () => _pickImage(ImageSource.gallery),
                   child: CustomShadowContainer(
-                    image: Image.asset('assets/media_picker/gallery-add.png'),
-                    title: 'Gallery',
+                    image: SvgPicture.asset(AppAssets.mediaPickerGallery, height: 0.32 * Responsive.getHeight(context),),
+                    title: 'gallery',
                   ),
                 ),
-              if (widget.isGalleryShow) const SizedBox(width: 20),
+              if (widget.isGalleryShow) SizedBox(width: 0.05 * Responsive.getWidth(context)),
               if (widget.isDocumentShow)
                 GestureDetector(
                   onTap: _pickDocument,
                   child: CustomShadowContainer(
-                    image: Image.asset(
-                      'assets/media_picker/document.png',
-                      fit: BoxFit.contain,
-                    ),
-                    title: 'Documents',
+                    image:SvgPicture.asset(AppAssets.mediaPickerDocument, height: 0.32 * Responsive.getHeight(context),),
+                    title: 'documents',
                   ),
                 ),
             ],
@@ -232,7 +232,7 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
             isShadowBottomLeft: true,
             onTap: () => Navigator.pop(context),
             boarderRadius: 50,
-            title: 'Cancel',
+            title: 'cancel',
           ),
         ),
       ],
@@ -299,7 +299,7 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
         }
       }
     } catch (e) {
-      print("Error picking image: $e");
+      print('Error picking image: $e');
       if (mounted) Navigator.pop(context);
     } finally {
       widget.onLoading?.call(false);
@@ -329,7 +329,7 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
         Navigator.pop(context);
       }
     } catch (e) {
-      print("Error picking document: $e");
+      print('Error picking document: $e');
       if (mounted) Navigator.pop(context);
     } finally {
       widget.onLoading?.call(false);

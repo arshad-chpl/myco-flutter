@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
@@ -54,8 +55,7 @@ class MyCoButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return _MyCoButtonMobile(
+  Widget build(BuildContext context) => _MyCoButtonMobile(
       onTap: enabled ? onTap : null,
       title: title,
       height: height ?? 0.06 * Responsive.getHeight(context),
@@ -79,7 +79,6 @@ class MyCoButton extends StatelessWidget {
       isShadowBottomRight: isShadowBottomRight,
       isShadowBottomLeft: isShadowBottomLeft,
     );
-  }
 }
 
 class _MyCoButtonMobile extends StatelessWidget {
@@ -170,7 +169,7 @@ class _MyCoButtonMobile extends StatelessWidget {
                 ),
             child: Center(
               child: _ButtonContent(
-                title: title,
+                title: LanguageManager().get(title),
                 style: finalStyle,
                 image: image,
                 imagePosition: imagePosition,
@@ -246,18 +245,18 @@ class _ButtonContent extends StatelessWidget {
     List<Widget> children;
 
     if (imagePosition == AxisDirection.left) {
-      children = [imageWidget, SizedBox(width: gap), Text(title, style: style)];
+      children = [imageWidget, SizedBox(width: gap), Text(LanguageManager().get(title), style: style)];
     } else if (imagePosition == AxisDirection.right) {
-      children = [Text(title, style: style), SizedBox(width: gap), imageWidget];
+      children = [Text(LanguageManager().get(title), style: style), SizedBox(width: gap), imageWidget];
     } else if (imagePosition == AxisDirection.up) {
       children = [
         imageWidget,
         SizedBox(height: gap),
-        Text(title, style: style),
+        Text(LanguageManager().get(title), style: style),
       ];
     } else {
       children = [
-        Text(title, style: style),
+        Text(LanguageManager().get(title), style: style),
         SizedBox(height: gap),
         imageWidget,
       ];

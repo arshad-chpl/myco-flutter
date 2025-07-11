@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:path/path.dart' as path;
@@ -52,15 +53,14 @@ class _CustomImagePickerContainerState
   File? pickedFile;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.isTitle == true)
           Text(
-            widget.isTitle == true ? widget.title ?? "Title" : "",
+            widget.isTitle == true ? widget.title ?? 'Title' : '',
             style: TextStyle(
-              fontFamily: "Gilroy-Bold",
+              fontFamily: 'Gilroy-Bold',
               fontWeight: FontWeight.w400,
               color: AppTheme.getColor(context).onSurfaceVariant,
               fontSize: 13,
@@ -123,7 +123,7 @@ class _CustomImagePickerContainerState
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
-                              "Remove",
+                              'Remove',
                               style: TextStyle(
                                 fontSize:
                                     Theme.of(
@@ -152,7 +152,7 @@ class _CustomImagePickerContainerState
                           path.basename(pickedFile!.path),
                           style: TextStyle(
                             fontSize: 16 * Responsive.getResponsive(context),
-                            fontFamily: "Gilroy-Medium",
+                            fontFamily: 'Gilroy-Medium',
                             color: AppTheme.getColor(context).onSurfaceVariant,
                           ),
                           overflow: TextOverflow.ellipsis,
@@ -173,7 +173,7 @@ class _CustomImagePickerContainerState
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
-                            "Remove",
+                            'Remove',
                             style: TextStyle(
                               fontSize: 14 * Responsive.getResponsive(context),
                               color: AppTheme.getColor(context).error,
@@ -188,7 +188,7 @@ class _CustomImagePickerContainerState
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Image.asset(
-                        widget.imagePath ?? 'assets/gallery-export.png',
+                        widget.imagePath ?? AppAssets.assetGalleryExport,
                         width: widget.iconSize ?? 30,
                         height: widget.iconSize ?? 30,
                       ),
@@ -197,7 +197,7 @@ class _CustomImagePickerContainerState
                         widget.imageTitle ?? 'Capture Image',
                         style: TextStyle(
                           fontSize: 14,
-                          fontFamily: "Gilroy-SemiBold",
+                          fontFamily: 'Gilroy-SemiBold',
                           fontWeight: FontWeight.w400,
                           color: AppTheme.getColor(context).onSurfaceVariant,
                         ),
@@ -208,7 +208,6 @@ class _CustomImagePickerContainerState
         ),
       ],
     );
-  }
 
   void openImagePicker(
     BuildContext context,

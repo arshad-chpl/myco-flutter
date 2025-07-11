@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -12,12 +14,22 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:path/path.dart' as path;
 
 class CustomMediaPickerContainer extends StatefulWidget {
-  final double? imageMargin, containerHeight, titleFontSize, imageTitleSize;
+  final double? imageMargin,
+      containerHeight,
+      titleFontSize,
+      imageTitleSize,
+      imageHeight,
+      imageWidth;
   final String title, imageTitle;
   final String imagePath;
   final int multipleImage;
   final Color? titleColor, backgroundColor, imageTitleColor;
-  final bool isCameraShow, isGalleryShow, isDocumentShow, isCropImage;
+  final bool isCameraShow,
+      isGalleryShow,
+      isDocumentShow,
+      isCropImage,
+      titleIsKey,
+      imageTitleIsKey;
   final Function(List<File> files)? onSelectedMedia;
 
   const CustomMediaPickerContainer({
@@ -25,6 +37,8 @@ class CustomMediaPickerContainer extends StatefulWidget {
     required this.imageTitle,
     required this.multipleImage,
     required this.imagePath,
+    this.imageHeight,
+    this.imageWidth,
     this.onSelectedMedia,
     super.key,
     this.imageMargin,
@@ -34,6 +48,8 @@ class CustomMediaPickerContainer extends StatefulWidget {
     this.isGalleryShow = false,
     this.isDocumentShow = false,
     this.isCropImage = false,
+    this.titleIsKey = false,
+    this.imageTitleIsKey = false,
     this.titleFontSize,
     this.titleColor,
     this.imageTitleColor,
@@ -47,8 +63,8 @@ class CustomMediaPickerContainer extends StatefulWidget {
 
 class _CustomMediaPickerContainerState
     extends State<CustomMediaPickerContainer> {
-  final List<File> _pickedImages = [];
-  File? pickedFile;
+  final List<File> _selectedImages = [];
+  File? _pickedDocumentFile;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -56,11 +72,11 @@ class _CustomMediaPickerContainerState
     children: [
       CustomText(
         widget.title,
+        isKey: widget.titleIsKey,
         fontSize:
-        widget.titleFontSize ?? 14 * Responsive.getResponsiveText(context),
+            widget.titleFontSize ?? 14 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
-        color:
-        widget.titleColor ?? AppTheme.getColor(context).onSurfaceVariant,
+        color: widget.titleColor ?? AppTheme.getColor(context).onSurfaceVariant,
       ),
       const SizedBox(height: 8),
       _buildPickerContent(),
@@ -68,183 +84,189 @@ class _CustomMediaPickerContainerState
   );
 
   Widget _buildPickerContent() {
-    if (_pickedImages.isNotEmpty) {
-      return DesignBorderContainer(
-        borderRadius: 8,
-        borderColor: AppTheme.getColor(context).primary,
-        backgroundColor: AppTheme.getColor(context).onPrimary,
-        padding: const EdgeInsets.all(0),
-        child: Padding(
-          padding: EdgeInsets.all(widget.imageMargin ?? 10),
-          child: GridView.count(
-            crossAxisCount: 4,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: 0.75,
-            children: List.generate(
-              _pickedImages.length < widget.multipleImage
-                  ? _pickedImages.length + 1
-                  : _pickedImages.length,
-                  (index) {
-                if (_pickedImages.length < widget.multipleImage &&
-                    index == _pickedImages.length) {
-                  return GestureDetector(
-                    onTap: () => openMediaPicker(context),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppTheme.getColor(context).surfaceContainer,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: AppTheme.getColor(context).primary,
-                        ),
-                      ),
-                      child: Icon(
-                        Icons.add,
-                        size: 30,
-                        color: AppTheme.getColor(context).primary,
-                      ),
-                    ),
-                  );
-                }
+    if (_selectedImages.isNotEmpty) return _buildImageGrid();
+    if (_pickedDocumentFile != null) return _buildDocumentPreview();
+    return _buildInitialPicker();
+  }
 
-                return Container(
+  // Image grid preview when images are selected
+  Widget _buildImageGrid() => DesignBorderContainer(
+    borderRadius: 8,
+    borderColor: AppTheme.getColor(context).primary,
+    backgroundColor: AppTheme.getColor(context).onPrimary,
+    padding: const EdgeInsets.all(0),
+    child: Padding(
+      padding: EdgeInsets.all(widget.imageMargin ?? 10),
+      child: GridView.count(
+        padding: const EdgeInsets.all(0),
+        crossAxisCount: 4,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        childAspectRatio: 0.75,
+        children: List.generate(
+          _selectedImages.length < widget.multipleImage
+              ? _selectedImages.length + 1
+              : _selectedImages.length,
+          (index) {
+            if (_selectedImages.length < widget.multipleImage &&
+                index == _selectedImages.length) {
+              return GestureDetector(
+                onTap: () => openMediaPicker(context),
+                child: Container(
                   decoration: BoxDecoration(
+                    color: AppTheme.getColor(context).surfaceContainer,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
                       color: AppTheme.getColor(context).primary,
-                      width: 1,
                     ),
                   ),
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.file(
-                            _pickedImages[index],
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _pickedImages.removeAt(index);
-                          });
-                          widget.onSelectedMedia?.call(_pickedImages);
-                        },
-                        child: Image.asset(
-                          'assets/media_picker/trash.png',
-                          height: 20,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-      );
-    } else if (pickedFile != null) {
-      return DesignBorderContainer(
-        borderRadius: 12,
-        borderColor: AppTheme.getColor(context).primary,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
-          child: Row(
-            children: [
-              Icon(
-                Icons.insert_drive_file,
-                color: AppTheme.getColor(context).primary,
-                size: 40,
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: CustomText(
-                  path.basename(pickedFile!.path),
-                  fontSize: 16 * Responsive.getResponsiveText(context),
-                  fontWeight: FontWeight.w500,
-                  color: AppTheme.getColor(context).onSurfaceVariant,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() => pickedFile = null);
-                  widget.onSelectedMedia?.call([]);
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 2,
-                    horizontal: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.removeBackground,
-                    border: Border.all(color: AppTheme.getColor(context).error),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: CustomText(
-                    'Remove',
-                    fontSize: 14 * Responsive.getResponsiveText(context),
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.error,
+                  child: Icon(
+                    Icons.add,
+                    size: 30,
+                    color: AppTheme.getColor(context).primary,
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      );
-    } else {
-      return GestureDetector(
-        onTap: () => openMediaPicker(context),
-        child: DesignBorderContainer(
-          borderRadius: 12,
-          borderColor: AppTheme.getColor(context).primary,
-          backgroundColor: widget.backgroundColor ?? AppColors.lightTeal,
-          padding: const EdgeInsets.all(10),
-          child: SizedBox(
-            width: double.infinity,
-            height: widget.containerHeight ?? 150,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  widget.imagePath.isNotEmpty
-                      ? widget.imagePath
-                      : 'assets/gallery-export.png',
-                  width: 30,
-                  height: 30,
-                ),
-                const SizedBox(height: 5),
-                CustomText(
-                  widget.imageTitle,
-                  fontSize: widget.imageTitleSize ??
-                      16 * Responsive.getResponsiveText(context),
-                  fontWeight: FontWeight.w600,
-                  color: widget.imageTitleColor ??
-                      AppTheme.getColor(context).onSurfaceVariant,
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
-  }
+              );
+            }
 
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: AppTheme.getColor(context).primary,
+                  width: 1,
+                ),
+              ),
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
+                        _selectedImages[index],
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedImages.removeAt(index);
+                      });
+                      widget.onSelectedMedia?.call(_selectedImages);
+                    },
+                    child: SvgPicture.asset(
+                      AppAssets.trash,
+                      height: 0.020 * Responsive.getHeight(context),
+                    ),
+                    // child: Image.asset(
+                    //   'assets/media_picker/trash.png',
+                    //   height: 20,
+                    // ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    ),
+  );
+
+  // Document preview when a document is selected
+  Widget _buildDocumentPreview() => DesignBorderContainer(
+    borderRadius: 12,
+    borderColor: AppTheme.getColor(context).primary,
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+    child: Row(
+      children: [
+        Icon(
+          Icons.insert_drive_file,
+          color: AppTheme.getColor(context).primary,
+          size: 40,
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: CustomText(
+            path.basename(_pickedDocumentFile!.path),
+            fontSize: 16 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w500,
+            color: AppTheme.getColor(context).onSurfaceVariant,
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            setState(() => _pickedDocumentFile = null);
+            widget.onSelectedMedia?.call([]);
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
+            decoration: BoxDecoration(
+              color: AppColors.removeBackground,
+              border: Border.all(color: AppTheme.getColor(context).error),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: CustomText(
+              'Remove',
+              fontSize: 14 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.w700,
+              color: AppColors.error,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+
+  // Initial upload box before any selection
+  Widget _buildInitialPicker() => GestureDetector(
+    onTap: () => openMediaPicker(context),
+    child: DesignBorderContainer(
+      borderRadius: 12,
+      borderColor: AppTheme.getColor(context).primary,
+      backgroundColor: widget.backgroundColor ?? AppColors.lightTeal,
+      padding: const EdgeInsets.all(10),
+      child: SizedBox(
+        width: double.infinity,
+        height: widget.containerHeight ?? 0.10 * Responsive.getHeight(context),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              widget.imagePath.isNotEmpty
+                  ? widget.imagePath
+                  : AppAssets.assetGalleryExport,
+              width: widget.imageWidth ?? 0.030 * Responsive.getWidth(context),
+              height:
+                  widget.imageHeight ?? 0.030 * Responsive.getHeight(context),
+            ),
+            SizedBox(height: 0.006 * Responsive.getHeight(context)),
+            CustomText(
+              widget.imageTitle,
+              isKey: widget.imageTitleIsKey,
+              fontSize:
+                  widget.imageTitleSize ??
+                  16 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.w600,
+              color:
+                  widget.imageTitleColor ??
+                  AppTheme.getColor(context).onSurfaceVariant,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+
+  // Opens the media picker and handles the selected files
   void openMediaPicker(BuildContext context) async {
-    List<File>? selectedFiles = [];
-
-    final remainingCount = widget.multipleImage - _pickedImages.length;
+    final remainingCount = widget.multipleImage - _selectedImages.length;
     if (remainingCount <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -257,6 +279,9 @@ class _CustomMediaPickerContainerState
       return;
     }
 
+    List<File>? selectedFiles = [];
+
+    // Show only gallery screen if others are disabled
     if (widget.isGalleryShow &&
         !widget.isCameraShow &&
         !widget.isDocumentShow) {
@@ -269,9 +294,7 @@ class _CustomMediaPickerContainerState
               final List<File> files = [];
               for (final asset in assets) {
                 final file = await asset.file;
-                if (file != null) {
-                  files.add(file);
-                }
+                if (file != null) files.add(file);
               }
               Navigator.pop(context, files);
             },
@@ -289,54 +312,59 @@ class _CustomMediaPickerContainerState
       );
     }
 
-    if (selectedFiles != null && selectedFiles.isNotEmpty) {
-      final List<File> imageFiles = [];
-      File? documentFile;
-
-      for (final file in selectedFiles) {
-        final String extension = path.extension(file.path).toLowerCase();
-
-        if (['.png', '.jpg', '.jpeg', '.heic', '.heif'].contains(extension)) {
-          imageFiles.add(file);
-        } else if (['.pdf', '.doc', '.docx'].contains(extension)) {
-          documentFile = file;
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Unsupported file type')),
-          );
-          return;
-        }
-      }
-
-      if (imageFiles.isNotEmpty) {
-        if (_pickedImages.length + imageFiles.length <= widget.multipleImage) {
-          setState(() {
-            _pickedImages.addAll(imageFiles);
-            pickedFile = null;
-          });
-          widget.onSelectedMedia?.call(_pickedImages);
-        } else {
-          final remaining = widget.multipleImage - _pickedImages.length;
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: CustomText(
-                'You can only select $remaining more image${remaining > 1 ? "s" : ""}.',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        }
-      }
-
-      if (documentFile != null) {
-        setState(() {
-          pickedFile = documentFile;
-          _pickedImages.clear();
-        });
-        widget.onSelectedMedia?.call([pickedFile!]);
-      }
-    } else {
+    if (selectedFiles == null || selectedFiles.isEmpty) {
       log('User cancelled or error occurred.');
+      return;
     }
+
+    final Map<String, List<File>> validFiles = _filterFiles(selectedFiles);
+
+    // Add images
+    if (validFiles['images']!.isNotEmpty) {
+      if (_selectedImages.length + validFiles['images']!.length <=
+          widget.multipleImage) {
+        setState(() {
+          _selectedImages.addAll(validFiles['images']!);
+          _pickedDocumentFile = null;
+        });
+        widget.onSelectedMedia?.call(_selectedImages);
+      } else {
+        final remaining = widget.multipleImage - _selectedImages.length;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: CustomText(
+              'You can only select $remaining more image${remaining > 1 ? "s" : ""}.',
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        );
+      }
+    }
+
+    // Add document
+    if (validFiles['document']!.isNotEmpty) {
+      setState(() {
+        _pickedDocumentFile = validFiles['document']!.first;
+        _selectedImages.clear();
+      });
+      widget.onSelectedMedia?.call([_pickedDocumentFile!]);
+    }
+  }
+
+  // Helper to separate images and document files
+  Map<String, List<File>> _filterFiles(List<File> files) {
+    final List<File> images = [];
+    final List<File> document = [];
+
+    for (final file in files) {
+      final ext = path.extension(file.path).toLowerCase();
+      if (['.png', '.jpg', '.jpeg', '.heic', '.heif'].contains(ext)) {
+        images.add(file);
+      } else if (['.pdf', '.doc', '.docx'].contains(ext)) {
+        document.add(file);
+      }
+    }
+
+    return {'images': images, 'document': document};
   }
 }

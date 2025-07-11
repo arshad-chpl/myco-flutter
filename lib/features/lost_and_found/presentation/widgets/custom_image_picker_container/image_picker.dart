@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/lost_and_found/utils/helper/app_permissions.dart';
@@ -90,7 +92,7 @@ class _ImageFilePickerWidgetState extends State<_ImageFilePickerWidget> {
             children: [
               if (widget.isCameraShow == true)
                 _pickerButton(
-                  icon: 'assets/lost_and_found/camera.png',
+                  icon: AppAssets.mediaPickerCamera,
                   title: 'Camera',
                   onTap: () async {
                     final hasPermission =
@@ -158,7 +160,7 @@ class _ImageFilePickerWidgetState extends State<_ImageFilePickerWidget> {
     required VoidCallback onTap,
   }) => GestureDetector(
     onTap: onTap,
-    child: CustomShadowContainer(image: Image.asset(icon), title: title),
+    child: CustomShadowContainer(image: SvgPicture.asset(icon), title: title),
   );
 
   Future<void> _pickImage(ImageSource source) async {

@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -430,7 +431,7 @@ class TextFieldFormMobile extends StatelessWidget {
               bottom: 16 * Responsive.getResponsive(context),
             ),
         labelText: isLabelOn == true ? labelText : null,
-        hintText: hintText,
+        hintText: LanguageManager().get(hintText ?? ''),
         hintStyle:
             hintTextStyle ??
             AppTheme.getTextStyle(

@@ -10,6 +10,7 @@ class AppAssets {
   static const String splash = '$basePath/splash';
   static const String assetVisit = '$basePath/add_expense';
   static const String employees = '$basePath/employees';
+  static const String mediaPicker = '$basePath/media_picker';
   static const String stepper = '$basePath/stepper';
 
   // Images
@@ -59,5 +60,11 @@ class AppAssets {
   static const String downArrow = '$employees/down_arrow.png';
 
   //images stepper
-  static const String rightIcon = '$stepper/right.png';
+  static const String stepperCheckIcon = '$stepper/check.svg';
+
+  //media picker
+  static const String mediaPickerCamera = '$mediaPicker/camera.svg';
+  static const String mediaPickerGallery = '$mediaPicker/gallery-add.svg';
+  static const String mediaPickerDocument = '$mediaPicker/document.svg';
+  static const String trash = '$mediaPicker/trash.svg';
 }

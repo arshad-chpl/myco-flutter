@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/app_permissions.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_loader.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_crop_images/custom_crop_images.dart';
@@ -208,7 +209,7 @@ class _GalleryPickerScreenState extends State<GalleryPickerScreen> {
       title: ValueListenableBuilder<List<AssetEntity>>(
         valueListenable: selectedAssets,
         builder: (_, selected, __) => CustomText(
-          'Selected: ${selected.length}/$_currentMaxSelection',
+          '${LanguageManager().get('selected')}: ${selected.length}/$_currentMaxSelection',
           fontSize: 18 * Responsive.getResponsiveText(context),
           color: AppTheme.getColor(context).onPrimary,
           fontWeight: FontWeight.w600,
@@ -222,7 +223,8 @@ class _GalleryPickerScreenState extends State<GalleryPickerScreen> {
                 ? () => _validateAndSubmitSelection(selected)
                 : null,
             child: CustomText(
-              'Done',
+              'done',
+              isKey: true,
               fontSize: 16 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w700,
               color: selected.isNotEmpty

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -166,6 +167,10 @@ class _MainStepWidget extends StatelessWidget {
     BuildContext context, {
     Widget? customIcon,
   }) {
+    final bool isWideScreen = Responsive.screenWidth() > 600;
+    final double iconSize = isWideScreen
+        ? 0.040 * Responsive.getHeight(context)
+        : 0.017 * Responsive.getHeight(context);
     if (customIcon != null) {
       return SizedBox(
         height: 0.045 * Responsive.getHeight(context),
@@ -177,18 +182,25 @@ class _MainStepWidget extends StatelessWidget {
     switch (status) {
       case StepStatus.approved:
       case StepStatus.completed:
-        return Image.asset(
-          AppAssets.rightIcon,
-          height: 17,
-          width: 17,
-          color: AppColors.white,
+        return SvgPicture.asset(
+          AppAssets.stepperCheckIcon,
+          height: iconSize,
+          width: iconSize,
         );
+
       case StepStatus.denied:
-        return Icon(Icons.close, color: AppColors.white, size: 17);
+        return Icon(Icons.close, color: AppColors.white, size: iconSize);
+
       case StepStatus.authorized:
-        return Icon(Icons.lock_outline, color: AppColors.white, size: 17);
+        return Icon(Icons.lock_outline, color: AppColors.white, size: iconSize);
+
       case StepStatus.pending:
-        return Icon(Icons.hourglass_top, color: AppColors.white, size: 17);
+        return Icon(
+          Icons.hourglass_top,
+          color: AppColors.white,
+          size: iconSize,
+        );
+
       case StepStatus.inActive:
         return const SizedBox();
     }
@@ -410,7 +422,11 @@ class _SubStepper extends StatelessWidget {
     }
   }
 
-  Widget getIconWidgetForSubStatus(StepStatus status, {Widget? customIcon}) {
+  Widget getIconWidgetForSubStatus(
+    StepStatus status,
+    BuildContext context, {
+    Widget? customIcon,
+  }) {
     if (customIcon != null) {
       return SizedBox(
         height: 10,
@@ -422,11 +438,12 @@ class _SubStepper extends StatelessWidget {
     switch (status) {
       case StepStatus.approved:
       case StepStatus.completed:
-        return Image.asset(
-          'assets/stepper_icon/check.png',
-          height: 10,
-          width: 10,
-          color: AppColors.white,
+        return SvgPicture.asset(
+          AppAssets.stepperCheckIcon,
+          height: Responsive.screenWidth() > 600
+              ? 0.020 * Responsive.getHeight(context)
+              : 0.011 * Responsive.getHeight(context),
+          width: 0.011 * Responsive.getWidth(context),
         );
       case StepStatus.denied:
         return const Icon(Icons.close, color: AppColors.white, size: 12);
@@ -501,6 +518,7 @@ class _SubStepper extends StatelessWidget {
                                   child: getIconWidgetForSubStatus(
                                     sub.status ?? StepStatus.pending,
                                     customIcon: sub.customStatusIcon,
+                                    context,
                                   ),
                                 )
                               : const SizedBox.shrink(),

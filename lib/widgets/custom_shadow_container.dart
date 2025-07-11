@@ -86,6 +86,7 @@ class CustomShadowContainer extends StatelessWidget {
           const SizedBox(height: 6),
           CustomText(
             title,
+            isKey: true,
             fontSize: 11 * Responsive.getResponsive(context),
             fontWeight: FontWeight.w600,
           ),
