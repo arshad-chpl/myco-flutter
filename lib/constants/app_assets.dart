@@ -8,6 +8,7 @@ class AppAssets {
   static const String iconsPath = '$basePath/icons';
   static const String splash = '$basePath/splash';
   static const String assetVisit = '$basePath/add_expense';
+  static const String lostAndFound = '$basePath/lost_and_found';
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -51,4 +52,20 @@ class AppAssets {
   static const String assetVector = '$assetVisit/Vector.svg';
   static const String assetDocumentText = '$assetVisit/document-text.svg';
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
+
+  // Lost And Found
+
+  static const String arrowDown = '$lostAndFound/arrow-down.svg';
+  static const String camera = '$lostAndFound/camera.svg';
+  static const String clipboard = '$lostAndFound/clipboard.svg';
+  static const String data = '$lostAndFound/data.svg';
+  static const String documents = '$lostAndFound/documents.svg';
+  static const String gallaryAdd = '$lostAndFound/gallery-add.svg';
+  static const String gallaryExport = '$lostAndFound/gallery-export.svg';
+  static const String link = '$lostAndFound/link.svg';
+  static const String messageEdit = '$lostAndFound/message-edit.svg';
+  static const String noteFavorite = '$lostAndFound/note-favorite.svg';
+  static const String profileCircle = '$lostAndFound/profile-circle.svg';
+  static const String searchNormal = '$lostAndFound/search-normal.svg';
+  static const String send = '$lostAndFound/send.svg';
 }

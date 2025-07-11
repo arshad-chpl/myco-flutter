@@ -1,12 +1,16 @@
 import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/app_permissions.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/lost_and_found/utils/helper/app_permissions.dart';
+import 'package:myco_flutter/widgets/custom_media_picker_container/custom_shadow_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_shadow_container.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:path/path.dart' as path;
 
 Future<File?> showImageFilePicker({
@@ -75,23 +79,28 @@ class _ImageFilePickerWidgetState extends State<_ImageFilePickerWidget> {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(
-            'Select option',
-            style: TextStyle(
-              fontSize: 20 * Responsive.getResponsive(context),
-              color: AppTheme.getColor(context).outline,
-            ),
+          child: CustomText(
+            'select_option',
+            isKey: true,
+            fontSize: 16 * Responsive.getResponsive(context),
+            color: AppTheme.getColor(context).outline,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        const Divider(height: 2),
+        Divider(height: .002 * Responsive.getHeight(context)),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20),
+          padding: EdgeInsets.symmetric(
+            vertical: .016 * Responsive.getHeight(context),
+            horizontal:
+                // 20,
+                .020 * Responsive.getWidth(context),
+          ),
           child: Row(
             children: [
               if (widget.isCameraShow == true)
                 _pickerButton(
-                  icon: 'assets/lost_and_found/camera.png',
-                  title: 'Camera',
+                  icon: AppAssets.camera,
+                  title: 'camera',
                   onTap: () async {
                     final hasPermission =
                         await PermissionUtil.checkPermissionByPickerType(
@@ -103,11 +112,11 @@ class _ImageFilePickerWidgetState extends State<_ImageFilePickerWidget> {
                     }
                   },
                 ),
-              const SizedBox(width: 10),
+              SizedBox(width: .020 * Responsive.getWidth(context)),
               if (widget.isGallaryShow == true)
                 _pickerButton(
-                  icon: 'assets/lost_and_found/gallery-add.png',
-                  title: 'Gallery',
+                  icon: AppAssets.gallaryAdd,
+                  title: 'gallery',
                   onTap: () async {
                     final hasPermission =
                         await PermissionUtil.checkPermissionByPickerType(
@@ -119,11 +128,11 @@ class _ImageFilePickerWidgetState extends State<_ImageFilePickerWidget> {
                     }
                   },
                 ),
-              const SizedBox(width: 10),
+              SizedBox(width: .020 * Responsive.getWidth(context)),
               if (widget.isDocumentShow == true)
                 _pickerButton(
-                  icon: 'assets/lost_and_found/document.png',
-                  title: 'Documents',
+                  icon: AppAssets.documents,
+                  title: 'documents',
                   onTap: () async {
                     final hasPermission =
                         await PermissionUtil.checkPermissionByPickerType(
@@ -139,15 +148,17 @@ class _ImageFilePickerWidgetState extends State<_ImageFilePickerWidget> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.0 * Responsive.getResponsive(context),
+          ),
           child: MyCoButton(
             isShadowBottomLeft: true,
             onTap: () => Navigator.pop(context),
             boarderRadius: 50,
-            title: 'Cancel',
+            title: 'cancel',
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: .016 * Responsive.getHeight(context)),
       ],
     ),
   );
@@ -158,7 +169,13 @@ class _ImageFilePickerWidgetState extends State<_ImageFilePickerWidget> {
     required VoidCallback onTap,
   }) => GestureDetector(
     onTap: onTap,
-    child: CustomShadowContainer(image: Image.asset(icon), title: title),
+    child: CustomShadowContainer(
+      image: SvgPicture.asset(
+        icon,
+        height: .32 * Responsive.getHeight(context),
+      ),
+      title: title,
+    ),
   );
 
   Future<void> _pickImage(ImageSource source) async {

@@ -136,9 +136,10 @@ class LabeledTextField extends StatelessWidget {
     children: [
       CustomText(
         label,
-        color: textColor?? AppColors.textGray,
-        fontSize: textFontSize?? 16 * Responsive.getResponsiveText(context),
-        fontWeight:textFontweight?? FontWeight.bold,
+        isKey: true,
+        color: textColor ?? AppColors.textGray,
+        fontSize: textFontSize ?? 16 * Responsive.getResponsiveText(context),
+        fontWeight: textFontweight ?? FontWeight.bold,
         decoration: textDecoration,
         textAlign: textAlign,
         decorationColor: textDecorationColor,

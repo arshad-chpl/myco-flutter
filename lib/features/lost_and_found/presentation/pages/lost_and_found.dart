@@ -220,7 +220,9 @@
 // lost_and_found.dart
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -274,7 +276,8 @@ class _LostAndFoundState extends State<LostAndFound> {
       title: Row(
         children: [
           CustomText(
-            'Lost & Found',
+            isKey: true,
+            'lost_found',
             fontSize: 18 * Responsive.getResponsive(context),
             fontWeight: FontWeight.w700,
           ),
@@ -289,13 +292,15 @@ class _LostAndFoundState extends State<LostAndFound> {
         children: [
           MyCoTextfield(
             isSuffixIconOn: false,
-            preFixImage: 'assets/lost_and_found/search-normal.png',
-            prefixImageHeight: .020 * Responsive.getHeight(context),
-            prefixImageWidth: .020 * Responsive.getWidth(context),
+            prefix: SvgPicture.asset(
+              AppAssets.searchNormal,
+              fit: BoxFit.scaleDown,
+            ),
+            // preFixImage: AppAssets.searchNormal,
             contentPadding: EdgeInsets.all(
               10 * Responsive.getResponsive(context),
             ),
-            hintText: 'Search',
+            hintText: 'search',
             fillColor: Colors.white,
             color: Colors.white,
             boarderRadius: 12,
@@ -320,6 +325,9 @@ class _LostAndFoundState extends State<LostAndFound> {
 
               itemBuilder: (context, index) {
                 final item = _filteredItems[index];
+                final formattedDate = DateFormat(
+                  'dd MMM yyyy (EEE)',
+                ).format(item.dateTime);
 
                 return GestureDetector(
                   onTap: () {
@@ -362,7 +370,7 @@ class _LostAndFoundState extends State<LostAndFound> {
                                 top: 8,
                                 right: 8,
                                 child: InnerShadowContainer(
-                                  backgroundColor: item.status == 'Found'
+                                  backgroundColor: item.status == 'found'
                                       ? AppTheme.getColor(context).secondary
                                       : const Color(0xffDD4646),
                                   height: 17,
@@ -385,6 +393,7 @@ class _LostAndFoundState extends State<LostAndFound> {
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(14, 12, 8, 8),
                             child: CustomText(
+                              isKey: true,
                               item.name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -397,9 +406,7 @@ class _LostAndFoundState extends State<LostAndFound> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(14, 0, 8, 12),
                           child: CustomText(
-                            DateFormat(
-                              'dd MMM yyyy (EEE)',
-                            ).format(DateTime.now()),
+                            formattedDate,
                             fontWeight: FontWeight.w400,
                             fontSize: 12 * Responsive.getResponsive(context),
                             color: AppColors.textPrimary,
@@ -420,7 +427,7 @@ class _LostAndFoundState extends State<LostAndFound> {
       isShadowBottomLeft: true,
       onTap: _navigateToAddScreen,
       title: '',
-      image: const Icon(Icons.add, color: Colors.white, size: 40),
+      image: Icon(Icons.add, color: AppColors.white, size: 50),
       backgroundColor: AppColors.primary,
       height: 63,
       width: 63,

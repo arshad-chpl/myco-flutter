@@ -259,27 +259,27 @@ class AppRouter {
         name: 'addExpense',
         builder: (context, state) => const AddExpensePage(),
       ),
-      GoRoute(
-        path: RoutePaths.lostAndFoundAddScreen,
-        name: 'lost-and-found-add-screen',
-        builder: (context, state) => const LostAndFoundAddScreen(),
-      ),
 
+      // GoRoute(
+      //   path: RoutePaths.lostAndFoundAddScreen,
+      //   name: 'lost-and-found-add-screen',
+      //   builder: (context, state) => const LostAndFoundAddScreen(),
+      // ),
       GoRoute(
         path: RoutePaths.lostAndFoundChatScreen,
         name: 'lost-and-found-chat-screen',
         builder: (context, state) => ChatScreen(),
       ),
-      //TODO
-      GoRoute(
-        path: RoutePaths.lostAndFoundItemDetails,
-        name: 'lost-and-found-item-details',
-        builder: (context, state) {
-          LostAndFoundItemModel lostitem = state.extra as LostAndFoundItemModel;
-          return ItemDetailsScreen(item: lostitem);
-        },
-      ),
 
+      //TODO
+      // GoRoute(
+      //   path: RoutePaths.lostAndFoundItemDetails,
+      //   name: 'lost-and-found-item-details',
+      //   builder: (context, state) {
+      //     LostAndFoundItemModel lostitem = state.extra as LostAndFoundItemModel;
+      //     return ItemDetailsScreen(item: lostitem);
+      //   },
+      // ),
       GoRoute(
         path: RoutePaths.lostAndFound,
         name: 'lost-and-found',

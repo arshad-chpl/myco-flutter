@@ -1,8 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:path/path.dart' as path;
 import 'dashed_border_container.dart';
 import 'image_picker.dart';
@@ -16,7 +18,7 @@ class CustomImagePickerContainer extends StatefulWidget {
   final Color? backgroundColor;
   final Color? borderColor;
   final bool? isTitle;
-  final String? imagePath;
+  final Widget? image;
   final String? imageTitle;
   final bool? isCameraShow;
   final bool? isGallaryShow;
@@ -31,7 +33,7 @@ class CustomImagePickerContainer extends StatefulWidget {
     this.borderRadius,
     this.isTitle = false,
     this.containerWidth,
-    this.imagePath,
+    this.image,
     this.isCameraShow,
     this.isGallaryShow,
     this.isDocumentShow,
@@ -52,109 +54,103 @@ class _CustomImagePickerContainerState
   File? pickedFile;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (widget.isTitle == true)
-          Text(
-            widget.isTitle == true ? widget.title ?? "Title" : "",
-            style: TextStyle(
-              fontFamily: "Gilroy-Bold",
-              fontWeight: FontWeight.w400,
-              color: AppTheme.getColor(context).onSurfaceVariant,
-              fontSize: 13,
-            ),
-          ),
-        SizedBox(height: 5),
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      if (widget.isTitle == true)
+        CustomText(
+          widget.isTitle == true ? widget.title ?? "Title" : "",
+          isKey: true,
+          fontWeight: FontWeight.w700,
+          fontSize: 13 * Responsive.getResponsive(context),
+          color: AppTheme.getColor(context).onSurfaceVariant,
+        ),
+      SizedBox(height: 5),
 
-        GestureDetector(
-          onTap: () {
-            if (_pickedImage == null && pickedFile == null) {
-              openImagePicker(
-                context,
-                widget.isDocumentShow ?? false,
-                widget.isCameraShow ?? false,
-                widget.isGallaryShow ?? false,
-              );
-            }
-          },
+      GestureDetector(
+        onTap: () {
+          if (_pickedImage == null && pickedFile == null) {
+            openImagePicker(
+              context,
+              widget.isDocumentShow ?? false,
+              widget.isCameraShow ?? false,
+              widget.isGallaryShow ?? false,
+            );
+          }
+        },
 
-          child: DesignBorderContainer(
-            borderRadius: widget.borderRadius ?? 12,
-            width: widget.containerWidth ?? double.infinity,
-            height: widget.containerHeight ?? double.infinity,
-            borderColor:
-                widget.borderColor ?? AppTheme.getColor(context).primary,
-            backgroundColor:
-                widget.backgroundColor ??
-                AppTheme.getColor(context).surfaceContainer,
-            padding: const EdgeInsets.all(0),
-            child: _pickedImage != null
-                ? Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                          widget.borderRadius ?? 12,
-                        ),
-                        child: Image.file(
-                          _pickedImage!,
-                          width: double.infinity,
-                          height: widget.containerHeight ?? 160,
-                          fit: BoxFit.cover,
-                        ),
+        child: DesignBorderContainer(
+          borderRadius: widget.borderRadius ?? 12,
+          width: widget.containerWidth ?? double.infinity,
+          height: widget.containerHeight ?? double.infinity,
+          borderColor: widget.borderColor ?? AppTheme.getColor(context).primary,
+          backgroundColor:
+              widget.backgroundColor ??
+              AppTheme.getColor(context).surfaceContainer,
+          padding: const EdgeInsets.all(0),
+          child: _pickedImage != null
+              ? Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                        widget.borderRadius ?? 12,
                       ),
+                      child: Image.file(
+                        _pickedImage!,
+                        width: double.infinity,
+                        height: widget.containerHeight ?? 160,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
 
-                      Positioned(
-                        right: 6,
-                        top: 6,
-                        child: GestureDetector(
-                          onTap: () => setState(() => _pickedImage = null),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 2,
-                              horizontal: 6,
+                    Positioned(
+                      right: 6,
+                      top: 6,
+                      child: GestureDetector(
+                        onTap: () => setState(() => _pickedImage = null),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 2,
+                            horizontal: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppTheme.getColor(context).onSurface,
+                            border: Border.all(
+                              color: AppTheme.getColor(context).error,
                             ),
-                            decoration: BoxDecoration(
-                              color: AppTheme.getColor(context).onSurface,
-                              border: Border.all(
-                                color: AppTheme.getColor(context).error,
-                              ),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              "Remove",
-                              style: TextStyle(
-                                fontSize:
-                                    Theme.of(
-                                      context,
-                                    ).textTheme.bodyMedium?.fontSize ??
-                                    14,
-                                color: AppTheme.getColor(context).error,
-                              ),
-                            ),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: CustomText(
+                            "Remove",
+                            fontSize:
+                                Theme.of(
+                                  context,
+                                ).textTheme.bodyMedium?.fontSize ??
+                                14,
+                            color: AppTheme.getColor(context).error,
                           ),
                         ),
                       ),
-                    ],
-                  )
-                : pickedFile != null
-                ? Row(
+                    ),
+                  ],
+                )
+              : pickedFile != null
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
                     children: [
                       Icon(
                         Icons.insert_drive_file,
                         color: AppTheme.getColor(context).primary,
-                        size: 40,
+                        size: 30,
                       ),
-                      const SizedBox(width: 10),
+                      SizedBox(width: .010 * Responsive.getWidth(context)),
                       Expanded(
-                        child: Text(
+                        child: CustomText(
                           path.basename(pickedFile!.path),
-                          style: TextStyle(
-                            fontSize: 16 * Responsive.getResponsive(context),
-                            fontFamily: "Gilroy-Medium",
-                            color: AppTheme.getColor(context).onSurfaceVariant,
-                          ),
+                          fontSize: 16 * Responsive.getResponsive(context),
+                          color: AppTheme.getColor(context).onSurfaceVariant,
+                          fontWeight: FontWeight.w500,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
@@ -172,43 +168,35 @@ class _CustomImagePickerContainerState
                             ),
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: Text(
+                          child: CustomText(
                             "Remove",
-                            style: TextStyle(
-                              fontSize: 14 * Responsive.getResponsive(context),
-                              color: AppTheme.getColor(context).error,
-                            ),
+                            fontSize: 14 * Responsive.getResponsive(context),
+                            color: AppTheme.getColor(context).error,
                           ),
                         ),
                       ),
                     ],
-                  )
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        widget.imagePath ?? 'assets/gallery-export.png',
-                        width: widget.iconSize ?? 30,
-                        height: widget.iconSize ?? 30,
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        widget.imageTitle ?? 'Capture Image',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: "Gilroy-SemiBold",
-                          fontWeight: FontWeight.w400,
-                          color: AppTheme.getColor(context).onSurfaceVariant,
-                        ),
-                      ),
-                    ],
                   ),
-          ),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ?widget.image,
+                    SizedBox(height: .005 * Responsive.getHeight(context)),
+                    CustomText(
+                      widget.imageTitle ?? 'Capture Image',
+                      isKey: true,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14 * Responsive.getResponsive(context),
+                      color: AppTheme.getColor(context).onSurfaceVariant,
+                    ),
+                  ],
+                ),
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
 
   void openImagePicker(
     BuildContext context,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
 import 'package:myco_flutter/core/theme/app_theme.dart';
@@ -29,67 +30,68 @@ class CustomShadowContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-      width: width ?? 70,
-      height: height,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Stack(
-            children: [
-              Container(
-                width: width ?? 70,
-                height: containerHeight ?? 70,
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(borderRadius ?? 20),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black26,
-                      offset: Offset(2.5, 2),
-                      blurRadius: 1,
-                    ),
-                  ],
-                ),
-                child: Center(child: image),
+    width: width ?? 70,
+    height: height,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Stack(
+          children: [
+            Container(
+              width: width ?? 70,
+              height: containerHeight ?? 70,
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(borderRadius ?? 20),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    offset: Offset(2.5, 2),
+                    blurRadius: 1,
+                  ),
+                ],
               ),
-              Positioned.fill(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(borderRadius ?? 20),
-                  child: CustomPaint(
-                    painter: InnerShadowPainter(
-                      shadowColor: const Color.fromARGB(50, 0, 0, 0),
-                      blur: 4,
-                      offset: const Offset(3, -3.5),
-                      borderRadius: 20,
-                      isShadowBottomRight: true,
-                    ),
+              child: Center(child: image),
+            ),
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(borderRadius ?? 20),
+                child: CustomPaint(
+                  painter: InnerShadowPainter(
+                    shadowColor: const Color.fromARGB(50, 0, 0, 0),
+                    blur: 4,
+                    offset: const Offset(3, -3.5),
+                    borderRadius: 20,
+                    isShadowBottomRight: true,
                   ),
                 ),
               ),
-              Positioned.fill(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(borderRadius ?? 20),
-                  child: CustomPaint(
-                    painter: InnerShadowPainter(
-                      shadowColor: const Color.fromARGB(50, 0, 0, 0),
-                      blur: 4,
-                      offset: const Offset(3, -3.5),
-                      borderRadius: 20,
-                      isShadowBottomLeft: true,
-                    ),
+            ),
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(borderRadius ?? 20),
+                child: CustomPaint(
+                  painter: InnerShadowPainter(
+                    shadowColor: const Color.fromARGB(50, 0, 0, 0),
+                    blur: 4,
+                    offset: const Offset(3, -3.5),
+                    borderRadius: 20,
+                    isShadowBottomLeft: true,
                   ),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          CustomText(
-            title,
-            fontSize: 11 * Responsive.getResponsive(context),
-            fontWeight: FontWeight.w600,
-          ),
-        ],
-      ),
-    );
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        CustomText(
+          LanguageManager().get(title),
+          fontSize: 14 * Responsive.getResponsive(context),
+          fontWeight: FontWeight.w600,
+          color: AppColors.black,
+        ),
+      ],
+    ),
+  );
 }

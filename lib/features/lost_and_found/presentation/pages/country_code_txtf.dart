@@ -223,6 +223,8 @@
 
 //======================================responsive==============================
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 
@@ -420,10 +422,10 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                           ),
                     ),
                     SizedBox(width: 6 * Responsive.getResponsive(context)),
-                    Icon(
-                      Icons.keyboard_arrow_down_outlined,
-                      color: AppTheme.getColor(context).primary,
-                      size: 30 * Responsive.getResponsive(context),
+                    SvgPicture.asset(
+                      AppAssets.arrowDown,
+                      height: .020 * Responsive.getHeight(context),
+                      // width: .020 * Responsive.getWidth(context),
                     ),
                   ],
                 ),
