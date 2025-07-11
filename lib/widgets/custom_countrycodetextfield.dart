@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_expression_function_bodies
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -92,6 +93,7 @@ class PhoneNumberField extends StatelessWidget {
                         14.0 * Responsive.getResponsiveText(context),
                   ),
               textInputType: TextInputType.phone,
+              inputFormater: [FilteringTextInputFormatter.digitsOnly],
               border: InputBorder.none,
             ),
           ),
@@ -100,7 +102,6 @@ class PhoneNumberField extends StatelessWidget {
     );
   }
 }
-
 
 //below given code is the example of the usage of the above code in ui
 
