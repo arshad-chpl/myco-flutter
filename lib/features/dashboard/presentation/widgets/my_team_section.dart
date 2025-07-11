@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_myteam%20(1).dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_myteam.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_section.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 
