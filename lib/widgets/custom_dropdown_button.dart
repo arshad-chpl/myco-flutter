@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 
@@ -26,6 +28,8 @@ class CustomPopupDropdownStyled<T> extends StatelessWidget {
   final Icon? icon;
   final Color? iconColor;
   final double? spacing;
+  final bool? suffixIconOn;
+  final Widget? suffix;
 
   const CustomPopupDropdownStyled({
     super.key,
@@ -52,6 +56,8 @@ class CustomPopupDropdownStyled<T> extends StatelessWidget {
     this.icon,
     this.iconColor,
     this.spacing,
+    this.suffixIconOn,
+    this.suffix,
   });
 
   @override
@@ -179,11 +185,14 @@ class CustomPopupDropdownStyled<T> extends StatelessWidget {
               ),
             ),
 
-            Icon(
-              icon?.icon ?? Icons.keyboard_arrow_down,
-              color: iconColor ?? AppTheme.getColor(context).primary,
-              size: iconSize ?? 30 * Responsive.getResponsive(context),
-            ),
+            ?suffixIconOn == true
+                ? suffix
+                : SvgPicture.asset(AppAssets.arrowDown),
+            // Icon(
+            //             icon?.icon ?? Icons.keyboard_arrow_down,
+            //             color: iconColor ?? AppTheme.getColor(context).primary,
+            //             size: iconSize ?? 30 * Responsive.getResponsive(context),
+            //           ),
           ],
         ),
       ),
