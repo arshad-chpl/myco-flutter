@@ -10,6 +10,7 @@ Future<String?> showCustomSimpleBottomSheet({
   required BuildContext context,
   required List<Map<String, String>> dataList,
   required String heading,
+  bool? isKey,
   String? selectedId,
   ImageProvider? icon,
   String? searchHint,
@@ -20,6 +21,7 @@ Future<String?> showCustomSimpleBottomSheet({
   backgroundColor: Colors.transparent,
   builder: (_) => _CustomSimpleBottomSheet(
     heading: heading,
+    isKey: isKey = false,
     dataList: dataList,
     selectedId: selectedId,
     icon: icon,
@@ -31,6 +33,7 @@ Future<String?> showCustomSimpleBottomSheet({
 class _CustomSimpleBottomSheet extends StatefulWidget {
   final List<Map<String, String>> dataList;
   final String heading;
+  final bool isKey;
   final String? selectedId;
   final String? searchHint;
   final String? btnTitle;
@@ -43,6 +46,7 @@ class _CustomSimpleBottomSheet extends StatefulWidget {
     this.searchHint,
     this.btnTitle,
     this.icon,
+    this.isKey = false,
   });
 
   @override
@@ -94,6 +98,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
               Expanded(
                 child: CustomText(
                   widget.heading,
+                  isKey: widget.isKey,
                   fontWeight: FontWeight.w700,
                   fontSize: 18 * Responsive.getResponsiveText(context),
                   color: AppColors.textPrimary,

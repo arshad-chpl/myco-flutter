@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
@@ -60,9 +62,10 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: CustomAppbar(
-        leading: const Icon(CupertinoIcons.arrow_left, size: 20),
+        // leading: const Icon(CupertinoIcons.arrow_left, size: 20),
         title: CustomText(
           branchController.text.isEmpty ? 'branch' : branchController.text,
+          isKey: true,
           fontSize: 18 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
         ),
@@ -79,7 +82,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                 'assets/take_order/search-normal.png',
                 scale: 20,
               ),
-              hintText: 'Search',
+              hintText: 'search',
               hintTextStyle: TextStyle(
                 fontSize: 14 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
@@ -100,7 +103,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                       onTap: () async {
                         final selectedId = await showCustomSimpleBottomSheet(
                           context: context,
-                          heading: 'Select Branch',
+                          heading: 'select_branch',
+                          isKey: true,
                           icon: const AssetImage(AppAssets.downArrow),
                           dataList: branches,
                         );
@@ -116,9 +120,9 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                       },
                       child: _buildDropdownBox(
                         context,
-                        branchController.text.isEmpty
-                            ? 'Select Branch'
-                            : branchController.text,
+                        (branchController.text.isEmpty
+                            ? 'select_branch'
+                            : branchController.text), isKey: true,
                       ),
                     ),
                   ),
@@ -129,7 +133,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                       onTap: () async {
                         final selectedId = await showCustomSimpleBottomSheet(
                           context: context,
-                          heading: 'Select Department',
+                          heading: 'select_department',
+                          isKey: true,
                           dataList: departments,
                           icon: const AssetImage(
                             'assets/employees/down_arrow.png',
@@ -150,8 +155,9 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                       child: _buildDropdownBox(
                         context,
                         departmentController.text.isEmpty
-                            ? 'Select Department'
+                            ? 'select_department'
                             : departmentController.text,
+                        isKey: true
                       ),
                     ),
                   ),
@@ -312,6 +318,10 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                 isGalleryShow: true,
                 isDocumentShow: true,
                 isCropImage: true,
+                onSelectedMedia: (files) {
+                  final paths = files.map((file) => file.path).toList();
+                  log('Selected file paths: $paths');
+                },
               ),
             ),
           ],
@@ -320,7 +330,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     );
   }
 
-  Widget _buildDropdownBox(BuildContext context, String text) {
+  Widget _buildDropdownBox(BuildContext context, String text, {bool isKey = false}) {
     final isWide = Responsive.screenWidth() > 600;
     final boxHeight = isWide ? 48.0 : 44 * Responsive.getResponsive(context);
     final horizontalPadding = isWide ? 16.0 : 10.0;
@@ -337,12 +347,15 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: Text(
+            child: CustomText(
               text,
-              style: _typingStyle(context),
+              isKey: isKey,
+              fontSize: 14 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.w600,
               textAlign: TextAlign.left,
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
+              color: AppTheme.getColor(context).primary,
             ),
           ),
           Icon(
@@ -354,11 +367,4 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
       ),
     );
   }
-
-  TextStyle _typingStyle(BuildContext context) => TextStyle(
-    fontFamily: 'Gilroy-SemiBold',
-    fontWeight: FontWeight.w600,
-    fontSize: 14 * Responsive.getResponsiveText(context),
-    color: AppTheme.getColor(context).primary,
-  );
 }
