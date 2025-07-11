@@ -14,7 +14,6 @@ class RoutePaths {
   static const String details = '/details';
   static const String visitReport = '/visit_report';
 
-
   static const String offers = '/offers';
   static const String products = '/products';
   static const String orderSummary = '/order-summary';
@@ -30,7 +29,6 @@ class RoutePaths {
   static const String signUpForm = '/sign-up-form';
 
   static const String addVisit = '/add-visit';
-
 
   // static const String distributorVisitor = '/distributor-visitor';
   // static const String noOrder = '/no-order';
@@ -48,4 +46,8 @@ class RoutePaths {
 
   static const String lostAndFound = '/lost-and-found';
   static const String myVisit = '/myVisit';
+  static const String CustomerAddNewVisit = '/CustomerAddNewVisit';
+  static const String AssignToVisit = '/AssignToVisit';
+  static const String TravelMode = '/TravelMode';
+
 }

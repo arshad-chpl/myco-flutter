@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
 
-import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class CustomShadowContainer extends StatelessWidget {
@@ -29,8 +27,7 @@ class CustomShadowContainer extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
+  Widget build(BuildContext context) => SizedBox(
       width: width ?? 70,
       height: height,
       child: Column(
@@ -95,5 +92,4 @@ class CustomShadowContainer extends StatelessWidget {
         ],
       ),
     );
-  }
 }

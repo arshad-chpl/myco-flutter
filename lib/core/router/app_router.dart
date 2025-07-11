@@ -5,15 +5,16 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
-import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
-import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/travel_mode.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
@@ -45,7 +46,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.dashboard,
+    initialLocation: RoutePaths.AssignToVisit,
     routes: [
       GoRoute(
         path: RoutePaths.splash,
@@ -54,12 +55,6 @@ class AppRouter {
           create: (_) => GetIt.I<SplashBloc>()..add(LoadSplash()),
           child: const SplashPage(),
         ),
-      ),
-
-      GoRoute(
-        path: RoutePaths.addVisit,
-        name: 'add visit',
-        builder: (context, state) => const Visit(),
       ),
 
       GoRoute(
@@ -96,7 +91,6 @@ class AppRouter {
         name: 'dashboard',
         builder: (context, state) => DashBoardPage(),
       ),
-
 
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
@@ -158,17 +152,17 @@ class AppRouter {
         ],
       ),
 
-
       GoRoute(
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
         builder: (context, state) => BlocProvider(
-            create: (context) => GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+          create: (context) =>
+              GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
           child: const FaceDetectionPage(),
-        )
+        ),
       ),
       // Add all modular routes here
-     // Add all modular routes here
+      // Add all modular routes here
       // GoRoute(
       //   path: RoutePaths.takeOrder,
       //   name: 'take-order',
@@ -224,6 +218,30 @@ class AppRouter {
         name: 'addCustomer',
         builder: (context, state) => const AddCustomer(),
       ),
+
+      GoRoute(
+        path: RoutePaths.addVisit,
+        name: 'add visit',
+        builder: (context, state) => const Visit(),
+      ),
+
+      GoRoute(
+        path: RoutePaths.CustomerAddNewVisit,
+        name: 'CustomerAddNewVisit',
+        builder: (context, state) => const CustomerAddNewVisit(),
+      ),
+
+      GoRoute(
+        path: RoutePaths.AssignToVisit,
+        name: 'AssignToVisit',
+        builder: (context, state) => const AssignToVisit(),
+      ),
+      GoRoute(
+        path: RoutePaths.TravelMode,
+        name: 'TravelMode',
+        builder: (context, state) => const TravelMode(),
+      ),
+
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,

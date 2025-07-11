@@ -1,8 +1,8 @@
+
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 
 class Responsive {
   static late double _screenWidth;
@@ -71,7 +71,6 @@ double getResponsiveText(context) {
     return getWidth(context) > 600 ? 1.5 : 0.9;
   }
 }
-
 double getDashboardResponsiveText(BuildContext context) {
   if (getWidth(context) > 600) {
     return 1.2;
