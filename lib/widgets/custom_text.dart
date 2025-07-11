@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/util.dart';
+
 class CustomText extends StatelessWidget {
   final String text;
+  final bool isKey;
   final double fontSize;
   final FontWeight fontWeight;
   final Color? color;
@@ -16,19 +18,20 @@ class CustomText extends StatelessWidget {
   const CustomText(
     this.text, {
     super.key,
+    this.isKey = false,
     this.fontSize = 16,
     this.fontWeight = FontWeight.w400,
     this.color,
     this.textAlign,
     this.maxLines,
     this.overflow,
-    this.decoration, this.decorationColor,
-
+    this.decoration,
+    this.decorationColor,
   });
 
   @override
   Widget build(BuildContext context) => Text(
-    text,
+    isKey ? LanguageManager().get(text) : text,
     textAlign: textAlign,
     maxLines: maxLines,
     overflow: overflow,
@@ -38,7 +41,6 @@ class CustomText extends StatelessWidget {
       color: color ?? AppTheme.getColor(context).onSurface,
       decoration: decoration,
       decorationColor: decorationColor,
-
     ),
   );
 }
