@@ -42,8 +42,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter router = GoRouter(
-    navigatorKey: _rootNavigatorKe
-    initialLocation: RoutePaths.employees,
+    navigatorKey: _rootNavigatorKey,
+    initialLocation: RoutePaths.addCustomer,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],

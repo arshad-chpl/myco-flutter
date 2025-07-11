@@ -111,10 +111,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
         widget.leading ??
         (widget.automaticallyImplyLeading
             ? IconButton(
-                icon: Image.asset(
-                  'assets/icons/sort.png',
-                  color: AppTheme.getColor(context).onSurface,
-                ),
+                icon: BackButton(),
                 onPressed: () {},
               )
             : null),

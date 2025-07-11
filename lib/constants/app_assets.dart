@@ -1,12 +1,14 @@
 class AppAssets {
   // commmon paths for visit in the application
-  static const String basePath = 'visit';
+  static const String basePath = 'assets';
   // static const String fontsPath = '$basePath/fonts';
   static const String imagesPath = '$basePath/images';
   static const String svgsPath = '$basePath/svgs';
   static const String dashboard = '$basePath/dashboard';
   static const String iconsPath = '$basePath/icons';
   static const String splash = '$basePath/splash';
+  static const String visit = '$basePath/visit';
+  static const String svgsVisit = '$svgsPath/visit';
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -37,4 +39,25 @@ class AppAssets {
 
   // Animations (if using Lottie or similar)
   static const String loadingAnimation = 'visit/animations/loading.json';
+
+  // Visit Assets
+  static const String emptyWalletTime = '$svgsVisit/empty-wallet-time.svg';
+  static const String bitCinCard = '$svgsVisit/bitcoin-card.svg';
+  static const String building = '$svgsVisit/building.svg';
+  static const String businessAndTrade = '$svgsVisit/business-and-trade 1.svg';
+  static const String cardCoin = '$svgsVisit/card-coin.svg';
+  static const String clock = '$svgsVisit/clock.svg';
+  static const String element = '$svgsVisit/element-1.svg';
+  static const String addButton = '$svgsVisit/Frame 1000003425.svg';
+  static const String global = '$svgsVisit/global.svg';
+  static const String gst = '$svgsVisit/Group 1410104499.svg';
+  static const String location = '$svgsVisit/location.svg';
+  static const String lock = '$svgsVisit/lock.svg';
+  static const String map = '$svgsVisit/map.svg';
+  static const String date = '$svgsVisit/note-favorite.svg';
+  static const String home = '$svgsVisit/home 1.svg';
+  static const String profileCircle = '$svgsVisit/profile-circle.svg';
+  static const String sms = '$svgsVisit/sms.svg';
+  static const String downArrow = '$svgsVisit/arrow-down.svg';
+  static const String galleryExport = '$svgsVisit/gallery-export.svg';
 }
