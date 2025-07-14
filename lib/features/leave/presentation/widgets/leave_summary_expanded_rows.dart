@@ -1,65 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
-import 'package:myco_flutter/features/leave/presentation/widgets/leave_summary_grid.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 
-class LeaveSummaryCard extends StatelessWidget {
-  final List<LeaveSummaryItem> chips;
+class LeaveRowData {
+  final String label;
+  final String value;
+  final bool isVisible;
+  final VoidCallback? onTap;
+  final bool isMonthlyData;
+  final Map<String, String>? monthlyData;
+
+  LeaveRowData({
+    required this.label,
+    required this.value,
+    this.isVisible = true,
+    this.onTap,
+    this.isMonthlyData = false,
+    this.monthlyData,
+  });
+}
+
+class LeaveSummaryExpandedRows extends StatelessWidget {
   final List<LeaveRowData> rows;
 
-  const LeaveSummaryCard({
-    super.key,
-    required this.chips,
-    required this.rows
-  });
-
+  const LeaveSummaryExpandedRows({super.key, required this.rows});
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    return Container(
+    return Padding(
       padding: EdgeInsets.symmetric(
-        vertical: height * 0.02,
+        vertical: height * 0.01,
         horizontal: width * 0.04,
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          LeaveSummarySection(
-            summaryItems: chips,
-            maxLeavesInMonth: 2,
-            isOtherContainer: false,
-            onViewDates: () {},
-          ),
-
-          // Dynamic Dotted Rows
           ...rows.map((row) {
-            if (row.label == 'View Dates' || row.label == 'Apply for leave encashment?') {
+            if (row.label == 'View Dates' ||
+                row.label == 'Apply for leave encashment') {
               return InkWell(
                 onTap: row.onTap,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        row.label,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: row.onTap != null ? Colors.blue : Colors.black,
-                          decoration: row.onTap != null ? TextDecoration.underline : TextDecoration.none,
-                        ),
-                      ),
-                      if (row.value.isNotEmpty)
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
                         Text(
-                          row.value,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                          row.label,
+                          style: TextStyle(
                             fontSize: 14,
+                            color: row.label == 'Apply for leave encashment'
+                                ? AppColors.greenDark
+                                : AppColors.primary,
                           ),
                         ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -71,7 +69,12 @@ class LeaveSummaryCard extends StatelessWidget {
       ),
     );
   }
-  Widget _dottedRow(String title, String value, {VoidCallback? onTap}) => Padding(
+
+  Widget _dottedRow(
+    String title,
+    String value, {
+    VoidCallback? onTap,
+  }) => Padding(
     padding: const EdgeInsets.symmetric(vertical: 6),
     child: InkWell(
       onTap: onTap,
@@ -105,4 +108,3 @@ class LeaveSummaryCard extends StatelessWidget {
     ),
   );
 }
-

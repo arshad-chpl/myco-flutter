@@ -224,6 +224,7 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
                     title: "SUBMIT",
                     height: 0.065 * Responsive.getHeight(context),
                     boarderRadius: 30,
+
                     textStyle: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
