@@ -51,7 +51,7 @@ class _AssignToVisitState extends State<AssignToVisit> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 16 * getResponsive(context)),
+            // SizedBox(height: 16 * getResponsive(context)),
             CustomVisitTypeRadioButton(
               textStyle: TextStyle(
                 fontSize: 16 * getResponsiveText(context),
@@ -73,11 +73,11 @@ class _AssignToVisitState extends State<AssignToVisit> {
                 title: 'Change',
                 isShadowBottomLeft: true,
                 boarderRadius: 50 * getResponsive(context),
-                height: 0.03 * getHeight(context),
-                width: 0.3 * getWidth(context),
+                height: 0.04 * getHeight(context),
+                width: 0.2 * getWidth(context),
                 textStyle: TextStyle(
                   color: AppTheme.getColor(context).onPrimary,
-                  fontSize: 16 * getResponsiveText(context),
+                  fontSize: 15 * getResponsiveText(context),
                 ),
               ),
               title: 'Assign To',
@@ -86,8 +86,8 @@ class _AssignToVisitState extends State<AssignToVisit> {
               },
               bottomWidget: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 8 * getResponsive(context),
-                  vertical: 2 * getResponsive(context),
+                  horizontal: 9 * getResponsive(context),
+                  vertical: 3 * getResponsive(context),
                 ),
                 child: GridView.builder(
                   shrinkWrap: true,
@@ -95,12 +95,12 @@ class _AssignToVisitState extends State<AssignToVisit> {
                   itemCount: 6,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    mainAxisExtent: 40 * getResponsive(context),
-                    crossAxisSpacing: 20 * getResponsive(context),
-                    mainAxisSpacing: 15 * getResponsive(context),
+                    mainAxisExtent: 45 * getResponsive(context),
+                    crossAxisSpacing: 30 * getResponsive(context),
+                    mainAxisSpacing: 10 * getResponsive(context),
                   ),
                   itemBuilder: (context, index) => Container(
-                    padding: EdgeInsets.only(right: 4 * getResponsive(context)),
+                    padding: EdgeInsets.only(right: 6 * getResponsive(context)),
                     child: Row(
                       children: [
                         CircleAvatar(
@@ -109,10 +109,9 @@ class _AssignToVisitState extends State<AssignToVisit> {
                             context,
                           ).outlineVariant,
                         ),
-                        SizedBox(width: 4 * getResponsive(context)),
+                        SizedBox(width: 2 * getResponsive(context)),
                         Expanded(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CustomText(
                                 'Vatsal Champaneri',
@@ -128,7 +127,7 @@ class _AssignToVisitState extends State<AssignToVisit> {
                             ],
                           ),
                         ),
-                        SizedBox(width: 4 * getResponsive(context)),
+                        SizedBox(width: 2 * getResponsive(context)),
                         SvgPicture.asset(
                           AppAssets.trash,
                           height: 0.02 * getHeight(context),
@@ -223,7 +222,7 @@ class _AssignToVisitState extends State<AssignToVisit> {
             CustomPopupDropdownStyled<String>(
               height: 0.06 * getHeight(context),
               spacing: 10 * getResponsive(context),
-              prefix: SvgPicture.asset(AppAssets.gps , fit: BoxFit.scaleDown,),
+              prefix: SvgPicture.asset(AppAssets.gps),
               prefixImageHeight: 20 * getHeight(context),
               prefixImageWidth: 20 * getWidth(context),
               items: VisitPurpose,
@@ -238,20 +237,18 @@ class _AssignToVisitState extends State<AssignToVisit> {
               onChanged: (value, index) {},
             ),
             Padding(
-              padding:
-                  const EdgeInsets.only(
-                    top: 30,
-                    right: 20,
-                    bottom: 12,
-                    left: 20,
-                  ) *
-                  getResponsive(context),
+              padding: EdgeInsets.only(
+                top: 30 * getResponsive(context),
+                right: 20 * getResponsive(context),
+                bottom: 8 * getResponsive(context),
+                left: 20 * getResponsive(context),
+              ),
               child: MyCoButton(
                 onTap: () {},
                 title: 'SUBMIT',
                 textStyle: TextStyle(
                   color: AppTheme.getColor(context).onPrimary,
-                  fontSize: 25 * getResponsiveText(context),
+                  fontSize: 22 * getResponsiveText(context), // reduced
                   fontFamily: 'Gilroy-Bold',
                 ),
                 isShadowBottomLeft: true,

@@ -16,25 +16,25 @@ class AutoStartVisitCheckboxRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-      spacing: 10 * getResponsive(context),
-      children: [
-        CustomCheckbox(
-          value: autoStartVisit,
-          onChanged: onChanged,
-          borderColor: AppTheme.getColor(context).onSurface,
-          activeColor: AppTheme.getColor(context).primary,
-          checkColor: Colors.white,
-          height: 20 * getResponsive(context),
-          width: 20 * getResponsive(context),
-          unCheckedBackground: Colors.white,
+    spacing: 10 * getResponsive(context),
+    children: [
+      CustomCheckbox(
+        value: autoStartVisit,
+        onChanged: onChanged,
+        borderColor: AppTheme.getColor(context).onSurface,
+        activeColor: AppTheme.getColor(context).primary,
+        checkColor: Colors.white,
+        height: 20 * getResponsive(context),
+        width: 20 * getResponsive(context),
+        unCheckedBackground: Colors.white,
+      ),
+      Expanded(
+        child: CustomText(
+          'Please agree to automatically start the visit',
+          fontSize: 14 * getResponsiveText(context),
+          color: AppTheme.getColor(context).onSurface,
         ),
-        Expanded(
-          child: CustomText(
-            'Please agree to automatically start the visit',
-            fontSize: 14 * getResponsiveText(context),
-            color: AppTheme.getColor(context).onSurface,
-          ),
-        ),
-      ],
-    );
+      ),
+    ],
+  );
 }

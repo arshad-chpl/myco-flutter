@@ -8,6 +8,7 @@ import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom
 import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_custom_radio_button.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
+import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -75,7 +76,6 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
               },
             ),
 
-
             // Customer to visit label
             CustomText(
               'Customer to visit',
@@ -86,7 +86,6 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
 
             /// Customer Dropdown
             CustomPopupDropdownStyled<String>(
-              width: 44 * getWidth(context),
               height: 0.06 * getHeight(context),
               spacing: 10 * getResponsive(context),
               prefix: SvgPicture.asset(AppAssets.personalcard),
@@ -100,14 +99,11 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
               ),
               selectedItem: selectedleavetype,
               itemToString: (item) => item,
-              onChanged: (value, index) {
-
-              },
+              onChanged: (value, index) {},
             ),
 
             /// Visit Date TextField
             LabeledTextField(
-              heightFactor: 0.06 * getHeight(context),
               textAlignment: TextAlign.start,
               label: 'Visit Date',
               hint: 'Select Date',
@@ -124,7 +120,8 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
                   10 * getResponsive(context),
                 ),
               ),
-              prefix: SvgPicture.asset(AppAssets.note_favorite,
+              prefix: SvgPicture.asset(
+                AppAssets.note_favorite,
                 fit: BoxFit.scaleDown,
               ),
               prefixImageHeight: 20 * getHeight(context),
@@ -142,7 +139,7 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
             /// Visit Slot Dropdown
             CustomPopupDropdownStyled<String>(
               height: 0.06 * getHeight(context),
-              spacing: 10 * getResponsive(context),
+              spacing: 12 * getResponsive(context),
               prefix: SvgPicture.asset(AppAssets.clock),
               prefixImageHeight: 20 * getResponsive(context),
               prefixImageWidth: 20 * getResponsive(context),
@@ -154,16 +151,16 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
               ),
               selectedItem: selectedleavetype,
               itemToString: (item) => item,
-              onChanged: (value, index) {
-
-              },
+              onChanged: (value, index) {},
             ),
 
             // Visit Mode Radio Buttons
             CustomRadioButton(
               height: 0.05 * getHeight(context),
               options: ["field visit", "virtual visit"],
-              onChanged: (selected) {},
+              onChanged: (selected) {
+                // Handle radio button change
+              },
             ),
 
             // Visit Type Label
@@ -217,6 +214,26 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
                 // Handle dropdown change
               },
             ),
+            LabeledDropdown<String>(
+              label: 'Visit Purpose',
+              isRequired: false,
+              items: VisitPurpose,
+              selectedItem: selectedleavetype,
+              itemToString: (item) => item,
+              onChanged: (value, index) {
+                setState(() {
+                  selectedleavetype = value;
+                });
+              },
+              hintText: 'Select',
+              hintTextStyle: TextStyle(
+                fontSize: 15 * getResponsiveText(context),
+                color: AppTheme.getColor(context).outline,
+              ),
+              prefix: SvgPicture.asset(AppAssets.gps),
+              height: 0.06 * getHeight(context),
+              spacing: 10 * getResponsive(context),
+            ),
             // Submit Button
             Padding(
               padding:
@@ -224,7 +241,7 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
                   getResponsive(context),
               child: MyCoButton(
                 onTap: () {
-                  // Todo:Handle form submission
+                  // Handle form submission
                 },
                 title: 'SUBMIT',
                 textStyle: TextStyle(

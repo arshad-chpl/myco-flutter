@@ -226,7 +226,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
                 boarderRadius: 50 * getResponsive(context),
               ),
             ),
-            SizedBox(),
+            const SizedBox(),
           ],
         ),
       ),
