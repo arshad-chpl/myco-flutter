@@ -18,7 +18,9 @@ class OfferBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Card(
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+      borderRadius: BorderRadius.circular(
+        12 * Responsive.getResponsive(context),
+      ),
     ),
     color: AppTheme.getColor(context).onPrimary,
     child: Column(
@@ -26,26 +28,26 @@ class OfferBox extends StatelessWidget {
       children: [
         // Header
         Container(
-          height: 0.05 * getHeight(context),
-          padding: EdgeInsets.all(8 * getResponsive(context)),
+          height: 0.05 * Responsive.getHeight(context),
+          padding: EdgeInsets.all(8 * Responsive.getResponsive(context)),
           decoration: BoxDecoration(
             color: AppColors.myCoCyan,
             borderRadius: BorderRadius.vertical(
-              top: Radius.circular(12 * getResponsive(context)),
+              top: Radius.circular(12 * Responsive.getResponsive(context)),
             ),
           ),
           child: Row(
             children: [
               Image.asset(
-                'visit/take_order/offer.png',
-                height: 0.02 * getHeight(context),
+                'assets/take_order/offer.png',
+                height: 0.02 * Responsive.getHeight(context),
               ),
-              SizedBox(width: 0.02 * getWidth(context)),
+              SizedBox(width: 0.02 * Responsive.getWidth(context)),
               CustomText(
                 title,
                 color: AppTheme.getColor(context).onPrimary,
                 fontWeight: FontWeight.bold,
-                fontSize: 18 * getResponsiveText(context),
+                fontSize: 18 * Responsive.getResponsiveText(context),
               ),
             ],
           ),
@@ -53,10 +55,10 @@ class OfferBox extends StatelessWidget {
 
         // Offer Description
         Padding(
-          padding: EdgeInsets.all(10 * getResponsive(context)),
+          padding: EdgeInsets.all(10 * Responsive.getResponsive(context)),
           child: CustomText(
             textContent,
-            fontSize: 14 * getResponsiveText(context),
+            fontSize: 14 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w500,
             color: AppTheme.getColor(context).onSurfaceVariant,
           ),
@@ -65,14 +67,14 @@ class OfferBox extends StatelessWidget {
         // Footer with validity
         Padding(
           padding: EdgeInsets.fromLTRB(
-            12 * getResponsive(context),
+            12 * Responsive.getResponsive(context),
             0,
-            12 * getResponsive(context),
-            12 * getResponsive(context),
+            12 * Responsive.getResponsive(context),
+            12 * Responsive.getResponsive(context),
           ),
           child: CustomText(
             offerTime,
-            fontSize: 12 * getResponsiveText(context),
+            fontSize: 12 * Responsive.getResponsiveText(context),
             color: AppTheme.getColor(context).primary,
             fontWeight: FontWeight.w700,
           ),

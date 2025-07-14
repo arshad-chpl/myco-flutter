@@ -120,7 +120,11 @@ class UpcomingCelebrationCard extends StatelessWidget {
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: AppTheme.getColor(context).primary,
-                              width: 1.5 * getDashboardResponsiveText(context),
+                              width:
+                                  1.5 *
+                                  Responsive.getDashboardResponsiveText(
+                                    context,
+                                  ),
                             ),
                           ),
                       child: CircleAvatar(
@@ -165,7 +169,7 @@ class UpcomingCelebrationCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 MyCoButton(
-                  height: 40 * getDashboardResponsiveText(context),
+                  height: 40 * Responsive.getDashboardResponsiveText(context),
                   onTap: onButtonPressed,
                   title: buttonLabel,
                   fontWeight: FontWeight.w600,

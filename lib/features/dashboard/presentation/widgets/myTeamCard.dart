@@ -51,7 +51,7 @@ class MyTeamCard extends StatelessWidget {
         right: 0,
         left: 0,
         child: Container(
-          height: getResponsiveOnWidth(context),
+          height: Responsive.getResponsiveOnWidth(context),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: isActive

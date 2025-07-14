@@ -7,14 +7,14 @@ sealed class TakeOrderEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class TabChangeEvent extends TakeOrderEvent {
-  final int index;
+// class TabChangeEvent extends TakeOrderEvent {
+//   final int index;
 
-  const TabChangeEvent({required this.index});
+//   const TabChangeEvent({required this.index});
 
-  @override
-  List<Object> get props => [index];
-}
+//   @override
+//   List<Object> get props => [index];
+// }
 
 class StartVisitEvent extends TakeOrderEvent {
   @override

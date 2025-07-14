@@ -105,28 +105,32 @@ class CustomPopupDropdownStyled<T> extends StatelessWidget {
               onChanged?.call(value, index);
             },
       color: colorBackground ?? AppTheme.getColor(context).onPrimary,
-      elevation: popupElevation ?? 4 * getResponsive(context),
+      elevation: popupElevation ?? 4 * Responsive.getResponsive(context),
       shape:
           popupShape ??
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8 * getResponsive(context)),
+            borderRadius: BorderRadius.circular(
+              8 * Responsive.getResponsive(context),
+            ),
             side: BorderSide(
               color: AppTheme.getColor(context).primary,
-              width: 0.002 * getWidth(context),
+              width: 0.002 * Responsive.getWidth(context),
             ),
           ),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 12 * getResponsive(context)),
+        padding: EdgeInsets.symmetric(
+          horizontal: 12 * Responsive.getResponsive(context),
+        ),
         decoration: BoxDecoration(
           color: colorBackground ?? AppTheme.getColor(context).onPrimary,
           borderRadius: BorderRadius.circular(
-            borderRadius ?? 8 * getResponsive(context),
+            borderRadius ?? 8 * Responsive.getResponsive(context),
           ),
           border:
               border ??
               Border.all(
                 color: AppTheme.getColor(context).primary,
-                width: 0.002 * getWidth(context),
+                width: 0.002 * Responsive.getWidth(context),
               ),
         ),
         child: Row(
@@ -140,12 +144,16 @@ class CustomPopupDropdownStyled<T> extends StatelessWidget {
                 onTap: onTapPrefix,
                 child: Padding(
                   padding: EdgeInsets.only(
-                    right: 16.0 * getResponsive(context),
+                    right: 16.0 * Responsive.getResponsive(context),
                   ),
                   child: Image.asset(
                     prefixImage!,
-                    height: prefixImageHeight ?? 0.018 * getHeight(context),
-                    width: prefixImageWidth ?? 0.018 * getWidth(context),
+                    height:
+                        prefixImageHeight ??
+                        0.018 * Responsive.getHeight(context),
+                    width:
+                        prefixImageWidth ??
+                        0.018 * Responsive.getWidth(context),
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -170,10 +178,11 @@ class CustomPopupDropdownStyled<T> extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
+
             Icon(
               icon?.icon ?? Icons.keyboard_arrow_down,
               color: iconColor ?? AppTheme.getColor(context).primary,
-              size: iconSize ?? 30 * getResponsive(context),
+              size: iconSize ?? 30 * Responsive.getResponsive(context),
             ),
           ],
         ),

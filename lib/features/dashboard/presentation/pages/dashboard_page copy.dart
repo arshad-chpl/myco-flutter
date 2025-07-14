@@ -87,7 +87,7 @@
 //                       subtitle: 'It’s Team That can Make it Happen',
 //                       icon: Image.asset(
 //                         AppAssets.quickAccessGif,
-//                         height: 70 * getResponsiveOnWidth(context),
+//                         height: 70 * Responsive.getResponsiveOnWidth(context),
 //                       ),
 //                       hasViewMoreButton: true,
 //                       count: '04',
@@ -133,7 +133,7 @@
 //                       subtitle: 'All Your Work Related Tools.',
 //                       icon: Image.asset(
 //                         AppAssets.quickAccessGif,
-//                         height: 70 * getResponsiveOnWidth(context),
+//                         height: 70 * Responsive.getResponsiveOnWidth(context),
 //                       ),
 //                       hasViewMoreButton: true,
 //                       count: '04',
@@ -145,7 +145,7 @@
 //                         shrinkWrap: true,
 //                         physics: const NeverScrollableScrollPhysics(),
 //                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//                           crossAxisCount: getWidth(context) > 600
+//                           crossAxisCount: Responsive.getWidth(context) > 600
 //                               ? 6
 //                               : 3, // 2 columns
 //                           crossAxisSpacing: 16,
@@ -171,13 +171,13 @@
 //                       subtitle: 'Spread smiles — celebrate someone today!',
 //                       icon: Image.asset(
 //                         AppAssets.quickAccessGif,
-//                         height: 70 * getResponsiveOnWidth(context),
+//                         height: 70 * Responsive.getResponsiveOnWidth(context),
 //                       ),
 //                       count: '04',
 //                       hasViewMoreButton: true,
 //                       child: SizedBox(
-//                         width: getWidth(context),
-//                         height: 0.3 * getHeight(context),
+//                         width: Responsive.getWidth(context),
+//                         height: 0.3 * Responsive.getHeight(context),
 //                         child: ListView.builder(
 //                           itemCount: 3,
 //                           shrinkWrap: true,
@@ -191,7 +191,7 @@
 //                               chipLabel: 'BirthDay',
 //                               buttonLabel: '',
 //                               onButtonPressed: () {},
-//                               cardWidth: getWidth(context) * 0.8,
+//                               cardWidth: Responsive.getWidth(context) * 0.8,
 //                               cardPadding: EdgeInsets.zero,
 //                               // contentPadding: EdgeInsets.zero,
 //                             );
@@ -204,13 +204,13 @@
 //                       subtitle: 'The people who help make things happen.',
 //                       icon: Image.asset(
 //                         AppAssets.quickAccessGif,
-//                         height: 70 * getResponsiveOnWidth(context),
+//                         height: 70 * Responsive.getResponsiveOnWidth(context),
 //                       ),
 //                       count: '04',
 //                       hasViewMoreButton: true,
 //                       child: SizedBox(
-//                         width: getWidth(context),
-//                         height: 0.3 * getHeight(context),
+//                         width: Responsive.getWidth(context),
+//                         height: 0.3 * Responsive.getHeight(context),
 //                         child: ListView.builder(
 //                           itemCount: 3,
 //                           shrinkWrap: true,
@@ -234,13 +234,13 @@
 //                       subtitle: 'live the Moments Again.',
 //                       icon: Image.asset(
 //                         AppAssets.quickAccessGif,
-//                         height: 70 * getResponsiveOnWidth(context),
+//                         height: 70 * Responsive.getResponsiveOnWidth(context),
 //                       ),
 //                       count: '04',
 //                       hasViewMoreButton: true,
 //                       child: SizedBox(
-//                         width: getWidth(context),
-//                         height: 0.3 * getHeight(context),
+//                         width: Responsive.getWidth(context),
+//                         height: 0.3 * Responsive.getHeight(context),
 //                         child: ListView.builder(
 //                           itemCount: 3,
 //                           shrinkWrap: true,
@@ -364,4 +364,3 @@
 //     }
 //   }
 // }
-  

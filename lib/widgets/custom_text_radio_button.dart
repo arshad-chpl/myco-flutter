@@ -51,15 +51,15 @@ class CustomTextRadioButton extends StatelessWidget {
       child: Container(
         height: height,
         width: width,
-        // padding: padding ?? EdgeInsets.symmetric(vertical: 12 * getResponsive(context)),
-        // margin: margin ?? EdgeInsets.symmetric(horizontal: 6 * getResponsive(context)),
-        decoration: customDecoration ??
+        // padding: padding ?? EdgeInsets.symmetric(vertical: 12 * Responsive.getResponsive(context)),
+        // margin: margin ?? EdgeInsets.symmetric(horizontal: 6 * Responsive.getResponsive(context)),
+        decoration:
+            customDecoration ??
             BoxDecoration(
-              border: Border.all(
-                color: AppColors.gray,
-                width: 1,
+              border: Border.all(color: AppColors.gray, width: 1),
+              borderRadius: BorderRadius.circular(
+                10 * Responsive.getResponsive(context),
               ),
-              borderRadius: BorderRadius.circular(10 * getResponsive(context)),
               color: Colors.white,
             ),
         child: Row(
@@ -79,11 +79,12 @@ class CustomTextRadioButton extends StatelessWidget {
                 ),
             Text(
               gender,
-              style: textStyle ??
+              style:
+                  textStyle ??
                   TextStyle(
                     fontWeight: FontWeight.w600,
                     color: AppColors.gray,
-                    fontSize: 18*getResponsiveText(context)
+                    fontSize: 18 * Responsive.getResponsiveText(context),
                   ),
             ),
           ],
