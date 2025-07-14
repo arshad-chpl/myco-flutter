@@ -1,21 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-Widget startVisitBottomSheet(BuildContext context) {
-  final double screenWidth = Responsive.getWidth(context);
-  final double screenHeight = Responsive.getHeight(context);
-  final double multiplier = Responsive.getResponsiveText(context);
-
-  return Padding(
+Widget startVisitBottomSheet(BuildContext context) => Padding(
     padding: EdgeInsets.only(
-      left: screenWidth * 0.05,
-      right: screenWidth * 0.05,
-      bottom: MediaQuery.of(context).viewInsets.bottom + screenHeight * 0.03,
-      top: screenHeight * 0.03,
+      left: 0.05 * Responsive.getWidth(context),
+      right: 0.05 * Responsive.getWidth(context),
+      bottom: MediaQuery.of(context).viewInsets.bottom + 0.03 * Responsive.getHeight(context),
+      top: 0.03 * Responsive.getHeight(context),
     ),
     child: Column(
       mainAxisSize: MainAxisSize.min,
@@ -23,24 +19,24 @@ Widget startVisitBottomSheet(BuildContext context) {
       children: [
         CustomText(
           'Face Match Alert!',
-          fontSize: 18 * multiplier,
+          fontSize: 18 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
         ),
-        SizedBox(height: screenHeight * 0.02),
+        SizedBox(height: 0.02 * Responsive.getHeight(context)),
         Center(
           child: Image.asset(
-            'assets/visit/svgs/face_match.png',
+            AppAssets.faceMatch,
             fit: BoxFit.contain,
           ),
         ),
-        SizedBox(height: screenHeight * 0.025),
+        SizedBox(height: 0.025 * Responsive.getHeight(context)),
         CustomText(
           'You will now required to match your face when you start or end the visit',
-          fontSize: 18 * multiplier,
+          fontSize: 18 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w400,
           textAlign: TextAlign.center,
         ),
-        SizedBox(height: screenHeight * 0.03),
+        SizedBox(height: 0.03 * Responsive.getHeight(context)),
         Row(
           children: [
             Expanded(
@@ -51,7 +47,7 @@ Widget startVisitBottomSheet(BuildContext context) {
                 title: 'CLOSE',
                 textStyle: TextStyle(
                   color: AppColors.primary,
-                  fontSize: 14 * multiplier,
+                  fontSize: 14 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
                 backgroundColor: Colors.transparent,
@@ -60,7 +56,7 @@ Widget startVisitBottomSheet(BuildContext context) {
                 borderColor: AppColors.primary,
               ),
             ),
-            SizedBox(width: screenWidth * 0.04),
+            SizedBox(width: 0.04 * Responsive.getWidth(context)),
             Expanded(
               child: MyCoButton(
                 onTap: () {
@@ -69,7 +65,7 @@ Widget startVisitBottomSheet(BuildContext context) {
                 title: 'CONTINUE',
                 textStyle: TextStyle(
                   color: Colors.white,
-                  fontSize: 14 * multiplier,
+                  fontSize: 14 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
                 backgroundColor: AppColors.primary,
@@ -83,4 +79,3 @@ Widget startVisitBottomSheet(BuildContext context) {
       ],
     ),
   );
-}

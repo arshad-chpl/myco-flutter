@@ -14,13 +14,7 @@ Row getCommonRow(
   Color textColor = AppColors.black,
   TextDecoration? decoration,
   bool showMap = false,
-}) {
-  final double multiplier = Responsive.getResponsiveText(context);
-  final double spacing = 0.03 * Responsive.getWidth(context);
-  final double screenHeight = Responsive.getHeight(context);
-  final double screenWidth = Responsive.getWidth(context);
-
-  return Row(
+}) => Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Expanded(
@@ -31,7 +25,7 @@ Row getCommonRow(
             CustomText(
               title,
               fontWeight: FontWeight.w700,
-              fontSize: 13.5 * multiplier,
+              fontSize: 13.5 * Responsive.getResponsiveText(context),
             ),
             if (showMap)
               Padding(
@@ -45,8 +39,8 @@ Row getCommonRow(
                     padding: const EdgeInsets.all(8.0),
                     child: SvgPicture.asset(
                       'assets/visit/svgs/map.svg',
-                      height: 0.04 * screenHeight,
-                      width: 0.05 * screenWidth,
+                      height: 0.04 * Responsive.getHeight(context),
+                      width: 0.05 * Responsive.getWidth(context),
                     ),
                   ),
                 ),
@@ -54,18 +48,17 @@ Row getCommonRow(
           ],
         ),
       ),
-       const CustomText(':',),
-      SizedBox(width: spacing),
+      const CustomText(':'),
+      SizedBox(width: 0.03 * Responsive.getWidth(context)),
       Expanded(
         flex: 9,
         child: InkWell(
           onTap: onTap,
-          child:
-              valueWidget ??
+          child: valueWidget ??
               CustomText(
                 value,
                 color: textColor,
-                fontSize: 13.5 * multiplier,
+                fontSize: 13.5 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w500,
                 decoration: decoration,
               ),
@@ -73,4 +66,3 @@ Row getCommonRow(
       ),
     ],
   );
-}

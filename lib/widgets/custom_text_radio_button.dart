@@ -82,7 +82,7 @@ class CustomTextRadioButton extends StatelessWidget {
                   TextStyle(
                     fontWeight: FontWeight.w600,
                     color: AppColors.gray,
-                    fontSize: 18 * Responsive.getResponsiveText(context),
+                    fontSize: 18.0 * Responsive.getResponsiveText(context),
                   ),
             ),
           ],

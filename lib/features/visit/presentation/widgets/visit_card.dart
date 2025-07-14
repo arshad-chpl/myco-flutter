@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
-import 'package:myco_flutter/features/visit/presentation/pages/reschedule_visit_page.dart';
-import 'package:myco_flutter/features/visit/presentation/widgets/end_visit_bottom_sheet.dart';
-import 'package:myco_flutter/features/visit/presentation/widgets/get_common_row.dart';
-import 'package:myco_flutter/features/visit/presentation/widgets/start_visit_bottom_sheet.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/reschedule_visit_page.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/end_visit_bottom_sheet.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/get_common_row.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/start_visit_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -27,12 +28,9 @@ Widget buildVisitCard(
       : AppColors.spanishYellow;
 
   final bool isSixthContainer = visit['isSixthContainer'] == true;
-  final double multiplier = getResponsiveText(context);
-  final double screenHeight = getHeight(context);
-  final double screenWidth = getWidth(context);
 
   return Padding(
-    padding: EdgeInsets.only(bottom: screenHeight * 0.02),
+    padding: EdgeInsets.only(bottom: Responsive.getHeight(context) * 0.02),
     child: Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -55,7 +53,7 @@ Widget buildVisitCard(
           borderColor: AppTheme.getColor(context).outline,
           showBlackShadowInChild: true,
           bottomWidget: Padding(
-            padding: EdgeInsets.all(screenWidth * 0.03),
+            padding: EdgeInsets.all(Responsive.getWidth(context) * 0.03),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -70,7 +68,7 @@ Widget buildVisitCard(
                         backgroundColor: Colors.transparent,
                         textStyle: TextStyle(
                           color: statusColor,
-                          fontSize: 13 * multiplier,
+                          fontSize: 13 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w400,
                         ),
                         boarderRadius: 40,
@@ -78,7 +76,7 @@ Widget buildVisitCard(
                         borderWidth: 1,
                       ),
                     ),
-                    const SizedBox(width: 10),
+                    SizedBox(width: Responsive.getWidth(context) * 0.25),
                     Expanded(
                       child: MyCoButton(
                         onTap: () {},
@@ -86,7 +84,7 @@ Widget buildVisitCard(
                         backgroundColor: AppTheme.getColor(context).primary,
                         textStyle: TextStyle(
                           color: AppTheme.getColor(context).onPrimary,
-                          fontSize: 13 * multiplier,
+                          fontSize: 13 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w400,
                         ),
                         boarderRadius: 40,
@@ -97,7 +95,7 @@ Widget buildVisitCard(
                   ],
                 ),
 
-                SizedBox(height: screenHeight * 0.02),
+                SizedBox(height: Responsive.getHeight(context) * 0.02),
 
                 // details
                 ...visit['details'].entries.map((e) {
@@ -124,7 +122,7 @@ Widget buildVisitCard(
                   );
                 }).toList(),
 
-                SizedBox(height: 0.020 * getHeight(context),),
+                SizedBox(height: 0.020 * Responsive.getHeight(context),),
                 // Reschedule Row
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,7 +139,7 @@ Widget buildVisitCard(
                       child: CustomText(
                         'Reschedule Visit?',
                         fontWeight: FontWeight.w600,
-                        fontSize: 14 * multiplier,
+                        fontSize: 14 * Responsive.getResponsiveText(context),
                         color: AppTheme.getColor(context).primary,
                         decoration: TextDecoration.underline,
                         decorationColor: AppTheme.getColor(context).primary,
@@ -153,12 +151,12 @@ Widget buildVisitCard(
                         if (visit['showWhatsapp'] == true)
                           ...[
                             SvgPicture.asset('assets/visit/svgs/whatsapp.svg'),
-                            SizedBox(width: screenWidth * 0.03),
+                            SizedBox(width: Responsive.getWidth(context) * 0.03),
                           ],
                         if (visit['showShare'] == true)
                           ...[
                             SvgPicture.asset('assets/visit/svgs/share.svg'),
-                            SizedBox(width: screenWidth * 0.03),
+                            SizedBox(width: Responsive.getWidth(context) * 0.03),
                           ],
                         if (visit['showDelete'] == true)
                           SvgPicture.asset('assets/visit/svgs/delete.svg'),
@@ -167,7 +165,7 @@ Widget buildVisitCard(
                   ],
                 ),
 
-                SizedBox(height: screenHeight * 0.02),
+                SizedBox(height: Responsive.getHeight(context) * 0.02),
 
                 // Buttons
                 if (index == 2 || index == 3)
@@ -189,12 +187,12 @@ Widget buildVisitCard(
                           title: 'END VISIT',
                           textStyle: TextStyle(
                             color: AppColors.red,
-                            fontSize: 13.5 * multiplier,
+                            fontSize: 13.5 * Responsive.getResponsiveText(context),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 5),
+                      SizedBox(width: Responsive.getWidth(context) * 0.040),
                       Expanded(
                         child: MyCoButton(
                           onTap: () {},
@@ -204,7 +202,7 @@ Widget buildVisitCard(
                           textStyle: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 13.5 * multiplier,
+                            fontSize: 13.5 * Responsive.getResponsiveText(context),
                           ),
                           isShadowBottomLeft: true,
                         ),
@@ -212,15 +210,15 @@ Widget buildVisitCard(
                     ],
                   ),
 
-                SizedBox(height: screenHeight * 0.02),
+                SizedBox(height: Responsive.getHeight(context) * 0.02),
 
                 if (isSixthContainer && index == 5)
                   Padding(
-                    padding: EdgeInsets.only(bottom: screenHeight * 0.008),
+                    padding: EdgeInsets.only(bottom: Responsive.getHeight(context) * 0.008),
                     child: Center(
                       child: CustomText(
                         'Visit Not Ended, Forgot to end Visit',
-                        fontSize: 14 * multiplier,
+                        fontSize: 14 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w600,
                         color: AppTheme.getColor(context).primary,
                         textAlign: TextAlign.center,
@@ -254,7 +252,7 @@ Widget buildVisitCard(
                     textStyle: TextStyle(
                       color: AppTheme.getColor(context).onPrimary,
                       fontWeight: FontWeight.bold,
-                      fontSize: 14 * multiplier,
+                      fontSize: 14 * Responsive.getResponsiveText(context),
                     ),
                     boarderRadius: 30,
                     wantBorder: false,
@@ -263,14 +261,14 @@ Widget buildVisitCard(
 
                 // Rejection Message
                 if (visit['isEighthContainer'] == true) ...[
-                  SizedBox(height: screenHeight * 0.03),
+                  SizedBox(height: Responsive.getHeight(context) * 0.03),
                   CustomText(
                     'End Visit Request',
                     fontWeight: FontWeight.w600,
-                    fontSize: 14 * multiplier,
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                     color: AppTheme.getColor(context).primary,
                   ),
-                  SizedBox(height: screenHeight * 0.015),
+                  SizedBox(height: Responsive.getHeight(context) * 0.015),
                   getCommonRow(
                     context,
                     title: 'Rejected By',

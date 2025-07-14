@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -19,13 +20,12 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
   @override
   Widget build(BuildContext context) {
     Responsive.init(context);
-    final multiplier = Responsive.getResponsiveText(context);
-    final screenWidth = Responsive.screenWidth();
-    final screenHeight = Responsive.screenHeight();
-
     String? selectedExpenseType;
 
-    final List<String> expenseTypes = [ 'Travel', 'Food', 'Accommodation', 'Office Supplies', 'Entertainment', 'Miscellaneous', 'Fuel', 'Internet', 'Medical', 'Training', ];
+    final List<String> expenseTypes = [
+      'Travel', 'Food', 'Accommodation', 'Office Supplies', 'Entertainment',
+      'Miscellaneous', 'Fuel', 'Internet', 'Medical', 'Training',
+    ];
 
     return Padding(
       padding: EdgeInsets.only(
@@ -42,7 +42,7 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
             alignment: Alignment.centerLeft,
             child: CustomText(
               'Visit Report',
-              fontSize: 18 * multiplier,
+              fontSize: 18 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -51,17 +51,18 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
           /// Image
           Center(
             child: Image.asset(
-              'assets/visit/svgs/visit_report.png',
+              AppAssets.visitReport,
               fit: BoxFit.contain,
             ),
           ),
           const SizedBox(height: 24),
 
+          /// Dropdown 1
           CustomPopupDropdownStyled<String>(
             items: expenseTypes,
             hintText: 'Visit Template',
             prefix: SvgPicture.asset(
-              'assets/visit/svgs/message_edit.svg',
+              AppAssets.message_edit,
               fit: BoxFit.scaleDown,
             ),
             hintTextStyle: TextStyle(
@@ -83,11 +84,12 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
           ),
           const SizedBox(height: 24),
 
+          /// Dropdown 2
           CustomPopupDropdownStyled<String>(
             items: expenseTypes,
             hintText: 'Test New Visit *',
             prefix: SvgPicture.asset(
-              'assets/visit/svgs/message_edit.svg',
+              AppAssets.message_edit,
               fit: BoxFit.scaleDown,
             ),
             hintTextStyle: TextStyle(
@@ -108,7 +110,8 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
             ),
           ),
           const SizedBox(height: 24),
-          // Button Row
+
+          /// Button Row
           Row(
             children: [
               Expanded(
@@ -117,7 +120,7 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
                   title: 'CLOSE',
                   textStyle: TextStyle(
                     color: AppColors.primary,
-                    fontSize: 14 * multiplier,
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.bold,
                   ),
                   backgroundColor: Colors.transparent,
@@ -125,7 +128,7 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
                   borderColor: AppColors.primary,
                 ),
               ),
-              SizedBox(width: screenWidth * 0.04),
+              SizedBox(width: 0.04 * Responsive.getWidth(context)),
               Expanded(
                 child: MyCoButton(
                   onTap: () {
@@ -134,7 +137,7 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
                   title: 'CONTINUE',
                   textStyle: TextStyle(
                     color: Colors.white,
-                    fontSize: 14 * multiplier,
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.bold,
                   ),
                   backgroundColor: AppColors.primary,
@@ -149,4 +152,5 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
       ),
     );
   }
+
 }
