@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/leave/model/get_new_list_type_response.dart';
+import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
@@ -17,14 +17,18 @@ import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme
 class LeaveRowData {
   final String label;
   final String value;
-  final VoidCallback? onTap;
   final bool isVisible;
+  final VoidCallback? onTap;
+  final bool isMonthlyData;
+  final Map<String, String>? monthlyData;
 
   LeaveRowData({
     required this.label,
     required this.value,
-    this.onTap,
     this.isVisible = true,
+    this.onTap,
+    this.isMonthlyData = false,
+    this.monthlyData,
   });
 }
 
@@ -36,11 +40,20 @@ class MyLeaveBalanceScreen extends StatefulWidget {
 }
 
 class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
-  String selectedValue = '2025';
-
+  late String selectedValue;
+  late List<String> yearOptions;
   @override
   void initState() {
     super.initState();
+    final currentYear = DateTime.now().year;
+    // Set the selectedValue to the current year
+    selectedValue = currentYear.toString();
+    // Generate year options: current year - 1, current year, current year + 1
+    yearOptions = [
+      (currentYear - 1).toString(),
+      currentYear.toString(),
+      (currentYear + 1).toString(),
+    ];
     // Dispatch the event to fetch leave types when the screen is initialized
     context.read<LeaveBloc>().add(FetchNewLeaveListType(selectedValue));
   }
@@ -73,7 +86,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
                         FetchNewLeaveListType(selectedValue),
                       );
                     });
-                  }, ['2025', '2024', '2023']);
+                  }, yearOptions);
                 },
                 textStyle: TextStyle(
                   fontSize: 12 * Responsive.getResponsiveText(context),
@@ -124,7 +137,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
 
   // Helper method to map GetNewListTypeResponse to leaveTypes list
   List<Map<String, dynamic>> _mapResponseToLeaveTypes(
-      GetNewListTypeResponse response,) =>
+      LeaveHistoryResponseModel response,) =>
       response.leaveTypes
           ?.map(
             (leave) =>
@@ -144,121 +157,117 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
           [];
 
   // Helper method to generate rows for a specific leave type
-  List<LeaveRowData> _generateRowsForLeaveType(LeaveType leave) {
-    final isSpecialLeave = leave.isSpecialLeave == '1';
+  List<LeaveRowData> _generateRowsForLeaveType(LeaveTypeModel leave) {
+    final isSpecialLeave = leave.specialLeave == '1';
     final isLeaveRestricted = leave.leaveRestrictions == true;
     final isApplyLeaveEncashment =
         leave.leaveEncashmentOption == '1' && leave.encashmentAllowed != '0';
+    final hasMonthlyLeaveBalance =
+        leave.userMonthlyLeaveBalanceData != null && leave.userMonthlyLeaveBalanceData!.isNotEmpty;
 
     return [
       // Available Till Days
-      if (leave.leaveExpireAfterDays != null &&
-          leave.leaveExpireAfterDays!.isNotEmpty)
+      if (leave.leaveExpireAfterDays != null && leave.leaveExpireAfterDays!.isNotEmpty)
         LeaveRowData(
           label: 'Available Till Days',
           value: leave.leaveExpireAfterDays!,
           isVisible: true,
         ),
 
-      // Expire Leave
-      LeaveRowData(
-        label: 'Expire Leave',
-        value: leave.leaveExpireAfterDays ?? '0',
-        isVisible:
-        leave.leaveExpireAfterDays != null &&
-            leave.leaveExpireAfterDays!.isNotEmpty,
-      ),
-
-      // Assign Leaves
-      LeaveRowData(
-        label: 'Assign Leaves',
-        value: leave.userTotalLeave ?? '0',
-        isVisible: !isSpecialLeave,
-      ),
-
-      // Encashment Summary
-      if (leave.encasementSummary != null) ...[
-        LeaveRowData(
-          label: 'Total Encashment Leave',
-          value: leave.encasementSummary?.totalEncashment ?? '0',
-          isVisible:
-          leave.encasementSummary?.totalEncashment != null &&
-              leave.encasementSummary!.totalEncashment!.isNotEmpty &&
-              leave.encasementSummary!.totalEncashment != '0',
-        ),
-        LeaveRowData(
-          label: 'Paid Encashment Leave',
-          value: leave.encasementSummary?.totalPaid ?? '0',
-          isVisible:
-          leave.encasementSummary?.totalPaid != null &&
-              leave.encasementSummary!.totalPaid!.isNotEmpty &&
-              leave.encasementSummary!.totalPaid != '0',
-        ),
-        LeaveRowData(
-          label: 'Unpaid Encashment Leave',
-          value: leave.encasementSummary?.totalUnpaid ?? '0',
-          isVisible:
-          leave.encasementSummary?.totalUnpaid != null &&
-              leave.encasementSummary!.totalUnpaid!.isNotEmpty &&
-              leave.encasementSummary!.totalUnpaid != '0',
-        ),
+      // Encashment Summary - Only shown if not special leave and has encashment data
+      if (!isSpecialLeave && leave.encasementSummary != null) ...[
+        if (leave.encasementSummary?.totalEncashment != null &&
+            leave.encasementSummary!.totalEncashment!.isNotEmpty &&
+            leave.encasementSummary!.totalEncashment != '0')
+          LeaveRowData(
+            label: 'Total Encashment Leave',
+            value: leave.encasementSummary?.totalEncashment ?? '0',
+            isVisible: true,
+          ),
+        if (leave.encasementSummary?.totalPaid != null &&
+            leave.encasementSummary!.totalPaid!.isNotEmpty &&
+            leave.encasementSummary!.totalPaid != '0')
+          LeaveRowData(
+            label: 'Paid Encashment Leave',
+            value: leave.encasementSummary?.totalPaid ?? '0',
+            isVisible: true,
+          ),
+        if (leave.encasementSummary?.totalUnpaid != null &&
+            leave.encasementSummary!.totalUnpaid!.isNotEmpty &&
+            leave.encasementSummary!.totalUnpaid != '0')
+          LeaveRowData(
+            label: 'Unpaid Encashment Leave',
+            value: leave.encasementSummary?.totalUnpaid ?? '0',
+            isVisible: true,
+          ),
       ],
 
       // Leave Credit Last Date
-      LeaveRowData(
-        label: 'Leave Credit Last Date',
-        value: leave.leaveCreditLastDate ?? 'N/A',
-        isVisible:
-        leave.leaveCreditLastDate != null &&
-            leave.leaveCreditLastDate!.isNotEmpty,
-      ),
+      if (leave.leaveCreditLastDate != null && leave.leaveCreditLastDate!.isNotEmpty)
+        LeaveRowData(
+          label: 'Leave Credit Last Date',
+          value: leave.leaveCreditLastDate!,
+          isVisible: true,
+        ),
 
-      // Regular leave details (hidden for special leaves)
-      LeaveRowData(
-        label: 'Applicable Max Leaves In Month',
-        value: leave.applicableLeavesInMonth ?? '0',
-        isVisible: !isSpecialLeave,
-      ),
-      LeaveRowData(
-        label: 'Leave Calculation',
-        value: leave.leaveCalculation ?? 'N/A',
-        isVisible: !isSpecialLeave,
-      ),
-      LeaveRowData(
-        label: 'View Leave Count',
-        value: leave.assignLeaveFrequency ?? 'N/A',
-        isVisible: !isSpecialLeave,
-      ),
-      LeaveRowData(
-        label: 'Leaves According To Payroll Cycle',
-        value: leave.leavesAccordingToPayrollCycle ?? 'No',
-        isVisible: !isSpecialLeave,
-      ),
-      LeaveRowData(
-        label: 'Leave Restrictions',
-        value: leave.leaveRestrictions == true ? 'Yes' : 'No',
-        isVisible: !isSpecialLeave,
-      ),
-      LeaveRowData(
-        label: 'Take Leave During Notice Period',
-        value: leave.takeLeaveDuringNoticePeriod ?? 'No',
-        isVisible: !isSpecialLeave,
-      ),
-      LeaveRowData(
-        label: 'Max Leave During Notice Period',
-        value: leave.maxLeaveDuringNoticePeriod ?? '0',
-        isVisible: !isSpecialLeave,
-      ),
-      LeaveRowData(
-        label: 'Take Leave During Probation Period',
-        value: leave.takeLeaveDuringProbationPeriod ?? 'No',
-        isVisible: !isSpecialLeave,
-      ),
-      LeaveRowData(
-        label: 'Max Leave Per Month During Probation Period',
-        value: leave.maxLeavePerMonthDuringProbationPeriod ?? '0',
-        isVisible: !isSpecialLeave,
-      ),
+      // Regular leave details (hidden for special leaves and when monthly data exists)
+      if (!isSpecialLeave && !hasMonthlyLeaveBalance) ...[
+        LeaveRowData(
+          label: 'Applicable Max Leaves In Month',
+          value: leave.applicableLeavesInMonth ?? '0',
+          isVisible: true,
+        ),
+        LeaveRowData(
+          label: 'Leave Calculation',
+          value: leave.leaveCalculation ?? 'N/A',
+          isVisible: true,
+        ),
+        LeaveRowData(
+          label: 'View Leave Count',
+          value: leave.assignLeaveFrequency ?? 'N/A',
+          isVisible: true,
+        ),
+        LeaveRowData(
+          label: 'Leaves According To Payroll Cycle',
+          value: leave.leavesAccordingToPayrollCycle ?? 'No',
+          isVisible: true,
+        ),
+        LeaveRowData(
+          label: 'Leave Restrictions',
+          value: leave.leaveRestrictions == true ? 'Yes' : 'No',
+          isVisible: true,
+        ),
+        LeaveRowData(
+          label: 'Take Leave During Notice Period',
+          value: leave.takeLeaveDuringNoticePeriod ?? 'No',
+          isVisible: true,
+        ),
+        LeaveRowData(
+          label: 'Max Leave During Notice Period',
+          value: leave.maxLeaveDuringNoticePeriod ?? '0',
+          isVisible: true,
+        ),
+        LeaveRowData(
+          label: 'Take Leave During Probation Period',
+          value: leave.takeLeaveDuringProbationPeriod ?? 'No',
+          isVisible: true,
+        ),
+        LeaveRowData(
+          label: 'Max Leave Per Month During Probation Period',
+          value: leave.maxLeavePerMonthDuringProbationPeriod ?? '0',
+          isVisible: true,
+        ),
+      ],
+
+      // Monthly leave balance data
+      if (hasMonthlyLeaveBalance)
+        LeaveRowData(
+          label: 'Monthly Leave Balance',
+          value: '', // This would be handled by a separate widget
+          isVisible: true,
+          isMonthlyData: true,
+          monthlyData: leave.userMonthlyLeaveBalanceData!,
+        ),
 
       // Action buttons
       LeaveRowData(
@@ -298,7 +307,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
           separatorBuilder: (context, index) => const SizedBox(height: 16),
           itemBuilder: (context, index) {
             final leave = leaveTypes[index];
-            final leaveData = leave['leaveData'] as LeaveType;
+            final leaveData = leave['leaveData'] as LeaveTypeModel;
             return ExpandableCommonCard(
               headerColor: leave['headerColor'],
               title: '${leave['title']} (Total ${leave['total']})',

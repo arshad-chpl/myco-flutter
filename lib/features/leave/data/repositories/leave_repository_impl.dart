@@ -3,7 +3,7 @@ import 'package:myco_flutter/core/error/failure.dart';
 import 'package:myco_flutter/core/utils/safe_api_call.dart';
 import 'package:myco_flutter/features/leave/data/datasources/leave_remote_data_source.dart';
 import 'package:myco_flutter/features/leave/domain/repositories/leave_repository.dart';
-import 'package:myco_flutter/features/leave/model/get_new_list_type_response.dart';
+import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
 
 class LeaveRepositoryImpl implements LeaveRepository{
   final LeaveRemoteDataSource remoteDataSource;
@@ -11,7 +11,7 @@ class LeaveRepositoryImpl implements LeaveRepository{
 
   LeaveRepositoryImpl(this.remoteDataSource, this.safeApiCall);
   @override
-  Future<Either<Failure, GetNewListTypeResponse>> getNewListType( String query,
+  Future<Either<Failure, LeaveHistoryResponseModel>> getNewListType( String query,
       ) async =>
    safeApiCall.execute(() => remoteDataSource.getNewLeaveListType(query));
 

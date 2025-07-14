@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:myco_flutter/features/leave/model/get_new_list_type_response.dart';
+import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
 
 abstract class LeaveState extends Equatable {
   const LeaveState();
@@ -12,7 +12,7 @@ class LeaveInitial extends LeaveState {}
 class LeaveLoading extends LeaveState {}
 
 class LeaveListTypeFetched extends LeaveState {
-  final GetNewListTypeResponse newLeaveListType; // Changed to hold GetNewListTypeResponse
+  final LeaveHistoryResponseModel newLeaveListType; // Changed to hold GetNewListTypeResponse
   const LeaveListTypeFetched(this.newLeaveListType);
   @override
   List<Object> get props => [newLeaveListType];

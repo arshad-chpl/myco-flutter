@@ -1,5 +1,6 @@
-import 'package:myco_flutter/features/leave/model/get_new_list_type_response.dart';
+
+import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
 
 abstract class LeaveRemoteDataSource{
-  Future<GetNewListTypeResponse> getNewLeaveListType(String query);
+  Future<LeaveHistoryResponseModel> getNewLeaveListType(String query);
 }
