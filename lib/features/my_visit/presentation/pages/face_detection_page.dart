@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/app_permissions.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/auto_closed_timer_widgets.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/camera_shimmer_widgets.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/draggable_scrollable_sheet_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/greeting_message_card_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/linear_progress_indicator_widget.dart';
@@ -15,7 +14,6 @@ import 'package:myco_flutter/features/my_visit/presentation/widgets/warning_mess
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_face_detection_widgets.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:shimmer/shimmer.dart';
 
 class FaceDetectionPage extends StatefulWidget {
   const FaceDetectionPage({super.key});
@@ -183,21 +181,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                       },
                     );
                   } else if (state is FaceDetectionLoading) {
-                    return Shimmer.fromColors(
-                      baseColor: AppTheme.getColor(context).outlineVariant,
-                      highlightColor: AppColors.gray,
-                      child: Container(
-                        height: 0.32 * Responsive.getHeight(context),
-                        width: double.infinity *
-                            Responsive.getResponsiveOnWidth(context),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            27 * Responsive.getResponsive(context),
-                          ),
-                          color: AppTheme.getColor(context).onPrimary,
-                        ),
-                      ),
-                    );
+                    return const CameraShimmerWidgets();
                     // return const Center(child: CircularProgressIndicator());
                   } else if (state is FaceDetectionError) {
                     return Center(child: CustomText(state.message));
