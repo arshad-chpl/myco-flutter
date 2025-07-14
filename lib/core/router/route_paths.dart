@@ -108,4 +108,8 @@ class RoutePaths {
   static const String adminEducation = 'education';
   static const String adminAchievements = 'achievements';
   static const String adminEmployeesFace = 'employees-face';
+
+  // ======== Chat ========
+  static const String chatList = '/chat-list';
+  static const String UserChatScreen = '/user-chat';
 }

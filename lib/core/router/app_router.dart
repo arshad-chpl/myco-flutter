@@ -10,6 +10,9 @@ import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_p
 import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
 import 'package:myco_flutter/features/asset/view/testing.dart';
+import 'package:myco_flutter/features/chat/presentation/page/chat_list.dart';
+import 'package:myco_flutter/features/chat/presentation/page/chat_screen.dart';
+import 'package:myco_flutter/features/chat/presentation/page/groupe_detail.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
@@ -302,8 +305,8 @@ class AppRouter {
         path: RoutePaths.myProfile,
         name: 'my-profile',
         builder: (context, state) => MyProfilePage(),
-        ),
-        GoRoute(
+      ),
+      GoRoute(
         path: RoutePaths.adminView,
         name: 'admin-view',
         builder: (context, state) => BlocProvider(
@@ -311,6 +314,16 @@ class AppRouter {
           child: const AdminViewPage(),
         ),
         routes: adminViewRoutes,
+      ),
+      GoRoute(
+        path: RoutePaths.chatList,
+        name: 'chat-list',
+        builder: (context, state) =>  ChatListScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.UserChatScreen,
+        name: 'user-chat',
+        builder: (context, state) =>  UserChatScreen(),
       ),
       // Add all modular routes here
       // ...authRoutes,
