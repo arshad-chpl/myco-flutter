@@ -8,6 +8,10 @@ class AppAssets {
   static const String iconsPath = '$basePath/icons';
   static const String splash = '$basePath/splash';
   static const String assetVisit = '$basePath/add_expense';
+  static const String faceDetection = '$basePath/face_detection';
+
+  static const String visit = '$basePath/visit';
+  static const String svgsVisit = '$svgsPath/visit';
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -23,6 +27,7 @@ class AppAssets {
   static const String punchIn = '$svgsPath/punchIn.svg';
   static const String scanQR = '$svgsPath/scanQR.svg';
   static const String refresh = '$svgsPath/refresh.svg';
+  static const String result = '$svgsVisit/result.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
@@ -51,4 +56,12 @@ class AppAssets {
   static const String assetVector = '$assetVisit/Vector.svg';
   static const String assetDocumentText = '$assetVisit/document-text.svg';
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
+
+  //face detection assets
+  static const String assetCircle = '$visit/circle.png';
+  static const String assetCross = '$visit/cross.png';
+  static const String assetsDanger = '$visit/danger.png';
+  static const String locationIcon = '$visit/location_icon.png';
+  static const String locationPreview = '$visit/location_preview.png';
+  static const String outOfRange = '$visit/out_of_range.png';
 }

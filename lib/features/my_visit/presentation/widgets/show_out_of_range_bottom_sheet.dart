@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/auto_closed_timer_widgets.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/current_location_with_label_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/gps_accuracy_status_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/out_of_range_image_message_widget.dart';
-import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/prev_next_btn_widget.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class ShowOutOfRangeBottomSheet extends StatefulWidget {
@@ -30,7 +32,6 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
     controller: widget.scrollController,
-    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
     child: Container(
       padding: EdgeInsets.all(29 * Responsive.getResponsive(context)),
       width: double.infinity,
@@ -44,10 +45,10 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const OutOfRangeImageMessageWidget(
-            imagePath: 'assets/face_detection/out_of_range.png',
-            message: 'You are Out of Range(Ahmedabad)',
+            imagePath: AppAssets.outOfRange,
+            message: 'you_are_out_off_range',
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 0.01 * Responsive.getHeight(context)),
 
           CustomText(
             '480.45 Meter Away (Air Distance)',
@@ -55,13 +56,13 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
             fontWeight: FontWeight.w600,
             fontSize: 17 * Responsive.getResponsiveText(context),
           ),
-          const SizedBox(height: 13),
+          SizedBox(height: 0.013 * Responsive.getHeight(context)),
 
           const GpsAccuracyStatusWidget(
-            accuracyStatus: 'Medium',
+            accuracyStatus: 'medium',
             accuracyStatusColor: AppColors.spanishYellow,
           ),
-          const SizedBox(height: 13),
+          SizedBox(height: 0.013 * Responsive.getHeight(context)),
 
           const CurrentLocationWithLabelWidget(
             address:
@@ -70,37 +71,27 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
                 'Makarba, Ahmedabad, Gujarat\n'
                 '382210, India.',
           ),
-          const SizedBox(height: 13),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
-          CustomText(
-            'Visit Type',
-            color: AppColors.textGray,
-            fontSize: 16 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.bold,
-          ),
-          SizedBox(height: 5 * Responsive.getResponsive(context)),
-
-          CustomPopupDropdownStyled<String>(
-            height: 0.060 * Responsive.getHeight(context),
-            spacing: 10 * Responsive.getResponsive(context),
-            prefix: SvgPicture.asset('assets/face_detection/svgs/result.svg'),
+          LabeledDropdown(
+            prefix: SvgPicture.asset(AppAssets.result),
+            label: 'Visit Type',
             items: dayType,
             hintText: 'Select',
+            itemToString: (i) => i.toString(),
             selectedItem: selectedDayType,
-            itemToString: (item) => item,
             onChanged: (value, index) {
               setState(() {
                 selectedDayType = value;
               });
             },
           ),
-          const SizedBox(height: 13),
+          SizedBox(height: 0.013 * Responsive.getHeight(context)),
 
           LabeledTextField(
-            heightFactor: 60 * Responsive.getResponsive(context),
             textAlignment: TextAlign.start,
             label: 'Out of range Reason',
-            hint: 'Select Date',
+            hint: 'Write Here',
             widthFactor: Responsive.getWidth(context),
             border: OutlineInputBorder(
               borderSide: BorderSide(color: AppTheme.getColor(context).outline),
@@ -108,61 +99,18 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
                 10 * Responsive.getResponsive(context),
               ),
             ),
-            prefix: SvgPicture.asset(
-              'assets/face_detection/svgs/result.svg',
-              fit: BoxFit.scaleDown,
-            ),
+            prefix: SvgPicture.asset(AppAssets.result, fit: BoxFit.scaleDown),
           ),
           SizedBox(height: 23 * Responsive.getResponsive(context)),
 
-          Row(
-            spacing: 10 * Responsive.getResponsive(context),
-            children: [
-              Expanded(
-                child: MyCoButton(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  title: 'Prev',
-                  textStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16 * Responsive.getResponsiveText(context),
-                    fontWeight: FontWeight.w600,
-                  ),
-                  backgroundColor: AppTheme.getColor(context).primary,
-                  boarderRadius: 30 * Responsive.getResponsive(context),
-                  isShadowBottomLeft: true,
-                ),
-              ),
-              Expanded(
-                child: MyCoButton(
-                  onTap: () {
-                    // Handle  click event
-                  },
-                  title: 'Next',
-                  textStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16 * Responsive.getResponsiveText(context),
-                    fontWeight: FontWeight.w600,
-                  ),
-                  backgroundColor: AppTheme.getColor(context).primary,
-                  boarderRadius: 30 * Responsive.getResponsive(context),
-                  isShadowBottomLeft: true,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 13),
+          const PrevNextBtnWidget(),
+          SizedBox(height: 0.013 * Responsive.getHeight(context)),
 
           BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
             builder: (context, state) {
               if (state is FaceDetectionLoaded) {
-                return Center(
-                  child: CustomText(
-                    'Auto close in ${state.remainingTime}',
-                    color: AppTheme.getColor(context).primary,
-                    textAlign: TextAlign.center,
-                  ),
+                return AutoClosedTimerWidgets(
+                  remainingTime: state.remainingTime,
                 );
               }
               return const SizedBox();

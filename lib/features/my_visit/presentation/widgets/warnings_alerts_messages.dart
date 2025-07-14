@@ -22,8 +22,12 @@ class WarningsAlertsMessages extends StatelessWidget {
         width: 0.023 * Responsive.getHeight(context),
         color: AppTheme.getColor(context).onSurface,
       ),
-      const SizedBox(width: 10),
-      CustomText(msg, fontWeight: FontWeight.w600),
+      SizedBox(width: 0.013 * Responsive.getWidth(context)),
+      CustomText(
+        msg,
+        // isKey: true,
+        fontWeight: FontWeight.w600,
+      ),
     ],
   );
 }

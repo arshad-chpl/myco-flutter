@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/router/app_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -11,6 +13,7 @@ import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/bottom_sheet.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_slider.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_timer.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -82,7 +85,9 @@ Widget punchInAndTimeCard({required BuildContext context}) =>
                   // CustomText('text'),
                   MyCoButton(
                     title: 'Punch Out',
-                    onTap: () {},
+                    onTap: () {
+                      context.pushNamed('faceDetection');
+                    },
 
                     // height: 0.18 * Responsive.getWidth(context),
                     width: 160,
@@ -170,7 +175,7 @@ class _LiveClockState extends State<LiveClock> {
   void initState() {
     super.initState();
     _updateTime();
-    _timer = Timer.periodic(Duration(minutes: 1), (timer) => _updateTime());
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) => _updateTime());
   }
 
   void _updateTime() {
@@ -190,11 +195,9 @@ class _LiveClockState extends State<LiveClock> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return CustomText(
+  Widget build(BuildContext context) => CustomText(
       _timeString,
       fontSize: widget.fontSize ?? 13 * Responsive.getResponsiveText(context),
       fontWeight: widget.fontWeight ?? FontWeight.w500,
     );
-  }
 }

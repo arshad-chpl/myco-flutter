@@ -97,8 +97,8 @@ flutter:
     - assets/media_picker/
     - assets/lost_and_found/
     - assets/add_expense/
-    - assets/face_detection/
     - assets/dashboard/svgs/
+    - assets/svgs/visit/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

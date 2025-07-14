@@ -11,44 +11,44 @@ class GreetingMessageCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BorderContainerWraper(
-      width: double.infinity,
-      backgroundColor: AppColors.secondary,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomText(
-            'Welcome To Work',
-            fontSize: 21 * Responsive.getResponsiveText(context),
-            color: AppTheme.getColor(context).onSecondary,
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.spanishYellow,
-                  borderRadius: BorderRadius.circular(10),
+    width: double.infinity,
+    backgroundColor: AppColors.secondary,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CustomText(
+          'Welcome To Work',
+          fontSize: 21 * Responsive.getResponsiveText(context),
+          color: AppTheme.getColor(context).onSecondary,
+        ),
+        SizedBox(height: 0.010 * Responsive.getHeight(context)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.spanishYellow,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10 * Responsive.getResponsive(context),
+                  vertical: 3 * Responsive.getResponsive(context),
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10 * Responsive.getResponsive(context),
-                    vertical: 3 * Responsive.getResponsive(context),
-                  ),
-                  child: CustomText(
-                    'Flutter Developer',
-                    fontSize: 21 * Responsive.getResponsiveText(context),
-                  ),
+                child: CustomText(
+                  'Flutter Developer',
+                  fontSize: 21 * Responsive.getResponsiveText(context),
                 ),
               ),
+            ),
 
-              ShowDateTimeWidget(
-                color: AppTheme.getColor(context).onSecondary,
-                weight: FontWeight.w400,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+            ShowDateTimeWidget(
+              color: AppTheme.getColor(context).onSecondary,
+              weight: FontWeight.w400,
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
 }

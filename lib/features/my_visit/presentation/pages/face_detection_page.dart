@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/app_permissions.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/auto_closed_timer_widgets.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/draggable_scrollable_sheet_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/greeting_message_card_widget.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/linear_progress_indicator_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/show_out_of_range_bottom_sheet.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/warning_message_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_face_detection_widgets.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:shimmer/shimmer.dart';
 
 class FaceDetectionPage extends StatefulWidget {
   const FaceDetectionPage({super.key});
@@ -22,8 +26,7 @@ class FaceDetectionPage extends StatefulWidget {
 
 class _FaceDetectionPageState extends State<FaceDetectionPage>
     with SingleTickerProviderStateMixin {
-
-  late AnimationController _scanController;
+  late AnimationController? _scanController;
   late Animation<double> _topLineAlignment;
   late Animation<double> _bottomLineAlignment;
 
@@ -31,23 +34,44 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
 
   String scanningSate = 'scanning';
 
-  Future<void> cameraPermission() async {
-    final status = await [
-      Permission.camera,
-      Permission.microphone
-    ].request();
+  Future<void> cameraPermission(BuildContext context) async {
 
-    if (status[Permission.camera]!.isGranted && status[Permission.microphone]!.isGranted) {
+    final results = await PermissionUtil.requestMultiplePermissions([
+      AppPermission.camera,
+      AppPermission.microphone
+    ]);
+
+    final isCameraPermissionGranted = results[AppPermission.camera] ?? false;
+    final isMicroPhonePermissionGranted = results[AppPermission.microphone] ?? false;
+
+    if(isCameraPermissionGranted && isMicroPhonePermissionGranted) {
       Fluttertoast.showToast(msg: 'Camera and audio permission granted');
-    } else {
-      Fluttertoast.showToast(msg: 'Please allow both permission camera and audio');
+    } else if(!isCameraPermissionGranted || !isMicroPhonePermissionGranted) {
+      if(context.mounted) {
+        PermissionUtil.showPermissionDeniedDialog(
+            context,
+            message: 'Camera and MicroPhone permission required for face detection'
+        );
+      }
     }
+
+    // final status = await [Permission.camera, Permission.microphone].request();
+    //
+    // if (status[Permission.camera]!.isGranted &&
+    //     status[Permission.microphone]!.isGranted) {
+    //   Fluttertoast.showToast(msg: 'Camera and audio permission granted');
+    // } else {
+    //   Fluttertoast.showToast(
+    //     msg: 'Please allow both permission camera and audio',
+    //   );
+    // }
   }
 
   @override
   void initState() {
     super.initState();
-    cameraPermission();
+
+    cameraPermission(context);
 
     _scanController = AnimationController(
       vsync: this,
@@ -55,22 +79,22 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
     );
 
     _topLineAlignment = Tween<double>(begin: 30, end: 120).animate(
-      CurvedAnimation(parent: _scanController, curve: Curves.easeInOut),
+      CurvedAnimation(parent: _scanController!, curve: Curves.easeInOut),
     );
 
     _bottomLineAlignment = Tween<double>(begin: 200, end: 110).animate(
-      CurvedAnimation(parent: _scanController, curve: Curves.easeInOut),
+      CurvedAnimation(parent: _scanController!, curve: Curves.easeInOut),
     );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _scanController.repeat(reverse: true);
+      _scanController!.repeat(reverse: true);
     });
   }
 
   @override
   void dispose() {
     Theme.of(context);
-    _scanController.dispose();
+    _scanController!.dispose();
     scrollController.dispose();
     super.dispose();
   }
@@ -78,11 +102,20 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      leading: IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_back)),
-      title: CustomText(
-        'Hello, AJAJ',
-        fontSize: 23 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.bold,
+      title: Row(
+        children: [
+          CustomText(
+            'hello',
+            isKey: true,
+            fontSize: 23 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.bold,
+          ),
+          CustomText(
+            '  AJAJ',
+            fontSize: 23 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.bold,
+          ),
+        ],
       ),
       actions: [
         IconButton(
@@ -90,18 +123,18 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
             final faceDetectionBloc = context.read<FaceDetectionBloc>();
 
             showGeneralDialog(
-                context: context,
-                barrierDismissible: true,
-                barrierLabel: 'Dismiss',
-                transitionDuration: const Duration(milliseconds: 300),
-                pageBuilder: (_, _, _) => BlocProvider.value(
-                    value: faceDetectionBloc,
-                    child: DraggableScrollableSheetWidget(
-                        showBottomSheet: ShowOutOfRangeBottomSheet(
-                          scrollController: scrollController,
-                        )
-                    )
+              context: context,
+              barrierDismissible: true,
+              barrierLabel: 'Dismiss',
+              transitionDuration: const Duration(milliseconds: 300),
+              pageBuilder: (_, _, _) => BlocProvider.value(
+                value: faceDetectionBloc,
+                child: DraggableScrollableSheetWidget(
+                  showBottomSheet: ShowOutOfRangeBottomSheet(
+                    scrollController: scrollController,
+                  ),
                 ),
+              ),
             );
           },
           icon: const Icon(Icons.more_vert),
@@ -115,29 +148,28 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
           child: Column(
             children: [
               const GreetingMessageCardWidget(),
-              const SizedBox(height: 23),
+              SizedBox(height: 23 * Responsive.getResponsive(context)),
 
               BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
                 builder: (context, state) {
                   if (state is FaceDetectionLoaded) {
                     if (state.scanningState != 'scanning') {
-                      _scanController.stop();
-                    } else if (!_scanController.isAnimating) {
-                      _scanController.repeat(reverse: true);
+                      _scanController!.stop();
+                    } else if (!_scanController!.isAnimating) {
+                      _scanController!.repeat(reverse: true);
                     }
-
                     return CustomFaceDetectionWidgets(
                       controller: state.controller,
                       /**
-                       * Sets the scanning state use for UI display
-                       *
-                       * Valid values:
-                       * - 'scanning' -> When scanning is in progress.
-                       * - 'success' -> When the face has been successfully scanned.
-                       * - 'failure' -> When the scan failed or timed out.
-                       *
-                       * @param scanningState The state of scan
-                       * */
+                           * Sets the scanning state use for UI display
+                           *
+                           * Valid values:
+                           * - 'scanning' -> When scanning is in progress.
+                           * - 'success' -> When the face has been successfully scanned.
+                           * - 'failure' -> When the scan failed or timed out.
+                           *
+                           * @param scanningState The state of scan
+                           * */
                       scanningState: state.scanningState,
                       topLineAlignment: _topLineAlignment,
                       bottomLineAlignment: _bottomLineAlignment,
@@ -151,63 +183,60 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                       },
                     );
                   } else if (state is FaceDetectionLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Shimmer.fromColors(
+                      baseColor: AppTheme.getColor(context).outlineVariant,
+                      highlightColor: AppColors.gray,
+                      child: Container(
+                        height: 0.32 * Responsive.getHeight(context),
+                        width: double.infinity *
+                            Responsive.getResponsiveOnWidth(context),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            27 * Responsive.getResponsive(context),
+                          ),
+                          color: AppTheme.getColor(context).onPrimary,
+                        ),
+                      ),
+                    );
+                    // return const Center(child: CircularProgressIndicator());
                   } else if (state is FaceDetectionError) {
-                    return Center(child: Text(state.message));
+                    return Center(child: CustomText(state.message));
                   }
-                  return const Center(child: Text('Camera error'));
+                  return const Center(child: CustomText('Camera error'));
                 },
               ),
-              const SizedBox(height: 13),
+              SizedBox(height: 0.013 * Responsive.getHeight(context)),
 
               CustomText(
                 'Align your face within the frame',
                 fontWeight: FontWeight.w700,
                 fontSize: 21 * Responsive.getResponsiveText(context),
               ),
-              const SizedBox(height: 40),
+              SizedBox(height: 0.040 * Responsive.getHeight(context)),
 
               BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
                 builder: (context, state) {
                   if (state is FaceDetectionLoaded) {
-                    return Container(
-                      height: 0.021 * Responsive.getHeight(context),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 5 * Responsive.getResponsiveOnWidth(context),
-                          color: AppTheme.getColor(context).primary,
-                        ),
-                        borderRadius: BorderRadius.circular(13),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(11),
-                        child: LinearProgressIndicator(
-                          borderRadius: BorderRadius.horizontal(
-                              right: Radius.circular(13 * Responsive.getResponsive(context))),
-                          value: state.progress,
-                          backgroundColor: const Color.fromARGB(255, 220, 239, 255),
-                          color: AppTheme.getColor(context).primary,
-                        ),
-                      ),
+                    return LinearProgressIndicatorWidget(
+                      progress: state.progress,
                     );
                   }
                   return const SizedBox();
                 },
               ),
-              const SizedBox(height: 19),
+              SizedBox(height: 0.019 * Responsive.getHeight(context)),
 
               BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
                 builder: (context, state) {
                   if (state is FaceDetectionLoaded) {
-                    return CustomText(
-                      'Auto close in ${state.remainingTime}',
-                      color: AppTheme.getColor(context).primary,
+                    return AutoClosedTimerWidgets(
+                      remainingTime: state.remainingTime,
                     );
                   }
                   return const SizedBox();
                 },
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 0.017 * Responsive.getHeight(context)),
 
               const WarningMessageCard(),
             ],

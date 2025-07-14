@@ -69,10 +69,8 @@ class AppRouter {
               create: (_) => GetIt.I<SplashBloc>()..add(LoadSplash()),
             ),
             BlocProvider(
-              create: (_) {
-                return GetIt.I<LanguageBloc>()
-                  ..add(LoadLanguageToPreferences());
-              },
+              create: (_) => GetIt.I<LanguageBloc>()
+                  ..add(LoadLanguageToPreferences()),
               lazy: false,
             ),
           ],
@@ -181,12 +179,20 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
-        builder: (context, state) => BlocProvider(
-          create: (context) =>
-          GetIt.I<FaceDetectionBloc>()
-            ..add(LaunchCamera()),
-          child: const FaceDetectionPage(),
-        ),
+        pageBuilder: (context, state) => MaterialPage(
+              child: BlocProvider(
+                  create: (context) =>
+                GetIt.I<FaceDetectionBloc>()
+                ..add(LaunchCamera()),
+                child: const FaceDetectionPage(),
+              )
+          ),
+        // builder: (context, state) => BlocProvider(
+        //   create: (context) =>
+        //   GetIt.I<FaceDetectionBloc>()
+        //     ..add(LaunchCamera()),
+        //   child: const FaceDetectionPage(),
+        // ),
       ),
       // Add all modular routes here
       // Add all modular routes here

@@ -8,7 +8,12 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 class ShowDateTimeWidget extends StatefulWidget {
   final Color color;
   final FontWeight weight;
-  const ShowDateTimeWidget({required this.color, required this.weight, super.key});
+
+  const ShowDateTimeWidget({
+    required this.color,
+    required this.weight,
+    super.key,
+  });
 
   @override
   State<ShowDateTimeWidget> createState() => _ShowDateTimeWidgetState();
@@ -16,17 +21,22 @@ class ShowDateTimeWidget extends StatefulWidget {
 
 class _ShowDateTimeWidgetState extends State<ShowDateTimeWidget> {
   @override
-  Widget build(BuildContext context) => BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
-      builder: (context, state) {
-        if (state is FaceDetectionLoaded) {
-          return CustomText(
-            state.dateTime.trim().isEmpty ? 'EMPTY' : state.dateTime,
-            color: widget.color,
-            fontSize: 17 * Responsive.getResponsiveText(context),
-            fontWeight: widget.weight,
+  Widget build(BuildContext context) =>
+      BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
+        builder: (context, state) {
+          if (state is FaceDetectionLoaded) {
+            return CustomText(
+              state.dateTime.trim().isEmpty ? 'EMPTY' : state.dateTime,
+              color: widget.color,
+              fontSize: 17 * Responsive.getResponsiveText(context),
+              fontWeight: widget.weight,
+            );
+          }
+          return const CustomText(
+            'loading...',
+            isKey: true,
+            color: AppColors.white,
           );
-        }
-        return const CustomText('Loading...', color: AppColors.white);
-      },
-    );
+        },
+      );
 }
