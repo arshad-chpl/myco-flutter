@@ -52,17 +52,6 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
         );
       }
     }
-
-    // final status = await [Permission.camera, Permission.microphone].request();
-    //
-    // if (status[Permission.camera]!.isGranted &&
-    //     status[Permission.microphone]!.isGranted) {
-    //   Fluttertoast.showToast(msg: 'Camera and audio permission granted');
-    // } else {
-    //   Fluttertoast.showToast(
-    //     msg: 'Please allow both permission camera and audio',
-    //   );
-    // }
   }
 
   @override
