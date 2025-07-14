@@ -455,7 +455,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                                         name: "CompanyPref",
                                       );
 
-                                      context.go('/login');
+                                      context.go('/dashboard');
 
                                       // showModalBottomSheet(
                                       //   scrollControlDisabledMaxHeightRatio:

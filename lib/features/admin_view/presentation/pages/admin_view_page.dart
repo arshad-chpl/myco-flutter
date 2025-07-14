@@ -23,6 +23,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_menu_list.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -50,16 +51,7 @@ class AdminViewPage extends StatelessWidget {
       ///
       /// Uses [AppColors.primary] for the background and [CustomText] for the title
       /// to maintain consistent styling. The back button navigates to the home page.
-      appBar: AppBar(
-        // Primary color defined in AppColors.
-        title: CustomText(
-          LanguageManager().get('admin_view'),
-          // Localized title for the admin view.
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
+      appBar: CustomAppbar(title: CustomText(LanguageManager().get('admin_view'))),
       backgroundColor: const Color(0xFFF8F9FA),
       // Light background color for the body.
       body: RefreshIndicator(
