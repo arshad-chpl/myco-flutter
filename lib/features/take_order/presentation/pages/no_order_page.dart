@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -9,14 +10,7 @@ class NoOrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: CustomText(
-        'No Order',
-        fontSize: 20 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-      ),
-      leading: const BackButton(),
-    ),
+    appBar: CustomAppbar(appBarText: 'No Order'),
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),

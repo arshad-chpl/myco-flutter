@@ -1,11 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:myco_flutter/core/router/app_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/add_short_leave_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/my_team_leaves_screen.dart';
@@ -111,9 +112,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       leading: IconButton(
-        onPressed: () {
-          context.pop();
-        },
+        onPressed: () {},
         icon: const Icon(Icons.arrow_back_outlined),
       ),
       title: const Text('Leave balance'),
@@ -164,12 +163,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
                 LeaveActionButton(
                   title: 'My Leave Balance',
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MyLeaveBalanceScreen(),
-                      ),
-                    );
+                   context.go(RoutePaths.leaveBalance);
                   },
                 ),
                 LeaveActionButton(
@@ -191,21 +185,59 @@ class _LeaveScreenState extends State<LeaveScreen> {
         ),
       ),
     ),
-
+    // floatingActionButton: LeaveFloatingActionButton(
+    //   actions: [
+    //     LeaveFloatingActionButtonModel(
+    //       label: 'Apply Short Leave',
+    //       onTap: () {
+    //         Navigator.push(
+    //           context,
+    //           MaterialPageRoute(builder: (context) => AddShortLeaveScreen()),
+    //         );
+    //       },
+    //       icon: Icons.add,
+    //       iconPath: 'assets/images/short_apply_leave.png',
+    //     ),
+    //     LeaveFloatingActionButtonModel(
+    //       label: 'Apply Leave',
+    //       onTap: () {
+    //         showModalBottomSheet(
+    //           context: context,
+    //           builder: (context) => Container(),
+    //         );
+    //       },
+    //
+    //       icon: Icons.add,
+    //     ),
+    //   ],
+    //   innericonsize: 25,
+    //   circleavataradius: 25,
+    //   imageSize: 0.050 * Responsive.getHeight(context),
+    //   openIcon: Icons.add,
+    //   innerimageheight: 0.02 * Responsive.getHeight(context),
+    //   innerimagewidth: 0.02 * Responsive.getHeight(context),
+    //   closeIcon: Icons.close_outlined,
+    // ),
     floatingActionButton: CustomFabMenu(
       buttons: [
         FabButtonModel(
           label: 'Apply Leave',
           icon: Icons.event_available_outlined,
           onTap: () {
-            context.push(RoutePaths.addLeaveScreen);
+            showModalBottomSheet(
+              context: context,
+              builder: (context) => Container(),
+            );
           },
         ),
         FabButtonModel(
           label: 'Apply Short Leave',
           imagePath: 'assets/images/short_apply_leave.png',
           onTap: () {
-            context.push(RoutePaths.addShortLeaveScreen);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddShortLeaveScreen()),
+            );
           },
         ),
       ],

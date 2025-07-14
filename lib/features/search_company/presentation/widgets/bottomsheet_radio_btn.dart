@@ -144,7 +144,8 @@ class _BottomsheetRadioButtonState extends State<BottomsheetRadioButton> {
                       color: AppColors.primary.withAlpha((0.3 * 255).toInt()),
                     ),
                   ),
-                  child: RadioListTile<String>(
+                  child:
+                   RadioListTile<String>(
                     value: item['id']!,
                     groupValue: selectedItem,
                     onChanged: (value) {

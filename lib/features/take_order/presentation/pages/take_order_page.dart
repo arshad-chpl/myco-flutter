@@ -8,9 +8,9 @@ import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart'
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/frequent_buy_card.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 // ignore: must_be_immutable
@@ -26,13 +26,8 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      leading: const BackButton(),
-      title: CustomText(
-        'Take Order',
-        fontSize: 20 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-      ),
+    appBar: CustomAppbar(
+      appBarText: 'Take Order',
       actions: [
         MyCoButton(
           onTap: () {},
