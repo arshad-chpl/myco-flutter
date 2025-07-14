@@ -59,7 +59,7 @@ class ChatListScreen extends StatelessWidget {
         ),
       ],
 
-      padding: 0.02 * Responsive.getWidth(context),
+      // padding: 0.02 * Responsive.getWidth(context),
     ),
     body: Container(
       padding: EdgeInsets.symmetric(
