@@ -18,11 +18,12 @@ Future<void> init() async {
   await initNetworkModule(sl);
 
   // Initialize feature modules
+  //========Language Selector=========
+  setupLanguageDI(sl);
+  
   //========Splash=========
   splashDi(sl);
 
-  //========Language Selector=========
-  setupLanguageDI(sl);
 
   //========Company Selector=========
   companySelectorDi(sl);
@@ -34,5 +35,5 @@ Future<void> init() async {
   faceDetectionDi(sl);
 
   // ========Admin View=========
-  await adminViewDi(sl);
+  adminViewDi(sl);
 }

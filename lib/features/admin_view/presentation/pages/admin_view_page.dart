@@ -18,7 +18,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
@@ -93,10 +92,10 @@ class AdminViewPage extends StatelessWidget {
       // Dispatch a BLoC event to fetch admin view data.
       context.read<AdminViewBloc>().add(
         FetchAdminView(
-          companyId: '1',
+          companyId: companyId!,
           // Non-null assertion as ID is expected to exist.
           userId: '1401',
-          languageId: '1',
+          languageId: languageId!,
         ),
       );
     }
@@ -189,8 +188,8 @@ class _AdminViewBodyState extends State<AdminViewBody> {
     // Start a new debounce timer.
     _debounce = Timer(const Duration(milliseconds: 300), () {
       setState(() {
-        _currentSearchQuery =
-            _searchController.text.trim(); // Update search query.
+        _currentSearchQuery = _searchController.text
+            .trim(); // Update search query.
       });
     });
   }
@@ -262,226 +261,141 @@ class _AdminViewBodyState extends State<AdminViewBody> {
 
   @override
   Widget build(BuildContext context) => Column(
-      children: [
-        /// Search bar container with shadow and rounded corners.
-        ///
-        /// Contains a [TextField] with dynamic hint text and a clear button.
-        Container(
-          margin: const EdgeInsets.all(16.0),
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16.0),
-            boxShadow: const [
-              BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, 0.08),
-                blurRadius: 12,
-                offset: Offset(0, 4),
-              ),
-            ],
-          ),
-          child: BlocBuilder<AdminViewBloc, AdminViewState>(
-            /// Builds the search bar UI based on the BLoC state.
-            ///
-            /// Updates the hint text dynamically based on admin menu categories
-            /// and handles focus and clear button visibility.
-            builder: (context, state) {
-              LanguageManager().get('search');
-
-              if (state is AdminViewLoaded) {
-                final categories = state.adminViewData.adminMenuCategory ?? [];
-                // Update dynamic hint words based on menu categories.
-                _updateDynamicWords(
-                  categories.map((c) => c.accessType).toList(),
-                );
-              }
-
-              final bool showHint = _searchController.text.isEmpty;
-              return Row(
-                children: [
-                  Icon(
-                    Icons.search,
-                    color:
-                        _searchFocusNode.hasFocus
-                            ? AppColors.primary
-                            : Colors.grey.shade500,
-                    size: 24,
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Stack(
-                      alignment: Alignment.centerLeft,
-                      children: [
-                        /// The search text field with no default border.
-                        ///
-                        /// Uses a [TextEditingController] for input and a [FocusNode]
-                        /// to track focus state.
-                        TextField(
-                          controller: _searchController,
-                          focusNode: _searchFocusNode,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black87,
-                          ),
-                          decoration: const InputDecoration(
-                            hintText: '',
-                            // Empty to use custom hint.
-                            border: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(
-                              vertical: 16.0,
-                            ),
-                          ),
-                          onSubmitted: (_) {
-                            _searchFocusNode.unfocus(); // Unfocus on submit.
-                          },
-                        ),
-                        // Custom animated hint text.
-                        if (showHint && _dynamicWords.isNotEmpty)
-                          AnimatedOpacity(
-                            opacity: showHint ? 1.0 : 0.0,
-                            duration: const Duration(milliseconds: 200),
-                            child: IgnorePointer(
-                              child: Row(
-                                children: [
-                                  Text(
-                                    '${LanguageManager().get('search')} ',
-                                    style: TextStyle(
-                                      color: Colors.grey.shade500,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  AnimatedSwitcher(
-                                    duration: const Duration(milliseconds: 300),
-                                    child: Text(
-                                      _dynamicWords[_currentWordIndex],
-                                      key: ValueKey(
-                                        _dynamicWords[_currentWordIndex],
-                                      ),
-                                      style: const TextStyle(
-                                        color: AppColors.primary,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  // Clear button, shown only when text is present.
-                  if (_searchController.text.isNotEmpty)
-                    AnimatedScale(
-                      scale: _searchController.text.isNotEmpty ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 200),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.clear,
-                          color: Colors.grey.shade500,
-                          size: 20,
-                        ),
-                        onPressed: _clearSearch,
-                        splashRadius: 20,
-                      ),
-                    ),
-                ],
-              );
-            },
-          ),
+    children: [
+      /// Search bar container with shadow and rounded corners.
+      ///
+      /// Contains a [TextField] with dynamic hint text and a clear button.
+      Container(
+        margin: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16.0),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.08),
+              blurRadius: 12,
+              offset: Offset(0, 4),
+            ),
+          ],
         ),
-
-        /// Main content area that changes based on the BLoC state.
-        ///
-        /// Displays a shimmer loading effect, the admin menu list, an error message,
-        /// or a no-data message depending on the state.
-        BlocBuilder<AdminViewBloc, AdminViewState>(
+        child: BlocBuilder<AdminViewBloc, AdminViewState>(
+          /// Builds the search bar UI based on the BLoC state.
+          ///
+          /// Updates the hint text dynamically based on admin menu categories
+          /// and handles focus and clear button visibility.
           builder: (context, state) {
-            // Handle initial state or loading state - show shimmer
-            if (state is AdminViewLoading || state is AdminViewInitial) {
-              return Expanded(
-                child: Shimmer.fromColors(
-                  baseColor: Colors.grey.shade300,
-                  highlightColor: Colors.grey.shade100,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: 6,
-                    itemBuilder: (context, index) => Container(
-                      margin: const EdgeInsets.only(bottom: 16),
-                      height: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            } else if (state is AdminViewLoaded) {
+            LanguageManager().get('search');
+
+            if (state is AdminViewLoaded) {
               final categories = state.adminViewData.adminMenuCategory ?? [];
-              return Expanded(
-                child: AdminMenuList(
-                  categories: categories,
-                  searchQuery: _currentSearchQuery,
-                  isFromNotificationReminder: false,
-                  adminViewResponse: state.adminViewData,
+              // Update dynamic hint words based on menu categories.
+              _updateDynamicWords(categories.map((c) => c.accessType).toList());
+            }
+
+            final bool showHint = _searchController.text.isEmpty;
+            return Row(
+              children: [
+                Icon(
+                  Icons.search,
+                  color: _searchFocusNode.hasFocus
+                      ? AppColors.primary
+                      : Colors.grey.shade500,
+                  size: 24,
                 ),
-              );
-            } else if (state is AdminViewError) {
-              return Expanded(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Stack(
+                    alignment: Alignment.centerLeft,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        decoration: const BoxDecoration(
-                          color: AppColors.error,
-                          shape: BoxShape.circle,
+                      /// The search text field with no default border.
+                      ///
+                      /// Uses a [TextEditingController] for input and a [FocusNode]
+                      /// to track focus state.
+                      TextField(
+                        controller: _searchController,
+                        focusNode: _searchFocusNode,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
                         ),
-                        child: const Icon(
-                          Icons.error_outline,
-                          size: 48,
-                          color: AppColors.error,
+                        decoration: const InputDecoration(
+                          hintText: '',
+                          // Empty to use custom hint.
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(vertical: 16.0),
                         ),
+                        onSubmitted: (_) {
+                          _searchFocusNode.unfocus(); // Unfocus on submit.
+                        },
                       ),
-                      const SizedBox(height: 24),
-                      CustomText(
-                        state.message,
-                        color: AppColors.error,
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 24),
-                      ElevatedButton.icon(
-                        onPressed: _refreshData,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 12,
+                      // Custom animated hint text.
+                      if (showHint && _dynamicWords.isNotEmpty)
+                        AnimatedOpacity(
+                          opacity: showHint ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 200),
+                          child: IgnorePointer(
+                            child: Row(
+                              children: [
+                                Text(
+                                  '${LanguageManager().get('search')} ',
+                                  style: TextStyle(
+                                    color: Colors.grey.shade500,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 300),
+                                  child: Text(
+                                    _dynamicWords[_currentWordIndex],
+                                    key: ValueKey(
+                                      _dynamicWords[_currentWordIndex],
+                                    ),
+                                    style: const TextStyle(
+                                      color: AppColors.primary,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
                         ),
-                        icon: const Icon(Icons.refresh),
-                        label: CustomText(
-                          LanguageManager().get('retry'),
-                          color: Colors.white,
-                        ),
-                      ),
                     ],
                   ),
                 ),
-              );
-            }
+                // Clear button, shown only when text is present.
+                if (_searchController.text.isNotEmpty)
+                  AnimatedScale(
+                    scale: _searchController.text.isNotEmpty ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 200),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.clear,
+                        color: Colors.grey.shade500,
+                        size: 20,
+                      ),
+                      onPressed: _clearSearch,
+                      splashRadius: 20,
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      ),
 
-            // This should rarely be reached now, but kept as fallback
-            // You could also return a loading shimmer here instead
+      /// Main content area that changes based on the BLoC state.
+      ///
+      /// Displays a shimmer loading effect, the admin menu list, an error message,
+      /// or a no-data message depending on the state.
+      BlocBuilder<AdminViewBloc, AdminViewState>(
+        builder: (context, state) {
+          // Handle initial state or loading state - show shimmer
+          if (state is AdminViewLoading || state is AdminViewInitial) {
             return Expanded(
               child: Shimmer.fromColors(
                 baseColor: Colors.grey.shade300,
@@ -500,8 +414,88 @@ class _AdminViewBodyState extends State<AdminViewBody> {
                 ),
               ),
             );
-          },
-        ),
-      ],
-    );
+          } else if (state is AdminViewLoaded) {
+            final categories = state.adminViewData.adminMenuCategory ?? [];
+            return Expanded(
+              child: AdminMenuList(
+                categories: categories,
+                searchQuery: _currentSearchQuery,
+                isFromNotificationReminder: false,
+                adminViewResponse: state.adminViewData,
+              ),
+            );
+          } else if (state is AdminViewError) {
+            return Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: const BoxDecoration(
+                        color: AppColors.error,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.error_outline,
+                        size: 48,
+                        color: AppColors.error,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    CustomText(
+                      state.message,
+                      color: AppColors.error,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 24),
+                    ElevatedButton.icon(
+                      onPressed: _refreshData,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 12,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      icon: const Icon(Icons.refresh),
+                      label: CustomText(
+                        LanguageManager().get('retry'),
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+
+          // This should rarely be reached now, but kept as fallback
+          // You could also return a loading shimmer here instead
+          return Expanded(
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.grey.shade100,
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                itemCount: 6,
+                itemBuilder: (context, index) => Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  height: 120,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    ],
+  );
 }

@@ -84,12 +84,14 @@ class MyCustomTabBar extends StatelessWidget {
                   ? TextStyle(
                       fontSize: 13 * Responsive.getResponsiveText(context),
                       color: Colors.white,
-                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Gilroy-Bold',
+                      fontWeight: FontWeight.w700,
                     )
                   : TextStyle(
+                      fontFamily: 'Gilroy-Bold',
                       color: selectedBgColors[index],
                       fontSize: 13 * Responsive.getResponsiveText(context),
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w700,
                     ),
             ),
           ),

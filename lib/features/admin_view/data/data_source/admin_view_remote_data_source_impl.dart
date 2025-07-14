@@ -15,7 +15,7 @@ class AdminViewRemoteDataSourceImpl extends AdminViewRemoteDataSource {
   ) async {
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
     final response = await GetIt.I<ApiClient>(
-      instanceName: VariableBag.residentApiNew,
+      instanceName: VariableBag.employeeMobileApi,
     ).postDynamic('admin_view_controller.php', encryptedBody);
     return AdminViewResponseModel.fromJson(
       json.decode(GzipUtil.decryptAES(response)),

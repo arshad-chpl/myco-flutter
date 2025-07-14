@@ -112,4 +112,13 @@ class RoutePaths {
   // ======== Chat ========
   static const String chatList = '/chat-list';
   static const String UserChatScreen = '/user-chat';
+
+  //maulik
+  static const String assetsDetails = '/assets-details';
+  static const String addAssets = '/add-assets';
+  static const String editAssets = '/edit-assets';
+  static const String handoverAssets = '/handover-assets';
+  static const String takeoverAssets = '/takeover-assets';
+  static const String swapAssets = '/swap-assets';
+
 }
