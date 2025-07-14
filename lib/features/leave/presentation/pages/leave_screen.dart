@@ -169,12 +169,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
                 LeaveActionButton(
                   title: 'My Team Leaves',
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MyTeamLeavesScreen(),
-                      ),
-                    );
+                    context.go(RoutePaths.teamLeaveBalance);
                   },
                 ),
               ],

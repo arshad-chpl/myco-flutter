@@ -16,5 +16,4 @@ Future<void>setUpLeaveDI(GetIt sl) async{
 
   sl.registerLazySingleton<LeaveRemoteDataSource>(LeaveRemoteDataSourceImpl.new,);
 
-
 }

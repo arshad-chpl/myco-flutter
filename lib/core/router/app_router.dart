@@ -35,6 +35,7 @@ import 'package:myco_flutter/features/language_selector/presentation/pages/langu
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/my_team_leaves_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
@@ -335,6 +336,14 @@ class AppRouter {
         builder: (context, state) => BlocProvider<LeaveBloc>(
           create: (_) => GetIt.I<LeaveBloc>(),
           child: const MyLeaveBalanceScreen(),
+        ),
+      ),
+      GoRoute(
+        path: RoutePaths.teamLeaveBalance,
+        name: RoutePaths.teamLeaveBalance,
+        builder: (context, state) => BlocProvider<LeaveBloc>(
+          create: (_) => GetIt.I<LeaveBloc>(),
+          child: const MyTeamLeavesScreen(),
         ),
       ),
 

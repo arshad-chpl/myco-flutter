@@ -13,8 +13,21 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
       try {
         final results = await leaveUseCase.getNewListType(event.query);
         results.fold(
-              (failure) => emit(LeaveError(failure.message)),
-              (leaveType) => emit(LeaveListTypeFetched(leaveType)),
+          (failure) => emit(LeaveError(failure.message)),
+          (leaveType) => emit(LeaveListTypeFetched(leaveType)),
+        );
+      } catch (e) {
+        emit(const LeaveError('Failed to load leaveType'));
+      }
+    });
+
+    on<FetchMyTeamLeaveList>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.getMyTeamLeaves();
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (leaveType) => emit(TeamLeaveListFetched(leaveType)),
         );
       } catch (e) {
         emit(const LeaveError('Failed to load leaveType'));
@@ -25,7 +38,4 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
       emit(LeaveInitial());
     });
   }
-
-
-
 }

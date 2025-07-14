@@ -12,4 +12,8 @@ class FetchNewLeaveListType extends LeaveEvent{
 
 }
 
+class FetchMyTeamLeaveList extends LeaveEvent{
+  const FetchMyTeamLeaveList();
+}
+
 class InitialView extends LeaveEvent {}
