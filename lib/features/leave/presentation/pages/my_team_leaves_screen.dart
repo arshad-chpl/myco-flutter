@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/expandable_common_card.dart';
+import 'package:myco_flutter/features/leave/presentation/widgets/leave_expandable_card.dart';
 
 class MyTeamLeavesScreen extends StatefulWidget {
   const MyTeamLeavesScreen({super.key});
@@ -32,10 +33,10 @@ class _MyTeamLeavesScreenState extends State<MyTeamLeavesScreen> {
         child: Column(
           spacing: 0.015 * Responsive.getHeight(context),
           children: [
-            ExpandableCommonCard(
-              headerColor: AppColors.primary,
+            LeaveExpandableCard(
+              collapsedChild: Container(),
+              expandedChild: Container(),
               title: 'Sick Leave (Total 7)',
-              bottomWidget: Container(),
             ),
           ],
         ),
