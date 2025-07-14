@@ -12,11 +12,7 @@ import 'package:myco_flutter/features/dashboard/presentation/widgets/profile_too
 import 'package:myco_flutter/features/dashboard/presentation/widgets/profile_word_attendance_card.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_employee_card.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/custom_shadow_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_progress_bar.dart';
-import 'package:myco_flutter/widgets/custom_task_widget.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class MyProfilePage extends StatelessWidget {
