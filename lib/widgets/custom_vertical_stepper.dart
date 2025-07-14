@@ -4,33 +4,61 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_inner_shadow.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 enum StepStatus { pending, approved, completed, denied, authorized, inActive }
 
 class StepDetail {
   final String title, description;
+  final double? titleFontSize, descriptionFontSize, separatorFontSize;
+  final FontWeight? titleFontWeight, descriptionFontWeight, separatorFontWeight;
+  final Color? titleTextColor, descriptionTextColor, separatorColor;
 
-  StepDetail({required this.title, required this.description});
+  StepDetail({
+    required this.title,
+    required this.description,
+    this.titleFontSize,
+    this.descriptionFontSize,
+    this.separatorFontSize,
+    this.titleFontWeight,
+    this.descriptionFontWeight,
+    this.separatorFontWeight,
+    this.titleTextColor,
+    this.descriptionTextColor,
+    this.separatorColor,
+  });
 }
 
 class SubStepData {
-  final String? title, subTitle, trailingTitle;
-  final StepStatus? status;
+  final String? subStepTitle, subStepSubTitle, subStepTrailingTitle;
+  final StepStatus? subStepStatus;
   final bool isSubStepIconShow;
-  final Color? statusColor, titleColor, subTitleColor, trailingTitleColor;
-  final Widget? customStatusIcon;
+  final Color? subStepStatusColor,
+      subStepTitleColor,
+      subStepSubTitleColor,
+      subStepTrailingTitleColor;
+  final Widget? subStepCustomStatusIcon;
+  final double? subStepTitleFontSize,
+      subStepSubTitleFontSize,
+      subStepTrailingFontSize;
+  final FontWeight? subStepTitleFontWeight, subStepSubTitleFontWeight;
 
   SubStepData({
-    this.title,
-    this.subTitle,
-    this.trailingTitle,
-    this.status,
-    this.statusColor,
-    this.subTitleColor,
-    this.trailingTitleColor,
-    this.titleColor,
+    this.subStepTitle,
+    this.subStepSubTitle,
+    this.subStepTrailingTitle,
+    this.subStepStatus,
+    this.subStepStatusColor,
+    this.subStepTitleColor,
+    this.subStepSubTitleColor,
+    this.subStepTrailingTitleColor,
+    this.subStepCustomStatusIcon,
+    this.subStepTitleFontSize,
+    this.subStepSubTitleFontSize,
+    this.subStepTrailingFontSize,
+    this.subStepTitleFontWeight,
+    this.subStepSubTitleFontWeight,
     this.isSubStepIconShow = true,
-    this.customStatusIcon,
   });
 }
 
@@ -43,6 +71,10 @@ class StepData {
   final Color? statusColor, titleColor, subTitleColor, trailingTitleColor;
   final bool isStepIconShow;
   final Widget? customStatusIcon;
+  final double? titleFontSize, subTitleFontSize, trillingTitleFontSize;
+  final FontWeight? titleFontWeight,
+      subTitleFontWeight,
+      trillingTitleFontWeight;
 
   StepData({
     required this.title,
@@ -57,6 +89,12 @@ class StepData {
     this.trailingTitleColor,
     this.isStepIconShow = true,
     this.customStatusIcon,
+    this.titleFontSize,
+    this.trillingTitleFontSize,
+    this.subTitleFontSize,
+    this.titleFontWeight,
+    this.trillingTitleFontWeight,
+    this.subTitleFontWeight,
   });
 }
 
@@ -286,38 +324,36 @@ class _MainStepWidget extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
+                      CustomText(
                         step.title,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Gilroy-SemiBold',
-                          color: titleColor,
-                        ),
+                        fontSize:
+                            step.titleFontSize ??
+                            14 * Responsive.getResponsiveText(context),
+                        fontWeight: step.titleFontWeight ?? FontWeight.w600,
+                        color: titleColor,
                       ),
                       const Spacer(),
                       if (step.trillingTitle != null)
-                        Text(
+                        CustomText(
                           step.trillingTitle!,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Gilroy-Regular',
-                            color: trailingColor,
-                          ),
+                          fontSize:
+                              step.trillingTitleFontSize ??
+                              12 * Responsive.getResponsiveText(context),
+                          fontWeight:
+                              step.trillingTitleFontWeight ?? FontWeight.w400,
+                          color: trailingColor,
                           overflow: TextOverflow.ellipsis,
                         ),
                     ],
                   ),
                   if (step.subTitle != null)
-                    Text(
+                    CustomText(
                       step.subTitle!,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Gilroy-Regular',
-                        color: subTitleColor,
-                      ),
+                      fontSize:
+                          step.subTitleFontSize ??
+                          12 * Responsive.getResponsiveText(context),
+                      fontWeight: step.subTitleFontWeight ?? FontWeight.w400,
+                      color: subTitleColor,
                     ),
                   if (step.details != null && step.details!.isNotEmpty)
                     _StepDetails(details: step.details!),
@@ -357,37 +393,35 @@ class _StepDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: 140,
-                    child: Text(
+                    width: 0.35 * Responsive.getWidth(context),
+                    child: CustomText(
                       item.title,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Gilroy-SemiBold',
-                        color: AppColors.black,
-                      ),
+                      fontSize:
+                          item.titleFontSize ??
+                          12 * Responsive.getResponsiveText(context),
+                      fontWeight: item.titleFontWeight ?? FontWeight.w600,
+                      color: item.titleTextColor ?? AppColors.black,
                     ),
                   ),
-                  const Text(
+                  CustomText(
                     ' : ',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Gilroy-SemiBold',
-                      color: AppColors.black,
-                    ),
+                    fontSize:
+                        item.separatorFontSize ??
+                        12 * Responsive.getResponsiveText(context),
+                    fontWeight: item.separatorFontWeight ?? FontWeight.w600,
+                    color: item.separatorColor ?? AppColors.black,
                   ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child: Text(
+                      child: CustomText(
                         item.description,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontFamily: 'Gilroy-Medium',
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.black,
-                        ),
+                        fontSize:
+                            item.descriptionFontSize ??
+                            12 * Responsive.getResponsiveText(context),
+                        fontWeight:
+                            item.descriptionFontWeight ?? FontWeight.w500,
+                        color: item.separatorColor ?? AppColors.black,
                       ),
                     ),
                   ),
@@ -429,8 +463,8 @@ class _SubStepper extends StatelessWidget {
   }) {
     if (customIcon != null) {
       return SizedBox(
-        height: 10,
-        width: 10,
+        height: 0.030 * Responsive.getHeight(context),
+        width: 0.030 * Responsive.getWidth(context),
         child: FittedBox(fit: BoxFit.scaleDown, child: customIcon),
       );
     }
@@ -453,7 +487,7 @@ class _SubStepper extends StatelessWidget {
         return const Icon(
           Icons.hourglass_top,
           color: AppColors.white,
-          size: 10,
+          size: 12,
         );
       case StepStatus.inActive:
         return const SizedBox();
@@ -463,8 +497,9 @@ class _SubStepper extends StatelessWidget {
   StepStatus getLastEffectiveStatus() {
     for (int i = subSteps.length - 1; i >= 0; i--) {
       final sub = subSteps[i];
-      if (sub.status != null && sub.status != StepStatus.inActive) {
-        return sub.status!;
+      if (sub.subStepStatus != null &&
+          sub.subStepStatus != StepStatus.inActive) {
+        return sub.subStepStatus!;
       }
     }
     return StepStatus.pending;
@@ -486,10 +521,10 @@ class _SubStepper extends StatelessWidget {
         children: List.generate(subSteps.length, (index) {
           final sub = subSteps[index];
           final isLast = index == subSteps.length - 1;
-          final isDisabled = sub.status == StepStatus.inActive;
+          final isDisabled = sub.subStepStatus == StepStatus.inActive;
           final color = isDisabled
               ? AppColors.stepperDisabled
-              : sub.statusColor ?? globalColor;
+              : sub.subStepStatusColor ?? globalColor;
 
           return IntrinsicHeight(
             child: Row(
@@ -500,24 +535,32 @@ class _SubStepper extends StatelessWidget {
                     Stack(
                       alignment: Alignment.center,
                       children: [
-                        const InnerShadowContainer(
-                          height: 25,
-                          width: 25,
+                        InnerShadowContainer(
+                          height: Responsive.screenWidth() > 600
+                              ? 0.025 * Responsive.getWidth(context)
+                              : 0.025 * Responsive.getHeight(context),
+                          width: Responsive.screenWidth() > 600
+                              ? 0.025 * Responsive.getWidth(context)
+                              : 0.025 * Responsive.getHeight(context),
                           borderRadius: 15,
                           backgroundColor: AppColors.white,
                           isShadowTopLeft: true,
                         ),
                         InnerShadowContainer(
-                          height: 18,
-                          width: 18,
+                          height: Responsive.screenWidth() > 600
+                              ? 0.018 * Responsive.getWidth(context)
+                              : 0.018 * Responsive.getHeight(context),
+                          width: Responsive.screenWidth() > 600
+                              ? 0.018 * Responsive.getWidth(context)
+                              : 0.018 * Responsive.getHeight(context),
                           borderRadius: 10,
                           backgroundColor: color,
                           isShadowBottomLeft: true,
                           child: sub.isSubStepIconShow
                               ? Center(
                                   child: getIconWidgetForSubStatus(
-                                    sub.status ?? StepStatus.pending,
-                                    customIcon: sub.customStatusIcon,
+                                    sub.subStepStatus ?? StepStatus.pending,
+                                    customIcon: sub.subStepCustomStatusIcon,
                                     context,
                                   ),
                                 )
@@ -528,7 +571,7 @@ class _SubStepper extends StatelessWidget {
                     if (!isLast)
                       Expanded(
                         child: InnerShadowContainer(
-                          width: 2.5,
+                          width: 0.0055 * Responsive.getWidth(context),
                           isShadowBottomLeft: true,
                           borderRadius: 0,
                           backgroundColor: color,
@@ -536,7 +579,7 @@ class _SubStepper extends StatelessWidget {
                       ),
                   ],
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 0.020 * Responsive.getWidth(context)),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 12),
@@ -545,41 +588,40 @@ class _SubStepper extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              sub.title ?? 'No title',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Gilroy-SemiBold',
-                                color: isDisabled
-                                    ? AppColors.stepperDisabled
-                                    : sub.titleColor ?? Colors.black,
-                              ),
+                            CustomText(
+                              sub.subStepTitle ?? 'No title',
+                              fontSize:
+                                  sub.subStepTitleFontSize ??
+                                  12 * Responsive.getResponsiveText(context),
+                              fontWeight:
+                                  sub.subStepTitleFontWeight ?? FontWeight.w600,
+                              color: isDisabled
+                                  ? AppColors.stepperDisabled
+                                  : sub.subStepTitleColor ?? Colors.black,
                             ),
                             const Spacer(),
-                            if (sub.trailingTitle != null)
-                              Text(
-                                sub.trailingTitle!,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontFamily: 'Gilroy-Medium',
-                                  color:
-                                      sub.trailingTitleColor ??
-                                      AppColors.textSecondary,
-                                ),
+                            if (sub.subStepTrailingTitle != null)
+                              CustomText(
+                                sub.subStepTrailingTitle!,
+                                fontSize:
+                                    sub.subStepTrailingFontSize ??
+                                    12 * Responsive.getResponsiveText(context),
+                                fontWeight: FontWeight.w500,
+                                color:
+                                    sub.subStepTrailingTitleColor ??
+                                    AppColors.textSecondary,
                               ),
                           ],
                         ),
-                        if (sub.subTitle != null)
-                          Text(
-                            sub.subTitle!,
-                            style: TextStyle(
-                              fontSize: 11,
-                              fontFamily: 'Gilroy-Regular',
-                              fontWeight: FontWeight.w400,
-                              color:
-                                  sub.subTitleColor ?? AppColors.textSecondary,
-                            ),
+                        if (sub.subStepTitle != null)
+                          CustomText(
+                            sub.subStepSubTitle!,
+                            fontSize:
+                                11 * Responsive.getResponsiveText(context),
+                            fontWeight: FontWeight.w400,
+                            color:
+                                sub.subStepSubTitleColor ??
+                                AppColors.textSecondary,
                           ),
                       ],
                     ),
