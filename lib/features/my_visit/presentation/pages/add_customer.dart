@@ -27,7 +27,12 @@ class _AddCustomerState extends State<AddCustomer> {
 
   // Dropdown list options
   final List<String> cityList = ['Ahmedabad', 'Surat', 'Rajkot', 'Vadodara'];
-  final List<String> areaList = ['Maninagar', 'Navrangpura', 'Bopal', 'Iskon'];
+  final List<String> areaList = [
+    'PrahaladNagar',
+    'RamdevNagar',
+    'KrishnaNagar',
+    'Thaltej',
+  ];
 
   // Country code selections for phone number fields
   String selectedCountry1 = 'INA';
@@ -105,15 +110,15 @@ class _AddCustomerState extends State<AddCustomer> {
                 onCountryChanged: (_) {},
                 controller: phoneController1,
                 countryDialCodes: countryMap,
-                borderRadius: 8 * getResponsive(context),
-                textFieldHeight: 44  ,
+                borderRadius: 5 * getResponsive(context),
+                textFieldHeight: 47,
                 borderColor: AppTheme.getColor(context).outline,
                 hintText: '000 00 000 00',
                 phoneFontWeight: FontWeight.w600,
                 hintTextStyle: TextStyle(
                   color: AppTheme.getColor(context).outline,
                 ),
-                countryFontSize: 18 * getResponsiveText(context),
+                countryFontSize: 16 * getResponsiveText(context),
                 countryCodeFontSize: 14 * getResponsiveText(context),
                 countryCodeTextStyle: TextStyle(
                   color: AppTheme.getColor(context).outline,
@@ -139,7 +144,7 @@ class _AddCustomerState extends State<AddCustomer> {
                 onCountryChanged: (_) {},
                 controller: phoneController2,
                 countryDialCodes: countryMap,
-                borderRadius: 8 * getResponsive(context),
+                borderRadius: 5 * getResponsive(context),
                 textFieldHeight: 47,
                 borderColor: AppTheme.getColor(context).outline,
                 hintText: '000 00 000 00',
@@ -147,7 +152,7 @@ class _AddCustomerState extends State<AddCustomer> {
                 hintTextStyle: TextStyle(
                   color: AppTheme.getColor(context).outline,
                 ),
-                countryFontSize: 18 * getResponsiveText(context),
+                countryFontSize: 16 * getResponsiveText(context),
                 countryCodeFontSize: 14 * getResponsiveText(context),
                 countryCodeTextStyle: TextStyle(
                   color: AppTheme.getColor(context).outline,
@@ -240,7 +245,6 @@ class _AddCustomerState extends State<AddCustomer> {
                 ),
                 prefix: SvgPicture.asset(AppAssets.building),
                 border: Border.all(color: AppTheme.getColor(context).outline),
-
               ),
             ],
           ),
@@ -362,11 +366,6 @@ class _AddCustomerState extends State<AddCustomer> {
     isReadOnly: readOnly,
     onClick: onTap,
     boarderRadius: 8 * getResponsive(context),
-    labelTextStyle: TextStyle(
-      color: AppTheme.getColor(context).onSurfaceVariant,
-      fontSize: 12 * getResponsiveText(context),
-      fontWeight: FontWeight.w700,
-    ),
     hintTextStyle: TextStyle(
       fontWeight: FontWeight.w600,
       color: AppTheme.getColor(context).outline,
