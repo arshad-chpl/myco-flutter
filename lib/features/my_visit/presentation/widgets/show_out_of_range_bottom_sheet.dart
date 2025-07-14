@@ -75,7 +75,7 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
 
           LabeledDropdown(
             prefix: SvgPicture.asset(AppAssets.result),
-            label: 'Visit Type',
+            label: 'Day Type',
             items: dayType,
             hintText: 'Select',
             itemToString: (i) => i.toString(),

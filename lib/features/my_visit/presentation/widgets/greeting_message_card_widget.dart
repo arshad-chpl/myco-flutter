@@ -19,6 +19,7 @@ class GreetingMessageCardWidget extends StatelessWidget {
         CustomText(
           'Welcome To Work',
           fontSize: 21 * Responsive.getResponsiveText(context),
+          fontWeight: FontWeight.w500,
           color: AppTheme.getColor(context).onSecondary,
         ),
         SizedBox(height: 0.010 * Responsive.getHeight(context)),
@@ -38,13 +39,14 @@ class GreetingMessageCardWidget extends StatelessWidget {
                 child: CustomText(
                   'Flutter Developer',
                   fontSize: 21 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
 
             ShowDateTimeWidget(
               color: AppTheme.getColor(context).onSecondary,
-              weight: FontWeight.w400,
+              weight: FontWeight.w500,
             ),
           ],
         ),
