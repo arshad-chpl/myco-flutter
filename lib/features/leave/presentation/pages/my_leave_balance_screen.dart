@@ -161,7 +161,11 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
     final isSpecialLeave = leave.specialLeave == '1';
     final isLeaveRestricted = leave.leaveRestrictions == true;
     final isApplyLeaveEncashment =
-        leave.leaveEncashmentOption == '1' && leave.encashmentAllowed != '0';
+    (leave.leaveEncashmentOption != null &&
+        leave.leaveEncashmentOption == '1' &&
+        leave.encashmentAllowed != null &&
+        leave.encashmentAllowed != '0');
+
     final hasMonthlyLeaveBalance =
         leave.userMonthlyLeaveBalanceData != null && leave.userMonthlyLeaveBalanceData!.isNotEmpty;
 
