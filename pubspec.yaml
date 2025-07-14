@@ -103,6 +103,7 @@ flutter:
     - .env
     - assets/images/
     - assets/svgs/
+    - assets/svgs/visit/
     - assets/gifs/
     - assets/dashboard/
     - assets/splash/myco_splash.json
@@ -113,7 +114,6 @@ flutter:
     - assets/payslip/
     - assets/media_picker/
     - assets/lost_and_found/
-    - assets/visit_svgs/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

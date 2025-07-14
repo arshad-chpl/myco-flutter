@@ -8,6 +8,9 @@ class AppAssets {
   static const String iconsPath = '$basePath/icons';
   static const String splash = '$basePath/splash';
 
+  //visit svgs
+  static const String svgsVisit = '$svgsPath/visit';
+
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
   static const String chplLogo = '$imagesPath/chpl_logo.png';
@@ -22,6 +25,13 @@ class AppAssets {
   static const String punchIn = '$svgsPath/punchIn.svg';
   static const String scanQR = '$svgsPath/scanQR.svg';
   static const String refresh = '$svgsPath/refresh.svg';
+  static const String calendar = '$svgsVisit/calendar.svg';
+  static const String whats = '$svgsVisit/whats.svg';
+  static const String share = '$svgsVisit/share.svg';
+  static const String arrow = '$svgsVisit/arrow-down.svg';
+  static const String docoumentText = '$svgsVisit/document-text.svg';
+  static const String doubleDA = '$svgsVisit/double_DA.svg';
+  static const String data = '$svgsVisit/data.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';

@@ -5,10 +5,10 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class CustomTableWidget extends StatelessWidget {
-  final String name = 'Yash Soni';
-  final String designation = '( UI UX )';
+  final String name;
+  final String designation;
 
-  CustomTableWidget({super.key});
+  CustomTableWidget({super.key, required this.name, required this.designation});
 
   TableRow _buildRow(BuildContext context) {
     return TableRow(

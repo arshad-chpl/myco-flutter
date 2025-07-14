@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/visits/presentation/pages/bottom_sheet.dart';
+import 'package:myco_flutter/features/visits/presentation/pages/visit_report_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/horizontal_border.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-
-
 
 //Visit Report page
 class VisitReport extends StatelessWidget {
@@ -17,6 +16,7 @@ class VisitReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //Custom app bar
       appBar: CustomAppbar(
         leading: BackButton(),
         title: CustomText(
@@ -25,11 +25,18 @@ class VisitReport extends StatelessWidget {
           fontSize: 18 * getResponsiveText(context),
         ),
       ),
+
       body: ListView.builder(
         itemCount: 2,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.all(12),
+            padding: EdgeInsets.only(
+              left: 32 * getResponsive(context),
+              right: 32 * getResponsive(context),
+              bottom: 16 * getResponsive(context),
+            ),
+
+            //Common card
             child: CommonCard(
               showBlackShadowInChild: true,
               title: '05 June 2025',
@@ -37,18 +44,21 @@ class VisitReport extends StatelessWidget {
                 onTap: () {
                   showModalBottomSheet(
                     context: context,
-                    shape: const RoundedRectangleBorder(
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(10),
+                        top: Radius.circular(10 * getResponsive(context)),
                       ),
                     ),
                     builder: (context) => TestNewVisit(),
                   );
                 },
-                child: SvgPicture.asset('assets/visit_svgs/arrow-down.svg'),
+                child: SvgPicture.asset(AppAssets.arrow),
               ),
+
               bottomWidget: Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: EdgeInsets.all(12 * getResponsive(context)),
+
+                //Card child
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -67,27 +77,29 @@ class VisitReport extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                         SizedBox(height: 0.008 * getHeight(context)),
+
+                        //Horizontal dashed line
                         HorizontalDashedLine(
                           width: double.maxFinite,
                           thickness: 2,
                           color: AppTheme.getColor(context).outline,
                         ),
 
-                        SizedBox(height: 0.0055 * getHeight(context)),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            CustomText(
-                              'Download Report',
-                              fontSize: 12 * getResponsiveText(context),
-                              color: AppTheme.getColor(context).secondary,
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.w700,
-                              decorationColor: AppTheme.getColor(
-                                context,
-                              ).secondary,
-                            ),
-                          ],
+                        SizedBox(height: 0.005 * getHeight(context)),
+
+                        //Download report
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: CustomText(
+                            'Download Report',
+                            fontSize: 12 * getResponsiveText(context),
+                            color: AppTheme.getColor(context).secondary,
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.w700,
+                            decorationColor: AppTheme.getColor(
+                              context,
+                            ).secondary,
+                          ),
                         ),
                       ],
                     ),
