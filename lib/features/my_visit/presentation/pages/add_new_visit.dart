@@ -53,26 +53,26 @@ class _AddNewVisitState extends State<AddNewVisit> {
     appBar: CustomAppbar(
       appBarText: 'Add New Visit',
       appbartxtcolor: AppTheme.getColor(context).onSurface,
-      size: 16 * getResponsiveText(context),
+      size: 16 * Responsive.getResponsiveText(context),
       appBarBackgoundColor: AppTheme.getColor(context).surface,
       leading: const BackButton(),
     ),
 
     body: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 31.0 * getResponsive(context)),
+      padding: EdgeInsets.symmetric(horizontal: 31.0 * Responsive.getResponsive(context)),
       child: SingleChildScrollView(
         child: Column(
-          spacing: 16 * getResponsive(context),
+          spacing: 16 * Responsive.getResponsive(context),
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Visit Type Radio Buttons
             CustomVisitTypeRadioButton(
               textStyle: TextStyle(
-                fontSize: 20 * getResponsiveText(context),
+                fontSize: 20 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurface,
               ),
-              borderRadius: 8 * getResponsive(context),
-              height: 30 * getHeight(context),
+              borderRadius: 8 * Responsive.getResponsive(context),
+              height: 30 * Responsive.getHeight(context),
               borderColor: AppTheme.getColor(context).primary,
               options: visitTypes,
               selectedValue: selectedVisitType,
@@ -81,21 +81,21 @@ class _AddNewVisitState extends State<AddNewVisit> {
 
             CustomText(
               'Customer to visit',
-              fontSize: 12 * getResponsiveText(context),
+              fontSize: 12 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
               color: AppTheme.getColor(context).onSurface,
             ),
             // Customer Dropdown
             CustomPopupDropdownStyled<String>(
-              height: 0.06 * getHeight(context),
-              spacing: 10 * getResponsive(context),
+              height: 0.06 * Responsive.getHeight(context),
+              spacing: 10 * Responsive.getResponsive(context),
               prefix: SvgPicture.asset(AppAssets.personalcard),
-              prefixImageWidth: 20 * getWidth(context),
-              prefixImageHeight: 20 * getHeight(context),
+              prefixImageWidth: 20 * Responsive.getWidth(context),
+              prefixImageHeight: 20 * Responsive.getHeight(context),
               items: leavetype,
               hintText: 'Select ',
               hintTextStyle: TextStyle(
-                fontSize: 14 * getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).outline,
               ),
               selectedItem: selectedleavetype,
@@ -109,21 +109,21 @@ class _AddNewVisitState extends State<AddNewVisit> {
               label: 'Visit Date',
               labelTextStyle: TextStyle(
                 fontWeight: FontWeight.w400,
-                fontSize: 10 * getResponsiveText(context),
+                fontSize: 10 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurface,
               ),
               hint: 'Select Date',
               hintTextStyle: TextStyle(
-                fontSize: 14 * getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).outline,
               ),
-              widthFactor: getWidth(context),
+              widthFactor: Responsive.getWidth(context),
               border: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: AppTheme.getColor(context).primary,
                 ),
                 borderRadius: BorderRadius.circular(
-                  10 * getResponsive(context),
+                  10 * Responsive.getResponsive(context),
                 ),
               ),
               prefix: SvgPicture.asset(
@@ -135,22 +135,22 @@ class _AddNewVisitState extends State<AddNewVisit> {
             // Visit Slot Label
             CustomText(
               'Visit Slot',
-              fontSize: 12 * getResponsiveText(context),
+              fontSize: 12 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
               color: AppTheme.getColor(context).onSurface,
             ),
 
             ///Visit Slot Dropdown
             CustomPopupDropdownStyled<String>(
-              height: 0.06 * getHeight(context),
-              spacing: 10 * getResponsive(context),
+              height: 0.06 * Responsive.getHeight(context),
+              spacing: 10 * Responsive.getResponsive(context),
               prefix: SvgPicture.asset(AppAssets.clock),
-              prefixImageWidth: 20 * getWidth(context),
-              prefixImageHeight: 20 * getHeight(context),
+              prefixImageWidth: 20 * Responsive.getWidth(context),
+              prefixImageHeight: 20 * Responsive.getHeight(context),
               items: leavetype,
               hintText: 'Select Slot',
               hintTextStyle: TextStyle(
-                fontSize: 14 * getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).outline,
               ),
               selectedItem: selectedleavetype,
@@ -163,14 +163,14 @@ class _AddNewVisitState extends State<AddNewVisit> {
             // Visit Type Label
             CustomText(
               'Visit Type',
-              fontSize: 12 * getResponsiveText(context),
+              fontSize: 12 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
               color: AppTheme.getColor(context).onSurface,
             ),
 
             // Visit Mode Radio Buttons
             CustomRadioButton(
-              height: 0.05 * getHeight(context),
+              height: 0.05 * Responsive.getHeight(context),
               options: ['field visit', 'virtual visit'],
               onChanged: (selected) {
                 // Handle radio button change
@@ -179,12 +179,12 @@ class _AddNewVisitState extends State<AddNewVisit> {
 
             ///Purpose of Visit Label & TextField
             Column(
-              spacing: 3 * getResponsive(context),
+              spacing: 3 * Responsive.getResponsive(context),
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
                   'Purpose Of Visit',
-                  fontSize: 12 * getResponsiveText(context),
+                  fontSize: 12 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w500,
                   color: AppTheme.getColor(context).onSurface,
                 ),
@@ -196,7 +196,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
                       color: AppTheme.getColor(context).onSurface,
                     ),
                     borderRadius: BorderRadius.circular(
-                      10 * getResponsive(context),
+                      10 * Responsive.getResponsive(context),
                     ),
                   ),
                 ),
@@ -212,7 +212,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
 
             ///Submit Button
             Padding(
-              padding: EdgeInsets.only(top: 0.05 * getHeight(context)),
+              padding: EdgeInsets.only(top: 0.05 * Responsive.getHeight(context)),
               child: MyCoButton(
                 onTap: () {
                   //  Handle form submission here
@@ -220,10 +220,10 @@ class _AddNewVisitState extends State<AddNewVisit> {
                 title: 'SUBMIT',
                 textStyle: TextStyle(
                   color: AppTheme.getColor(context).onPrimary,
-                  fontSize: 18 * getResponsiveText(context),
+                  fontSize: 18 * Responsive.getResponsiveText(context),
                 ),
                 isShadowBottomLeft: true,
-                boarderRadius: 50 * getResponsive(context),
+                boarderRadius: 50 * Responsive.getResponsive(context),
               ),
             ),
             const SizedBox(),

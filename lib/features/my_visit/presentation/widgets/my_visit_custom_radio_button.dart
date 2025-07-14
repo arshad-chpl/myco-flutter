@@ -36,7 +36,7 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme.getColor(context);
-    final screenWidth = getWidth(context);
+    final screenWidth = Responsive.getWidth(context);
     final isTablet = screenWidth > 600;
     final responsiveWidth = isTablet ? screenWidth * 10 : screenWidth * 10;
 
@@ -48,8 +48,8 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
         border: Border.all(color: borderColor ?? theme.primary),
       ),
       padding: EdgeInsets.symmetric(
-        vertical: 10 * getResponsive(context),
-        horizontal: 10* getResponsive(context),
+        vertical: 10 * Responsive.getResponsive(context),
+        horizontal: 10* Responsive.getResponsive(context),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -60,14 +60,14 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
                 contentPadding:
                     tilePadding ??
                     EdgeInsets.symmetric(
-                      horizontal: 9 * getResponsive(context),
+                      horizontal: 9 * Responsive.getResponsive(context),
                     ),
                 visualDensity: VisualDensity.compact,
                 activeColor: activeColor ?? theme.primary,
                 title: CustomText(
                   option,
                   fontWeight: FontWeight.w600,
-                  fontSize: 18 * getResponsiveText(context),
+                  fontSize: 18 * Responsive.getResponsiveText(context),
                   color:
                       textStyle?.color ?? AppTheme.getColor(context).onSurface,
                 ),

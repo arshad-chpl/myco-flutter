@@ -113,7 +113,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
                           color: isSelected
                               ? AppTheme.getColor(context).primary
                               : Colors.grey,
-                          fontSize: 14 * getResponsiveText(context),
+                          fontSize: 14 * Responsive.getResponsiveText(context),
                         ),
                       ),
                     ],

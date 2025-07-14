@@ -31,34 +31,34 @@ class _TravelModeState extends State<TravelMode> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: 31.0 * getResponsive(context),
+            horizontal: 31.0 * Responsive.getResponsive(context),
           ),
           child: Column(
-            spacing: 15 * getResponsive(context),
+            spacing: 15 * Responsive.getResponsive(context),
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Label for Travel Mode Dropdown
               CustomText(
                 'Select Travel Mode',
-                fontSize: 12 * getResponsiveText(context),
+                fontSize: 12 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w400,
                 color: theme.onSurface,
               ),
 
               /// Travel Mode Dropdown
               CustomPopupDropdownStyled<String>(
-                height: 0.06 * getHeight(context),
-                spacing: 8 * getResponsive(context),
+                height: 0.06 * Responsive.getHeight(context),
+                spacing: 8 * Responsive.getResponsive(context),
                 prefix: SvgPicture.asset(
                   AppAssets.smart_car,
                   fit: BoxFit.scaleDown,
                 ),
-                prefixImageWidth: 20 * getWidth(context),
-                prefixImageHeight: 20 * getHeight(context),
+                prefixImageWidth: 20 * Responsive.getWidth(context),
+                prefixImageHeight: 20 * Responsive.getHeight(context),
                 items: travelModes,
                 hintText: 'Select',
                 hintTextStyle: TextStyle(
-                  fontSize: 20 * getResponsiveText(context),
+                  fontSize: 20 * Responsive.getResponsiveText(context),
                   color: theme.outline,
                 ),
                 selectedItem: selectedTravelMode,
@@ -71,15 +71,15 @@ class _TravelModeState extends State<TravelMode> {
               // Label for Site Dropdown
               CustomText(
                 'Site',
-                fontSize: 12 * getResponsiveText(context),
+                fontSize: 12 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w500,
                 color: theme.onSurface,
               ),
 
               /// Site Dropdown
               CustomPopupDropdownStyled<String>(
-                height: 0.06 * getHeight(context),
-                spacing: 10 * getResponsive(context),
+                height: 0.06 * Responsive.getHeight(context),
+                spacing: 10 * Responsive.getResponsive(context),
                 prefix: SvgPicture.asset(
                   AppAssets.global,
                   fit: BoxFit.scaleDown,
@@ -87,7 +87,7 @@ class _TravelModeState extends State<TravelMode> {
                 items: sites,
                 hintText: 'Select',
                 hintTextStyle: TextStyle(
-                  fontSize: 20 * getResponsiveText(context),
+                  fontSize: 20 * Responsive.getResponsiveText(context),
                   color: theme.outline,
                 ),
                 selectedItem: selectedSite,
@@ -101,9 +101,9 @@ class _TravelModeState extends State<TravelMode> {
               Padding(
                 padding:
                     EdgeInsets.only(top: 20, left: 5, right: 5) *
-                    getResponsive(context),
+                        Responsive.getResponsive(context),
                 child: Row(
-                  spacing: 10 * getResponsive(context),
+                  spacing: 10 * Responsive.getResponsive(context),
                   children: [
                     // CLOSE Button
                     Expanded(
@@ -114,12 +114,12 @@ class _TravelModeState extends State<TravelMode> {
                         title: 'CLOSE',
                         textStyle: TextStyle(
                           color: theme.primary,
-                          fontSize: 16 * getResponsiveText(context),
+                          fontSize: 16 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w400,
                         ),
                         backgroundColor: Colors.white,
                         borderColor: theme.primary,
-                        boarderRadius: 30 * getResponsive(context),
+                        boarderRadius: 30 * Responsive.getResponsive(context),
                       ),
                     ),
 
@@ -132,11 +132,11 @@ class _TravelModeState extends State<TravelMode> {
                         title: 'START VISIT',
                         textStyle: TextStyle(
                           color: Colors.white,
-                          fontSize: 16 * getResponsiveText(context),
+                          fontSize: 16 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w400,
                         ),
                         backgroundColor: theme.primary,
-                        boarderRadius: 30 * getResponsive(context),
+                        boarderRadius: 30 * Responsive.getResponsive(context),
                         isShadowBottomLeft: true,
                       ),
                     ),
