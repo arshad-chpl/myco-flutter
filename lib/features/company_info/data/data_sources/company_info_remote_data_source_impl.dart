@@ -16,7 +16,7 @@ class CompanyInfoRemoteDataSourceImpl implements CompanyInfoRemoteDataSource {
   @override
   Future<CompanyInfoResponse> getCompanyInfo() async {
     final dataMap = {
-      'tag': 'buildingDetails',
+      'buildingDetails': 'buildingDetails',
       'society_id': '1',
       'language_id': '1',
     };

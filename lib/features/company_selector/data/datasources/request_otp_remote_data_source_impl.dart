@@ -7,6 +7,9 @@ import 'package:myco_flutter/core/encryption/gzip_util.dart';
 import 'package:myco_flutter/core/models/common_response.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/company_selector/data/datasources/request_otp_remote_data_source.dart';
+import 'package:myco_flutter/features/company_selector/data/models/request_otp_request_model.dart';
+import 'package:myco_flutter/features/company_selector/data/models/verify_otp_reponse.dart';
+import 'package:myco_flutter/features/company_selector/data/models/verify_otp_request_model.dart';
 
 class RequestOtpRemoteDataSourceImpl implements RequestOtpRemoteDataSource {
   final Dio dio;
@@ -14,20 +17,9 @@ class RequestOtpRemoteDataSourceImpl implements RequestOtpRemoteDataSource {
   RequestOtpRemoteDataSourceImpl({required this.dio});
 
   @override
-  Future<CommonResponse> requestOtp() async {
-    final dataMap = {
-      'tag': 'user_login_new',
-      'society_id': '1',
-      'country_code': '1',
-      'otp_type': '1',
-      'user_mobile': 'aasif.shaikh@chplgroup.org',
-      'is_firebase': true,
-      'user_mac_address': '1',
-      'login_via': '1',
-      'language_id': '1',
-    };
+  Future<CommonResponse> requestOtp(RequestOtpRequestModel model) async {
 
-    final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
+    final encryptedBody = GzipUtil.encryptAES(jsonEncode(model.toMap()));
 
     final controller = 'otpControllerNewEnc.php';
 
@@ -35,5 +27,17 @@ class RequestOtpRemoteDataSourceImpl implements RequestOtpRemoteDataSource {
       instanceName: VariableBag.employeeMobileApi,
     ).postDynamic(controller, encryptedBody);
     return CommonResponse.fromJson(json.decode(GzipUtil.decryptAES(response)));
+  }
+
+  @override
+  Future<VerifyOtpResponse> verifyOtp(VerifyOtpRequestModel model) async {
+    final encryptedBody = GzipUtil.encryptAES(jsonEncode(model.toMap()));
+
+    final controller = 'otpControllerNewEnc.php';
+
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.employeeMobileApi,
+    ).postDynamic(controller, encryptedBody);
+    return VerifyOtpResponse.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 }

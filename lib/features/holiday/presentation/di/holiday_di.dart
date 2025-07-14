@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/features/holiday/data/data_sources/holiday_remote_data_source.dart';
 import 'package:myco_flutter/features/holiday/data/data_sources/holiday_remote_data_source_impl.dart';
 import 'package:myco_flutter/features/holiday/data/repositories/holiday_repository_impl.dart';
@@ -30,6 +32,8 @@ Future<void> setupHolidayDI(GetIt sl) async {
 
   // Data Source
   sl.registerLazySingleton<HolidayRemoteDataSource>(
-    () => HolidayRemoteDataSourceImpl(dio: sl()),
+    () => HolidayRemoteDataSourceImpl(
+      dio: sl<Dio>(instanceName: VariableBag.dioWithAuth),
+    ),
   );
 }

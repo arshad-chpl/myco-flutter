@@ -1,13 +1,16 @@
+import 'package:myco_flutter/features/company_selector/data/models/request_otp_request_model.dart';
+import 'package:myco_flutter/features/company_selector/data/models/verify_otp_request_model.dart';
+
 abstract class LoginEvent {}
 
 class SendOtpEvent extends LoginEvent {
-  final String contactInfo;
-  final bool isEmail;
-  SendOtpEvent({required this.contactInfo, required this.isEmail});
+  final RequestOtpRequestModel model;
+
+  SendOtpEvent({required this.model});
 }
 
 class VerifyOtpEvent extends LoginEvent {
-  final String contactInfo;
-  final String otp;
-  VerifyOtpEvent({required this.contactInfo, required this.otp});
+  final VerifyOtpRequestModel model;
+
+  VerifyOtpEvent({required this.model});
 }

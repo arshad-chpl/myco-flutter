@@ -28,7 +28,7 @@ Future<void> init() async {
   splashDi(sl);
 
   //========Login=========
-  setupLogin(sl);
+  await setupLoginDi(sl);
 
   //========Company Selector=========
   companySelectorDi(sl);

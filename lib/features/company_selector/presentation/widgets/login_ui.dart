@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/company_selector/data/models/request_otp_request_model.dart';
 import 'package:myco_flutter/features/company_selector/data/models/society_response_model.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_event.dart';
@@ -184,11 +185,19 @@ class LoginUi extends StatelessWidget {
                   );
                   return;
                 }
-                context.read<LoginBloc>().add(
-                  SendOtpEvent(contactInfo: contactInfo, isEmail: isEmailLogin),
+
+                final model = RequestOtpRequestModel(
+                  societyId: selectedCompany?.societyId.toString() ?? '',
+                  countryCode: countryMap[selectedCountry] ?? '',
+                  otpType: selectedCompany?.loginVia == '1' ? '2' : '0',
+                  userMobile: contactInfo,
+                  isFirebase: true,
+                  userMacAddress: '', // Replace with actual MAC logic if needed
+                  loginVia: selectedCompany?.loginVia ?? '1',
+                  languageId: '1',
                 );
 
-                if (state is OtpSentState) _nextStep();
+                context.read<LoginBloc>().add(SendOtpEvent(model: model));
               },
               textStyle: TextStyle(
                 color: AppTheme.getColor(context).onPrimary,

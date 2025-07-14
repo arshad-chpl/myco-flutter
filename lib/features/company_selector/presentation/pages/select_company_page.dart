@@ -6,10 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/models/common_response.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/features/company_selector/data/models/society_response_model.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
+import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_event.dart';
+import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_state.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/login_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/otp_verification_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/select_company_ui.dart';
@@ -127,60 +130,96 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
               );
 
               return BlocProvider(
-                create: (BuildContext context) =>GetIt.I<LoginBloc>(),
-                child: LoginUi(
-                  previousStep: _previousStep,
-                  nextStep: _nextStep,
-                  selectedCountry: selectedCountry,
-                  countryMap: countryMap,
-                  onCountryChanged: (value, index) {
-                    setState(() {
-                      selectedCountry = value!;
-                    });
+                create: (BuildContext context) => GetIt.I<LoginBloc>(),
+                child: BlocListener<LoginBloc, LoginState>(
+                  listener: (context, state) async {
+                    if (state is OtpSentState) {
+                      final prefs = GetIt.I<PreferenceManager>();
+                      await prefs.writeString(
+                        'otpResponse',
+                        jsonEncode(state.response.toJson()),
+                      );
+                      _nextStep();
+                    } else if (state is LoginError) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(state.message)));
+                    }
                   },
-                  phoneController: phoneController,
-                  emailController: emailController,
-                  isChecked: isChecked,
-                  onCheckChanged: (val) {
-                    setState(() {
-                      isChecked = val;
-                    });
-                  },
-                  selectedCompany: selectedCompany,
+                  child: LoginUi(
+                    previousStep: _previousStep,
+                    nextStep: _nextStep,
+                    // You can remove this if not used inside LoginUi
+                    selectedCountry: selectedCountry,
+                    countryMap: countryMap,
+                    onCountryChanged: (value, index) {
+                      setState(() {
+                        selectedCountry = value!;
+                      });
+                    },
+                    phoneController: phoneController,
+                    emailController: emailController,
+                    isChecked: isChecked,
+                    onCheckChanged: (val) {
+                      setState(() {
+                        isChecked = val;
+                      });
+                    },
+                    selectedCompany: selectedCompany,
+                  ),
                 ),
               );
             }
           },
         );
       case 2:
-        return FutureBuilder<String?>(
-          future: preference.readString('selectedCompany'),
+        return FutureBuilder<List<String?>>(
+          future: Future.wait([
+            preference.readString('otpResponse'),
+            preference.readString('selectedCompany'),
+          ]),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError || snapshot.data == null) {
-              return const Center(
-                child: Text('Failed to load selected company.'),
-              );
+            } else if (snapshot.hasError ||
+                snapshot.data == null ||
+                snapshot.data!.any((e) => e == null)) {
+              return const Center(child: Text('Failed to load required data.'));
             } else {
-              final companyJson = snapshot.data!;
+              final otpResponseJson = snapshot.data![0]!;
+              final selectedCompanyJson = snapshot.data![1]!;
+
+              final otpResponse = CommonResponse.fromJson(
+                jsonDecode(otpResponseJson),
+              );
               final selectedCompany = SocietyModel.fromJson(
-                jsonDecode(companyJson),
+                jsonDecode(selectedCompanyJson),
               );
 
               final bool isEmail = selectedCompany.loginVia == '1';
-              final String contactValue = isEmail ? emailController.text : phoneController.text;
+              final String contactValue = isEmail
+                  ? emailController.text
+                  : phoneController.text;
 
-              return OtpVerificationUi(
-                contactValue: contactValue,
-                isEmail: isEmail,
-                onSubmit: (otp) {
-                  // Verify OTP, then navigate or whatever
-                },
-                previousStep: _previousStep,
-                onResend: () {},
-                onEmailOtp: () {},
-                onCallOtp: () {},
+              return BlocProvider(
+                create: (context) => GetIt.I<LoginBloc>(),
+                child: OtpVerificationUi(
+                  contactValue: contactValue,
+                  isEmail: isEmail,
+                  otpResponse: otpResponse,
+                  selectedCompany: selectedCompany,
+                  onSubmit: (otp) {},
+                  previousStep: _previousStep,
+                  onResend: () {
+                    // Handle resend OTP logic if needed
+                  },
+                  onEmailOtp: () {
+                    // Handle email OTP logic if needed
+                  },
+                  onCallOtp: () {
+                    // Handle call OTP logic if needed
+                  },
+                ),
               );
             }
           },
@@ -190,74 +229,3 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
     }
   }
 }
-
-// Padding(
-//                   padding: const EdgeInsets.fromLTRB(14, 0, 14, 0),
-//                   child: ListView.builder(
-//                     itemCount: state.companies.society!.length,
-//                     itemBuilder: (_, index) {
-//                       final company = state.companies.society![index];
-//                       return Card(
-//                         color: Colors.grey[100],
-//                         elevation: 1,
-//                         child: Padding(
-//                           padding: const EdgeInsets.all(8),
-//                           child: ListTile(
-//                             selectedColor: AppColors.primary,
-//                             leading: Image.asset(AppAssets.myCoLogo),
-//                             title: CustomText(
-//                               company.societyName!,
-//                               fontWeight: FontWeight.w600,
-//                             ),
-//                             subtitle: CustomText(
-//                               company.societyAddress!,
-//                               fontSize: 10,
-//                             ),
-//                             selected: company == _selectedCompany,
-//                             onTap: () {
-//                               preference.setCompanyId(
-//                                 company.societyId.toString(),
-//                               );
-//                               preference.setCompanyName(
-//                                 company.societyName.toString(),
-//                               );
-//                               preference.setCompanyAddress(
-//                                 company.societyAddress.toString(),
-//                               );
-//                               preference.setBaseUrl(
-//                                 company.subDomain.toString(),
-//                               );
-//                               preference.setCompanyId(
-//                                 company.societyId.toString(),
-//                               );
-//                               preference.setCompanyName(
-//                                 company.societyName.toString(),
-//                               );
-//                               preference.setCompanyAddress(
-//                                 company.societyAddress.toString(),
-//                               );
-//                               preference.setBaseUrl(
-//                                 company.subDomain.toString(),
-//                               );
-
-//                               final companyJson = jsonEncode(company.toJson());
-
-//                               preference.writeString(
-//                                 'selectedCompany',
-//                                 companyJson,
-//                               );
-//                               // TODO: refreshApiServiceCompany
-//                               // refreshApiServiceCompany();
-
-//                               preference.setLoginSession(true);
-
-//                               context.go('/login');
-
-//                               //   setState(() => _selectedCompany = company);
-//                             },
-//                           ),
-//                         ),
-//                       );
-//                     },
-//                   ),
-//                 );

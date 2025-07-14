@@ -16,7 +16,7 @@ class HolidayRemoteDataSourceImpl implements HolidayRemoteDataSource {
   @override
   Future<HolidayListResponse> fetchHolidays(String year) async {
     final dataMap = {
-      'tag': 'getHolidaysNewGroupWise',
+      'getHolidaysNewGroupWise': 'getHolidaysNewGroupWise',
       'society_id': '1',
       'unit_id': '1',
       'language_id': '1',
@@ -42,7 +42,7 @@ class HolidayRemoteDataSourceImpl implements HolidayRemoteDataSource {
   @override
   Future<void> applyHoliday(String holidayId) async {
     final dataMap = {
-      'tag': 'applyOptionalHoliday',
+      'applyOptionalHoliday': 'applyOptionalHoliday',
       'society_id': '1',
       'holiday_id': holidayId,
       'user_id': '1',
@@ -60,7 +60,7 @@ class HolidayRemoteDataSourceImpl implements HolidayRemoteDataSource {
   @override
   Future<void> deleteHoliday(String optionalHolidayAssignId) async {
     final dataMap = {
-      'tag': 'deleteOptionalHolidayRequest',
+      'deleteOptionalHolidayRequest': 'deleteOptionalHolidayRequest',
       'society_id': '1',
       'user_id': '1',
       'optional_holiday_assign_id': optionalHolidayAssignId,
