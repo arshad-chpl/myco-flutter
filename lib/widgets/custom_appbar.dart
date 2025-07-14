@@ -6,8 +6,6 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 
 class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final double height;
-  @override
-  final Key? key;
   final Widget? leading;
   final bool automaticallyImplyLeading;
   final Widget? title;
@@ -42,8 +40,8 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final double? size;
   final Color? appbartxtcolor;
 
-  CustomAppbar({
-    this.key,
+  const CustomAppbar({
+    super.key,
     this.appbartxtcolor,
     this.leading,
     this.automaticallyImplyLeading = true,

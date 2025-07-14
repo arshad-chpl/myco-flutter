@@ -1,252 +1,283 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
+import 'package:myco_flutter/features/asset/bloc/assets_bloc.dart';
+import 'package:myco_flutter/features/asset/bloc/assets_event.dart';
+import 'package:myco_flutter/features/asset/bloc/assets_state.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
 import 'package:myco_flutter/features/asset/widgets/all_assets_card.dart';
+import 'package:myco_flutter/features/asset/widgets/assets_bottom_sheet.dart';
 import 'package:myco_flutter/features/asset/widgets/past_assets_card.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
-class AssetsHomePage extends StatefulWidget {
+class AssetsHomePage extends StatelessWidget {
   const AssetsHomePage({super.key});
 
   @override
-  State<AssetsHomePage> createState() => _TestingState();
-}
+  Widget build(BuildContext context) {
+    final bloc = context.read<AssetsTabBloc>();
 
-class _TestingState extends State<AssetsHomePage> {
-  int selectedIndex = 0;
-
-  final List<String> leavetype = ['Paid leave', 'Unpaid leave', 'Casual leave'];
-  String? selectedleavetype;
-  // Default selected index
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppTheme.getColor(context).surface,
-    appBar: AppBar(
-      title: CustomText(
-        'Assets',
-        fontSize: 20 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-      ),
-      titleSpacing: 0,
-      leading: const BackButton(),
-      backgroundColor: AppTheme.getColor(context).surface,
-      actions: [
-        GestureDetector(
-          onTap: () {},
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.add,
-                size: 16,
-                color: AppTheme.getColor(context).onSurface,
-              ),
-              CustomText(
-                'Add Assets',
-                fontSize: 16 * Responsive.getResponsiveText(context),
-                fontWeight: FontWeight.w600,
-              ),
-            ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppTheme.getColor(context).surface,
+        appBar: CustomAppbar(
+          title: CustomText(
+            isKey: true,
+            'assets',
+            fontSize: 22 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w700,
           ),
-        ),
-      ],
-      actionsPadding: EdgeInsets.only(
-        right: 0.04 * Responsive.getWidth(context),
-      ),
-    ),
-    body: CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          expandedHeight: 70,
-          backgroundColor: AppTheme.getColor(context).surface,
-          floating: true,
-          snap: true,
-          automaticallyImplyLeading: false,
           titleSpacing: 0,
-          title: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 0.04 * Responsive.getWidth(context),
-            ),
-            child: MyCoTextfield(
-              hintText: 'Search',
-              hintTextStyle: AppTheme.getTextStyle(
-                context,
-              ).labelLarge!.copyWith(color: AppColors.textSecondary),
-              preFixImage: 'assets/images/search.png',
-              isSuffixIconOn: true,
-              image2: 'assets/images/scan.png',
-              onTap2: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const QRScannerPage()),
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(
+                right: 0.04 * Responsive.getWidth(context),
               ),
-              contentPadding: EdgeInsets.only(
-                top: 0.012 * Responsive.getHeight(context),
+              child: GestureDetector(
+                onTap: () => context.push('/add-assets'),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.add,
+                      size: 0.035 * Responsive.getWidth(context),
+                      color: AppTheme.getColor(context).onSurface,
+                    ),
+                    CustomText(
+                      isKey: true,
+                      'add_assets',
+                      fontSize: 16 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ],
+                ),
               ),
-              boarderRadius: 12 * Responsive.getResponsive(context),
             ),
-          ),
+          ],
+          appBarBackgoundColor: AppTheme.getColor(context).surface,
         ),
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              expandedHeight: 70,
+              backgroundColor: AppTheme.getColor(context).surface,
+              floating: true,
+              snap: true,
+              automaticallyImplyLeading: false,
+              titleSpacing: 0,
+              title: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 0.04 * Responsive.getWidth(context),
+                ),
+                child: MyCoTextfield(
+                  hintText: 'Search',
+                  textAlignment: TextAlign.start,
+                  hintTextStyle: AppTheme.getTextStyle(
+                    context,
+                  ).labelLarge!.copyWith(color: AppColors.textSecondary),
+                  preFixImage:
+                      AppAssets.imageSearch, 
+                  isSuffixIconOn: true,
+                  suFixImage: AppAssets.imageScanner,
+                  suFixImageWidth: 25,
+                  onTap1: () => context.push('/qr-scanner'),
+                  contentPadding: EdgeInsets.only(
+                    top: 0.012 * Responsive.getHeight(context),
+                  ),
+                  boarderRadius: 12 * Responsive.getResponsive(context),
+                ),
+              ),
+            ),
 
-        // Pinned TabBar
-        SliverPersistentHeader(
+            // Pinned TabBar
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: _SliverTabBarDelegate(
+                height: 60,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: 0.04 * Responsive.getWidth(context),
+                    right: 0.04 * Responsive.getWidth(context),
+                    bottom: 0.015 * Responsive.getHeight(context),
+                  ),
+                  child: BlocBuilder<AssetsTabBloc, AssetsTabState>(
+                    builder: (context, state) => MyCustomTabBar(
+                      isShadowBottomLeft: true,
+                      tabBarBorderColor: AppTheme.getColor(context).outline,
+                      selectedBgColors: [
+                        AppTheme.getColor(context).secondary,
+                        AppTheme.getColor(context).primary,
+                        const Color(0xFF08A4BB),
+                      ],
+                      selectedIndex: state.selectedIndex,
+                      tabs: const [
+                        'Active Assets (3)',
+                        'Past Assets (2)',
+                        'All Assets (2)',
+                      ],
+                      onTabChange: (int index) {
+                        bloc.add(TabChanged(index));
+                      },
+                      unselectedBorderAndTextColor: AppTheme.getColor(
+                        context,
+                      ).outline,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            // Asset List
+            ..._buildAssetListByTab(context),
+
+            // Extra spacing at the bottom
+            SliverToBoxAdapter(
+              child: SizedBox(height: 0.02 * Responsive.getHeight(context)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildAssetListByTab(BuildContext context) {
+    final index = context.watch<AssetsTabBloc>().state.selectedIndex;
+
+    final tabBuilders = <int, List<Widget> Function()>{
+      0: _buildActiveAssetsTab,
+      1: _buildPastAssetsTab,
+      2: () => _buildAllAssetsTab(context),
+    };
+
+    return tabBuilders[index]?.call() ?? [];
+  }
+
+  List<Widget> _buildActiveAssetsTab() => [const AssetsListPage()];
+
+  List<Widget> _buildPastAssetsTab() => [const PastAssetsListPage()];
+
+  // ignore: prefer_expression_function_bodies
+  List<Widget> _buildAllAssetsTab(BuildContext context) {
+    return [
+      SliverPadding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 0.04 * Responsive.getWidth(context),
+        ),
+        sliver: SliverPersistentHeader(
           pinned: true,
           delegate: _SliverTabBarDelegate(
             height: 60,
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: 0.04 * Responsive.getWidth(context),
-                right: 0.04 * Responsive.getWidth(context),
-                bottom: 0.015 * Responsive.getHeight(context),
-              ),
-              child: MyCustomTabBar(
-                isShadowBottomLeft: true,
-                tabBarBorderColor: AppTheme.getColor(context).outline,
-                selectedBgColors: [
-                  AppTheme.getColor(context).secondary,
-                  AppTheme.getColor(context).primary,
-                  const Color(0xFF08A4BB),
-                ],
-                selectedIndex: selectedIndex,
-                tabs: const [
-                  'Active Assets (3)',
-                  'Past Assets (2)',
-                  'All Assets(2)',
-                ],
-                onTabChange: (int index) {
-                  setState(() {
-                    selectedIndex = index;
-                  });
-                },
-                unselectedBorderAndTextColor: AppTheme.getColor(
-                  context,
-                ).outline,
-              ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: BlocBuilder<AssetsFilterBloc, AssetsFilterState>(
+                    builder: (context, state) => DropDownTextField(
+                      context,
+                      title: state.category,
+                      onTap: () async {
+                        final data = await showAssetsBottomSheet(
+                          context: context,
+                          heading: 'Select Category',
+                          dataList: const [
+                            'All Category',
+                            'Desktop',
+                            'Laptop',
+                            'Mobile',
+                            'Tab',
+                            'Test Assets',
+                          ],
+                        );
+                        if (data != null) {
+                          context.read<AssetsFilterBloc>().add(
+                            AssetsFilters(category: data),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(width: 0.06 * Responsive.getWidth(context)),
+                Expanded(
+                  child: BlocBuilder<AssetsFilterBloc, AssetsFilterState>(
+                    builder: (context, state) => DropDownTextField(
+                      context,
+                      title: state.brand,
+                      onTap: () async {
+                        final data = await showAssetsBottomSheet(
+                          context: context,
+                          heading: 'Select Brand',
+                          dataList: const [
+                            'All Brand',
+                            'Apple',
+                            'Asus',
+                            'Samsung',
+                            'Acer',
+                            'HP',
+                          ],
+                        );
+                        if (data != null) {
+                          context.read<AssetsFilterBloc>().add(
+                            AssetsFilters(brand: data),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
+      ),
+      const SliverToBoxAdapter(child: SizedBox(height: 10)),
+      const AllAssetsListPage(),
+    ];
+  }
 
-        // Asset List
-        ..._buildAssetListByTab(),
-        // SliverPadding(
-        //   padding: EdgeInsets.symmetric(horizontal: 0.04 * Responsive.getWidth(context)),
-        //   sliver: SliverList.separated(
-        //     itemCount: 5,
-        //     separatorBuilder: (context, index) =>
-        //         SizedBox(height: 0.02 * Responsive.getHeight(context)),
-        //     itemBuilder: (context, index) => const ActiveAssetsCard(
-        //       title: 'Desktop',
-        //       subTitle: '(AS100)',
-        //       image: 'assets/images/laptop.png',
-        //       brand: 'Acer',
-        //       srNo: 'KJABLDBLDUE',
-        //       handOverDate: '02-05-2025',
-        //     ),
-        //   ),
-        // ),
-
-        // Extra spacing at the bottom
-        SliverToBoxAdapter(
-          child: SizedBox(height: 0.02 * Responsive.getHeight(context)),
+  Widget DropDownTextField(
+    BuildContext context, {
+    required String title,
+    required VoidCallback onTap,
+  }) => GestureDetector(
+    onTap: onTap,
+    child: Container(
+      padding: EdgeInsets.symmetric(
+        vertical: 8 * Responsive.getResponsive(context),
+        horizontal: 6 * Responsive.getResponsive(context),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(
+          10 * Responsive.getResponsive(context),
         ),
-      ],
+        border: Border.all(color: AppTheme.getColor(context).secondary),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: CustomText(
+              isKey: true,
+              title,
+              fontWeight: FontWeight.w600,
+              color: AppTheme.getColor(context).secondary,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Icon(
+            Icons.keyboard_arrow_down,
+            color: AppTheme.getColor(context).secondary,
+          ),
+        ],
+      ),
     ),
   );
-
-  List<Widget> _buildAssetListByTab() {
-    switch (selectedIndex) {
-      case 0: // Active Assets
-        return [
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 0.04 * Responsive.getWidth(context),
-            ),
-            sliver: SliverList.separated(
-              itemCount: 8,
-              separatorBuilder: (_, __) =>
-                  SizedBox(height: 0.02 * Responsive.getHeight(context)),
-              itemBuilder: (_, index) => const ActiveAssetsCard(
-                title: 'Laptop',
-                subTitle: '(AS101)',
-                image: 'assets/images/laptop.png',
-                brand: 'Dell',
-                srNo: 'DELL123456',
-                handOverDate: '01-01-2024',
-              ),
-            ),
-          ),
-        ];
-
-      case 1: // Past Assets
-        return [
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 0.04 * Responsive.getWidth(context),
-            ),
-            sliver: SliverList.separated(
-              itemCount: 5,
-              separatorBuilder: (_, __) =>
-                  SizedBox(height: 0.02 * Responsive.getHeight(context)),
-              itemBuilder: (_, index) => const PastAssetsCard(
-                title: 'Desktop',
-                subTitle: '(AS101)',
-                image: 'assets/images/laptop.png',
-                brand: 'HP',
-                srNo: 'DELL123456',
-                handover: '02-05-2025',
-                takeover: '02-05-2025',
-              ),
-            ),
-          ),
-        ];
-
-      case 2: // All Assets
-        return [
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 0.04 * Responsive.getWidth(context),
-            ),
-            sliver: SliverList.separated(
-              itemCount: 10,
-              separatorBuilder: (_, __) =>
-                  SizedBox(height: 0.02 * Responsive.getHeight(context)),
-              itemBuilder: (_, index) {
-                if (index % 2 != 0) {
-                  return const AllAssetsCard(
-                    title: 'Desktop',
-                    subTitle: '(AS101)',
-                    image: 'assets/images/laptop.png',
-                    brand: 'HP',
-                    srNo: 'DELL123456',
-                    category: 'Desktop',
-                    createdBy: 'Parth Jadav',
-                    custodian: 'Arth Sorthiya',
-                  );
-                } else {
-                  return AllAssetsCard(
-                    title: 'Desktop',
-                    subTitle: '(AS101)',
-                    image: 'assets/images/laptop.png',
-                    brand: 'Dell',
-                    srNo: 'DELL123456',
-                    category: 'Desktop',
-                    createdBy: 'Parth Jadav',
-                    onViewDetailsTap: () => print('on Tap'),
-                  );
-                }
-              },
-            ),
-          ),
-        ];
-
-      default:
-        return [];
-    }
-  }
 }
 
 class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
@@ -275,3 +306,96 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(covariant _SliverTabBarDelegate oldDelegate) =>
       child != oldDelegate.child || height != oldDelegate.height;
 }
+
+
+
+
+  // List<Widget> _buildAssetListByTab(BuildContext context) {
+  //   switch (context.watch<AssetsTabBloc>().state.selectedIndex) {
+  //     case 0: // Active Assets
+  //       return [const AssetsListPage()];
+
+  //     case 1: // Past Assets
+  //       return [const PastAssetsListPage()];
+
+  //     case 2: // All Assets
+  //       return [
+  //         SliverPadding(
+  //           padding: EdgeInsets.symmetric(
+  //             horizontal: 0.04 * Responsive.getWidth(context),
+  //           ),
+  //           sliver: SliverPersistentHeader(
+  //             pinned: true,
+  //             delegate: _SliverTabBarDelegate(
+  //               height: 60,
+  //               child: Row(
+  //                 children: [
+  //                   Expanded(
+  //                     child: BlocBuilder<AssetsFilterBloc, AssetsFilterState>(
+  //                       builder: (context, state) => DropDownButton(
+  //                         context,
+  //                         title: state.category, //'All Category',
+  //                         onTap: () async {
+  //                           final data = await showAssetsBottomSheet(
+  //                             context: context,
+  //                             heading: 'Select Category',
+  //                             dataList: const [
+  //                               'All Category',
+  //                               'Desktop',
+  //                               'Laptop',
+  //                               'Mobile',
+  //                               'Tab',
+  //                               'Test Assets',
+  //                             ],
+  //                           );
+  //                           // log('Selected category: $data');
+  //                           if (data != null) {
+  //                             context.read<AssetsFilterBloc>().add(
+  //                               AssetsFilters(category: data),
+  //                             );
+  //                           }
+  //                         },
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   SizedBox(width: 0.06 * Responsive.getWidth(context)),
+  //                   Expanded(
+  //                     child: BlocBuilder<AssetsFilterBloc, AssetsFilterState>(
+  //                       builder: (context, state) => DropDownButton(
+  //                         context,
+  //                         title: state.brand, // 'All Brand',
+  //                         onTap: () async {
+  //                           final data = await showAssetsBottomSheet(
+  //                             context: context,
+  //                             heading: 'Select Brand',
+  //                             dataList: const [
+  //                               'All Brand',
+  //                               'Apple',
+  //                               'Asus',
+  //                               'Samsung',
+  //                               'Acer',
+  //                               'HP',
+  //                             ],
+  //                           );
+  //                           // log('Selected category: $data');
+  //                           if (data != null) {
+  //                             context.read<AssetsFilterBloc>().add(
+  //                               AssetsFilters(brand: data),
+  //                             );
+  //                           }
+  //                         },
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //         const SliverToBoxAdapter(child: SizedBox(height: 10)),
+  //         const AllAssetsListPage(),
+  //       ];
+  //     default:
+  //       return [];
+  //   }
+  // }
