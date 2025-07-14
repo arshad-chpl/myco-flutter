@@ -71,10 +71,10 @@ class _VisitWithState extends State<VisitWith> {
         padding: EdgeInsets.only(
           left: 20 *  Responsive.getResponsiveText(context),
           right: 20 *  Responsive.getResponsiveText(context),
-          top: 20 *  Responsive.getResponsiveText(context),
           bottom: 5 *  Responsive.getResponsiveText(context),
+          top: 5 *  Responsive.getResponsiveText(context),
         ),
-        height: Responsive.getHeight(context) * 0.97,
+        height: Responsive.getHeight(context) * 0.95,
         width: Responsive.getWidth(context) * 1,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -85,6 +85,7 @@ class _VisitWithState extends State<VisitWith> {
               children: [
                 CustomText(
                   'visit_with',
+                fontSize: Responsive.getDashboardResponsiveText(context) *20 ,
                 isKey: true,
                   fontWeight: FontWeight.bold,
                   color: AppTheme.getColor(context).onSurface,
@@ -103,9 +104,9 @@ class _VisitWithState extends State<VisitWith> {
               boarderRadius: 10,
               contentPadding: EdgeInsets.symmetric(vertical: 2 *  Responsive.getResponsiveText(context)),
              prefix: SvgPicture.asset(AppAssets.Search,fit: BoxFit.scaleDown,),
-              typingtextStyle: TextStyle(fontSize: 14 *  Responsive.getResponsiveText(context)),
+              typingtextStyle: TextStyle(fontSize: 15 *  Responsive.getResponsiveText(context)),
               hintTextStyle: TextStyle(
-                fontSize: 15 *  Responsive.getResponsiveText(context),
+                fontSize: 16 *  Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).outline,
               ),
               textAlignment: TextAlign.start,
@@ -129,8 +130,8 @@ class _VisitWithState extends State<VisitWith> {
                   onTap: () async {
                     final selectedId = await showCustomSimpleBottomSheet(
                       context: context,
-                      btnTitle: 'ADD',
-                      heading: 'Select Branch',
+                      btnTitle: 'add',
+                      heading: 'select_branch',
                       dataList: branches,
                     );
                     if (selectedId != null) {
@@ -145,9 +146,9 @@ class _VisitWithState extends State<VisitWith> {
                   },
                 ),
                 //Tag input field for branches
-                TagInputField(
+                CustomTagInputField(
                   tags: _branchTags,
-                  hint: "Branch",
+                  hint: 'block',
                   onAdd: (value) {
                     final cleanValue = value.replaceAll(',', '').trim();
                     if (cleanValue.isNotEmpty &&
@@ -162,23 +163,24 @@ class _VisitWithState extends State<VisitWith> {
                       _branchTags.remove(tag);
                     });
                   },
-                  onarrowbtn: () async {
-                    final selectedId = await showCustomSimpleBottomSheet(
-                      context: context,
-                      btnTitle: 'ADD',
-                      heading: 'Select Branch',
-                      dataList: branches,
+                  onArrowTap: () async {
+                  final selectedId = await showCustomSimpleBottomSheet(
+                    context: context,
+                    btnTitle: 'add',
+                    heading: 'select_branch',
+                    dataList: branches,
+                  );
+                  if (selectedId != null) {
+                    final selectedMap = branches.firstWhere(
+                          (e) => e['id'] == selectedId,
+                      orElse: () => {'id': '', 'name': ''},
                     );
-                    if (selectedId != null) {
-                      final selectedMap = branches.firstWhere(
-                        (e) => e['id'] == selectedId,
-                        orElse: () => {'id': '', 'name': ''},
-                      );
-                      setState(() {
-                        _branchTags.add(selectedMap['name'] ?? '');
-                      });
-                    }
-                  },
+                    setState(() {
+                      _branchTags.add(selectedMap['name'] ?? '');
+                    });
+                  }
+
+                },
                 ),
               ],
             ),
@@ -192,9 +194,9 @@ class _VisitWithState extends State<VisitWith> {
                   onTap: () async {
                     final selectedId = await showCustomSimpleBottomSheet(
                       context: context,
-                      heading: 'Select Department',
+                      heading: 'select_department',
                       dataList: Department,
-                      btnTitle: 'ADD',
+                      btnTitle: 'add',
                     );
                     if (selectedId != null) {
                       final selectedMap = Department.firstWhere(
@@ -208,9 +210,26 @@ class _VisitWithState extends State<VisitWith> {
                   },
                 ),
                 //Tag input field for department
-                TagInputField(
+                CustomTagInputField(
+                  onArrowTap: () async{
+                    final selectedId = await showCustomSimpleBottomSheet(
+                      context: context,
+                      heading: 'select_department',
+                      dataList: Department,
+                      btnTitle: 'add',
+                    );
+                    if (selectedId != null) {
+                      final selectedMap = Department.firstWhere(
+                            (e) => e['id'] == selectedId,
+                        orElse: () => {'id': '', 'name': ''},
+                      );
+                      setState(() {
+                        _departmentTags.add(selectedMap['name'] ?? '');
+                      });
+                    }
+                  },
                   tags: _departmentTags,
-                  hint: 'Department',
+                  hint: 'department',
                   onAdd: (value) {
                     final cleanValue = value.replaceAll(',', '').trim();
                     if (cleanValue.isNotEmpty &&
@@ -224,23 +243,6 @@ class _VisitWithState extends State<VisitWith> {
                     setState(() {
                       _departmentTags.remove(tag);
                     });
-                  },
-                  onarrowbtn: () async {
-                    final selectedId = await showCustomSimpleBottomSheet(
-                      context: context,
-                      heading: 'Select Department',
-                      dataList: Department,
-                      btnTitle: 'ADD',
-                    );
-                    if (selectedId != null) {
-                      final selectedMap = Department.firstWhere(
-                        (e) => e['id'] == selectedId,
-                        orElse: () => {'id': '', 'name': ''},
-                      );
-                      setState(() {
-                        _departmentTags.add(selectedMap['name'] ?? '');
-                      });
-                    }
                   },
                 ),
               ],
@@ -294,7 +296,7 @@ class _VisitWithState extends State<VisitWith> {
             Align(
               alignment: Alignment.bottomCenter,
               child: MyCoButton(
-                title: 'ADD',
+                title: 'add',
                 boarderRadius: 50,
                 height: 0.05 * Responsive.getHeight(context),
                 isShadowBottomLeft: true,

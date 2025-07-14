@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -31,6 +32,7 @@ Future<String?> showCustomSimpleBottomSheet({
 class _CustomSimpleBottomSheet extends StatefulWidget {
   final List<Map<String, String>> dataList;
   final String heading;
+  final bool isKey;
   final String? selectedId;
   final String? searchHint;
   final String? btnTitle;
@@ -43,6 +45,7 @@ class _CustomSimpleBottomSheet extends StatefulWidget {
     this.searchHint,
     this.btnTitle,
     this.icon,
+    this.isKey = false,
   });
 
   @override
@@ -68,9 +71,9 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
       filteredList = widget.dataList
           .where(
             (item) => (item['name'] ?? '').toLowerCase().contains(
-              query.toLowerCase(),
-            ),
-          )
+          query.toLowerCase(),
+        ),
+      )
           .toList();
     });
   }
@@ -93,7 +96,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
             if (widget.heading.isNotEmpty)
               Expanded(
                 child: CustomText(
-                  widget.heading,
+                  LanguageManager().get(widget.heading),
                   fontWeight: FontWeight.w700,
                   fontSize: 18 * Responsive.getResponsiveText(context),
                   color: AppColors.textPrimary,
@@ -196,7 +199,9 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
 
         // Submit button
         MyCoButton(
-          title: widget.btnTitle ?? 'Select',
+
+          title: LanguageManager().get(widget.btnTitle ?? 'Submit'),
+          // title: widget.btnTitle ?? 'Select',
           boarderRadius: 50,
           height: 0.05 * Responsive.getHeight(context),
           isShadowBottomLeft: true,

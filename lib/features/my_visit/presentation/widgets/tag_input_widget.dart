@@ -1,110 +1,106 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 
-class TagInputField extends StatefulWidget {
+class CustomTagInputField extends StatefulWidget {
   final List<String> tags;
   final String hint;
   final Function(String) onAdd;
   final Function(String) onRemove;
-  final Future<void> Function()? onarrowbtn;
+  final Future<void> Function()? onArrowTap;
 
-  const TagInputField({
+  const CustomTagInputField({
     required this.tags,
     required this.hint,
     required this.onAdd,
     required this.onRemove,
-    required this.onarrowbtn,
+    required this.onArrowTap,
     Key? key,
   }) : super(key: key);
 
   @override
-  State<TagInputField> createState() => _TagInputFieldState();
+  State<CustomTagInputField> createState() => _CustomTagInputFieldState();
 }
 
-class _TagInputFieldState extends State<TagInputField> {
+class _CustomTagInputFieldState extends State<CustomTagInputField> {
   @override
-  Widget build(BuildContext context) => Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      margin: const EdgeInsets.only(top: 6),
+  Widget build(BuildContext context) {
+    final responsive = Responsive.getResponsive(context);
+    final responsiveText = Responsive.getResponsiveText(context);
+    final themeColor = AppTheme.getColor(context);
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: responsive * 9, vertical: responsive * 9),
+      margin: EdgeInsets.only(top: responsive * 6),
       decoration: BoxDecoration(
-        border: Border.all(color:  AppTheme.getColor(context).outline),
-        borderRadius: BorderRadius.circular(
-          Responsive.getResponsive(context) * 8,
-        ),
+        border: Border.all(color: themeColor.outline),
+        borderRadius: BorderRadius.circular(responsive * 8),
         color: Colors.white,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Wrap(
-              spacing: 3,
+              spacing: 4,
               runSpacing: 4,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 ...widget.tags.map(
-                  (tag) => Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      decoration: BoxDecoration(
-                        color: AppTheme.getColor(context).primary.withAlpha(30),
-                        borderRadius: BorderRadius.circular(
-                          Responsive.getResponsive(context) * 10,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              tag,
-                              style: TextStyle(
-                                color: AppTheme.getColor(context).primary,
-                                fontSize:
-                                    Responsive.getResponsiveText(context) * 14,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      (tag) => Container(
+                    padding: EdgeInsets.symmetric(horizontal: responsive * 9),
+                    decoration: BoxDecoration(
+                      color: themeColor.primary.withAlpha(30),
+                      borderRadius: BorderRadius.circular(responsive * 10),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(responsive * 3),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            tag,
+                            style: TextStyle(
+                              color: themeColor.primary,
+                              fontSize: responsiveText * 14,
+                              fontWeight: FontWeight.bold,
                             ),
-                            const SizedBox(width: 8),
-                            GestureDetector(
-                              onTap: () {
-                                widget.onRemove(tag);
-                                setState(() {});
-                              },
-                              child: Icon(
-                                Icons.close,
-                                size: Responsive.getResponsiveText(context) * 14,
-                                color: AppTheme.getColor(context).primary,
-                              ),
+                          ),
+                          SizedBox(width: responsive * 9),
+                          GestureDetector(
+                            onTap: () {
+                              widget.onRemove(tag);
+                              setState(() {});
+                            },
+                            child: Icon(
+                              Icons.close,
+                              size: responsive * 14,
+                              color: themeColor.primary,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
                 ConstrainedBox(
                   constraints: BoxConstraints(
-                    minWidth: Responsive.getResponsiveText(context) * 14,
-                    maxWidth: 120,
+                    minWidth: responsive * 14,
+                    maxWidth: responsive * 120,
                   ),
                   child: TextField(
                     readOnly: true,
                     onTap: () async {
-                      if (widget.onarrowbtn != null) {
-                        await widget.onarrowbtn!();
+                      if (widget.onArrowTap != null) {
+                        await widget.onArrowTap!();
                       }
                     },
                     onSubmitted: widget.onAdd,
                     onChanged: (val) {
                       if (val.endsWith(',')) {
-                        widget.onAdd(val);
+                        widget.onAdd(val.trim().replaceAll(',', ''));
                       }
                     },
                     maxLines: null,
@@ -112,18 +108,20 @@ class _TagInputFieldState extends State<TagInputField> {
                     decoration: InputDecoration(
                       isDense: true,
                       border: InputBorder.none,
-                      hintText: widget.tags.isEmpty ? widget.hint : '',
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 5,
-                        horizontal: 6,
+                      hintText: widget.tags.isEmpty
+                          ? LanguageManager().get(widget.hint)
+                          : '',
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: responsive * 5,
+                        horizontal: responsive * 6,
                       ),
                       hintStyle: TextStyle(
-                        color: AppTheme.getColor(context).outline,
-                        fontSize: Responsive.getResponsiveText(context) * 12,
+                        color: themeColor.outline,
+                        fontSize: responsiveText * 12,
                       ),
                     ),
                     style: TextStyle(
-                      fontSize: Responsive.getResponsiveText(context) * 16,
+                      fontSize: responsiveText * 16,
                     ),
                   ),
                 ),
@@ -131,18 +129,19 @@ class _TagInputFieldState extends State<TagInputField> {
             ),
           ),
           GestureDetector(
+            onTap: () async {
+              if (widget.onArrowTap != null) {
+                await widget.onArrowTap!();
+              }
+            },
             child: Icon(
               Icons.keyboard_arrow_down,
               color: AppColors.primary,
-              size: Responsive.getResponsiveText(context) * 30,
+              size: responsiveText * 30,
             ),
-            onTap: () async {
-              if (widget.onarrowbtn != null) {
-                await widget.onarrowbtn!();
-              }
-            },
           ),
         ],
       ),
     );
+  }
 }

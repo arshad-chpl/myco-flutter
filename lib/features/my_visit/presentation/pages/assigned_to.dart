@@ -155,9 +155,9 @@ class _VisitWithState extends State<AssignedTo> {
                     },
                   ),
                   //Tag input field for branches
-                  TagInputField(
+                  CustomTagInputField(
                     tags: _branchTags,
-                    hint: "Branch",
+                    hint: 'block',
                     onAdd: (value) {
                       final cleanValue = value.replaceAll(',', '').trim();
                       if (cleanValue.isNotEmpty &&
@@ -172,22 +172,23 @@ class _VisitWithState extends State<AssignedTo> {
                         _branchTags.remove(tag);
                       });
                     },
-                    onarrowbtn: () async {
+                    onArrowTap: () async {
                       final selectedId = await showCustomSimpleBottomSheet(
                         context: context,
-                        btnTitle: 'ADD',
-                        heading: 'Select Branch',
+                        btnTitle: 'add',
+                        heading: 'select_branch',
                         dataList: branches,
                       );
                       if (selectedId != null) {
                         final selectedMap = branches.firstWhere(
-                          (e) => e['id'] == selectedId,
+                              (e) => e['id'] == selectedId,
                           orElse: () => {'id': '', 'name': ''},
                         );
                         setState(() {
                           _branchTags.add(selectedMap['name'] ?? '');
                         });
                       }
+
                     },
                   ),
                 ],
@@ -218,9 +219,26 @@ class _VisitWithState extends State<AssignedTo> {
                     },
                   ),
                   //Tag input field for department
-                  TagInputField(
+                  CustomTagInputField(
+                    onArrowTap: () async{
+                      final selectedId = await showCustomSimpleBottomSheet(
+                        context: context,
+                        heading: 'select_department',
+                        dataList: Department,
+                        btnTitle: 'add',
+                      );
+                      if (selectedId != null) {
+                        final selectedMap = Department.firstWhere(
+                              (e) => e['id'] == selectedId,
+                          orElse: () => {'id': '', 'name': ''},
+                        );
+                        setState(() {
+                          _departmentTags.add(selectedMap['name'] ?? '');
+                        });
+                      }
+                    },
                     tags: _departmentTags,
-                    hint: 'Department',
+                    hint: 'department',
                     onAdd: (value) {
                       final cleanValue = value.replaceAll(',', '').trim();
                       if (cleanValue.isNotEmpty &&
@@ -234,23 +252,6 @@ class _VisitWithState extends State<AssignedTo> {
                       setState(() {
                         _departmentTags.remove(tag);
                       });
-                    },
-                    onarrowbtn: () async {
-                      final selectedId = await showCustomSimpleBottomSheet(
-                        context: context,
-                        heading: 'Select Department',
-                        dataList: Department,
-                        btnTitle: 'ADD',
-                      );
-                      if (selectedId != null) {
-                        final selectedMap = Department.firstWhere(
-                          (e) => e['id'] == selectedId,
-                          orElse: () => {'id': '', 'name': ''},
-                        );
-                        setState(() {
-                          _departmentTags.add(selectedMap['name'] ?? '');
-                        });
-                      }
                     },
                   ),
                 ],

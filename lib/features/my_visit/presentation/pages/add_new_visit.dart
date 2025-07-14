@@ -59,7 +59,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
     ),
 
     body: Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding:  EdgeInsets.all(20.0),
       child: SingleChildScrollView(
         child: Column(
           spacing: 15 * Responsive.getResponsive(context),
