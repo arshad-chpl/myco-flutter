@@ -5,7 +5,9 @@ abstract class LanguageEvent {}
 class FetchLanguages extends LanguageEvent {}
 
 class SelectLanguage extends LanguageEvent {
-  final Language selectedLanguage;
+  final Language? selectedLanguage;
 
-  SelectLanguage(this.selectedLanguage);
+  SelectLanguage({this.selectedLanguage});
 }
+
+class LoadLanguageToPreferences extends LanguageEvent {}

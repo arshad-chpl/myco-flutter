@@ -29,7 +29,9 @@ void showCustomEmailVerificationSheet({
       ? showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            contentPadding: EdgeInsets.all(0 * getResponsive(context)),
+            contentPadding: EdgeInsets.all(
+              0 * Responsive.getResponsive(context),
+            ),
             backgroundColor: AppTheme.getColor(context).onPrimary,
             content: _EmailVerificationContent(
               emailAddress: emailAddress,
@@ -46,7 +48,7 @@ void showCustomEmailVerificationSheet({
               isShadowTopRight: isShadowTopRight,
               isShadowBottomRight: isShadowBottomRight,
               isShadowBottomLeft: isShadowBottomLeft,
-              otpTextStyle:otpTextStyle,
+              otpTextStyle: otpTextStyle,
             ),
           ),
         )
@@ -56,7 +58,7 @@ void showCustomEmailVerificationSheet({
           isScrollControlled: true,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
-              top: Radius.circular(24 * getResponsive(context)),
+              top: Radius.circular(24 * Responsive.getResponsive(context)),
             ),
           ),
           builder: (context) => _EmailVerificationContent(
@@ -74,7 +76,7 @@ void showCustomEmailVerificationSheet({
             isShadowTopRight: isShadowTopRight,
             isShadowBottomRight: isShadowBottomRight,
             isShadowBottomLeft: isShadowBottomLeft,
-            otpTextStyle:otpTextStyle,
+            otpTextStyle: otpTextStyle,
           ),
         );
 }
@@ -130,31 +132,33 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
       children: [
         Padding(
           padding: EdgeInsets.only(
-            top: 48 * getResponsive(context),
-            left: 25 * getResponsive(context),
-            right: 25 * getResponsive(context),
-            bottom: mediaQuery.viewInsets.bottom + 16 * getResponsive(context),
+            top: 48 * Responsive.getResponsive(context),
+            left: 25 * Responsive.getResponsive(context),
+            right: 25 * Responsive.getResponsive(context),
+            bottom:
+                mediaQuery.viewInsets.bottom +
+                16 * Responsive.getResponsive(context),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: .016 * getHeight(context)),
+              SizedBox(height: .016 * Responsive.getHeight(context)),
               CustomText(
                 widget.title ?? 'Email Verification Sent!',
-                fontSize: 22 * getResponsiveText(context),
+                fontSize: 22 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurface,
                 fontWeight: FontWeight.w700,
               ),
-              SizedBox(height: .008 * getHeight(context)),
+              SizedBox(height: .008 * Responsive.getHeight(context)),
               CustomText(
                 widget.description ??
                     'A verification code will be sent to the email${widget.emailAddress} for your account verification process.',
                 textAlign: TextAlign.left,
                 fontWeight: FontWeight.w500,
-                fontSize: 16 * getResponsiveText(context),
+                fontSize: 16 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurfaceVariant,
               ),
-              SizedBox(height: .024 * getHeight(context)),
+              SizedBox(height: .024 * Responsive.getHeight(context)),
               OTPInputField(
                 length: widget.length,
                 onCompleted: (_) {},
@@ -165,24 +169,26 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                 },
                 otpTextStyle: widget.otpTextStyle,
               ),
-              SizedBox(height: .012 * getHeight(context)),
+              SizedBox(height: .012 * Responsive.getHeight(context)),
               // timer
               CustomText(
                 '00:25',
-                fontSize: 18 * getResponsiveText(context),
+                fontSize: 18 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurface,
                 fontWeight: FontWeight.w600,
               ),
-              SizedBox(height: .008 * getHeight(context)),
+              SizedBox(height: .008 * Responsive.getHeight(context)),
               Padding(
-                padding: EdgeInsets.only(left: 8.0 * getResponsive(context)),
+                padding: EdgeInsets.only(
+                  left: 8.0 * Responsive.getResponsive(context),
+                ),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: RichText(
                     text: TextSpan(
                       style: TextStyle(
                         color: AppTheme.getColor(context).onSurface,
-                        fontSize: 18 * getResponsiveText(context),
+                        fontSize: 18 * Responsive.getResponsiveText(context),
                       ),
                       children: [
                         const TextSpan(
@@ -193,7 +199,8 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                           style: TextStyle(
                             color: AppTheme.getColor(context).primary,
                             fontWeight: FontWeight.w700,
-                            fontSize: 18 * getResponsiveText(context),
+                            fontSize:
+                                18 * Responsive.getResponsiveText(context),
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
@@ -206,11 +213,11 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                   ),
                 ),
               ),
-              SizedBox(height: .02 * getHeight(context)),
+              SizedBox(height: .02 * Responsive.getHeight(context)),
               RichText(
                 text: TextSpan(
                   style: TextStyle(
-                    fontSize: 18 * getResponsiveText(context),
+                    fontSize: 18 * Responsive.getResponsiveText(context),
                     color: AppTheme.getColor(context).onSurface,
                   ),
                   children: [
@@ -257,9 +264,9 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                   ],
                 ),
               ),
-              SizedBox(height: .02 * getHeight(context)),
+              SizedBox(height: .02 * Responsive.getHeight(context)),
               MyCoButton(
-                height: .05 * getHeight(context),
+                height: .05 * Responsive.getHeight(context),
                 onTap: currentOtp.length == widget.length
                     ? () {
                         widget.onVerifyButtonPressed();
@@ -268,43 +275,43 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                       }
                     : null,
                 title: 'Submit',
-                boarderRadius: 50 * getResponsive(context),
+                boarderRadius: 50 * Responsive.getResponsive(context),
                 isShadowBottomLeft: true,
               ),
-              SizedBox(height: .014 * getHeight(context)),
+              SizedBox(height: .014 * Responsive.getHeight(context)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomText(
                     'Sign in with different method ',
-                    fontSize: 18 * getResponsiveText(context),
+                    fontSize: 18 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w500,
                   ),
                   GestureDetector(
                     onTap: widget.onResend,
                     child: CustomText(
                       'Here',
-                      fontSize: 18 * getResponsiveText(context),
+                      fontSize: 18 * Responsive.getResponsiveText(context),
                       color: AppTheme.getColor(context).primary,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: .008 * getHeight(context)),
+              SizedBox(height: .008 * Responsive.getHeight(context)),
             ],
           ),
         ),
         Positioned(
-          top: -45 * getResponsive(context),
-          left: 0 * getResponsive(context),
-          right: 0 * getResponsive(context),
+          top: -45 * Responsive.getResponsive(context),
+          left: 0 * Responsive.getResponsive(context),
+          right: 0 * Responsive.getResponsive(context),
           child: Center(
             child: MyCoButton(
               onTap: () {},
               title: '',
-              height: 0.088 * getHeight(context),
-              width: 0.21 * getWidth(context),
+              height: 0.088 * Responsive.getHeight(context),
+              width: 0.21 * Responsive.getWidth(context),
               isShadowBottomLeft: true,
               image: widget.imageUrl != null
                   ? Image.asset(
@@ -313,7 +320,7 @@ class _EmailVerificationContentState extends State<_EmailVerificationContent> {
                       width: widget.imageWidth,
                     )
                   : Image.asset(
-                      'visit/images/chpl_logo.png',
+                      'assets/images/chpl_logo.png',
                       height: widget.imageHeight,
                       width: widget.imageWidth,
                     ),
@@ -419,7 +426,7 @@ class _OTPInputFieldState extends State<OTPInputField> {
                 widget.otpTextStyle ??
                 TextStyle(
                   color: AppTheme.getColor(context).onSurface,
-                  fontSize: 30 * getResponsiveText(context),
+                  fontSize: 30 * Responsive.getResponsiveText(context),
                 ),
             inputFormatters:
                 widget.inputFormaters ??
@@ -430,13 +437,13 @@ class _OTPInputFieldState extends State<OTPInputField> {
                   hintText: '0',
                   hintStyle: TextStyle(
                     color: AppTheme.getColor(context).outlineVariant,
-                    fontSize: 30 * getResponsiveText(context),
+                    fontSize: 30 * Responsive.getResponsiveText(context),
                   ),
                   counterText: '',
 
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
-                      8 * getResponsive(context),
+                      8 * Responsive.getResponsive(context),
                     ),
                     borderSide: BorderSide(
                       color: AppTheme.getColor(context).outline,
@@ -444,7 +451,7 @@ class _OTPInputFieldState extends State<OTPInputField> {
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
-                      8 * getResponsive(context),
+                      8 * Responsive.getResponsive(context),
                     ),
                     borderSide: BorderSide(
                       color: AppTheme.getColor(context).outline,
@@ -452,14 +459,14 @@ class _OTPInputFieldState extends State<OTPInputField> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
-                      8 * getResponsive(context),
+                      8 * Responsive.getResponsive(context),
                     ),
                     borderSide: BorderSide(
                       color: AppTheme.getColor(context).outline,
                     ),
                   ),
                   contentPadding: EdgeInsets.symmetric(
-                    vertical: 10 * getResponsive(context),
+                    vertical: 10 * Responsive.getResponsive(context),
                   ),
                 ),
             onChanged: (val) => _onChanged(index, val),

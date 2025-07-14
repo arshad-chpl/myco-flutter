@@ -27,6 +27,14 @@ class LabeledDropdown<T> extends StatelessWidget {
   final double? popupElevation;
   final double? borderRadius;
   final double? spacing;
+  final Color? textColor;
+  final FontWeight? textFontweight;
+  final double? textFontSize;
+  final TextDecoration? textDecoration;
+  final Color? textDecorationColor;
+  final TextAlign? textAlign;
+  final int? textMaxLine;
+  final TextOverflow? textOverflow;
 
   const LabeledDropdown({
     super.key,
@@ -51,58 +59,63 @@ class LabeledDropdown<T> extends StatelessWidget {
     this.popupShape,
     this.colorBackground,
     this.popupElevation,
-    this.borderRadius,
+    this.borderRadius, this.textColor, this.textFontweight, this.textFontSize, this.textDecoration, this.textDecorationColor, this.textAlign, this.textMaxLine, this.textOverflow,
   });
 
   @override
   Widget build(BuildContext context) => Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        children: [
+          CustomText(
+            label,
+            color:textColor?? AppColors.textGray,
+            fontSize:textFontSize?? 16 * Responsive.getResponsiveText(context),
+            fontWeight:textFontweight?? FontWeight.bold,
+            decoration: textDecoration,
+            textAlign: textAlign,
+            decorationColor: textDecorationColor,
+            maxLines: textMaxLine,
+            overflow: textOverflow,
+          ),
+          if (isRequired)
             CustomText(
-              label,
-                color: AppColors.textGray,
-                fontSize: 16 * getResponsiveText(context),
-                fontWeight: FontWeight.bold,
+              "*",
+              color: AppColors.red,
+              fontSize: 20 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.bold,
             ),
-            if (isRequired)
-              CustomText(
-                "*",
-                  color: AppColors.red,
-                  fontSize: 20 * getResponsiveText(context),
-                  fontWeight: FontWeight.bold,
-              ),
-          ],
-        ),
-        SizedBox(height: 0.005 * getHeight(context)),
-        CustomPopupDropdownStyled<T>(
-          prefix: prefix,
-          prefixImage: prefixImage,
-          height: height ?? 0.06 * getHeight(context),
-          width: width ?? 0.9 * getWidth(context),
-          hintText: hintText,
-          hintTextStyle:
-              hintTextStyle ??
-              TextStyle(
-                fontSize: 18 * getResponsiveText(context),
-                color: AppColors.gray,
-                fontWeight: FontWeight.bold,
-              ),
-          items: items,
-          selectedItem: selectedItem,
-          itemToString: itemToString,
-          onChanged: onChanged,
-          border: border,
-          prefixImageHeight: prefixImageHeight,
-          prefixImageWidth: prefixImageWidth,
-          colorBackground: colorBackground,
-          borderRadius: borderRadius,
-          onTapPrefix: onTapPrefix,
-          popupElevation: popupElevation,
-          popupShape: popupShape,
-          useRadioList: useRadioList??false,
-        ),
-      ],
-    );
+        ],
+      ),
+      SizedBox(height: 0.005 * Responsive.getHeight(context)),
+      CustomPopupDropdownStyled<T>(
+        prefix: prefix,
+        prefixImage: prefixImage,
+        height: height ?? 0.06 * Responsive.getHeight(context),
+        width: width ?? 0.9 * Responsive.getWidth(context),
+        hintText: hintText,
+        hintTextStyle:
+            hintTextStyle ??
+            TextStyle(
+              fontSize: 18 * Responsive.getResponsiveText(context),
+              color: AppColors.gray,
+              fontWeight: FontWeight.bold,
+            ),
+        items: items,
+        selectedItem: selectedItem,
+        itemToString: itemToString,
+        onChanged: onChanged,
+        border: border,
+        prefixImageHeight: prefixImageHeight,
+        prefixImageWidth: prefixImageWidth,
+        colorBackground: colorBackground,
+        borderRadius: borderRadius,
+        onTapPrefix: onTapPrefix,
+        popupElevation: popupElevation,
+        popupShape: popupShape,
+        useRadioList: useRadioList ?? false,
+      ),
+    ],
+  );
 }

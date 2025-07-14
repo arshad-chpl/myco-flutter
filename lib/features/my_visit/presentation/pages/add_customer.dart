@@ -54,22 +54,25 @@ class _AddCustomerState extends State<AddCustomer> {
     appBar: CustomAppbar(
       leading: BackButton(
         style: ButtonStyle(
-          iconSize: WidgetStatePropertyAll(0.04 * getWidth(context)),
+          iconSize: WidgetStatePropertyAll(0.05 * Responsive.getWidth(context)),
         ),
       ),
-      backgroundColor: AppTheme.getColor(context).surface,
+      appBarBackgoundColor: AppTheme.getColor(context).surface,
       elevation: 0,
       title: CustomText(
         'Add Customer',
-        fontSize: 16 * getResponsiveText(context),
+        fontSize: 16 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
         color: AppTheme.getColor(context).onSurface,
       ),
     ),
     body: SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 32.0 * getResponsive(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 15.0 * Responsive.getResponsive(context),
+      ),
+
       child: Column(
-        spacing: 16 * getResponsive(context),
+        spacing: 16 * Responsive.getResponsive(context),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Customer Company Name
@@ -100,17 +103,17 @@ class _AddCustomerState extends State<AddCustomer> {
               CustomText(
                 'Contact Person Mobile Number',
                 fontWeight: FontWeight.w700,
-                fontSize: 12 * getResponsiveText(context),
+                fontSize: 12 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurfaceVariant,
               ),
-              SizedBox(height: 0.005 * getHeight(context)),
+              SizedBox(height: 0.005 * Responsive.getHeight(context)),
               PhoneField(
                 selectedCountry: selectedCountry1,
                 countries: countryMap.keys.toList(),
                 onCountryChanged: (_) {},
                 controller: phoneController1,
                 countryDialCodes: countryMap,
-                borderRadius: 5 * getResponsive(context),
+                borderRadius: 5 * Responsive.getResponsive(context),
                 textFieldHeight: 47,
                 borderColor: AppTheme.getColor(context).outline,
                 hintText: '000 00 000 00',
@@ -118,8 +121,8 @@ class _AddCustomerState extends State<AddCustomer> {
                 hintTextStyle: TextStyle(
                   color: AppTheme.getColor(context).outline,
                 ),
-                countryFontSize: 16 * getResponsiveText(context),
-                countryCodeFontSize: 14 * getResponsiveText(context),
+                countryFontSize: 16 * Responsive.getResponsiveText(context),
+                countryCodeFontSize: 14 * Responsive.getResponsiveText(context),
                 countryCodeTextStyle: TextStyle(
                   color: AppTheme.getColor(context).outline,
                 ),
@@ -134,17 +137,17 @@ class _AddCustomerState extends State<AddCustomer> {
               CustomText(
                 'Alt. Phone Number',
                 fontWeight: FontWeight.w700,
-                fontSize: 12 * getResponsiveText(context),
+                fontSize: 12 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurfaceVariant,
               ),
-              SizedBox(height: 0.005 * getHeight(context)),
+              SizedBox(height: 0.005 * Responsive.getHeight(context)),
               PhoneField(
                 selectedCountry: selectedCountry2,
                 countries: countryMap.keys.toList(),
                 onCountryChanged: (_) {},
                 controller: phoneController2,
                 countryDialCodes: countryMap,
-                borderRadius: 5 * getResponsive(context),
+                borderRadius: 5 * Responsive.getResponsive(context),
                 textFieldHeight: 47,
                 borderColor: AppTheme.getColor(context).outline,
                 hintText: '000 00 000 00',
@@ -152,8 +155,8 @@ class _AddCustomerState extends State<AddCustomer> {
                 hintTextStyle: TextStyle(
                   color: AppTheme.getColor(context).outline,
                 ),
-                countryFontSize: 16 * getResponsiveText(context),
-                countryCodeFontSize: 14 * getResponsiveText(context),
+                countryFontSize: 16 * Responsive.getResponsiveText(context),
+                countryCodeFontSize: 14 * Responsive.getResponsiveText(context),
                 countryCodeTextStyle: TextStyle(
                   color: AppTheme.getColor(context).outline,
                 ),
@@ -210,7 +213,7 @@ class _AddCustomerState extends State<AddCustomer> {
           CommonTextField(
             'Select Location',
             'Select Location',
-            AppAssets.location,
+            AppAssets.locationVisit,
           ),
 
           // Address
@@ -228,20 +231,20 @@ class _AddCustomerState extends State<AddCustomer> {
                 onTap: () {},
                 iconPath: AppAssets.addButton,
               ),
-              SizedBox(height: 0.005 * getHeight(context)),
+              SizedBox(height: 0.005 * Responsive.getHeight(context)),
               CustomPopupDropdownStyled<String>(
                 items: cityList,
                 selectedItem: selectedCity,
                 hintText: 'State not assigned',
                 itemToString: (item) => item,
                 onChanged: (value, index) {},
-                borderRadius: 8 * getResponsive(context),
-                popupElevation: 6 * getResponsive(context),
-                spacing: 25 * getResponsive(context),
+                borderRadius: 8 * Responsive.getResponsive(context),
+                popupElevation: 6 * Responsive.getResponsive(context),
+                spacing: 25 * Responsive.getResponsive(context),
                 hintTextStyle: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: AppTheme.getColor(context).outline,
-                  fontSize: 14 * getResponsiveText(context),
+                  fontSize: 14 * Responsive.getResponsiveText(context),
                 ),
                 prefix: SvgPicture.asset(AppAssets.building),
                 border: Border.all(color: AppTheme.getColor(context).outline),
@@ -258,20 +261,20 @@ class _AddCustomerState extends State<AddCustomer> {
                 onTap: () {},
                 iconPath: AppAssets.addButton,
               ),
-              SizedBox(height: 0.005 * getHeight(context)),
+              SizedBox(height: 0.005 * Responsive.getHeight(context)),
               CustomPopupDropdownStyled<String>(
                 items: areaList,
                 selectedItem: selectedAreaList,
                 hintText: 'Select Area',
                 itemToString: (item) => item,
                 onChanged: (value, index) {},
-                borderRadius: 8 * getResponsive(context),
-                popupElevation: 6 * getResponsive(context),
-                spacing: 25 * getResponsive(context),
+                borderRadius: 8 * Responsive.getResponsive(context),
+                popupElevation: 6 * Responsive.getResponsive(context),
+                spacing: 25 * Responsive.getResponsive(context),
                 hintTextStyle: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: AppTheme.getColor(context).outline,
-                  fontSize: 14 * getResponsiveText(context),
+                  fontSize: 14 * Responsive.getResponsiveText(context),
                 ),
                 prefix: SvgPicture.asset(AppAssets.map),
                 border: Border.all(color: AppTheme.getColor(context).outline),
@@ -313,7 +316,7 @@ class _AddCustomerState extends State<AddCustomer> {
           CustomMediaPickerContainer(
             title: 'Shop Photo',
             titleColor: AppTheme.getColor(context).onSurfaceVariant,
-            titleFontSize: 12 * getResponsiveText(context),
+            titleFontSize: 12 * Responsive.getResponsiveText(context),
             imageTitle: 'Select Media',
             containerHeight: 100,
             multipleImage: 5,
@@ -323,21 +326,23 @@ class _AddCustomerState extends State<AddCustomer> {
             isGalleryShow: true,
             isDocumentShow: true,
             isCropImage: true,
-            imageTitleSize: 14 * getResponsiveText(context),
+            imageTitleSize: 14 * Responsive.getResponsiveText(context),
             imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
           ),
 
           //  space below media picker
-          SizedBox(height: 0.03 * getHeight(context)),
+          SizedBox(height: 0.03 * Responsive.getHeight(context)),
 
           // Submit button
           MyCoButton(
             onTap: () {},
             title: 'SUBMIT',
+            height: 20,
+            width: 55,
             isShadowBottomLeft: true,
-            boarderRadius: 50 * getResponsive(context),
+            boarderRadius: 50 * Responsive.getResponsive(context),
             textStyle: TextStyle(
-              fontSize: 20 * getResponsiveText(context),
+              fontSize: 20 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
               color: AppTheme.getColor(context).onPrimary,
             ),
@@ -362,18 +367,20 @@ class _AddCustomerState extends State<AddCustomer> {
   }) => LabeledTextField(
     label: label,
     hint: hint,
+    textColor: AppTheme.getColor(context).onSurfaceVariant,
+    textFontSize: 12 * Responsive.getResponsiveText(context),
     controller: controller,
     isReadOnly: readOnly,
+    heightFactor: 44,
     onClick: onTap,
-    boarderRadius: 8 * getResponsive(context),
+    boarderRadius: 8 * Responsive.getResponsive(context),
     hintTextStyle: TextStyle(
       fontWeight: FontWeight.w600,
       color: AppTheme.getColor(context).outline,
-      fontSize: 14 * getResponsiveText(context),
+      fontSize: 14 * Responsive.getResponsiveText(context),
     ),
-    contentPadding: EdgeInsets.symmetric(vertical: 12 * getResponsive(context)),
     textAlignment: TextAlign.start,
-    widthFactor: getWidth(context),
+    widthFactor: Responsive.getWidth(context),
     prefix: SvgPicture.asset(iconPath, fit: BoxFit.scaleDown),
     border: OutlineInputBorder(
       borderSide: BorderSide(color: AppTheme.getColor(context).outline),

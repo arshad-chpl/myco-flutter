@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/core/network/dio_provider.dart';
@@ -14,26 +13,63 @@ import 'package:myco_flutter/core/utils/util.dart';
 
 Future<void> initNetworkModule(GetIt sl) async {
   sl.registerLazySingleton(() => SafeApiCall(sl()));
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(Connectivity()));
 
-  PreferenceManager preference = sl<PreferenceManager>();
-  final userId = await preference.getUserId();
+  // final PreferenceManager preference = sl<PreferenceManager>();
+  // final userId = preference.getUserId();
+  // final companyId = await preference.getCompanyId();
+  // final userMobile = preference.getUserMobile();
+  // final baseUrl = await preference.getBaseUrl();
+  // final password = Util.getCurrentPassword(
+  //   companyId.toString(),
+  //   userId,
+  //   userMobile.toString(),
+  // );
+
+await refreshApiServiceCompany(sl);
+}
+
+Future<void> refreshApiServiceCompany(GetIt sl) async {
+  final preference = sl<PreferenceManager>();
   final companyId = await preference.getCompanyId();
-  final userMobile = await preference.getUserMobile();
+  
+  // TODO: currently static userID and Mobile, need to change later
+  final userId = preference.getUserId();
+  final userMobile = preference.getUserMobile();
   var baseUrl = await preference.getBaseUrl();
   final password = Util.getCurrentPassword(
     companyId.toString(),
     userId,
     userMobile.toString(),
   );
-  final credentials = base64Encode(utf8.encode('$userId:$password'));
-  sl.registerLazySingleton(() => createDio(credentials));
-  sl.registerLazySingleton(() => ApiClient(sl()));
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(Connectivity()));
+    final credentials = base64Encode(utf8.encode('$userId:$password'));
+    // final Dio dioWithAuth= createDio(credentials);
+  // sl.registerLazySingleton(() => createDio(credentials));
+  // sl.registerLazySingleton(() => ApiClient(sl()));
 
+  _registerOrReplace<Dio>(
+    createDio(credentials),
+    sl,
+    instanceName: VariableBag.dioWithAuth,
+  );
+  final dio = sl<Dio>(instanceName: VariableBag.dioWithAuth);
   _registerOrReplace<ApiClient>(
-    ApiClient(sl(), baseUrl: baseUrl ?? ''),
+    ApiClient(dio),
     sl,
     instanceName: VariableBag.masterAPICall,
+  );
+if (baseUrl==null) return;
+
+  _registerOrReplace<ApiClient>(
+    ApiClient(dio, baseUrl: baseUrl + VariableBag.residentApiEnd),
+    sl,
+    instanceName: VariableBag.residentApiNew,
+  );
+
+  _registerOrReplace<ApiClient>(
+    ApiClient(dio, baseUrl: baseUrl + VariableBag.subEnd),
+    sl,
+    instanceName: VariableBag.employeeMobileApi,
   );
 }
 

@@ -1,11 +1,10 @@
 import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-
-
 import 'package:url_launcher/url_launcher.dart';
 
 class MyCoTextfield extends StatefulWidget {
@@ -61,7 +60,6 @@ class MyCoTextfield extends StatefulWidget {
   final bool? alignLabelWithHint;
   final int? maxLines;
 
-
   const MyCoTextfield({
     super.key,
     this.labelText,
@@ -110,7 +108,10 @@ class MyCoTextfield extends StatefulWidget {
     this.decoration,
     this.textAlignVertical,
     this.alignLabelWithHint,
-    this.maxLines, this.suFixImage, this.suFixImageHeight, this.suFixImageWidth,
+    this.maxLines,
+    this.suFixImage,
+    this.suFixImageHeight,
+    this.suFixImageWidth,
   });
 
   @override
@@ -120,56 +121,56 @@ class MyCoTextfield extends StatefulWidget {
 class _MyCoTextfieldState extends State<MyCoTextfield> {
   @override
   Widget build(BuildContext context) => TextFieldFormMobile(
-        labelText: widget.labelText,
-        isSuffixIconOn: widget.isSuffixIconOn,
-        controller: widget.controller,
-        isLabelOn: widget.isLabelOn,
-        image1: widget.image1,
-        image2: widget.image2,
-        contentPadding: widget.contentPadding,
-        titleTextSize: widget.titleTextSize,
-        fontWeight: widget.fontWeight,
-        prefix: widget.prefix,
-        isReadOnly: widget.isReadOnly,
-        onClick: widget.onClick,
-        onSaved: widget.onSaved,
-        height: widget.height,
-        key: widget.key,
-        onTap1: widget.onTap1,
-        onTap2: widget.onTap2,
-        hintTextStyle: widget.hintTextStyle,
-        labelTextStyle: widget.labelTextStyle,
-        color: widget.color,
-        fillColor: widget.fillColor,
-        titleColor: widget.titleColor,
-        focusNode: widget.focusNode,
-        obscureText: widget.obscureText,
-        onChanged: widget.onChanged,
-        validator: widget.validator,
-        iconHeight: widget.iconHeight,
-        iconWidth: widget.iconWidth,
-        textInputType: widget.textInputType,
-        hintText: widget.hintText,
-        floatingLabelBehavior: widget.floatingLabelBehavior,
-        autoFocus: widget.autoFocus,
-        typingtextStyle: widget.typingtextStyle,
-        boarderRadius: widget.boarderRadius,
-        prefixImage: widget.preFixImage,
-        prefixImageHeight: widget.prefixImageHeight,
-        prefixImageWidth: widget.prefixImageWidth,
-        maxLenght: widget.maxLenght,
-        textAlignment: widget.textAlignment,
-        inputFormater: widget.inputFormater,
-        border: widget.border,
-        suffix: widget.suffix,
-        decoration: widget.decoration,
-        textAlignVertical: widget.textAlignVertical,
-        alignLabelWithHint: widget.alignLabelWithHint,
-        maxLines: widget.maxLines,
-        suFixImage: widget.suFixImage,
-        suFixImageHeight: widget.suFixImageHeight,
-        suFixImageWidth: widget.suFixImageWidth ,
-      );
+    labelText: widget.labelText,
+    isSuffixIconOn: widget.isSuffixIconOn,
+    controller: widget.controller,
+    isLabelOn: widget.isLabelOn,
+    image1: widget.image1,
+    image2: widget.image2,
+    contentPadding: widget.contentPadding,
+    titleTextSize: widget.titleTextSize,
+    fontWeight: widget.fontWeight,
+    prefix: widget.prefix,
+    isReadOnly: widget.isReadOnly,
+    onClick: widget.onClick,
+    onSaved: widget.onSaved,
+    height: widget.height,
+    key: widget.key,
+    onTap1: widget.onTap1,
+    onTap2: widget.onTap2,
+    hintTextStyle: widget.hintTextStyle,
+    labelTextStyle: widget.labelTextStyle,
+    color: widget.color,
+    fillColor: widget.fillColor,
+    titleColor: widget.titleColor,
+    focusNode: widget.focusNode,
+    obscureText: widget.obscureText,
+    onChanged: widget.onChanged,
+    validator: widget.validator,
+    iconHeight: widget.iconHeight,
+    iconWidth: widget.iconWidth,
+    textInputType: widget.textInputType,
+    hintText: widget.hintText,
+    floatingLabelBehavior: widget.floatingLabelBehavior,
+    autoFocus: widget.autoFocus,
+    typingtextStyle: widget.typingtextStyle,
+    boarderRadius: widget.boarderRadius,
+    prefixImage: widget.preFixImage,
+    prefixImageHeight: widget.prefixImageHeight,
+    prefixImageWidth: widget.prefixImageWidth,
+    maxLenght: widget.maxLenght,
+    textAlignment: widget.textAlignment ?? TextAlign.start,
+    inputFormater: widget.inputFormater,
+    border: widget.border,
+    suffix: widget.suffix,
+    decoration: widget.decoration,
+    textAlignVertical: widget.textAlignVertical,
+    alignLabelWithHint: widget.alignLabelWithHint,
+    maxLines: widget.maxLines,
+    suFixImage: widget.suFixImage,
+    suFixImageHeight: widget.suFixImageHeight,
+    suFixImageWidth: widget.suFixImageWidth,
+  );
 }
 
 class TextFieldFormMobile extends StatelessWidget {
@@ -282,35 +283,33 @@ class TextFieldFormMobile extends StatelessWidget {
     this.suFixImageHeight,
   });
 
-
-
-
-
-
-
-    @override
+  @override
   Widget build(BuildContext context) {
     bool isTablet(BuildContext context) =>
-      MediaQuery.of(context).size.width > 600;
-      final bool isTab = isTablet(context);
+        MediaQuery.of(context).size.width > 600;
+    final bool isTab = isTablet(context);
 
     if (isRichClickableTextMode == true) {
       return Container(
         height: height,
         width: width,
-        padding: contentPadding ?? EdgeInsets.all(8 * getResponsive(context)),
-        decoration: decoration ??
+        padding:
+            contentPadding ??
+            EdgeInsets.all(8 * Responsive.getResponsive(context)),
+        decoration:
+            decoration ??
             BoxDecoration(
-              color: fillColor ?? Colors.white,
+              color: fillColor ?? AppTheme.getColor(context).surfaceBright,
               border: Border.all(color: AppTheme.getColor(context).primary),
               borderRadius: BorderRadius.circular(
-                  boarderRadius ?? 7.0 * getResponsiveText(context)),
+                boarderRadius ?? 7.0 * Responsive.getResponsiveText(context),
+              ),
             ),
         child: Row(
           children: [
             if (prefix != null) ...[
               prefix!,
-              SizedBox(width: 0.008 * getWidth(context))
+              SizedBox(width: 0.008 * Responsive.getWidth(context)),
             ],
             Expanded(
               child: RichText(
@@ -318,7 +317,8 @@ class TextFieldFormMobile extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: clickableText ?? '',
-                      style: typingtextStyle ??
+                      style:
+                          typingtextStyle ??
                           AppTheme.getTextStyle(context).bodyMedium,
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
@@ -331,17 +331,14 @@ class TextFieldFormMobile extends StatelessWidget {
                             } else if (clickableText!.contains('@')) {
                               // Email
                               // Use Uri to encode email properly
-                              uri = Uri(
-                                scheme: 'mailto',
-                                path: clickableText,
-                              );
+                              uri = Uri(scheme: 'mailto', path: clickableText);
                             } else if (clickableText!.startsWith('http') ||
                                 clickableText!.startsWith('www')) {
                               // URL
                               final urlString =
                                   clickableText!.startsWith('http')
-                                      ? clickableText!
-                                      : 'https://${clickableText!}';
+                                  ? clickableText!
+                                  : 'https://${clickableText!}';
                               uri = Uri.tryParse(urlString);
                             }
 
@@ -383,109 +380,135 @@ class TextFieldFormMobile extends StatelessWidget {
       keyboardType: textInputType,
       textAlignVertical: textAlignVertical,
       maxLength: maxLenght,
-      textAlign: textAlignment ?? TextAlign.center,
+      textAlign: textAlignment ?? TextAlign.start,
       inputFormatters: inputFormater,
       decoration: InputDecoration(
         counterText: '',
         floatingLabelBehavior: floatingLabelBehavior,
         filled: true,
         alignLabelWithHint: alignLabelWithHint,
-        fillColor: fillColor ?? Colors.white,
-        border: border ??
+        fillColor: fillColor ?? AppTheme.getColor(context).surfaceBright,
+        border:
+            border ??
             OutlineInputBorder(
               borderSide: BorderSide(
-                  color: AppTheme.getColor(context).outline,
-                  width: 1.2 * getResponsive(context)),
+                color: AppTheme.getColor(context).outline,
+                width: 1.2 * Responsive.getResponsive(context),
+              ),
               borderRadius: BorderRadius.circular(
-                  boarderRadius ?? 7.0 * getResponsiveText(context)),
+                boarderRadius ?? 7.0 * Responsive.getResponsiveText(context),
+              ),
             ),
-        focusedBorder: border ??
+        focusedBorder:
+            border ??
             OutlineInputBorder(
               borderSide: BorderSide(
-                  color: AppTheme.getColor(context).primary,
-                  width: 0.002 * getWidth(context)),
+                color: AppTheme.getColor(context).primary,
+                width: 0.002 * Responsive.getWidth(context),
+              ),
               borderRadius: BorderRadius.circular(
-                  boarderRadius ?? 7.0 * getResponsive(context)),
+                boarderRadius ?? 7.0 * Responsive.getResponsive(context),
+              ),
             ),
-        enabledBorder: border ??
+        enabledBorder:
+            border ??
             OutlineInputBorder(
               borderSide: BorderSide(
-                  color: AppTheme.getColor(context).outline,
-                  width: 0.002 * getWidth(context)),
+                color: AppTheme.getColor(context).outline,
+                width: 0.002 * Responsive.getWidth(context),
+              ),
               borderRadius: BorderRadius.circular(
-                  boarderRadius ?? 7.0 * getResponsive(context)),
+                boarderRadius ?? 7.0 * Responsive.getResponsive(context),
+              ),
             ),
-        contentPadding: contentPadding ??
+        contentPadding:
+            contentPadding ??
             EdgeInsets.only(
-                top: 25 * getResponsive(context),
-                left: 12 * getResponsive(context),
-                right: 12 * getResponsive(context),
-                bottom: 16 * getResponsive(context)),
+              top: 25 * Responsive.getResponsive(context),
+              left: 12 * Responsive.getResponsive(context),
+              right: 12 * Responsive.getResponsive(context),
+              bottom: 16 * Responsive.getResponsive(context),
+            ),
         labelText: isLabelOn == true ? labelText : null,
         hintText: hintText,
-        hintStyle: hintTextStyle ??
-            AppTheme.getTextStyle(context)
-                .bodyLarge!
-                .copyWith(color: AppTheme.getColor(context).outline),
-        labelStyle: labelTextStyle ??
-            AppTheme.getTextStyle(context).bodySmall!.copyWith(
-                  color: AppTheme.getColor(context).primary,
-                ),
+        hintStyle:
+            hintTextStyle ??
+            AppTheme.getTextStyle(
+              context,
+            ).bodyLarge!.copyWith(color: AppTheme.getColor(context).outline),
+        labelStyle:
+            labelTextStyle ??
+            AppTheme.getTextStyle(
+              context,
+            ).bodySmall!.copyWith(color: AppTheme.getColor(context).primary),
         prefixIcon: (prefix != null)
             ? prefix
             : (prefixImage != null && prefixImage!.isNotEmpty)
-                ? GestureDetector(
-                    onTap: onTap1,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: isTab ? 20*getResponsive(context) : 16* getResponsive(context),
-                        right: isTab ? 12*getResponsive(context) : 8* getResponsive(context),
-                      ),
-                      child: Image.asset(
-                        prefixImage!,
-                        fit:BoxFit.contain ,
-                        width: prefixImageWidth ??
-                            (isTab
-                                ? 0.5 * getWidth(context)
-                                : 0.03 * getWidth(context)),
-                        height: prefixImageHeight ??
-                            (isTab
-                                ? 0.5 * getHeight(context)
-                                : 0.03 * getHeight(context)),
-                      ),
-                    ),
-                  )
-                : null,
+            ? GestureDetector(
+                onTap: onTap1,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: isTab
+                        ? 20 * Responsive.getResponsive(context)
+                        : 16 * Responsive.getResponsive(context),
+                    right: isTab
+                        ? 12 * Responsive.getResponsive(context)
+                        : 8 * Responsive.getResponsive(context),
+                  ),
+                  child: Image.asset(
+                    prefixImage!,
+                    fit: BoxFit.contain,
+                    width:
+                        prefixImageWidth ??
+                        (isTab
+                            ? 0.5 * Responsive.getWidth(context)
+                            : 0.03 * Responsive.getWidth(context)),
+                    height:
+                        prefixImageHeight ??
+                        (isTab
+                            ? 0.5 * Responsive.getHeight(context)
+                            : 0.03 * Responsive.getHeight(context)),
+                  ),
+                ),
+              )
+            : null,
         suffixIcon: (suffix != null)
             ? suffix
             : (suFixImage != null && suFixImage!.isNotEmpty)
-                ? GestureDetector(
-                    onTap: onTap1,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        right: isTab ? 20 * getResponsive(context) : 16* getResponsive(context),
-                        left: isTab ? 12* getResponsive(context) : 8* getResponsive(context),
-                      ),
-                      child: Image.asset(
-                        fit: BoxFit.contain,
-                        suFixImage!,
-                        width: suFixImageWidth ??
-                            (isTab
-                                ? 0.5 * getWidth(context)
-                                : 0.05 * getWidth(context)),
-                        height: suFixImageHeight ??
-                            (isTab
-                                ? 0.5 * getHeight(context)
-                                : 0.05 * getHeight(context)),
-                      ),
-                    ),
-                  )
-                : null,
+            ? GestureDetector(
+                onTap: onTap1,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    right: isTab
+                        ? 20 * Responsive.getResponsive(context)
+                        : 16 * Responsive.getResponsive(context),
+                    left: isTab
+                        ? 12 * Responsive.getResponsive(context)
+                        : 8 * Responsive.getResponsive(context),
+                  ),
+                  child: Image.asset(
+                    fit: BoxFit.contain,
+                    suFixImage!,
+                    width:
+                        suFixImageWidth ??
+                        (isTab
+                            ? 0.5 * Responsive.getWidth(context)
+                            : 0.05 * Responsive.getWidth(context)),
+                    height:
+                        suFixImageHeight ??
+                        (isTab
+                            ? 0.5 * Responsive.getHeight(context)
+                            : 0.05 * Responsive.getHeight(context)),
+                  ),
+                ),
+              )
+            : null,
       ),
-      style: typingtextStyle ??
-          AppTheme.getTextStyle(context).bodyLarge!.copyWith(
-                color: AppTheme.getColor(context).primary,
-              ),
+      style:
+          typingtextStyle ??
+          AppTheme.getTextStyle(
+            context,
+          ).bodyLarge!.copyWith(color: AppTheme.getColor(context).primary),
       cursorColor: AppTheme.getColor(context).primary,
       validator: validator,
       onChanged: onChanged,
@@ -494,4 +517,3 @@ class TextFieldFormMobile extends StatelessWidget {
     );
   }
 }
-

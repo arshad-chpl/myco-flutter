@@ -14,7 +14,7 @@ class CustomShadowContainer extends StatelessWidget {
   final double? containerHeight;
   final double? borderRadius;
 
-  const CustomShadowContainer({
+  CustomShadowContainer({
     required this.image,
     required this.title,
     super.key,
@@ -82,7 +82,7 @@ class CustomShadowContainer extends StatelessWidget {
       CustomText(
         title,
         color: AppColors.black,
-        fontSize: 11 * getResponsiveText(context),
+        fontSize: 11 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w600,
       ),
     ],
