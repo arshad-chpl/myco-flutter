@@ -23,6 +23,13 @@ class _LinearProgressIndicatorWidgetState
         width: 5 * Responsive.getResponsiveOnWidth(context),
         color: AppTheme.getColor(context).primary,
       ),
+      boxShadow: [
+        BoxShadow(
+          color: AppColors.containerHigh,
+          blurRadius: 6 * Responsive.getResponsive(context),
+          offset: const Offset(0, 5)
+        )
+      ],
       borderRadius: BorderRadius.circular(
         13 * Responsive.getResponsive(context),
       ),

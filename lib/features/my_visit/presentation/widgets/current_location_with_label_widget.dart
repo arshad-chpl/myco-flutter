@@ -34,16 +34,15 @@ class _CurrentLocationWithLabelWidgetState
         width: double.infinity,
         backgroundColor: AppColors.removeBackground,
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(
-                top: 5 * Responsive.getResponsive(context),
-              ),
+                padding: EdgeInsets.only(
+                  bottom: 40 * Responsive.getResponsive(context)
+                ),
               child: Image(
                 image: const AssetImage(AppAssets.locationIcon),
-                height: 0.060 * Responsive.getHeight(context),
-                width: 0.060 * Responsive.getWidth(context),
+                height: 0.050 * Responsive.getHeight(context),
+                width: 0.050 * Responsive.getWidth(context),
                 color: AppColors.textPrimary,
               ),
             ),
@@ -58,7 +57,7 @@ class _CurrentLocationWithLabelWidgetState
             SizedBox(width: 0.040 * Responsive.getWidth(context)),
             Image(
               image: const AssetImage(AppAssets.locationPreview),
-              height: 0.09 * Responsive.getHeight(context),
+              height: 0.08 * Responsive.getHeight(context),
               width: 0.2 * Responsive.getWidth(context),
             ),
           ],
