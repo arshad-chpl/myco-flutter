@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/constants.dart';
@@ -12,6 +13,16 @@ Future<void> main() async {
   await dotenv.load(fileName: '.env');
   ApiUrl.getMainURL();
   await init();
+
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      // statusBarIconBrightness: Brightness.dark, // for Android
+      // statusBarBrightness: Brightness.light, // for iOS
+      // systemNavigationBarColor: Colors.white, // bottom nav bar color
+      // systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
 
   runApp(
     //     DevicePreview(

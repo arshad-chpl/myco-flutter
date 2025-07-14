@@ -1,10 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
+import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_dash_line.dart';
 import 'package:myco_flutter/features/asset/widgets/image_gredal.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
+
+class PastAssetsListPage extends StatelessWidget {
+  const PastAssetsListPage({super.key});
+
+  @override
+  Widget build(BuildContext context) => SliverPadding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 0.04 * Responsive.getWidth(context),
+    ),
+    sliver: SliverList.separated(
+      itemCount: 5,
+      separatorBuilder: (_, __) =>
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
+      itemBuilder: (_, index) => const PastAssetsCard(
+        title: 'Desktop',
+        subTitle: '(AS101)',
+        image: AppAssets.imageLaptop,
+        brand: 'HP',
+        srNo: 'DELL123456',
+        handover: '02-05-2025',
+        takeover: '02-05-2025',
+        handoverImageList: [
+          'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+          'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+          AppAssets.imageLaptop, 
+          AppAssets.imageLaptop
+        ],
+        takeoverImageList: [
+          'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+          'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+         AppAssets.imageLaptop, 
+         AppAssets.imageLaptop
+        ],
+      ),
+    ),
+  );
+}
 
 class PastAssetsCard extends StatelessWidget {
   final String title;
@@ -14,8 +53,8 @@ class PastAssetsCard extends StatelessWidget {
   final String srNo;
   final String handover;
   final String takeover;
-  final List<String>? handoverImageList;
-  final List<String>? takeoverImageList;
+  final List<String> handoverImageList;
+  final List<String> takeoverImageList;
   final EdgeInsetsGeometry? childPadding;
   final double? spaceBetweenData;
   final Color? titleColor;
@@ -28,6 +67,8 @@ class PastAssetsCard extends StatelessWidget {
     required this.brand,
     required this.srNo,
     required this.handover,
+    required this.handoverImageList,
+    required this.takeoverImageList,
     required this.takeover,
     super.key,
     this.childPadding,
@@ -35,8 +76,6 @@ class PastAssetsCard extends StatelessWidget {
     this.dashLineColor,
     this.dashLinewidth,
     this.titleColor,
-    this.handoverImageList,
-    this.takeoverImageList,
   });
 
   @override
@@ -45,6 +84,7 @@ class PastAssetsCard extends StatelessWidget {
     return CommonCard(
       title: title,
       subTitle: subTitle,
+      showBlackShadowInChild: true,
       headerColor: AppTheme.getColor(context).primary,
       borderColor: AppTheme.lightTheme(context).dividerColor,
       headerPadding: EdgeInsets.symmetric(
@@ -63,7 +103,16 @@ class PastAssetsCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Image.asset(image, width: 0.3 * Responsive.getWidth(context)),
+                  if (image.startsWith('http') || image.startsWith('https'))
+                    CachedImage(
+                      imageUrl: image,
+                      width: 0.3 * Responsive.getWidth(context),
+                    )
+                  else
+                    Image.asset(
+                      image,
+                      width: 0.3 * Responsive.getWidth(context),
+                    ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: DashedLine(
@@ -77,13 +126,41 @@ class PastAssetsCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AssetsVerticalData(title: 'Brand', data: brand),
+                        AssetsVerticalData(title: 'brand', data: brand),
                         SizedBox(
                           height:
                               spaceBetweenData ??
                               0.02 * Responsive.getHeight(context),
                         ),
-                        AssetsVerticalData(title: 'Sr.No./MAC/Sim', data: srNo),
+                        AssetsVerticalData(title: 'sr_no', data: srNo),
+                        SizedBox(
+                          height:
+                              spaceBetweenData ??
+                              0.02 * Responsive.getHeight(context),
+                        ),
+                        Row(
+                          children: [
+                            if (handoverImageList.isEmpty)
+                              Expanded(
+                                child: AssetsVerticalData(
+                                  title: 'handover',
+                                  data: handover,
+                                ),
+                              ),
+                            if (takeoverImageList.isEmpty &&
+                                handoverImageList.isEmpty)
+                              SizedBox(
+                                width: 0.01 * Responsive.getWidth(context),
+                              ),
+                            if (takeoverImageList.isEmpty)
+                              Expanded(
+                                child: AssetsVerticalData(
+                                  title: 'takeover',
+                                  data: takeover,
+                                ),
+                              ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -93,33 +170,51 @@ class PastAssetsCard extends StatelessWidget {
             SizedBox(
               height: spaceBetweenData ?? 0.02 * Responsive.getHeight(context),
             ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 0.36 * Responsive.getWidth(context),
-                  child: AssetsVerticalData(title: 'Handover', data: srNo),
-                ),
-                Expanded(
-                  child: ImageGridPreviewWidget(
-                    boxHeight: 0.14 * Responsive.getWidth(context),
-                    boxWidth: 0.14 * Responsive.getWidth(context),
-                    borderRadius: 10,
-                    imageList:
-                        handoverImageList ?? //[],
-                        [
-                          'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
-                          'assets/images/laptop.png',
-                          'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                          'assets/images/laptop.png',
-                        ],
+            if (handoverImageList.isNotEmpty)
+              Row(
+                children: [
+                  SizedBox(
+                    width: 0.36 * Responsive.getWidth(context),
+                    child: AssetsVerticalData(
+                      title: 'handover',
+                      data: handover,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: spaceBetweenData ?? 0.02 * Responsive.getHeight(context),
-            ),
-            AssetsVerticalData(title: 'Takeover', data: srNo),
+                  Expanded(
+                    child: ImageGridPreviewWidget(
+                      boxHeight: 0.14 * Responsive.getWidth(context),
+                      boxWidth: 0.14 * Responsive.getWidth(context),
+                      borderRadius: 10,
+                      imageList: handoverImageList,
+                    ),
+                  ),
+                ],
+              ),
+            if (handoverImageList.isNotEmpty && takeoverImageList.isNotEmpty)
+              SizedBox(
+                height:
+                    spaceBetweenData ?? 0.02 * Responsive.getHeight(context),
+              ),
+            if (takeoverImageList.isNotEmpty)
+              Row(
+                children: [
+                  SizedBox(
+                    width: 0.36 * Responsive.getWidth(context),
+                    child: AssetsVerticalData(
+                      title: 'takeover',
+                      data: takeover,
+                    ),
+                  ),
+                  Expanded(
+                    child: ImageGridPreviewWidget(
+                      boxHeight: 0.14 * Responsive.getWidth(context),
+                      boxWidth: 0.14 * Responsive.getWidth(context),
+                      borderRadius: 10,
+                      imageList: takeoverImageList,
+                    ),
+                  ),
+                ],
+              ),
           ],
         ),
       ),

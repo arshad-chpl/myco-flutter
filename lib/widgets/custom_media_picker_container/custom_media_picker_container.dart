@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -12,18 +11,27 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:path/path.dart' as path;
 
 class CustomMediaPickerContainer extends StatefulWidget {
-  final double? imageMargin, containerHeight, titleFontSize, imageTitleSize;
+  final double? imageMargin,
+      containerHeight,
+      titleFontSize,
+      imageTitleSize,
+      titleWidgetBetweenSpace,
+      pickerBoxBorderRadius;
   final String title, imageTitle;
   final String imagePath;
   final int multipleImage;
+  final FontWeight? titleFontWeight;
   final Color? titleColor, backgroundColor, imageTitleColor;
   final bool isCameraShow, isGalleryShow, isDocumentShow, isCropImage;
+
+  final Function(List<File> value)? onSelectMedia; // ✅ New callback
 
   const CustomMediaPickerContainer({
     required this.title,
     required this.imageTitle,
     required this.multipleImage,
     required this.imagePath,
+    this.onSelectMedia, // ✅ Add in constructor
     super.key,
     this.imageMargin,
     this.containerHeight,
@@ -36,6 +44,9 @@ class CustomMediaPickerContainer extends StatefulWidget {
     this.titleColor,
     this.imageTitleColor,
     this.imageTitleSize,
+    this.titleFontWeight,
+    this.titleWidgetBetweenSpace,
+    this.pickerBoxBorderRadius,
   });
 
   @override
@@ -50,24 +61,26 @@ class _CustomMediaPickerContainerState
 
   @override
   Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      CustomText(
-        widget.title,
-        fontSize:
-            widget.titleFontSize ?? 14 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-        color: widget.titleColor ?? AppTheme.getColor(context).onSurfaceVariant,
-      ),
-      const SizedBox(height: 8),
-      _buildPickerContent(),
-    ],
-  );
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomText(
+            isKey: true,
+            widget.title,
+            fontSize:
+                widget.titleFontSize ?? 14 * Responsive.getResponsiveText(context),
+            fontWeight: widget.titleFontWeight ?? FontWeight.w700,
+            color:
+                widget.titleColor ?? AppTheme.getColor(context).onSurfaceVariant,
+          ),
+          SizedBox(height: widget.titleWidgetBetweenSpace ?? 8),
+          _buildPickerContent(),
+        ],
+      );
 
   Widget _buildPickerContent() {
     if (_pickedImages.isNotEmpty) {
       return DesignBorderContainer(
-        borderRadius: 8,
+        borderRadius: widget.pickerBoxBorderRadius ?? 8,
         borderColor: AppTheme.getColor(context).primary,
         backgroundColor: AppTheme.getColor(context).onPrimary,
         padding: const EdgeInsets.all(0),
@@ -134,6 +147,7 @@ class _CustomMediaPickerContainerState
                           setState(() {
                             _pickedImages.removeAt(index);
                           });
+                          widget.onSelectMedia?.call(_pickedImages); // ✅ Update
                         },
                         child: Image.asset(
                           'assets/media_picker/trash.png',
@@ -173,7 +187,10 @@ class _CustomMediaPickerContainerState
                 ),
               ),
               GestureDetector(
-                onTap: () => setState(() => pickedFile = null),
+                onTap: () => setState(() {
+                  pickedFile = null;
+                  widget.onSelectMedia?.call([]); // ✅ Callback on remove
+                }),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     vertical: 2,
@@ -219,13 +236,12 @@ class _CustomMediaPickerContainerState
                 ),
                 const SizedBox(height: 5),
                 CustomText(
+                  isKey: true,
                   widget.imageTitle,
-                  fontSize:
-                      widget.imageTitleSize ??
+                  fontSize: widget.imageTitleSize ??
                       16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w600,
-                  color:
-                      widget.imageTitleColor ??
+                  color: widget.imageTitleColor ??
                       AppTheme.getColor(context).onSurfaceVariant,
                 ),
               ],
@@ -238,9 +254,8 @@ class _CustomMediaPickerContainerState
 
   void openMediaPicker(BuildContext context) async {
     List<File>? selectedFiles = [];
-
     final remainingCount = widget.multipleImage - _pickedImages.length;
-    print('remainingCount:-----------------------------$remainingCount');
+
     if (remainingCount <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -261,7 +276,6 @@ class _CustomMediaPickerContainerState
         MaterialPageRoute(
           builder: (context) => GalleryPickerScreen(
             maxSelection: remainingCount,
-            // isCropImage: false,
             onSelectionDone: (List<dynamic> assets) async {
               final List<File> files = [];
               for (final asset in assets) {
@@ -292,7 +306,6 @@ class _CustomMediaPickerContainerState
 
       for (final file in selectedFiles) {
         final String extension = path.extension(file.path).toLowerCase();
-
         if (['.png', '.jpg', '.jpeg', '.heic', '.heif'].contains(extension)) {
           imageFiles.add(file);
         } else if (['.pdf', '.doc', '.docx'].contains(extension)) {
@@ -311,6 +324,8 @@ class _CustomMediaPickerContainerState
             _pickedImages.addAll(imageFiles);
             pickedFile = null;
           });
+
+          widget.onSelectMedia?.call(_pickedImages); // ✅ Callback for images
         } else {
           final remaining = widget.multipleImage - _pickedImages.length;
           ScaffoldMessenger.of(context).showSnackBar(
@@ -329,6 +344,8 @@ class _CustomMediaPickerContainerState
           pickedFile = documentFile;
           _pickedImages.clear();
         });
+
+        widget.onSelectMedia?.call([documentFile]); // ✅ Callback for document
       }
     } else {
       log('User cancelled or error occurred.');

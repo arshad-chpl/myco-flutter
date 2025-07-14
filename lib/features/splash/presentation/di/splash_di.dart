@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:myco_flutter/constants/constants.dart';
+import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/splash/data/datasources/version_remote_data_source.dart';
 import 'package:myco_flutter/features/splash/data/datasources/version_remote_data_source_impl.dart';
 import 'package:myco_flutter/features/splash/data/repositories/version_repository_impl.dart';
@@ -9,7 +11,7 @@ import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart'
 void splashDi(GetIt sl) {
   // Data sources
   sl.registerLazySingleton<VersionRemoteDataSource>(
-    () => VersionRemoteDataSourceImpl(sl()),
+    () => VersionRemoteDataSourceImpl(sl<ApiClient>(instanceName:  VariableBag.masterAPICall)),
   );
 
   // Repository

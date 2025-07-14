@@ -46,5 +46,5 @@ Future<void> init() async {
   setupHolidayDI(sl);
 
   // ========Admin View=========
-  await adminViewDi(sl);
+  adminViewDi(sl);
 }
