@@ -55,14 +55,14 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
                 AppAssets.gallaryExport,
                 fit: BoxFit.scaleDown,
               ),
-              iconSize: 20,
+              iconSize: 20 * Responsive.getResponsive(context),
               title: 'select_image',
               isTitle: true,
               isGallaryShow: true,
               isCameraShow: true,
               isDocumentShow: true,
-              borderRadius: 10,
-              containerHeight: 71,
+              borderRadius: 8,
+              containerHeight: .079 * Responsive.getHeight(context),
               imageTitle: 'select_image',
 
               onImageSelected: (file) {
@@ -73,13 +73,13 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
               },
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: .024 * Responsive.getHeight(context)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28),
             child: CustomRadioButton(
-              title: 'Select',
+              title: 'select',
               options: const ['lost', 'found'],
-              height: 44,
+              height: .049 * Responsive.getHeight(context),
               onChanged: (value) {
                 setState(() {
                   selectedOption = value;
@@ -87,17 +87,16 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
               },
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: .024 * Responsive.getHeight(context)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: LabeledTextField(
-              contentPadding: EdgeInsets.all(
-                9 * Responsive.getResponsive(context),
-              ),
+              textFontSize: 12 * Responsive.getResponsiveText(context),
+              contentPadding: EdgeInsets.all(9),
               heightFactor: .044 * Responsive.getHeight(context),
               height: .044 * Responsive.getHeight(context),
               controller: itemNameController,
-              boarderRadius: 8 * Responsive.getResponsive(context),
+              boarderRadius: 8,
               textAlignment: TextAlign.start,
               label: 'item_name',
               hint: 'type_here',
@@ -113,29 +112,29 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
             ),
           ),
 
-          const SizedBox(height: 24),
+          SizedBox(height: .024 * Responsive.getHeight(context)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: CustomText(
               'About Item',
               isKey: true,
-              fontSize: 13 * Responsive.getResponsive(context),
+              fontSize: 12 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w700,
               color: AppTheme.getColor(context).onSurfaceVariant,
             ),
           ),
 
-          const SizedBox(height: 5),
+          SizedBox(height: .005 * Responsive.getHeight(context)),
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: BigMyCoTextField(
               height: 0.140 * Responsive.getHeight(context),
-              maxLines: 1,
+              maxLines: 5,
               controller: aboutItemController,
               hintText: 'Type here',
+              style: _typingStyle(context),
               hintStyle: _hintStyle(context),
-              textInputType: TextInputType.number,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(30),
                 borderSide: BorderSide(
@@ -147,7 +146,7 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
               prefixImage: SvgPicture.asset(AppAssets.messageEdit),
             ),
           ),
-          const SizedBox(height: 80),
+          SizedBox(height: .080 * Responsive.getHeight(context)),
         ],
       ),
     ),
@@ -184,15 +183,15 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
             );
           }
         },
-        title: 'SUBMIT',
+        title: 'submit',
         boarderRadius: 50,
         isShadowBottomLeft: true,
         backgroundColor: AppTheme.getColor(context).primary,
-        height: 50,
+        height: .050 * Responsive.getHeight(context),
         width: double.infinity,
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
           color: Colors.white,
-          fontSize: 15,
+          fontSize: 15 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w500,
           fontFamily: 'Inter',
         ),
@@ -200,238 +199,17 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
     ),
   );
 
-  TextStyle _hintStyle(BuildContext context) => const TextStyle(
+  TextStyle _hintStyle(BuildContext context) => TextStyle(
     fontFamily: 'Gilroy-SemiBold',
     fontWeight: FontWeight.w400,
-    fontSize: 14,
-    color: Colors.black54,
+    fontSize: 14 * Responsive.getResponsiveText(context),
+    color: AppTheme.getColor(context).outline,
   );
 
   TextStyle _typingStyle(BuildContext context) => TextStyle(
     fontFamily: 'Gilroy-SemiBold',
     fontWeight: FontWeight.w400,
-    fontSize: 14,
+    fontSize: 14 * Responsive.getResponsiveText(context),
     color: AppColors.textPrimary,
   );
 }
-
-// ================================Responsive.dart==================================
-
-// import 'dart:io';
-//
-// import 'package:flutter/material.dart';
-// import 'package:new_myco/custom_widgets/custom_image_picker_container/custom_image_picker_containe.dart';
-// import 'package:new_myco/custom_widgets/text_field.dart';
-//
-// import '../custom_widgets/custom_radio_button.dart';
-// import '../custom_widgets/new_myco_button.dart';
-// import '../custom_widgets/responsive.dart';
-// import '../themes_colors/colors.dart';
-//
-// class LostAndFoundAddScreen extends StatefulWidget {
-//   const LostAndFoundAddScreen({super.key});
-//
-//   @override
-//   State<LostAndFoundAddScreen> createState() => _LostAndFoundAddScreenState();
-// }
-//
-// class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
-//   TextEditingController itemNameController = TextEditingController();
-//   TextEditingController aboutItemController = TextEditingController();
-//   File? selectedImage;
-//   String selectedOption = "Lost";
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     double res = Responsive.getResponsive(context);
-//
-//     return Scaffold(
-//       backgroundColor: AppColors.scaffoldBackgroundColor,
-//       appBar: AppBar(
-//         backgroundColor: AppColors.scaffoldBackgroundColor,
-//         title: Text(
-//           "Lost And Found",
-//           style: TextStyle(
-//             fontFamily: "Gilroy-Bold",
-//             fontSize: 18,
-//             fontWeight: FontWeight.w400,
-//             color: AppColors.subTitleColor,
-//           ),
-//         ),
-//       ),
-//       body: SingleChildScrollView(
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             SizedBox(height: 20 * res),
-//
-//             Padding(
-//               padding: EdgeInsets.symmetric(horizontal: 32 * res),
-//               child: CustomImagePickerContainer(
-//                 iconSize: 20,
-//                 title: "Select Image",
-//                 isTitle: true,
-//                 isGallaryShow: true,
-//                 isCameraShow: true,
-//                 isDocumentShow: false,
-//                 borderRadius: 10,
-//                 containerHeight: 71 * res,
-//                 imageTitle: "Select image",
-//                 onImageSelected: (file) {
-//                   setState(() {
-//                     selectedImage = file;
-//                   });
-//                   print("Selected Image: ${file.path}");
-//                 },
-//               ),
-//             ),
-//             SizedBox(height: 24 * res),
-//
-//             Padding(
-//               padding: EdgeInsets.symmetric(horizontal: 28 * res),
-//               child: CustomRadioButton(
-//                 title: "Select",
-//                 options: const ["Lost", "Found"],
-//                 height: 44 * res,
-//                 initialValue: selectedOption,
-//                 onChanged: (value) {
-//                   setState(() {
-//                     selectedOption = value;
-//                   });
-//                 },
-//               ),
-//             ),
-//             SizedBox(height: 24 * res),
-//
-//             Padding(
-//               padding: EdgeInsets.symmetric(horizontal: 32 * res),
-//               child: Text(
-//                 "Item Name",
-//                 style: TextStyle(
-//                   fontFamily: "Gilroy-Bold",
-//                   fontWeight: FontWeight.w400,
-//                   color: AppColors.titleColor,
-//                   fontSize: 13,
-//                 ),
-//               ),
-//             ),
-//             SizedBox(height: 5 * res),
-//
-//             Padding(
-//               padding: EdgeInsets.symmetric(horizontal: 32 * res),
-//               child: MyCoTextField(
-//                 maxLenght: 5,
-//                 controller: itemNameController,
-//                 isSuffixIconOn: true,
-//                 hintText: "Type here",
-//                 isLabelOn: true,
-//                 hintTextStyle: _hintStyle(context),
-//                 typingtextStyle: _typingStyle(context),
-//                 prefix: _prefixIcon("assets/lost_and_found/item-name.png"),
-//               ),
-//             ),
-//             SizedBox(height: 24 * res),
-//
-//             Padding(
-//               padding: EdgeInsets.symmetric(horizontal: 32 * res),
-//               child: Text(
-//                 "About Item",
-//                 style: TextStyle(
-//                   fontSize: 13,
-//                   fontFamily: "Gilroy-Bold",
-//                   fontWeight: FontWeight.w400,
-//                   color: AppColors.titleColor,
-//                 ),
-//               ),
-//             ),
-//             SizedBox(height: 5 * res),
-//
-//             Padding(
-//               padding: EdgeInsets.symmetric(horizontal: 32 * res),
-//               child: MyCoTextField(
-//                 fillColor: Colors.white,
-//                 controller: aboutItemController,
-//                 isSuffixIconOn: true,
-//                 hintText: "Type here",
-//                 hintTextStyle: _hintStyle(context),
-//                 typingtextStyle: _typingStyle(context),
-//                 isLabelOn: true,
-//                 prefix: _prefixIcon("assets/lost_and_found/message-edit.png"),
-//               ),
-//             ),
-//             SizedBox(height: 80 * res),
-//           ],
-//         ),
-//       ),
-//       bottomNavigationBar: Padding(
-//         padding: EdgeInsets.fromLTRB(32 * res, 0, 32 * res, 32 * res),
-//         child: MyCoButton(
-//           onTap: () {
-//             final itemName = itemNameController.text.trim();
-//             final aboutItem = aboutItemController.text.trim();
-//
-//             if (selectedImage == null) {
-//               ScaffoldMessenger.of(context).showSnackBar(
-//                 const SnackBar(content: Text("Please select an image")),
-//               );
-//             } else if (itemName.isEmpty) {
-//               ScaffoldMessenger.of(context).showSnackBar(
-//                 const SnackBar(content: Text("Please enter item name")),
-//               );
-//             } else if (aboutItem.isEmpty) {
-//               ScaffoldMessenger.of(context).showSnackBar(
-//                 const SnackBar(content: Text("Please enter item description")),
-//               );
-//             } else {
-//               Navigator.pop(context, {
-//                 'image': selectedImage,
-//                 'name': itemName,
-//                 'desc': aboutItem,
-//                 'status': selectedOption,
-//               });
-//             }
-//           },
-//           title: 'SUBMIT',
-//           boarderRadius: 50,
-//           isShadowBottomLeft: true,
-//           backgroundColor: AppColors.primary,
-//           height: 50 * res,
-//           width: double.infinity,
-//           textStyle: const TextStyle(
-//             color: Colors.white,
-//             fontSize: 15,
-//             fontWeight: FontWeight.w500,
-//             fontFamily: "Inter",
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   Widget _prefixIcon(String assetPath) {
-//     double res = Responsive.getResponsive(context);
-//     return Padding(
-//       padding: EdgeInsets.all(12.0 * res),
-//       child: Image.asset(
-//         assetPath,
-//         width: 0.020 * Responsive.getWidth(context),
-//         height: 0.20 * Responsive.getHeight(context),
-//         fit: BoxFit.contain,
-//       ),
-//     );
-//   }
-//
-//   TextStyle _hintStyle(BuildContext context) => TextStyle(
-//     fontFamily: 'Gilroy-SemiBold',
-//     fontWeight: FontWeight.w400,
-//     fontSize: 14,
-//     color: Colors.black54,
-//   );
-//
-//   TextStyle _typingStyle(BuildContext context) => TextStyle(
-//     fontFamily: 'Gilroy-SemiBold',
-//     fontWeight: FontWeight.w400,
-//     fontSize: 14,
-//     color: AppColors.textFieldColor,
-//   );
-// }

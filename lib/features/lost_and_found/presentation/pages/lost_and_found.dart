@@ -229,8 +229,7 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_inner_shadow.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/widgets/text_field.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 import '../../model/lost_and_found_item_model.dart';
@@ -246,11 +245,15 @@ class _LostAndFoundState extends State<LostAndFound> {
   final List<LostAndFoundItemModel> lostFoundItems = [];
 
   void _navigateToAddScreen() async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const LostAndFoundAddScreen()),
-    );
-
+    final result =
+        await
+        // context.pushNamed("/lost-and-found-add-screen");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LostAndFoundAddScreen(),
+          ),
+        );
     if (result != null && result is LostAndFoundItemModel) {
       setState(() {
         lostFoundItems.add(result);
@@ -272,25 +275,25 @@ class _LostAndFoundState extends State<LostAndFound> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: Row(
-        children: [
-          CustomText(
-            isKey: true,
-            'lost_found',
-            fontSize: 18 * Responsive.getResponsive(context),
-            fontWeight: FontWeight.w700,
-          ),
-        ],
+    appBar: CustomAppbar(
+      automaticallyImplyLeading: false,
+      title: CustomText(
+        isKey: true,
+        'lost_found',
+        fontSize: 18 * Responsive.getResponsiveText(context),
+        fontWeight: FontWeight.w700,
       ),
       centerTitle: false,
       elevation: 0,
     ),
     body: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
+      padding: EdgeInsets.symmetric(
+        horizontal: 28 * Responsive.getResponsive(context),
+      ),
       child: Column(
         children: [
           MyCoTextfield(
+            height: .044 * Responsive.getHeight(context),
             isSuffixIconOn: false,
             prefix: SvgPicture.asset(
               AppAssets.searchNormal,
@@ -298,7 +301,7 @@ class _LostAndFoundState extends State<LostAndFound> {
             ),
             // preFixImage: AppAssets.searchNormal,
             contentPadding: EdgeInsets.all(
-              10 * Responsive.getResponsive(context),
+              9 * Responsive.getResponsive(context),
             ),
             hintText: 'search',
             fillColor: Colors.white,
@@ -306,14 +309,13 @@ class _LostAndFoundState extends State<LostAndFound> {
             boarderRadius: 12,
             hintTextStyle: _hintStyle(context),
 
-            // height: .040 * Responsive.getHeight(context),
             onChanged: (val) {
               setState(() {
                 _searchQuery = val ?? '';
               });
             },
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: .024 * Responsive.getHeight(context)),
           Expanded(
             child: GridView.builder(
               itemCount: _filteredItems.length,
@@ -339,10 +341,9 @@ class _LostAndFoundState extends State<LostAndFound> {
                     );
                   },
                   child: Container(
-                    height: 150,
-                    width: 155,
+                    height: .0150 * Responsive.getHeight(context),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: AppColors.primary, width: 0.75),
                       color: AppTheme.getColor(context).surfaceContainer,
                       boxShadow: [
@@ -354,16 +355,17 @@ class _LostAndFoundState extends State<LostAndFound> {
                       ],
                     ),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(15),
                           child: Stack(
                             children: [
                               Image.file(
                                 item.image,
                                 width: double.infinity,
-                                height: 95,
+                                height: .095 * Responsive.getHeight(context),
                                 fit: BoxFit.cover,
                               ),
                               Positioned(
@@ -373,12 +375,13 @@ class _LostAndFoundState extends State<LostAndFound> {
                                   backgroundColor: item.status == 'found'
                                       ? AppTheme.getColor(context).secondary
                                       : const Color(0xffDD4646),
-                                  height: 17,
-                                  width: 46,
+                                  height: .017 * Responsive.getHeight(context),
+                                  width: .086 * Responsive.getWidth(context),
                                   borderRadius: 50,
                                   isShadowBottomLeft: true,
                                   child: CustomText(
                                     item.status,
+                                    isKey: true,
                                     fontSize:
                                         10 * Responsive.getResponsive(context),
                                     fontWeight: FontWeight.w500,
@@ -389,26 +392,29 @@ class _LostAndFoundState extends State<LostAndFound> {
                             ],
                           ),
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(14, 12, 8, 8),
-                            child: CustomText(
-                              isKey: true,
-                              item.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16 * Responsive.getResponsive(context),
-                              color: AppColors.textPrimary,
-                            ),
+                        // Expanded(
+                        //   child:
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(14, 12, 8, 12),
+                          child: CustomText(
+                            isKey: true,
+                            item.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.w600,
+                            fontSize:
+                                16 * Responsive.getResponsiveText(context),
+                            color: AppColors.textPrimary,
                           ),
                         ),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(14, 0, 8, 12),
                           child: CustomText(
                             formattedDate,
                             fontWeight: FontWeight.w400,
-                            fontSize: 12 * Responsive.getResponsive(context),
+                            fontSize:
+                                12 * Responsive.getResponsiveText(context),
                             color: AppColors.textPrimary,
                           ),
                         ),
@@ -422,22 +428,40 @@ class _LostAndFoundState extends State<LostAndFound> {
         ],
       ),
     ),
-    floatingActionButton: MyCoButton(
-      boarderRadius: 50,
-      isShadowBottomLeft: true,
+    floatingActionButton: GestureDetector(
       onTap: _navigateToAddScreen,
-      title: '',
-      image: Icon(Icons.add, color: AppColors.white, size: 50),
-      backgroundColor: AppColors.primary,
-      height: 63,
-      width: 63,
+      // _navigateToAddScreen,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          // color: AppColors.red,
+        ),
+        height: .063 * Responsive.getHeight(context),
+        width: .063 * Responsive.getHeight(context),
+        child: SvgPicture.asset(AppAssets.vector, fit: BoxFit.fill),
+      ),
     ),
+
+    // MyCoButton(
+    //   boarderRadius: 50,
+    //   isShadowBottomLeft: true,
+    //   onTap: _navigateToAddScreen,
+    //   title: '',
+    //   image: Icon(
+    //     Icons.add,
+    //     color: AppColors.white,
+    //     size: .070 * Responsive.getWidth(context),
+    //   ),
+    //   backgroundColor: AppColors.primary,
+    //   height: .063 * Responsive.getHeight(context),
+    //   width: .063 * Responsive.getHeight(context),
+    // ),
   );
 
-  TextStyle _hintStyle(BuildContext context) => const TextStyle(
+  TextStyle _hintStyle(BuildContext context) => TextStyle(
     fontFamily: 'Gilroy-SemiBold',
     fontWeight: FontWeight.w400,
-    fontSize: 14,
+    fontSize: 14 * Responsive.getResponsiveText(context),
     color: Colors.black54,
   );
 }

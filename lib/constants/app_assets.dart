@@ -68,4 +68,5 @@ class AppAssets {
   static const String profileCircle = '$lostAndFound/profile-circle.svg';
   static const String searchNormal = '$lostAndFound/search-normal.svg';
   static const String send = '$lostAndFound/send.svg';
+  static const String vector = '$lostAndFound/Vector.svg';
 }

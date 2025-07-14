@@ -331,7 +331,7 @@ class _CustomMobileNumberFieldState extends State<CustomMobileNumberField> {
                   200 * Responsive.getHeight(context) / 800,
               child: ListView(
                 padding: EdgeInsets.symmetric(
-                  vertical: 4 * Responsive.getResponsive(context),
+                  vertical: 1 * Responsive.getResponsive(context),
                 ),
                 children: widget.countries
                     .map(

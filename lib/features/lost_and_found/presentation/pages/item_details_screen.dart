@@ -5,6 +5,7 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -46,7 +47,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
+    appBar: CustomAppbar(
       scrolledUnderElevation: 0,
       elevation: 0,
       title: CustomText(
@@ -60,7 +61,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
     ),
     body: Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: 16 * Responsive.getResponsive(context),
+        horizontal: 28 * Responsive.getResponsive(context),
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -92,17 +93,16 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
               heightFactor: .044 * Responsive.getHeight(context),
             ),
 
-            const SizedBox(height: 16),
+            SizedBox(height: .016 * Responsive.getHeight(context)),
             _buildLabel(context, 'contact_person_mobile'),
-            const SizedBox(height: 4),
+            SizedBox(height: .004 * Responsive.getHeight(context)),
             CustomMobileNumberField(
               numberTextStyle: _typingStyle(context),
               countryTextStyle: _typingStyle(context),
               hintTextStyle: _hintStyle(context),
-              // readOnly: true,
-              width: 200,
+              readOnly: true,
               height: .044 * Responsive.getHeight(context),
-              dropdownHeight: 200,
+              dropdownHeight: .170 * Responsive.getHeight(context),
               countries: countryList,
               controller: phoneController,
               onCountryChanged: (selected) {},
@@ -115,13 +115,12 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
               hintTextStyle: _hintStyle(context),
               typingtextStyle: _typingStyle(context),
               heightFactor: .044 * Responsive.getHeight(context),
-
               prefix: SvgPicture.asset(AppAssets.data, fit: BoxFit.scaleDown),
               label: 'branch',
               hint: 'Branch',
               isReadOnly: true,
               widthFactor: Responsive.getWidth(context),
-
+              controller: branchController,
               contentPadding: EdgeInsets.all(
                 9 * Responsive.getResponsive(context),
               ),
@@ -135,7 +134,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
               hintTextStyle: _hintStyle(context),
               typingtextStyle: _typingStyle(context),
               heightFactor: .044 * Responsive.getHeight(context),
-
+              controller: departmentController,
               prefix: SvgPicture.asset(
                 AppAssets.noteFavorite,
                 fit: BoxFit.scaleDown,
@@ -144,7 +143,6 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
               hint: 'Department',
               isReadOnly: true,
               widthFactor: Responsive.getWidth(context),
-
               contentPadding: EdgeInsets.all(
                 9 * Responsive.getResponsive(context),
               ),
@@ -160,7 +158,8 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                 ),
                 title: 'chat',
                 isShadowBottomLeft: true,
-                boarderRadius: 50,
+                boarderRadius: 100,
+                height: .048 * Responsive.getHeight(context),
                 fontFamily: 'Gilroy-Bold',
                 fontWeight: FontWeight.w500,
               ),
@@ -175,11 +174,11 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
     height: 0.18 * Responsive.getHeight(context),
     decoration: BoxDecoration(
       color: const Color(0xFFEEF7FD),
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(8),
       border: Border.all(color: const Color(0xFF2F648E)),
     ),
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(7),
       child: Image.file(image, fit: BoxFit.cover, width: double.infinity),
     ),
   );
@@ -187,34 +186,35 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
   Widget _itemDetails(BuildContext context) => Container(
     padding: const EdgeInsets.all(12),
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(8),
       border: Border.all(color: const Color(0xFF2F648E)),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         LabeledTextField(
-          heightFactor: .044 * Responsive.getHeight(context),
-
-          fontWeight: FontWeight.w700,
-          textColor: AppTheme.getColor(context).onSurfaceVariant,
+          boarderRadius: 8,
           widthFactor: Responsive.getWidth(context),
-          prefix: SvgPicture.asset(AppAssets.clipboard, fit: BoxFit.scaleDown),
-          boarderRadius: 12 * Responsive.getResponsive(context),
-          textAlignment: TextAlign.start,
-          textFontSize: 12 * Responsive.getResponsive(context),
-          // height: 44,
+          heightFactor: .044 * Responsive.getHeight(context),
           controller: TextEditingController(text: widget.item.name),
           isReadOnly: true,
           typingtextStyle: _typingStyle(context),
           hintTextStyle: _hintStyle(context),
+          prefix: SvgPicture.asset(
+            AppAssets.messageEdit,
+            fit: BoxFit.scaleDown,
+          ),
           contentPadding: EdgeInsets.all(9 * Responsive.getResponsive(context)),
           label: 'item_name',
-          hint: 'Item Name',
+          hint: '',
+          textColor: AppTheme.getColor(context).onSurfaceVariant,
+          fontWeight: FontWeight.w700,
+          textFontSize: 12 * Responsive.getResponsiveText(context),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: .012 * Responsive.getHeight(context)),
 
         LabeledTextField(
+          boarderRadius: 8,
           widthFactor: Responsive.getWidth(context),
           heightFactor: .044 * Responsive.getHeight(context),
           controller: TextEditingController(text: widget.item.description),
@@ -230,40 +230,40 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
           hint: '',
           textColor: AppTheme.getColor(context).onSurfaceVariant,
           fontWeight: FontWeight.w700,
-          textFontSize: 12 * Responsive.getResponsive(context),
+          textFontSize: 12 * Responsive.getResponsiveText(context),
         ),
       ],
     ),
   );
 
-  TextStyle _hintStyle(BuildContext context) => const TextStyle(
+  TextStyle _hintStyle(BuildContext context) => TextStyle(
     fontFamily: 'Gilroy-SemiBold',
     fontWeight: FontWeight.w400,
-    fontSize: 14,
+    fontSize: 14 * Responsive.getResponsiveText(context),
     color: Colors.black54,
   );
 
   TextStyle _typingStyle(BuildContext context) => TextStyle(
     fontFamily: 'Gilroy-SemiBold',
-    fontWeight: FontWeight.w400,
-    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    fontSize: 14 * Responsive.getResponsiveText(context),
     color: AppColors.textPrimary,
   );
 
   Widget _buildLabel(BuildContext context, String label) => CustomText(
     label,
     isKey: true,
-    fontSize: 12 * Responsive.getResponsive(context),
+    fontSize: 12 * Responsive.getResponsiveText(context),
     fontWeight: FontWeight.w700,
     color: AppTheme.getColor(context).onSurfaceVariant,
   );
 
   Widget _buildHeader(BuildContext context, String header) => Padding(
-    padding: EdgeInsets.only(bottom: 0.01 * Responsive.getHeight(context)),
+    padding: EdgeInsets.only(bottom: 0.01),
     child: CustomText(
       header,
       color: AppTheme.getColor(context).onSurface,
-      fontSize: 18 * Responsive.getResponsive(context),
+      fontSize: 18 * Responsive.getResponsiveText(context),
       fontWeight: FontWeight.w700,
     ),
   );

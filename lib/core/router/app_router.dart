@@ -54,7 +54,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash,
+    initialLocation: RoutePaths.lostAndFound,
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -260,11 +260,11 @@ class AppRouter {
         builder: (context, state) => const AddExpensePage(),
       ),
 
-      // GoRoute(
-      //   path: RoutePaths.lostAndFoundAddScreen,
-      //   name: 'lost-and-found-add-screen',
-      //   builder: (context, state) => const LostAndFoundAddScreen(),
-      // ),
+      GoRoute(
+        path: RoutePaths.lostAndFoundAddScreen,
+        name: 'lost-and-found-add-screen',
+        builder: (context, state) => const LostAndFoundAddScreen(),
+      ),
       GoRoute(
         path: RoutePaths.lostAndFoundChatScreen,
         name: 'lost-and-found-chat-screen',
