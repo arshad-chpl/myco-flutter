@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
-import 'package:myco_flutter/core/router/app_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -13,7 +12,6 @@ import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/bottom_sheet.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_slider.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_timer.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -86,7 +84,7 @@ Widget punchInAndTimeCard({required BuildContext context}) =>
                   MyCoButton(
                     title: 'Punch Out',
                     onTap: () {
-                      context.pushNamed('faceDetection');
+                      // context.pushNamed('faceDetection');
                     },
 
                     // height: 0.18 * Responsive.getWidth(context),
