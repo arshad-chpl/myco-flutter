@@ -6,7 +6,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_label_gifs.dart';
-import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_myteam%20(1).dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_myteam.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_section.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/profile_details_card.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/profile_personal_info_card.dart';
@@ -30,8 +30,12 @@ class MyProfilePage extends StatelessWidget {
     appBar: CustomAppbar(
       // automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
-      leadingWidth: 0.1*Responsive.getWidth(context),
-      title: CustomText("My Profile",fontWeight: FontWeight.bold,fontSize: 26*Responsive.getResponsiveText(context),),
+      leadingWidth: 0.1 * Responsive.getWidth(context),
+      title: CustomText(
+        "My Profile",
+        fontWeight: FontWeight.bold,
+        fontSize: 26 * Responsive.getResponsiveText(context),
+      ),
     ),
     body: Padding(
       padding: EdgeInsets.symmetric(
@@ -65,7 +69,8 @@ class MyProfilePage extends StatelessWidget {
                         Container(
                           child: Center(
                             child: SvgPicture.asset(
-                              "assets/dashboard/svgs/admin_view_icon.svg",height: 0.02*Responsive.getHeight(context),
+                              "assets/dashboard/svgs/admin_view_icon.svg",
+                              height: 0.02 * Responsive.getHeight(context),
                             ),
                           ),
                           height: 0.03 * Responsive.getHeight(context),

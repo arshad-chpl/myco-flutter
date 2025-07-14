@@ -7,8 +7,15 @@ import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
+import 'package:myco_flutter/features/asset/bloc/assets_bloc.dart';
+import 'package:myco_flutter/features/asset/view/add_assets.dart';
+import 'package:myco_flutter/features/asset/view/assets_details_page.dart';
 import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
+import 'package:myco_flutter/features/asset/view/edit_assets_page.dart';
+import 'package:myco_flutter/features/asset/view/handover_assets.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
+import 'package:myco_flutter/features/asset/view/swap_assets.dart';
+import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
@@ -54,7 +61,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash,
+    initialLocation: RoutePaths.getStarted,
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -69,10 +76,8 @@ class AppRouter {
               create: (_) => GetIt.I<SplashBloc>()..add(LoadSplash()),
             ),
             BlocProvider(
-              create: (_) {
-                return GetIt.I<LanguageBloc>()
-                  ..add(LoadLanguageToPreferences());
-              },
+              create: (_) =>
+                  GetIt.I<LanguageBloc>()..add(LoadLanguageToPreferences()),
               lazy: false,
             ),
           ],
@@ -285,16 +290,7 @@ class AppRouter {
         name: 'lost-and-found',
         builder: (context, state) => const LostAndFound(),
       ),
-      GoRoute(
-        path: RoutePaths.assetsHome,
-        name: 'assets-home',
-        builder: (context, state) => const AssetsHomePage(),
-      ),
-      GoRoute(
-        path: RoutePaths.qrScanner,
-        name: 'qr-scanner',
-        builder: (context, state) => const QRScannerPage(),
-      ),
+    
       GoRoute(
         path: RoutePaths.addVisit,
         name: 'add-visit',
@@ -318,6 +314,54 @@ class AppRouter {
           child: const AdminViewPage(),
         ),
         routes: adminViewRoutes,
+      ),
+
+      GoRoute(
+        path: RoutePaths.assetsHome,
+        name: 'assets-home',
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider<AssetsTabBloc>(create: (_) => AssetsTabBloc()),
+            BlocProvider<AssetsFilterBloc>(create: (_) => AssetsFilterBloc()),
+          ],
+          child: const AssetsHomePage(),
+        ),
+      ),
+
+      GoRoute(
+        path: RoutePaths.qrScanner,
+        name: 'qr-scanner',
+        builder: (context, state) => const QRScannerPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.assetsDetails,
+        name: 'assets-details',
+        builder: (context, state) => const AssetsDetailsPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.addAssets,
+        name: 'add-assets',
+        builder: (context, state) => const AddAssets(),
+      ),
+      GoRoute(
+        path: RoutePaths.editAssets,
+        name: 'edit-assets',
+        builder: (context, state) => const EditAssetsPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.handoverAssets,
+        name: 'handover-assets',
+        builder: (context, state) => const HandoverAssetsPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.takeoverAssets,
+        name: 'takeover-assets',
+        builder: (context, state) => const TakeoverAssets(),
+      ),
+      GoRoute(
+        path: RoutePaths.swapAssets,
+        name: 'swap-assets',
+        builder: (context, state) => const SwapAssetsPage(),
       ),
       // Add all modular routes here
       // ...authRoutes,

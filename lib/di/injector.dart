@@ -35,5 +35,5 @@ Future<void> init() async {
   faceDetectionDi(sl);
 
   // ========Admin View=========
-  await adminViewDi(sl);
+  adminViewDi(sl);
 }
