@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
@@ -216,7 +217,7 @@ class OrderHistoryCard extends StatelessWidget {
                   SizedBox(width: 0.01 * Responsive.getWidth(context)),
                   MyCoButton(
                     onTap: () {
-                      context.pushNamed('order-summary', extra: true);
+                      context.pushNamed(RoutePaths.orderSummary, extra: true);
                     },
                     title: LanguageManager().get('repeat_order'),
                     width: 0.25 * Responsive.getWidth(context),
@@ -230,7 +231,7 @@ class OrderHistoryCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   InkWell(
-                    onTap: () => context.pushNamed('edit-order'),
+                    onTap: () => context.pushNamed(RoutePaths.editOrder),
                     child: Image.asset(
                       'assets/take_order/message-edit.png',
                       height: 0.023 * Responsive.getHeight(context),

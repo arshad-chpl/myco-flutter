@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
@@ -134,8 +137,9 @@ class OrderSummaryPage extends StatelessWidget {
                               ),
                               child: Row(
                                 children: [
-                                  Image.asset(
-                                    'assets/take_order/message-edit.png',
+                                  SvgPicture.asset(
+                                    // 'assets/take_order/message-edit.png',
+                                    AppAssets.messageEdit,
                                     fit: BoxFit.cover,
                                     height:
                                         0.015 * Responsive.getHeight(context),
@@ -157,8 +161,9 @@ class OrderSummaryPage extends StatelessWidget {
                             SizedBox(
                               width: 0.01 * Responsive.getWidth(context),
                             ),
-                            Image.asset(
-                              'assets/take_order/xcircle.png',
+                            SvgPicture.asset(
+                              // 'assets/take_order/xcircle.png',
+                              AppAssets.xCircle,
                               width: 0.06 * Responsive.getWidth(context),
                               height: 0.025 * Responsive.getHeight(context),
                             ),
@@ -270,8 +275,9 @@ class OrderSummaryPage extends StatelessWidget {
                     padding: EdgeInsets.only(
                       top: 0.01 * Responsive.getHeight(context),
                     ),
-                    child: Image.asset(
-                      'assets/take_order/message-edit.png',
+                    child: SvgPicture.asset(
+                      // 'assets/take_order/message-edit.png',
+                      AppAssets.messageEdit,
                       height: 0.022 * Responsive.getHeight(context),
                     ),
                   ),
@@ -300,7 +306,8 @@ class OrderSummaryPage extends StatelessWidget {
               isButton: true,
               buttonText: LanguageManager().get('change'),
               onTap: () {
-                context.pushNamed('all-distributor');
+                // context.pushNamed('all-distributor');
+                context.pushNamed(RoutePaths.allDistributor);
               },
               bottomWidget: Padding(
                 padding: EdgeInsets.symmetric(
@@ -353,7 +360,8 @@ class OrderSummaryPage extends StatelessWidget {
             isRepeatOrder
                 ? MyCoButton(
                     onTap: () {
-                      context.pushNamed('order-history');
+                      // context.pushNamed('order-history');
+                      context.pushNamed(RoutePaths.orderHistory);
                     },
                     title: LanguageManager().get('place_order'),
                     // width: 0.4 * Responsive.getWidth(context),
@@ -367,7 +375,8 @@ class OrderSummaryPage extends StatelessWidget {
                     button2Name: LanguageManager().get('place_order'),
                     onTap1: () {},
                     onTap2: () {
-                      context.pushNamed('order-history');
+                      // context.pushNamed('order-history');
+                      context.pushNamed(RoutePaths.orderHistory);
                     },
                   ),
             SizedBox(height: 0.02 * Responsive.getHeight(context)),

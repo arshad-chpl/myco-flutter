@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
@@ -42,8 +45,8 @@ class DistributorVisitorPage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Image.asset(
-                          'assets/take_order/call-calling.png',
+                        SvgPicture.asset(
+                          AppAssets.calling,
                           width: 0.04 * Responsive.getWidth(context),
                         ),
                         SizedBox(width: 0.02 * Responsive.getWidth(context)),
@@ -59,8 +62,8 @@ class DistributorVisitorPage extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image.asset(
-                          'assets/take_order/location.png',
+                        SvgPicture.asset(
+                          AppAssets.location,
                           width: 0.04 * Responsive.getWidth(context),
                         ),
                         SizedBox(width: 0.02 * Responsive.getWidth(context)),
@@ -160,7 +163,9 @@ class DistributorVisitorPage extends StatelessWidget {
                             );
                           }
                         },
-                        title: isRunning ? LanguageManager().get('stop') : LanguageManager().get('start'),
+                        title: isRunning
+                            ? LanguageManager().get('stop')
+                            : LanguageManager().get('start'),
                         width: 0.2 * Responsive.getWidth(context),
                         height: 0.035 * Responsive.getHeight(context),
                         backgroundColor: AppTheme.getColor(context).secondary,
@@ -168,12 +173,12 @@ class DistributorVisitorPage extends StatelessWidget {
                         borderColor: AppTheme.getColor(context).secondary,
                         isShadowBottomLeft: true,
                         image: isRunning
-                            ? Image.asset(
-                                'assets/take_order/stop-button.png',
+                            ? SvgPicture.asset(
+                                AppAssets.stop,
                                 width: 0.05 * Responsive.getWidth(context),
                               )
-                            : Image.asset(
-                                'assets/take_order/play-button.png',
+                            : SvgPicture.asset(
+                                AppAssets.start,
                                 width: 0.03 * Responsive.getWidth(context),
                               ),
 
@@ -236,26 +241,26 @@ class DistributorVisitorPage extends StatelessWidget {
               children: [
                 getCommonColumn(
                   context,
-                  imagePath: 'assets/take_order/place_order.png',
+                  imagePath: AppAssets.placeOrder,
                   name: 'place_order',
                   onTap: () {
-                    context.pushNamed('take-order');
+                    context.pushNamed(RoutePaths.takeOrder);
                   },
                 ),
                 getCommonColumn(
                   context,
-                  imagePath: 'assets/take_order/order_history.png',
+                  imagePath: AppAssets.orderHistory,
                   name: 'order_history',
                   onTap: () {
-                    context.pushNamed('order-history');
+                    context.pushNamed(RoutePaths.orderHistory);
                   },
                 ),
                 getCommonColumn(
                   context,
-                  imagePath: 'assets/take_order/no_order.png',
+                  imagePath: AppAssets.noOrder,
                   name: 'no_order',
                   onTap: () {
-                    context.pushNamed('no-order');
+                    context.pushNamed(RoutePaths.noOrder);
                   },
                 ),
               ],
@@ -301,7 +306,7 @@ class DistributorVisitorPage extends StatelessWidget {
               isButton: true,
               buttonText: LanguageManager().get('change'),
               onTap: () {
-                context.pushNamed('all-distributor');
+                context.pushNamed(RoutePaths.allDistributor);
               },
               bottomWidget: Padding(
                 padding: EdgeInsets.symmetric(
@@ -608,7 +613,7 @@ class DistributorVisitorPage extends StatelessWidget {
     onTap: onTap,
     child: Column(
       children: [
-        Image.asset(imagePath, width: 0.13 * Responsive.getWidth(context)),
+        SvgPicture.asset(imagePath, width: 0.13 * Responsive.getWidth(context)),
         SizedBox(height: 0.03 * Responsive.getWidth(context)),
         CustomText(
           name,

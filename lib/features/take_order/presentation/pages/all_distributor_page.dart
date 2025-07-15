@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -37,7 +38,7 @@ class AllDistributorPage extends StatelessWidget {
             child: ListView.separated(
               itemCount: 3,
               itemBuilder: (context, index) => InkWell(
-                onTap: () => context.pushNamed('distributor-visitor'),
+                onTap: () => context.pushNamed(RoutePaths.distributorVisitor),
                 child: DistributorCard(
                   headerHeight: 0.045 * Responsive.getHeight(context),
                   title: 'Mukund',
