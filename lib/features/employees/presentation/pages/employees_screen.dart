@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -12,6 +13,7 @@ import 'package:myco_flutter/features/employees/data/models/branch_model.dart';
 import 'package:myco_flutter/features/employees/data/models/department_model.dart';
 import 'package:myco_flutter/features/employees/data/models/employee_model.dart';
 import 'package:myco_flutter/features/employees/presentation/widgets/employee_card.dart';
+import 'package:myco_flutter/widgets/custom_loader.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
@@ -43,6 +45,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
 
   bool isLoading = false;
 
+  String searchQuery = '';
   final Set<int> selectedEmployeeIndexes = {};
   final TextEditingController branchController = TextEditingController();
   final TextEditingController departmentController = TextEditingController();
@@ -107,7 +110,6 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
         branchController.text = userBranch.blockName;
         departmentController.text = userDepartment.departmentName;
       });
-
       _fetchData(
         blockId: userDepartment.blockId,
         floorId: userDepartment.floorId,
@@ -161,6 +163,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
       selectedDepartment = null;
       branchController.text = branch?.blockName ?? '';
       departmentController.text = '';
+      searchQuery = '';
     });
 
     final branchDepartments = departments
@@ -178,6 +181,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     setState(() {
       selectedDepartment = department;
       departmentController.text = department?.departmentName ?? '';
+      searchQuery = '';
     });
 
     if (department != null) {
@@ -185,14 +189,28 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     }
   }
 
+  void _onSearch(String query) {
+    setState(() {
+      searchQuery = query.trim().toLowerCase();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Responsive.init(context);
+
     final filteredDepartments = selectedBranch == null
         ? []
         : departments
               .where((d) => d.blockId == selectedBranch!.blockId)
               .toList();
+
+    final List<EmployeeModel> filteredEmployees = searchQuery.isEmpty
+        ? employees
+        : employees.where((e) {
+            return e.userFullName.toLowerCase().contains(searchQuery) ||
+                e.designation.toLowerCase().contains(searchQuery);
+          }).toList();
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -207,26 +225,30 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
         appbartxtcolor: AppTheme.getColor(context).onSurface,
       ),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(child: CustomLoader())
           : Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   MyCoTextfield(
-                    prefix: Image.asset(
-                      'assets/take_order/search-normal.png',
-                      scale: 20,
+                    prefix: SvgPicture.asset(
+                      AppAssets.searchNormal,
+                      fit: BoxFit.scaleDown,
                     ),
                     hintText: 'search',
-                    maxLines: 1,
                     hintTextStyle: TextStyle(
                       fontSize: 14 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary,
                     ),
+                    textInputType: TextInputType.text,
                     textAlignment: TextAlign.left,
                     boarderRadius: 10,
-                    contentPadding: const EdgeInsets.all(10),
+                    contentPadding: EdgeInsets.all(
+                      10 * Responsive.getResponsive(context),
+                    ),
+                    onChanged: _onSearch,
                   ),
                   SizedBox(height: Responsive.scaleHeight(16)),
                   Padding(
@@ -251,7 +273,9 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                           },
                                         )
                                         .toList(),
+                                    selectedId: selectedBranch?.blockId,
                                   );
+
                               final branch = branches.firstWhere(
                                 (b) => b.blockId == selectedId,
                                 orElse: () => BranchModel.empty(),
@@ -279,13 +303,14 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                     dataList: filteredDepartments
                                         .map(
                                           (d) => {
-                                            'id': '${d.floorId}',
-                                            'name': '${d.departmentName}',
+                                            'id': d.floorId.toString(),
+                                            'name': d.departmentName.toString(),
                                           },
                                         )
-                                        .cast<Map<String, String>>()
                                         .toList(),
+                                    selectedId: selectedDepartment?.floorId,
                                   );
+
                               final dept = filteredDepartments.firstWhere(
                                 (d) => d.floorId == selectedId,
                                 orElse: () => DepartmentModel.empty(),
@@ -305,7 +330,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                     ),
                   ),
                   Expanded(
-                    child: employees.isEmpty
+                    child: filteredEmployees.isEmpty
                         ? const Center(child: Text('No employees found'))
                         : GridView.builder(
                             padding: const EdgeInsets.all(8),
@@ -324,9 +349,9 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                     context,
                                   ).childAspectRatio,
                                 ),
-                            itemCount: employees.length,
+                            itemCount: filteredEmployees.length,
                             itemBuilder: (context, index) {
-                              final emp = employees[index];
+                              final emp = filteredEmployees[index];
                               return EmployeeSelectionCard(
                                 name: emp.userFullName,
                                 department: emp.designation,
@@ -335,6 +360,12 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                   index,
                                 ),
                                 onSelected: (value) {
+                                  final selectedEmployee =
+                                      filteredEmployees[index];
+                                  debugPrint(
+                                    'Selected Employee: ${jsonEncode(selectedEmployee.toJson())}',
+                                  );
+
                                   setState(() {
                                     if (selectedEmployeeIndexes.contains(
                                       index,

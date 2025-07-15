@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
@@ -15,24 +17,24 @@ Future<String?> showCustomSimpleBottomSheet({
   ImageProvider? icon,
   String? searchHint,
   String? btnTitle,
-}) => showModalBottomSheet<String>(
-  context: context,
-  isScrollControlled: true,
-  backgroundColor: Colors.transparent,
-  builder: (_) => _CustomSimpleBottomSheet(
-    heading: heading,
-    dataList: dataList,
-    selectedId: selectedId,
-    icon: icon,
-    searchHint: searchHint,
-    btnTitle: btnTitle,
-  ),
-);
+}) =>
+    showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _CustomSimpleBottomSheet(
+        heading: heading,
+        dataList: dataList,
+        selectedId: selectedId,
+        icon: icon,
+        searchHint: searchHint,
+        btnTitle: btnTitle,
+      ),
+    );
 
 class _CustomSimpleBottomSheet extends StatefulWidget {
   final List<Map<String, String>> dataList;
   final String heading;
-  final bool isKey;
   final String? selectedId;
   final String? searchHint;
   final String? btnTitle;
@@ -45,7 +47,6 @@ class _CustomSimpleBottomSheet extends StatefulWidget {
     this.searchHint,
     this.btnTitle,
     this.icon,
-    this.isKey = false,
   });
 
   @override
@@ -70,10 +71,9 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
       searchQuery = query;
       filteredList = widget.dataList
           .where(
-            (item) => (item['name'] ?? '').toLowerCase().contains(
-              query.toLowerCase(),
-            ),
-          )
+            (item) =>
+            (item['name'] ?? '').toLowerCase().contains(query.toLowerCase()),
+      )
           .toList();
     });
   }
@@ -121,7 +121,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
 
         // Search field
         MyCoTextfield(
-          prefix: Image.asset('assets/take_order/search-normal.png', scale: 20),
+          prefix: SvgPicture.asset(AppAssets.searchNormal, fit: BoxFit.scaleDown),
           hintText: widget.searchHint ?? 'Search',
           hintTextStyle: TextStyle(
             fontSize: 14 * Responsive.getResponsiveText(context),
@@ -157,7 +157,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                 ),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? AppTheme.getColor(context).primary
+                      ? AppTheme.getColor(context).surfaceContainer
                       : Colors.white,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
@@ -176,9 +176,6 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                       horizontal: 16 * Responsive.getResponsive(context),
                     ),
                     decoration: BoxDecoration(
-                      color: isSelected
-                          ? AppTheme.getColor(context).surfaceContainer
-                          : Colors.transparent,
                       borderRadius: BorderRadius.circular(11),
                     ),
                     child: CustomText(
@@ -186,7 +183,9 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                       textAlign: TextAlign.center,
                       fontWeight: FontWeight.w700,
                       fontSize: 14 * Responsive.getResponsiveText(context),
-                      color: AppColors.textPrimary,
+                      color: isSelected
+                          ? AppTheme.getColor(context).primary
+                          : AppColors.textPrimary,
                     ),
                   ),
                 ),
@@ -199,9 +198,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
 
         // Submit button
         MyCoButton(
-          
           title: LanguageManager().get(widget.btnTitle ?? 'Submit'),
-          // title: widget.btnTitle ?? 'Select',
           boarderRadius: 50,
           height: 0.05 * Responsive.getHeight(context),
           isShadowBottomLeft: true,

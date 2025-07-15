@@ -58,6 +58,7 @@ class AppAssets {
 
   //images employees
   static const String downArrow = '$employees/down_arrow.png';
+  static const String searchNormal = '$employees/search-normal.svg';
 
   //images stepper
   static const String stepperCheckIcon = '$stepper/check.svg';

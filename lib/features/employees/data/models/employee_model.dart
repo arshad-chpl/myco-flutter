@@ -36,21 +36,44 @@ class EmployeeModel {
   });
 
   factory EmployeeModel.fromJson(Map<String, dynamic> json) => EmployeeModel(
-      userId: json['user_id'],
-      unitId: json['unit_id'],
-      blockId: json['block_id'],
-      floorId: json['floor_id'],
-      userFirstName: json['user_first_name'],
-      userLastName: json['user_last_name'],
-      userMobile: json['user_mobile'],
-      userFullName: json['user_full_name'],
-      shortName: json['short_name'],
-      societyId: json['society_id'],
-      designation: json['designation'],
-      companyLeaveDate: json['company_leave_date'],
-      companyLeaveDateView: json['company_leave_date_view'],
-      isFutureDate: json['is_future_date'],
-      userActive: json['user_active'],
-      userProfilePic: json['user_profile_pic'],
-    );
+    userId: json['user_id'],
+    unitId: json['unit_id'],
+    blockId: json['block_id'],
+    floorId: json['floor_id'],
+    userFirstName: json['user_first_name'],
+    userLastName: json['user_last_name'],
+    userMobile: json['user_mobile'],
+    userFullName: json['user_full_name'],
+    shortName: json['short_name'],
+    societyId: json['society_id'],
+    designation: json['designation'],
+    companyLeaveDate: json['company_leave_date'],
+    companyLeaveDateView: json['company_leave_date_view'],
+    isFutureDate: json['is_future_date'] is bool
+        ? json['is_future_date']
+        : json['is_future_date'].toString() == 'true',
+    userActive: json['user_active'] is bool
+        ? json['user_active']
+        : json['user_active'].toString() == 'true',
+    userProfilePic: json['user_profile_pic'],
+  );
+
+  Map<String, dynamic> toJson() => {
+    'user_id': userId,
+    'unit_id': unitId,
+    'block_id': blockId,
+    'floor_id': floorId,
+    'user_first_name': userFirstName,
+    'user_last_name': userLastName,
+    'user_mobile': userMobile,
+    'user_full_name': userFullName,
+    'short_name': shortName,
+    'society_id': societyId,
+    'designation': designation,
+    'company_leave_date': companyLeaveDate,
+    'company_leave_date_view': companyLeaveDateView,
+    'is_future_date': isFutureDate,
+    'user_active': userActive,
+    'user_profile_pic': userProfilePic,
+  };
 }

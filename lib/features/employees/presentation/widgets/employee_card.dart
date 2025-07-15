@@ -189,7 +189,7 @@ class EmployeeSelectionCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 0.010 * Responsive.getHeight(context)),
+              SizedBox(height: 0.006 * Responsive.getHeight(context)),
               CustomText(
                 name,
                 fontSize: 12 * Responsive.getResponsiveText(context),
