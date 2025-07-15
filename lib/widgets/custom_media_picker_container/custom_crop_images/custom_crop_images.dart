@@ -684,7 +684,8 @@ class _CustomCropImageScreenState extends State<CustomCropImageScreen> {
                             const SizedBox(height: 4),
                             CustomText(
                               ratio.label,
-                              fontSize: 12 * getResponsiveText(context),
+                              fontSize:
+                                  12 * Responsive.getResponsiveText(context),
                               color: isSelected
                                   ? AppTheme.getColor(context).onPrimary
                                   : AppTheme.getColor(
@@ -726,7 +727,7 @@ class _CustomCropImageScreenState extends State<CustomCropImageScreen> {
           CustomText(
             label,
             color: AppColors.secondary,
-            fontSize: 12 * getResponsiveText(context),
+            fontSize: 12 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w500,
           ),
         ],
@@ -756,7 +757,7 @@ class _CustomCropImageScreenState extends State<CustomCropImageScreen> {
             const SizedBox(height: 4),
             CustomText(
               shape.toString().split('.').last.capitalize(),
-              fontSize: 12 * getResponsiveText(context),
+              fontSize: 12 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
               color: isSelected
                   ? AppTheme.getColor(context).onPrimary

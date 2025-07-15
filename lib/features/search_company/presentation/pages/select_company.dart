@@ -20,7 +20,7 @@ class TermsAndConditions extends StatelessWidget {
             context: context,
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
-            builder: (_) => BottomTermAndCondition()
+            builder: (_) => BottomTermAndCondition(),
           );
         },
         child: const Text('Open Full Bottom Sheet'),
@@ -56,23 +56,23 @@ class TermsAndConditions extends StatelessWidget {
   //           ),
   //           color: const Color(0xFF2FBBA4),
   //           child: Padding(
-  //             padding:  EdgeInsets.symmetric(horizontal: 0.02 * getWidth(context)),
+  //             padding:  EdgeInsets.symmetric(horizontal: 0.02 * Responsive.getWidth(context)),
   //             child: Column(
   //               children: [
   //                  CircleAvatar(
-  //                   radius: 54 * getResponsive(context),
+  //                   radius: 54 * Responsive.getResponsive(context),
   //                   backgroundImage: const AssetImage(
-  //                     'assets/search_society/placeholder.png',
+  //                     'visit/search_society/placeholder.png',
   //                   ),
   //                 ),
-  //                  SizedBox(height: 0.01 * getHeight(context)),
+  //                  SizedBox(height: 0.01 * Responsive.getHeight(context)),
   //                 Row(
   //                   mainAxisAlignment: MainAxisAlignment.center,
   //                   children: [
   //                     Text(
   //                       'Designation:',
   //                       style: TextStyle(
-  //                         fontSize: 13 * getResponsiveText(context),
+  //                         fontSize: 13 * Responsive.getResponsiveText(context),
   //                         fontWeight: FontWeight.w800,
   //                         color: AppColors.black,
   //                       ),
@@ -80,51 +80,51 @@ class TermsAndConditions extends StatelessWidget {
   //                     SizedBox(width: 5),
   //                     Text(
   //                       'Flutter Developer',
-  //                       style: TextStyle(fontSize: 13 * getResponsiveText(context), color: AppColors.black),
+  //                       style: TextStyle(fontSize: 13 * Responsive.getResponsiveText(context), color: AppColors.black),
   //                     ),
   //                   ],
   //                 ),
-  //                  SizedBox(height: 0.005 * getHeight(context)),
+  //                  SizedBox(height: 0.005 * Responsive.getHeight(context)),
   //                  Text(
   //                   "Technical - Ahmedabad",
-  //                   style: TextStyle(fontSize: 13 * getResponsiveText(context), color: AppColors.black),
+  //                   style: TextStyle(fontSize: 13 * Responsive.getResponsiveText(context), color: AppColors.black),
   //                 ),
-  //                 SizedBox(height: 0.005 * getHeight(context)),
+  //                 SizedBox(height: 0.005 * Responsive.getHeight(context)),
   //                  Text(
   //                   "+91 99999 99999",
-  //                   style: TextStyle(fontSize: 13 * getResponsiveText(context), color: AppColors.black),
+  //                   style: TextStyle(fontSize: 13 * Responsive.getResponsiveText(context), color: AppColors.black),
   //                 ),
-  //                  SizedBox(height: 0.012 * getHeight(context)),
+  //                  SizedBox(height: 0.012 * Responsive.getHeight(context)),
   //                  Text(
   //                   "Account Not Activated Please Contact to Admin",
-  //                   style: TextStyle(fontSize: 14 * getResponsiveText(context), color: AppColors.red),
+  //                   style: TextStyle(fontSize: 14 * Responsive.getResponsiveText(context), color: AppColors.red),
   //                 ),
   //                 const SizedBox(height: 10),
   //                 Row(
   //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
   //                   children: [
   //                     MyCoButton(onTap: (){
-                        
+
   //                     }, title: "Cancel Request",
-  //                       height: 0.05 * getHeight(context),
-  //                       width: 0.37 * getWidth(context),
-  //                       boarderRadius: 30 * getResponsive(context),
+  //                       height: 0.05 * Responsive.getHeight(context),
+  //                       width: 0.37 * Responsive.getWidth(context),
+  //                       boarderRadius: 30 * Responsive.getResponsive(context),
   //                       textStyle:  TextStyle(
-  //                         fontSize: 17 * getResponsiveText(context),
+  //                         fontSize: 17 * Responsive.getResponsiveText(context),
   //                         fontWeight: FontWeight.w600,
   //                         color: AppColors.primary,
   //                       ),
   //                       backgroundColor: AppColors.white,
-              
+
   //                     ),
   //                     MyCoButton(onTap: (){
-                        
+
   //                     }, title: "Send Reminder",
-  //                       height: 0.05 * getHeight(context),
-  //                       width: 0.37 * getWidth(context),
-  //                       boarderRadius: 30 * getResponsive(context),
+  //                       height: 0.05 * Responsive.getHeight(context),
+  //                       width: 0.37 * Responsive.getWidth(context),
+  //                       boarderRadius: 30 * Responsive.getResponsive(context),
   //                       textStyle:  TextStyle(
-  //                         fontSize: 17 * getResponsiveText(context),
+  //                         fontSize: 17 * Responsive.getResponsiveText(context),
   //                         fontWeight: FontWeight.w600,
   //                         color: Colors.white,
   //                       ),
@@ -137,8 +137,8 @@ class TermsAndConditions extends StatelessWidget {
   //             ),
   //           ),
   //         ),
-  //         SizedBox(height: 0.03 * getHeight(context),),
-  //         Image.asset('assets/search_society/contact_admin.png',height: 0.35 * getHeight(context),),
+  //         SizedBox(height: 0.03 * Responsive.getHeight(context),),
+  //         Image.asset('visit/search_society/contact_admin.png',height: 0.35 * Responsive.getHeight(context),),
   //       ],
   //     ),
   //   ),

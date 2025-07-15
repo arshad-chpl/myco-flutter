@@ -11,7 +11,7 @@ class TakeOrderBloc extends Bloc<TakeOrderEvent, TakeOrderState> {
   Duration _duration = Duration.zero;
   TakeOrderBloc() : super(TakeOrderInitial()) {
     // Tab Event
-    on<TabChangeEvent>(tabChangeEvent);
+    // on<TabChangeEvent>(tabChangeEvent);
 
     // Visit Timer Event
     on<StartVisitEvent>(onStart);
@@ -22,9 +22,9 @@ class TakeOrderBloc extends Bloc<TakeOrderEvent, TakeOrderState> {
     on<SearchQueryChangeEvent>(onSearch);
   }
 
-  void tabChangeEvent(TabChangeEvent event, Emitter<TakeOrderState> emit) {
-    emit(TabChangeState(selectedIndex: event.index));
-  }
+  // void tabChangeEvent(TabChangeEvent event, Emitter<TakeOrderState> emit) {
+  //   emit(TabChangeState(selectedIndex: event.index));
+  // }
 
   void onStart(StartVisitEvent event, Emitter<TakeOrderState> emit) {
     _timer?.cancel();

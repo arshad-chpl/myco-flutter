@@ -36,7 +36,9 @@ class MyCoDialog extends StatelessWidget {
     } else {
       return Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+          borderRadius: BorderRadius.circular(
+            12 * Responsive.getResponsive(context),
+          ),
         ),
         backgroundColor: Theme.of(context).cardColor,
         child: content,
@@ -54,9 +56,9 @@ class _MyCoBottomSheetWrapper extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
     padding: EdgeInsets.only(
       bottom: MediaQuery.of(context).viewInsets.bottom,
-      left: 20 * getResponsive(context),
-      right: 20 * getResponsive(context),
-      top: 10 * getResponsive(context),
+      left: 20 * Responsive.getResponsive(context),
+      right: 20 * Responsive.getResponsive(context),
+      top: 10 * Responsive.getResponsive(context),
     ),
     child: SingleChildScrollView(child: child),
   );
@@ -78,32 +80,32 @@ class _MyCoDialogContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
     padding: EdgeInsets.symmetric(
-      horizontal: 20 * getResponsive(context),
-      vertical: 24 * getResponsive(context),
+      horizontal: 20 * Responsive.getResponsive(context),
+      vertical: 24 * Responsive.getResponsive(context),
     ),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         if (image != null) ...[
           image!,
-          SizedBox(height: .016 * getHeight(context)),
+          SizedBox(height: .016 * Responsive.getHeight(context)),
         ],
         CustomText(
           title,
-          fontSize: 18 * getResponsiveText(context),
+          fontSize: 18 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.bold,
           color: AppTheme.getColor(context).onSurface,
           textAlign: TextAlign.center,
         ),
         if (description != null && description!.isNotEmpty) ...[
-          SizedBox(height: .016 * getHeight(context)),
+          SizedBox(height: .016 * Responsive.getHeight(context)),
           CustomText(
             description!,
-            fontSize: 16 * getResponsive(context),
+            fontSize: 16 * Responsive.getResponsive(context),
             textAlign: TextAlign.center,
           ),
         ],
-        SizedBox(height: .035 * getHeight(context)),
+        SizedBox(height: .035 * Responsive.getHeight(context)),
         GridView.builder(
           shrinkWrap: true,
           itemCount: actions.length,

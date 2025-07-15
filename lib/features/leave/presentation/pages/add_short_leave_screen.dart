@@ -43,8 +43,8 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
       child: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(
-            left: 20 * getResponsive(context),
-            right: 20 * getResponsive(context),
+            left: 20 * Responsive.getResponsive(context),
+            right: 20 * Responsive.getResponsive(context),
           ),
           child: Form(
             key: AddShortLeaveScreen.formKey,
@@ -55,12 +55,12 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
                   text: 'Select Date',
                   isRequired: true,
                   style: TextStyle(
-                    fontSize: 15 * getResponsiveText(context),
+                    fontSize: 15 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w700,
                     color: AppTheme.getColor(context).onSurfaceVariant,
                   ),
                 ),
-                SizedBox(height: 0.01 * getHeight(context)),
+                SizedBox(height: 0.01 * Responsive.getHeight(context)),
                 MyCoTextfield(
                   controller: dateController,
                   focusNode: dateFocusNode,
@@ -92,7 +92,7 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
                     );
                   },
                   hintTextStyle: TextStyle(
-                    fontSize: 18 * getResponsiveText(context),
+                    fontSize: 18 * Responsive.getResponsiveText(context),
                     color: AppTheme.getColor(context).outline,
                   ),
                   preFixImage: 'assets/images/note-favorite.png',
@@ -100,7 +100,7 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     borderSide: BorderSide(color: Color(0xFF98A2B3), width: 1),
                   ),
-                  height: 0.02 * getHeight(context),
+                  height: 0.02 * Responsive.getHeight(context),
                   textAlignment: TextAlign.start,
                   isSuffixIconOn: true,
                   image1: 'assets/images/arrow-down.png',
@@ -108,20 +108,20 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
                   suffix: Icon(
                     Icons.keyboard_arrow_down_sharp,
                     color: AppTheme.getColor(context).primary,
-                    size: 30 * getResponsive(context),
+                    size: 30 * Responsive.getResponsive(context),
                   ),
                 ),
-                SizedBox(height: 0.02 * getHeight(context)),
+                SizedBox(height: 0.02 * Responsive.getHeight(context)),
                 RequiredTextLabel(
                   text: 'Short Leave Time',
                   isRequired: true,
                   style: TextStyle(
-                    fontSize: 15 * getResponsiveText(context),
+                    fontSize: 15 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w700,
                     color: AppTheme.getColor(context).onSurfaceVariant,
                   ),
                 ),
-                SizedBox(height: 0.01 * getHeight(context)),
+                SizedBox(height: 0.01 * Responsive.getHeight(context)),
                 MyCoTextfield(
                   validator: (value) => value == null || value.isEmpty
                       ? 'Please select a time'
@@ -155,7 +155,7 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
                   focusNode: timeFocusNode,
                   hintText: 'Select Time',
                   hintTextStyle: TextStyle(
-                    fontSize: 18 * getResponsiveText(context),
+                    fontSize: 18 * Responsive.getResponsiveText(context),
                     color: AppTheme.getColor(context).outline,
                   ),
                   preFixImage: 'assets/images/clock.png',
@@ -163,20 +163,20 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     borderSide: BorderSide(color: Color(0xFF98A2B3), width: 1),
                   ),
-                  height: 0.02 * getHeight(context),
+                  height: 0.02 * Responsive.getHeight(context),
                   textAlignment: TextAlign.start,
                 ),
-                SizedBox(height: 0.02 * getHeight(context)),
+                SizedBox(height: 0.02 * Responsive.getHeight(context)),
                 RequiredTextLabel(
                   text: 'Add Reason',
                   isRequired: true,
                   style: TextStyle(
-                    fontSize: 15 * getResponsiveText(context),
+                    fontSize: 15 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w700,
                     color: AppTheme.getColor(context).onSurfaceVariant,
                   ),
                 ),
-                SizedBox(height: 0.01 * getHeight(context)),
+                SizedBox(height: 0.01 * Responsive.getHeight(context)),
                 MyCoTextfield(
                   focusNode: reasonFocusNode,
                   isReadOnly: false,
@@ -186,7 +186,7 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
                   controller: reasonController,
                   hintText: 'Reason for Leave',
                   hintTextStyle: TextStyle(
-                    fontSize: 18 * getResponsiveText(context),
+                    fontSize: 18 * Responsive.getResponsiveText(context),
                     color: AppTheme.getColor(context).outline,
                   ),
                   preFixImage: 'assets/images/message-question.png',
@@ -224,7 +224,7 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
                       }
                     },
                     title: "SUBMIT",
-                    height: 0.065 * getHeight(context),
+                    height: 0.065 * Responsive.getHeight(context),
                     boarderRadius: 30,
                     textStyle: TextStyle(
                       fontSize: 16,

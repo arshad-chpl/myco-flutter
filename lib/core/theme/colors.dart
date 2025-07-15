@@ -6,10 +6,13 @@ class AppColors {
   static const Color secondary = Color(0xFF2FBBA4);
   static const Color myCoCyan = Color(0xFF08A4BB);
   static const Color backgroundPrimary = Color(0xFFFAFAFF);
+  static const Color bgWhite = Color(0xFFFFFFFF);
 
   // Text
   static const Color textPrimary = Color(0xFF101828);
   static const Color textSecondary = Color(0xFF475467);
+  static const Color textGray = Color(0xFF7C7C7C);
+
 
   // Surface
   static const Color surfacePrimary = Color(0xFFF5F5F5);
@@ -37,7 +40,7 @@ class AppColors {
   static const Color textGrey200 = Color(0xFFEAECF0);
   static const Color textBorder300 = Color(0xFFD0D5DD);
   //sign in
-  static const Color textGray = Color(0xFF475467);
+  // static const Color textGray = Color(0xFF475467);
   static const Color lightPurple = Color(0xFFF4F3FF);
   static const Color gray = Color(0xFF98A2B3);
   static const Color containerHigh = Color(0xFFDCEFFF);
@@ -78,5 +81,11 @@ class AppColors {
   static const Color containerGrey = Color(0xFFF9FAFB);
   static const Color lightBlue = Color(0xFFDEE5EF);
   static const Color littleDarkBlue = Color(0xFF5B84A6);
+
+
+
+  static const Color deleteIcon = Color(0xFFD01515);
+
+
 
 }

@@ -34,14 +34,14 @@ class CustomTableWidget extends StatelessWidget {
       children: [
         CustomText(
           '$name',
-          fontSize: 12 * getResponsiveText(context),
+          fontSize: 12 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,
           color: AppTheme.getColor(context).onSurface,
         ),
-        SizedBox(width: 0.006 * getWidth(context)),
+        SizedBox(width: 0.006 * Responsive.getWidth(context)),
         CustomText(
           '$designation',
-          fontSize: 12 * getResponsiveText(context),
+          fontSize: 12 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,
           color: AppTheme.getColor(context).outline,
         ),

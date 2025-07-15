@@ -19,12 +19,13 @@ class _BouncingImageState extends State<BouncingImage>
 
     _controller = AnimationController(
       vsync: this,
-      duration:  const Duration(milliseconds: 1400),
+      duration: const Duration(milliseconds: 1400),
     )..repeat(reverse: true);
 
-    _animation = Tween<double>(begin: 0.0, end: 25.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: 0.0,
+      end: 25.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -35,13 +36,13 @@ class _BouncingImageState extends State<BouncingImage>
 
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) => Transform.translate(
-          offset: Offset(0, -_animation.value),
-          child: Image.asset(
-            'assets/search_society/get-started.png',
-            width: getWidth(context) * 0.85,
-          ),
-        ),
-    );
+    animation: _animation,
+    builder: (context, child) => Transform.translate(
+      offset: Offset(0, -_animation.value),
+      child: Image.asset(
+        'assets/search_society/get-started.png',
+        width: Responsive.getWidth(context) * 0.85,
+      ),
+    ),
+  );
 }

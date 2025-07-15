@@ -1,15 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-// import 'package:myco_employee/core/colors.dart';
-// import 'package:myco_employee/widgets/new_myco_button.dart';
-// import 'package:myco_employee/widgets/new_myco_button_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class DialDatePickerWidget extends StatefulWidget {
   final void Function(DateTime selectedDate) onSubmit;
-  final DateTime initialDate;
   final DateTime? minDate;
   final DateTime? maxDate;
   final bool pickDay;
@@ -21,18 +19,18 @@ class DialDatePickerWidget extends StatefulWidget {
   final bool? use24hFormat;
 
   const DialDatePickerWidget({
-    required this.initialDate,
     required this.onSubmit,
     super.key,
     this.minDate,
     this.maxDate,
     this.pickDay = true,
-    this.timePicker = false, // NEW
+    this.timePicker = false,
     this.image,
     this.height,
     this.width,
     this.bottomSheetHeight,
     this.use24hFormat,
+    required DateTime initialDate,
   });
 
   @override
@@ -41,12 +39,13 @@ class DialDatePickerWidget extends StatefulWidget {
 
 class _DialDatePickerWidgetState extends State<DialDatePickerWidget> {
   late DateTime _selectedDate;
+  final GlobalKey<_CustomTimePickerState> _timePickerKey = GlobalKey();
+  final GlobalKey<_CustomDatePickerState> _datePickerKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    _selectedDate = widget.initialDate;
-
+    _selectedDate = DateTime.now();
     if (widget.minDate != null && _selectedDate.isBefore(widget.minDate!)) {
       _selectedDate = widget.minDate!;
     }
@@ -68,38 +67,19 @@ class _DialDatePickerWidgetState extends State<DialDatePickerWidget> {
           children: [
             Expanded(
               child: widget.timePicker
-                  ? CupertinoDatePicker(
-                      mode: CupertinoDatePickerMode.time,
+                  ? CustomTimePicker(
+                      key: _timePickerKey,
                       initialDateTime: _selectedDate,
                       use24hFormat: widget.use24hFormat ?? false,
-                      onDateTimeChanged: (DateTime newTime) {
-                        setState(() {
-                          _selectedDate = DateTime(
-                            _selectedDate.year,
-                            _selectedDate.month,
-                            _selectedDate.day,
-                            newTime.hour,
-                            newTime.minute,
-                          );
-                        });
-                      },
+                      onTimeChanged: (_) {},
                     )
                   : CustomDatePicker(
+                      key: _datePickerKey,
                       initialDate: _selectedDate,
-                      minDate: widget.minDate ?? DateTime(1900),
+                      minDate: widget.minDate ?? DateTime(1900, 1, 1),
                       maxDate: widget.maxDate ?? DateTime(2100, 12, 31),
                       pickDay: widget.pickDay,
-                      onDateChanged: (date) {
-                        setState(() {
-                          _selectedDate = DateTime(
-                            date.year,
-                            date.month,
-                            date.day,
-                            _selectedDate.hour,
-                            _selectedDate.minute,
-                          );
-                        });
-                      },
+                      onDateChanged: (_) {},
                     ),
             ),
             Container(
@@ -116,6 +96,29 @@ class _DialDatePickerWidgetState extends State<DialDatePickerWidget> {
                   ),
                 ),
                 onPressed: () {
+                  DateTime newDateTime;
+                  if (widget.timePicker) {
+                    final selectedTime = _timePickerKey.currentState
+                        ?.getSelectedTime();
+                    newDateTime = DateTime(
+                      _selectedDate.year,
+                      _selectedDate.month,
+                      _selectedDate.day,
+                      selectedTime?.hour ?? _selectedDate.hour,
+                      selectedTime?.minute ?? _selectedDate.minute,
+                    );
+                  } else {
+                    final selectedDate = _datePickerKey.currentState
+                        ?.getSelectedDate();
+                    newDateTime = DateTime(
+                      selectedDate?.year ?? _selectedDate.year,
+                      selectedDate?.month ?? _selectedDate.month,
+                      selectedDate?.day ?? _selectedDate.day,
+                      _selectedDate.hour,
+                      _selectedDate.minute,
+                    );
+                  }
+                  setState(() => _selectedDate = newDateTime);
                   widget.onSubmit(_selectedDate);
                   Navigator.of(context).pop();
                 },
@@ -152,7 +155,6 @@ class _DialDatePickerWidgetState extends State<DialDatePickerWidget> {
       'Nov',
       'Dec',
     ];
-    if (month < 1 || month > 12) return '';
     return months[month - 1];
   }
 
@@ -162,7 +164,7 @@ class _DialDatePickerWidgetState extends State<DialDatePickerWidget> {
     title: _formatDate(_selectedDate),
     textStyle: const TextStyle(
       color: AppColors.black,
-      fontWeight: FontWeight.w500,
+      fontFamily: 'Gilroy-semiBold',
     ),
     image: widget.image,
     width: widget.width,
@@ -172,6 +174,116 @@ class _DialDatePickerWidgetState extends State<DialDatePickerWidget> {
   );
 }
 
+// -- For Time Picker --
+class CustomTimePicker extends StatefulWidget {
+  final DateTime initialDateTime;
+  final bool use24hFormat;
+  final ValueChanged<DateTime> onTimeChanged;
+
+  const CustomTimePicker({
+    required this.initialDateTime,
+    required this.onTimeChanged,
+    this.use24hFormat = false,
+    super.key,
+  });
+
+  @override
+  State<CustomTimePicker> createState() => _CustomTimePickerState();
+}
+
+class _CustomTimePickerState extends State<CustomTimePicker> {
+  late int selectedHour;
+  late int selectedMinute;
+  late String selectedPeriod;
+
+  late List<int> hourList;
+  final List<int> minuteList = List.generate(60, (i) => i);
+  final List<String> periods = ['AM', 'PM'];
+
+  @override
+  void initState() {
+    super.initState();
+    final dt = widget.initialDateTime;
+    if (widget.use24hFormat) {
+      hourList = List.generate(24, (i) => i);
+      selectedHour = dt.hour;
+    } else {
+      hourList = List.generate(12, (i) => i + 1);
+      selectedHour = dt.hour % 12 == 0 ? 12 : dt.hour % 12;
+      selectedPeriod = dt.hour >= 12 ? 'PM' : 'AM';
+    }
+    selectedMinute = dt.minute;
+  }
+
+  DateTime getSelectedTime() {
+    int hour = selectedHour;
+    if (!widget.use24hFormat) {
+      if (selectedPeriod == 'PM' && hour < 12) hour += 12;
+      if (selectedPeriod == 'AM' && hour == 12) hour = 0;
+    }
+    return DateTime(0, 1, 1, hour, selectedMinute);
+  }
+
+  Widget _buildStaticPicker<T>({
+    required List<T> items,
+    required int selectedIndex,
+    required ValueChanged<int> onChanged,
+    required String Function(T item) displayText,
+  }) => Expanded(
+    child: CupertinoPicker(
+      scrollController: FixedExtentScrollController(initialItem: selectedIndex),
+      diameterRatio: 1,
+      itemExtent: 32,
+      selectionOverlay: Container(
+        decoration: const BoxDecoration(
+          border: Border.symmetric(
+            horizontal: BorderSide(color: AppColors.primary, width: 1.5),
+          ),
+        ),
+        margin: const EdgeInsets.symmetric(horizontal: 6),
+      ),
+      onSelectedItemChanged: onChanged,
+      children: items
+          .map(
+            (item) => Center(
+              child: CustomText(
+                displayText(item),
+                fontSize: 22 * Responsive.getResponsiveText(context),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          )
+          .toList(),
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      _buildLoopingPicker<int>(
+        items: hourList,
+        selectedIndex: hourList.indexOf(selectedHour),
+        onChanged: (i) => setState(() => selectedHour = hourList[i]),
+        displayText: (val) => val.toString().padLeft(2, '0'),
+      ),
+      _buildLoopingPicker<int>(
+        items: minuteList,
+        selectedIndex: selectedMinute,
+        onChanged: (i) => setState(() => selectedMinute = i),
+        displayText: (val) => val.toString().padLeft(2, '0'),
+      ),
+      if (!widget.use24hFormat)
+        _buildStaticPicker<String>(
+          items: periods,
+          selectedIndex: periods.indexOf(selectedPeriod),
+          onChanged: (i) => setState(() => selectedPeriod = periods[i]),
+          displayText: (val) => val,
+        ),
+    ],
+  );
+}
+
+// -- For Date Picker --
 class CustomDatePicker extends StatefulWidget {
   final DateTime initialDate;
   final DateTime minDate;
@@ -208,13 +320,11 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     selectedMonth = widget.initialDate.month;
     selectedYear = widget.initialDate.year;
 
-    // Month labels
     monthNames = List.generate(
       12,
       (i) => DateFormat.MMM().format(DateTime(0, i + 1)),
     );
 
-    // Year range
     yearList = List.generate(
       widget.maxDate.year - widget.minDate.year + 1,
       (i) => widget.minDate.year + i,
@@ -233,95 +343,98 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
     final int startDay = isMinMonth ? widget.minDate.day : 1;
     int endDay = DateTime(selectedYear, selectedMonth + 1, 0).day;
+
     if (isMaxMonth) endDay = widget.maxDate.day.clamp(1, endDay);
 
     dayList = List.generate(endDay - startDay + 1, (i) => startDay + i);
 
     if (!dayList.contains(selectedDay)) {
-      selectedDay = dayList.last;
+      selectedDay = dayList.first;
     }
   }
 
-  void _notifyChange() {
-    final pickedDate = DateTime(
-      selectedYear,
-      selectedMonth,
-      widget.pickDay ? selectedDay : 1,
-    );
-    widget.onDateChanged(pickedDate);
-  }
+  DateTime getSelectedDate() =>
+      DateTime(selectedYear, selectedMonth, widget.pickDay ? selectedDay : 1);
 
-  Widget _buildPicker({
-    required FixedExtentScrollController controller,
-    required List<Widget> children,
-    required ValueChanged<int> onChanged,
-  }) => Expanded(
-    child: CupertinoPicker(
-      scrollController: controller,
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      if (widget.pickDay)
+        _buildLoopingPicker<int>(
+          items: dayList,
+          selectedIndex: dayList.indexOf(selectedDay),
+          onChanged: (index) => setState(() => selectedDay = dayList[index]),
+          displayText: (val) => val.toString().padLeft(2, '0'),
+        ),
+      _buildLoopingPicker<String>(
+        items: monthNames,
+        selectedIndex: selectedMonth - 1,
+        onChanged: (index) {
+          setState(() {
+            selectedMonth = index + 1;
+            _generateDayList();
+          });
+        },
+        displayText: (val) => val,
+      ),
+      _buildLoopingPicker<int>(
+        items: yearList,
+        selectedIndex: selectedYear - widget.minDate.year,
+        onChanged: (index) {
+          setState(() {
+            selectedYear = yearList[index];
+            _generateDayList();
+          });
+        },
+        displayText: (val) => val.toString(),
+      ),
+    ],
+  );
+}
+
+Widget _buildLoopingPicker<T>({
+  required List<T> items,
+  required int selectedIndex,
+  required ValueChanged<int> onChanged,
+  required String Function(T item) displayText,
+}) {
+  const int loopMultiplier = 1000;
+  final int totalCount = items.length * loopMultiplier;
+  final int middleIndex = (totalCount / 2).floor();
+  final int initialLoopIndex =
+      middleIndex - (middleIndex % items.length) + selectedIndex;
+
+  return Expanded(
+    child: CupertinoPicker.builder(
+      scrollController: FixedExtentScrollController(
+        initialItem: initialLoopIndex,
+      ),
+      diameterRatio: 1,
       itemExtent: 32,
-      onSelectedItemChanged: onChanged,
+      childCount: totalCount,
       selectionOverlay: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           border: Border.symmetric(
             horizontal: BorderSide(color: AppColors.primary, width: 1.5),
           ),
         ),
         margin: const EdgeInsets.symmetric(horizontal: 6),
       ),
-      children: children,
-    ),
-  );
+      itemBuilder: (context, index) {
+        final actualIndex = index % items.length;
+        final isSelected = actualIndex == selectedIndex;
+        final item = items[actualIndex];
 
-  @override
-  Widget build(BuildContext context) => Row(
-    children: [
-      if (widget.pickDay)
-        _buildPicker(
-          controller: FixedExtentScrollController(
-            initialItem: dayList.indexOf(selectedDay),
+        return Center(
+          child: CustomText(
+            displayText(item),
+            fontSize: 22 * Responsive.getResponsiveText(context),
+            color: isSelected ? AppColors.primary : AppColors.textPrimary,
+            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
           ),
-          children: dayList
-              .map(
-                (d) => Center(
-                  child: Text(d.toString(), textAlign: TextAlign.center),
-                ),
-              )
-              .toList(),
-          onChanged: (index) {
-            setState(() {
-              selectedDay = dayList[index];
-              _notifyChange();
-            });
-          },
-        ),
-
-      _buildPicker(
-        controller: FixedExtentScrollController(initialItem: selectedMonth - 1),
-        children: monthNames.map((m) => Center(child: Text(m))).toList(),
-        onChanged: (index) {
-          setState(() {
-            selectedMonth = index + 1;
-            _generateDayList();
-            _notifyChange();
-          });
-        },
-      ),
-
-      _buildPicker(
-        controller: FixedExtentScrollController(
-          initialItem: selectedYear - widget.minDate.year,
-        ),
-        children: yearList
-            .map((y) => Center(child: Text(y.toString())))
-            .toList(),
-        onChanged: (index) {
-          setState(() {
-            selectedYear = yearList[index];
-            _generateDayList();
-            _notifyChange();
-          });
-        },
-      ),
-    ],
+        );
+      },
+      onSelectedItemChanged: (index) => onChanged(index % items.length),
+    ),
   );
 }

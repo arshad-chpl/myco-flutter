@@ -7,7 +7,6 @@ import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart'
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
-
 class BottomsheetRadioButton extends StatefulWidget {
   final List<Map<String, String>> items;
   final double? height;
@@ -50,18 +49,17 @@ class _BottomsheetRadioButtonState extends State<BottomsheetRadioButton> {
 
   @override
   Widget build(BuildContext context) {
-    final filteredItems =
-        widget.items
-            .where(
-              (item) =>
-                  item['title']!.toLowerCase().contains(
-                    searchQuery.toLowerCase(),
-                  ) ||
-                  item['subtitle']!.toLowerCase().contains(
-                    searchQuery.toLowerCase(),
-                  ),
-            )
-            .toList();
+    final filteredItems = widget.items
+        .where(
+          (item) =>
+              item['title']!.toLowerCase().contains(
+                searchQuery.toLowerCase(),
+              ) ||
+              item['subtitle']!.toLowerCase().contains(
+                searchQuery.toLowerCase(),
+              ),
+        )
+        .toList();
 
     return Container(
       height: widget.height ?? MediaQuery.of(context).size.height * 0.8,
@@ -100,28 +98,28 @@ class _BottomsheetRadioButtonState extends State<BottomsheetRadioButton> {
                 ),
               ),
             ),
-            Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Company Name',
-                  style: TextStyle(
-                    fontSize: 15 * getResponsiveText(context),
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF101828),
-                    fontFamily: 'Gilroy-Bold',
-                  ),
-                  textAlign: TextAlign.start,
-                ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Company Name',
+              style: TextStyle(
+                fontSize: 15 * Responsive.getResponsiveText(context),
+                fontWeight: FontWeight.w500,
+                color: const Color(0xFF101828),
+                fontFamily: 'Gilroy-Bold',
               ),
-              SizedBox(height: 0.01 * getHeight(context)),
+              textAlign: TextAlign.start,
+            ),
+          ),
+          SizedBox(height: 0.01 * Responsive.getHeight(context)),
           MyCoTextfield(
             isSuffixIconOn: true,
             hintText: "Search",
             hintTextStyle: TextStyle(color: AppColors.black),
             border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  borderSide: BorderSide(color: Color(0xFF98A2B3), width: 1),
-                ),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(color: Color(0xFF98A2B3), width: 1),
+            ),
             preFixImage: 'assets/search_society/company_icon.png',
             onChanged: (value) {
               setState(() {
@@ -129,7 +127,7 @@ class _BottomsheetRadioButtonState extends State<BottomsheetRadioButton> {
               });
             },
           ),
-           SizedBox(height: getHeight(context) * 0.025),
+          SizedBox(height: Responsive.getHeight(context) * 0.025),
           Expanded(
             child: ListView.builder(
               itemCount: filteredItems.length,
@@ -146,7 +144,8 @@ class _BottomsheetRadioButtonState extends State<BottomsheetRadioButton> {
                       color: AppColors.primary.withAlpha((0.3 * 255).toInt()),
                     ),
                   ),
-                  child: RadioListTile<String>(
+                  child:
+                   RadioListTile<String>(
                     value: item['id']!,
                     groupValue: selectedItem,
                     onChanged: (value) {
@@ -203,8 +202,9 @@ class _BottomsheetRadioButtonState extends State<BottomsheetRadioButton> {
                     ),
                     secondary: CircleAvatar(
                       radius: 20,
-                      backgroundColor:
-                          isSelected ? Colors.white : AppColors.primary,
+                      backgroundColor: isSelected
+                          ? Colors.white
+                          : AppColors.primary,
                       child: Container(
                         alignment: Alignment.center,
                         height: 30,
@@ -239,9 +239,9 @@ class _BottomsheetRadioButtonState extends State<BottomsheetRadioButton> {
               Expanded(
                 child: MyCoButton(
                   title: 'Close',
-                  
+
                   boarderRadius: 30,
-                  width: getWidth(context) * .450,
+                  width: Responsive.getWidth(context) * .450,
                   backgroundColor: AppColors.white,
                   border: Border.all(color: AppColors.primary, width: 1),
                   textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(
@@ -258,7 +258,7 @@ class _BottomsheetRadioButtonState extends State<BottomsheetRadioButton> {
                   title: 'Submit',
                   isShadowBottomLeft: true,
                   boarderRadius: 30,
-                  width: getWidth(context) * .450,
+                  width: Responsive.getWidth(context) * .450,
                   onTap: () {
                     // if (selectedItem != null && widget.onSelect != null) {
                     //   widget.onSelect!(selectedItem!);
@@ -288,7 +288,8 @@ class _BottomsheetRadioButtonState extends State<BottomsheetRadioButton> {
                     // }
                     context.pop();
                     showModalBottomSheet(
-                      scrollControlDisabledMaxHeightRatio: 0.7 * getHeight(context),
+                      scrollControlDisabledMaxHeightRatio:
+                          0.7 * Responsive.getHeight(context),
                       backgroundColor: Colors.transparent,
                       context: context,
                       isScrollControlled: true,

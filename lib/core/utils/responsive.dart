@@ -3,6 +3,22 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+class GridConfig {
+  final int itemCount;
+  final double spacing;
+  final double itemWidth;
+  final double itemHeight;
+  final double childAspectRatio;
+
+  GridConfig({
+    required this.itemCount,
+    required this.spacing,
+    required this.itemWidth,
+    required this.itemHeight,
+    required this.childAspectRatio,
+  });
+}
+
 class Responsive {
   static late double _screenWidth;
   static late double _screenHeight;
@@ -12,80 +28,69 @@ class Responsive {
     final size = MediaQuery.of(context).size;
     _screenWidth = size.width;
     _screenHeight = size.height;
-    isTablet = _screenWidth >= 600; // basic tablet breakpoint
+    isTablet = _screenWidth >= 600;
   }
 
   static double screenWidth() => _screenWidth;
+
   static double screenHeight() => _screenHeight;
 
-  static double scaleHeight(double height) {
-    // Scales based on height but limits wild differences
-    return (_screenHeight / 812) * height;
-  }
+  static double scaleHeight(double height) => (_screenHeight / 812) * height;
 
-  static double scaleWidth(double width) {
-    // Based on width (e.g., iPhone 11 base: 375)
-    return (_screenWidth / 375) * width;
-  }
+  static double scaleWidth(double width) => (_screenWidth / 375) * width;
 
   static double scaleText(double size) {
-    // Text scaling with clamping for mobile/tablet
     double factor = _screenWidth / 375;
     factor = factor.clamp(0.85, 1.2);
     return size * factor;
   }
 
-  static double responsivePadding() {
-    return isTablet ? 24 : 16;
+  static double responsivePadding() => isTablet ? 24 : 16;
+
+  static double getHeight(context) => MediaQuery.of(context).size.height;
+
+  static double getWidth(context) => MediaQuery.of(context).size.width;
+
+  static double getResponsive(context) =>
+      MediaQuery.of(context).size.height * 0.001;
+
+  static double getResponsiveOnWidth(context) =>
+      MediaQuery.of(context).size.width * 0.001;
+
+  static double getResponsiveText(context) {
+    double width = MediaQuery.of(context).size.width;
+    if (kIsWeb) return width > 600 ? 1.5 : 1.0;
+    if (Platform.isAndroid) return getWidth(context) > 600 ? 1.5 : 0.8;
+    return getWidth(context) > 600 ? 1.5 : 0.9;
   }
-}
 
-double getHeight(context) {
-  return MediaQuery.of(context).size.height;
-}
+  static double getDashboardResponsiveText(BuildContext context) =>
+      getWidth(context) > 600 ? 1.2 : 1;
 
-double getWidth(context) {
-  print(MediaQuery.of(context).size.width);
-  return MediaQuery.of(context).size.width;
-}
+  static GridConfig getGridConfig(BuildContext context) {
+    final screenWidth = getWidth(context);
+    final spacing = 12.0 * getResponsive(context);
 
-double getResponsive(context) {
-  print(
-    '${MediaQuery.of(context).size.width} , ${MediaQuery.of(context).size.height}',
-  );
-  return MediaQuery.of(context).size.height * 0.001;
-}
+    final itemCount = screenWidth > 1200
+        ? 12
+        : screenWidth > 900
+        ? 9
+        : screenWidth > 600
+        ? 6
+        : 3;
 
-double getResponsiveOnWidth(context) {
-  kDebugMode
-      ? print('Responsive Width: ${MediaQuery.of(context).size.width * 0.001}')
-      : null;
-  return MediaQuery.of(context).size.width * 0.001;
-}
+    final itemWidth = (screenWidth - (spacing * (itemCount - 1))) / itemCount;
 
-// double getResponsiveText(context) {
-//   if (Platform.isAndroid) {
-//     return getWidth(context) > 600 ? 1.5 : 0.8;
-//   } else {
-//     return getWidth(context) > 600 ? 1.5 : 0.9;
-//   }
-// }
-double getResponsiveText(BuildContext context) {
-  double width = MediaQuery.of(context).size.width;
+    final itemHeight = screenWidth > 600 ? 180.0 : 150.0;
 
-  if (kIsWeb) {
-    // Web-specific logic
-    return width > 600 ? 1.5 : 1.0;
-  } else {
-    // Mobile or Desktop
-    return width > 600 ? 1.5 : 0.9;
-  }
-}
+    final childAspectRatio = itemWidth / itemHeight;
 
-double getDashboardResponsiveText(BuildContext context) {
-  if (getWidth(context) > 600) {
-    return 1.2;
-  } else {
-    return 1;
+    return GridConfig(
+      itemCount: itemCount,
+      spacing: spacing,
+      itemWidth: itemWidth,
+      itemHeight: itemHeight,
+      childAspectRatio: childAspectRatio,
+    );
   }
 }

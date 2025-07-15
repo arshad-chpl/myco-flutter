@@ -117,7 +117,7 @@ class ChatScreen extends StatelessWidget {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     double res = getResponsive(context);
+//     double res = Responsive.getResponsive(context);
 //
 //     return Scaffold(
 //       extendBody: true,

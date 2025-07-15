@@ -20,17 +20,17 @@ class DashBoardPage extends StatelessWidget {
 
     body: SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 16,
           children: [
             // AppBar
-            DashboardAppBar(),
+            const DashboardAppBar(),
 
             // Body content
             Expanded(
-              child: getWidth(context) > 600
+              child: Responsive.getWidth(context) > 600
                   ? _tabview(context)
                   : _mobileView(context),
             ),
@@ -40,8 +40,7 @@ class DashBoardPage extends StatelessWidget {
     ),
   );
 
-  Widget _tabview(BuildContext context) {
-    return Row(
+  Widget _tabview(BuildContext context) => Row(
       children: [
         Expanded(
           child: SingleChildScrollView(
@@ -52,12 +51,12 @@ class DashBoardPage extends StatelessWidget {
                 timerAndSlider(context),
 
                 // Circulars and discussion section
-                CircularAndDiscussion(),
+                const CircularAndDiscussion(),
                 // My Team Section
-                MyTeamSection(),
-// Your Department Section 
-                YourDepartmentSection(),
-                MomentsSection(),
+                const MyTeamSection(),
+                // Your Department Section
+                const YourDepartmentSection(),
+                const MomentsSection(),
               ],
             ),
           ),
@@ -70,17 +69,15 @@ class DashBoardPage extends StatelessWidget {
                 QuickActionSection(),
 
                 // Upcoming Celebrations Section
-                UpcomingCelebrationSection(),
+                const UpcomingCelebrationSection(),
               ],
             ),
           ),
         ),
       ],
     );
-  }
 
-  Widget _mobileView(BuildContext context) {
-    return SingleChildScrollView(
+  Widget _mobileView(BuildContext context) => SingleChildScrollView(
       child: Column(
         spacing: 16,
         children: [
@@ -88,24 +85,23 @@ class DashBoardPage extends StatelessWidget {
           timerAndSlider(context),
 
           // Circulars and discussion section
-          CircularAndDiscussion(),
+          const CircularAndDiscussion(),
           // My Team Section
-          MyTeamSection(),
-          
+          const MyTeamSection(),
+
           // Quick Access Section
-           QuickActionSection(),
+          QuickActionSection(),
 
           // Upcoming Celebrations Section
-          UpcomingCelebrationSection(),
+          const UpcomingCelebrationSection(),
 
           //Your Department Section
-          //Your Department Section 
-          YourDepartmentSection(),
+          //Your Department Section
+          const YourDepartmentSection(),
 
           // Moments Section
-          MomentsSection(),
+          const MomentsSection(),
         ],
       ),
     );
-  }
 }
