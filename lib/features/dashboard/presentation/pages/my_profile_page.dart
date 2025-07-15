@@ -22,7 +22,7 @@ class MyProfilePage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
       // automaticallyImplyLeading: false,
-      // backgroundColor: Colors.transparent,
+      appBarBackgoundColor: Colors.transparent,
       leadingWidth: 0.1 * Responsive.getWidth(context),
       title: CustomText(
         "My Profile",

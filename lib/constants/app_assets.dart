@@ -1,5 +1,5 @@
 class AppAssets {
-  // commmon paths for visit in the application
+  // common paths for visit in the application
   static const String basePath = 'assets';
   // static const String fontsPath = '$basePath/fonts';
   static const String imagesPath = '$basePath/images';
@@ -37,6 +37,7 @@ class AppAssets {
   static const String scanQR = '$svgsPath/scanQR.svg';
   static const String refresh = '$svgsPath/refresh.svg';
   static const String result = '$svgsVisit/result.svg';
+  static const String arrowDown = '$svgsPath/arrow_down.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
@@ -66,7 +67,7 @@ class AppAssets {
   static const String assetDocumentText = '$assetVisit/document-text.svg';
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
 
-  //face detection assets
+  //face detection screen assets
   static const String assetCircle = '$visit/circle.png';
   static const String assetCross = '$visit/cross.png';
   static const String assetsDanger = '$visit/danger.png';
