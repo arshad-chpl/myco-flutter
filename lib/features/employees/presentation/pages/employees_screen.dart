@@ -1,3 +1,4 @@
+// [imports stay unchanged]
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
@@ -47,7 +48,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
   final String userId = '21';
   final String societyId = '1';
 
-  bool isLoading = false;
+  bool isEmployeesLoading = true;
 
   String searchQuery = '';
   final Set<int> selectedEmployeeIndexes = {};
@@ -61,7 +62,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
   }
 
   Future<void> _initializeUserData() async {
-    setState(() => isLoading = true);
+    setState(() => isEmployeesLoading = true);
+
     final formData = FormData.fromMap({
       'getEmployees': 'getEmployees',
       'language_id': '1',
@@ -70,63 +72,60 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     });
 
     try {
-      final response = await _dio.post(
-        'employee_controller.php',
-        data: formData,
-      );
-      final data = response.data is String
-          ? jsonDecode(response.data)
-          : response.data;
+      final response = await _dio.post('employee_controller.php', data: formData);
+      final data = response.data is String ? jsonDecode(response.data) : response.data;
 
-      final List<BranchModel> fetchedBranches = (data['branch_list'] as List)
-          .map((e) => BranchModel.fromJson(e))
-          .toList();
+      final List<BranchModel> fetchedBranches =
+      (data['branch_list'] as List).map((e) => BranchModel.fromJson(e)).toList();
 
       final List<DepartmentModel> fetchedDepartments =
-          (data['departments'] as List)
-              .map((e) => DepartmentModel.fromJson(e))
-              .toList();
+      (data['departments'] as List).map((e) => DepartmentModel.fromJson(e)).toList();
 
-      final List<EmployeeModel> fetchedEmployees = (data['employees'] as List)
-          .map((e) => EmployeeModel.fromJson(e))
-          .toList();
+      final List<EmployeeModel> fetchedEmployees =
+      (data['employees'] as List).map((e) => EmployeeModel.fromJson(e)).toList();
 
       final currentUser = fetchedEmployees.firstWhere(
-        (e) => e.userId == userId,
+            (e) => e.userId == userId,
         orElse: () => fetchedEmployees.first,
       );
+
       final userDepartment = fetchedDepartments.firstWhere(
-        (d) => d.floorId == currentUser.floorId,
+            (d) => d.floorId == currentUser.floorId,
         orElse: () => fetchedDepartments.first,
       );
 
       final userBranch = fetchedBranches.firstWhere(
-        (b) => b.blockId == userDepartment.blockId,
+            (b) => b.blockId == userDepartment.blockId,
         orElse: () => fetchedBranches.first,
       );
 
       setState(() {
         branches = fetchedBranches;
         departments = fetchedDepartments;
-        employees = fetchedEmployees;
         selectedBranch = userBranch;
         selectedDepartment = userDepartment;
         branchController.text = userBranch.blockName;
         departmentController.text = userDepartment.departmentName;
       });
-      _fetchData(
+
+      await _fetchData(
         blockId: userDepartment.blockId,
         floorId: userDepartment.floorId,
+        setLoader: true,
       );
     } catch (e) {
       debugPrint('Error initializing user data: $e');
-    } finally {
-      setState(() => isLoading = false);
+      setState(() => isEmployeesLoading = false);
     }
   }
 
-  Future<void> _fetchData({String? blockId, String? floorId}) async {
-    setState(() => isLoading = true);
+  Future<void> _fetchData({
+    String? blockId,
+    String? floorId,
+    bool setLoader = true,
+  }) async {
+    if (setLoader) setState(() => isEmployeesLoading = true);
+
     final formData = FormData.fromMap({
       'getEmployees': 'getEmployees',
       'language_id': '1',
@@ -137,27 +136,23 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     });
 
     try {
-      final response = await _dio.post(
-        'employee_controller.php',
-        data: formData,
-      );
-      final data = response.data is String
-          ? jsonDecode(response.data)
-          : response.data;
+      final response = await _dio.post('employee_controller.php', data: formData);
+      final data = response.data is String ? jsonDecode(response.data) : response.data;
 
-      final List<EmployeeModel> allEmployees = (data['employees'] as List)
-          .map((e) => EmployeeModel.fromJson(e))
+      final List<EmployeeModel> allEmployees =
+      (data['employees'] as List).map((e) => EmployeeModel.fromJson(e)).toList();
+
+      final filtered = allEmployees
+          .where((e) => e.blockId == blockId && e.floorId == floorId)
           .toList();
 
-      final filteredEmployees = allEmployees.where((e) {
-        return e.blockId == blockId && e.floorId == floorId;
-      }).toList();
-
-      setState(() => employees = filteredEmployees);
+      setState(() {
+        employees = filtered;
+        isEmployeesLoading = false; // Set loader false only after data loads
+      });
     } catch (e) {
       debugPrint('Error fetching employees: $e');
-    } finally {
-      setState(() => isLoading = false);
+      setState(() => isEmployeesLoading = false);
     }
   }
 
@@ -170,9 +165,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
       searchQuery = '';
     });
 
-    final branchDepartments = departments
-        .where((d) => d.blockId == branch?.blockId)
-        .toList();
+    final branchDepartments =
+    departments.where((d) => d.blockId == branch?.blockId).toList();
 
     if (branchDepartments.isNotEmpty) {
       _onDepartmentChanged(branchDepartments.first);
@@ -189,14 +183,16 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     });
 
     if (department != null) {
-      _fetchData(blockId: department.blockId, floorId: department.floorId);
+      _fetchData(
+        blockId: department.blockId,
+        floorId: department.floorId,
+        setLoader: true,
+      );
     }
   }
 
   void _onSearch(String query) {
-    setState(() {
-      searchQuery = query.trim().toLowerCase();
-    });
+    setState(() => searchQuery = query.trim().toLowerCase());
   }
 
   @override
@@ -205,19 +201,14 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
 
     final filteredDepartments = selectedBranch == null
         ? []
-        : departments
-              .where((d) => d.blockId == selectedBranch!.blockId)
-              .toList();
+        : departments.where((d) => d.blockId == selectedBranch!.blockId).toList();
 
     final List<EmployeeModel> filteredEmployees = searchQuery.isEmpty
         ? employees
-        : employees
-              .where(
-                (e) =>
-                    e.userFullName.toLowerCase().contains(searchQuery) ||
-                    e.designation.toLowerCase().contains(searchQuery),
-              )
-              .toList();
+        : employees.where((e) {
+      return e.userFullName.toLowerCase().contains(searchQuery) ||
+          e.designation.toLowerCase().contains(searchQuery);
+    }).toList();
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -231,267 +222,142 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
         appBarBackgoundColor: AppTheme.getColor(context).surface,
         appbartxtcolor: AppTheme.getColor(context).onSurface,
       ),
-      body: isLoading
+      body: isEmployeesLoading
           ? const Center(child: CustomLoader())
           : Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomLoader(),
-                  SizedBox(height: 100),
-                  MyCoTextfield(
-                    prefix: SvgPicture.asset(
-                      AppAssets.searchNormal,
-                      fit: BoxFit.scaleDown,
-                    ),
-                    hintText: 'search',
-                    hintTextStyle: TextStyle(
-                      fontSize: 14 * Responsive.getResponsiveText(context),
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
-                    ),
-                    textInputType: TextInputType.text,
-                    textAlignment: TextAlign.left,
-                    boarderRadius: 10,
-                    contentPadding: EdgeInsets.all(
-                      10 * Responsive.getResponsive(context),
-                    ),
-                    onChanged: _onSearch,
-                  ),
-                  SizedBox(height: Responsive.scaleHeight(16)),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 12 * Responsive.getResponsive(context),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () async {
-                              final selectedId =
-                                  await showCustomSimpleBottomSheet(
-                                    context: context,
-                                    heading: 'select_branch',
-                                    icon: const AssetImage(AppAssets.downArrow),
-                                    dataList: branches
-                                        .map(
-                                          (b) => {
-                                            'id': b.blockId,
-                                            'name': b.blockName,
-                                          },
-                                        )
-                                        .toList(),
-                                    selectedId: selectedBranch?.blockId,
-                                  );
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            MyCoTextfield(
+              prefix: SvgPicture.asset(AppAssets.searchNormal, fit: BoxFit.scaleDown),
+              hintText: 'search',
+              hintTextStyle: TextStyle(
+                fontSize: 14 * Responsive.getResponsiveText(context),
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+              ),
+              textInputType: TextInputType.text,
+              textAlignment: TextAlign.left,
+              boarderRadius: 10,
+              contentPadding: EdgeInsets.all(10 * Responsive.getResponsive(context)),
+              onChanged: _onSearch,
+            ),
+            SizedBox(height: Responsive.scaleHeight(16)),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 12 * Responsive.getResponsive(context)),
+              child: Row(
+                children: [   Expanded(
+                  child: GestureDetector(
+                    onTap: () async {
+                      final selectedId =
+                      await showCustomSimpleBottomSheet(
+                        context: context,
+                        heading: 'select_branch',
+                        icon: const AssetImage(AppAssets.downArrow),
+                        dataList: branches
+                            .map(
+                              (b) => {
+                            'id': b.blockId,
+                            'name': b.blockName,
+                          },
+                        )
+                            .toList(),
+                        selectedId: selectedBranch?.blockId,
+                      );
 
-                              final branch = branches.firstWhere(
-                                (b) => b.blockId == selectedId,
-                                orElse: () => BranchModel.empty(),
-                              );
-                              if (branch.blockId.isNotEmpty)
-                                _onBranchChanged(branch);
-                            },
-                            child: _buildDropdownBox(
-                              context,
-                              branchController.text.isEmpty
-                                  ? 'select_branch'
-                                  : branchController.text,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: Responsive.scaleWidth(12)),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () async {
-                              final selectedId =
-                                  await showCustomSimpleBottomSheet(
-                                    context: context,
-                                    heading: 'select_department',
-                                    icon: const AssetImage(AppAssets.downArrow),
-                                    dataList: filteredDepartments
-                                        .map(
-                                          (d) => {
-                                            'id': d.floorId.toString(),
-                                            'name': d.departmentName.toString(),
-                                          },
-                                        )
-                                        .toList(),
-                                    selectedId: selectedDepartment?.floorId,
-                                  );
-
-                              final dept = filteredDepartments.firstWhere(
-                                (d) => d.floorId == selectedId,
-                                orElse: () => DepartmentModel.empty(),
-                              );
-                              if (dept.floorId.isNotEmpty)
-                                _onDepartmentChanged(dept);
-                            },
-                            child: _buildDropdownBox(
-                              context,
-                              departmentController.text.isEmpty
-                                  ? 'select_department'
-                                  : departmentController.text,
-                            ),
-                          ),
-                        ),
-                      ],
+                      final branch = branches.firstWhere(
+                            (b) => b.blockId == selectedId,
+                        orElse: () => BranchModel.empty(),
+                      );
+                      if (branch.blockId.isNotEmpty)
+                        _onBranchChanged(branch);
+                    },
+                    child: _buildDropdownBox(
+                      context,
+                      branchController.text.isEmpty
+                          ? 'select_branch'
+                          : branchController.text,
                     ),
                   ),
+                ),
+                  SizedBox(width: Responsive.scaleWidth(12)),
                   Expanded(
-                    child: filteredEmployees.isEmpty
-                        ? const Center(child: Text('No employees found'))
-                        : GridView.builder(
-                            padding: const EdgeInsets.all(8),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: Responsive.getGridConfig(
-                                    context,
-                                  ).itemCount,
-                                  mainAxisSpacing: Responsive.getGridConfig(
-                                    context,
-                                  ).spacing,
-                                  crossAxisSpacing: Responsive.getGridConfig(
-                                    context,
-                                  ).spacing,
-                                  childAspectRatio: Responsive.getGridConfig(
-                                    context,
-                                  ).childAspectRatio,
-                                ),
-                            itemCount: filteredEmployees.length,
-                            itemBuilder: (context, index) {
-                              final emp = filteredEmployees[index];
-                              return EmployeeSelectionCard(
-                                name: emp.userFullName,
-                                department: emp.designation,
-                                // image: NetworkImage(emp.userProfilePic),
-                                image: CachedImage(
-                                  // placeholder: Text('KP'),
-                                  errorWidget: Center(child: Text('KP')),
-                                  imageProvider: NetworkImage(
-                                    emp.userProfilePic,
-                                  ),
-                                ),
-                                isSelected: selectedEmployeeIndexes.contains(
-                                  index,
-                                ),
-                                onSelected: (value) {
-                                  final selectedEmployee =
-                                      filteredEmployees[index];
-
-                                  debugPrint(
-                                    'Selected Employee: ${jsonEncode(selectedEmployee.toJson())}',
-                                  );
-
-                                  setState(() {
-                                    if (selectedEmployeeIndexes.contains(
-                                      index,
-                                    )) {
-                                      selectedEmployeeIndexes.remove(index);
-                                    } else {
-                                      selectedEmployeeIndexes.add(index);
-                                    }
-                                  });
-                                },
-                              );
+                    child: GestureDetector(
+                      onTap: () async {
+                        final selectedId =
+                        await showCustomSimpleBottomSheet(
+                          context: context,
+                          heading: 'select_department',
+                          icon: const AssetImage(AppAssets.downArrow),
+                          dataList: filteredDepartments
+                              .map(
+                                (d) => {
+                              'id': d.floorId.toString(),
+                              'name': d.departmentName.toString(),
                             },
-                          ),
-                  ),
+                          )
+                              .toList(),
+                          selectedId: selectedDepartment?.floorId,
+                        );
 
-                  /// Media picker container
-                  // Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: CustomMediaPickerContainer(
-                  //     title: 'Assets Image',
-                  //     titleFontSize: 14 * Responsive.getResponsiveText(context),
-                  //     imageTitle: 'Capture Image',
-                  //     // imageTitleSize: 10,
-                  //     // containerHeight: 100,
-                  //     multipleImage: 5,
-                  //     imagePath: AppAssets.assetGalleryExport,
-                  //     backgroundColor: Colors.blue.shade50,
-                  //     isCameraShow: true,
-                  //     isGalleryShow: true,
-                  //     isDocumentShow: true,
-                  //     isCropImage: true,
-                  //     onSelectedMedia: (files) {
-                  //       final paths = files.map((file) => file.path).toList();
-                  //       log('Selected file paths: $paths');
-                  //     },
-                  //   ),
-                  // ),
-                  ///Punch in-out Stepper
-                  // const Text('Punch in-out Demo'),
-                  // Expanded(
-                  //   child: SingleChildScrollView(
-                  //     child: CustomVerticalStepper(
-                  //       steps: [
-                  //         StepData(
-                  //           title: 'PUNCH IN',
-                  //           // title: '',
-                  //           subTitle: '10:25:06 AM',
-                  //           subTitleFontSize: 20,
-                  //           status: StepStatus.inActive,
-                  //           // isStepIconShow: false,
-                  //           customStatusIcon: SvgPicture.asset(
-                  //             AppAssets.assetGalleryExport,
-                  //           ),
-                  //           // customStatusIcon: const Icon(
-                  //           //   Icons.ac_unit,
-                  //           //   color: Colors.white,
-                  //           // ),
-                  //           details: [
-                  //             StepDetail(
-                  //               title: 'title',
-                  //               description: 'description',
-                  //             ),
-                  //             StepDetail(
-                  //               title: 'Completion Remark',
-                  //               description: 'description',
-                  //             ),
-                  //           ],
-                  //           subSteps: [
-                  //             SubStepData(
-                  //               subStepTitle: 'Lunch Break',
-                  //               subStepSubTitle: '01:32:56 PM - 02:01:46 PM',
-                  //               subStepTrailingTitle: '28 min 50 sec',
-                  //               subStepStatus: StepStatus.pending,
-                  //               subStepCustomStatusIcon: Icon(
-                  //                 Icons.lunch_dining,
-                  //               ),
-                  //               subStepSubTitleFontSize: 20,
-                  //               isSubStepIconShow: false,
-                  //             ),
-                  //             SubStepData(
-                  //               subStepTitle: 'Tea Break',
-                  //               subStepSubTitle: '06:05:02 PM - 06:07:51 PM',
-                  //               subStepTrailingTitle: '2 min 49 sec',
-                  //               subStepStatus: StepStatus.pending,
-                  //               // isSubStepIconShow: false,
-                  //             ),
-                  //           ],
-                  //         ),
-                  //         StepData(
-                  //           title: 'PUNCH OUT',
-                  //           subTitle: '06:08:39 PM',
-                  //           trillingTitle: '7 hour 43 min 33 sec',
-                  //           status: StepStatus.pending,
-                  //           // isStepIconShow: false,
-                  //         ),
-                  //         StepData(
-                  //           title: 'PUNCH IN & OUT',
-                  //           subTitle: '06:08:39 PM',
-                  //           trillingTitle: '1 min 18 sec',
-                  //           status: StepStatus.approved,
-                  //           // isStepIconShow: true,
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+                        final dept = filteredDepartments.firstWhere(
+                              (d) => d.floorId == selectedId,
+                          orElse: () => DepartmentModel.empty(),
+                        );
+                        if (dept.floorId.isNotEmpty)
+                          _onDepartmentChanged(dept);
+                      },
+                      child: _buildDropdownBox(
+                        context,
+                        departmentController.text.isEmpty
+                            ? 'select_department'
+                            : departmentController.text,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
+            Expanded(
+              child: filteredEmployees.isEmpty
+                  ? const Center(child: Text('No employees found'))
+                  : GridView.builder(
+                padding: const EdgeInsets.all(8),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: Responsive.getGridConfig(context).itemCount,
+                  mainAxisSpacing: Responsive.getGridConfig(context).spacing,
+                  crossAxisSpacing: Responsive.getGridConfig(context).spacing,
+                  childAspectRatio: Responsive.getGridConfig(context).childAspectRatio,
+                ),
+                itemCount: filteredEmployees.length,
+                itemBuilder: (context, index) {
+                  final emp = filteredEmployees[index];
+                  return EmployeeSelectionCard(
+                    name: emp.userFullName,
+                    department: emp.designation,
+                    image: CachedImage(
+                      errorWidget: Center(child: Text('KP')),
+                      imageProvider: NetworkImage(emp.userProfilePic),
+                    ),
+                    isSelected: selectedEmployeeIndexes.contains(index),
+                    onSelected: (value) {
+                      debugPrint('Selected Employee: ${jsonEncode(emp.toJson())}');
+                      setState(() {
+                        if (selectedEmployeeIndexes.contains(index)) {
+                          selectedEmployeeIndexes.remove(index);
+                        } else {
+                          selectedEmployeeIndexes.add(index);
+                        }
+                      });
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -532,3 +398,98 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     );
   }
 }
+
+
+///Custom loader
+// CustomLoader()
+/// Media picker container
+// Padding(
+//   padding: const EdgeInsets.all(8.0),
+//   child: CustomMediaPickerContainer(
+//     title: 'Assets Image',
+//     titleFontSize: 14 * Responsive.getResponsiveText(context),
+//     imageTitle: 'Capture Image',
+//     // imageTitleSize: 10,
+//     // containerHeight: 100,
+//     multipleImage: 5,
+//     imagePath: AppAssets.assetGalleryExport,
+//     backgroundColor: Colors.blue.shade50,
+//     isCameraShow: true,
+//     isGalleryShow: true,
+//     isDocumentShow: true,
+//     isCropImage: true,
+//     onSelectedMedia: (files) {
+//       final paths = files.map((file) => file.path).toList();
+//       log('Selected file paths: $paths');
+//     },
+//   ),
+// ),
+///Punch in-out Stepper
+// const Text('Punch in-out Demo'),
+// Expanded(
+//   child: SingleChildScrollView(
+//     child: CustomVerticalStepper(
+//       steps: [
+//         StepData(
+//           title: 'PUNCH IN',
+//           // title: '',
+//           subTitle: '10:25:06 AM',
+//           subTitleFontSize: 20,
+//           status: StepStatus.inActive,
+//           // isStepIconShow: false,
+//           customStatusIcon: SvgPicture.asset(
+//             AppAssets.assetGalleryExport,
+//           ),
+//           // customStatusIcon: const Icon(
+//           //   Icons.ac_unit,
+//           //   color: Colors.white,
+//           // ),
+//           details: [
+//             StepDetail(
+//               title: 'title',
+//               description: 'description',
+//             ),
+//             StepDetail(
+//               title: 'Completion Remark',
+//               description: 'description',
+//             ),
+//           ],
+//           subSteps: [
+//             SubStepData(
+//               subStepTitle: 'Lunch Break',
+//               subStepSubTitle: '01:32:56 PM - 02:01:46 PM',
+//               subStepTrailingTitle: '28 min 50 sec',
+//               subStepStatus: StepStatus.pending,
+//               subStepCustomStatusIcon: Icon(
+//                 Icons.lunch_dining,
+//               ),
+//               subStepSubTitleFontSize: 20,
+//               isSubStepIconShow: false,
+//             ),
+//             SubStepData(
+//               subStepTitle: 'Tea Break',
+//               subStepSubTitle: '06:05:02 PM - 06:07:51 PM',
+//               subStepTrailingTitle: '2 min 49 sec',
+//               subStepStatus: StepStatus.pending,
+//               // isSubStepIconShow: false,
+//             ),
+//           ],
+//         ),
+//         StepData(
+//           title: 'PUNCH OUT',
+//           subTitle: '06:08:39 PM',
+//           trillingTitle: '7 hour 43 min 33 sec',
+//           status: StepStatus.pending,
+//           // isStepIconShow: false,
+//         ),
+//         StepData(
+//           title: 'PUNCH IN & OUT',
+//           subTitle: '06:08:39 PM',
+//           trillingTitle: '1 min 18 sec',
+//           status: StepStatus.approved,
+//           // isStepIconShow: true,
+//         ),
+//       ],
+//     ),
+//   ),
+// ),

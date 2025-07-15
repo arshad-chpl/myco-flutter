@@ -122,7 +122,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
         // Search field
         MyCoTextfield(
           prefix: SvgPicture.asset(AppAssets.searchNormal, fit: BoxFit.scaleDown),
-          hintText: widget.searchHint ?? 'Search',
+          hintText: widget.searchHint ?? 'search',
           hintTextStyle: TextStyle(
             fontSize: 14 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,
