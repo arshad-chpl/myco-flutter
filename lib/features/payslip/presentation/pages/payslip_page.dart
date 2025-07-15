@@ -23,8 +23,7 @@ class PayslipPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      appBarText: 'payslip',
-      //  'Payslip',
+      title: 'Payslip',
       actions: [
         MyCoButton(
           onTap: () {

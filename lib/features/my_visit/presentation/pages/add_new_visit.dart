@@ -51,11 +51,18 @@ class _AddNewVisitState extends State<AddNewVisit> {
   Widget build(BuildContext context) => Scaffold(
     // Custom App Bar
     appBar: CustomAppbar(
-      appBarText: 'Add New Visit',
-      appbartxtcolor: AppTheme.getColor(context).onSurface,
-      size: 16 * Responsive.getResponsiveText(context),
-      appBarBackgoundColor: AppTheme.getColor(context).surface,
-      leading: const BackButton(),
+      title: 'Add New Visit',
+      appBarBackgoundColor: Colors.white,
+      titileColor: Colors.black,
+      titleFontWeight: FontWeight.bold,
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back,
+          color: Colors.black,
+          size: 30 * Responsive.getResponsive(context),
+        ),
+        onPressed: () => Navigator.pop(context),
+      ),
     ),
 
     body: Padding(

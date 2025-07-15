@@ -14,7 +14,7 @@ class AllDistributorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(appBarText: LanguageManager().get('all_distributor')),
+    appBar: CustomAppbar(title: 'All Distributor'),
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),

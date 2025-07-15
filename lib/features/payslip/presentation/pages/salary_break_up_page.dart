@@ -13,10 +13,7 @@ class SalaryBreakUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: const CustomAppbar(
-      appBarText: 'salary_break_up',
-      // 'Salary Break-Up'
-    ),
+    appBar: CustomAppbar(title: 'Salary Break-Up'),
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),

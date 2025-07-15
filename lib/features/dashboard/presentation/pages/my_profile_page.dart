@@ -31,11 +31,7 @@ class MyProfilePage extends StatelessWidget {
       // automaticallyImplyLeading: false,
       appBarBackgoundColor: Colors.transparent,
       leadingWidth: 0.1 * Responsive.getWidth(context),
-      title: CustomText(
-        "My Profile",
-        fontWeight: FontWeight.bold,
-        fontSize: 26 * Responsive.getResponsiveText(context),
-      ),
+      title: "My Profile",
     ),
     body: Padding(
       padding: EdgeInsets.symmetric(
