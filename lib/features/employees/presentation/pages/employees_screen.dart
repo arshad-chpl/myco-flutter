@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
@@ -8,6 +9,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/employees/data/models/branch_model.dart';
 import 'package:myco_flutter/features/employees/data/models/department_model.dart';
 import 'package:myco_flutter/features/employees/data/models/employee_model.dart';
@@ -18,6 +20,7 @@ import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
+import 'package:myco_flutter/widgets/custom_vertical_stepper.dart';
 
 class EmployeesScreen extends StatefulWidget {
   const EmployeesScreen({Key? key}) : super(key: key);
@@ -208,10 +211,13 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
 
     final List<EmployeeModel> filteredEmployees = searchQuery.isEmpty
         ? employees
-        : employees.where((e) {
-            return e.userFullName.toLowerCase().contains(searchQuery) ||
-                e.designation.toLowerCase().contains(searchQuery);
-          }).toList();
+        : employees
+              .where(
+                (e) =>
+                    e.userFullName.toLowerCase().contains(searchQuery) ||
+                    e.designation.toLowerCase().contains(searchQuery),
+              )
+              .toList();
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -232,6 +238,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  CustomLoader(),
+                  SizedBox(height: 100),
                   MyCoTextfield(
                     prefix: SvgPicture.asset(
                       AppAssets.searchNormal,
@@ -357,13 +365,20 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                 name: emp.userFullName,
                                 department: emp.designation,
                                 // image: NetworkImage(emp.userProfilePic),
-                                image: NetworkImage(emp.userProfilePic),
+                                image: CachedImage(
+                                  // placeholder: Text('KP'),
+                                  errorWidget: Center(child: Text('KP')),
+                                  imageProvider: NetworkImage(
+                                    emp.userProfilePic,
+                                  ),
+                                ),
                                 isSelected: selectedEmployeeIndexes.contains(
                                   index,
                                 ),
                                 onSelected: (value) {
                                   final selectedEmployee =
                                       filteredEmployees[index];
+
                                   debugPrint(
                                     'Selected Employee: ${jsonEncode(selectedEmployee.toJson())}',
                                   );
@@ -382,6 +397,98 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                             },
                           ),
                   ),
+
+                  /// Media picker container
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: CustomMediaPickerContainer(
+                  //     title: 'Assets Image',
+                  //     titleFontSize: 14 * Responsive.getResponsiveText(context),
+                  //     imageTitle: 'Capture Image',
+                  //     // imageTitleSize: 10,
+                  //     // containerHeight: 100,
+                  //     multipleImage: 5,
+                  //     imagePath: AppAssets.assetGalleryExport,
+                  //     backgroundColor: Colors.blue.shade50,
+                  //     isCameraShow: true,
+                  //     isGalleryShow: true,
+                  //     isDocumentShow: true,
+                  //     isCropImage: true,
+                  //     onSelectedMedia: (files) {
+                  //       final paths = files.map((file) => file.path).toList();
+                  //       log('Selected file paths: $paths');
+                  //     },
+                  //   ),
+                  // ),
+                  ///Punch in-out Stepper
+                  // const Text('Punch in-out Demo'),
+                  // Expanded(
+                  //   child: SingleChildScrollView(
+                  //     child: CustomVerticalStepper(
+                  //       steps: [
+                  //         StepData(
+                  //           title: 'PUNCH IN',
+                  //           // title: '',
+                  //           subTitle: '10:25:06 AM',
+                  //           subTitleFontSize: 20,
+                  //           status: StepStatus.inActive,
+                  //           // isStepIconShow: false,
+                  //           customStatusIcon: SvgPicture.asset(
+                  //             AppAssets.assetGalleryExport,
+                  //           ),
+                  //           // customStatusIcon: const Icon(
+                  //           //   Icons.ac_unit,
+                  //           //   color: Colors.white,
+                  //           // ),
+                  //           details: [
+                  //             StepDetail(
+                  //               title: 'title',
+                  //               description: 'description',
+                  //             ),
+                  //             StepDetail(
+                  //               title: 'Completion Remark',
+                  //               description: 'description',
+                  //             ),
+                  //           ],
+                  //           subSteps: [
+                  //             SubStepData(
+                  //               subStepTitle: 'Lunch Break',
+                  //               subStepSubTitle: '01:32:56 PM - 02:01:46 PM',
+                  //               subStepTrailingTitle: '28 min 50 sec',
+                  //               subStepStatus: StepStatus.pending,
+                  //               subStepCustomStatusIcon: Icon(
+                  //                 Icons.lunch_dining,
+                  //               ),
+                  //               subStepSubTitleFontSize: 20,
+                  //               isSubStepIconShow: false,
+                  //             ),
+                  //             SubStepData(
+                  //               subStepTitle: 'Tea Break',
+                  //               subStepSubTitle: '06:05:02 PM - 06:07:51 PM',
+                  //               subStepTrailingTitle: '2 min 49 sec',
+                  //               subStepStatus: StepStatus.pending,
+                  //               // isSubStepIconShow: false,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //         StepData(
+                  //           title: 'PUNCH OUT',
+                  //           subTitle: '06:08:39 PM',
+                  //           trillingTitle: '7 hour 43 min 33 sec',
+                  //           status: StepStatus.pending,
+                  //           // isStepIconShow: false,
+                  //         ),
+                  //         StepData(
+                  //           title: 'PUNCH IN & OUT',
+                  //           subTitle: '06:08:39 PM',
+                  //           trillingTitle: '1 min 18 sec',
+                  //           status: StepStatus.approved,
+                  //           // isStepIconShow: true,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

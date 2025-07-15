@@ -3,7 +3,8 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CachedImage extends StatefulWidget {
-  final String imageUrl;
+  final String? imageUrl;
+  final ImageProvider? imageProvider;
   final BoxFit fit;
   final double? width;
   final double? height;
@@ -11,45 +12,50 @@ class CachedImage extends StatefulWidget {
   final Widget? errorWidget;
 
   const CachedImage({
-    required this.imageUrl,
     super.key,
+    this.imageUrl,
+    this.imageProvider,
     this.fit = BoxFit.cover,
     this.width,
     this.height,
     this.placeholder,
     this.errorWidget,
-  });
+  }) : assert(
+  imageUrl != null || imageProvider != null,
+  'Either imageUrl or imageProvider must be provided.',
+  );
 
   @override
   State<CachedImage> createState() => _CachedImageState();
 }
 
 class _CachedImageState extends State<CachedImage> {
-  late final ImageProvider _imageProvider;
+  late final ImageProvider _provider;
   bool _hasError = false;
   bool _isLoaded = false;
 
   @override
   void initState() {
     super.initState();
-    _imageProvider = NetworkImage(widget.imageUrl);
 
-    _imageProvider
+    _provider = widget.imageProvider ?? NetworkImage(widget.imageUrl!);
+
+    _provider
         .resolve(const ImageConfiguration())
         .addListener(
-          ImageStreamListener(
+      ImageStreamListener(
             (info, _) {
-              if (mounted) {
-                setState(() => _isLoaded = true);
-              }
-            },
-            onError: (_, __) {
-              if (mounted) {
-                setState(() => _hasError = true);
-              }
-            },
-          ),
-        );
+          if (mounted) {
+            setState(() => _isLoaded = true);
+          }
+        },
+        onError: (_, __) {
+          if (mounted) {
+            setState(() => _hasError = true);
+          }
+        },
+      ),
+    );
   }
 
   @override
@@ -77,7 +83,7 @@ class _CachedImageState extends State<CachedImage> {
     }
 
     return Image(
-      image: _imageProvider,
+      image: _provider,
       fit: widget.fit,
       width: widget.width,
       height: widget.height,

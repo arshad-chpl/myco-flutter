@@ -110,16 +110,16 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                       ).onSurfaceVariant,
                       backgroundColor: const Color(0xFFEEF7FD),
                       containerHeight: 0.1 * Responsive.getHeight(context),
-                      pickerBoxBorderRadius: 10,
-                      titleFontWeight: FontWeight.w600,
-                      titleWidgetBetweenSpace:
-                          0.006 * Responsive.getHeight(context),
-                      onSelectMedia: (List<File> selectedFiles) {
-                        // Do something with selectedFiles
-                        for (var file in selectedFiles) {
-                          log("Selected File: ${file.path}");
-                        }
-                      },
+                      // pickerBoxBorderRadius: 10,
+                      // titleFontWeight: FontWeight.w600,
+                      // titleWidgetBetweenSpace:
+                      //     0.006 * Responsive.getHeight(context),
+                      // onSelectMedia: (List<File> selectedFiles) {
+                      //   // Do something with selectedFiles
+                      //   for (var file in selectedFiles) {
+                      //     log("Selected File: ${file.path}");
+                      //   }
+                      // },
                     ),
                     SizedBox(height: 0.024 * Responsive.getHeight(context)),
 
@@ -312,10 +312,10 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                         ).onSurfaceVariant,
                         backgroundColor: const Color(0xFFEEF7FD),
                         containerHeight: 0.1 * Responsive.getHeight(context),
-                        pickerBoxBorderRadius: 10,
-                        titleFontWeight: FontWeight.w600,
-                        titleWidgetBetweenSpace:
-                            0.006 * Responsive.getHeight(context),
+                        // pickerBoxBorderRadius: 10,
+                        // titleFontWeight: FontWeight.w600,
+                        // titleWidgetBetweenSpace:
+                        //     0.006 * Responsive.getHeight(context),
                       ),
                       SizedBox(height: 0.035 * Responsive.getHeight(context)),
                     ],

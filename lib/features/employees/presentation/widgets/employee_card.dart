@@ -5,7 +5,7 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class EmployeeSelectionModel {
-  final ImageProvider image;
+  final Widget image;
   final String name, department;
 
   EmployeeSelectionModel({
@@ -16,7 +16,7 @@ class EmployeeSelectionModel {
 }
 
 class EmployeeSelectionCard extends StatelessWidget {
-  final ImageProvider image;
+  final Widget image;
   final String name, department;
   final bool isSelected;
   final bool? showDelete;
@@ -73,8 +73,7 @@ class EmployeeSelectionCard extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Container(
-          padding:
-              boxPadding ??
+          padding: boxPadding ??
               const EdgeInsets.only(top: 12, left: 16, right: 24, bottom: 2),
           decoration: BoxDecoration(
             color: isSelected ? const Color(0xffEEF7FD) : Colors.white,
@@ -112,16 +111,16 @@ class EmployeeSelectionCard extends StatelessWidget {
                             gradient: LinearGradient(
                               colors: isSelected
                                   ? [
-                                      selectedColor ?? AppColors.primary,
-                                      (selectedColor ?? AppColors.primary)
-                                          .withAlpha(150),
-                                      Colors.white,
-                                    ]
+                                selectedColor ?? AppColors.primary,
+                                (selectedColor ?? AppColors.primary)
+                                    .withAlpha(150),
+                                Colors.white,
+                              ]
                                   : [
-                                      Colors.grey.shade400,
-                                      Colors.grey.shade300,
-                                      Colors.white,
-                                    ],
+                                Colors.grey.shade400,
+                                Colors.grey.shade300,
+                                Colors.white,
+                              ],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                             ),
@@ -143,9 +142,12 @@ class EmployeeSelectionCard extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              child: CircleAvatar(
-                                backgroundColor: AppColors.white,
-                                backgroundImage: image,
+                              child: ClipOval(
+                                child: SizedBox(
+                                  width: imageWidth ?? 40,
+                                  height: imageHeight ?? 40,
+                                  child: image,
+                                ),
                               ),
                             ),
                           ),
@@ -160,14 +162,14 @@ class EmployeeSelectionCard extends StatelessWidget {
                               gradient: LinearGradient(
                                 colors: isSelected
                                     ? [
-                                        AppColors.primary,
-                                        AppColors.primary.withAlpha(150),
-                                        Colors.white,
-                                      ]
+                                  AppColors.primary,
+                                  AppColors.primary.withAlpha(150),
+                                  Colors.white,
+                                ]
                                     : [
-                                        Colors.grey.shade400,
-                                        Colors.grey.shade400,
-                                      ],
+                                  Colors.grey.shade400,
+                                  Colors.grey.shade400,
+                                ],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                               ),
@@ -189,7 +191,7 @@ class EmployeeSelectionCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 0.006 * Responsive.getHeight(context)),
+              SizedBox(height: spaceBetweenImageText ?? 0.006 * Responsive.getHeight(context)),
               CustomText(
                 name,
                 fontSize: 12 * Responsive.getResponsiveText(context),
