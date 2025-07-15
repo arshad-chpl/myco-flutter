@@ -241,7 +241,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   ),
                   SizedBox(height: 0.015 * Responsive.getHeight(context)),
                   CustomText(
-                    "Gender",
+                    'Gender',
                       color: AppTheme.getColor(context).onSurface,
                       fontSize: 16 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.bold,
@@ -262,7 +262,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       ),
                       Spacer(),
                       CustomTextRadioButton(
-                        gender: "FEMALE",
+                        gender: 'FEMALE',
                         selectedGender: selectedGender,
                         onSelect: (val) {
                           setState(() {
@@ -276,7 +276,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   ),
                   SizedBox(height: 0.015 * Responsive.getHeight(context)),
                   CustomText(
-                    "Phone Number",
+                    'Phone Number',
                       color: AppTheme.getColor(context).onSurface,
                       fontSize: 16 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.bold,
@@ -305,14 +305,14 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   SizedBox(height: 0.015 * Responsive.getHeight(context)),
                   MyCoTextfield(
                     textAlignment: TextAlign.start,
-                    hintText: "abc@gmail.com",
+                    hintText: 'abc@gmail.com',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
                         10 * Responsive.getResponsive(context),
                       ),
                       borderSide: BorderSide(color: AppTheme.getColor(context).outline),
                     ),
-                    preFixImage: "assets/sign_in/email_icon.png",
+                    preFixImage: 'assets/sign_in/email_icon.png',
                   ),
                   SizedBox(height: 0.015 * Responsive.getHeight(context)),
                   Row(
@@ -344,7 +344,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                             ),
                             children: [
                               TextSpan(
-                                text: "Please confirm that you agree to our ",
+                                text: 'Please confirm that you agree to our ',
                                 style: TextStyle(
                                   color: AppTheme.getColor(context).onSurface,
                                   fontSize: 14 * Responsive.getResponsiveText(context),
@@ -352,7 +352,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                                 ),
                               ),
                               TextSpan(
-                                text: "Privacy Policy",
+                                text: 'Privacy Policy',
                                 style: TextStyle(
                                   color: AppTheme.getColor(context).primary,
                                   fontSize: 14 * Responsive.getResponsiveText(context),
@@ -367,9 +367,9 @@ class _SignupFormPageState extends State<SignupFormPage> {
                                     );
                                   },
                               ),
-                              TextSpan(text: ", "),
+                              const TextSpan(text: ', '),
                               TextSpan(
-                                text: "Terms & Conditions",
+                                text: 'Terms & Conditions',
                                 style: TextStyle(color: AppTheme.getColor(context).primary),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
@@ -382,7 +382,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                                   },
                               ),
                               TextSpan(
-                                text: " & ",
+                                text: ' & ',
                                 style: TextStyle(
                                   color: AppTheme.getColor(context).onSurface,
                                   fontSize: 14 * Responsive.getResponsiveText(context),
@@ -390,7 +390,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                                 ),
                               ),
                               TextSpan(
-                                text: "Cancellation & Refund Policy",
+                                text: 'Cancellation & Refund Policy',
                                 style: TextStyle(color: AppTheme.getColor(context).primary),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
@@ -403,7 +403,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                                   },
                               ),
                               TextSpan(
-                                text: ".",
+                                text: '.',
                                 style: TextStyle(
                                   color: AppTheme.getColor(context).onSurface,
                                   fontSize: 14 * Responsive.getResponsiveText(context),
@@ -433,9 +433,9 @@ class _SignupFormPageState extends State<SignupFormPage> {
                             title: 'Email Verification Sent!',
                             description:
                                 'A verification code will be sent to the email Hello@work.com for your account verification process.',
-                            emailAddress: "example@example.com",
+                            emailAddress: 'example@example.com',
                             onSubmit: (String otp) {
-                              dev.log("OTP submitted: $otp");
+                              dev.log('OTP submitted: $otp');
                               // context.pop();
                               showModalBottomSheet(
                                   context: context,
@@ -444,10 +444,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
                               );
                             },
                             onResend: () {
-                              dev.log("Resend OTP");
+                              dev.log('Resend OTP');
                             },
                             onVerifyButtonPressed: () {
-                              dev.log("Verify button pressed");
+                              dev.log('Verify button pressed');
                               context.pop();
                               showModalBottomSheet(
                                   context: context,
@@ -458,7 +458,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                             length: 6,
                           );
                     },
-                    title: "Sign Up",
+                    title: 'Sign Up',
                     boarderRadius: 30 * Responsive.getResponsive(context),
                     isShadowBottomLeft: true,
                   ),
@@ -468,14 +468,14 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomText(
-                          "Already have an account?",
+                          'Already have an account?',
 
                         fontSize: 18 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.bold,
                         color: AppTheme.getColor(context).onSurface,
                       ),
                       CustomText(
-                        "Sign in here",
+                        'Sign in here',
 
                         fontSize: 18 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.bold,
