@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
+import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
@@ -56,7 +57,6 @@ import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_
 import 'package:myco_flutter/features/leave/presentation/pages/my_team_leaves_screen.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
-import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
@@ -212,7 +212,7 @@ class AppRouter {
         routes: [
           GoRoute(
             path: RoutePaths.takeOrder,
-            name: 'take-order',
+            name: RoutePaths.takeOrder,
             builder: (context, state) => BlocProvider(
               create: (_) => TakeOrderBloc(),
               child: const TakeOrderPage(),
@@ -256,6 +256,7 @@ class AppRouter {
         name: 'companySearch',
         builder: (context, state) => const SearchCompanyScreen(),
       ),
+      // Payslip routes
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
           providers: [BlocProvider(create: (_) => TabbarBloc())],
@@ -264,20 +265,9 @@ class AppRouter {
         routes: [
           GoRoute(
             path: RoutePaths.payslip,
-            name: 'payslip',
+            name: RoutePaths.payslip,
             builder: (context, state) => PayslipPage(),
-            routes: [
-              GoRoute(
-                path: RoutePaths.salaryBreakUp,
-                name: 'salary-break-up',
-                builder: (context, state) => const SalaryBreakUpPage(),
-              ),
-              GoRoute(
-                path: RoutePaths.payslipDetail,
-                name: 'payslip-detail',
-                builder: (context, state) => const PayslipDetail(),
-              ),
-            ],
+            routes: payslipRoutes,
           ),
         ],
       ),
