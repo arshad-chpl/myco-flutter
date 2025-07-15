@@ -98,7 +98,8 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
             fontWeight: FontWeight.bold,
           ),
           CustomText(
-            '  AJAJ',
+            '  AJAJ', /**
+                       * space is mandatory before name */
             fontSize: 23 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.bold,
           ),
