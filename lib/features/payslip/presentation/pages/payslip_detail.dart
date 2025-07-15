@@ -61,7 +61,7 @@ class PayslipDetail extends StatelessWidget {
                           border: Border.all(
                             color: AppTheme.getColor(context).outline,
                           ),
-                          color: AppTheme.getColor(context).onPrimary,
+                          color: AppTheme.getColor(context).surface,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,7 +250,9 @@ class PayslipDetail extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const DottedLineWidget(),
+                      DottedLineWidget(
+                        color: AppTheme.getColor(context).onSurface,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -310,7 +312,9 @@ class PayslipDetail extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const DottedLineWidget(),
+                      DottedLineWidget(
+                        color: AppTheme.getColor(context).onSurface,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -370,7 +374,9 @@ class PayslipDetail extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const DottedLineWidget(),
+                      DottedLineWidget(
+                        color: AppTheme.getColor(context).onSurface,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -429,7 +435,9 @@ class PayslipDetail extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const DottedLineWidget(),
+                      DottedLineWidget(
+                        color: AppTheme.getColor(context).onSurface,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

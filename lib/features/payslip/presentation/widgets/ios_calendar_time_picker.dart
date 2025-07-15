@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
@@ -565,7 +566,9 @@ Widget _buildLoopingPicker<T>({
           child: CustomText(
             displayText(item),
             fontSize: 22 * Responsive.getResponsiveText(context),
-            color: isSelected ? AppColors.primary : AppColors.textPrimary,
+            color: isSelected
+                ? AppTheme.getColor(context).primary
+                : AppTheme.getColor(context).onSurface,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
           ),
         );
