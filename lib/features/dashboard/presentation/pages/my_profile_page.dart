@@ -4,9 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_label_gifs.dart';
-import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_myteam%20(1).dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_myteam.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_section.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/profile_details_card.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/profile_personal_info_card.dart';
@@ -15,6 +14,7 @@ import 'package:myco_flutter/features/dashboard/presentation/widgets/profile_too
 import 'package:myco_flutter/features/dashboard/presentation/widgets/profile_word_attendance_card.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_employee_card.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_shadow_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -29,9 +29,13 @@ class MyProfilePage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
       // automaticallyImplyLeading: false,
-      backgroundColor: Colors.transparent,
-      leadingWidth: 0.1*Responsive.getWidth(context),
-      title: CustomText("My Profile",fontWeight: FontWeight.bold,fontSize: 26*Responsive.getResponsiveText(context),),
+      appBarBackgoundColor: Colors.transparent,
+      leadingWidth: 0.1 * Responsive.getWidth(context),
+      title: CustomText(
+        "My Profile",
+        fontWeight: FontWeight.bold,
+        fontSize: 26 * Responsive.getResponsiveText(context),
+      ),
     ),
     body: Padding(
       padding: EdgeInsets.symmetric(
@@ -65,7 +69,8 @@ class MyProfilePage extends StatelessWidget {
                         Container(
                           child: Center(
                             child: SvgPicture.asset(
-                              "assets/dashboard/svgs/admin_view_icon.svg",height: 0.02*Responsive.getHeight(context),
+                              "assets/dashboard/svgs/admin_view_icon.svg",
+                              height: 0.02 * Responsive.getHeight(context),
                             ),
                           ),
                           height: 0.03 * Responsive.getHeight(context),

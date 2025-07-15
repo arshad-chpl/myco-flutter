@@ -14,11 +14,12 @@ class CustomText extends StatelessWidget {
   final TextOverflow? overflow;
   final TextDecoration? decoration;
   final Color? decorationColor;
+  final FontStyle? fontStyle;
 
   const CustomText(
     this.text, {
     super.key,
-    this.isKey = false,
+    this.isKey = true,
     this.fontSize = 16,
     this.fontWeight = FontWeight.w400,
     this.color,
@@ -26,7 +27,7 @@ class CustomText extends StatelessWidget {
     this.maxLines,
     this.overflow,
     this.decoration,
-    this.decorationColor,
+    this.decorationColor, this.fontStyle,
   });
 
   @override
@@ -35,12 +36,14 @@ class CustomText extends StatelessWidget {
     textAlign: textAlign,
     maxLines: maxLines,
     overflow: overflow,
+    
     style: TextStyle(
       fontFamily: Util.getFontFamily(fontWeight),
       fontSize: fontSize,
       color: color ?? AppTheme.getColor(context).onSurface,
       decoration: decoration,
       decorationColor: decorationColor,
+      fontStyle: fontStyle
     ),
   );
 }
