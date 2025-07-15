@@ -263,7 +263,7 @@ class SalaryBreakUpPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const DottedLineWidget(),
+                  DottedLineWidget(color: AppTheme.getColor(context).onSurface),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
