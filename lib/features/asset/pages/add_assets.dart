@@ -63,13 +63,6 @@ class _AddAssets extends State<AddAssets> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              LabeledTextField(
-                hint: 'hint',
-                label: 'label',
-                textFieldwidth: 200,
-              ),
-
-              ////
               AssetsTextFieldWidget(
                 label: 'assets_category',
                 hintText: 'select',

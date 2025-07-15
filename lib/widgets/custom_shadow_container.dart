@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -9,14 +8,15 @@ class CustomShadowContainer extends StatelessWidget {
   final Widget image;
   final String? title;
   final TextStyle? titleStyle;
+  final TextAlign? titleAlign;
   final FontWeight? titleWeight;
-  final Color? titleColor;
+  final Color? titleColor, boxColor;
   final double? height,
+      boxTextBetweenSpace,
       width,
       boxPadding,
       titleFontSize,
-      borderRadius,
-      imageTitleBetweenSpace;
+      borderRadius;
 
   const CustomShadowContainer({
     required this.image,
@@ -28,14 +28,16 @@ class CustomShadowContainer extends StatelessWidget {
     this.borderRadius,
     this.titleFontSize,
     this.titleColor,
-    this.imageTitleBetweenSpace,
     this.titleWeight,
     this.boxPadding,
+    this.titleAlign,
+    this.boxColor,
+    this.boxTextBetweenSpace,
   });
 
   @override
   Widget build(BuildContext context) => SizedBox(
-    width: width ?? 70,
+    width: width ?? 0.02 * Responsive.getWidth(context),
     height: height,
     child: Column(
       mainAxisSize: MainAxisSize.min,
@@ -44,9 +46,11 @@ class CustomShadowContainer extends StatelessWidget {
           children: [
             Center(
               child: Container(
-                padding: EdgeInsets.all(boxPadding ?? 15),
+                padding: EdgeInsets.all(
+                  boxPadding ?? 15 * Responsive.getResponsive(context),
+                ),
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: boxColor ?? AppTheme.getColor(context).onPrimary,
                   borderRadius: BorderRadius.circular(
                     borderRadius ?? 20 * Responsive.getResponsive(context),
                   ),
@@ -70,37 +74,50 @@ class CustomShadowContainer extends StatelessWidget {
                   painter: InnerShadowPainter(
                     shadowColor: const Color.fromARGB(50, 0, 0, 0),
                     blur: 4,
-                    offset: const Offset(3, -3.5),
-                    borderRadius: 20,
+                    offset: const Offset(2, -3.5),
+                    borderRadius: 12,
                     isShadowBottomRight: true,
-                  ),
-                ),
-              ),
-            ),
-            Positioned.fill(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  borderRadius ?? 20 * Responsive.getResponsive(context),
-                ),
-                child: CustomPaint(
-                  painter: InnerShadowPainter(
-                    shadowColor: const Color.fromARGB(50, 0, 0, 0),
-                    blur: 4,
-                    offset: const Offset(3, -3.5),
-                    borderRadius: 20,
                     isShadowBottomLeft: true,
                   ),
                 ),
               ),
             ),
+            // Positioned.fill(
+            //   child: ClipRRect(
+            //     borderRadius: BorderRadius.circular(
+            //       borderRadius ?? 20 * Responsive.getResponsive(context),
+            //     ),
+            //     child: CustomPaint(
+            //       painter: InnerShadowPainter(
+            //         shadowColor: const Color.fromARGB(50, 0, 0, 0),
+            //         blur: 4,
+            //         offset: const Offset(3, -3.5),
+            //         borderRadius: 20,
+            //         isShadowBottomLeft: true,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
-        const SizedBox(height: 6),
-        CustomText(
-          title ?? '',
-          fontSize: 11 * Responsive.getResponsive(context),
-          fontWeight: FontWeight.w600,
-        ),
+
+        if (title != null)
+          SizedBox(
+            height: boxTextBetweenSpace ?? 0.01 * Responsive.getHeight(context),
+          ),
+
+        if (title != null)
+          titleStyle != null
+              ? Text(title ?? '', style: titleStyle)
+              : CustomText(
+                  title ?? '',
+                  fontSize:
+                      titleFontSize ??
+                      10 * Responsive.getDashboardResponsiveText(context),
+                  fontWeight: titleWeight ?? FontWeight.w600,
+                  textAlign: titleAlign ?? TextAlign.center,
+                  color: titleColor ?? AppTheme.getColor(context).onSurface,
+                ),
       ],
     ),
   );

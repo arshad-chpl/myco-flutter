@@ -5,7 +5,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
 import 'package:myco_flutter/features/asset/widgets/assets_holder_bottom_sheet.dart';
-import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
+import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_dash_line.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';

@@ -76,7 +76,9 @@ class _QRScannerPageState extends State<QRScannerPage> {
                 width: 0.85 * Responsive.getWidth(context),
                 imageButtonSpacing: 0.001 * Responsive.getHeight(context),
                 onScanned: (data) {
-                  Navigator.pop(context, data);
+                  log('$data');
+                  Navigator.pop(context);
+                  // Navigator.pop(context, data);
                 },
               ),
             ),

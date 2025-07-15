@@ -6,25 +6,30 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 
 class CommonCard extends StatelessWidget {
   final String title;
-  final String? subTitle;
-  final String? secondTitle;
+  final String? subTitle, secondTitle;
   final bool isButton;
   final String buttonText;
   final Widget bottomWidget;
   final void Function()? onTap;
-  final double? headerHeight;
-  final double? borderRadius;
+  final double? headerHeight,
+      borderRadius,
+      titleSecondTitleBetweenSpace,
+      secondTitleSubTitleBetweenSpace;
   final EdgeInsetsGeometry? headerPadding;
-  final Color? headerColor;
-  final Color? borderColor;
-  final bool? showHeaderPrefixIcon;
+  final Color? headerColor, borderColor, headerPrefixIconColor;
+  final bool? showHeaderPrefixIcon, showBlackShadowInChild;
   final String? headerPrefixIcon;
-  final Color? headerPrefixIconColor;
-  final Widget? suffixIcon;
-  final double? headerPrefixIconHeight;
-  final double? headerPrefixIconWidth;
-  final bool? showBlackShadowInChild;
-  final Widget? subTitleIcon;
+  final Widget? suffixIcon, titleSuffix, subTitleIcon;
+  final double? headerPrefixIconHeight, headerPrefixIconWidth;
+  final FontWeight? titleFontWeight,
+      secondTitleFontWeight,
+      subTitleFontWeight,
+      buttonTextFontWeight;
+  final Color? titleColor, secondTitleColor, subTitleColor, buttonTextColor;
+  final double? titleFontSize,
+      secondTitleFontSize,
+      subTitleFontSize,
+      buttonTextFontSize;
   const CommonCard({
     required this.title,
     required this.bottomWidget,
@@ -47,6 +52,21 @@ class CommonCard extends StatelessWidget {
     this.headerPrefixIconWidth,
     this.showBlackShadowInChild,
     this.subTitleIcon,
+    this.titleSuffix,
+    this.titleFontWeight,
+    this.secondTitleFontWeight,
+    this.subTitleFontWeight,
+    this.titleColor,
+    this.secondTitleColor,
+    this.subTitleColor,
+    this.titleFontSize,
+    this.secondTitleFontSize,
+    this.subTitleFontSize,
+    this.titleSecondTitleBetweenSpace,
+    this.secondTitleSubTitleBetweenSpace,
+    this.buttonTextFontWeight,
+    this.buttonTextColor,
+    this.buttonTextFontSize,
   });
 
   @override
@@ -78,19 +98,19 @@ class CommonCard extends StatelessWidget {
               if (showBlackShadowInChild == true)
                 const BoxShadow(
                   color: Colors.black26,
-                  offset: Offset(0, 2),
+                  offset: Offset(0, 3),
                   blurRadius: 4,
                 ),
               BoxShadow(
                 color:
-                    headerColor?.withAlpha(200) ??
+                    headerColor?.withAlpha(180) ??
                     AppTheme.getColor(context).secondary.withAlpha(180),
               ),
               BoxShadow(
                 color: headerColor ?? AppTheme.getColor(context).secondary,
-              offset: const Offset(1, 4),
-                    spreadRadius: -6.0,
-                    blurRadius: 6.0,
+                offset: const Offset(1, 4),
+                spreadRadius: -6.0,
+                blurRadius: 6.0,
               ),
             ],
           ),
@@ -112,21 +132,40 @@ class CommonCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(
-                      isKey: true,
-                      title,
-                      color: AppTheme.getColor(context).onPrimary,
-                      fontSize: 18 * Responsive.getResponsiveText(context),
-                      fontWeight: FontWeight.bold,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomText(
+                            isKey: true,
+                            title,
+                            color:
+                                titleColor ??
+                                AppTheme.getColor(context).onPrimary,
+                            fontSize:
+                                titleFontSize ??
+                                18 * Responsive.getResponsiveText(context),
+                            fontWeight: titleFontWeight ?? FontWeight.w700,
+                          ),
+                        ),
+                        if (titleSuffix != null)
+                          titleSuffix ?? const SizedBox.shrink(),
+                      ],
                     ),
+
+                    SizedBox(height: titleSecondTitleBetweenSpace),
                     if (secondTitle != null)
                       CustomText(
                         isKey: true,
                         '$secondTitle',
-                        color: AppTheme.getColor(context).onPrimary,
-                        fontSize: 18 * Responsive.getResponsiveText(context),
-                        fontWeight: FontWeight.bold,
+                        color:
+                            secondTitleColor ??
+                            AppTheme.getColor(context).onPrimary,
+                        fontSize:
+                            secondTitleFontSize ??
+                            18 * Responsive.getResponsiveText(context),
+                        fontWeight: secondTitleFontWeight ?? FontWeight.w700,
                       ),
+                    SizedBox(height: secondTitleSubTitleBetweenSpace),
                     if (subTitle != null)
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,10 +181,13 @@ class CommonCard extends StatelessWidget {
                             child: CustomText(
                               isKey: true,
                               '$subTitle',
-                              color: AppTheme.getColor(context).onPrimary,
+                              color:
+                                  subTitleColor ??
+                                  AppTheme.getColor(context).onPrimary,
                               fontSize:
+                                  subTitleFontSize ??
                                   15 * Responsive.getResponsiveText(context),
-                              fontWeight: FontWeight.bold,
+                              fontWeight: subTitleFontWeight ?? FontWeight.w600,
                             ),
                           ),
                         ],
@@ -161,8 +203,13 @@ class CommonCard extends StatelessWidget {
                   onTap: onTap,
                   title: buttonText,
                   textStyle: TextStyle(
-                    fontSize: 13 * Responsive.getResponsiveText(context),
-                    color: AppTheme.getColor(context).onPrimary,
+                    fontFamily: 'Gilroy-semiBold',
+                    fontSize:
+                        buttonTextFontSize ??
+                        13 * Responsive.getResponsiveText(context),
+                    color:
+                        buttonTextColor ?? AppTheme.getColor(context).onPrimary,
+                    fontWeight: buttonTextFontWeight,
                   ),
                   width: 0.16 * Responsive.getWidth(context),
                   boarderRadius: 30 * Responsive.getResponsive(context),

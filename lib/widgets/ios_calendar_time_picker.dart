@@ -1,10 +1,129 @@
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+
+Future<String?> showPicker(
+  BuildContext context, {
+  DateTime? minDate,
+  DateTime? maxDate,
+  required bool pickDay,
+  required bool timePicker,
+  Widget? image,
+  double? height,
+  double? width,
+  bool? use24hFormat,
+  double? bottomSheetHeight,
+}) async {
+  final DateTime selectedDate0 = DateTime.now(); // Initialize properly
+  final GlobalKey<_CustomTimePickerState> timePickerKey = GlobalKey();
+  final GlobalKey<_CustomDatePickerState> datePickerKey = GlobalKey();
+
+  return await showCupertinoModalPopup<String>(
+    context: context,
+    builder: (_) => Container(
+      height: bottomSheetHeight ?? MediaQuery.of(context).size.height * 0.4,
+      width: double.infinity,
+      color: CupertinoColors.systemBackground.resolveFrom(context),
+      child: Column(
+        children: [
+          Expanded(
+            child: timePicker
+                ? CustomTimePicker(
+                    key: timePickerKey,
+                    initialDateTime: selectedDate0,
+                    use24hFormat: use24hFormat ?? false,
+                    onTimeChanged: (_) {},
+                  )
+                : CustomDatePicker(
+                    key: datePickerKey,
+                    initialDate: selectedDate0,
+                    minDate: minDate ?? DateTime(1900, 1, 1),
+                    maxDate: maxDate ?? DateTime(2100, 12, 31),
+                    pickDay: pickDay,
+                    onDateChanged: (_) {},
+                  ),
+          ),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+            child: CupertinoButton(
+              padding: const EdgeInsets.all(0),
+              borderRadius: BorderRadius.circular(50),
+              color: AppTheme.getColor(context).primary,
+              child: Center(
+                child: Text(
+                  'Submit',
+                  style: MyCoButtonTheme.getMobileTextStyle(context),
+                ),
+              ),
+              onPressed: () {
+                DateTime newDateTime;
+                if (timePicker) {
+                  final selectedTime = timePickerKey.currentState
+                      ?.getSelectedTime();
+                  newDateTime = DateTime(
+                    selectedDate0.year,
+                    selectedDate0.month,
+                    selectedDate0.day,
+                    selectedTime?.hour ?? selectedDate0.hour,
+                    selectedTime?.minute ?? selectedDate0.minute,
+                  );
+                } else {
+                  final selectedDate = datePickerKey.currentState
+                      ?.getSelectedDate();
+                  newDateTime = DateTime(
+                    selectedDate?.year ?? selectedDate0.year,
+                    selectedDate?.month ?? selectedDate0.month,
+                    selectedDate?.day ?? selectedDate0.day,
+                    selectedDate0.hour,
+                    selectedDate0.minute,
+                  );
+                }
+
+                String formatDate(DateTime date) {
+                  String monthName(int month) {
+                    const months = [
+                      'Jan',
+                      'Feb',
+                      'Mar',
+                      'Apr',
+                      'May',
+                      'Jun',
+                      'Jul',
+                      'Aug',
+                      'Sep',
+                      'Oct',
+                      'Nov',
+                      'Dec',
+                    ];
+                    return months[month - 1];
+                  }
+
+                  if (timePicker) {
+                    return DateFormat('hh:mm a').format(date);
+                  } else if (pickDay) {
+                    return '${monthName(date.month)} ${date.day}, ${date.year}';
+                  } else {
+                    return '${monthName(date.month)} ${date.year}';
+                  }
+                }
+
+                // ✅ Send formatted value
+                final formatted = formatDate(newDateTime);
+                Navigator.of(context).pop('$formatted');
+              },
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
 
 class DialDatePickerWidget extends StatefulWidget {
   final void Function(DateTime selectedDate) onSubmit;
@@ -57,9 +176,7 @@ class _DialDatePickerWidgetState extends State<DialDatePickerWidget> {
     showCupertinoModalPopup(
       context: context,
       builder: (_) => Container(
-        height:
-            widget.bottomSheetHeight ??
-            MediaQuery.of(context).size.height * 0.4,
+        height: widget.bottomSheetHeight ?? Responsive.getHeight(context) * 0.4,
         width: double.infinity,
         color: CupertinoColors.systemBackground.resolveFrom(context),
         child: Column(
@@ -75,19 +192,24 @@ class _DialDatePickerWidgetState extends State<DialDatePickerWidget> {
                   : CustomDatePicker(
                       key: _datePickerKey,
                       initialDate: _selectedDate,
-                      minDate: widget.minDate ?? DateTime(1900, 1, 1),
-                      maxDate: widget.maxDate ?? DateTime(2100, 12, 31),
+                      minDate: widget.minDate ?? DateTime(1800, 1, 1),
+                      maxDate: widget.maxDate ?? DateTime(2200, 12, 31),
                       pickDay: widget.pickDay,
                       onDateChanged: (_) {},
                     ),
             ),
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              padding: EdgeInsets.only(
+                left: 16 * Responsive.getResponsive(context),
+                right: 16 * Responsive.getResponsive(context),
+                bottom: 16 * Responsive.getResponsive(context),
+              ),
               child: CupertinoButton(
-                padding: const EdgeInsets.all(0),
-                borderRadius: BorderRadius.circular(50),
-                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(
+                  50 * Responsive.getResponsive(context),
+                ),
+                color: AppTheme.getColor(context).primary,
                 child: Center(
                   child: Text(
                     'Submit',
@@ -224,6 +346,7 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
   }
 
   Widget _buildStaticPicker<T>({
+    required BuildContext context,
     required List<T> items,
     required int selectedIndex,
     required ValueChanged<int> onChanged,
@@ -234,9 +357,12 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
       diameterRatio: 1,
       itemExtent: 32,
       selectionOverlay: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           border: Border.symmetric(
-            horizontal: BorderSide(color: AppColors.primary, width: 1.5),
+            horizontal: BorderSide(
+              color: AppTheme.getColor(context).primary,
+              width: 1.5,
+            ),
           ),
         ),
         margin: const EdgeInsets.symmetric(horizontal: 6),
@@ -260,12 +386,14 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
   Widget build(BuildContext context) => Row(
     children: [
       _buildLoopingPicker<int>(
+        context: context,
         items: hourList,
         selectedIndex: hourList.indexOf(selectedHour),
         onChanged: (i) => setState(() => selectedHour = hourList[i]),
         displayText: (val) => val.toString().padLeft(2, '0'),
       ),
       _buildLoopingPicker<int>(
+        context: context,
         items: minuteList,
         selectedIndex: selectedMinute,
         onChanged: (i) => setState(() => selectedMinute = i),
@@ -273,6 +401,7 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
       ),
       if (!widget.use24hFormat)
         _buildStaticPicker<String>(
+          context: context,
           items: periods,
           selectedIndex: periods.indexOf(selectedPeriod),
           onChanged: (i) => setState(() => selectedPeriod = periods[i]),
@@ -360,12 +489,14 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     children: [
       if (widget.pickDay)
         _buildLoopingPicker<int>(
+          context: context,
           items: dayList,
           selectedIndex: dayList.indexOf(selectedDay),
           onChanged: (index) => setState(() => selectedDay = dayList[index]),
           displayText: (val) => val.toString().padLeft(2, '0'),
         ),
       _buildLoopingPicker<String>(
+        context: context,
         items: monthNames,
         selectedIndex: selectedMonth - 1,
         onChanged: (index) {
@@ -377,6 +508,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         displayText: (val) => val,
       ),
       _buildLoopingPicker<int>(
+        context: context,
         items: yearList,
         selectedIndex: selectedYear - widget.minDate.year,
         onChanged: (index) {
@@ -392,6 +524,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 }
 
 Widget _buildLoopingPicker<T>({
+  required BuildContext context,
   required List<T> items,
   required int selectedIndex,
   required ValueChanged<int> onChanged,
@@ -412,9 +545,12 @@ Widget _buildLoopingPicker<T>({
       itemExtent: 32,
       childCount: totalCount,
       selectionOverlay: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           border: Border.symmetric(
-            horizontal: BorderSide(color: AppColors.primary, width: 1.5),
+            horizontal: BorderSide(
+              color: AppTheme.getColor(context).primary,
+              width: 1.5,
+            ),
           ),
         ),
         margin: const EdgeInsets.symmetric(horizontal: 6),
@@ -428,7 +564,9 @@ Widget _buildLoopingPicker<T>({
           child: CustomText(
             displayText(item),
             fontSize: 22 * Responsive.getResponsiveText(context),
-            color: isSelected ? AppColors.primary : AppColors.textPrimary,
+            color: isSelected
+                ? AppTheme.getColor(context).primary
+                : AppColors.textPrimary,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
           ),
         );
