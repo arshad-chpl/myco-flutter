@@ -1,5 +1,5 @@
 class AppAssets {
-  // common paths for visit in the application
+  // commmon paths for visit in the application
   static const String basePath = 'assets';
   // static const String fontsPath = '$basePath/fonts';
   static const String imagesPath = '$basePath/images';
@@ -7,6 +7,8 @@ class AppAssets {
   static const String dashboard = '$basePath/dashboard';
   static const String iconsPath = '$basePath/icons';
   static const String splash = '$basePath/splash';
+  static const String visit = '$basePath/visit';
+  static const String svgsVisit = '$svgsPath/visit';
   static const String assetVisit = '$basePath/add_expense';
   static const String assets = '$basePath/assets';
   static const String lostFound = '$basePath/lost_and_found';
@@ -33,9 +35,13 @@ class AppAssets {
   static const String punchIn = '$svgsPath/punchIn.svg';
   static const String scanQR = '$svgsPath/scanQR.svg';
   static const String refresh = '$svgsPath/refresh.svg';
+  static const String arrowDown = '$svgsPath/arrow_down.svg';
+
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
+  static const String loaderGif = '$basePath/gifs/mycoLoading.gif';
+
 
   // dashboard Screen
   static const String search = '$dashboard/search.png';
@@ -47,7 +53,16 @@ class AppAssets {
   static const String settingsIcon = 'visit/icons/settings_icon.png';
 
   // Animations (if using Lottie or similar)
-  static const String loadingAnimation = 'assets/animations/loading.json';
+  static const String loadingAnimation = 'visit/animations/loading.json';
+
+  static const String clock = '$svgsVisit/clock.svg';
+  static const String personalcard = '$svgsVisit/personalcard.svg';
+  static const String note_favorite = '$svgsVisit/note-favorite.svg';
+  static const String sticky_note = '$svgsVisit/sticky_note.svg';
+  static const String gps = '$svgsVisit/gps.svg';
+  static const String trash = '$svgsVisit/trash.svg';
+  static const String smart_car = '$svgsVisit/smart-car.svg';
+  static const String global = '$svgsVisit/global.svg';
 
   //images visit
   static const String assetBookmark = '$assetVisit/bookmark.svg';

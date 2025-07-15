@@ -1,32 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
 
 class CustomLoader extends StatelessWidget {
   const CustomLoader({super.key});
 
   @override
-  Widget build(BuildContext context) => Stack(
+  Widget build(BuildContext context) {
+    final responsive = Responsive.getResponsive(context);
+    final isTablet = Responsive.screenWidth() > 600;
+
+    final double padding = 10 * responsive;
+    final double borderRadius = isTablet ? 40 * responsive : 20 * responsive;
+    final double blurRadius = isTablet ? 30 * responsive : 6 * responsive;
+    final double imageWidth = isTablet
+        ? 0.2 * Responsive.getWidth(context)
+        : 0.25 * Responsive.getWidth(context);
+    final double imageHeight = isTablet
+        ? 0.2 * Responsive.getWidth(context)
+        : 0.1 * Responsive.getHeight(context);
+
+    return Stack(
       children: [
-        // const ModalBarrier(dismissible: false, color: Colors.white),
         Center(
           child: Container(
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(padding),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: const [
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(borderRadius),
+              boxShadow: [
                 BoxShadow(
-                  blurRadius: 10,
-                  offset: Offset(0, 4),
+                  color: Colors.grey,
+                  blurRadius: blurRadius,
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),
             child: Image.asset(
-              'assets/gifs/mycoLoading.gif',
-              width: 120,
-              height: 120,
+              AppAssets.loaderGif,
+              width: imageWidth,
+              height: imageHeight,
             ),
           ),
         ),
       ],
     );
+  }
 }
