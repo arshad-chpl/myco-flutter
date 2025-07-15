@@ -27,7 +27,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      appBarText: 'Take Order',
+      title: 'Take Order',
       actions: [
         MyCoButton(
           onTap: () {},
