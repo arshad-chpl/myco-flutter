@@ -59,7 +59,15 @@ class LabeledDropdown<T> extends StatelessWidget {
     this.popupShape,
     this.colorBackground,
     this.popupElevation,
-    this.borderRadius, this.textColor, this.textFontweight, this.textFontSize, this.textDecoration, this.textDecorationColor, this.textAlign, this.textMaxLine, this.textOverflow,
+    this.borderRadius,
+    this.textColor,
+    this.textFontweight,
+    this.textFontSize,
+    this.textDecoration,
+    this.textDecorationColor,
+    this.textAlign,
+    this.textMaxLine,
+    this.textOverflow,
   });
 
   @override
@@ -70,9 +78,10 @@ class LabeledDropdown<T> extends StatelessWidget {
         children: [
           CustomText(
             label,
-            color:textColor?? AppColors.textGray,
-            fontSize:textFontSize?? 16 * Responsive.getResponsiveText(context),
-            fontWeight:textFontweight?? FontWeight.bold,
+            color: textColor ?? AppColors.textGray,
+            fontSize:
+                textFontSize ?? 16 * Responsive.getResponsiveText(context),
+            fontWeight: textFontweight ?? FontWeight.bold,
             decoration: textDecoration,
             textAlign: textAlign,
             decorationColor: textDecorationColor,

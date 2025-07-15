@@ -106,6 +106,7 @@ class RoutePaths {
   static const String adminEducation = 'education';
   static const String adminAchievements = 'achievements';
   static const String adminEmployeesFace = 'employees-face';
+  static const String CustomerAddNewVisit = 'CustomerAddNewVisit';
 
   //maulik
   static const String assetsDetails = '/assets-details';

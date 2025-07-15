@@ -100,7 +100,9 @@ class _AssignToVisitState extends State<AssignToVisit> {
                     mainAxisSpacing: 10 * Responsive.getResponsive(context),
                   ),
                   itemBuilder: (context, index) => Container(
-                    padding: EdgeInsets.only(right: 6 * Responsive.getResponsive(context)),
+                    padding: EdgeInsets.only(
+                      right: 6 * Responsive.getResponsive(context),
+                    ),
                     child: Row(
                       children: [
                         CircleAvatar(
@@ -116,12 +118,14 @@ class _AssignToVisitState extends State<AssignToVisit> {
                               CustomText(
                                 'Vatsal Champaneri',
                                 color: AppTheme.getColor(context).onSurface,
-                                fontSize: 10 * Responsive.getResponsiveText(context),
+                                fontSize:
+                                    10 * Responsive.getResponsiveText(context),
                                 overflow: TextOverflow.ellipsis,
                               ),
                               CustomText(
                                 'QA',
-                                fontSize: 10 * Responsive.getResponsiveText(context),
+                                fontSize:
+                                    10 * Responsive.getResponsiveText(context),
                                 color: AppTheme.getColor(context).onSurface,
                               ),
                             ],
@@ -141,7 +145,8 @@ class _AssignToVisitState extends State<AssignToVisit> {
             ),
             SizedBox(height: 16 * Responsive.getResponsive(context)),
             CustomText(
-              'Customer to visit',
+              'customer_to_visit',
+              isKey: true,
               fontSize: 13 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).onSurface,
             ),
@@ -152,7 +157,7 @@ class _AssignToVisitState extends State<AssignToVisit> {
               prefixImageHeight: 20 * Responsive.getHeight(context),
               prefixImageWidth: 20 * Responsive.getWidth(context),
               items: Customer,
-              hintText: '  Select ',
+              hintText: 'Select ',
               hintTextStyle: TextStyle(
                 fontSize: 14 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).outline,
@@ -248,7 +253,8 @@ class _AssignToVisitState extends State<AssignToVisit> {
                 title: 'SUBMIT',
                 textStyle: TextStyle(
                   color: AppTheme.getColor(context).onPrimary,
-                  fontSize: 22 * Responsive.getResponsiveText(context), // reduced
+                  fontSize:
+                      22 * Responsive.getResponsiveText(context), // reduced
                   fontFamily: 'Gilroy-Bold',
                 ),
                 isShadowBottomLeft: true,

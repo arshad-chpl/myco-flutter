@@ -59,7 +59,9 @@ class _AddNewVisitState extends State<AddNewVisit> {
     ),
 
     body: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 31.0 * Responsive.getResponsive(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 31.0 * Responsive.getResponsive(context),
+      ),
       child: SingleChildScrollView(
         child: Column(
           spacing: 16 * Responsive.getResponsive(context),
@@ -80,7 +82,8 @@ class _AddNewVisitState extends State<AddNewVisit> {
             ),
 
             CustomText(
-              'Customer to visit',
+              'customer_to_visit',
+              isKey: true,
               fontSize: 12 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
               color: AppTheme.getColor(context).onSurface,
@@ -134,7 +137,8 @@ class _AddNewVisitState extends State<AddNewVisit> {
 
             // Visit Slot Label
             CustomText(
-              'Visit Slot',
+              'visit_slots',
+              isKey: true,
               fontSize: 12 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
               color: AppTheme.getColor(context).onSurface,
@@ -162,7 +166,8 @@ class _AddNewVisitState extends State<AddNewVisit> {
 
             // Visit Type Label
             CustomText(
-              'Visit Type',
+              'visit_type',
+              isKey: true,
               fontSize: 12 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
               color: AppTheme.getColor(context).onSurface,
@@ -212,7 +217,9 @@ class _AddNewVisitState extends State<AddNewVisit> {
 
             ///Submit Button
             Padding(
-              padding: EdgeInsets.only(top: 0.05 * Responsive.getHeight(context)),
+              padding: EdgeInsets.only(
+                top: 0.05 * Responsive.getHeight(context),
+              ),
               child: MyCoButton(
                 onTap: () {
                   //  Handle form submission here

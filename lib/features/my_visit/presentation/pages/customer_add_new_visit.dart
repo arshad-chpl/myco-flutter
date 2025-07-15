@@ -8,7 +8,6 @@ import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_cus
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
-import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -213,26 +212,6 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
               onChanged: (value, index) {
                 // Handle dropdown change
               },
-            ),
-            LabeledDropdown<String>(
-              label: 'Visit Purpose',
-              isRequired: false,
-              items: VisitPurpose,
-              selectedItem: selectedleavetype,
-              itemToString: (item) => item,
-              onChanged: (value, index) {
-                setState(() {
-                  selectedleavetype = value;
-                });
-              },
-              hintText: 'Select',
-              hintTextStyle: TextStyle(
-                fontSize: 15 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).outline,
-              ),
-              prefix: SvgPicture.asset(AppAssets.gps),
-              height: 0.06 * Responsive.getHeight(context),
-              spacing: 10 * Responsive.getResponsive(context),
             ),
             // Submit Button
             Padding(
