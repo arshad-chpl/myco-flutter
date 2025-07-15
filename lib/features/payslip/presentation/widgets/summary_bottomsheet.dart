@@ -15,11 +15,18 @@ class SummaryBottomsheet extends StatelessWidget {
     ),
     child: Column(
       children: [
-        AppBar(
-          leading: const BackButton(),
-          title: const CustomText('Summary', fontWeight: FontWeight.w700),
-          centerTitle: false,
+        Row(
+          children: [
+            const BackButton(),
+            CustomText(
+              'Summary',
+              color: AppTheme.getColor(context).onSurface,
+              fontSize: 18 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.w700,
+            ),
+          ],
         ),
+
         Padding(
           padding: EdgeInsets.all(16.0 * Responsive.getResponsive(context)),
           child: Column(
@@ -128,7 +135,9 @@ class SummaryBottomsheet extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const DottedLineWidget(),
+                        DottedLineWidget(
+                          color: AppTheme.getColor(context).onSurface,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -183,7 +192,9 @@ class SummaryBottomsheet extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const DottedLineWidget(),
+                      DottedLineWidget(
+                        color: AppTheme.getColor(context).onSurface,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

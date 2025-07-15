@@ -47,7 +47,7 @@ class NoOrderPage extends StatelessWidget {
           SizedBox(height: 0.01 * Responsive.getHeight(context)),
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              // color: Colors.white,
               border: Border.all(color: AppTheme.getColor(context).outline),
               borderRadius: BorderRadius.circular(
                 12 * Responsive.getResponsive(context),
