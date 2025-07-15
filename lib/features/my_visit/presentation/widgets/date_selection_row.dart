@@ -18,10 +18,7 @@ class DateSelectionRow extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final double multiplier = Responsive.getResponsiveText(context);
-
-    return Row(
+  Widget build(BuildContext context) => Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         DateArrowButton(icon: Icons.chevron_left_rounded, onTap: goToPreviousDate),
@@ -31,20 +28,20 @@ class DateSelectionRow extends StatelessWidget {
             children: [
               Baseline(
                 baselineType: TextBaseline.alphabetic,
-                baseline: 20 * multiplier,
+                baseline: 20 * Responsive.getResponsiveText(context),
                 child: CustomText(
                   formattedDate,
-                  fontSize: 16 * multiplier,
+                  fontSize: 16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w700,
                   color: AppTheme.getColor(context).onSurface,
                 ),
               ),
               Baseline(
                 baselineType: TextBaseline.alphabetic,
-                baseline: 20 * multiplier,
+                baseline: 20 * Responsive.getResponsiveText(context),
                 child: Icon(
                   Icons.keyboard_arrow_down_rounded,
-                  size: 22 * multiplier,
+                  size: 22 * Responsive.getResponsiveText(context),
                   color: AppTheme.getColor(context).onSurface,
                 ),
               ),
@@ -54,7 +51,6 @@ class DateSelectionRow extends StatelessWidget {
         DateArrowButton(icon: Icons.chevron_right_rounded, onTap: goToNextDate),
       ],
     );
-  }
 }
 
 class DateArrowButton extends StatelessWidget {
@@ -67,19 +63,15 @@ class DateArrowButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final double multiplier = Responsive.getResponsiveText(context);
-
-    return GestureDetector(
+  Widget build(BuildContext context) => GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(8 * multiplier),
+        padding: EdgeInsets.all(8 * Responsive.getResponsiveText(context)),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15 * multiplier),
+          borderRadius: BorderRadius.circular(15 * Responsive.getResponsiveText(context)),
           color: AppTheme.getColor(context).primary.withOpacity(0.25),
         ),
-        child: Icon(icon, size: 22 * multiplier),
+        child: Icon(icon, size: 22 * Responsive.getResponsiveText(context)),
       ),
     );
-  }
 }

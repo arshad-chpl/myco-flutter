@@ -18,7 +18,8 @@ Widget startVisitBottomSheet(BuildContext context) => Padding(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomText(
-          'Face Match Alert!',
+          'visit_face_alert',
+          isKey: true,
           fontSize: 18 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
         ),
@@ -31,7 +32,8 @@ Widget startVisitBottomSheet(BuildContext context) => Padding(
         ),
         SizedBox(height: 0.025 * Responsive.getHeight(context)),
         CustomText(
-          'You will now required to match your face when you start or end the visit',
+          'visit_face_alert_info',
+          isKey: true,
           fontSize: 18 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w400,
           textAlign: TextAlign.center,

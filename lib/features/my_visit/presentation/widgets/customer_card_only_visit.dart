@@ -3,8 +3,8 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/card_bottom_content.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class CustomerCardOnlyVisit extends StatelessWidget {
   final VoidCallback? onTap;
@@ -26,14 +26,14 @@ class CustomerCardOnlyVisit extends StatelessWidget {
         ),
         color: Colors.transparent, // Transparent background
       ),
-      child: Text(
-        'Only Visit',
-        style: TextStyle(
-          color: Colors.white, // Text color
+        child: CustomText(
+          'only_visit',
+          isKey: true,
+          color: Colors.white,
           fontSize: 12 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,
-        ),
-      ),
+        )
+
     ),
       onTap: onTap,
       headerColor: AppColors.spanishYellow,

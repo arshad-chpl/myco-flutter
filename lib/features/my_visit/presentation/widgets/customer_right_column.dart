@@ -36,7 +36,7 @@ class CustomerRightColumn extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SvgPicture.asset(
-                  'assets/visit/svgs/map.svg',
+                  AppAssets.map,
                   height: 50,
                   width: 50,
                 ),
@@ -90,7 +90,8 @@ class CustomerRightColumn extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     CustomText(
-                      'Last Visit History',
+                      'last_visit_history',
+                      isKey: true,
                       fontSize: 13 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w600,
                       color: AppColors.primary,

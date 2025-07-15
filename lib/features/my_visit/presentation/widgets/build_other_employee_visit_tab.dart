@@ -4,19 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/date_selection_row.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/employee_info_tile.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/get_common_row.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/reschedule_visit_row.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_action_row.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_detail_rows.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_search_bar.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 Widget buildOtherEmployeeVisitTab(
   BuildContext context,

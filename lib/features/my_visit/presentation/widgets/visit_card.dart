@@ -36,7 +36,6 @@ Widget buildVisitCard(
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.8),
-        border: Border.all(color: AppColors.textfieldBorder),
       ),
       child: CommonCard(
         title: visit['title'],
@@ -142,6 +141,7 @@ Widget buildVisitCard(
                     },
                     child: CustomText(
                       'Reschedule Visit?',
+                      isKey: true,
                       fontWeight: FontWeight.w600,
                       fontSize: 14 * Responsive.getResponsiveText(context),
                       color: AppTheme.getColor(context).primary,
@@ -219,7 +219,8 @@ Widget buildVisitCard(
                   padding: EdgeInsets.only(bottom: Responsive.getHeight(context) * 0.008),
                   child: Center(
                     child: CustomText(
-                      'Visit Not Ended, Forgot to end Visit',
+                      'forgot_to_end_visit',
+                      isKey: true,
                       fontSize: 14 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w600,
                       color: AppTheme.getColor(context).primary,
@@ -265,7 +266,8 @@ Widget buildVisitCard(
               if (visit['isEighthContainer'] == true) ...[
                 SizedBox(height: Responsive.getHeight(context) * 0.03),
                 CustomText(
-                  'End Visit Request',
+                  'end_visit_request',
+                  isKey: true,
                   fontWeight: FontWeight.w600,
                   fontSize: 14 * Responsive.getResponsiveText(context),
                   color: AppTheme.getColor(context).primary,
@@ -273,7 +275,7 @@ Widget buildVisitCard(
                 SizedBox(height: Responsive.getHeight(context) * 0.015),
                 getCommonRow(
                   context,
-                  title: 'Rejected By',
+                  title: 'rejected_by',
                   value: 'vatsal soni (UIUX Designer)',
                   textColor: AppTheme.getColor(context).onSurface,
                   onTap: () {},

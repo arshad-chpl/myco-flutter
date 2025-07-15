@@ -36,14 +36,12 @@ class _CustomerPageState extends State<CustomerPage> {
   ];
 
   @override
-  Widget build(BuildContext context) {
-    final isTablet = Responsive.getWidth(context) >= 600;
-
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: CustomAppbar(
         appBarBackgoundColor: AppTheme.getColor(context).surface,
         title: CustomText(
-          'Customer',
+          'customer',
+          isKey: true,
           fontSize: 18 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
           color: AppTheme.getColor(context).onSurface,
@@ -100,5 +98,4 @@ class _CustomerPageState extends State<CustomerPage> {
         ),
       ),
     );
-  }
 }

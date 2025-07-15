@@ -24,7 +24,8 @@ class RescheduleVisitRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CustomText(
-            'Visit Added For',
+            'visit_added_for',
+            isKey: true,
             color: AppTheme.getColor(context).onSurface,
             fontWeight: FontWeight.w600,
             fontSize: 14 * multiplier,

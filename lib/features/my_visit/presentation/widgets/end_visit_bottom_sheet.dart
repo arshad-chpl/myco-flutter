@@ -41,7 +41,8 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
           Align(
             alignment: Alignment.centerLeft,
             child: CustomText(
-              'Visit Report',
+              'visit_report',
+              isKey: true,
               fontSize: 18 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
             ),

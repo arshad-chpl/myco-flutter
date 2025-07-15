@@ -10,13 +10,11 @@ import 'package:myco_flutter/features/my_visit/presentation/widgets/auto_start_c
 import 'package:myco_flutter/features/my_visit/presentation/widgets/custom_visit_type_radio_button.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/field_virtual_visit_toggle.dart';
 import 'package:myco_flutter/widgets/big_textfield.dart';
-import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_radio_button.dart';
 
 class RescheduleVisitPage extends StatefulWidget {
   const RescheduleVisitPage({super.key});
@@ -59,7 +57,8 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
         centerTitle: false,
         leading: const BackButton(),
         title: CustomText(
-          'Reschedule Visit',
+          'reschedule_visit',
+          isKey: true,
           fontSize: 24 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
           color: AppTheme.getColor(context).onSurface,
@@ -68,7 +67,7 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
 
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
-          horizontal: 16 * Responsive.getResponsive(context),
+          horizontal: 20 * Responsive.getResponsive(context),
           vertical: 12 * Responsive.getResponsive(context),
         ),
         child: Column(
@@ -89,7 +88,8 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
 
             // Customer to Visit
             CustomText(
-              'Customer to Visit',
+              'customer_to_visit',
+              isKey: true,
               color: AppTheme.getColor(context).onSurfaceVariant,
               fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
@@ -142,9 +142,10 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
 
             SizedBox(height: 12 * Responsive.getResponsive(context)),
 
-            // Visit Slots
+
             CustomText(
-              'Visit Slots',
+              'visit_slots',
+              isKey: true,
               color: AppTheme.getColor(context).onSurfaceVariant,
               fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
@@ -178,7 +179,8 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
 
             // Visit Purpose
             CustomText(
-              'Visit Type',
+              'visit_type',
+              isKey: true,
               color: AppTheme.getColor(context).onSurfaceVariant,
               fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
@@ -205,7 +207,8 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
 
             // Reason Dropdown
             CustomText(
-              'Visit Purpose',
+              'visit_purpose',
+              isKey: true,
               color: AppTheme.getColor(context).onSurfaceVariant,
               fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
@@ -232,7 +235,8 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
 
             // Reason
             CustomText(
-              'Reason for Reschedule',
+              'reason_for_reschedule',
+              isKey: true,
               color: AppTheme.getColor(context).onSurfaceVariant,
               fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,

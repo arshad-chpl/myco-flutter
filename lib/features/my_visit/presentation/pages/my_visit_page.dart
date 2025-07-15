@@ -37,7 +37,7 @@ class _VisitPageState extends State<MyVisitPage> {
         'Visit': 'Physical',
         'Visit Status': 'Approved',
         'Address':
-        '101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India'
+            '101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India'
             '\n(You are in Range)',
       },
       'showWhatsapp': true,
@@ -52,8 +52,7 @@ class _VisitPageState extends State<MyVisitPage> {
       'details': {
         'Visit': 'Demo',
         'Visit Status': 'Pending',
-        'Address':
-        'Plot 22, Phase-3 GIDC, Vatva, Ahmedabad, Gujarat, 382445',
+        'Address': 'Plot 22, Phase-3 GIDC, Vatva, Ahmedabad, Gujarat, 382445',
       },
       'showWhatsapp': true,
       'showShare': true,
@@ -67,8 +66,7 @@ class _VisitPageState extends State<MyVisitPage> {
       'details': {
         'Visit': 'Service',
         'Visit Status': 'Approved',
-        'Address':
-        'SG Highway, Near Infocity, Gandhinagar, Gujarat',
+        'Address': 'SG Highway, Near Infocity, Gandhinagar, Gujarat',
       },
       'showWhatsapp': true,
       'showShare': true,
@@ -84,7 +82,7 @@ class _VisitPageState extends State<MyVisitPage> {
       'details': {
         'Visit': 'Installation',
         'Visit Status': 'Approved',
-        'Address': 'Bapunagar, Ahmedabad, Gujarat - 380024'
+        'Address': 'Bapunagar, Ahmedabad, Gujarat - 380024',
       },
       'showWhatsapp': true,
       'showShare': true,
@@ -101,7 +99,8 @@ class _VisitPageState extends State<MyVisitPage> {
       'details': {
         'Visit': 'Service',
         'Visit Status': 'Approved',
-        'Address': '101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India'
+        'Address':
+            '101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India',
       },
       'showWhatsapp': true,
       'showShare': true,
@@ -121,12 +120,13 @@ class _VisitPageState extends State<MyVisitPage> {
       'details': {
         'Visit': 'Inspection',
         'Visit Status': 'Approved',
-        'Address': '101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India'
+        'Address':
+            '101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India',
       },
       'showWhatsapp': true,
       'showShare': true,
     },
-//7th
+    //7th
     {
       'title': 'Late Visit End ( LV2025 )',
       'time': '07th April, 2025(01:30 PM) TO 07th April, 2025(03:30 PM)',
@@ -142,7 +142,8 @@ class _VisitPageState extends State<MyVisitPage> {
       'details': {
         'Visit': 'Inspection',
         'Visit Status': 'Approved',
-        'Address': '101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India'
+        'Address':
+            '101 Sanand - Sarkhej Rd, Makarba, Ahmedabad\nSarkhej-Okaf, Gujarat, 382421, India',
       },
       'showWhatsapp': true,
       'showShare': true,
@@ -164,12 +165,11 @@ class _VisitPageState extends State<MyVisitPage> {
       'details': {
         'Visit': 'Inspection',
         'Visit Status': 'Approved',
-        'Address': 'Maninagar, Ahmedabad, Gujarat'
+        'Address': 'Maninagar, Ahmedabad, Gujarat',
       },
       'showWhatsapp': true,
       'showShare': true,
     },
-
   ];
 
   String get formattedDate =>
@@ -177,8 +177,18 @@ class _VisitPageState extends State<MyVisitPage> {
 
   String monthName(int month) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return months[month - 1];
   }
@@ -200,15 +210,16 @@ class _VisitPageState extends State<MyVisitPage> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => CustomVisitCupertinoDatePicker(
-        initialDate: selectedDate,
-      ),
+      builder: (_) => CustomVisitCupertinoDatePicker(initialDate: selectedDate),
     );
 
     if (result != null) {
       setState(() {
-        selectedDate =
-            DateTime(result['year']!, result['month']!, result['day']!);
+        selectedDate = DateTime(
+          result['year']!,
+          result['month']!,
+          result['day']!,
+        );
       });
     }
   }
@@ -225,20 +236,24 @@ class _VisitPageState extends State<MyVisitPage> {
       appBar: CustomAppbar(
         leading: const BackButton(),
         title: CustomText(
-          'visit',isKey: true,
+          'visit',
+          isKey: true,
           fontSize: 22 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
           color: AppTheme.getColor(context).onSurface,
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 12 * Responsive.getResponsiveText(context)),
+            padding: EdgeInsets.only(
+              right: 12 * Responsive.getResponsiveText(context),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomText(
                   'Latitude: 22.938088',
+                  isKey: true,
                   fontSize: 10 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w600,
                   color: AppTheme.getColor(context).primary,
@@ -266,7 +281,7 @@ class _VisitPageState extends State<MyVisitPage> {
             },
             selectedBgColors: [
               AppTheme.getColor(context).primary,
-              AppTheme.getColor(context).secondary
+              AppTheme.getColor(context).secondary,
             ],
             unselectedBorderAndTextColor: tabBorderColor,
             tabBarBorderColor: tabBorderColor,
@@ -274,60 +289,60 @@ class _VisitPageState extends State<MyVisitPage> {
           ),
           Expanded(
             child: selectedTabIndex == 0
-
-            //my visit tab
+                //my visit tab
                 ? MyVisitTab(
-              searchController: searchController,
-              searchFocus: searchFocus,
-              formattedDate: formattedDate,
-              goToPreviousDate: goToPreviousDate,
-              goToNextDate: goToNextDate,
-              selectDateFromPicker: selectDateFromPicker,
-              visitList: visitList,
-              buildVisitCard: buildVisitCard,
-              buildAutoExpenseCard: buildAutoExpenseCard(context),
-            )
-
-            //other emp visit tab
+                    searchController: searchController,
+                    searchFocus: searchFocus,
+                    formattedDate: formattedDate,
+                    goToPreviousDate: goToPreviousDate,
+                    goToNextDate: goToNextDate,
+                    selectDateFromPicker: selectDateFromPicker,
+                    visitList: visitList,
+                    buildVisitCard: buildVisitCard,
+                    buildAutoExpenseCard: buildAutoExpenseCard(context),
+                  )
+                //other emp visit tab
                 : buildOtherEmployeeVisitTab(
-              context,
-              MediaQuery.of(context).size,
-              searchController: searchController,
-              searchFocus: searchFocus,
-              formattedDate: formattedDate,
-              goToPreviousDate: goToPreviousDate,
-              goToNextDate: goToNextDate,
-              selectDateFromPicker: selectDateFromPicker,
-            ),
+                    context,
+                    MediaQuery.of(context).size,
+                    searchController: searchController,
+                    searchFocus: searchFocus,
+                    formattedDate: formattedDate,
+                    goToPreviousDate: goToPreviousDate,
+                    goToNextDate: goToNextDate,
+                    selectDateFromPicker: selectDateFromPicker,
+                  ),
           ),
         ],
       ),
       floatingActionButton: selectedTabIndex == 0
           ? ExpandableFab(
-        openIcon: Icons.add,
-        closeIcon: Icons.close,
-        actions: [
-          ExpandableFabAction(
-            label: 'Add Visit',
-            icon: Icons.location_on,
-            onTap: () {},
-          ),
-          ExpandableFabAction(
-            label: 'Add Expense',
-            icon: Icons.money,
-            onTap: () {},
-          ),
-        ],
-        imageSize: 66 * Responsive.getResponsiveText(context),
-        innericonsize: 20 * Responsive.getResponsiveText(context),
-        circleavataradius: 22 * Responsive.getResponsiveText(context),
-        innericonbgr: AppColors.white,
-        margin: EdgeInsets.only(right: 10 * Responsive.getResponsiveText(context)),
-        padding: EdgeInsets.symmetric(
-          horizontal: 14 * Responsive.getResponsiveText(context),
-          vertical: 8 * Responsive.getResponsiveText(context),
-        ),
-      )
+              openIcon: Icons.add,
+              closeIcon: Icons.close,
+              actions: [
+                ExpandableFabAction(
+                  label: 'Add Visit',
+                  icon: Icons.location_on,
+                  onTap: () {},
+                ),
+                ExpandableFabAction(
+                  label: 'Add Expense',
+                  icon: Icons.money,
+                  onTap: () {},
+                ),
+              ],
+              imageSize: 66 * Responsive.getResponsiveText(context),
+              innericonsize: 20 * Responsive.getResponsiveText(context),
+              circleavataradius: 22 * Responsive.getResponsiveText(context),
+              innericonbgr: AppColors.white,
+              margin: EdgeInsets.only(
+                right: 10 * Responsive.getResponsiveText(context),
+              ),
+              padding: EdgeInsets.symmetric(
+                horizontal: 14 * Responsive.getResponsiveText(context),
+                vertical: 8 * Responsive.getResponsiveText(context),
+              ),
+            )
           : null,
     );
   }

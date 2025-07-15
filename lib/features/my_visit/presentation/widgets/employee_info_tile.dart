@@ -16,33 +16,28 @@ class EmployeeInfoTile extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final double multiplier = Responsive.getResponsiveText(context);
-    final double screenWidth = Responsive.getWidth(context);
-
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+  Widget build(BuildContext context) => Padding(
+      padding: EdgeInsets.symmetric(horizontal: Responsive.getWidth(context) * 0.02),
       child: ListTile(
         contentPadding: EdgeInsets.zero,
         leading: Image.asset(
           imagePath,
-          width: 80 * multiplier,
-          height: 80 * multiplier,
+          width: 80 * Responsive.getResponsiveText(context),
+          height: 80 * Responsive.getResponsiveText(context),
           fit: BoxFit.contain,
         ),
         title: CustomText(
           name,
           color: AppColors.primary,
           fontWeight: FontWeight.bold,
-          fontSize: 14 * multiplier,
+          fontSize: 14 * Responsive.getResponsiveText(context),
         ),
         subtitle: CustomText(
           role,
           color: AppColors.textfieldBorder,
-          fontSize: 12 * multiplier,
+          fontSize: 12 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w400,
         ),
       ),
     );
-  }
 }

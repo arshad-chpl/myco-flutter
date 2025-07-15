@@ -3,6 +3,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/card_bottom_content.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class CustomerCardOrderNow extends StatelessWidget {
   final VoidCallback? onTap;
@@ -20,19 +21,18 @@ class CustomerCardOrderNow extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         border: Border.all(
-          color: AppTheme.getColor(context).onPrimary, // White border
+          color: AppTheme.getColor(context).onPrimary,
           width: 1.2,
         ),
         color: Colors.transparent, // Transparent background
       ),
-      child: Text(
-        'Order Taken',
-        style: TextStyle(
-          color: Colors.white, // Text color
+        child: CustomText(
+          'order_taken',
+          isKey: true,
+          color: Colors.white,
           fontSize: 12 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,
-        ),
-      ),
+        )
     ),
       headerColor: AppTheme.getColor(context).secondary,
       borderColor: AppTheme.getColor(context).outline,

@@ -18,40 +18,36 @@ class VisitSearchBar extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final double multiplier = Responsive.getResponsiveText(context);
-
-    return SizedBox(
-      height: 45 * multiplier,
+  Widget build(BuildContext context) => SizedBox(
+      height: 45 * Responsive.getResponsiveText(context),
       child: MyCoTextfield(
         controller: controller,
         focusNode: focusNode,
         hintText: hintText,
         fillColor: Colors.white,
         boarderRadius: 10,
-        contentPadding: EdgeInsets.symmetric(vertical: 12 * multiplier),
+        contentPadding: EdgeInsets.symmetric(vertical: 12 * Responsive.getResponsiveText(context)),
         prefix: Padding(
           padding: EdgeInsets.only(
-            left: 12 * multiplier,
-            right: 8 * multiplier,
+            left: 12 * Responsive.getResponsiveText(context),
+            right: 8 * Responsive.getResponsiveText(context),
           ),
           child: Icon(
             CupertinoIcons.search,
             color: AppColors.primary,
-            size: 24 * multiplier,
+            size: 24 * Responsive.getResponsiveText(context),
           ),
         ),
-        typingtextStyle: TextStyle(fontSize: 14 * multiplier),
+        typingtextStyle: TextStyle(fontSize: 14 * Responsive.getResponsiveText(context)),
         hintTextStyle: TextStyle(
-          fontSize: 14 * multiplier,
+          fontSize: 14 * Responsive.getResponsiveText(context),
           color: AppColors.textPrimary,
         ),
         textAlignment: TextAlign.start,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10 * multiplier)),
+          borderRadius: BorderRadius.all(Radius.circular(10 * Responsive.getResponsiveText(context))),
           borderSide: BorderSide(color: AppTheme.getColor(context).outline),
         ),
       ),
     );
-  }
 }
