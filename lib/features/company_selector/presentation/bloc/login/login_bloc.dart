@@ -28,7 +28,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (response.error == null) {
         emit(OtpSentState(response));
       } else {
-        emit(OtpNotSentState());
+        emit(OtpNotSentState(response));
       }
     });
   }
@@ -44,7 +44,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     result.fold(
       (failure) => emit(LoginError(failure.message)),
-      (response) => emit(OtpVerifiedState(response)),
+      (response){
+        if (response.error == null) {
+          emit(OtpVerifiedState(response));
+        } else {
+          emit(OtpVerificationFailedState(response));
+        }
+      }
     );
   }
 }

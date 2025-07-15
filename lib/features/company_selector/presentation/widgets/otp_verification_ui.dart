@@ -20,6 +20,7 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 
 class OtpVerificationUi extends StatelessWidget {
   final String contactValue;
+  final String countryCode;
   final bool isEmail;
   final CommonResponse? otpResponse;
   final SocietyModel? selectedCompany;
@@ -35,6 +36,7 @@ class OtpVerificationUi extends StatelessWidget {
     required this.otpResponse,
     required this.selectedCompany,
     required this.contactValue,
+    required this.countryCode,
     required this.onSubmit,
     required this.previousStep,
     required this.onResend,
@@ -49,7 +51,7 @@ class OtpVerificationUi extends StatelessWidget {
     final String title = isEmail ? 'Sign In Email' : 'Sign In Phone Number';
     final String message = isEmail
         ? 'Sign in code has been sent to $contactValue, check your inbox to continue.'
-        : 'Sign in code has been sent to $contactValue, check your messages to continue.';
+        : 'Sign in code has been sent to $countryCode $contactValue, check your messages to continue.';
 
     final String imagePath = isEmail
         ? 'assets/sign_in/email.png'
@@ -71,7 +73,7 @@ class OtpVerificationUi extends StatelessWidget {
         } else if (state is OtpVerificationFailedState) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text(state.message)));
+          ).showSnackBar(SnackBar(content: Text(state.response.message ?? '')));
         }
       },
       child: Container(
@@ -192,7 +194,7 @@ class OtpVerificationUi extends StatelessWidget {
                 final model = VerifyOtpRequestModel(
                   societyId: selectedCompany?.societyId ?? '',
                   userMobile: contactValue,
-                  countryCode: '',
+                  countryCode: countryCode,
                   userToken: '',
                   device: Platform.operatingSystem,
                   otp: currentOtp,

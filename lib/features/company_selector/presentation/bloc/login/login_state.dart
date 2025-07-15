@@ -9,11 +9,13 @@ class LoginLoading extends LoginState {}
 
 class OtpSentState extends LoginState {
   final CommonResponse response;
-
   OtpSentState(this.response);
 }
 
-class OtpNotSentState extends LoginState {}
+class OtpNotSentState extends LoginState {
+  final CommonResponse response;
+  OtpNotSentState(this.response);
+}
 
 class LoginError extends LoginState {
   final String message;
@@ -26,6 +28,6 @@ class OtpVerifiedState extends LoginState {
 }
 
 class OtpVerificationFailedState extends LoginState {
-  final String message;
-  OtpVerificationFailedState(this.message);
+  final VerifyOtpResponse response;
+  OtpVerificationFailedState(this.response);
 }

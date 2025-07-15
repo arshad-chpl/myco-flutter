@@ -160,8 +160,7 @@ class LoginUi extends StatelessWidget {
             const SizedBox(height: 20),
             MyCoButton(
               onTap: () {
-                final isEmailLogin =
-                    selectedCompany!.loginVia != null &&
+                final isEmailLogin = selectedCompany!.loginVia != null &&
                     selectedCompany!.loginVia == '1';
                 final contactInfo = isEmailLogin
                     ? emailController.text
@@ -171,9 +170,7 @@ class LoginUi extends StatelessWidget {
                   final String text = isEmailLogin
                       ? 'Please enter your Email Address'
                       : 'Please enter your Phone Number';
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(text)));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
                   return;
                 }
 
@@ -181,6 +178,16 @@ class LoginUi extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Please enter a valid Email Address'),
+                    ),
+                  );
+                  return;
+                }
+
+                // Validate checkbox
+                if (!isChecked) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Please agree to the terms and conditions to continue.'),
                     ),
                   );
                   return;

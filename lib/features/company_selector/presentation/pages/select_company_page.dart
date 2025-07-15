@@ -4,31 +4,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
-import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/models/common_response.dart';
-import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/features/company_selector/data/models/society_response_model.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
-import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_state.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/login_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/otp_verification_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/select_company_ui.dart';
-import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/core/utils/language_manager.dart';
-import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/di/modules/network_module.dart';
-import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
-import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_event.dart';
-import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_state.dart';
-import 'package:myco_flutter/features/company_selector/presentation/pages/sales_inquiry_dialog_page.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 class SelectCompanyPage extends StatelessWidget {
   const SelectCompanyPage({super.key});
@@ -116,15 +99,15 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
       case 1:
         return FutureBuilder<String?>(
           future: preference.readString('selectedCompany'),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+          builder: (context, instance) {
+            if (instance.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError || snapshot.data == null) {
+            } else if (instance.hasError || instance.data == null) {
               return const Center(
                 child: Text('Failed to load selected company.'),
               );
             } else {
-              final companyJson = snapshot.data!;
+              final companyJson = instance.data!;
               final selectedCompany = SocietyModel.fromJson(
                 jsonDecode(companyJson),
               );
@@ -140,10 +123,10 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                         jsonEncode(state.response.toJson()),
                       );
                       _nextStep();
-                    } else if (state is LoginError) {
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(SnackBar(content: Text(state.message)));
+                    } else if (state is OtpNotSentState) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.response.message ?? '')),
+                      );
                     }
                   },
                   child: LoginUi(
@@ -178,16 +161,16 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
             preference.readString('otpResponse'),
             preference.readString('selectedCompany'),
           ]),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+          builder: (context, instance) {
+            if (instance.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError ||
-                snapshot.data == null ||
-                snapshot.data!.any((e) => e == null)) {
+            } else if (instance.hasError ||
+                instance.data == null ||
+                instance.data!.any((e) => e == null)) {
               return const Center(child: Text('Failed to load required data.'));
             } else {
-              final otpResponseJson = snapshot.data![0]!;
-              final selectedCompanyJson = snapshot.data![1]!;
+              final otpResponseJson = instance.data![0]!;
+              final selectedCompanyJson = instance.data![1]!;
 
               final otpResponse = CommonResponse.fromJson(
                 jsonDecode(otpResponseJson),
@@ -205,6 +188,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                 create: (context) => GetIt.I<LoginBloc>(),
                 child: OtpVerificationUi(
                   contactValue: contactValue,
+                  countryCode: countryMap[selectedCountry] ?? '',
                   isEmail: isEmail,
                   otpResponse: otpResponse,
                   selectedCompany: selectedCompany,
