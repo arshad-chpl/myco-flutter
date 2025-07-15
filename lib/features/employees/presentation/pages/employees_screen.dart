@@ -355,6 +355,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                               return EmployeeSelectionCard(
                                 name: emp.userFullName,
                                 department: emp.designation,
+                                // image: NetworkImage(emp.userProfilePic),
                                 image: NetworkImage(emp.userProfilePic),
                                 isSelected: selectedEmployeeIndexes.contains(
                                   index,
