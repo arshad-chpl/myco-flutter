@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/asset/widgets/label_text_field.dart';
+import 'package:myco_flutter/features/asset/widgets/assets_label_text_field.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -38,13 +38,13 @@ class _SwapAssetsPageState extends State<SwapAssetsPage> {
         ),
         child: Column(
           children: [
-            LabelTextFieldWidget(
+            AssetsTextFieldWidget(
               label: 'custodian',
               hintText: 'select',
               image: AppAssets.assetsUserTick,
               controller: custodian1,
             ),
-            LabelTextFieldWidget(
+            AssetsTextFieldWidget(
               label: 'custodian',
               hintText: 'select',
               image: AppAssets.assetsElement,

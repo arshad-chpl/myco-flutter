@@ -20,6 +20,7 @@ class QRScannerWidget extends StatefulWidget {
   final Widget? image;
   final double scannerFlex;
   final double resultFlex;
+  final MobileScannerController controller;
 
   const QRScannerWidget({
     required this.onScanned,
@@ -36,6 +37,7 @@ class QRScannerWidget extends StatefulWidget {
     this.image,
     required this.height,
     this.width,
+    required this.controller,
   });
 
   @override
@@ -46,7 +48,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
   bool hasScanned = false;
   Key scannerKey = UniqueKey();
 
-  final MobileScannerController controller = MobileScannerController();
+  // final MobileScannerController controller = MobileScannerController();
   final ImagePicker _picker = ImagePicker();
   Future<void> pickImageAndScan() async {
     final XFile? image = await _picker.pickImage(
@@ -56,7 +58,9 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
     );
     if (image == null) return;
 
-    final BarcodeCapture? result = await controller.analyzeImage(image.path);
+    final BarcodeCapture? result = await widget.controller.analyzeImage(
+      image.path,
+    );
 
     if (result != null && result.barcodes.isNotEmpty && !hasScanned) {
       for (final barcode in result.barcodes) {
@@ -104,7 +108,7 @@ class _QRScannerWidgetState extends State<QRScannerWidget> {
                 borderRadius: BorderRadius.circular(widget.imageRadius ?? 10),
                 child: MobileScanner(
                   key: scannerKey,
-                  controller: controller,
+                  controller: widget.controller,
                   onDetect: (barcodes) {
                     if (hasScanned) return;
                     for (final barcode in barcodes.barcodes) {

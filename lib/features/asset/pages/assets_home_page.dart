@@ -82,8 +82,7 @@ class AssetsHomePage extends StatelessWidget {
                   hintTextStyle: AppTheme.getTextStyle(
                     context,
                   ).labelLarge!.copyWith(color: AppColors.textSecondary),
-                  preFixImage:
-                      AppAssets.imageSearch, 
+                  preFixImage: AppAssets.imageSearch,
                   isSuffixIconOn: true,
                   suFixImage: AppAssets.imageScanner,
                   suFixImageWidth: 25,

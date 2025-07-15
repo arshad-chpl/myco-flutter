@@ -7,12 +7,12 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
-class LabelTextFieldWidget extends StatelessWidget {
+class AssetsTextFieldWidget extends StatelessWidget {
   final String label;
   final String hintText;
   final String image;
   final TextEditingController? controller;
-  const LabelTextFieldWidget({
+  const AssetsTextFieldWidget({
     required this.label,
     required this.image,
     required this.hintText,
@@ -42,8 +42,14 @@ class LabelTextFieldWidget extends StatelessWidget {
         hintTextStyle: TextStyle(
           fontFamily: 'Gilroy-semibold',
           fontWeight: FontWeight.w400,
-          fontSize: 18 * Responsive.getResponsiveText(context),
+          fontSize: 20 * Responsive.getResponsiveText(context),
           color: AppColors.gray,
+        ),
+        typingtextStyle: TextStyle(
+          fontFamily: 'Gilroy-semiBold',
+          fontWeight: FontWeight.w400,
+          fontSize: 20 * Responsive.getResponsiveText(context),
+          // color: AppColors.gray,
         ),
         maxLines: 1,
         prefix: Padding(

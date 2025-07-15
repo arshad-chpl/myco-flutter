@@ -8,14 +8,14 @@ import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
 import 'package:myco_flutter/features/asset/bloc/assets_bloc.dart';
-import 'package:myco_flutter/features/asset/view/add_assets.dart';
-import 'package:myco_flutter/features/asset/view/assets_details_page.dart';
-import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
-import 'package:myco_flutter/features/asset/view/edit_assets_page.dart';
-import 'package:myco_flutter/features/asset/view/handover_assets.dart';
-import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
-import 'package:myco_flutter/features/asset/view/swap_assets.dart';
-import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
+import 'package:myco_flutter/features/asset/pages/add_assets.dart';
+import 'package:myco_flutter/features/asset/pages/assets_details_page.dart';
+import 'package:myco_flutter/features/asset/pages/assets_home_page.dart';
+import 'package:myco_flutter/features/asset/pages/edit_assets_page.dart';
+import 'package:myco_flutter/features/asset/pages/handover_assets.dart';
+import 'package:myco_flutter/features/asset/pages/qr_scanner_page.dart';
+import 'package:myco_flutter/features/asset/pages/swap_assets.dart';
+import 'package:myco_flutter/features/asset/pages/takeover_asset.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
@@ -61,7 +61,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.splash,
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),

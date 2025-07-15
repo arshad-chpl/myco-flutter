@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/asset/controllers/add_assets_controllers.dart';
-import 'package:myco_flutter/features/asset/widgets/label_text_field.dart';
+import 'package:myco_flutter/features/asset/text_controllers/add_assets_controllers.dart';
+import 'package:myco_flutter/features/asset/widgets/assets_label_text_field.dart';
+import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -62,85 +63,92 @@ class _AddAssets extends State<AddAssets> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              LabelTextFieldWidget(
+              LabeledTextField(
+                hint: 'hint',
+                label: 'label',
+                textFieldwidth: 200,
+              ),
+
+              ////
+              AssetsTextFieldWidget(
                 label: 'assets_category',
                 hintText: 'select',
                 image: AppAssets.assetsElement,
                 controller: addAssetsControllers.categoryController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'item_name',
                 hintText: 'type_name',
                 image: AppAssets.assetsShoppingBag,
                 controller: addAssetsControllers.itemNameController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'brand_name',
                 hintText: 'type_here',
                 image: AppAssets.assetsGroup,
                 controller: addAssetsControllers.brandNameController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'location',
                 hintText: 'type_here',
                 image: AppAssets.location,
                 controller: addAssetsControllers.locationController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'item_code',
                 hintText: 'select_section',
                 image: AppAssets.assetsPasswordCheck,
                 controller: addAssetsControllers.itemCodeController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'description',
                 hintText: 'type_here',
                 image: AppAssets.assetsStickyNote,
                 controller: addAssetsControllers.descriptionController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'purchase_date',
                 hintText: 'select',
                 image: AppAssets.imageNoteFavorite,
                 controller: addAssetsControllers.purchaseDateController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'sr_no',
                 hintText: 'type_here',
                 image: AppAssets.assetsSimCard,
                 controller: addAssetsControllers.simController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'price',
                 hintText: 'type_here',
                 image: AppAssets.assetsDollar,
                 controller: addAssetsControllers.priceController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'credential',
                 hintText: 'type_here',
                 image: AppAssets.lostFoundData,
                 controller: addAssetsControllers.credentialController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'branch',
                 hintText: 'select',
                 image: AppAssets.lostFoundData,
                 controller: addAssetsControllers.branchController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'departement',
                 hintText: 'select',
                 image: AppAssets.imageNoteFavorite,
                 controller: addAssetsControllers.departmentController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'custodian',
                 hintText: 'select',
                 image: AppAssets.assetsUserTick,
                 controller: addAssetsControllers.custodianController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'handover_date',
                 hintText: 'select',
                 image: AppAssets.imageNoteFavorite,

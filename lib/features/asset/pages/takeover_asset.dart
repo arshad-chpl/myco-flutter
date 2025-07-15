@@ -8,9 +8,9 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/asset/controllers/takeover_controllers.dart';
+import 'package:myco_flutter/features/asset/text_controllers/takeover_controllers.dart';
 import 'package:myco_flutter/features/asset/widgets/assets_bottom_sheet.dart';
-import 'package:myco_flutter/features/asset/widgets/label_text_field.dart';
+import 'package:myco_flutter/features/asset/widgets/assets_label_text_field.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -81,13 +81,13 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    LabelTextFieldWidget(
+                    AssetsTextFieldWidget(
                       label: 'takeover_date',
                       hintText: 'select',
                       image: AppAssets.imageNoteFavorite,
                       controller: takeoverController.takeoverDateController,
                     ),
-                    LabelTextFieldWidget(
+                    AssetsTextFieldWidget(
                       label: 'takeover_remark',
                       hintText: 'type_here',
                       image: AppAssets.lostFoundMessageEdit,
@@ -202,25 +202,25 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                     if (handoverSelected == 'YES') ...[
                       SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
-                      LabelTextFieldWidget(
+                      AssetsTextFieldWidget(
                         label: 'handover_date',
                         hintText: 'select',
                         image: AppAssets.imageNoteFavorite,
                         controller: takeoverController.handoverDateController,
                       ),
-                      LabelTextFieldWidget(
+                      AssetsTextFieldWidget(
                         label: 'branch',
                         hintText: 'select',
                         image: AppAssets.lostFoundData,
                         controller: takeoverController.branchController,
                       ),
-                      LabelTextFieldWidget(
+                      AssetsTextFieldWidget(
                         label: 'departement',
                         hintText: 'select',
                         image: AppAssets.imageNoteFavorite,
                         controller: takeoverController.departmentController,
                       ),
-                      LabelTextFieldWidget(
+                      AssetsTextFieldWidget(
                         label: 'custodian',
                         hintText: 'select',
                         image: AppAssets.assetsUserTick,
@@ -288,7 +288,7 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                       ),
                       SizedBox(height: 0.024 * Responsive.getHeight(context)),
 
-                      LabelTextFieldWidget(
+                      AssetsTextFieldWidget(
                         label: 'handover_remark',
                         hintText: 'type_here',
                         image: AppAssets.lostFoundMessageEdit,

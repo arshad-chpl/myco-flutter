@@ -5,9 +5,9 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/asset/controllers/takeover_controllers.dart';
+import 'package:myco_flutter/features/asset/text_controllers/takeover_controllers.dart';
 import 'package:myco_flutter/features/asset/widgets/assets_bottom_sheet.dart';
-import 'package:myco_flutter/features/asset/widgets/label_text_field.dart';
+import 'package:myco_flutter/features/asset/widgets/assets_label_text_field.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -73,25 +73,25 @@ class _HandoverAssetsPageState extends State<HandoverAssetsPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
 
             children: [
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'handover_date',
                 hintText: 'select',
                 image: AppAssets.imageNoteFavorite,
                 controller: handoverController.takeoverDateController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'branch',
                 hintText: 'select',
                 image: AppAssets.lostFoundData,
                 controller: handoverController.branchController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'departement',
                 hintText: 'select',
                 image: AppAssets.imageNoteFavorite,
                 controller: handoverController.departmentController,
               ),
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'custodian',
                 hintText: 'select',
                 image: AppAssets.assetsUserTick,
@@ -154,7 +154,7 @@ class _HandoverAssetsPageState extends State<HandoverAssetsPage> {
               ),
               SizedBox(height: 0.024 * Responsive.getHeight(context)),
 
-              LabelTextFieldWidget(
+              AssetsTextFieldWidget(
                 label: 'handover_remark',
                 hintText: 'type_here',
                 image: AppAssets.lostFoundMessageEdit,

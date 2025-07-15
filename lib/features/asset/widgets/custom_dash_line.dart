@@ -21,18 +21,16 @@ class DashedLine extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      size: axis == Axis.horizontal ? Size(width, height) : Size(width, height),
-      painter: DashedLinePainter(
-        color: color,
-        strokeWidth: strokeWidth,
-        dashLength: dashLength,
-        gapLength: gapLength,
-        axis: axis,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => CustomPaint(
+    size: axis == Axis.horizontal ? Size(width, height) : Size(width, height),
+    painter: DashedLinePainter(
+      color: color,
+      strokeWidth: strokeWidth,
+      dashLength: dashLength,
+      gapLength: gapLength,
+      axis: axis,
+    ),
+  );
 }
 
 class DashedLinePainter extends CustomPainter {
