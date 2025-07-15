@@ -149,6 +149,7 @@ class OrderSummaryPage extends StatelessWidget {
                                         12 *
                                         Responsive.getResponsiveText(context),
                                     fontWeight: FontWeight.w500,
+                                    color: AppColors.black,
                                   ),
                                 ],
                               ),
@@ -253,7 +254,7 @@ class OrderSummaryPage extends StatelessWidget {
             Container(
               height: 0.115 * Responsive.getHeight(context),
               decoration: BoxDecoration(
-                color: AppTheme.getColor(context).onPrimary,
+                // color: AppTheme.getColor(context).onPrimary,
                 border: Border.all(color: AppTheme.getColor(context).outline),
                 borderRadius: BorderRadius.circular(
                   12 * Responsive.getResponsive(context),
@@ -380,7 +381,7 @@ class OrderSummaryPage extends StatelessWidget {
     BuildContext context, {
     required String leftText,
     required String rightText,
-    Color textColor = AppColors.black,
+    Color? textColor,
   }) => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -388,13 +389,13 @@ class OrderSummaryPage extends StatelessWidget {
         leftText,
         fontSize: 15 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w600,
-        color: textColor,
+        color: textColor ?? AppTheme.getColor(context).onSurface,
       ),
       CustomText(
         rightText,
         fontSize: 15 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w500,
-        color: textColor,
+        color: textColor ?? AppTheme.getColor(context).onSurface,
       ),
     ],
   );
@@ -402,6 +403,6 @@ class OrderSummaryPage extends StatelessWidget {
   BoxDecoration getCommonDecoration(BuildContext context) => BoxDecoration(
     border: Border.all(color: AppTheme.getColor(context).outline),
     borderRadius: BorderRadius.circular(12 * Responsive.getResponsive(context)),
-    color: AppTheme.getColor(context).onPrimary,
+    // color: AppTheme.getColor(context).onPrimary,
   );
 }

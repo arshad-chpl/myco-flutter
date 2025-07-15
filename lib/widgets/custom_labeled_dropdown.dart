@@ -35,6 +35,8 @@ class LabeledDropdown<T> extends StatelessWidget {
   final TextAlign? textAlign;
   final int? textMaxLine;
   final TextOverflow? textOverflow;
+  final bool? suffixIconOn;
+  final Widget? suffix;
 
   const LabeledDropdown({
     super.key,
@@ -68,6 +70,8 @@ class LabeledDropdown<T> extends StatelessWidget {
     this.textAlign,
     this.textMaxLine,
     this.textOverflow,
+    this.suffixIconOn,
+    this.suffix,
   });
 
   @override
@@ -124,6 +128,9 @@ class LabeledDropdown<T> extends StatelessWidget {
         popupElevation: popupElevation,
         popupShape: popupShape,
         useRadioList: useRadioList ?? false,
+        spacing: spacing,
+        suffixIconOn: suffixIconOn,
+        suffix: suffix,
       ),
     ],
   );

@@ -48,7 +48,7 @@ class OrderHistoryCard extends StatelessWidget {
       side: BorderSide(color: AppTheme.getColor(context).outline),
     ),
 
-    color: AppTheme.getColor(context).onPrimary,
+    // color: AppTheme.getColor(context).onPrimary,
     child: Column(
       children: [
         // Header
@@ -256,7 +256,7 @@ class OrderHistoryCard extends StatelessWidget {
   ) => getBottomSheet(
     context,
     Container(
-      color: AppTheme.getColor(context).onPrimary,
+      // color: AppTheme.getColor(context).onPrimary,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -376,7 +376,7 @@ class OrderHistoryCard extends StatelessWidget {
         context,
         Container(
           width: Responsive.getWidth(context),
-          color: AppTheme.getColor(context).onPrimary,
+          // color: AppTheme.getColor(context).onPrimary,
           padding: EdgeInsets.symmetric(
             horizontal: 0.08 * Responsive.getWidth(context),
           ),
@@ -421,7 +421,7 @@ class OrderHistoryCard extends StatelessWidget {
     required String title,
     required String value,
     required VoidCallback onTap,
-    Color textColor = AppColors.black,
+    Color? textColor,
     TextDecoration? decoration,
   }) => Row(
     children: [
@@ -442,7 +442,7 @@ class OrderHistoryCard extends StatelessWidget {
           child: CustomText(
             value,
             decoration: decoration,
-            color: textColor,
+            color: textColor ?? AppTheme.getColor(context).onSurface,
             fontWeight: FontWeight.w500,
             fontSize: 13 * Responsive.getResponsiveText(context),
           ),
@@ -456,7 +456,7 @@ class OrderHistoryCard extends StatelessWidget {
   ) => getBottomSheet(
     context,
     Container(
-      color: AppTheme.getColor(context).onPrimary,
+      // color: AppTheme.getColor(context).onPrimary,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

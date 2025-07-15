@@ -13,7 +13,6 @@ class FrequentBuyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     decoration: BoxDecoration(
-      color: AppTheme.getColor(context).onPrimary,
       border: Border.all(color: AppTheme.getColor(context).outline),
       borderRadius: BorderRadius.circular(
         12 * Responsive.getResponsive(context),

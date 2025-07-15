@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
+import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
@@ -19,6 +20,7 @@ import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
+import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
@@ -45,9 +47,7 @@ import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection
 import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
-import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
-import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
@@ -119,7 +119,11 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.dashboard,
         name: RoutePaths.dashboard,
-        builder: (context, state) => const DashBoardPage(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => GetIt.I<DashboardBloc>()
+            ..add(GetIDCardDetails()),
+          child: const DashBoardPage(),
+          lazy: false,),
       ),
 
       ShellRoute(
@@ -175,7 +179,7 @@ class AppRouter {
         routes: [
           GoRoute(
             path: RoutePaths.takeOrder,
-            name: 'take-order',
+            name: RoutePaths.takeOrder,
             builder: (context, state) => BlocProvider(
               create: (_) => TakeOrderBloc(),
               child: const TakeOrderPage(),
@@ -219,6 +223,7 @@ class AppRouter {
         name: 'companySearch',
         builder: (context, state) => const SearchCompanyScreen(),
       ),
+      // Payslip routes
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
           providers: [BlocProvider(create: (_) => TabbarBloc())],
@@ -227,20 +232,9 @@ class AppRouter {
         routes: [
           GoRoute(
             path: RoutePaths.payslip,
-            name: 'payslip',
+            name: RoutePaths.payslip,
             builder: (context, state) => PayslipPage(),
-            routes: [
-              GoRoute(
-                path: RoutePaths.salaryBreakUp,
-                name: 'salary-break-up',
-                builder: (context, state) => const SalaryBreakUpPage(),
-              ),
-              GoRoute(
-                path: RoutePaths.payslipDetail,
-                name: 'payslip-detail',
-                builder: (context, state) => const PayslipDetail(),
-              ),
-            ],
+            routes: payslipRoutes,
           ),
         ],
       ),

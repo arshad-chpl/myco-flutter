@@ -128,7 +128,7 @@ class DistributorVisitorPage extends StatelessWidget {
                     border: Border.all(
                       color: AppTheme.getColor(context).outline,
                     ),
-                    color: AppTheme.getColor(context).onPrimary,
+                    // color: AppTheme.getColor(context).onPrimary,
                     borderRadius: BorderRadius.circular(
                       12 * Responsive.getResponsive(context),
                     ),
@@ -269,7 +269,7 @@ class DistributorVisitorPage extends StatelessWidget {
               width: 0.83 * Responsive.getWidth(context),
               decoration: BoxDecoration(
                 border: Border.all(color: AppTheme.getColor(context).outline),
-                color: AppTheme.getColor(context).onPrimary,
+                // color: AppTheme.getColor(context).onPrimary,
                 borderRadius: BorderRadius.circular(
                   12 * Responsive.getResponsive(context),
                 ),
@@ -365,7 +365,7 @@ class DistributorVisitorPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           12 * Responsive.getResponsive(context),
         ),
-        color: AppTheme.getColor(context).onPrimary,
+        // color: AppTheme.getColor(context).onPrimary,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -388,7 +388,7 @@ class DistributorVisitorPage extends StatelessWidget {
               horizontal: 0.08 * Responsive.getWidth(context),
             ),
             decoration: BoxDecoration(
-              color: AppTheme.getColor(context).onPrimary,
+              // color: AppTheme.getColor(context).onPrimary,
               border: Border.all(color: AppTheme.getColor(context).outline),
               borderRadius: BorderRadius.circular(
                 12 * Responsive.getResponsive(context),
@@ -452,7 +452,7 @@ class DistributorVisitorPage extends StatelessWidget {
   }) => getBottomSheet(
     context,
     Container(
-      color: AppTheme.getColor(context).onPrimary,
+      // color: AppTheme.getColor(context).onPrimary,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
