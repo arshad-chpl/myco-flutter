@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -30,9 +31,7 @@ class AutoStartVisitCheckboxRow extends StatelessWidget {
       ),
       Expanded(
         child: CustomText(
-          'Please agree to automatically start the visit',
-          fontSize: 14 * Responsive.getResponsiveText(context),
-          color: AppTheme.getColor(context).onSurface,
+          LanguageManager().get('auto_start_visit'),
         ),
       ),
     ],
