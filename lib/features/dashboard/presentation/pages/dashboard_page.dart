@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/circular_and_discussion.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/dashboard_app_bar.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/moments_section.dart';
@@ -10,11 +14,39 @@ import 'package:myco_flutter/features/dashboard/presentation/widgets/timer_and_s
 import 'package:myco_flutter/features/dashboard/presentation/widgets/upcoming_celebration_section.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/your_department_section.dart';
 
-class DashBoardPage extends StatelessWidget {
+class DashBoardPage extends StatefulWidget {
   const DashBoardPage({super.key});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  State<DashBoardPage> createState() => _DashBoardPageState();
+}
+
+class _DashBoardPageState extends State<DashBoardPage> {
+
+  @override
+  void initState() {
+    super.initState();
+          GetIdCardDetails();
+  }
+  Future<void> GetIdCardDetails()async{
+Future.microtask(() async {
+    final prefs = GetIt.I<PreferenceManager>();
+
+    final userId = await prefs.getUserId();
+    final companyId = await prefs.getCompanyId();
+    final languageId = await prefs.getLanguageId();
+ if (!mounted) return; 
+    context.read<DashboardBloc>().add(GetIDCardDetails(
+      userId: userId,
+      companyId: companyId,
+      languageId: languageId,
+    ));
+  });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
     floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     backgroundColor: AppTheme.getColor(context).surface,
 
@@ -39,8 +71,9 @@ class DashBoardPage extends StatelessWidget {
       ),
     ),
   );
+  }
 
-  Widget _tabview(BuildContext context) => Row(
+    Widget _tabview(BuildContext context) => Row(
       children: [
         Expanded(
           child: SingleChildScrollView(
@@ -77,7 +110,7 @@ class DashBoardPage extends StatelessWidget {
       ],
     );
 
-  Widget _mobileView(BuildContext context) => SingleChildScrollView(
+      Widget _mobileView(BuildContext context) => SingleChildScrollView(
       child: Column(
         spacing: 16,
         children: [

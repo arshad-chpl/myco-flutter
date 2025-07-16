@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_text.dart'; // make sure to import
 
 class CustomVisitTypeRadioButton extends StatelessWidget {
   final List<String> options;
@@ -37,19 +38,18 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
     final theme = AppTheme.getColor(context);
     final screenWidth = Responsive.getWidth(context);
     final isTablet = screenWidth > 600;
-
-    final responsiveWidth = isTablet ? screenWidth * 0.9 : screenWidth * 0.9;
+    final responsiveWidth = isTablet ? screenWidth * 10 : screenWidth * 10;
 
     return Container(
       width: responsiveWidth,
       decoration: BoxDecoration(
-        color: backgroundColor ?? theme.primary.withOpacity(0.02),
+        color: backgroundColor ?? theme.primary.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(borderRadius),
         border: Border.all(color: borderColor ?? theme.primary),
       ),
       padding: EdgeInsets.symmetric(
         vertical: 10 * Responsive.getResponsive(context),
-        horizontal: 16 * Responsive.getResponsive(context),
+        horizontal: 10* Responsive.getResponsive(context),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -58,17 +58,18 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
               (option) => RadioListTile<String>(
                 dense: true,
                 contentPadding:
-                    tilePadding ?? const EdgeInsets.symmetric(horizontal: 0),
+                    tilePadding ??
+                    EdgeInsets.symmetric(
+                      horizontal: 9 * Responsive.getResponsive(context),
+                    ),
                 visualDensity: VisualDensity.compact,
                 activeColor: activeColor ?? theme.primary,
-                title: Text(
+                title: CustomText(
                   option,
-                  style:
-                      textStyle ??
-                      TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18 * Responsive.getResponsiveText(context),
-                      ),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18 * Responsive.getResponsiveText(context),
+                  color:
+                      textStyle?.color ?? AppTheme.getColor(context).onSurface,
                 ),
                 value: option,
                 groupValue: selectedValue,
