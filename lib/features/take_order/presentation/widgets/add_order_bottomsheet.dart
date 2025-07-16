@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -66,7 +67,7 @@ class AddOrderBottomsheet extends StatelessWidget {
             horizontal: 0.08 * Responsive.getWidth(context),
           ),
           child: CustomText(
-            'Add Quantity',
+            'add_quantity',
             fontSize: 18 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w700,
           ),
@@ -79,7 +80,7 @@ class AddOrderBottomsheet extends StatelessWidget {
           child: Row(
             children: [
               CustomText(
-                'Price (₹)',
+                'price',
                 fontSize: 18 * Responsive.getResponsiveText(context),
               ),
               const Spacer(),
@@ -113,7 +114,7 @@ class AddOrderBottomsheet extends StatelessWidget {
           child: Row(
             children: [
               CustomText(
-                'Units',
+                'unit_quantity',
                 fontSize: 18 * Responsive.getResponsiveText(context),
               ),
               const Spacer(),
@@ -129,7 +130,7 @@ class AddOrderBottomsheet extends StatelessWidget {
                     context,
                     width: 0.17 * Responsive.getWidth(context),
                     isIcon: false,
-                    textData: 'Add',
+                    textData: 'add',
                     bgColor: AppTheme.getColor(
                       context,
                     ).primary.withValues(alpha: 0.2),
@@ -151,8 +152,8 @@ class AddOrderBottomsheet extends StatelessWidget {
             horizontal: 0.08 * Responsive.getWidth(context),
           ),
           child: SideBySideButtons(
-            button1Name: 'CANCEL',
-            button2Name: 'ADD',
+            button1Name: LanguageManager().get('cancel'),
+            button2Name: LanguageManager().get('add'),
             onTap1: () {},
             onTap2: () {},
           ),
