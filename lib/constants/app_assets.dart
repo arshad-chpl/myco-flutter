@@ -41,6 +41,8 @@ class AppAssets {
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
+  static const String loaderGif = '$basePath/gifs/mycoLoading.gif';
+
 
   // dashboard Screen
   static const String search = '$dashboard/search.png';

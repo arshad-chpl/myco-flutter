@@ -20,6 +20,7 @@ import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
+import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
@@ -116,7 +117,11 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.dashboard,
         name: RoutePaths.dashboard,
-        builder: (context, state) => const DashBoardPage(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => GetIt.I<DashboardBloc>()
+            ..add(GetIDCardDetails()),
+          child: const DashBoardPage(),
+          lazy: false,),
       ),
 
       ShellRoute(
