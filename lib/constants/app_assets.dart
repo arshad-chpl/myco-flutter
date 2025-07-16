@@ -1,6 +1,7 @@
 class AppAssets {
   // common paths for visit in the application
   static const String basePath = 'assets';
+
   // static const String fontsPath = '$basePath/fonts';
   static const String imagesPath = '$basePath/images';
   static const String svgsPath = '$basePath/svgs';
@@ -34,11 +35,12 @@ class AppAssets {
   static const String scanQR = '$svgsPath/scanQR.svg';
   static const String refresh = '$svgsPath/refresh.svg';
   static const String arrowDown = '$svgsPath/arrow_down.svg';
+  static const String element_1 = '$workAllocation/element-1.svg';
+  static const String receiptEdittt = '$workAllocation/receiptedittt.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
   static const String loaderGif = '$basePath/gifs/mycoLoading.gif';
-
 
   // dashboard Screen
   static const String search = '$dashboard/search.png';
@@ -80,4 +82,7 @@ class AppAssets {
   static const String lostFoundData = '$lostFound/data.png';
   static const String lostFoundMessageEdit = '$lostFound/message-edit.png';
   static const String location = '$basePath/take_order/location.png';
+
+  //work-allocation
+  static const String workAllocation = '$svgsPath/work_allocation';
 }
