@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widgets/custom_employee_search_box.dart';
 import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
@@ -44,18 +46,33 @@ class _AssignWorkState extends State<AssignWorkPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //Work Category
-          CustomText(
-            'Category *',
-            isKey: true,
-            color: AppTheme.getColor(context).onSurfaceVariant,
-            fontSize: 14 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.w600,
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomText(
+                'Category',
+                isKey: false,
+                color: AppTheme.getColor(context).onSurface,
+                fontSize: 14 * Responsive.getResponsiveText(context),
+                fontWeight: FontWeight.w600,
+              ),
+              CustomText(
+                ' *',
+                isKey: false,
+                color: Colors.red,
+                fontSize: 14 * Responsive.getResponsiveText(context),
+                fontWeight: FontWeight.w600,
+              ),
+            ],
           ),
           SizedBox(height: 6 * Responsive.getResponsive(context)),
           CustomPopupDropdownStyled<String>(
             items: visitPurposes,
-            hintText: 'Work Category',
-            /*prefix: SvgPicture.asset(AppAssets.gps, fit: BoxFit.scaleDown),*/
+            hintText: '  Work Category',
+            prefix: SvgPicture.asset(
+              'assets/visit/element-1.svg',
+              fit: BoxFit.scaleDown,
+            ),
             selectedItem: selectedVisitPurpose,
             onChanged: (v, i) => setState(() => selectedVisitPurpose = v),
             itemToString: (item) => item,
@@ -79,7 +96,7 @@ class _AssignWorkState extends State<AssignWorkPage> {
             textInputType: TextInputType.datetime,
             textAlignment: TextAlign.start,
             /* prefix: SvgPicture.asset(
-              AppAssets.noteFavorite,
+              AppAssets.receiptedit,
               fit: BoxFit.scaleDown,
             ),*/
             validator: (v) =>
@@ -161,6 +178,14 @@ class _AssignWorkState extends State<AssignWorkPage> {
           SizedBox(height: 12 * Responsive.getResponsive(context)),
 
           //Assign Work Engineer *
+          CustomEmployeeSearchBox(
+            onEmployeeSelected: (employee) {
+              debugPrint(
+                "Selected: ${employee.name} from ${employee.department}",
+              );
+              // you can store or use the selected employee here
+            },
+          ),
 
           //Remark
           CustomText(

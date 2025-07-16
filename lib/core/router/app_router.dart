@@ -55,13 +55,14 @@ import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bl
 import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_bloc.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/pages/assign_work_page.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/pages/work_allocation_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.workAllocation,
+    initialLocation: RoutePaths.assignWork,
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -371,6 +372,14 @@ class AppRouter {
           GoRoute(
             path: RoutePaths.workAllocation,
             name: '/work-allocation',
+            builder: (context, state) => BlocProvider(
+              create: (context) => WorkAllocationBloc(),
+              child: WorkAllocationPage(),
+            ),
+          ),
+          GoRoute(
+            path: RoutePaths.assignWork,
+            name: '/assign-work',
             builder: (context, state) => BlocProvider(
               create: (context) => WorkAllocationBloc(),
               child: AssignWorkPage(),
