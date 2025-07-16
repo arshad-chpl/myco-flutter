@@ -62,13 +62,8 @@ class _AddCustomerState extends State<AddCustomer> {
       ),
       appBarBackgoundColor: AppTheme.getColor(context).surface,
       elevation: 0,
-      title: CustomText(
-        isKey: true,
-        'add_customer',
-        fontSize: 16 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-        color: AppTheme.getColor(context).onSurface,
-      ),
+      title: 'add_customer',
+      isKey: true,
     ),
     body: SingleChildScrollView(
       padding: EdgeInsets.symmetric(
