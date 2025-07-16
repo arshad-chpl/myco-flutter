@@ -89,7 +89,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      title: 'hello',
+      title: 'hello Ajaj',
       actions: [
         IconButton(
           onPressed: () {
