@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
@@ -6,17 +7,18 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
+import 'package:myco_flutter/features/lost_and_found/data/model/lost_and_found_item_model.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/pages/country_code_txtf.dart';
+import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import '../../model/lost_and_found_item_model.dart';
-import 'chat_screen.dart';
-import 'country_code_txtf.dart';
 
 class ItemDetailsScreen extends StatefulWidget {
   final LostAndFoundItemModel item;
 
-  const ItemDetailsScreen({Key? key, required this.item}) : super(key: key);
+  const ItemDetailsScreen({super.key, required this.item});
 
   @override
   State<ItemDetailsScreen> createState() => _ItemDetailsScreenState();
@@ -73,26 +75,15 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
             SizedBox(height: .024 * Responsive.getHeight(context)),
             _buildHeader(context, 'Contact Details'),
             SizedBox(height: .016 * Responsive.getHeight(context)),
-            LabeledTextField(
-              textFontSize: 12 * Responsive.getResponsiveText(context),
-              fontWeight: FontWeight.w700,
-              textColor: AppTheme.getColor(context).onSurfaceVariant,
-              typingtextStyle: _typingStyle(context),
-              prefix: SvgPicture.asset(
-                AppAssets.profileCircle,
+
+            _buildReadOnlyField(
+              label: 'contact_person_name',
+              controller: contactPersonNameController,
+              prefixIcon: SvgPicture.asset(
+                AppAssets.noteFavorite,
                 fit: BoxFit.scaleDown,
               ),
-              label: 'contact_person_name',
-              hint: 'contact person name',
-              isReadOnly: true,
-              widthFactor: Responsive.getWidth(context),
-              hintTextStyle: _hintStyle(context),
-              contentPadding: EdgeInsets.all(
-                9 * Responsive.getResponsive(context),
-              ),
-              heightFactor: .044 * Responsive.getHeight(context),
             ),
-
             SizedBox(height: .016 * Responsive.getHeight(context)),
             _buildLabel(context, 'contact_person_mobile'),
             SizedBox(height: .004 * Responsive.getHeight(context)),
@@ -107,44 +98,24 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
               controller: phoneController,
               onCountryChanged: (selected) {},
             ),
-            const SizedBox(height: 16),
-            LabeledTextField(
-              textColor: AppTheme.getColor(context).onSurfaceVariant,
-              textFontSize: 12 * Responsive.getResponsiveText(context),
-              fontWeight: FontWeight.w700,
-              hintTextStyle: _hintStyle(context),
-              typingtextStyle: _typingStyle(context),
-              heightFactor: .044 * Responsive.getHeight(context),
-              prefix: SvgPicture.asset(AppAssets.data, fit: BoxFit.scaleDown),
+            SizedBox(height: .016 * Responsive.getHeight(context)),
+            _buildReadOnlyField(
               label: 'branch',
-              hint: 'Branch',
-              isReadOnly: true,
-              widthFactor: Responsive.getWidth(context),
               controller: branchController,
-              contentPadding: EdgeInsets.all(
-                9 * Responsive.getResponsive(context),
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            LabeledTextField(
-              textColor: AppTheme.getColor(context).onSurfaceVariant,
-              textFontSize: 12 * Responsive.getResponsiveText(context),
-              fontWeight: FontWeight.w700,
-              hintTextStyle: _hintStyle(context),
-              typingtextStyle: _typingStyle(context),
-              heightFactor: .044 * Responsive.getHeight(context),
-              controller: departmentController,
-              prefix: SvgPicture.asset(
-                AppAssets.noteFavorite,
+              prefixIcon: SvgPicture.asset(
+                AppAssets.data,
                 fit: BoxFit.scaleDown,
               ),
+            ),
+
+            SizedBox(height: .016 * Responsive.getHeight(context)),
+
+            _buildReadOnlyField(
               label: 'departement',
-              hint: 'Department',
-              isReadOnly: true,
-              widthFactor: Responsive.getWidth(context),
-              contentPadding: EdgeInsets.all(
-                9 * Responsive.getResponsive(context),
+              controller: departmentController,
+              prefixIcon: SvgPicture.asset(
+                AppAssets.noteFavorite,
+                fit: BoxFit.scaleDown,
               ),
             ),
 
@@ -213,6 +184,21 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
         ),
         SizedBox(height: .012 * Responsive.getHeight(context)),
 
+        // BigMyCoTextField(
+        //   // height: 0.140 * Responsive.getHeight(context),
+        //   maxLines: 5,
+        //   controller: TextEditingController(text: widget.item.description),
+        //   hintText: 'type_here',
+        //   style: _typingStyle(context),
+        //   hintStyle: _hintStyle(context),
+        //   border: OutlineInputBorder(
+        //     borderRadius: BorderRadius.circular(30),
+        //     borderSide: BorderSide(color: AppTheme.getColor(context).outline),
+        //   ),
+        //   // typingtextStyle: _typingStyle(context),
+        //   // isLabelOn: true,
+        //   prefixImage: SvgPicture.asset(AppAssets.messageEdit),
+        // ),
         LabeledTextField(
           boarderRadius: 8,
           widthFactor: Responsive.getWidth(context),
@@ -266,6 +252,26 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
       fontSize: 18 * Responsive.getResponsiveText(context),
       fontWeight: FontWeight.w700,
     ),
+  );
+
+  Widget _buildReadOnlyField({
+    required String label,
+    required TextEditingController controller,
+    required Widget prefixIcon,
+  }) => LabeledTextField(
+    textColor: AppTheme.getColor(context).onSurfaceVariant,
+    textFontSize: 12 * Responsive.getResponsiveText(context),
+    fontWeight: FontWeight.w700,
+    hintTextStyle: _hintStyle(context),
+    typingtextStyle: _typingStyle(context),
+    heightFactor: .044 * Responsive.getHeight(context),
+    prefix: prefixIcon,
+    label: label,
+    hint: label,
+    isReadOnly: true,
+    widthFactor: Responsive.getWidth(context),
+    controller: controller,
+    contentPadding: EdgeInsets.all(9 * Responsive.getResponsive(context)),
   );
 }
 

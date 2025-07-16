@@ -6,7 +6,7 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
+import 'package:myco_flutter/features/lost_and_found/data/model/lost_and_found_item_model.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_image_picker_container/custom_image_picker_containe.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
 import 'package:myco_flutter/widgets/big_textfield.dart';
@@ -69,7 +69,6 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
                 setState(() {
                   selectedImage = file;
                 });
-                print('Selected Image: ${file.path}');
               },
             ),
           ),
@@ -91,12 +90,15 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: LabeledTextField(
+              maxLenght: 20,
+
               textFontSize: 12 * Responsive.getResponsiveText(context),
-              contentPadding: EdgeInsets.all(9),
+              contentPadding: const EdgeInsets.all(9),
               heightFactor: .044 * Responsive.getHeight(context),
               height: .044 * Responsive.getHeight(context),
               controller: itemNameController,
               boarderRadius: 8,
+
               textAlignment: TextAlign.start,
               label: 'item_name',
               hint: 'type_here',
@@ -132,7 +134,7 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
               height: 0.140 * Responsive.getHeight(context),
               maxLines: 5,
               controller: aboutItemController,
-              hintText: 'Type here',
+              hintText: 'type_here',
               style: _typingStyle(context),
               hintStyle: _hintStyle(context),
               border: OutlineInputBorder(
@@ -153,10 +155,44 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
     bottomNavigationBar: Padding(
       padding: const EdgeInsets.fromLTRB(32, 0, 32, 32),
       child: MyCoButton(
+        // onTap: () {
+        //   final itemName = itemNameController.text.trim();
+        //   final aboutItem = aboutItemController.text.trim();
+        //   DateFormat('dd MMM yyyy (EEE)').format(DateTime.now());
+        //
+        //   if (selectedImage == null) {
+        //     ScaffoldMessenger.of(context).showSnackBar(
+        //       const SnackBar(content: Text('Please select an image')),
+        //     );
+        //   } else if (itemName.isEmpty) {
+        //     ScaffoldMessenger.of(context).showSnackBar(
+        //       const SnackBar(content: Text('Please enter item name')),
+        //     );
+        //   } else if (aboutItem.isEmpty) {
+        //     ScaffoldMessenger.of(context).showSnackBar(
+        //       const SnackBar(content: Text('Please enter item description')),
+        //     );
+        //   } else {
+        //     Navigator.pop(
+        //       context,
+        //       LostAndFoundItemModel(
+        //         image: selectedImage!,
+        //         name: itemName,
+        //         description: aboutItem,
+        //         status: selectedOption,
+        //         dateTime: DateTime.now(),
+        //       ),
+        //     );
+        //   }
+        // },
         onTap: () {
           final itemName = itemNameController.text.trim();
           final aboutItem = aboutItemController.text.trim();
-          DateFormat('dd MMM yyyy (EEE)').format(DateTime.now());
+          final statusInt = selectedOption.toLowerCase() == 'lost' ? 1 : 0;
+
+          final formattedDate = DateFormat(
+            'dd MMM yyyy (EEE)',
+          ).format(DateTime.now());
 
           if (selectedImage == null) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -173,16 +209,18 @@ class _LostAndFoundAddScreenState extends State<LostAndFoundAddScreen> {
           } else {
             Navigator.pop(
               context,
+
               LostAndFoundItemModel(
                 image: selectedImage!,
                 name: itemName,
                 description: aboutItem,
-                status: selectedOption,
+                status: statusInt.toString(), // ✔️ stored as '1' or '0'
                 dateTime: DateTime.now(),
               ),
             );
           }
         },
+
         title: 'submit',
         boarderRadius: 50,
         isShadowBottomLeft: true,
