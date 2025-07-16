@@ -63,6 +63,8 @@ class AppAssets {
   static const String trash = '$svgsVisit/trash.svg';
   static const String smart_car = '$svgsVisit/smart-car.svg';
   static const String global = '$svgsVisit/global.svg';
+  static const String arrow_down = '$svgsVisit/arrow-down.svg';
+
 
   //images visit
   static const String assetBookmark = '$assetVisit/bookmark.svg';

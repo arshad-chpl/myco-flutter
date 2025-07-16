@@ -63,7 +63,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash,
+    initialLocation: RoutePaths.dashboard,
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -119,11 +119,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.dashboard,
         name: RoutePaths.dashboard,
-        builder: (context, state) => BlocProvider(
-          create: (context) => GetIt.I<DashboardBloc>()
-            ..add(GetIDCardDetails()),
-          child: const DashBoardPage(),
-          lazy: false,),
+        builder: (context, state) => const DashBoardPage(),
       ),
 
       ShellRoute(
@@ -297,7 +293,6 @@ class AppRouter {
         name: 'CustomerAddNewVisit',
         builder: (context, state) => const CustomerAddNewVisit(),
       ),
-
       GoRoute(
         path: RoutePaths.viewVisitDetails,
         name: 'view-visit-details',
