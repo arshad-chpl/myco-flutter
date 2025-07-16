@@ -3,12 +3,14 @@ import 'dart:developer' as dev;
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_get_started.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_term_and_condition.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/customotp_bottomsheet.dart';
+import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
@@ -211,7 +213,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
                         val == null || val.isEmpty ? "Required" : null,
                         textInputType: TextInputType.name,
                         widthFactor: 0.42 * Responsive.getWidth(context),
-                        textFieldHeight: 0.0165 * Responsive.getHeight(context),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: AppTheme.getColor(context).outline),
                           borderRadius: BorderRadius.circular(
@@ -229,7 +230,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
                             val == null || val.isEmpty ? "Required" : null,
                         textInputType: TextInputType.name,
                         widthFactor: 0.42 * Responsive.getWidth(context),
-                        textFieldHeight: 0.0165 * Responsive.getHeight(context),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(color: AppTheme.getColor(context).outline),
                           borderRadius: BorderRadius.circular(
@@ -470,28 +470,26 @@ class _SignupFormPageState extends State<SignupFormPage> {
                         CustomText(
                           "Already have an account?",
 
-                            fontSize: 18 * Responsive.getResponsiveText(context),
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme.getColor(context).onSurface,
+                        fontSize: 18 * Responsive.getResponsiveText(context),
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.getColor(context).onSurface,
+                      ),
+                      CustomText(
+                        "Sign in here",
 
-                        ),
-                        CustomText(
-                          "Sign in here",
-
-                            fontSize: 18 * Responsive.getResponsiveText(context),
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme.getColor(context).primary,
-
-                        ),
-                      ],
-                    ),
+                        fontSize: 18 * Responsive.getResponsiveText(context),
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.getColor(context).primary,
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 0.015 * Responsive.getHeight(context)),
-                ],
-              ),
+                ),
+                SizedBox(height: 0.015 * Responsive.getHeight(context)),
+              ],
             ),
           ),
         ),
       ),
-    );
+    ),
+  );
 }
