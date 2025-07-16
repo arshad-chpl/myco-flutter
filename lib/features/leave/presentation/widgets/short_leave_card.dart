@@ -163,9 +163,11 @@ class ShortLeaveCard extends StatelessWidget {
                           CustomText(
                             leave.status,
                             fontSize: 12 * textResponsive,
-                            color: leave.status.toLowerCase() == 'approved'
-                                ? Colors.green
-                                : Colors.orange,
+                            color:  leave.status == 'Pending'
+                                ? AppColors.spanishYellow
+                                : leave.status == 'Reject'
+                                ? AppColors.red
+                                : AppColors.secondary,
                           ),
                           const SizedBox(height: 4),
                           ElevatedButton(

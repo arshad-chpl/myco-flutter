@@ -343,6 +343,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
         final leave = leaveTypes[index];
         final leaveData = leave['leaveData'] as LeaveTypeModel;
         return LeaveExpandableCard(
+          headerHeight: 0.08 * Responsive.getHeight(context),
           headerColor: leave['headerColor'],
           title: '${leave['title']} (Total ${leave['total']})',
           collapsedChild: LeaveSummaryCollapsedChips(
