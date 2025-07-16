@@ -12,6 +12,8 @@ import 'package:myco_flutter/features/dashboard/presentation/di/dashboard_di.dar
 import 'package:myco_flutter/features/holiday/presentation/di/holiday_di.dart';
 import 'package:myco_flutter/features/language_selector/presentation/di/language_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
+import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
+import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
 
 final sl = GetIt.instance;
@@ -34,6 +36,8 @@ Future<void> init() async {
   //========Splash=========
   splashDi(sl);
 
+  //========Language Selector=========
+  setupLanguageDI(sl);
   //========Login=========
   await setupLoginDi(sl);
 
@@ -49,11 +53,11 @@ Future<void> init() async {
   //========Face Detection=========
   faceDetectionDi(sl);
 
-  //========Company Info=========
-  setupCompanyInfoDI(sl);
+  // ========Admin View=========
+  await adminViewDi(sl);
 
-  //========Holiday=========
-  setupHolidayDI(sl);
+  //========VISIT WITH=========
+  visitWithDi(sl);
 
   // ========Admin View=========
   adminViewDi(sl);
