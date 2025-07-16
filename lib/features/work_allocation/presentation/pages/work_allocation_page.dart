@@ -39,7 +39,7 @@ class _WorkAllocationPageState extends State<WorkAllocationPage> {
               // headerPrefixIcon: ,
               bottomWidget: Column(
                 children: [
-                  Row(
+                  Row( 
                     children: [
                       CustomText('Assign To')
                     ],
