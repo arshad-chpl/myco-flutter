@@ -89,22 +89,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      title: Row(
-        children: [
-          CustomText(
-            'hello',
-            isKey: true,
-            fontSize: 23 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.bold,
-          ),
-          CustomText(
-            '  AJAJ', /**
-                       * space is mandatory before name */
-            fontSize: 23 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.bold,
-          ),
-        ],
-      ),
+      title: 'hello',
       actions: [
         IconButton(
           onPressed: () {
