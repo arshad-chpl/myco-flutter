@@ -46,11 +46,28 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
           event.year,
         );
         results.fold(
-              (failure) => emit(LeaveError(failure.message)),
-              (model) => emit(LeaveHistoryNewFetched(model.toEntity())),
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(LeaveHistoryNewFetched(model.toEntity())),
         );
       } catch (e) {
         emit(LeaveError('Failed to load leave history: $e'));
+      }
+    });
+
+    on<AddShortLeave>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.addShortLeave(
+          event.date,
+          event.time,
+          event.reason,
+        );
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(ShortLeaveAdded(model)),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to add short leave: $e'));
       }
     });
   }

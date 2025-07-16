@@ -183,8 +183,11 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.addShortLeaveScreen,
-        name: '/add_short_leave_screen',
-        builder: (context, state) => AddShortLeaveScreen(),
+        name: RoutePaths.addShortLeaveScreen,
+        builder: (context, state) => BlocProvider<LeaveBloc>(
+          create: (_) => GetIt.I<LeaveBloc>(),
+          child: const AddShortLeaveScreen(),
+        ),
       ),
       GoRoute(
         path: RoutePaths.addLeaveScreen,

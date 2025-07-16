@@ -22,4 +22,11 @@ class FetchLeaveHistoryNew extends LeaveEvent{
   const FetchLeaveHistoryNew(this.monthName, this.year);
 }
 
+class AddShortLeave extends LeaveEvent{
+  final String date;
+  final String time;
+  final String reason;
+  const AddShortLeave(this.date, this.time, this.reason);
+}
+
 class InitialView extends LeaveEvent {}

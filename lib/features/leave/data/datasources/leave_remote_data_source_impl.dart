@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/constants.dart';
+import 'package:myco_flutter/core/models/common_response.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/leave/data/datasources/leave_remote_data_source.dart';
 import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
@@ -21,20 +22,11 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
       'language_id':'1',
     };
 
-    try {
-      final response = await GetIt.I<ApiClient>(
-        instanceName: VariableBag.residentApiNew,
-      ).postFormDynamic('leave_controller.php', dataMap);
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.residentApiNew,
+    ).postFormDynamic('leave_controller.php', dataMap);
 
-      print('Response: $response');
-      return LeaveHistoryResponseModel.fromJson(json.decode(response));
-    } catch (e) {
-      print('Error in getNewLeaveListType: $e');
-      if (e is DioException) {
-        print('Dio error: ${e.response?.data}');
-      }
-      rethrow;
-    }
+    return LeaveHistoryResponseModel.fromJson(json.decode(response));
   }
 
   @override
@@ -48,18 +40,11 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
       'level_id':'26'
     };
 
-    try {
-      final response = await GetIt.I<ApiClient>(
-        instanceName: VariableBag.residentApiNew,
-      ).postFormDynamic('team_controller.php', dataMap);
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.residentApiNew,
+    ).postFormDynamic('team_controller.php', dataMap);
 
-      return MyTeamResponseModel.fromJson(json.decode(response));
-    } catch (e) {
-      if (e is DioException) {
-        print('Dio error: ${e.response?.data}');
-      }
-      rethrow;
-    }
+    return MyTeamResponseModel.fromJson(json.decode(response));
   }
 
   @override
@@ -76,18 +61,32 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
       'year':year,
     };
 
-    try {
-      final response = await GetIt.I<ApiClient>(
-        instanceName: VariableBag.residentApiNew,
-      ).postFormDynamic('leave_controller.php', dataMap);
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.residentApiNew,
+    ).postFormDynamic('leave_controller.php', dataMap);
 
-      return LeaveHistoryResponseModel.fromJson(json.decode(response));
-    } catch (e) {
-      if (e is DioException) {
-        print('Dio error: ${e.response?.data}');
-      }
-      rethrow;
-    }
+    return LeaveHistoryResponseModel.fromJson(json.decode(response));
   }
+
+  @override
+  Future<CommonResponse> addShortLeave(String date, String time, String reason) async {
+    final dataMap = {
+      'addShortLeave':'addShortLeave',
+      'society_id':'1',
+      'user_id':'1365',
+      'user_name':'Lucky Katre',
+      'language_id':'1',
+      'short_leave_date':date,
+      'short_leave_time':time,
+      'short_leave_apply_reason':reason,
+    };
+
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.residentApiNew,
+    ).postFormDynamic('leave_controller.php', dataMap);
+    return CommonResponse.fromJson(json.decode(response));
+  }
+
+
 
 }
