@@ -43,9 +43,11 @@ class AppAssets {
   static const String docoumentText = '$svgsVisit/document-text.svg';
   static const String doubleDA = '$svgsVisit/double_DA.svg';
   static const String data = '$svgsVisit/data.svg';
+  static const String arrowDown = '$svgsPath/arrow_down.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
+  static const String loaderGif = '$basePath/gifs/mycoLoading.gif';
 
   // dashboard Screen
   static const String search = '$dashboard/search.png';

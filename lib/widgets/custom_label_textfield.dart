@@ -66,6 +66,9 @@ class LabeledTextField extends StatelessWidget {
   final TextAlign? textAlign;
   final int? textMaxLine;
   final TextOverflow? textOverflow;
+  final BoxConstraints? suffixIconConstraints;
+  final BoxConstraints? prefixIconConstraints;
+  final EdgeInsetsGeometry? containerPadding;
 
   const LabeledTextField({
     Key? key,
@@ -128,6 +131,9 @@ class LabeledTextField extends StatelessWidget {
     this.textAlign,
     this.textMaxLine,
     this.textOverflow,
+    this.suffixIconConstraints,
+    this.prefixIconConstraints,
+    this.containerPadding,
   }) : super(key: key);
 
   @override
@@ -199,6 +205,9 @@ class LabeledTextField extends StatelessWidget {
           preFixImage: preFixImage,
           titleTextSize: titleTextSize,
           typingtextStyle: typingtextStyle,
+          prefixIconConstraints: prefixIconConstraints,
+          suffixIconConstraints: suffixIconConstraints,
+          containerPadding: containerPadding,
         ),
       ),
     ],

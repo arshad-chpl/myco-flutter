@@ -23,6 +23,8 @@ class BigMyCoTextField extends StatelessWidget {
   final TextInputType? textInputType;
   final InputBorder? border;
   final bool obscureText;
+  final Decoration? decoration;
+  final InputDecoration? inputDecoration;
 
   const BigMyCoTextField({
     super.key,
@@ -46,6 +48,8 @@ class BigMyCoTextField extends StatelessWidget {
     this.textInputType,
     this.border,
     this.obscureText = false,
+    this.decoration,
+    this.inputDecoration,
   });
 
   @override
@@ -68,7 +72,7 @@ class BigMyCoTextField extends StatelessWidget {
               horizontal: 12 * Responsive.getResponsive(context),
               vertical: 12 * Responsive.getResponsive(context),
             ),
-            decoration: BoxDecoration(
+            decoration:decoration ?? BoxDecoration(
               color: AppTheme.getColor(context).onPrimary,
               border: Border.all(
                 color: hasError
@@ -109,7 +113,7 @@ class BigMyCoTextField extends StatelessWidget {
                       field.didChange(value);
                       if (onChanged != null) onChanged!(value);
                     },
-                    decoration: InputDecoration(
+                    decoration: inputDecoration ?? InputDecoration(
                       isCollapsed: true,
                       border: InputBorder.none,
                       hintText: hintText ?? "Write here",
