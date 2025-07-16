@@ -131,6 +131,7 @@ class AdminMenuList extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(
                     top: 22 * Responsive.getResponsive(context),
+                    bottom: 12 * Responsive.getResponsive(context),
                   ),
                   child: AdminSubMenuList(
                     subMenus: category!.adminSubMenu!,

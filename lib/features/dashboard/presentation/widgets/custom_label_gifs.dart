@@ -28,11 +28,11 @@ class CustomLabelGifs extends StatelessWidget {
     this.widthFactor,
     this.paddingFactor,
     this.backgroundColor,
-    this.borderRadiusFactor ,
+    this.borderRadiusFactor,
     this.boxShadow,
     this.border,
     this.clipBorderRadiusFactor,
-    this.gifHeightFactor ,
+    this.gifHeightFactor,
   });
 
   @override
@@ -57,18 +57,16 @@ class CustomLabelGifs extends StatelessWidget {
           CustomText(
             title,
             color: AppTheme.getColor(context).onPrimary,
-            fontSize: 17 * Responsive.getResponsiveText(context),
+            fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.bold,
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(
-              clipBorderRadiusFactor ?? 10 *
-                  Responsive.getResponsive(context),
+              clipBorderRadiusFactor ?? 10 * Responsive.getResponsive(context),
             ),
             child: Image.asset(
               gifAssetPath,
-              height:
-              gifHeightFactor ?? 0.035 * Responsive.getHeight(context),
+              height: gifHeightFactor ?? 0.035 * Responsive.getHeight(context),
             ),
           ),
         ],

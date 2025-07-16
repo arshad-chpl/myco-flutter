@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -12,8 +11,8 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_menu_list.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AdminViewPage extends StatefulWidget {
@@ -88,11 +87,11 @@ class _AdminViewPageState extends State<AdminViewPage> {
     });
   }
 
-  void _clearSearch() {
-    _searchController.clear();
-    setState(() => _currentSearchQuery = '');
-    FocusScope.of(context).unfocus();
-  }
+  // void _clearSearch() {
+  //   _searchController.clear();
+  //   setState(() => _currentSearchQuery = '');
+  //   FocusScope.of(context).unfocus();
+  // }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -111,19 +110,23 @@ class _AdminViewPageState extends State<AdminViewPage> {
       right: 16.0 * Responsive.getResponsive(context),
       bottom: 16.0 * Responsive.getResponsive(context),
     ),
-    child: MyCoTextfield(
+    child: CustomSearchField(
       controller: _searchController,
       hintText: LanguageManager().get('search'),
-      preFixImage: AppAssets.imageSearch,
-      suFixImage: _searchController.text.isNotEmpty
-          ? AppAssets.imageScanner
-          : null,
-      onTap1: _clearSearch,
-      boarderRadius: 12.0,
+      
+
+      // preFixImage: AppAssets.imageSearch,
+
+      // suFixImage: _searchController.text.isNotEmpty
+      //     ? AppAssets.imageScanner
+      //     : null,
+      // on: _clearSearch,
+      borderRadius: 12.0,
       height: 0.06 * Responsive.getHeight(context),
-      contentPadding: EdgeInsets.symmetric(
-        vertical: 8 * Responsive.getResponsive(context),
-      ),
+      
+      // padding: EdgeInsets.symmetric(
+      //   vertical: 8 * Responsive.getResponsive(context),
+      // ),
       // prefixImageHeight: 0. * Responsive.getHeight(context),
     ),
   );

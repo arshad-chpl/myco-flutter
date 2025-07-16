@@ -60,7 +60,7 @@ class Responsive {
   static double getResponsiveText(context) {
     double width = MediaQuery.of(context).size.width;
     if (kIsWeb) return width > 600 ? 1.5 : 1.0;
-    if (Platform.isAndroid) return getWidth(context) > 600 ? 1.5 : 0.8;
+    if (Platform.isAndroid) return getWidth(context) > 600 ? 1.5 : 0.9;
     return getWidth(context) > 600 ? 1.5 : 0.9;
   }
 
@@ -74,8 +74,8 @@ class Responsive {
         ? 10
         : screenWidth > 1000
         ? 7
-    // : screenWidth > 600
-    // ? 6
+        // : screenWidth > 600
+        // ? 6
         : 3;
     final itemWidth = (screenWidth - (spacing * (itemCount - 1))) / itemCount;
     final itemHeight = screenWidth > 600
