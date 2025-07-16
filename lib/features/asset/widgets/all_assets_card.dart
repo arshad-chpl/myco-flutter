@@ -1,11 +1,79 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
+import 'package:myco_flutter/features/asset/widgets/assets_holder_bottom_sheet.dart';
+import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_dash_line.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+
+class AllAssetsListPage extends StatelessWidget {
+  const AllAssetsListPage({super.key});
+
+  @override
+  Widget build(BuildContext context) => SliverPadding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 0.04 * Responsive.getWidth(context),
+    ),
+    sliver: SliverList.separated(
+      itemCount: 10,
+      separatorBuilder: (_, __) =>
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
+      itemBuilder: (_, index) {
+        if (index % 2 != 0) {
+          return AllAssetsCard(
+            title: 'Desktop',
+            subTitle: '(AS101)',
+            image: AppAssets.imageLaptop,
+            brand: 'HP',
+            srNo: 'DELL123456',
+            category: 'Desktop',
+            createdBy: 'Parth Jadav',
+            custodian: 'Arth Sorthiya',
+            onViewDetailsTap: () => context.push('/assets-details'),
+            onEditTap: () => context.push('/edit-assets'),
+            onScannerTap: () => showAssetsHoldersBottomSheet(
+              context: context,
+              handoverImageList: [
+                'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+                'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+                AppAssets.imageLaptop,
+                AppAssets.imageLaptop,
+              ],
+              image: AppAssets.imageLaptop,
+            ),
+          );
+        } else {
+          return AllAssetsCard(
+            onEditTap: () => context.push('/edit-assets'),
+            title: 'Desktop',
+            subTitle: '(AS101)',
+            image: AppAssets.imageLaptop,
+            brand: 'Dell',
+            srNo: 'DELL123456',
+            category: 'Desktop',
+            createdBy: 'Parth Jadav',
+            onViewDetailsTap: () => context.push('/assets-details'),
+            onScannerTap: () => showAssetsHoldersBottomSheet(
+              context: context,
+              handoverImageList: [
+                'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+                'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+                AppAssets.imageLaptop,
+                AppAssets.imageLaptop,
+              ],
+              image: AppAssets.imageLaptop,
+            ),
+          );
+        }
+      },
+    ),
+  );
+}
 
 class AllAssetsCard extends StatelessWidget {
   final String title;
@@ -57,15 +125,16 @@ class AllAssetsCard extends StatelessWidget {
           GestureDetector(
             onTap: onEditTap,
             child: Image.asset(
-              'assets/images/message-edit.png',
+              AppAssets.imageMassageEdit,
               width: 0.07 * Responsive.getWidth(context),
+              color: AppTheme.getColor(context).onPrimary,
             ),
           ),
           SizedBox(width: 0.045 * Responsive.getWidth(context)),
           GestureDetector(
             onTap: onScannerTap,
             child: Image.asset(
-              'assets/images/scan.png',
+              AppAssets.imageScanner,
               width: 0.07 * Responsive.getWidth(context),
               color: AppTheme.getColor(context).onPrimary,
             ),
@@ -76,6 +145,7 @@ class AllAssetsCard extends StatelessWidget {
         horizontal: 16 * Responsive.getResponsive(context),
         vertical: 8 * Responsive.getResponsive(context),
       ),
+      showBlackShadowInChild: true,
       bottomWidget: Padding(
         padding:
             childPadding ??
@@ -88,7 +158,17 @@ class AllAssetsCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Image.asset(image, width: 0.3 * Responsive.getWidth(context)),
+                  if (image.startsWith('http') || image.startsWith('https'))
+                    CachedImage(
+                      imageUrl: image,
+                      width: 0.3 * Responsive.getWidth(context),
+                    )
+                  else
+                    Image.asset(
+                      image,
+                      width: 0.3 * Responsive.getWidth(context),
+                    ),
+
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: DashedLine(
@@ -107,7 +187,7 @@ class AllAssetsCard extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: AssetsVerticalData(
-                                  title: 'Brand',
+                                  title: 'brand',
                                   data: brand,
                                 ),
                               ),
@@ -118,7 +198,7 @@ class AllAssetsCard extends StatelessWidget {
                               ),
                               Expanded(
                                 child: AssetsVerticalData(
-                                  title: 'Brand',
+                                  title: 'brand',
                                   data: brand,
                                 ),
                               ),
@@ -130,7 +210,7 @@ class AllAssetsCard extends StatelessWidget {
                               spaceBetweenData ??
                               0.02 * Responsive.getHeight(context),
                         ),
-                        AssetsVerticalData(title: 'Sr.No./MAC/Sim', data: srNo),
+                        AssetsVerticalData(title: 'sr_no', data: srNo),
                         if (custodian != null)
                           SizedBox(
                             height:
@@ -139,7 +219,7 @@ class AllAssetsCard extends StatelessWidget {
                           ),
                         if (custodian != null)
                           AssetsVerticalData(
-                            title: 'Custodian',
+                            title: 'custodian',
                             data: custodian ?? '',
                           ),
                       ],
@@ -154,24 +234,10 @@ class AllAssetsCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Created By',
-                        style: TextStyle(
-                          fontFamily: 'Gilroy-Bold',
-                          fontStyle: FontStyle.italic,
-                          fontSize: 18 * Responsive.getResponsiveText(context),
-                        ),
-                      ),
-                      CustomText(
-                        createdBy,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18 * Responsive.getResponsiveText(context),
-                      ),
-                    ],
+                  child: AssetsVerticalData(
+                    title: 'created_by',
+                    data: createdBy,
+                    titleFontStyle: FontStyle.italic,
                   ),
                 ),
                 MyCoButton(
@@ -184,7 +250,7 @@ class AllAssetsCard extends StatelessWidget {
                   ),
                   width: 0.26 * Responsive.getWidth(context),
                   height: 0.09 * Responsive.getWidth(context),
-                  boarderRadius: 50,
+                  boarderRadius: 50 * Responsive.getResponsive(context),
                   borderColor: const Color(0xFF08A4BB),
                   backgroundColor: const Color(0xFF08A4BB),
                   isShadowBottomLeft: true,

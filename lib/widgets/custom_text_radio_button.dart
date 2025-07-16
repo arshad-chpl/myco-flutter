@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 
 class CustomTextRadioButton extends StatelessWidget {
+
   final String gender;
   final String selectedGender;
   final void Function(String) onSelect;
@@ -18,6 +20,7 @@ class CustomTextRadioButton extends StatelessWidget {
   final TextStyle? textStyle;
   final Widget? leading;
   final Widget? trailing;
+
 
   const CustomTextRadioButton({
     super.key,
@@ -49,18 +52,25 @@ class CustomTextRadioButton extends StatelessWidget {
       child: Container(
         height: height,
         width: width,
-        // padding: padding ?? EdgeInsets.symmetric(vertical: 12 * Responsive.getResponsive(context)),
-        // margin: margin ?? EdgeInsets.symmetric(horizontal: 6 * Responsive.getResponsive(context)),
-        decoration:
-            customDecoration ??
+        padding: padding ?? EdgeInsets.symmetric(
+          vertical: 12 * Responsive.getResponsive(context),
+          horizontal: 8 * Responsive.getResponsive(context),
+        ),
+        margin: margin ?? EdgeInsets.symmetric(
+          horizontal: 2 * Responsive.getResponsive(context),
+        ),
+        decoration: customDecoration ??
             BoxDecoration(
               border: Border.all(color: AppColors.gray, width: 1),
               borderRadius: BorderRadius.circular(
                 10 * Responsive.getResponsive(context),
               ),
-              color: Colors.white,
+              color: isSelected
+                  ? AppTheme.getColor(context).inversePrimary
+                  : Colors.white,
             ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             leading ??
                 Radio<String>(
@@ -75,16 +85,18 @@ class CustomTextRadioButton extends StatelessWidget {
                     }
                   },
                 ),
-            Text(
-              gender,
-              style:
-                  textStyle ??
-                  TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.gray,
-                    fontSize: 18.0 * Responsive.getResponsiveText(context),
-                  ),
+            Expanded(
+              child: Text(
+                gender,
+                style: textStyle ??
+                    TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: isSelected ? AppTheme.getColor(context).primary : AppTheme.getColor(context).outline,
+                      fontSize: 18 * Responsive.getResponsiveText(context),
+                    ),
+              ),
             ),
+            if (trailing != null) trailing!,
           ],
         ),
       ),

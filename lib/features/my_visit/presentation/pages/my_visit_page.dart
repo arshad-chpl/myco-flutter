@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -234,14 +235,14 @@ class _VisitPageState extends State<MyVisitPage> {
 
     return Scaffold(
       appBar: CustomAppbar(
-        leading: const BackButton(),
-        title: CustomText(
-          'visit',
-          isKey: true,
-          fontSize: 22 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.w700,
-          color: AppTheme.getColor(context).onSurface,
+        appBarBackgoundColor: AppTheme.getColor(context).onPrimary,
+        elevation: 0,
+        centerTitle: false,
+        leading: IconButton(
+          onPressed: () {},
+          icon: SvgPicture.asset('assets/visit/svgs/backarrow.svg'),
         ),
+        title: 'Visit',
         actions: [
           Padding(
             padding: EdgeInsets.only(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -66,6 +67,11 @@ class LabeledTextField extends StatelessWidget {
   final TextAlign? textAlign;
   final int? textMaxLine;
   final TextOverflow? textOverflow;
+  final BoxConstraints? suffixIconConstraints;
+  final BoxConstraints? prefixIconConstraints;
+  final EdgeInsetsGeometry? containerPadding;
+  final FontStyle? titleFontStyle;
+  final bool? isKey;
 
   const LabeledTextField({
     Key? key,
@@ -128,6 +134,11 @@ class LabeledTextField extends StatelessWidget {
     this.textAlign,
     this.textMaxLine,
     this.textOverflow,
+    this.suffixIconConstraints,
+    this.prefixIconConstraints,
+    this.containerPadding,
+    this.titleFontStyle,
+    this.isKey,
   }) : super(key: key);
 
   @override
@@ -136,18 +147,20 @@ class LabeledTextField extends StatelessWidget {
     children: [
       CustomText(
         label,
-        color: textColor?? AppColors.textGray,
-        fontSize: textFontSize?? 16 * Responsive.getResponsiveText(context),
-        fontWeight:textFontweight?? FontWeight.bold,
+        color: textColor ?? AppTheme.getColor(context).onSurfaceVariant,
+        fontSize: textFontSize ?? 16 * Responsive.getResponsiveText(context),
+        fontWeight: textFontweight ?? FontWeight.bold,
         decoration: textDecoration,
         textAlign: textAlign,
         decorationColor: textDecorationColor,
         maxLines: textMaxLine,
         overflow: textOverflow,
+        isKey: isKey ?? false,
+        fontStyle: titleFontStyle,
       ),
       SizedBox(height: 0.005 * Responsive.getHeight(context)),
       SizedBox(
-        height: heightFactor,
+        // height: heightFactor,
         width: widthFactor,
         child: MyCoTextfield(
           controller: controller,
@@ -199,6 +212,9 @@ class LabeledTextField extends StatelessWidget {
           preFixImage: preFixImage,
           titleTextSize: titleTextSize,
           typingtextStyle: typingtextStyle,
+          prefixIconConstraints: prefixIconConstraints,
+          suffixIconConstraints: suffixIconConstraints,
+          containerPadding: containerPadding,
         ),
       ),
     ],

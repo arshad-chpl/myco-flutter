@@ -4,7 +4,7 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/employees/presentation/widgets/custom_appbar.dart';
+import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/auto_start_checkbox_row.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/custom_visit_type_radio_button.dart';
@@ -56,13 +56,9 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
         elevation: 0,
         centerTitle: false,
         leading: const BackButton(),
-        title: CustomText(
-          'reschedule_visit',
+        title: 'reschedule_visit',
           isKey: true,
-          fontSize: 24 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.w700,
-          color: AppTheme.getColor(context).onSurface,
-        ),
+        
       ),
 
       body: SingleChildScrollView(

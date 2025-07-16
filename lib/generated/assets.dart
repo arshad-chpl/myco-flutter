@@ -163,7 +163,7 @@ class Assets {
   static const String svgsContactDetails = 'assets/dashboard/svgs/contact_details.svg';
   static const String svgsDanger = 'assets/svgs/danger.svg';
   static const String svgsDelete = 'assets/visit/svgs/delete.svg';
-  static const String svgsEducation&Achievement = 'assets/dashboard/svgs/education_&_achievement.svg';
+  static const String svgsEducationAchievement = 'assets/dashboard/svgs/education_&_achievement.svg';
   static const String svgsEmploymentDetail = 'assets/dashboard/svgs/employment_detail.svg';
   static const String svgsGps = 'assets/visit/svgs/gps.svg';
   static const String svgsHoldTeamSalary = 'assets/dashboard/svgs/hold_team_salary.svg';
@@ -222,7 +222,7 @@ class Assets {
   static const String visitBitcoinCard = 'assets/visit/bitcoin-card.svg';
   static const String visitBookmark2 = 'assets/visit/bookmark-2.png';
   static const String visitBuilding = 'assets/visit/building.svg';
-  static const String visitBusinessAndTrade 1 = 'assets/visit/business-and-trade 1.svg';
+  static const String visitBusinessAndTrade1 = 'assets/visit/business-and-trade 1.svg';
   static const String visitCalendar = 'assets/svgs/visit/calendar.svg';
   static const String visitCallCalling = 'assets/svgs/visit/call-calling.svg';
   static const String visitCardCoin = 'assets/visit/card-coin.svg';
@@ -235,11 +235,11 @@ class Assets {
   static const String visitElement1 = 'assets/visit/element-1.svg';
   static const String visitEmptyWalletTime = 'assets/visit/empty-wallet-time.svg';
   static const String visitFaceMatch = 'assets/svgs/visit/face_match.png';
-  static const String visitFrame 1000003425 = 'assets/visit/Frame 1000003425.svg';
+  static const String visitFrame1000003425 = 'assets/visit/Frame 1000003425.svg';
   static const String visitGlobal = 'assets/visit/global.svg';
   static const String visitGps = 'assets/svgs/visit/gps.svg';
-  static const String visitGroup 1410104499 = 'assets/visit/Group 1410104499.svg';
-  static const String visitHome 1 = 'assets/visit/home 1.svg';
+  static const String visitGroup1410104499 = 'assets/visit/Group 1410104499.svg';
+  static const String visitHome1 = 'assets/visit/home 1.svg';
   static const String visitLocation = 'assets/svgs/visit/location.svg';
   static const String visitLock = 'assets/visit/lock.svg';
   static const String visitMap = 'assets/svgs/visit/map.svg';

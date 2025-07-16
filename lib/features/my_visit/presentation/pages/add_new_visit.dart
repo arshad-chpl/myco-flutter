@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/AutoStartVisitCheckboxRow.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_custom_radio_button.dart';
 import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_checkbox.dart';
-import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
+import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_radio_button.dart';
 
 class AddNewVisit extends StatefulWidget {
   const AddNewVisit({super.key});
@@ -23,11 +25,10 @@ class AddNewVisit extends StatefulWidget {
 class _AddNewVisitState extends State<AddNewVisit> {
   String selectedVisitType = 'Self Visit';
   bool autoStartVisit = false;
-  final TextEditingController _purposeController = TextEditingController();
+
   String? selectedCustomer;
-  String? selectedSlot;
-  DateTime? selectedDate;
-  String selectedVisitMode = 'Field Visit';
+  String? selectedVisitSlot;
+  String selectedVisitMode = 'field_visit'; // default
 
   final List<String> visitTypes = [
     'Self Visit',
@@ -35,166 +36,153 @@ class _AddNewVisitState extends State<AddNewVisit> {
     'Visit With',
   ];
 
-  final List<String> visitSlots = ['Morning', 'Afternoon', 'Evening'];
   final List<String> customers = ['Customer 1', 'Customer 2', 'Customer 3'];
-  final List<String> leavetype = ['Paid leave', 'Unpaid leave', 'Casual leave'];
-  String? selectedleavetype;
+  final List<String> visitSlots = ['Morning', 'Afternoon', 'Evening'];
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.backgroundPrimary,
     appBar: CustomAppbar(
-      appBarText: 'Add New Visit',
-      appBarBackgoundColor: Colors.white,
-      appbartxtcolor: Colors.black,
-      fontWeight: FontWeight.bold,
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back,
-          color: Colors.black,
-          size: 30 * Responsive.getResponsive(context),
-        ),
-        onPressed: () => Navigator.pop(context),
-      ),
+      title: LanguageManager().get('add_new_visit'),
+      // appbartxtcolor: AppTheme.getColor(context).onSurface,
+      // size: 16 * Responsive.getResponsiveText(context),
+      appBarBackgoundColor: AppTheme.getColor(context).surface,
+      leading: const BackButton(),
     ),
-
     body: Padding(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: 31.0 * Responsive.getResponsive(context),
+      ),
       child: SingleChildScrollView(
         child: Column(
-          spacing: 15 * Responsive.getResponsive(context),
+          spacing: 16 * Responsive.getResponsive(context),
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            /// Visit type radio buttons
             CustomVisitTypeRadioButton(
-              height: 30 * Responsive.getResponsive(context),
+              textStyle: TextStyle(
+                fontSize: 20 * Responsive.getResponsiveText(context),
+                color: AppTheme.getColor(context).onSurface,
+              ),
+              borderRadius: 8 * Responsive.getResponsive(context),
+              height: 30 * Responsive.getHeight(context),
               borderColor: AppTheme.getColor(context).primary,
               options: visitTypes,
               selectedValue: selectedVisitType,
-              onChanged: (value) => setState(() => selectedVisitType = value),
-            ),
-            CustomText(
-              'Customer to visit',
-              fontSize: 12 * Responsive.getResponsiveText(context),
-              fontWeight: FontWeight.w500,
-              color: AppTheme.getColor(context).primary,
-            ),
-            CustomPopupDropdownStyled<String>(
-              height: 60 * Responsive.getResponsive(context),
-              spacing: 10 * Responsive.getResponsive(context),
-              prefix: SvgPicture.asset('assets/visit/personalcard.svg'),
-              prefixImageHeight: 20 * Responsive.getResponsive(context),
-              prefixImageWidth: 20 * Responsive.getResponsive(context),
-              items: leavetype,
-              hintText: '  Select ',
-              selectedItem: selectedleavetype,
+              onChanged: (value) =>(
+              // handle radio button selection
+              ), ),
+
+            /// Customer to Visit dropdown
+            LabeledDropdown<String>(
+              label: LanguageManager().get('customer_to_visit'),
+              items: customers,
+              selectedItem: selectedCustomer,
               itemToString: (item) => item,
               onChanged: (value, index) {
-                setState(() {
-                  selectedleavetype = value;
-                });
-              },
-            ),
-            LabeledTextField(
-              heightFactor: 60 * Responsive.getResponsive(context),
-              textAlignment: TextAlign.start,
-              label: 'Visit Date',
-              labelTextStyle: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 12 * Responsive.getResponsiveText(context),
-                color: AppColors.gray,
+                // handle dropdown selection
+                  },
+              hintText: LanguageManager().get('select'),
+              hintTextStyle: TextStyle(
+                fontSize: 14 * Responsive.getResponsiveText(context),
+                color: AppTheme.getColor(context).outline,
               ),
-              hint: 'Select Date',
-              widthFactor: Responsive.getWidth(context),
+              height: 0.06 * Responsive.getHeight(context),
+              spacing: 10 * Responsive.getResponsive(context),
+              prefix: SvgPicture.asset(AppAssets.personalcard),
+              prefixImageWidth: 20 * Responsive.getWidth(context),
+              prefixImageHeight: 20 * Responsive.getHeight(context),
+              suffix: SvgPicture.asset(AppAssets.arrow_down),
+            ),
+
+            /// Visit Date text field
+            LabeledTextField(
+              textAlignment: TextAlign.start,
+              label: LanguageManager().get('visit_date'),
+              hint: LanguageManager().get('select_date'),
+              textFontSize: 12 * Responsive.getResponsiveText(context),
+              textFontweight: FontWeight.w500,
+              textColor: AppTheme.getColor(context).onSurface,
+              hintTextStyle: TextStyle(
+                fontSize: 14 * Responsive.getResponsiveText(context),
+                color: AppTheme.getColor(context).outline,
+              ),
+              widthFactor: 0.9 * Responsive.getWidth(context),
               border: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: AppTheme.getColor(context).outline,
+                  color: AppTheme.getColor(context).primary,
                 ),
                 borderRadius: BorderRadius.circular(
                   10 * Responsive.getResponsive(context),
                 ),
               ),
               prefix: SvgPicture.asset(
-                'assets/visit/note-favorite.svg',
+                AppAssets.note_favorite,
                 fit: BoxFit.scaleDown,
               ),
             ),
 
-            CustomText(
-              'Visit Slot',
-              fontSize: 12 * Responsive.getResponsiveText(context),
-              fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
-            ),
-            CustomPopupDropdownStyled<String>(
-              height: 60 * Responsive.getResponsive(context),
-              spacing: 15 * Responsive.getResponsive(context),
-              prefix: SvgPicture.asset('assets/visit/clock.svg'),
-              items: leavetype,
-              hintText: 'Select Slot',
-              // width: double.infinity,
-              selectedItem: selectedleavetype,
+            /// Visit Slot dropdown
+            LabeledDropdown<String>(
+              label: LanguageManager().get('visit_slots'),
+              items: visitSlots,
+              selectedItem: selectedVisitSlot,
               itemToString: (item) => item,
               onChanged: (value, index) {
-                setState(() {
-                  selectedleavetype = value;
-                });
+                // handle dropdown selection
               },
-            ),
-            Column(
+              hintText: LanguageManager().get('select_slot'),
+              hintTextStyle: TextStyle(
+                fontSize: 14 * Responsive.getResponsiveText(context),
+                color: AppTheme.getColor(context).outline,
+              ),
+              height: 0.06 * Responsive.getHeight(context),
               spacing: 10 * Responsive.getResponsive(context),
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(
-                  'Visit Type',
-                  fontSize: 12 * Responsive.getResponsiveText(context),
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
-                Row(
-                  spacing: 25 * Responsive.getResponsive(context),
-                  children: [
-                    CustomTextRadioButton(
-                      gender: 'Field Visit',
-                      selectedGender: selectedVisitMode,
-                      onSelect: (value) {
-                        setState(() {
-                          selectedVisitMode = value;
-                        });
-                      },
-                      height: 50,
-                      width: 190 * Responsive.getResponsive(context),
-                    ),
-                    CustomTextRadioButton(
-                      gender: 'Virtual Visit',
-                      selectedGender: selectedVisitMode,
-                      onSelect: (value) {
-                        setState(() {
-                          selectedVisitMode = value;
-                        });
-                      },
-                      height: 50,
-                      width: 190 * Responsive.getResponsive(context),
-                    ),
-                  ],
-                ),
-              ],
+              prefix: SvgPicture.asset(AppAssets.clock),
+              prefixImageWidth: 20 * Responsive.getWidth(context),
+              prefixImageHeight: 20 * Responsive.getHeight(context),
+              textFontSize: 12 * Responsive.getResponsiveText(context),
+              textFontweight: FontWeight.w600,
+              textColor: AppTheme.getColor(context).onSurface,
+              suffix: SvgPicture.asset(AppAssets.arrow_down),
             ),
 
+            /// Visit Type label
+            CustomText(
+              LanguageManager().get('visit_type'),
+              fontSize: 12 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.w600,
+              color: AppTheme.getColor(context).onSurface,
+            ),
+
+            /// Visit mode radio buttons
+            CustomRadioButton(
+              height: 0.05 * Responsive.getHeight(context),
+              options: [
+                LanguageManager().get('field_visit'),
+                LanguageManager().get('virtual_visit'),
+              ],
+              onChanged: (selected) {
+                setState(() => selectedVisitMode = selected);
+              },
+            ),
+
+            /// Purpose of Visit (big text field)
             Column(
               spacing: 3 * Responsive.getResponsive(context),
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  'Purpose Of Visit',
+                  LanguageManager().get('purpose_of_visit'),
                   fontSize: 12 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w500,
-                  color: AppColors.black,
+                  color: AppTheme.getColor(context).onSurface,
                 ),
                 BigMyCoTextField(
-                  prefixImage: SvgPicture.asset('assets/visit/sticky_note.svg'),
+                  textInputType: TextInputType.multiline,
+                  prefixImage: SvgPicture.asset(AppAssets.sticky_note),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: AppTheme.getColor(context).primary,
+                      color: AppTheme.getColor(context).onSurface,
                     ),
                     borderRadius: BorderRadius.circular(
                       10 * Responsive.getResponsive(context),
@@ -204,43 +192,34 @@ class _AddNewVisitState extends State<AddNewVisit> {
               ],
             ),
 
-            Row(
-              spacing: 10 * Responsive.getResponsive(context),
-              children: [
-                CustomCheckbox(
-                  value: autoStartVisit,
-                  onChanged: (value) => setState(() => autoStartVisit = value),
-                  borderColor: AppColors.black,
-                  activeColor: AppTheme.getColor(context).primary,
-                  checkColor: Colors.white,
-                  height: 20,
-                  width: 20,
-                  unCheckedBackground: Colors.white,
-                ),
-                Expanded(
-                  child: Text(
-                    'Please agree to automatically start the visit',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey.shade600,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            MyCoButton(
-              onTap: () {
-                // Handle form submission
+            /// Auto Start Visit checkbox
+            AutoStartVisitCheckboxRow(
+              autoStartVisit: autoStartVisit,
+              onChanged: (value) {
+                // handle change
               },
-              title: 'SUBMIT',
-              textStyle: TextStyle(
-                color: AppTheme.getColor(context).onPrimary,
-                fontSize: 18 * Responsive.getResponsive(context),
-              ),
-              isShadowBottomLeft: true,
-              boarderRadius: 50 * Responsive.getResponsive(context),
             ),
+
+
+            /// Submit button
+            Padding(
+              padding: EdgeInsets.only(
+                top: 0.05 * Responsive.getHeight(context),
+              ),
+              child: MyCoButton(
+                onTap: () {
+                  
+                },
+                title: LanguageManager().get('submit'),
+                textStyle: TextStyle(
+                  color: AppTheme.getColor(context).onPrimary,
+                  fontSize: 18 * Responsive.getResponsiveText(context),
+                ),
+                isShadowBottomLeft: true,
+                boarderRadius: 50 * Responsive.getResponsive(context),
+              ),
+            ),
+            const SizedBox(),
           ],
         ),
       ),

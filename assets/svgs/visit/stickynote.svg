@@ -1,8 +1,15 @@
 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<<<<<<< HEAD
 <path d="M6.66663 1.66797V4.16797" stroke="#2F648E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M13.3334 1.66797V4.16797" stroke="#2F648E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M5.83337 9.16797H12.5" stroke="#2F648E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M5.83337 12.5H10" stroke="#2F648E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+=======
+<path d="M6.66669 1.66797V4.16797" stroke="#2F648E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M13.3333 1.66797V4.16797" stroke="#2F648E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M5.83331 9.16797H12.5" stroke="#2F648E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M5.83331 12.5H9.99998" stroke="#2F648E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+>>>>>>> harshgiri
 <path d="M12.5 18.3346H7.5C3.33333 18.3346 2.5 16.618 2.5 13.1846V8.04297C2.5 4.1263 3.89167 3.0763 6.66667 2.91797H13.3333C16.1083 3.06797 17.5 4.1263 17.5 8.04297V13.3346" stroke="#2F648E" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M17.5 13.332L12.5 18.332V15.832C12.5 14.1654 13.3333 13.332 15 13.332H17.5Z" stroke="#2F648E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
