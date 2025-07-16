@@ -121,4 +121,5 @@ class RoutePaths {
 
   //work-allocation
   static const String workAllocation = '/work-allocation';
+  static const String detailPage = '/detail-page';
 }
