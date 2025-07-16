@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
@@ -82,7 +83,7 @@ class LabeledDropdown<T> extends StatelessWidget {
         children: [
           CustomText(
             label,
-            color: textColor ?? AppColors.textGray,
+            color: textColor ??  AppTheme.getColor(context).onSurfaceVariant,
             fontSize:
                 textFontSize ?? 16 * Responsive.getResponsiveText(context),
             fontWeight: textFontweight ?? FontWeight.bold,

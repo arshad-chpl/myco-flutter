@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
@@ -11,6 +15,7 @@ import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_si
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 // ignore: must_be_immutable
@@ -31,7 +36,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
       actions: [
         MyCoButton(
           onTap: () {},
-          title: 'Refresh',
+          title: LanguageManager().get('refresh'),
           textStyle: AppTheme.getTextStyle(
             context,
           ).labelMedium!.copyWith(color: AppTheme.getColor(context).onPrimary),
@@ -48,7 +53,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
               onTap: () {
                 context.pushNamed('offers');
               },
-              title: 'Offers',
+              title: LanguageManager().get('offer'),
               textStyle: AppTheme.getTextStyle(context).labelMedium!.copyWith(
                 color: AppTheme.getColor(context).onPrimary,
               ),
@@ -63,16 +68,17 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
               height: 0.02 * Responsive.getHeight(context),
               width: 0.1 * Responsive.getWidth(context),
               decoration: const BoxDecoration(shape: BoxShape.circle),
-              child: Image.asset(
-                'assets/take_order/offer.png',
-                fit: BoxFit.contain,
+              child: SvgPicture.asset(
+                // 'assets/take_order/offer.png',
+                AppAssets.offers,
               ),
             ),
           ],
         ),
         SizedBox(width: 0.02 * Responsive.getWidth(context)),
-        Image.asset(
-          'assets/take_order/cart.png',
+        SvgPicture.asset(
+          // 'assets/take_order/cart.png',
+          AppAssets.cart,
           width: 0.06 * Responsive.getWidth(context),
         ),
         SizedBox(width: 0.06 * Responsive.getWidth(context)),
@@ -91,7 +97,10 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
                   ? state.selectedIndex
                   : 0;
               return MyCustomTabBar(
-                tabs: const ['All Products', 'Frequents Buy'],
+                tabs: [
+                  LanguageManager().get('all_product'),
+                  LanguageManager().get('frequent_buy'),
+                ],
                 selectedBgColors: [
                   AppTheme.getColor(context).primary,
                   AppTheme.getColor(context).secondary,
@@ -146,18 +155,25 @@ class AllProductsScreen extends StatelessWidget {
     return Column(
       children: [
         // Search Field
-        MyCoTextfield(
+        // MyCoTextfield(
+        //   hintText: LanguageManager().get('search'),
+        //   hintTextStyle: AppTheme.getTextStyle(
+        //     context,
+        //   ).labelLarge!.copyWith(color: AppColors.textSecondary),
+        //   prefix: const Icon(Icons.search),
+        //   contentPadding: EdgeInsets.only(
+        //     top: 0.012 * Responsive.getHeight(context),
+        //   ),
+        //   boarderRadius: 12 * Responsive.getResponsive(context),
+        //   onChanged: (value) =>
+        //       bloc.add(SearchQueryChangeEvent(value, productList)),
+        // ),
+        CustomSearchField(
           hintText: 'Search',
-          hintTextStyle: AppTheme.getTextStyle(
-            context,
-          ).labelLarge!.copyWith(color: AppColors.textSecondary),
-          prefix: const Icon(Icons.search),
-          contentPadding: EdgeInsets.only(
-            top: 0.012 * Responsive.getHeight(context),
-          ),
-          boarderRadius: 12 * Responsive.getResponsive(context),
-          onChanged: (value) =>
-              bloc.add(SearchQueryChangeEvent(value, productList)),
+          onChanged: (value) {
+            bloc.add(SearchQueryChangeEvent(value, productList));
+          },
+          
         ),
 
         SizedBox(height: 0.025 * Responsive.getHeight(context)),
@@ -174,7 +190,7 @@ class AllProductsScreen extends StatelessWidget {
               }
               return ListView.separated(
                 itemBuilder: (context, index) => MyCoTextfield(
-                  onClick: () => context.pushNamed('products'),
+                  onClick: () => context.pushNamed(RoutePaths.products),
                   isReadOnly: true,
                   hintText: products[index],
                   hintTextStyle: AppTheme.getTextStyle(context).bodyLarge!
@@ -216,11 +232,11 @@ class FrequentsBuyScreen extends StatelessWidget {
       ),
       SizedBox(height: 0.02 * Responsive.getHeight(context)),
       SideBySideButtons(
-        button1Name: 'Reset Cart',
-        button2Name: 'Add Order',
+        button1Name: LanguageManager().get('reset_cart'),
+        button2Name: LanguageManager().get('add_order'),
         onTap1: () {},
         onTap2: () {
-          context.pushNamed('order-summary');
+          context.pushNamed(RoutePaths.orderSummary);
         },
       ),
       SizedBox(height: 0.02 * Responsive.getHeight(context)),
