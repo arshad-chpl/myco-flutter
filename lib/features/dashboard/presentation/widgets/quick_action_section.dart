@@ -11,7 +11,7 @@ class QuickActionSection extends StatelessWidget {
   QuickActionSection({super.key});
 
   List quickAccessOptions = ["Employee","Leave","Assets","Take Order","Lost and Found","Sales","Visits","CRM","Documents","Attendance","Work Allocation","IdeaBox"];
-  List quickAccessOptionsNavigation = ["/employees","/leave","/assets-home","/take-order","/lost-and-found","","/my-visit","","","","",RoutePaths.adminView];
+  List quickAccessOptionsNavigation = ["/employees","/leave","/assets-home","/take-order","/lost-and-found","","/my-visit","","","","/work-allocation",RoutePaths.adminView];
 
   @override
   Widget build(BuildContext context) => CustomSection(
