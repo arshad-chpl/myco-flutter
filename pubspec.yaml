@@ -52,6 +52,9 @@ dependencies:
   highlight_text: ^1.8.0
   shimmer: ^3.0.0
   flutter_launcher_icons: ^0.14.4
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
 dependency_overrides:
   source_gen: 2.0.0
 dev_dependencies:

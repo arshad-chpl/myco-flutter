@@ -46,3 +46,5 @@ class ValidationFailure extends Failure {
 class CacheFailure extends Failure {
   const CacheFailure(super.message);
 }
+
+class CacheException implements Exception {}
