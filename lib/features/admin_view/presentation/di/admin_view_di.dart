@@ -1,4 +1,8 @@
 import 'package:get_it/get_it.dart';
+import 'package:myco_flutter/constants/constants.dart';
+import 'package:myco_flutter/core/network/api_client.dart';
+import 'package:myco_flutter/core/network/network_info.dart';
+import 'package:myco_flutter/core/services/cache_service.dart';
 import 'package:myco_flutter/features/admin_view/data/data_source/admin_view_local_data_source.dart';
 import 'package:myco_flutter/features/admin_view/data/data_source/admin_view_local_data_source_impl.dart';
 import 'package:myco_flutter/features/admin_view/data/data_source/admin_view_remote_data_source.dart';
@@ -10,11 +14,22 @@ import 'package:myco_flutter/features/admin_view/domain/usecases/get_cached_admi
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 
 Future<void> adminViewDi(GetIt sl) async {
-  // BLoC
-  sl.registerFactory(
-    () => AdminViewBloc(
-      getAdminViewUseCase: sl(),
-      getCachedAdminViewUseCase: sl(),
+  // Data Sources
+  sl.registerLazySingleton<AdminViewRemoteDataSource>(
+    () => AdminViewRemoteDataSourceImpl(
+      apiClient: sl<ApiClient>(instanceName: VariableBag.employeeMobileApi),
+    ),
+  );
+  sl.registerLazySingleton<AdminViewLocalDataSource>(
+    () => AdminViewLocalDataSourceImpl(cacheService: sl<CacheService>()),
+  );
+
+  // Repository
+  sl.registerLazySingleton<AdminViewRepository>(
+    () => AdminViewRepositoryImpl(
+      remoteDataSource: sl<AdminViewRemoteDataSource>(),
+      localDataSource: sl<AdminViewLocalDataSource>(),
+      networkInfo: sl<NetworkInfo>(),
     ),
   );
 
@@ -22,20 +37,11 @@ Future<void> adminViewDi(GetIt sl) async {
   sl.registerLazySingleton(() => GetAdminViewUseCase(repository: sl()));
   sl.registerLazySingleton(() => GetCachedAdminViewUseCase(repository: sl()));
 
-  // Repository
-  sl.registerLazySingleton<AdminViewRepository>(
-    () => AdminViewRepositoryImpl(
-      remoteDataSource: sl(),
-      localDataSource: sl(),
-      networkInfo: sl(),
+  // BLoC
+  sl.registerFactory(
+    () => AdminViewBloc(
+      getAdminViewUseCase: sl(),
+      getCachedAdminViewUseCase: sl(),
     ),
-  );
-
-  // Data Sources
-  sl.registerLazySingleton<AdminViewRemoteDataSource>(
-    AdminViewRemoteDataSourceImpl.new,
-  );
-  sl.registerLazySingleton<AdminViewLocalDataSource>(
-    () => AdminViewLocalDataSourceImpl(preferenceManager: sl()),
   );
 }
