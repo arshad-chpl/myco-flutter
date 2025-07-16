@@ -43,14 +43,14 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    // // Custom AppBar
-    // appBar: CustomAppbar(
-    //   appBarText: 'Add New Visit',
-    //   appbartxtcolor: AppTheme.getColor(context).onSurface,
-    //   size: 16 * Responsive.getResponsiveText(context),
-    //   appBarBackgoundColor: AppTheme.getColor(context).surface,
-    //   leading: BackButton(),
-    // ),
+    // Custom AppBar
+    appBar: CustomAppbar(
+      // appBarText: 'Add New Visit',
+      // appbartxtcolor: AppTheme.getColor(context).onSurface,
+      // size: 16 * Responsive.getResponsiveText(context),
+      appBarBackgoundColor: AppTheme.getColor(context).surface,
+      leading: BackButton(),
+    ),
 
     body: Padding(
       padding: EdgeInsets.symmetric(horizontal: 31.0 * Responsive.getResponsive(context)),
