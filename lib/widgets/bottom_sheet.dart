@@ -24,24 +24,26 @@ class _TestNewVisitState extends State<TestNewVisit> {
   @override
   Widget build(BuildContext context) => Scaffold(
     body: Container(
-      padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.08 * Responsive.getWidth(context),
+      ),
 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
 
         children: [
-          SizedBox(height: 0.05 * getHeight(context)),
+          SizedBox(height: 0.05 * Responsive.getHeight(context)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
                 'Test New Visit',
                 fontWeight: FontWeight.w600,
-                fontSize: 16 * getResponsiveText(context),
+                fontSize: 16 * Responsive.getResponsiveText(context),
               ),
               SizedBox(
-                height: 0.02 * getHeight(context),
-                width: 0.05 * getWidth(context),
+                height: 0.02 * Responsive.getHeight(context),
+                width: 0.05 * Responsive.getWidth(context),
                 child: SvgPicture.asset(
                   'assets/visit_svgs/calendar.svg',
                   fit: BoxFit.scaleDown,
@@ -49,11 +51,11 @@ class _TestNewVisitState extends State<TestNewVisit> {
               ),
             ],
           ),
-          SizedBox(height: 0.03 * getHeight(context)),
+          SizedBox(height: 0.03 * Responsive.getHeight(context)),
           CustomText(
             'Branch',
             fontWeight: FontWeight.w600,
-            fontSize: 16 * getResponsiveText(context),
+            fontSize: 16 * Responsive.getResponsiveText(context),
           ),
 
           CustomPopupDropdownStyled<String>(
@@ -64,7 +66,7 @@ class _TestNewVisitState extends State<TestNewVisit> {
               fit: BoxFit.scaleDown,
             ),
             hintTextStyle: TextStyle(
-              fontSize: 18 * getResponsiveText(context),
+              fontSize: 18 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).outline,
             ),
             border: BoxBorder.all(color: AppTheme.getColor(context).outline),
@@ -83,7 +85,7 @@ class _TestNewVisitState extends State<TestNewVisit> {
           Container(
             width: double.infinity,
             color: AppTheme.getColor(context).surfaceContainer,
-            height: 0.11 * getHeight(context),
+            height: 0.11 * Responsive.getHeight(context),
             child: BorderContainerWraper(
               isBorder: true,
               child: Column(
@@ -94,24 +96,26 @@ class _TestNewVisitState extends State<TestNewVisit> {
                     fit: BoxFit.scaleDown,
                   ),
 
-                  SizedBox(height: 0.010 * getHeight(context)),
+                  SizedBox(height: 0.010 * Responsive.getHeight(context)),
                   CustomText(
                     'Select Media',
-                    fontSize: 14 * getResponsive(context),
+                    fontSize: 14 * Responsive.getResponsive(context),
                     fontWeight: FontWeight.w600,
                   ),
                 ],
               ),
             ),
           ),
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
           LabeledTextField(
             label: 'Today Work',
             hint: 'Type here',
-            widthFactor: getWidth(context),
+            widthFactor: Responsive.getWidth(context),
             border: OutlineInputBorder(
               borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(10 * getResponsive(context)),
+              borderRadius: BorderRadius.circular(
+                10 * Responsive.getResponsive(context),
+              ),
             ),
             prefix: SvgPicture.asset(
               'assets/visit_svgs/calendar.svg',
@@ -119,9 +123,9 @@ class _TestNewVisitState extends State<TestNewVisit> {
             ),
           ),
 
-          SizedBox(height: 0.10 * getHeight(context)),
+          SizedBox(height: 0.10 * Responsive.getHeight(context)),
           MyCoButton(
-            boarderRadius: 30 * getResponsive(context),
+            boarderRadius: 30 * Responsive.getResponsive(context),
             isShadowBottomLeft: true,
             onTap: () {
               //  Navigator.push(context, MaterialPageRoute(builder: (context) => const VisitReport(),));

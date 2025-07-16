@@ -21,12 +21,12 @@ class EditOrderPage extends StatelessWidget {
         children: [
           CustomText(
             'Edit Order #241',
-            fontSize: 20 * getResponsiveText(context),
+            fontSize: 20 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w700,
           ),
           CustomText(
             'Mukund Madhav',
-            fontSize: 14 * getResponsiveText(context),
+            fontSize: 14 * Responsive.getResponsiveText(context),
             color: AppTheme.getColor(context).primary,
             fontWeight: FontWeight.w600,
           ),
@@ -35,39 +35,39 @@ class EditOrderPage extends StatelessWidget {
     ),
     body: Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 0.08 * getWidth(context),
-        vertical: 0.01 * getHeight(context),
+        horizontal: 0.08 * Responsive.getWidth(context),
+        vertical: 0.01 * Responsive.getHeight(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // First Container
           Container(
-            padding: EdgeInsets.all(10 * getResponsive(context)),
+            padding: EdgeInsets.all(10 * Responsive.getResponsive(context)),
             decoration: getCommonDecoration(context),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomText(
                   'Item (1)',
-                  fontSize: 16 * getResponsiveText(context),
+                  fontSize: 16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
                 CustomText(
                   'Units (25)',
-                  fontSize: 16 * getResponsiveText(context),
+                  fontSize: 16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
-                SizedBox(width: 0.015 * getWidth(context)),
+                SizedBox(width: 0.015 * Responsive.getWidth(context)),
                 CustomText(
                   'Total: ₹20000',
-                  fontSize: 16 * getResponsiveText(context),
+                  fontSize: 16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
               ],
             ),
           ),
-          SizedBox(height: 0.018 * getHeight(context)),
+          SizedBox(height: 0.018 * Responsive.getHeight(context)),
           // Unit Container
           Container(
             decoration: getCommonDecoration(context),
@@ -78,25 +78,25 @@ class EditOrderPage extends StatelessWidget {
                   leading: Container(
                     decoration: getCommonDecoration(context),
                     child: Image.asset(
-                      'visit/take_order/apple_image.png',
-                      height: 0.045 * getHeight(context),
-                      width: 0.1 * getWidth(context),
+                      'assets/take_order/apple_image.png',
+                      height: 0.045 * Responsive.getHeight(context),
+                      width: 0.1 * Responsive.getWidth(context),
                     ),
                   ),
-                  horizontalTitleGap: 0.01 * getWidth(context),
+                  horizontalTitleGap: 0.01 * Responsive.getWidth(context),
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
                         'Appy Fizz (Apple)',
-                        fontSize: 12 * getResponsiveText(context),
+                        fontSize: 12 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w700,
                         color: AppTheme.getColor(context).primary,
                       ),
-                      SizedBox(height: 0.01 * getHeight(context)),
+                      SizedBox(height: 0.01 * Responsive.getHeight(context)),
                       CustomText(
                         'Available Stocks : 9989',
-                        fontSize: 12 * getResponsiveText(context),
+                        fontSize: 12 * Responsive.getResponsiveText(context),
                         color: AppTheme.getColor(context).secondary,
                         fontWeight: FontWeight.w600,
                       ),
@@ -105,45 +105,49 @@ class EditOrderPage extends StatelessWidget {
                   trailing: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      SizedBox(height: 0.01 * getHeight(context)),
+                      SizedBox(height: 0.01 * Responsive.getHeight(context)),
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 6 * getResponsive(context),
-                              vertical: 1 * getResponsive(context),
+                              horizontal: 6 * Responsive.getResponsive(context),
+                              vertical: 1 * Responsive.getResponsive(context),
                             ),
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: AppTheme.getColor(context).outline,
                               ),
                               borderRadius: BorderRadius.circular(
-                                8 * getResponsive(context),
+                                8 * Responsive.getResponsive(context),
                               ),
                               color: AppColors.lightTeal,
                             ),
                             child: Row(
                               children: [
                                 Image.asset(
-                                  'visit/take_order/message-edit.png',
+                                  'assets/take_order/message-edit.png',
                                   fit: BoxFit.cover,
-                                  height: 0.015 * getHeight(context),
+                                  height: 0.015 * Responsive.getHeight(context),
                                 ),
-                                SizedBox(width: 0.02 * getWidth(context)),
+                                SizedBox(
+                                  width: 0.02 * Responsive.getWidth(context),
+                                ),
                                 CustomText(
                                   '25 Units',
-                                  fontSize: 12 * getResponsiveText(context),
+                                  fontSize:
+                                      12 *
+                                      Responsive.getResponsiveText(context),
                                   fontWeight: FontWeight.w500,
                                 ),
                               ],
                             ),
                           ),
-                          SizedBox(width: 0.01 * getWidth(context)),
+                          SizedBox(width: 0.01 * Responsive.getWidth(context)),
                           Image.asset(
-                            'visit/take_order/xcircle.png',
-                            width: 0.06 * getWidth(context),
-                            height: 0.025 * getHeight(context),
+                            'assets/take_order/xcircle.png',
+                            width: 0.06 * Responsive.getWidth(context),
+                            height: 0.025 * Responsive.getHeight(context),
                           ),
                         ],
                       ),
@@ -152,51 +156,51 @@ class EditOrderPage extends StatelessWidget {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 0.04 * getWidth(context),
+                    horizontal: 0.04 * Responsive.getWidth(context),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomText(
                         'Piece Wise(25 * ₹80.0)',
-                        fontSize: 13 * getResponsiveText(context),
+                        fontSize: 13 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w500,
                       ),
                       CustomText(
                         '₹2000.0',
-                        fontSize: 13 * getResponsiveText(context),
+                        fontSize: 13 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w600,
                         color: AppTheme.getColor(context).primary,
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 0.008 * getHeight(context)),
+                SizedBox(height: 0.008 * Responsive.getHeight(context)),
               ],
             ),
           ),
 
-          SizedBox(height: 0.01 * getHeight(context)),
+          SizedBox(height: 0.01 * Responsive.getHeight(context)),
           // Shipping Charges Card
           DistributorCard(
-            headerHeight: 0.04 * getHeight(context),
+            headerHeight: 0.04 * Responsive.getHeight(context),
             title: 'Shipping Charges',
             isButton: true,
             buttonText: '₹Add',
             bottomWidget: Padding(
-              padding: EdgeInsets.all(10.0 * getResponsive(context)),
+              padding: EdgeInsets.all(10.0 * Responsive.getResponsive(context)),
               child: CustomText(
                 'Amount cannot Exceed 1,00,000',
-                fontSize: 13 * getResponsiveText(context),
+                fontSize: 13 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
                 color: AppColors.error,
               ),
             ),
           ),
-          SizedBox(height: 0.015 * getHeight(context)),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
           // Total Amount Container
           Container(
-            padding: EdgeInsets.all(10 * getResponsive(context)),
+            padding: EdgeInsets.all(10 * Responsive.getResponsive(context)),
             decoration: getCommonDecoration(context),
             child: Column(
               children: [
@@ -205,7 +209,7 @@ class EditOrderPage extends StatelessWidget {
                   leftText: 'Total',
                   rightText: '₹2000.0',
                 ),
-                SizedBox(height: 0.005 * getHeight(context)),
+                SizedBox(height: 0.005 * Responsive.getHeight(context)),
                 getTotalAmountRow(
                   context,
                   leftText: 'Shipping Charges',
@@ -227,15 +231,15 @@ class EditOrderPage extends StatelessWidget {
               Navigator.pop(context);
             },
             title: 'Update Order',
-            width: getWidth(context),
-            height: 0.055 * getHeight(context),
-            boarderRadius: 30 * getResponsive(context),
+            width: Responsive.getWidth(context),
+            height: 0.055 * Responsive.getHeight(context),
+            boarderRadius: 30 * Responsive.getResponsive(context),
             textStyle: TextStyle(
               color: AppColors.white,
-              fontSize: 18 * getResponsiveText(context),
+              fontSize: 18 * Responsive.getResponsiveText(context),
             ),
           ),
-          SizedBox(height: 0.03 * getHeight(context)),
+          SizedBox(height: 0.03 * Responsive.getHeight(context)),
         ],
       ),
     ),
@@ -251,13 +255,13 @@ class EditOrderPage extends StatelessWidget {
     children: [
       CustomText(
         leftText,
-        fontSize: 15 * getResponsiveText(context),
+        fontSize: 15 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w600,
         color: textColor,
       ),
       CustomText(
         rightText,
-        fontSize: 15 * getResponsiveText(context),
+        fontSize: 15 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w500,
         color: textColor,
       ),
@@ -265,7 +269,7 @@ class EditOrderPage extends StatelessWidget {
   );
   BoxDecoration getCommonDecoration(BuildContext context) => BoxDecoration(
     border: Border.all(color: AppTheme.getColor(context).outline),
-    borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+    borderRadius: BorderRadius.circular(12 * Responsive.getResponsive(context)),
     color: AppTheme.getColor(context).onPrimary,
   );
 }

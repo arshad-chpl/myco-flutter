@@ -34,20 +34,20 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
   };
   @override
   Widget build(BuildContext context) => Container(
-    height: 0.7 * getHeight(context),
-    width: getWidth(context),
+    height: 0.7 * Responsive.getHeight(context),
+    width: Responsive.getWidth(context),
     decoration: BoxDecoration(
       color: AppTheme.getColor(context).onPrimary,
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(40 * getResponsive(context)),
-        topRight: Radius.circular(40 * getResponsive(context)),
+        topLeft: Radius.circular(40 * Responsive.getResponsive(context)),
+        topRight: Radius.circular(40 * Responsive.getResponsive(context)),
       ),
     ),
     child: Padding(
       padding: EdgeInsets.only(
-        left: 30 * getResponsive(context),
-        right: 30 * getResponsive(context),
-        top: 50 * getResponsive(context),
+        left: 30 * Responsive.getResponsive(context),
+        right: 30 * Responsive.getResponsive(context),
+        top: 50 * Responsive.getResponsive(context),
         bottom: 30,
       ),
       child: Column(
@@ -57,44 +57,44 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
             children: [
               Image.asset(
                 "assets/sign_in/back_arrow.png",
-                height: 0.015 * getHeight(context),
+                height: 0.015 * Responsive.getHeight(context),
                 fit: BoxFit.cover,
               ),
-              SizedBox(width: 0.05 * getWidth(context)),
+              SizedBox(width: 0.05 * Responsive.getWidth(context)),
               CustomText(
                 "Select Other Company",
                 color: AppTheme.getColor(context).onSurface,
                 fontWeight: FontWeight.w800,
-                fontSize: 18 * getResponsiveText(context),
+                fontSize: 18 * Responsive.getResponsiveText(context),
               ),
             ],
           ),
-          SizedBox(height: 0.015 * getHeight(context)),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
           Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CustomText(
                   "Sign in",
-                  fontSize: 30 * getResponsiveText(context),
+                  fontSize: 30 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w900,
                   color: AppTheme.getColor(context).onSurface,
                 ),
                 CustomText(
                   "Welcome To Delta Corporation",
-                  fontSize: 20 * getResponsiveText(context),
+                  fontSize: 20 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w800,
                   color: AppTheme.getColor(context).onSurface,
                 ),
               ],
             ),
           ),
-          SizedBox(height: 0.015 * getHeight(context)),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
           CustomText(
             "Phone number",
-              fontSize: 16 * getResponsiveText(context),
-              fontWeight: FontWeight.w600,
-              color: AppTheme.getColor(context).onSurface,
+            fontSize: 16 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w600,
+            color: AppTheme.getColor(context).onSurface,
           ),
           PhoneNumberField(
             selectedCountry: selectedCountry,
@@ -109,18 +109,20 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
             countryDialCodes: countryMap,
             phoneController: phoneController,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15 * getResponsive(context)),
+              borderRadius: BorderRadius.circular(
+                15 * Responsive.getResponsive(context),
+              ),
               border: Border.all(color: AppColors.gray5),
               color: AppTheme.getColor(context).onPrimary,
             ),
           ),
-          SizedBox(height: 0.015 * getHeight(context)),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
           MyCoButton(
             onTap: () {
               showCustomEmailVerificationSheet(
                 imageUrl: 'assets/sign_in/phone.png',
-                imageHeight: 0.035 * getHeight(context),
-                imageWidth: 0.09 * getWidth(context),
+                imageHeight: 0.035 * Responsive.getHeight(context),
+                imageWidth: 0.09 * Responsive.getWidth(context),
                 // isDialog: true,
                 context: context,
                 title: 'Sign In Phone Number',
@@ -129,11 +131,14 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                 emailAddress: "example@example.com",
                 onSubmit: (String otp) {
                   dev.log("OTP submitted: $otp");
+                  context.push("/dashboard");
                 },
                 onResend: () {
                   //for here
                   dev.log("Resend OTP");
-                  context.pushNamed("select-other-company");
+                  context.pop();
+                  context.pop();
+                  context.push("/sign-up-form");
                 },
                 onVerifyButtonPressed: () {
                   dev.log("Verify button pressed");
@@ -143,15 +148,15 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
             },
             textStyle: TextStyle(
               color: AppTheme.getColor(context).onPrimary,
-              fontSize: 18 * getResponsiveText(context),
+              fontSize: 18 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.bold,
             ),
             title: "Sign in",
-            boarderRadius: 30 * getResponsive(context),
+            boarderRadius: 30 * Responsive.getResponsive(context),
             // isShadowBottomRight: true,
             isShadowBottomLeft: true,
           ),
-          SizedBox(height: 0.025 * getHeight(context)),
+          SizedBox(height: 0.025 * Responsive.getHeight(context)),
           Row(
             children: [
               Expanded(
@@ -161,9 +166,9 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                   thickness: 2,
                 ),
               ),
-              SizedBox(width: 0.018 * getHeight(context)),
+              SizedBox(width: 0.018 * Responsive.getHeight(context)),
               Text("OR"),
-              SizedBox(width: 0.018 * getHeight(context)),
+              SizedBox(width: 0.018 * Responsive.getHeight(context)),
               Expanded(
                 child: Divider(
                   height: 10,
@@ -173,53 +178,57 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
               ),
             ],
           ),
-          SizedBox(height: 0.025 * getHeight(context)),
+          SizedBox(height: 0.025 * Responsive.getHeight(context)),
           MyCoButton(
             onTap: () {},
             title: "Sign In with Google",
             textStyle: TextStyle(
-              color: AppTheme.getColor(context).onSurface.withValues(alpha: 0.5),
-              fontSize: 20 * getResponsiveText(context),
+              color: AppTheme.getColor(
+                context,
+              ).onSurface.withValues(alpha: 0.5),
+              fontSize: 20 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w900,
             ),
             image: Image.asset(
               "assets/sign_in/google_logo.png",
               fit: BoxFit.contain,
-              height: 0.02 * getHeight(context),
+              height: 0.02 * Responsive.getHeight(context),
             ),
-            spacing: 10 * getResponsive(context),
+            spacing: 10 * Responsive.getResponsive(context),
             decoration: BoxDecoration(
               color: AppColors.white,
-              border: Border.all(
-                  color: AppTheme.getColor(context).primary
+              border: Border.all(color: AppTheme.getColor(context).primary),
+              borderRadius: BorderRadius.circular(
+                40 * Responsive.getResponsive(context),
               ),
-              borderRadius: BorderRadius.circular(40 * getResponsive(context)),
             ),
           ),
-          SizedBox(height: 0.015 * getHeight(context)),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
           MyCoButton(
             onTap: () {},
             title: "Sign In with Apple",
             textStyle: TextStyle(
-              color: AppTheme.getColor(context).onSurface.withValues(alpha: 0.5),
-              fontSize: 20 * getResponsiveText(context),
+              color: AppTheme.getColor(
+                context,
+              ).onSurface.withValues(alpha: 0.5),
+              fontSize: 20 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w900,
             ),
             image: Image.asset(
               "assets/sign_in/apple_logo.png",
               fit: BoxFit.contain,
-              height: 0.02 * getHeight(context),
+              height: 0.02 * Responsive.getHeight(context),
             ),
-            spacing: 10 * getResponsive(context),
+            spacing: 10 * Responsive.getResponsive(context),
             decoration: BoxDecoration(
-              border: Border.all(
-                color: AppTheme.getColor(context).primary
-              ),
+              border: Border.all(color: AppTheme.getColor(context).primary),
               color: AppColors.white,
-              borderRadius: BorderRadius.circular(40 * getResponsive(context)),
+              borderRadius: BorderRadius.circular(
+                40 * Responsive.getResponsive(context),
+              ),
             ),
           ),
-          SizedBox(height: 0.025 * getHeight(context)),
+          SizedBox(height: 0.025 * Responsive.getHeight(context)),
           Center(
             child: RichText(
               text: TextSpan(
@@ -228,21 +237,21 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                     text: "Don’t have an account? ",
                     style: TextStyle(
                       color: AppTheme.getColor(context).onSurface,
-                      fontSize: 14 * getResponsiveText(context),
+                      fontSize: 14 * Responsive.getResponsiveText(context),
                     ),
                   ),
                   TextSpan(
                     text: "Sign Up Here",
                     style: TextStyle(
                       color: AppTheme.getColor(context).primary,
-                      fontSize: 14 * getResponsiveText(context),
+                      fontSize: 14 * Responsive.getResponsiveText(context),
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          SizedBox(height: 0.025 * getHeight(context)),
+          SizedBox(height: 0.025 * Responsive.getHeight(context)),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -258,24 +267,26 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                     : Colors.grey, // 🔁 dynamic
                 activeColor: AppTheme.getColor(context).primaryContainer,
                 checkColor: AppTheme.getColor(context).primary,
-                height: 0.026 * getHeight(context),
-                width: 0.056 * getWidth(context),
-                unCheckedBackground: AppTheme.getColor(context).primaryContainer,
+                height: 0.026 * Responsive.getHeight(context),
+                width: 0.056 * Responsive.getWidth(context),
+                unCheckedBackground: AppTheme.getColor(
+                  context,
+                ).primaryContainer,
               ),
-              SizedBox(width: 0.015 * getWidth(context)),
+              SizedBox(width: 0.015 * Responsive.getWidth(context)),
               Expanded(
                 child: RichText(
                   text: TextSpan(
                     style: TextStyle(
                       color: AppTheme.getColor(context).onSurface,
-                      fontSize: 14 * getResponsiveText(context),
+                      fontSize: 14 * Responsive.getResponsiveText(context),
                     ),
                     children: [
                       TextSpan(
                         text: "Please confirm that you agree to our ",
                         style: TextStyle(
                           color: AppTheme.getColor(context).onSurface,
-                          fontSize: 14 * getResponsiveText(context),
+                          fontSize: 14 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -283,7 +294,7 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                         text: "Privacy Policy",
                         style: TextStyle(
                           color: AppTheme.getColor(context).primary,
-                          fontSize: 14 * getResponsiveText(context),
+                          fontSize: 14 * Responsive.getResponsiveText(context),
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
@@ -307,19 +318,23 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                             );
                           },
                         text: "Terms & Conditions",
-                        style: TextStyle(color: AppTheme.getColor(context).primary),
+                        style: TextStyle(
+                          color: AppTheme.getColor(context).primary,
+                        ),
                       ),
                       TextSpan(
                         text: " & ",
                         style: TextStyle(
                           color: AppTheme.getColor(context).onSurface,
-                          fontSize: 14 * getResponsiveText(context),
+                          fontSize: 14 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       TextSpan(
                         text: "Cancellation & Refund Policy",
-                        style: TextStyle(color: AppTheme.getColor(context).primary),
+                        style: TextStyle(
+                          color: AppTheme.getColor(context).primary,
+                        ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             showModalBottomSheet(
@@ -334,7 +349,7 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                         text: ".",
                         style: TextStyle(
                           color: AppTheme.getColor(context).onSurface,
-                          fontSize: 14 * getResponsiveText(context),
+                          fontSize: 14 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w900,
                         ),
                       ),
@@ -349,4 +364,3 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
     ),
   );
 }
-

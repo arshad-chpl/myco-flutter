@@ -15,7 +15,10 @@ class PayslipDetail extends StatelessWidget {
           Stack(
             children: [
               CustomPaint(
-                size: Size(getWidth(context), 0.55 * getHeight(context)),
+                size: Size(
+                  Responsive.getWidth(context),
+                  0.55 * Responsive.getHeight(context),
+                ),
                 painter: HeaderCustomPainter(),
               ),
               Column(
@@ -32,20 +35,20 @@ class PayslipDetail extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(height: 0.02 * getHeight(context)),
+                  SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 0.08 * getWidth(context),
+                      horizontal: 0.08 * Responsive.getWidth(context),
                     ),
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 0.04 * getWidth(context),
-                        vertical: 0.01 * getHeight(context),
+                        horizontal: 0.04 * Responsive.getWidth(context),
+                        vertical: 0.01 * Responsive.getHeight(context),
                       ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(
-                          8 * getResponsive(context),
+                          8 * Responsive.getResponsive(context),
                         ),
                         border: Border.all(
                           color: AppTheme.getColor(context).outline,
@@ -68,7 +71,9 @@ class PayslipDetail extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 0.005 * getHeight(context)),
+                          SizedBox(
+                            height: 0.005 * Responsive.getHeight(context),
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,23 +81,29 @@ class PayslipDetail extends StatelessWidget {
                               CustomText(
                                 '₹38,800.00',
                                 fontWeight: FontWeight.w600,
-                                fontSize: 28 * getResponsiveText(context),
+                                fontSize:
+                                    28 * Responsive.getResponsiveText(context),
                                 color: AppTheme.getColor(context).primary,
                               ),
                               CustomText(
                                 'Bank Transaction',
                                 fontWeight: FontWeight.w600,
-                                fontSize: 16 * getResponsiveText(context),
+                                fontSize:
+                                    16 * Responsive.getResponsiveText(context),
                                 color: AppTheme.getColor(context).outline,
                               ),
                             ],
                           ),
-                          SizedBox(height: 0.01 * getHeight(context)),
+                          SizedBox(
+                            height: 0.01 * Responsive.getHeight(context),
+                          ),
                           Divider(
                             thickness: 0.4,
                             color: AppTheme.getColor(context).onSurface,
                           ),
-                          SizedBox(height: 0.005 * getHeight(context)),
+                          SizedBox(
+                            height: 0.005 * Responsive.getHeight(context),
+                          ),
                           const CustomText(
                             'Net Pay (In Words)',
                             fontWeight: FontWeight.w600,
@@ -100,7 +111,8 @@ class PayslipDetail extends StatelessWidget {
                           ),
                           CustomText(
                             'Thirty Eight Thousands Eight Hundred Only',
-                            fontSize: 14 * getResponsiveText(context),
+                            fontSize:
+                                14 * Responsive.getResponsiveText(context),
                             color: AppTheme.getColor(context).primary,
                           ),
                         ],

@@ -1,6 +1,6 @@
 class AppAssets {
   // commmon paths for visit in the application
-  static const String basePath = 'visit';
+  static const String basePath = 'assets';
   // static const String fontsPath = '$basePath/fonts';
   static const String imagesPath = '$basePath/images';
   static const String svgsPath = '$basePath/svgs';

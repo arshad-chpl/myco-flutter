@@ -38,13 +38,15 @@ class OffersPage extends StatelessWidget {
       backgroundColor: AppTheme.getColor(context).surface,
       title: CustomText(
         'Offers',
-        fontSize: 20 * getResponsiveText(context),
+        fontSize: 20 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
       ),
       leading: const BackButton(),
     ),
     body: Container(
-      padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.08 * Responsive.getWidth(context),
+      ),
       child: Column(
         children: [
           Expanded(
@@ -56,7 +58,7 @@ class OffersPage extends StatelessWidget {
                 offerTime: offerContent[index]['offerTime'] ?? '',
               ),
               separatorBuilder: (context, index) =>
-                  SizedBox(height: 0.01 * getHeight(context)),
+                  SizedBox(height: 0.01 * Responsive.getHeight(context)),
             ),
           ),
         ],

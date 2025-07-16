@@ -287,22 +287,24 @@ class TextFieldFormTablet extends StatelessWidget {
         contentPadding:
             contentPadding ??
             EdgeInsets.only(
-              left: 0.003 * getResponsive(context),
-              top: 0.005 * getResponsive(context),
+              left: 0.003 * Responsive.getResponsive(context),
+              top: 0.005 * Responsive.getResponsive(context),
             ),
         labelText: isLabelOn == true ? labelText : null,
         hintText: hintText,
         hintStyle:
             hintTextStyle ??
             TextStyle(
-              fontSize: titleTextSize ?? 14 * getResponsiveText(context),
+              fontSize:
+                  titleTextSize ?? 14 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).primary,
               fontWeight: fontWeight ?? FontWeight.w500,
             ),
         labelStyle:
             labelTextStyle ??
             TextStyle(
-              fontSize: titleTextSize ?? 14 * getResponsiveText(context),
+              fontSize:
+                  titleTextSize ?? 14 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).primary,
               fontWeight: fontWeight ?? FontWeight.w500,
             ),
@@ -316,19 +318,21 @@ class TextFieldFormTablet extends StatelessWidget {
                       onTap: onTap1,
                       child: Image.asset(
                         image1!,
-                        height: iconHeight ?? 0.022 * getHeight(context),
+                        height:
+                            iconHeight ?? 0.022 * Responsive.getHeight(context),
                       ),
                     ),
-                  SizedBox(width: 0.03 * getWidth(context)),
+                  SizedBox(width: 0.03 * Responsive.getWidth(context)),
                   if (image2 != null)
                     GestureDetector(
                       onTap: onTap2,
                       child: Image.asset(
                         image2!,
-                        height: iconHeight ?? 0.022 * getHeight(context),
+                        height:
+                            iconHeight ?? 0.022 * Responsive.getHeight(context),
                       ),
                     ),
-                  SizedBox(width: 0.03 * getWidth(context)),
+                  SizedBox(width: 0.03 * Responsive.getWidth(context)),
                 ],
               )
             : null,
@@ -337,7 +341,8 @@ class TextFieldFormTablet extends StatelessWidget {
           typingtextStyle ??
           TextStyle(
             fontWeight: fontWeight ?? FontWeight.w500,
-            fontSize: titleTextSize ?? 14 * getResponsiveText(context),
+            fontSize:
+                titleTextSize ?? 14 * Responsive.getResponsiveText(context),
             color: AppTheme.getColor(context).primary,
           ),
       cursorColor: AppTheme.getColor(context).primary,
@@ -521,7 +526,7 @@ class TextFieldFormMobile extends StatelessWidget {
 
     return SizedBox(
       width: width ?? double.infinity,
-      height: height ?? 44, //0.06 * getHeight(context),
+      height: height ?? 44, //0.06 * Responsive.getHeight(context),
       child: TextFormField(
         readOnly: isReadOnly ?? false,
         onTap: onClick,

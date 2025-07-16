@@ -57,7 +57,9 @@ class _PayslipCardState extends State<PayslipCard> {
     shape:
         widget.cardShape ??
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8 * getResponsive(context)),
+          borderRadius: BorderRadius.circular(
+            8 * Responsive.getResponsive(context),
+          ),
           side: BorderSide(color: AppTheme.getColor(context).outline),
         ),
     child: Column(
@@ -69,7 +71,7 @@ class _PayslipCardState extends State<PayslipCard> {
               Positioned.fill(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(
-                    8 * getResponsive(context),
+                    8 * Responsive.getResponsive(context),
                   ),
                   child: CustomPaint(
                     painter: InnerShadowPainter(
@@ -110,26 +112,30 @@ class _PayslipCardState extends State<PayslipCard> {
                 });
               },
               child: Container(
-                height: widget.headerHeight ?? 0.045 * getHeight(context),
+                height:
+                    widget.headerHeight ??
+                    0.045 * Responsive.getHeight(context),
                 decoration:
                     widget.headerDecoration ??
                     BoxDecoration(
                       color: AppTheme.getColor(context).secondary,
                       borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(8 * getResponsive(context)),
+                        top: Radius.circular(
+                          8 * Responsive.getResponsive(context),
+                        ),
                       ),
                     ),
                 padding:
                     widget.contentPadding ??
                     EdgeInsets.symmetric(
-                      horizontal: 12 * getResponsive(context),
+                      horizontal: 12 * Responsive.getResponsive(context),
                     ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
                       '${widget.month} ${widget.year}',
-                      fontSize: 17 * getResponsiveText(context),
+                      fontSize: 17 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w700,
                       color: AppTheme.getColor(context).onPrimary,
                     ),
@@ -152,19 +158,19 @@ class _PayslipCardState extends State<PayslipCard> {
               children: [
                 CustomText(
                   'Net Pay',
-                  fontSize: 14 * getResponsiveText(context),
+                  fontSize: 14 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
                 CustomText(
                   '₹${widget.netPay}',
-                  fontSize: 14 * getResponsiveText(context),
+                  fontSize: 14 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
               ],
             ),
           ),
           secondChild: Padding(
-            padding: EdgeInsets.all(12 * getResponsive(context)),
+            padding: EdgeInsets.all(12 * Responsive.getResponsive(context)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -173,12 +179,12 @@ class _PayslipCardState extends State<PayslipCard> {
                   children: [
                     CustomText(
                       'Gross Salary (A)',
-                      fontSize: 15 * getResponsiveText(context),
+                      fontSize: 15 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w600,
                     ),
                     CustomText(
                       '₹${widget.grossSalary}',
-                      fontSize: 15 * getResponsiveText(context),
+                      fontSize: 15 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w600,
                     ),
                   ],
@@ -189,12 +195,12 @@ class _PayslipCardState extends State<PayslipCard> {
                   children: [
                     CustomText(
                       'Total Deduction (B)',
-                      fontSize: 15 * getResponsiveText(context),
+                      fontSize: 15 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w600,
                     ),
                     CustomText(
                       '₹${widget.totalDeduction}',
-                      fontSize: 15 * getResponsiveText(context),
+                      fontSize: 15 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w600,
                     ),
                   ],
@@ -205,12 +211,12 @@ class _PayslipCardState extends State<PayslipCard> {
                   children: [
                     CustomText(
                       'Net Pay (A-B)',
-                      fontSize: 15 * getResponsiveText(context),
+                      fontSize: 15 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.bold,
                     ),
                     CustomText(
                       '₹${widget.netPay}',
-                      fontSize: 15 * getResponsiveText(context),
+                      fontSize: 15 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.bold,
                     ),
                   ],
@@ -223,7 +229,7 @@ class _PayslipCardState extends State<PayslipCard> {
                       onTap: widget.onDownload,
                       child: CustomText(
                         'Download Payslip',
-                        fontSize: 14 * getResponsiveText(context),
+                        fontSize: 14 * Responsive.getResponsiveText(context),
                         color: AppTheme.getColor(context).secondary,
                         decoration: TextDecoration.underline,
                         decorationColor: AppTheme.getColor(context).secondary,

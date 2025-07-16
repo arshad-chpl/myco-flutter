@@ -18,7 +18,9 @@ class SalaryBreakUpPage extends StatelessWidget {
       centerTitle: false,
     ),
     body: Container(
-      padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.08 * Responsive.getWidth(context),
+      ),
       child: Column(
         children: [
           MyCustomTabBar(
@@ -33,14 +35,14 @@ class SalaryBreakUpPage extends StatelessWidget {
             isShadowBottomLeft: true,
           ),
 
-          SizedBox(height: 0.02 * getHeight(context)),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
           // Earning Card
           CommonCard(
             title: 'Earnings',
             bottomWidget: Container(
               padding: EdgeInsets.symmetric(
-                horizontal: 0.04 * getWidth(context),
-                vertical: 0.01 * getHeight(context),
+                horizontal: 0.04 * Responsive.getWidth(context),
+                vertical: 0.01 * Responsive.getHeight(context),
               ),
               child: Column(
                 children: [
@@ -63,26 +65,28 @@ class SalaryBreakUpPage extends StatelessWidget {
                         children: [
                           Container(
                             padding: EdgeInsets.only(
-                              right: 0.1 * getWidth(context),
-                              top: 0.005 * getHeight(context),
-                              bottom: 0.005 * getHeight(context),
+                              right: 0.1 * Responsive.getWidth(context),
+                              top: 0.005 * Responsive.getHeight(context),
+                              bottom: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
                               'Salary Heading',
                               fontWeight: FontWeight.w700,
-                              fontSize: 14 * getResponsiveText(context),
+                              fontSize:
+                                  14 * Responsive.getResponsiveText(context),
                             ),
                           ),
                           Container(
                             padding: EdgeInsets.only(
-                              left: 0.2 * getWidth(context),
-                              top: 0.005 * getHeight(context),
-                              bottom: 0.005 * getHeight(context),
+                              left: 0.2 * Responsive.getWidth(context),
+                              top: 0.005 * Responsive.getHeight(context),
+                              bottom: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
                               'Amount (₹)',
                               fontWeight: FontWeight.w700,
-                              fontSize: 14 * getResponsiveText(context),
+                              fontSize:
+                                  14 * Responsive.getResponsiveText(context),
                             ),
                           ),
                         ],
@@ -91,23 +95,25 @@ class SalaryBreakUpPage extends StatelessWidget {
                         children: [
                           Container(
                             padding: EdgeInsets.only(
-                              top: 0.005 * getHeight(context),
+                              top: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
                               'Basic',
-                              fontSize: 12 * getResponsiveText(context),
+                              fontSize:
+                                  12 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           Container(
                             padding: EdgeInsets.only(
-                              left: 0.23 * getWidth(context),
-                              top: 0.005 * getHeight(context),
-                              bottom: 0.005 * getHeight(context),
+                              left: 0.23 * Responsive.getWidth(context),
+                              top: 0.005 * Responsive.getHeight(context),
+                              bottom: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
                               '19,500.00',
-                              fontSize: 12 * getResponsiveText(context),
+                              fontSize:
+                                  12 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -117,23 +123,25 @@ class SalaryBreakUpPage extends StatelessWidget {
                         children: [
                           Container(
                             padding: EdgeInsets.only(
-                              top: 0.005 * getHeight(context),
+                              top: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
                               'HRA',
-                              fontSize: 12 * getResponsiveText(context),
+                              fontSize:
+                                  12 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           Container(
                             padding: EdgeInsets.only(
-                              left: 0.23 * getWidth(context),
-                              top: 0.005 * getHeight(context),
-                              bottom: 0.005 * getHeight(context),
+                              left: 0.23 * Responsive.getWidth(context),
+                              top: 0.005 * Responsive.getHeight(context),
+                              bottom: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
                               '7,800.00',
-                              fontSize: 12 * getResponsiveText(context),
+                              fontSize:
+                                  12 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -143,23 +151,25 @@ class SalaryBreakUpPage extends StatelessWidget {
                         children: [
                           Container(
                             padding: EdgeInsets.only(
-                              top: 0.005 * getHeight(context),
+                              top: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
                               'Conveyance',
-                              fontSize: 12 * getResponsiveText(context),
+                              fontSize:
+                                  12 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           Container(
                             padding: EdgeInsets.only(
-                              left: 0.23 * getWidth(context),
-                              top: 0.005 * getHeight(context),
-                              bottom: 0.005 * getHeight(context),
+                              left: 0.23 * Responsive.getWidth(context),
+                              top: 0.005 * Responsive.getHeight(context),
+                              bottom: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
                               '11,700.00',
-                              fontSize: 12 * getResponsiveText(context),
+                              fontSize:
+                                  12 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -169,23 +179,25 @@ class SalaryBreakUpPage extends StatelessWidget {
                         children: [
                           Container(
                             padding: EdgeInsets.only(
-                              top: 0.005 * getHeight(context),
+                              top: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
                               'Gross Salary /\nper Month',
-                              fontSize: 12 * getResponsiveText(context),
+                              fontSize:
+                                  12 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                           Container(
                             padding: EdgeInsets.only(
-                              left: 0.23 * getWidth(context),
-                              top: 0.005 * getHeight(context),
-                              bottom: 0.005 * getHeight(context),
+                              left: 0.23 * Responsive.getWidth(context),
+                              top: 0.005 * Responsive.getHeight(context),
+                              bottom: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
                               '39,000.00',
-                              fontSize: 12 * getResponsiveText(context),
+                              fontSize:
+                                  12 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -195,23 +207,25 @@ class SalaryBreakUpPage extends StatelessWidget {
                         children: [
                           Container(
                             padding: EdgeInsets.only(
-                              top: 0.01 * getHeight(context),
+                              top: 0.01 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
                               'Salary (CTC) /\nper Month',
-                              fontSize: 12 * getResponsiveText(context),
+                              fontSize:
+                                  12 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                           Container(
                             padding: EdgeInsets.only(
-                              left: 0.23 * getWidth(context),
-                              top: 0.005 * getHeight(context),
-                              bottom: 0.005 * getHeight(context),
+                              left: 0.23 * Responsive.getWidth(context),
+                              top: 0.005 * Responsive.getHeight(context),
+                              bottom: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
                               '39,000.00',
-                              fontSize: 12 * getResponsiveText(context),
+                              fontSize:
+                                  12 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -223,15 +237,15 @@ class SalaryBreakUpPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: .02 * getHeight(context)),
+          SizedBox(height: .02 * Responsive.getHeight(context)),
           // Deductions Card
           CommonCard(
             title: 'Deductions',
             headerColor: AppTheme.getColor(context).error,
             bottomWidget: Container(
               padding: EdgeInsets.symmetric(
-                horizontal: 0.04 * getWidth(context),
-                vertical: 0.01 * getHeight(context),
+                horizontal: 0.04 * Responsive.getWidth(context),
+                vertical: 0.01 * Responsive.getHeight(context),
               ),
               child: Column(
                 children: [
@@ -241,13 +255,13 @@ class SalaryBreakUpPage extends StatelessWidget {
                       CustomText(
                         'Professional Tax',
                         color: AppTheme.getColor(context).onSurface,
-                        fontSize: 14 * getResponsiveText(context),
+                        fontSize: 14 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w500,
                       ),
                       CustomText(
                         '₹2,222.00',
                         color: AppTheme.getColor(context).onSurface,
-                        fontSize: 14 * getResponsiveText(context),
+                        fontSize: 14 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w500,
                       ),
                     ],
@@ -260,13 +274,13 @@ class SalaryBreakUpPage extends StatelessWidget {
                         'Total Deduction',
                         color: AppTheme.getColor(context).onSurface,
                         fontWeight: FontWeight.w700,
-                        fontSize: 15 * getResponsiveText(context),
+                        fontSize: 15 * Responsive.getResponsiveText(context),
                       ),
                       CustomText(
                         '₹2,222.00',
                         color: AppTheme.getColor(context).onSurface,
                         fontWeight: FontWeight.w700,
-                        fontSize: 15 * getResponsiveText(context),
+                        fontSize: 15 * Responsive.getResponsiveText(context),
                       ),
                     ],
                   ),
@@ -274,15 +288,15 @@ class SalaryBreakUpPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: .02 * getHeight(context)),
+          SizedBox(height: .02 * Responsive.getHeight(context)),
           // Net Pay Card
           CommonCard(
             title: 'Net Pay',
             headerColor: AppTheme.getColor(context).primary,
             bottomWidget: Container(
               padding: EdgeInsets.symmetric(
-                horizontal: 0.04 * getWidth(context),
-                vertical: 0.01 * getHeight(context),
+                horizontal: 0.04 * Responsive.getWidth(context),
+                vertical: 0.01 * Responsive.getHeight(context),
               ),
               child: Column(
                 children: [
@@ -293,17 +307,17 @@ class SalaryBreakUpPage extends StatelessWidget {
                         'Salary in Hand (Per Month)',
                         color: AppTheme.getColor(context).onSurface,
                         fontWeight: FontWeight.bold,
-                        fontSize: 15 * getResponsiveText(context),
+                        fontSize: 15 * Responsive.getResponsiveText(context),
                       ),
                       CustomText(
                         '₹38,800.00',
                         color: AppTheme.getColor(context).onSurface,
                         fontWeight: FontWeight.bold,
-                        fontSize: 15 * getResponsiveText(context),
+                        fontSize: 15 * Responsive.getResponsiveText(context),
                       ),
                     ],
                   ),
-                  SizedBox(height: 0.005 * getHeight(context)),
+                  SizedBox(height: 0.005 * Responsive.getHeight(context)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -311,13 +325,13 @@ class SalaryBreakUpPage extends StatelessWidget {
                         'Salary (CTC) / (Per Year)',
                         color: AppTheme.getColor(context).onSurface,
                         fontWeight: FontWeight.bold,
-                        fontSize: 15 * getResponsiveText(context),
+                        fontSize: 15 * Responsive.getResponsiveText(context),
                       ),
                       CustomText(
                         '₹468,000.00',
                         color: AppTheme.getColor(context).onSurface,
                         fontWeight: FontWeight.bold,
-                        fontSize: 15 * getResponsiveText(context),
+                        fontSize: 15 * Responsive.getResponsiveText(context),
                       ),
                     ],
                   ),
