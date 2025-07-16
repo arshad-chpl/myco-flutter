@@ -82,7 +82,9 @@ Widget punchInAndTimeCard({required BuildContext context}) =>
                   // CustomText('text'),
                   MyCoButton(
                     title: 'Punch Out',
-                    onTap: () {},
+                    onTap: () {
+                      // context.pushNamed('faceDetection');
+                    },
 
                     // height: 0.18 * Responsive.getWidth(context),
                     width: 160,
@@ -170,7 +172,7 @@ class _LiveClockState extends State<LiveClock> {
   void initState() {
     super.initState();
     _updateTime();
-    _timer = Timer.periodic(Duration(minutes: 1), (timer) => _updateTime());
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) => _updateTime());
   }
 
   void _updateTime() {
@@ -190,11 +192,9 @@ class _LiveClockState extends State<LiveClock> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return CustomText(
+  Widget build(BuildContext context) => CustomText(
       _timeString,
       fontSize: widget.fontSize ?? 13 * Responsive.getResponsiveText(context),
       fontWeight: widget.fontWeight ?? FontWeight.w500,
     );
-  }
 }

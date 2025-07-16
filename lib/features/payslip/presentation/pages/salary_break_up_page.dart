@@ -13,7 +13,8 @@ class SalaryBreakUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(appBarText: 'Salary Break-Up'),
+    appBar: CustomAppbar(title: 'Salary Break-Up'),
+
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),
@@ -35,7 +36,8 @@ class SalaryBreakUpPage extends StatelessWidget {
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
           // Earning Card
           CommonCard(
-            title: 'Earnings',
+            title: 'earnings',
+            //  'Earnings',
             bottomWidget: Container(
               padding: EdgeInsets.symmetric(
                 horizontal: 0.04 * Responsive.getWidth(context),
@@ -67,7 +69,8 @@ class SalaryBreakUpPage extends StatelessWidget {
                               bottom: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
-                              'Salary Heading',
+                              'salary_head',
+                              // 'Salary Heading',
                               fontWeight: FontWeight.w700,
                               fontSize:
                                   14 * Responsive.getResponsiveText(context),
@@ -80,7 +83,8 @@ class SalaryBreakUpPage extends StatelessWidget {
                               bottom: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
-                              'Amount (₹)',
+                              'amount' + '(₹)',
+                              // 'Amount (₹)',
                               fontWeight: FontWeight.w700,
                               fontSize:
                                   14 * Responsive.getResponsiveText(context),
@@ -151,7 +155,8 @@ class SalaryBreakUpPage extends StatelessWidget {
                               top: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
-                              'Conveyance',
+                              'conveyance',
+                              // 'Conveyance',
                               fontSize:
                                   12 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w500,
@@ -179,7 +184,8 @@ class SalaryBreakUpPage extends StatelessWidget {
                               top: 0.005 * Responsive.getHeight(context),
                             ),
                             child: CustomText(
-                              'Gross Salary /\nper Month',
+                              'gross_salary_per_month',
+                              // 'Gross Salary /\nper Month',
                               fontSize:
                                   12 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w700,
@@ -237,7 +243,8 @@ class SalaryBreakUpPage extends StatelessWidget {
           SizedBox(height: .02 * Responsive.getHeight(context)),
           // Deductions Card
           CommonCard(
-            title: 'Deductions',
+            title: 'deductions',
+            // 'Deductions',
             headerColor: AppTheme.getColor(context).error,
             bottomWidget: Container(
               padding: EdgeInsets.symmetric(
@@ -250,7 +257,8 @@ class SalaryBreakUpPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomText(
-                        'Professional Tax',
+                        'professional_tex',
+                        // 'Professional Tax',
                         color: AppTheme.getColor(context).onSurface,
                         fontSize: 14 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w500,
@@ -263,12 +271,13 @@ class SalaryBreakUpPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const DottedLineWidget(),
+                  DottedLineWidget(color: AppTheme.getColor(context).onSurface),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomText(
-                        'Total Deduction',
+                        'gross_deduction',
+                        // 'Total Deduction',
                         color: AppTheme.getColor(context).onSurface,
                         fontWeight: FontWeight.w700,
                         fontSize: 15 * Responsive.getResponsiveText(context),
@@ -288,7 +297,8 @@ class SalaryBreakUpPage extends StatelessWidget {
           SizedBox(height: .02 * Responsive.getHeight(context)),
           // Net Pay Card
           CommonCard(
-            title: 'Net Pay',
+            title: 'net_pay',
+            // 'Net Pay',
             headerColor: AppTheme.getColor(context).primary,
             bottomWidget: Container(
               padding: EdgeInsets.symmetric(
@@ -301,7 +311,8 @@ class SalaryBreakUpPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomText(
-                        'Salary in Hand (Per Month)',
+                        'salary_in_hand_per_month',
+                        // 'Salary in Hand (Per Month)',
                         color: AppTheme.getColor(context).onSurface,
                         fontWeight: FontWeight.bold,
                         fontSize: 15 * Responsive.getResponsiveText(context),

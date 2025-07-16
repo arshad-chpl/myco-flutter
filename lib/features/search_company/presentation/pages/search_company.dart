@@ -91,7 +91,7 @@ class SearchCompanyScreen extends StatelessWidget {
               ),
               SizedBox(height: 0.017 * Responsive.getHeight(context)),
               // --- START: Updated Widget ---
-              GestureDetector(
+              InkWell(
                 onTap: showCompanySearchSheet, // Trigger the bottom sheet
                 child: AbsorbPointer(
                   // Prevents the text field from gaining focus
@@ -106,7 +106,7 @@ class SearchCompanyScreen extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide(color: Color(0xFF98A2B3)),
                     ),
-                    height: 0.02 * Responsive.getHeight(context),
+                    height: 0.06 * Responsive.getHeight(context),
                     // These properties make it look like a button
                     isReadOnly: true,
                   ),
