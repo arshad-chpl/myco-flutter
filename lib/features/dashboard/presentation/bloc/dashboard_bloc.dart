@@ -15,7 +15,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     GetIDCardDetails event,
     Emitter<DashboardState> emit,
   ) async {
-    Map dataMap = {
+    Map<String,dynamic> dataMap = {
       'getIDCardDetails': event.getIDCardDetails,
       'user_id': event.userId,
       'society_id': event.companyId,
