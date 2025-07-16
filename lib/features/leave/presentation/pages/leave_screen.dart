@@ -14,6 +14,7 @@ import 'package:myco_flutter/features/leave/presentation/widgets/leave_card.dart
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_detail_bottom_sheet.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_filter_bottom_sheet.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/month_year_header.dart';
+import 'package:myco_flutter/features/leave/presentation/widgets/sandwich_leave_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/short_leave_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
@@ -136,15 +137,21 @@ class _LeaveScreenState extends State<LeaveScreen> {
                 const SizedBox(height: 16),
                 if (filteredLeaves.isEmpty)
                   const Center(child: Text('No leaves found')),
-                ...filteredLeaves.map(
-                      (leave) {
-                    if (leave.sandwichLeave == false && leave.shortLeave == true) {
-                      return ShortLeaveCard(leave: _convertToShortLeaveEntry(leave));
-                    } else {
-                      return LeaveCard(leave: _convertToLeaveEntry(leave));
-                    }
-                  },
-                ),
+                ...filteredLeaves.map((leave) {
+                  if (leave.sandwichLeave == false &&
+                      leave.shortLeave == true) {
+                    return ShortLeaveCard(
+                      leave: _convertToShortLeaveEntry(leave),
+                    );
+                  } else if (leave.sandwichLeave == true &&
+                      leave.shortLeave == false) {
+                    return SandwichLeaveCard(
+                      leave: _convertToSandwichLeaveEntry(leave),
+                    );
+                  } else {
+                    return LeaveCard(leave: _convertToLeaveEntry(leave));
+                  }
+                }),
               ],
             ),
           ),
@@ -211,10 +218,12 @@ class _LeaveScreenState extends State<LeaveScreen> {
       taskDependency: leave.leaveTaskDependency == true ? 'Yes' : 'No',
       status: leave.leaveStatusView ?? '',
       dependencyHandle: leave.leaveHandleDependency ?? '',
-      attachments: leave.leaveAttachment
-          ?.split(',')
-          .where((e) => e.trim().isNotEmpty)
-          .toList() ?? [],
+      attachments:
+          leave.leaveAttachment
+              ?.split(',')
+              .where((e) => e.trim().isNotEmpty)
+              .toList() ??
+          [],
 
       detailColor: _getStatusColor(leave.leaveStatus, leave.autoLeave),
       autoLeave: leave.autoLeave ?? false,
@@ -248,16 +257,24 @@ class _LeaveScreenState extends State<LeaveScreen> {
     }
   }
 
+  ShortLeaveEntry _convertToShortLeaveEntry(LeaveHistoryEntity leave) =>
+      ShortLeaveEntry(
+        date: leave.shortLeaveDateView ?? '',
+        subType: 'Short Leave',
+        leaveTime: leave.shortLeaveTime ?? '',
+        reason: leave.shortLeaveApplyReason ?? '',
+        approvedBy: leave.shortLeaveStatusChangeName ?? '',
+        status: leave.shortLeaveStatusView ?? '',
+        rejectReason: leave.shortLeaveStatusChangeReason ?? '',
+        detailColor: _getShortLeaveStatusColor(leave.shortLeaveStatus),
+      );
 
-
-
-  ShortLeaveEntry _convertToShortLeaveEntry(LeaveHistoryEntity leave) => ShortLeaveEntry(
-      date: leave.shortLeaveDateView??'',
-      subType: 'Short Leave',
-      leaveTime: leave.shortLeaveTime??'',
-      reason: leave.shortLeaveApplyReason??'',
-      approvedBy: leave.shortLeaveStatusChangeName ?? '',
-      status: leave.shortLeaveStatusView??'',
-      rejectReason: leave.shortLeaveStatusChangeReason??'',
-      detailColor: _getShortLeaveStatusColor(leave.shortLeaveStatus));
+  SandwichLeaveEntry _convertToSandwichLeaveEntry(LeaveHistoryEntity leave) =>
+      SandwichLeaveEntry(
+        date: leave.sandwichLeaveDateView ?? '',
+        subType: 'Sandwich Leave',
+        reason: '${leave.prevLeaveDate}-${leave.nextLeaveDate}',
+        status: 'Approved',
+        isSalaryGenerated: leave.isSalaryGenerated ?? false,
+      );
 }
