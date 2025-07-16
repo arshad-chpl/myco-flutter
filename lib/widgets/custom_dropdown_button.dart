@@ -167,7 +167,7 @@ class CustomPopupDropdownStyled<T> extends StatelessWidget {
             else
               const SizedBox.shrink(),
 
-            SizedBox(width: spacing ?? 0),
+            SizedBox(width: spacing ?? 0.018*Responsive.getWidth(context)),
             Expanded(
               child: Text(
                 selectedItem != null

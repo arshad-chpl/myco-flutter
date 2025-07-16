@@ -44,6 +44,7 @@ class AppColors {
   static const Color lightPurple = Color(0xFFF4F3FF);
   static const Color gray = Color(0xFF98A2B3);
   static const Color containerHigh = Color(0xFFDCEFFF);
+  static const Color primaryLight = Color(0xFFDCEFFF);
 
   //================================================================
   // Dark Mode Colors

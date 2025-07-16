@@ -25,6 +25,7 @@ class MyProfilePage extends StatelessWidget {
       appBarBackgoundColor: Colors.transparent,
       leadingWidth: 0.1 * Responsive.getWidth(context),
       title: "My Profile",
+
     ),
     body: Padding(
       padding: EdgeInsets.symmetric(
@@ -58,8 +59,10 @@ class MyProfilePage extends StatelessWidget {
                         Container(
                           child: Center(
                             child: SvgPicture.asset(
+
                               "assets/dashboard/svgs/admin_view_icon.svg",
                               height: 0.02 * Responsive.getHeight(context),
+
                             ),
                           ),
                           height: 0.03 * Responsive.getHeight(context),

@@ -4,7 +4,7 @@ abstract class DashboardRemoteDataSource {
   /// Fetches the User's ID card details from the remote server.
   ///
   /// Returns a [IdCardDetailResponse] containing the dashboard data.
-  Future<IdCardDetailResponse> getIDCardDetails(Map dataMap);
+  Future<IdCardDetailResponse> getIDCardDetails(Map<String,dynamic> dataMap);
 
   /// Fetches the latest news articles from the remote server.
   ///
