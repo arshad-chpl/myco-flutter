@@ -9,5 +9,7 @@ class WorkAllocationPage extends StatefulWidget {
 
 class _WorkAllocationPageState extends State<WorkAllocationPage> {
   @override
-  Widget build(BuildContext context) => const Placeholder();
+  Widget build(BuildContext context) => const Scaffold(
+
+  );
 }
