@@ -7,6 +7,7 @@ import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -30,8 +31,13 @@ class _SplashPageState extends State<SplashPage>
   void initState() {
     super.initState();
     _init();
+<<<<<<< HEAD
+    final sl = GetIt.instance;
+    refreshApiServiceCompany(sl);
+=======
     // final sl = GetIt.instance;
     // refreshApiServiceCompany(sl);
+>>>>>>> harshgiri
   }
 
   Future<void> _init() async {
@@ -51,7 +57,10 @@ class _SplashPageState extends State<SplashPage>
   Future<void> _navigateNext() async {
     final isLoggedIn = await _preference.getLoginSession();
     if (!mounted) return;
+<<<<<<< HEAD
+=======
     // context.go('/assets-home');
+>>>>>>> harshgiri
     context.go(isLoggedIn ?? false ? '/dashboard' : '/get-started');
   }
 

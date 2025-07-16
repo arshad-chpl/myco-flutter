@@ -62,7 +62,11 @@ class PayslipDetail extends StatelessWidget {
                           border: Border.all(
                             color: AppTheme.getColor(context).outline,
                           ),
+<<<<<<< HEAD
+                          color: AppTheme.getColor(context).onPrimary,
+=======
                           color: AppTheme.getColor(context).surface,
+>>>>>>> harshgiri
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,9 +261,13 @@ class PayslipDetail extends StatelessWidget {
                           ),
                         ],
                       ),
+<<<<<<< HEAD
+                      const DottedLineWidget(),
+=======
                       DottedLineWidget(
                         color: AppTheme.getColor(context).onSurface,
                       ),
+>>>>>>> harshgiri
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -322,9 +330,13 @@ class PayslipDetail extends StatelessWidget {
                           ),
                         ],
                       ),
+<<<<<<< HEAD
+                      const DottedLineWidget(),
+=======
                       DottedLineWidget(
                         color: AppTheme.getColor(context).onSurface,
                       ),
+>>>>>>> harshgiri
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -387,9 +399,13 @@ class PayslipDetail extends StatelessWidget {
                           ),
                         ],
                       ),
+<<<<<<< HEAD
+                      const DottedLineWidget(),
+=======
                       DottedLineWidget(
                         color: AppTheme.getColor(context).onSurface,
                       ),
+>>>>>>> harshgiri
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -451,9 +467,13 @@ class PayslipDetail extends StatelessWidget {
                           ),
                         ],
                       ),
+<<<<<<< HEAD
+                      const DottedLineWidget(),
+=======
                       DottedLineWidget(
                         color: AppTheme.getColor(context).onSurface,
                       ),
+>>>>>>> harshgiri
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

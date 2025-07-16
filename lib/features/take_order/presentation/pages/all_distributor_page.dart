@@ -14,7 +14,11 @@ class AllDistributorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+<<<<<<< HEAD
+    appBar: CustomAppbar(appBarText: 'All Distributor'),
+=======
     appBar: CustomAppbar(title: 'All Distributor'),
+>>>>>>> harshgiri
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),
