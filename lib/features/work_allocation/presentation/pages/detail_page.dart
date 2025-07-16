@@ -81,7 +81,7 @@ class _DetailPageState extends State<DetailPage> {
                           'Work Completion Date',
                           fontWeight: FontWeight.w700,
                         ),
-                        CustomText('21 st May 2025', color: AppColors.textGray),
+                        CustomText('22nd May 2025', color: AppColors.textGray),
                       ],
                     ),
                   ],
