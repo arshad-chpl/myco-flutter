@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
@@ -31,7 +32,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
       actions: [
         MyCoButton(
           onTap: () {},
-          title: 'Refresh',
+          title: LanguageManager().get('refresh'),
           textStyle: AppTheme.getTextStyle(
             context,
           ).labelMedium!.copyWith(color: AppTheme.getColor(context).onPrimary),
@@ -48,7 +49,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
               onTap: () {
                 context.pushNamed('offers');
               },
-              title: 'Offers',
+              title: LanguageManager().get('offer'),
               textStyle: AppTheme.getTextStyle(context).labelMedium!.copyWith(
                 color: AppTheme.getColor(context).onPrimary,
               ),
@@ -91,7 +92,10 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
                   ? state.selectedIndex
                   : 0;
               return MyCustomTabBar(
-                tabs: const ['All Products', 'Frequents Buy'],
+                tabs: [
+                  LanguageManager().get('all_product'),
+                  LanguageManager().get('frequent_buy'),
+                ],
                 selectedBgColors: [
                   AppTheme.getColor(context).primary,
                   AppTheme.getColor(context).secondary,
@@ -147,7 +151,7 @@ class AllProductsScreen extends StatelessWidget {
       children: [
         // Search Field
         MyCoTextfield(
-          hintText: 'Search',
+          hintText: LanguageManager().get('search'),
           hintTextStyle: AppTheme.getTextStyle(
             context,
           ).labelLarge!.copyWith(color: AppColors.textSecondary),
@@ -216,8 +220,8 @@ class FrequentsBuyScreen extends StatelessWidget {
       ),
       SizedBox(height: 0.02 * Responsive.getHeight(context)),
       SideBySideButtons(
-        button1Name: 'Reset Cart',
-        button2Name: 'Add Order',
+        button1Name: LanguageManager().get('reset_cart'),
+        button2Name: LanguageManager().get('add_order'),
         onTap1: () {},
         onTap2: () {
           context.pushNamed('order-summary');

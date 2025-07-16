@@ -27,9 +27,9 @@ import 'package:myco_flutter/features/employees/presentation/pages/employees_scr
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
+import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_bloc.dart';
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
-import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
@@ -41,6 +41,8 @@ import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
@@ -61,7 +63,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.myProfile,
+    initialLocation: RoutePaths.splash,
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),

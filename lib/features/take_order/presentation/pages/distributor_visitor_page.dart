@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
@@ -84,7 +85,7 @@ class DistributorVisitorPage extends StatelessWidget {
                         ),
                         SizedBox(width: 0.01 * Responsive.getWidth(context)),
                         CustomText(
-                          'Get Direction',
+                          'get_direction',
                           decoration: TextDecoration.underline,
                           fontSize: 12 * Responsive.getResponsiveText(context),
                           color: AppTheme.getColor(context).primary,
@@ -159,7 +160,7 @@ class DistributorVisitorPage extends StatelessWidget {
                             );
                           }
                         },
-                        title: isRunning ? 'Stop' : 'Start',
+                        title: isRunning ? LanguageManager().get('stop') : LanguageManager().get('start'),
                         width: 0.2 * Responsive.getWidth(context),
                         height: 0.035 * Responsive.getHeight(context),
                         backgroundColor: AppTheme.getColor(context).secondary,
@@ -219,7 +220,7 @@ class DistributorVisitorPage extends StatelessWidget {
                               height: 0.01 * Responsive.getHeight(context),
                             ),
                       CustomText(
-                        'Click on ${isRunning ? "Stop" : "Start"} Button to ${isRunning ? "End" : "Start"} your Visit',
+                        'click_on_start',
                         fontSize: 14 * Responsive.getResponsiveText(context),
                         color: AppColors.error,
                         fontWeight: FontWeight.w600,
@@ -236,7 +237,7 @@ class DistributorVisitorPage extends StatelessWidget {
                 getCommonColumn(
                   context,
                   imagePath: 'assets/take_order/place_order.png',
-                  name: 'Place Order',
+                  name: 'place_order',
                   onTap: () {
                     context.pushNamed('take-order');
                   },
@@ -244,7 +245,7 @@ class DistributorVisitorPage extends StatelessWidget {
                 getCommonColumn(
                   context,
                   imagePath: 'assets/take_order/order_history.png',
-                  name: 'Order History',
+                  name: 'order_history',
                   onTap: () {
                     context.pushNamed('order-history');
                   },
@@ -252,7 +253,7 @@ class DistributorVisitorPage extends StatelessWidget {
                 getCommonColumn(
                   context,
                   imagePath: 'assets/take_order/no_order.png',
-                  name: 'No Order',
+                  name: 'no_order',
                   onTap: () {
                     context.pushNamed('no-order');
                   },
@@ -275,30 +276,30 @@ class DistributorVisitorPage extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  getCommonRow(context, title: 'Category', value: 'CHPL'),
+                  getCommonRow(context, title: 'category', value: 'CHPL'),
                   SizedBox(height: 0.01 * Responsive.getHeight(context)),
-                  getCommonRow(context, title: 'Area', value: '-'),
+                  getCommonRow(context, title: 'area', value: '-'),
                   SizedBox(height: 0.01 * Responsive.getHeight(context)),
-                  getCommonRow(context, title: 'GST', value: '-'),
+                  getCommonRow(context, title: 'gst', value: '-'),
                   SizedBox(height: 0.01 * Responsive.getHeight(context)),
                   getCommonRow(
                     context,
-                    title: 'Retailer Code',
+                    title: 'retailer_code',
                     value: 'RT43575',
                   ),
                   SizedBox(height: 0.01 * Responsive.getHeight(context)),
-                  getCommonRow(context, title: 'Credit Days', value: '0'),
+                  getCommonRow(context, title: 'credit_days', value: '0'),
                   SizedBox(height: 0.01 * Responsive.getHeight(context)),
-                  getCommonRow(context, title: 'Credit Limit', value: '0.00'),
+                  getCommonRow(context, title: 'credit_limit', value: '0.00'),
                 ],
               ),
             ),
             SizedBox(height: 0.01 * Responsive.getHeight(context)),
             DistributorCard(
               headerHeight: 0.055 * Responsive.getHeight(context),
-              title: 'Distributor',
+              title: 'distributor',
               isButton: true,
-              buttonText: 'Change',
+              buttonText: LanguageManager().get('change'),
               onTap: () {
                 context.pushNamed('all-distributor');
               },
@@ -338,7 +339,7 @@ class DistributorVisitorPage extends StatelessWidget {
                         horizontal: 6.0 * Responsive.getResponsive(context),
                       ),
                       child: CustomText(
-                        'Contact Person :  Manish ( +91 7980239236 )',
+                        'contact_person',
                         fontSize: 14 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w600,
                       ),
@@ -376,7 +377,7 @@ class DistributorVisitorPage extends StatelessWidget {
               horizontal: 0.08 * Responsive.getWidth(context),
             ),
             child: CustomText(
-              'Remark',
+              'remark',
               fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.bold,
             ),
@@ -414,7 +415,7 @@ class DistributorVisitorPage extends StatelessWidget {
                     maxLines: 6,
                     minLines: 4,
                     decoration: InputDecoration(
-                      hintText: 'Type Here',
+                      hintText: LanguageManager().get('type_here'),
                       hintStyle: TextStyle(
                         color: AppTheme.getColor(context).outline,
                       ),
@@ -433,8 +434,8 @@ class DistributorVisitorPage extends StatelessWidget {
               horizontal: 0.08 * Responsive.getWidth(context),
             ),
             child: SideBySideButtons(
-              button1Name: 'CLOSE',
-              button2Name: 'END VISIT',
+              button1Name: LanguageManager().get('close'),
+              button2Name: LanguageManager().get('end_visit'),
               onTap1: () {},
               onTap2: onTap,
             ),
@@ -468,7 +469,7 @@ class DistributorVisitorPage extends StatelessWidget {
                   color: AppTheme.getColor(context).primary,
                 ),
                 child: CustomText(
-                  'Visit Purpose',
+                  'visit_purpose',
                   color: AppTheme.getColor(context).onPrimary,
                   fontSize: 20 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w500,
@@ -498,8 +499,8 @@ class DistributorVisitorPage extends StatelessWidget {
             padding: EdgeInsets.symmetric(
               horizontal: 0.08 * Responsive.getWidth(context),
             ),
-            child: const MyCoTextfield(
-              hintText: 'Search',
+            child: MyCoTextfield(
+              hintText: LanguageManager().get('search'),
               isSuffixIconOn: true,
               image1: 'assets/take_order/microphone-2.png',
               preFixImage: 'assets/take_order/search-normal.png',
@@ -560,8 +561,8 @@ class DistributorVisitorPage extends StatelessWidget {
               horizontal: 0.08 * Responsive.getWidth(context),
             ),
             child: SideBySideButtons(
-              button1Name: 'CLOSE',
-              button2Name: 'DONE',
+              button1Name: LanguageManager().get('close'),
+              button2Name: LanguageManager().get('done'),
               onTap1: () {},
               onTap2: onTap,
             ),
