@@ -25,7 +25,7 @@ class LabelWithAddButton extends StatelessWidget {
         CustomText(
           label,
           fontWeight: FontWeight.w700,
-          fontSize: 12 * getResponsiveText(context),
+          fontSize: 12 * Responsive.getResponsiveText(context),
           color: AppTheme.getColor(context).onSurfaceVariant,
         ),
         const Spacer(),
@@ -35,13 +35,13 @@ class LabelWithAddButton extends StatelessWidget {
           onTap: onTap,
           child: SvgPicture.asset(iconPath),
         ),
-        SizedBox(width: 0.009 * getWidth(context)),
+        SizedBox(width: 0.009 * Responsive.getWidth(context)),
 
         // Action text
         CustomText(
           actionText,
           fontWeight: FontWeight.w700,
-          fontSize: 12 * getResponsiveText(context),
+          fontSize: 12 * Responsive.getResponsiveText(context),
           color: AppTheme.getColor(context).onSurfaceVariant,
         ),
       ],

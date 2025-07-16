@@ -42,14 +42,14 @@ class PhoneField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    height: textFieldHeight ?? 50 * getResponsive(context),
+    height: textFieldHeight ?? 50 * Responsive.getResponsive(context),
     decoration: BoxDecoration(
       color: AppTheme.getColor(context).onPrimary,
       border: Border.all(color: borderColor ?? AppTheme.getColor(context).outline),
-      borderRadius: BorderRadius.circular(borderRadius ?? 10 * getResponsive(context)),
+      borderRadius: BorderRadius.circular(borderRadius ?? 10 * Responsive.getResponsive(context)),
     ),
     child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.0 * getResponsive(context)),
+      padding: EdgeInsets.symmetric(horizontal: 10.0 * Responsive.getResponsive(context)),
       child: Row(
         children: [
           PopupMenuButton<String>(
@@ -59,7 +59,7 @@ class PhoneField extends StatelessWidget {
               child: CustomText(
                 country,
                 fontWeight: FontWeight.w700,
-                fontSize: countryFontSize ?? 16 * getResponsiveText(context),
+                fontSize: countryFontSize ?? 16 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).primary,
               ),
             ))
@@ -67,19 +67,19 @@ class PhoneField extends StatelessWidget {
             onSelected: (value) => onCountryChanged?.call(value),
             color: AppTheme.getColor(context).onPrimary,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10 * getResponsive(context)),
+              borderRadius: BorderRadius.circular(10 * Responsive.getResponsive(context)),
               side: BorderSide(
                 color: AppTheme.getColor(context).primary,
-                width: 0.002 * getWidth(context),
+                width: 0.002 * Responsive.getWidth(context),
               ),
             ),
             child: Container(
               padding: EdgeInsets.symmetric(
-                horizontal: 7 * getResponsive(context),
-                vertical: 8 * getResponsive(context),
+                horizontal: 7 * Responsive.getResponsive(context),
+                vertical: 8 * Responsive.getResponsive(context),
               ),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8 * getResponsive(context)),
+                borderRadius: BorderRadius.circular(8 * Responsive.getResponsive(context)),
                 color: AppTheme.getColor(context).onPrimary,
               ),
               child: Row(
@@ -87,10 +87,10 @@ class PhoneField extends StatelessWidget {
                   CustomText(
                     selectedCountry,
                     fontWeight: FontWeight.w700,
-                    fontSize: countryFontSize ?? 16 * getResponsiveText(context),
+                    fontSize: countryFontSize ?? 16 * Responsive.getResponsiveText(context),
                     color: AppTheme.getColor(context).onSurface,
                   ),
-                  SizedBox(width: 4 * getResponsive(context)),
+                  SizedBox(width: 4 * Responsive.getResponsive(context)),
                   // Icon(
                   //   Icons.keyboard_arrow_down_rounded,
                   //   size: .070 * getWidth(context),
@@ -101,17 +101,17 @@ class PhoneField extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: 2 * getResponsive(context)),
+          SizedBox(width: 2 * Responsive.getResponsive(context)),
           Expanded(
             child: Row(
               children: [
                 CustomText(
                   countryDialCodes[selectedCountry] ?? '',
-                  fontSize: countryCodeFontSize ?? 16 * getResponsiveText(context),
+                  fontSize: countryCodeFontSize ?? 16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w500,
                   color: countryCodeTextStyle?.color ?? AppTheme.getColor(context).outline,
                 ),
-                SizedBox(width: 5 * getResponsive(context)),
+                SizedBox(width: 5 * Responsive.getResponsive(context)),
                 Expanded(
                   child: TextField(
                     controller: controller,

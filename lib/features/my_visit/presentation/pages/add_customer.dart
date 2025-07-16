@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/label_with_add_botton.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/phone_field.dart';
@@ -41,6 +42,8 @@ class _AddCustomerState extends State<AddCustomer> {
   // Controllers for phone number text fields
   final TextEditingController phoneController1 = TextEditingController();
   final TextEditingController phoneController2 = TextEditingController();
+  final TextEditingController anniversaryController = TextEditingController();
+  final TextEditingController birthDateController = TextEditingController();
 
   // Country code mapping
   final Map<String, String> countryMap = {
@@ -60,7 +63,8 @@ class _AddCustomerState extends State<AddCustomer> {
       appBarBackgoundColor: AppTheme.getColor(context).surface,
       elevation: 0,
       title: CustomText(
-        'Add Customer',
+        isKey: true,
+        'add_customer',
         fontSize: 16 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
         color: AppTheme.getColor(context).onSurface,
@@ -78,21 +82,21 @@ class _AddCustomerState extends State<AddCustomer> {
           // Customer Company Name
           CommonTextField(
             'Customer Company Name',
-            'Type Here',
+            LanguageManager().get('type_here'),
             AppAssets.building,
           ),
 
           // Customer Category
           CommonTextField(
-            'Customer Category',
-            'Select Category',
+            'customer_category',
+            LanguageManager().get('select_category'),
             AppAssets.element,
           ),
 
           // Contact Person Name
           CommonTextField(
-            'Contact Person Name',
-            'Type Here',
+            'contact_person_name',
+            LanguageManager().get('type_here'),
             AppAssets.profileCircle,
           ),
 
@@ -101,7 +105,7 @@ class _AddCustomerState extends State<AddCustomer> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                'Contact Person Mobile Number',
+                'contact_person_mobile',
                 fontWeight: FontWeight.w700,
                 fontSize: 12 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurfaceVariant,
@@ -135,7 +139,7 @@ class _AddCustomerState extends State<AddCustomer> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                'Alt. Phone Number',
+                'alternate_phone_number',
                 fontWeight: FontWeight.w700,
                 fontSize: 12 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurfaceVariant,
@@ -166,12 +170,13 @@ class _AddCustomerState extends State<AddCustomer> {
 
           // Date Of Birth
           CommonTextField(
-            'Date Of Birth',
-            'Enter Birth Date',
+            'anniversary_date',
+            'Enter Anniversary Date',
             AppAssets.date,
+            controller: birthDateController,
             readOnly: true,
             onTap: () async {
-              await showModalBottomSheet<Map<String, int>>(
+              final result = await showModalBottomSheet<Map<String, int>>(
                 context: context,
                 isScrollControlled: true,
                 backgroundColor: Colors.transparent,
@@ -187,12 +192,13 @@ class _AddCustomerState extends State<AddCustomer> {
 
           // Anniversary Date
           CommonTextField(
-            'Anniversary Date',
-            'Enter Anniversary Date',
+            'date_of_birth',
+            'Enter Birth Date',
             AppAssets.date,
             readOnly: true,
+            controller: anniversaryController,
             onTap: () async {
-              await showModalBottomSheet<Map<String, int>>(
+              final result = await showModalBottomSheet<Map<String, int>>(
                 context: context,
                 isScrollControlled: true,
                 backgroundColor: Colors.transparent,
@@ -207,27 +213,39 @@ class _AddCustomerState extends State<AddCustomer> {
           ),
 
           // Email ID
-          CommonTextField('Email ID', 'Email', AppAssets.sms),
+          CommonTextField(
+            'email_id',
+            LanguageManager().get('email_contact_finca'),
+            AppAssets.sms,
+          ),
 
           // Select Location
           CommonTextField(
-            'Select Location',
-            'Select Location',
+            'select_location',
+            LanguageManager().get('select_location'),
             AppAssets.locationVisit,
           ),
 
           // Address
-          CommonTextField('Address', 'Type Here', AppAssets.home),
+          CommonTextField(
+            'address',
+            LanguageManager().get('type_here'),
+            AppAssets.home,
+          ),
 
           // Pincode
-          CommonTextField('Pincode', 'Type Here', AppAssets.lock),
+          CommonTextField(
+            'pincode',
+            LanguageManager().get('type_here'),
+            AppAssets.lock,
+          ),
 
           // City dropdown with Add button
           Column(
             children: [
               LabelWithAddButton(
-                label: 'City',
-                actionText: 'Add City',
+                label: 'city',
+                actionText: 'add_city',
                 onTap: () {},
                 iconPath: AppAssets.addButton,
               ),
@@ -235,7 +253,7 @@ class _AddCustomerState extends State<AddCustomer> {
               CustomPopupDropdownStyled<String>(
                 items: cityList,
                 selectedItem: selectedCity,
-                hintText: 'State not assigned',
+                hintText: LanguageManager().get('state_not_assigned'),
                 itemToString: (item) => item,
                 onChanged: (value, index) {},
                 borderRadius: 8 * Responsive.getResponsive(context),
@@ -256,8 +274,8 @@ class _AddCustomerState extends State<AddCustomer> {
           Column(
             children: [
               LabelWithAddButton(
-                label: 'Area',
-                actionText: 'Add Area',
+                label: 'area',
+                actionText: 'add_area',
                 onTap: () {},
                 iconPath: AppAssets.addButton,
               ),
@@ -265,7 +283,7 @@ class _AddCustomerState extends State<AddCustomer> {
               CustomPopupDropdownStyled<String>(
                 items: areaList,
                 selectedItem: selectedAreaList,
-                hintText: 'Select Area',
+                hintText: LanguageManager().get('select_area'),
                 itemToString: (item) => item,
                 onChanged: (value, index) {},
                 borderRadius: 8 * Responsive.getResponsive(context),
@@ -284,40 +302,52 @@ class _AddCustomerState extends State<AddCustomer> {
 
           // Retailer Type
           CommonTextField(
-            'Retailer Type',
-            'Select ',
+            'retailer_type',
+            LanguageManager().get('select'),
             AppAssets.businessAndTrade,
           ),
 
           // Website
-          CommonTextField('Website', 'Type Here', AppAssets.global),
+          CommonTextField(
+            'website_contact_finca',
+            LanguageManager().get('type_here'),
+            AppAssets.global,
+          ),
 
           // GST Number
-          CommonTextField('GST Number', 'Type Here', AppAssets.gst),
+          CommonTextField(
+            'tax_number',
+            LanguageManager().get('type_here'),
+            AppAssets.gst,
+          ),
 
           // Select Distributor
           CommonTextField(
-            'Select Distributor',
-            'Select Distributor',
+            'select_distributor',
+            LanguageManager().get('select_distributor'),
             AppAssets.cardCoin,
           ),
 
           // Credit Limit
-          CommonTextField('Credit Limit', 'Type Here', AppAssets.bitCinCard),
+          CommonTextField(
+            'credit_limit',
+            LanguageManager().get('type_here'),
+            AppAssets.bitCinCard,
+          ),
 
           // Credit Days
           CommonTextField(
-            'Credit Days',
-            'Type Here',
+            'credit_days',
+            LanguageManager().get('type_here'),
             AppAssets.emptyWalletTime,
           ),
 
           // Shop Photo media picker
           CustomMediaPickerContainer(
-            title: 'Shop Photo',
+            title: 'shop_photo',
             titleColor: AppTheme.getColor(context).onSurfaceVariant,
             titleFontSize: 12 * Responsive.getResponsiveText(context),
-            imageTitle: 'Select Media',
+            imageTitle: 'select_media',
             containerHeight: 100,
             multipleImage: 5,
             imagePath: 'assets/media_picker/gallery-export.png',
@@ -336,9 +366,7 @@ class _AddCustomerState extends State<AddCustomer> {
           // Submit button
           MyCoButton(
             onTap: () {},
-            title: 'SUBMIT',
-            height: 20,
-            width: 55,
+            title: LanguageManager().get('submit'),
             isShadowBottomLeft: true,
             boarderRadius: 50 * Responsive.getResponsive(context),
             textStyle: TextStyle(
@@ -374,6 +402,7 @@ class _AddCustomerState extends State<AddCustomer> {
     heightFactor: 44,
     onClick: onTap,
     boarderRadius: 8 * Responsive.getResponsive(context),
+    contentPadding: EdgeInsets.all(9 * Responsive.getResponsive(context)),
     hintTextStyle: TextStyle(
       fontWeight: FontWeight.w600,
       color: AppTheme.getColor(context).outline,

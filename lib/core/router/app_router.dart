@@ -258,7 +258,6 @@ class AppRouter {
         name: 'addCustomer',
         builder: (context, state) => const AddCustomer(),
       ),
-
       GoRoute(
         path: RoutePaths.AddExpense,
         name: 'addExpense',
@@ -290,7 +289,7 @@ class AppRouter {
         name: 'lost-and-found',
         builder: (context, state) => const LostAndFound(),
       ),
-    
+
       GoRoute(
         path: RoutePaths.addVisit,
         name: 'add-visit',
