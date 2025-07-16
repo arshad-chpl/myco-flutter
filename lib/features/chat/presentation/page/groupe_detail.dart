@@ -34,13 +34,11 @@ class GroupInfo extends StatelessWidget {
 ];
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: CustomAppbar(
+      appBar: const CustomAppbar(
       appBarBackgoundColor: Colors.transparent,
-      title: CustomText(
+      title: 
             'Chat List',
-            fontSize: 20 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.w700,
-          ),
+            
     ),
     body: Padding(padding: EdgeInsets.symmetric(
       horizontal: 0.05 * Responsive.getWidth(context),

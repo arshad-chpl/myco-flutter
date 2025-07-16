@@ -33,7 +33,9 @@ class UserChatScreen extends StatelessWidget {
           children: [
             CustomAppbar(
               appBarBackgoundColor: Colors.transparent,
-              title: Row(
+              appBarTitleWidget: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CircleAvatar(
                     backgroundColor: AppTheme.getColor(context).secondary,
@@ -44,7 +46,7 @@ class UserChatScreen extends StatelessWidget {
                   ),
                   SizedBox(width: 0.02 * Responsive.getWidth(context)),
                   CustomText(
-                    'Chat List',
+                    'Vedant',
                     fontSize: 20 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w700,
                   ),
@@ -61,6 +63,7 @@ class UserChatScreen extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(height: 0.01 * Responsive.getHeight(context)),
             Expanded(
               flex: 14,
               child: Padding(

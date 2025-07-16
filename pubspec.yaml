@@ -90,13 +90,14 @@ flutter:
     - assets/ideabox/
     - assets/payslip/
     - assets/visit/
-    - assets/visit/svgs/
     - assets/media_picker/
     - assets/lost_and_found/
     - assets/add_expense/
     - assets/face_detection/
+    - assets/svgs/visit/
     - assets/dashboard/svgs/
     - assets/assets/
+    - assets/svgs/take_order/
     - assets/chat/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

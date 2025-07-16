@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_label_gifs.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_myteam.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_section.dart';
@@ -30,13 +29,9 @@ class MyProfilePage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
       // automaticallyImplyLeading: false,
-      // backgroundColor: Colors.transparent,
+      appBarBackgoundColor: Colors.transparent,
       leadingWidth: 0.1 * Responsive.getWidth(context),
-      title: CustomText(
-        "My Profile",
-        fontWeight: FontWeight.bold,
-        fontSize: 26 * Responsive.getResponsiveText(context),
-      ),
+      title: "My Profile",
     ),
     body: Padding(
       padding: EdgeInsets.symmetric(

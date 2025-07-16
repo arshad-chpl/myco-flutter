@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -15,6 +16,7 @@ import 'package:myco_flutter/features/take_order/presentation/widgets/frequent_b
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
@@ -26,7 +28,9 @@ class ChatListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     floatingActionButton: FloatingActionButton(
-      onPressed: () {},
+      onPressed: () {
+        context.pushNamed('start-new-chat');
+      },
       backgroundColor: AppTheme.getColor(context).primary,
 
       shape: const CircleBorder(),
@@ -37,11 +41,8 @@ class ChatListScreen extends StatelessWidget {
       ),
     ),
     appBar: CustomAppbar(
-      title: CustomText(
+      title:
         'Chat List',
-        fontSize: 20 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-      ),
       titleSpacing: 10,
       actions: [
         MyCoButton(
@@ -147,16 +148,8 @@ class EmployeesChat extends StatelessWidget {
   Widget build(BuildContext context) => BlocBuilder<ChatBloc, ChatState>(
     builder: (context, state) => Column(
       children: [
-        MyCoTextfield(
+        CustomSearchField(
           hintText: 'Search',
-          hintTextStyle: AppTheme.getTextStyle(
-            context,
-          ).labelLarge!.copyWith(color: AppColors.textSecondary),
-          prefix: Image.asset('assets/chat/search-icon.png', scale: 20),
-          contentPadding: EdgeInsets.only(
-            top: 0.012 * Responsive.getHeight(context),
-          ),
-          boarderRadius: 12 * Responsive.getResponsive(context),
           onChanged: (value) => {
             context.read<ChatBloc>().add(SearchEvent(value, groupMembers)),
             log(state.toString(), name: "state"),

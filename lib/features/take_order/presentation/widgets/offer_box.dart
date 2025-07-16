@@ -21,8 +21,9 @@ class OfferBox extends StatelessWidget {
       borderRadius: BorderRadius.circular(
         12 * Responsive.getResponsive(context),
       ),
+      side: BorderSide(color: AppTheme.getColor(context).outline),
     ),
-    color: AppTheme.getColor(context).onPrimary,
+    // color: AppTheme.getColor(context).onPrimary,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
