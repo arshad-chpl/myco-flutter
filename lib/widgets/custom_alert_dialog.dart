@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 enum AlertType {
   defaultType,
@@ -106,23 +109,11 @@ class CustomAlertDialog extends StatelessWidget {
       case AlertType.custom:
         if (icon == null) return const SizedBox.shrink();
         if (icon!.endsWith('.svg')) {
-          return SvgPicture.asset(
-            icon!,
-            width: size,
-            height: size,
-          );
+          return SvgPicture.asset(icon!, width: size, height: size);
         } else if (icon!.startsWith('http')) {
-          return Image.network(
-            icon!,
-            width: size,
-            height: size,
-          );
+          return Image.network(icon!, width: size, height: size);
         } else {
-          return Image.asset(
-            icon!,
-            width: size,
-            height: size,
-          );
+          return Image.asset(icon!, width: size, height: size);
         }
     }
   }
@@ -149,18 +140,14 @@ class CustomAlertDialog extends StatelessWidget {
 
           if (_isNotEmpty(title)) ...[
             const SizedBox(height: 20),
-            Text(
-              title!,
-              style: Theme.of(context).textTheme.titleLarge,
-              textAlign: TextAlign.center,
-            ),
+            CustomText(title!, color: textColor, textAlign: TextAlign.center),
           ],
 
           if (_isNotEmpty(content)) ...[
-            const SizedBox(height: 8),
-            Text(
+            const SizedBox(height: 20),
+            CustomText(
               content!,
-              style: Theme.of(context).textTheme.bodyMedium,
+              color: AppTheme.getColor(context).onSurfaceVariant,
               textAlign: TextAlign.center,
             ),
           ],
@@ -175,15 +162,18 @@ class CustomAlertDialog extends StatelessWidget {
                 if (!hideCancelButton && _isNotEmpty(cancelText))
                   Expanded(
                     child: MyCoButton(
-                      isShadowBottomLeft: true,
-                      height: .05 * Responsive.getHeight(context),
-                      boarderRadius: 50 * Responsive.getResponsive(context),
-                      onTap: onCancel ?? () => Navigator.of(context).pop(),
                       title: cancelText!,
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: textColor,
+                      height: Responsive.getHeight(context) * .05,
+                      boarderRadius: 30 * Responsive.getResponsive(context),
+                      width: Responsive.getWidth(context) * .450,
+                      backgroundColor: AppColors.white,
+                      border: Border.all(
+                        color: AppTheme.getColor(context).primary,
                       ),
+                      textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(
+                        context,
+                      ),
+                      onTap: onCancel ?? () => Navigator.of(context).pop(),
                     ),
                   ),
                 if (!hideCancelButton &&
@@ -194,25 +184,22 @@ class CustomAlertDialog extends StatelessWidget {
                 if (!hideConfirmButton && _isNotEmpty(confirmText))
                   Expanded(
                     child: MyCoButton(
-                      isShadowBottomLeft: true,
-                      height: .05 * Responsive.getHeight(context),
-                      boarderRadius: 50 * Responsive.getResponsive(context),
-                      onTap: onConfirm ?? () => Navigator.of(context).pop(),
                       title: confirmText!,
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: textColor,
-                      ),
+                      height: Responsive.getHeight(context) * .05,
+                      isShadowBottomLeft: true,
+                      boarderRadius: 30,
+                      width: Responsive.getWidth(context) * .450,
+                      onTap: onConfirm ?? () => Navigator.of(context).pop(),
                     ),
                   ),
               ],
             ),
 
           if (showNeutralButton && _isNotEmpty(neutralText)) ...[
-            const SizedBox(height: 8),
+            const SizedBox(height: 20),
             MyCoButton(
               isShadowBottomLeft: true,
-              height: .05 * Responsive.getHeight(context),
+              height: Responsive.getHeight(context) * .05,
               boarderRadius: 50 * Responsive.getResponsive(context),
               onTap: onNeutral ?? () => Navigator.of(context).pop(),
               title: neutralText!,
@@ -224,7 +211,6 @@ class CustomAlertDialog extends StatelessWidget {
           ],
 
           const SizedBox(height: 20),
-
         ],
       ),
     );

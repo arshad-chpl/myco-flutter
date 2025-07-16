@@ -103,6 +103,7 @@ flutter:
     - assets/assets/
     - assets/svgs/take_order/
     - assets/animations/
+    - assets/login/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
