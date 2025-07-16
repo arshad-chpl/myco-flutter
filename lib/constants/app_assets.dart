@@ -40,13 +40,37 @@ class AppAssets {
   static const String punchIn = '$svgsPath/punchIn.svg';
   static const String scanQR = '$svgsPath/scanQR.svg';
   static const String refresh = '$svgsPath/refresh.svg';
+  static const String backarrow = '$svgsVisit/backarrow.svg';
+  static const String calendar = '$svgsVisit/calendar.svg';
+  static const String callCalling = '$svgsVisit/call-calling.svg';
+  static const String CaretCircleDown = '$svgsVisit/CaretCircleDown.svg';
+  static const String CaretCircleUp = '$svgsVisit/CaretCircleUp.svg';
+  static const String cart = '$svgsVisit/cart.svg';
+  static const String cart_no = '$svgsVisit/cart_no.svg';
+  static const String clock = '$svgsVisit/clock.svg';
+  static const String delete = '$svgsVisit/delete.svg';
+  static const String gps = '$svgsVisit/gps.svg';
+  static const String location = '$svgsVisit/location.svg';
+  static const String map = '$svgsVisit/map.svg';
+  static const String message_edit = '$svgsVisit/message_edit.svg';
+  static const String noteFavorite = '$svgsVisit/note-favorite.svg';
+  static const String personalcard = '$svgsVisit/personalcard.svg';
+  static const String profileCircle = '$svgsVisit/profile-circle.svg';
+  static const String share = '$svgsVisit/share.svg';
+  static const String stickynote = '$svgsVisit/stickynote.svg';
+  static const String whatsapp = '$svgsVisit/whatsapp.svg';
+  static const String ref = '$svgsVisit/refresh_new.svg';
+  static const String bookmark = '$svgsPath/bookmark-2.png';
+  static const String user = '$svgsVisit/user1.png';
+  static const String visitReport = '$svgsVisit/visit_report.png';
+  static const String faceMatch = '$svgsVisit/face_match.png';
+
   static const String result = '$svgsVisit/result.svg';
   static const String arrowDown = '$svgsPath/arrow_down.svg';
   static const String searchIcon = '$svgsPath/search_icon.svg';
 
   // Svgs Take Order
   static const String offers = '$svgsTakeOrder/offers.svg';
-  static const String cart = '$svgsTakeOrder/cart.svg';
   static const String xCircle = '$svgsTakeOrder/XCircle.svg';
   static const String messageEdit = '$svgsTakeOrder/message-edit.svg';
   static const String placeOrder = '$svgsTakeOrder/place-order.svg';
@@ -55,7 +79,6 @@ class AppAssets {
   static const String start = '$svgsTakeOrder/start.svg';
   static const String stop = '$svgsTakeOrder/stop.svg';
   static const String calling = '$svgsTakeOrder/calling.svg';
-  static const String location = '$svgsTakeOrder/location.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
@@ -73,12 +96,8 @@ class AppAssets {
 
   // Animations (if using Lottie or similar)
   static const String loadingAnimation = 'visit/animations/loading.json';
-
-  static const String clock = '$svgsVisit/clock.svg';
-  static const String personalcard = '$svgsVisit/personalcard.svg';
   static const String note_favorite = '$svgsVisit/note-favorite.svg';
   static const String sticky_note = '$svgsVisit/sticky_note.svg';
-  static const String gps = '$svgsVisit/gps.svg';
   static const String trash = '$svgsVisit/trash.svg';
   static const String smart_car = '$svgsVisit/smart-car.svg';
   static const String global = '$svgsVisit/global.svg';
@@ -127,4 +146,5 @@ class AppAssets {
   static const String assetProfileCircle = '$svgsVisit/profile-circle.svg';
   static const String assetClock = '$svgsVisit/clock.svg';
   static const String assetSearchNormal = '$svgsVisit/search-normal.svg';
+
 }

@@ -55,7 +55,7 @@ import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
@@ -87,8 +87,9 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
+
     initialLocation: RoutePaths.splash,
-    // initialLocation: RoutePaths.dashboard,
+
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
