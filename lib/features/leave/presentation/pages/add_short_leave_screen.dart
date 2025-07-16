@@ -60,6 +60,7 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
                 ),
                 SizedBox(height: 0.01 * Responsive.getHeight(context)),
                 MyCoTextfield(
+
                   controller: dateController,
                   focusNode: dateFocusNode,
                   hintText: 'Select Date',
@@ -98,7 +99,7 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     borderSide: BorderSide(color: Color(0xFF98A2B3), width: 1),
                   ),
-                  height: 0.02 * Responsive.getHeight(context),
+                  height: 0.05 * Responsive.getHeight(context),
                   textAlignment: TextAlign.start,
                   isSuffixIconOn: true,
                   image1: 'assets/images/arrow-down.png',
@@ -161,7 +162,7 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     borderSide: BorderSide(color: Color(0xFF98A2B3), width: 1),
                   ),
-                  height: 0.02 * Responsive.getHeight(context),
+                  height: 0.05 * Responsive.getHeight(context),
                   textAlignment: TextAlign.start,
                 ),
                 SizedBox(height: 0.02 * Responsive.getHeight(context)),
