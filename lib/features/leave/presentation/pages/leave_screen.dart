@@ -14,6 +14,7 @@ import 'package:myco_flutter/features/leave/presentation/widgets/leave_card.dart
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_detail_bottom_sheet.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_filter_bottom_sheet.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/month_year_header.dart';
+import 'package:myco_flutter/features/leave/presentation/widgets/short_leave_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 
@@ -31,6 +32,8 @@ class _LeaveScreenState extends State<LeaveScreen> {
   List<LeaveHistoryEntity> leaveHistoryList = [];
   bool isLoading = true;
   bool isTeamLeave = false;
+  bool isShortLeave = false;
+  bool isSandwichLeave = false;
 
   @override
   void initState() {
@@ -134,7 +137,13 @@ class _LeaveScreenState extends State<LeaveScreen> {
                 if (filteredLeaves.isEmpty)
                   const Center(child: Text('No leaves found')),
                 ...filteredLeaves.map(
-                  (leave) => LeaveCard(leave: _convertToLeaveEntry(leave)),
+                      (leave) {
+                    if (leave.sandwichLeave == false && leave.shortLeave == true) {
+                      return ShortLeaveCard(leave: _convertToShortLeaveEntry(leave));
+                    } else {
+                      return LeaveCard(leave: _convertToLeaveEntry(leave));
+                    }
+                  },
                 ),
               ],
             ),
@@ -227,4 +236,28 @@ class _LeaveScreenState extends State<LeaveScreen> {
       }
     }
   }
+
+  Color _getShortLeaveStatusColor(String? status) {
+    switch (status) {
+      case '1': // Approved
+        return AppColors.secondary;
+      case '2': // Rejected
+        return AppColors.red;
+      default: // Pending
+        return AppColors.spanishYellow;
+    }
+  }
+
+
+
+
+  ShortLeaveEntry _convertToShortLeaveEntry(LeaveHistoryEntity leave) => ShortLeaveEntry(
+      date: leave.shortLeaveDateView??'',
+      subType: 'Short Leave',
+      leaveTime: leave.shortLeaveTime??'',
+      reason: leave.shortLeaveApplyReason??'',
+      approvedBy: leave.shortLeaveStatusChangeName ?? '',
+      status: leave.shortLeaveStatusView??'',
+      rejectReason: leave.shortLeaveStatusChangeReason??'',
+      detailColor: _getShortLeaveStatusColor(leave.shortLeaveStatus));
 }

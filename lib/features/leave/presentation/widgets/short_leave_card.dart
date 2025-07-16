@@ -6,24 +6,22 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 
 class ShortLeaveEntry {
   final String date;
-  final String leaveType;
   final String subType;
   final String leaveTime;
   final String reason;
   final String approvedBy;
   final String status;
-  final String payStatus;
-  final Widget onViewDetailWidget;
+  final String rejectReason;
+  final Color detailColor;
   ShortLeaveEntry({
     required this.date,
-    required this.leaveType,
     required this.subType,
     required this.leaveTime,
     required this.reason,
     required this.approvedBy,
     required this.status,
-    required this.payStatus,
-    required this.onViewDetailWidget,
+    required this.rejectReason,
+    required this.detailColor,
   });
 }
 
@@ -50,45 +48,26 @@ class ShortLeaveCard extends StatelessWidget {
             showHeaderPrefixIcon: true,
             suffixIcon: leave.status == 'Pending'
                 ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  onPressed: () =>
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Still Work Left As no UI'),
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: () =>
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Still Work Left As no UI'),
+                              ),
+                            ),
+                        icon: Icon(
+                          Icons.delete_outline,
+                          size: 0.022 * Responsive.getHeight(context),
+                          color: AppColors.white,
                         ),
                       ),
-
-                  icon: Icon(
-                    Icons.edit_outlined,
-                    size: 0.022 * Responsive.getHeight(context),
-                    color: AppColors.white,
-                  ),
-                ),
-
-                IconButton(
-                  onPressed: () =>
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Still Work Left As no UI'),
-                        ),
-                      ),
-                  icon: Icon(
-                    Icons.delete_outline,
-                    size: 0.022 * Responsive.getHeight(context),
-                    color: AppColors.white,
-                  ),
-                ),
-              ],
-            )
+                    ],
+                  )
                 : null,
             title: leave.date,
-            headerColor: leave.status == 'Pending'
-                ? AppColors.spanishYellow
-                : leave.status == 'Reject'
-                ? AppColors.red
-                : AppColors.secondary,
+            headerColor: leave.detailColor,
             bottomWidget: Padding(
               padding: EdgeInsets.all(10 * responsive),
               child: Column(
@@ -121,9 +100,9 @@ class ShortLeaveCard extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Approved By :',
+                          text: '${leave.status} ',
                           style: TextStyle(
-                            color: AppColors.primary,
+                            color: leave.detailColor,
                             fontSize: 13 * textResponsive,
                           ),
                         ),
@@ -138,73 +117,16 @@ class ShortLeaveCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 6),
+                  if (leave.rejectReason.isNotEmpty)
+                    CustomText(
+                      'Reject Reason : ${leave.rejectReason}',
+                      fontSize: 12 * textResponsive,
+                      color: Colors.black,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  const SizedBox.shrink(),
                   // Pay Status & View Details
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomText(
-                            leave.leaveType,
-                            fontSize: 13 * textResponsive,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          CustomText(
-                            leave.payStatus,
-                            fontSize: 12 * textResponsive,
-                            color: Colors.grey.shade700,
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          CustomText(
-                            leave.status,
-                            fontSize: 12 * textResponsive,
-                            color: leave.status.toLowerCase() == 'approved'
-                                ? Colors.green
-                                : Colors.orange,
-                          ),
-                          const SizedBox(height: 4),
-                          ElevatedButton(
-                            onPressed: () async {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(20),
-                                  ),
-                                ),
-                                builder: (_) => Padding(
-                                  padding: EdgeInsets.all(20 * responsive),
-                                  child: leave.onViewDetailWidget,
-                                ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 6,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                            ),
-                            child: CustomText(
-                              'View Details',
-                              fontSize: 12 * textResponsive,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
