@@ -42,7 +42,7 @@ class _WorkAllocationPageState extends State<WorkAllocationPage> {
           CommonCard(
               title: 'title',
               headerColor: AppTheme.getColor(context).primary,
-              headerPrefixIcon: '',
+              headerPrefixIcon: 'assets/work_allocation/calendar.png',
               showHeaderPrefixIcon: true,
               bottomWidget: Padding(
                 padding: const EdgeInsets.all(8.0),
