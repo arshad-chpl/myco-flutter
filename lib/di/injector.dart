@@ -7,7 +7,9 @@ import 'package:myco_flutter/features/company_selector/presentation/di/company_s
 import 'package:myco_flutter/features/language_selector/presentation/di/language_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
+import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
+import 'package:myco_flutter/features/visit/presentation/di/face_detection_di.dart';
 
 final sl = GetIt.instance;
 
@@ -19,12 +21,11 @@ Future<void> init() async {
   await initNetworkModule(sl);
 
   // Initialize feature modules
-  //========Language Selector=========
-  setupLanguageDI(sl);
-  
   //========Splash=========
   splashDi(sl);
 
+  //========Language Selector=========
+  setupLanguageDI(sl);
 
   //========Company Selector=========
   companySelectorDi(sl);
@@ -40,4 +41,7 @@ Future<void> init() async {
 
   //========VISIT WITH=========
   visitWithDi(sl);
+
+  // ========Admin View=========
+  adminViewDi(sl);
 }

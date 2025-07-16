@@ -31,8 +31,13 @@ class _SplashPageState extends State<SplashPage>
   void initState() {
     super.initState();
     _init();
+<<<<<<< HEAD
     final sl = GetIt.instance;
     refreshApiServiceCompany(sl);
+=======
+    // final sl = GetIt.instance;
+    // refreshApiServiceCompany(sl);
+>>>>>>> harshgiri
   }
 
   Future<void> _init() async {
@@ -52,6 +57,10 @@ class _SplashPageState extends State<SplashPage>
   Future<void> _navigateNext() async {
     final isLoggedIn = await _preference.getLoginSession();
     if (!mounted) return;
+<<<<<<< HEAD
+=======
+    // context.go('/assets-home');
+>>>>>>> harshgiri
     context.go(isLoggedIn ?? false ? '/dashboard' : '/get-started');
   }
 

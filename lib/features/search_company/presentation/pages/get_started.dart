@@ -42,8 +42,13 @@ class GetStarted extends StatelessWidget {
               const BouncingImage(),
               SizedBox(height: 0.12 * Responsive.getHeight(context)),
               CustomText(
+<<<<<<< HEAD
                 LanguageManager().get('welcome_to_myco'),
 
+=======
+                'welcome_to_myco',
+                isKey: true,
+>>>>>>> harshgiri
                 fontSize: 30 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
                 color: AppTheme.getColor(context).onSurface,
@@ -52,7 +57,12 @@ class GetStarted extends StatelessWidget {
               ),
               SizedBox(height: 0.014 * Responsive.getHeight(context)),
               CustomText(
+<<<<<<< HEAD
                 LanguageManager().get('get_started_desc'),
+=======
+                'get_started_desc',
+                isKey: true,
+>>>>>>> harshgiri
                 fontSize: 15 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurfaceVariant,
                 fontWeight: FontWeight.w500,
@@ -63,7 +73,7 @@ class GetStarted extends StatelessWidget {
                 onTap: () {
                   context.pushNamed('companySearch');
                 },
-                title: "Get Started",
+                title: LanguageManager().get('get_started'),
                 height: 0.065 * Responsive.getHeight(context),
                 boarderRadius: 30,
                 textStyle: TextStyle(

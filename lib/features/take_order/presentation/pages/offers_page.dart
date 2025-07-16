@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/offer_box.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
@@ -34,7 +35,11 @@ class OffersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
+<<<<<<< HEAD
     appBar: CustomAppbar(appBarText: 'Offers'),
+=======
+    appBar: CustomAppbar(title: 'Offers'),
+>>>>>>> harshgiri
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),

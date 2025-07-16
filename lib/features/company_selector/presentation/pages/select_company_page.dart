@@ -7,9 +7,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+<<<<<<< HEAD
+=======
+import 'package:myco_flutter/core/utils/language_manager.dart';
+>>>>>>> harshgiri
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
@@ -93,7 +98,12 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
         // ),
         SizedBox(height: 0.03 * Responsive.getHeight(context)),
         CustomText(
+<<<<<<< HEAD
           'Company Name',
+=======
+          'company_name',
+          isKey: true,
+>>>>>>> harshgiri
           fontSize: 15 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,
           color: AppTheme.getColor(context).onSurfaceVariant,
@@ -113,7 +123,11 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
             }
           },
           isSuffixIconOn: true,
+<<<<<<< HEAD
           hintText: "Enter Company Name",
+=======
+          hintText: LanguageManager().get('enter_company_name'),
+>>>>>>> harshgiri
           hintTextStyle: TextStyle(
             fontSize: 14 * Responsive.getResponsiveText(context),
             color: AppTheme.getColor(context).outline,
@@ -185,7 +199,11 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                             ),
                             // TODO: replace with actual text
                             child: CustomText(
+<<<<<<< HEAD
                               'Request Your Society',
+=======
+                              'request_your_society',
+>>>>>>> harshgiri
                               // LanguageManager().get('request_your_society'),
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
@@ -357,7 +375,11 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                         children: [
                           Expanded(
                             child: MyCoButton(
+<<<<<<< HEAD
                               title: 'Close',
+=======
+                              title: LanguageManager().get('close'),
+>>>>>>> harshgiri
                               boarderRadius:
                                   30 * Responsive.getResponsive(context),
                               width: Responsive.getWidth(context) * .450,
@@ -378,7 +400,11 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                           const SizedBox(width: 10),
                           Expanded(
                             child: MyCoButton(
+<<<<<<< HEAD
                               title: 'Submit',
+=======
+                              title: LanguageManager().get('crm_submit'),
+>>>>>>> harshgiri
                               isShadowBottomLeft: true,
                               boarderRadius: 30,
                               width: Responsive.getWidth(context) * .450,
@@ -455,7 +481,11 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                                         name: "CompanyPref",
                                       );
 
+<<<<<<< HEAD
                                       context.go('/login');
+=======
+                                      context.go(RoutePaths.dashboard);
+>>>>>>> harshgiri
 
                                       // showModalBottomSheet(
                                       //   scrollControlDisabledMaxHeightRatio:
@@ -489,7 +519,11 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                         Image.asset(AppAssets.searchCompany, height: 180),
                         const SizedBox(height: 20),
                         const CustomText(
+<<<<<<< HEAD
                           'Search Your Society',
+=======
+                          'search_your_company',
+>>>>>>> harshgiri
                           // LanguageManager().get('search_your_society'),
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

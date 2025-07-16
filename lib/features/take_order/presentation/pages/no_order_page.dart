@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -10,7 +11,11 @@ class NoOrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+<<<<<<< HEAD
     appBar: CustomAppbar(appBarText: 'No Order'),
+=======
+    appBar: CustomAppbar(title: 'No Order'),
+>>>>>>> harshgiri
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),
@@ -20,13 +25,13 @@ class NoOrderPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
-            'Reason',
+            'reason',
             fontSize: 14 * Responsive.getResponsiveText(context),
           ),
           SizedBox(height: 0.01 * Responsive.getHeight(context)),
           DropdownMenu(
             width: 0.9 * Responsive.getWidth(context),
-            hintText: 'Select',
+            hintText: LanguageManager().get('select'),
 
             leadingIcon: const Icon(Icons.notes),
             dropdownMenuEntries: const [
@@ -41,13 +46,13 @@ class NoOrderPage extends StatelessWidget {
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
           // Remark Section
           CustomText(
-            'Remark',
+            'remark',
             fontSize: 14 * Responsive.getResponsiveText(context),
           ),
           SizedBox(height: 0.01 * Responsive.getHeight(context)),
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              // color: Colors.white,
               border: Border.all(color: AppTheme.getColor(context).outline),
               borderRadius: BorderRadius.circular(
                 12 * Responsive.getResponsive(context),
@@ -74,7 +79,7 @@ class NoOrderPage extends StatelessWidget {
                     maxLines: 5,
                     minLines: 3,
                     decoration: InputDecoration(
-                      hintText: 'Type Here',
+                      hintText: LanguageManager().get('type_here'),
                       hintStyle: TextStyle(
                         color: AppTheme.getColor(context).outline,
                       ),
@@ -88,7 +93,7 @@ class NoOrderPage extends StatelessWidget {
           const Spacer(),
           MyCoButton(
             onTap: () {},
-            title: 'SUBMIT',
+            title: LanguageManager().get('submit'),
             height: 0.05 * Responsive.getHeight(context),
             boarderRadius: 30 * Responsive.getResponsive(context),
           ),

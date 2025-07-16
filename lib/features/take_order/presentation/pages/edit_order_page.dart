@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
@@ -14,11 +15,15 @@ class EditOrderPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
     appBar: CustomAppbar(
+<<<<<<< HEAD
       title: Column(
+=======
+      appBarTitleWidget: Column(
+>>>>>>> harshgiri
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
-            'Edit Order #241',
+            'edit_order',
             fontSize: 20 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w700,
           ),
@@ -47,18 +52,18 @@ class EditOrderPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomText(
-                  'Item (1)',
+                  'item',
                   fontSize: 16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
                 CustomText(
-                  'Units (25)',
+                  'unit_quantity',
                   fontSize: 16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
                 SizedBox(width: 0.015 * Responsive.getWidth(context)),
                 CustomText(
-                  'Total: ₹20000',
+                  'total',
                   fontSize: 16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
@@ -93,7 +98,7 @@ class EditOrderPage extends StatelessWidget {
                       ),
                       SizedBox(height: 0.01 * Responsive.getHeight(context)),
                       CustomText(
-                        'Available Stocks : 9989',
+                        'available_stocks',
                         fontSize: 12 * Responsive.getResponsiveText(context),
                         color: AppTheme.getColor(context).secondary,
                         fontWeight: FontWeight.w600,
@@ -132,11 +137,12 @@ class EditOrderPage extends StatelessWidget {
                                   width: 0.02 * Responsive.getWidth(context),
                                 ),
                                 CustomText(
-                                  '25 Units',
+                                  'unit_quantity',
                                   fontSize:
                                       12 *
                                       Responsive.getResponsiveText(context),
                                   fontWeight: FontWeight.w500,
+                                  color: AppColors.black,
                                 ),
                               ],
                             ),
@@ -160,7 +166,7 @@ class EditOrderPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CustomText(
-                        'Piece Wise(25 * ₹80.0)',
+                        'piece_wise',
                         fontSize: 13 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w500,
                       ),
@@ -182,13 +188,13 @@ class EditOrderPage extends StatelessWidget {
           // Shipping Charges Card
           DistributorCard(
             headerHeight: 0.04 * Responsive.getHeight(context),
-            title: 'Shipping Charges',
+            title: 'shipping_charges',
             isButton: true,
-            buttonText: '₹Add',
+            buttonText: LanguageManager().get('add'),
             bottomWidget: Padding(
               padding: EdgeInsets.all(10.0 * Responsive.getResponsive(context)),
               child: CustomText(
-                'Amount cannot Exceed 1,00,000',
+                'amount_cannot_exceed_one_lac',
                 fontSize: 13 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
                 color: AppColors.error,
@@ -204,19 +210,19 @@ class EditOrderPage extends StatelessWidget {
               children: [
                 getTotalAmountRow(
                   context,
-                  leftText: 'Total',
+                  leftText: 'total',
                   rightText: '₹2000.0',
                 ),
                 SizedBox(height: 0.005 * Responsive.getHeight(context)),
                 getTotalAmountRow(
                   context,
-                  leftText: 'Shipping Charges',
+                  leftText: 'shipping_charges',
                   rightText: '₹00.0',
                 ),
                 const Divider(),
                 getTotalAmountRow(
                   context,
-                  leftText: 'Grand Total',
+                  leftText: 'grand_total',
                   rightText: '₹2000.0',
                   textColor: AppTheme.getColor(context).primary,
                 ),
@@ -228,7 +234,7 @@ class EditOrderPage extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
             },
-            title: 'Update Order',
+            title: LanguageManager().get('update_order'),
             width: Responsive.getWidth(context),
             height: 0.055 * Responsive.getHeight(context),
             boarderRadius: 30 * Responsive.getResponsive(context),
@@ -247,7 +253,7 @@ class EditOrderPage extends StatelessWidget {
     BuildContext context, {
     required String leftText,
     required String rightText,
-    Color textColor = AppColors.black,
+    Color? textColor,
   }) => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -255,19 +261,19 @@ class EditOrderPage extends StatelessWidget {
         leftText,
         fontSize: 15 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w600,
-        color: textColor,
+        color: textColor ?? AppTheme.getColor(context).onSurface,
       ),
       CustomText(
         rightText,
         fontSize: 15 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w500,
-        color: textColor,
+        color: textColor ?? AppTheme.getColor(context).onSurface,
       ),
     ],
   );
   BoxDecoration getCommonDecoration(BuildContext context) => BoxDecoration(
     border: Border.all(color: AppTheme.getColor(context).outline),
     borderRadius: BorderRadius.circular(12 * Responsive.getResponsive(context)),
-    color: AppTheme.getColor(context).onPrimary,
+    // color: AppTheme.getColor(context).onPrimary,
   );
 }

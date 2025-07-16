@@ -65,6 +65,7 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
     LoadLanguageToPreferences event,
     Emitter<LanguageState> emit,
   ) async {
+<<<<<<< HEAD
       // fetch and store language JSON from languageFile
       final success = await repository.getAppLanguageValues(
         "1",
@@ -82,5 +83,24 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
           }
         },
       );
+=======
+    // fetch and store language JSON from languageFile
+    final success = await repository.getAppLanguageValues(
+      "1",
+      preference.getCompanyId().toString(),
+    );
+    success.fold(
+      (failure) {
+        LanguageError(failure.message ?? "Failed to load languages");
+      },
+      (success) {
+        if (success) {
+          emit(LanguageValueDownloaded());
+        } else {
+          emit(LanguageError("Failed to load language values"));
+        }
+      },
+    );
+>>>>>>> harshgiri
   }
 }

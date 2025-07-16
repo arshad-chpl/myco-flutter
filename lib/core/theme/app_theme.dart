@@ -29,6 +29,7 @@ class AppTheme {
       surface: AppColors.backgroundPrimary, //0xFFFAFAFF
       surfaceContainer: AppColors.lightTeal, //0xFFEEF7FD
       surfaceContainerHigh: AppColors.containerHigh,
+      surfaceBright: AppColors.white, //0xFFFFFFFF
       error: AppColors.error, //0xFFE53935
       onPrimary: AppColors.white, //0xFFFFFFFF
       onSecondary: AppColors.white, //0xFFFFFFFF
@@ -42,7 +43,12 @@ class AppTheme {
       outlineVariant: AppColors.textGrey200, // 0xFFEAECF0
       primaryContainer: AppColors.lightPurple, //0xFFF4F3FF
       onTertiary: AppColors.darksecondary, //0xFF2FBBA4
+<<<<<<< HEAD
       onTertiaryContainer: AppColors.spanishYellow, //0xFFFDB913
+=======
+      onTertiaryContainer: AppColors.spanishYellow,
+      inversePrimary: AppColors.primaryLight//0xFF2F648E
+>>>>>>> harshgiri
     ),
   );
 
@@ -63,6 +69,7 @@ class AppTheme {
 
       surface: AppColors.darkbackgroundPrimary, //0xFFFAFAFF
       surfaceContainer: AppColors.lightTeal, //0xFFEEF7FD
+      surfaceBright: AppColors.black,
       error: AppColors.error, //0xFFE53935
       onPrimary: AppColors.white, //0xFFFFFFFF
       onSecondary: AppColors.white, //0xFFFFFFFF

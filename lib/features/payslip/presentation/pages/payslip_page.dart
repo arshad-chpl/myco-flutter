@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/ios_calendar_time_picker.dart';
@@ -23,11 +23,15 @@ class PayslipPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
+<<<<<<< HEAD
       appBarText: 'Payslip',
+=======
+      title: 'Payslip',
+>>>>>>> harshgiri
       actions: [
         MyCoButton(
           onTap: () {
-            context.pushNamed('salary-break-up');
+            context.pushNamed(RoutePaths.salaryBreakUp);
           },
           backgroundColor: AppTheme.getColor(context).secondary,
           borderColor: AppTheme.getColor(context).secondary,
@@ -61,7 +65,8 @@ class PayslipPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(
                     6 * Responsive.getResponsive(context),
                   ),
-                  color: AppColors.gray10,
+
+                  border: Border.all(color: AppTheme.getColor(context).outline),
                 ),
                 child: const Center(
                   child: CustomText('<', fontWeight: FontWeight.w700),
@@ -106,7 +111,8 @@ class PayslipPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(
                     6 * Responsive.getResponsive(context),
                   ),
-                  color: AppColors.gray10,
+                  border: Border.all(color: AppTheme.getColor(context).outline),
+                  // color: AppColors.gray10,
                 ),
                 child: const Center(
                   child: CustomText('>', fontWeight: FontWeight.w700),
@@ -135,7 +141,11 @@ class PayslipPage extends StatelessWidget {
                 unselectedBorderAndTextColor: AppTheme.getColor(
                   context,
                 ).primary,
+<<<<<<< HEAD
                 tabBarBorderColor: AppColors.black,
+=======
+                tabBarBorderColor: AppTheme.getColor(context).onSurface,
+>>>>>>> harshgiri
                 selectedIndex: selectedIndex,
                 isShadowBottomLeft: true,
                 onTabChange: (index) {
@@ -181,7 +191,11 @@ class PaySlip extends StatelessWidget {
             grossSalary: '3000.00',
             totalDeduction: '200.00',
             onView: () {
+<<<<<<< HEAD
               context.pushNamed('payslip-detail');
+=======
+              context.pushNamed(RoutePaths.payslipDetail);
+>>>>>>> harshgiri
             },
           ),
           separatorBuilder: (context, index) =>
