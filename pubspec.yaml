@@ -49,6 +49,8 @@ dependencies:
   image_picker: ^1.1.2
   file_picker: ^10.2.0
   permission_handler: ^12.0.0+1
+  share_plus: ^11.0.0
+  easy_url_launcher: ^0.0.7
   highlight_text: ^1.8.0
   shimmer: ^3.0.0
   flutter_launcher_icons: ^0.14.4
@@ -90,6 +92,8 @@ flutter:
     - assets/ideabox/
     - assets/payslip/
     - assets/visit/
+    - assets/visit/svgs/
+    - assets/visit_svgs/
     - assets/media_picker/
     - assets/lost_and_found/
     - assets/add_expense/
@@ -100,6 +104,7 @@ flutter:
     - assets/svgs/take_order/
     - assets/work_allocation/
     - assets/svgs/work_allocation/
+    - assets/animations/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

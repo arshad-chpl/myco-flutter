@@ -16,10 +16,16 @@ import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
 import 'package:myco_flutter/features/asset/view/edit_assets_page.dart';
 import 'package:myco_flutter/features/asset/view/handover_assets.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
+import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
+import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_event.dart';
+import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
 import 'package:myco_flutter/features/asset/view/swap_assets.dart';
 import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
+import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
+import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:myco_flutter/features/holiday/presentation/pages/holiday_list_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
@@ -40,6 +46,7 @@ import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_pa
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
@@ -49,8 +56,6 @@ import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart
 import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_bloc.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/pages/work_allocation_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -88,7 +93,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.login,
-        name: 'login',
+        name: RoutePaths.login,
         builder: (context, state) => const OtpVerifyDialog(),
       ),
       // GoRoute(
@@ -137,6 +142,22 @@ class AppRouter {
         path: RoutePaths.leave,
         name: 'leave',
         builder: (context, state) => const LeaveScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.holiday,
+        name: RoutePaths.holiday,
+        builder: (context, state) {
+          final controller = TextEditingController();
+          return HolidayListPage(controller: controller);
+        },
+      ),
+      GoRoute(
+        path: RoutePaths.companyInfo,
+        name: RoutePaths.companyInfo,
+        builder: (context, state) => BlocProvider<CompanyInfoBloc>(
+          create: (_) => GetIt.I<CompanyInfoBloc>(),
+          child: const CompanyInfoPage(),
+        ),
       ),
       /*GoRoute(
         path: RoutePaths.myVisit,
@@ -281,6 +302,24 @@ class AppRouter {
         ),
       ),
 
+      ShellRoute(
+        builder: (context, state, child) => MultiBlocProvider(
+          providers: [BlocProvider(create: (context) => WorkAllocationBloc())],
+          child: child,
+        ),
+        routes: [
+          GoRoute(
+            path: RoutePaths.workAllocation,
+            name: '/work-allocation',
+            // builder: (context, state) => BlocProvider(
+            //   create: (context) => WorkAllocationBloc(),
+            //   child: AssignWorkPage(),
+            // ),
+            builder: (context, state) => const WorkAllocationPage(),
+          ),
+        ],
+      ),
+
       GoRoute(
         path: RoutePaths.qrScanner,
         name: 'qr-scanner',
@@ -316,27 +355,9 @@ class AppRouter {
         name: 'swap-assets',
         builder: (context, state) => const SwapAssetsPage(),
       ),
-
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,
-      ShellRoute(
-        builder: (context, state, child) => MultiBlocProvider(
-          providers: [BlocProvider(create: (context) => WorkAllocationBloc())],
-          child: child,
-        ),
-        routes: [
-          GoRoute(
-            path: RoutePaths.workAllocation,
-            name: '/work-allocation',
-            // builder: (context, state) => BlocProvider(
-            //   create: (context) => WorkAllocationBloc(),
-            //   child: AssignWorkPage(),
-            // ),
-            builder: (context, state) => const WorkAllocationPage(),
-          ),
-        ],
-      ),
     ],
     // errorBuilder: (context, state) => const ErrorScreen(),
   );
