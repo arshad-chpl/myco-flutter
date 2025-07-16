@@ -50,13 +50,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(
-      title: const Text(
-        'Add Expense',
-        style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-      ),
-      leading: const BackButton(),
-    ),
+    appBar: CustomAppbar(title: 'Add Expense',),
     body: Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 30.0 * Responsive.getResponsive(context),
@@ -214,7 +208,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
             //submit button
             MyCoButton(
               onTap: () {
-
                 //use below code to open bottom sheet
                 // showModalBottomSheet(
                 //   context: context,
