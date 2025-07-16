@@ -96,7 +96,7 @@ class _AdminViewPageState extends State<AdminViewPage> {
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppColors.bgWhite,
     appBar: CustomAppbar(
-      title: CustomText(LanguageManager().get('admin_view')),
+      title: LanguageManager().get('admin_view'),
     ),
     body: RefreshIndicator(
       onRefresh: _refreshData,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_custom_radio_button.dart';
@@ -45,9 +46,7 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
   Widget build(BuildContext context) => Scaffold(
     // Custom AppBar
     appBar: CustomAppbar(
-      appBarText: 'Add New Visit',
-      appbartxtcolor: AppTheme.getColor(context).onSurface,
-      size: 16 * Responsive.getResponsiveText(context),
+      title: LanguageManager().get('add_new_visit'),
       appBarBackgoundColor: AppTheme.getColor(context).surface,
       leading: BackButton(),
     ),

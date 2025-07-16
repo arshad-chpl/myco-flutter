@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
@@ -37,10 +38,7 @@ class _AssignToVisitState extends State<AssignToVisit> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      appBarText: 'Add New Visit',
-      appbartxtcolor: AppTheme.getColor(context).onSurface,
-      size: 16 * Responsive.getResponsive(context),
-      appBarBackgoundColor: AppTheme.getColor(context).surface,
+      title: LanguageManager().get('add_new_visit'),
       leading: BackButton(),
     ),
     body: SingleChildScrollView(
