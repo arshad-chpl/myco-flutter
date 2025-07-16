@@ -59,13 +59,14 @@ class _SignupFormPageState extends State<SignupFormPage> {
           padding: EdgeInsets.only(
             left: 20 * Responsive.getResponsive(context),
             right: 20 * Responsive.getResponsive(context),
-            top: 20 * Responsive.getResponsive(context),
+            top: 5 * Responsive.getResponsive(context),
             bottom: 20 * Responsive.getResponsive(context),
           ),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 0.05*Responsive.getHeight(context),),
                 Center(
                   child: badges.Badge(
                     badgeStyle: badges.BadgeStyle(
@@ -330,7 +331,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     ),
                   ),
                   preFixImage: "assets/sign_in/email_icon.png",
-                  prefixIconConstraints: BoxConstraints(minHeight: 0.02*Responsive.getHeight(context),minWidth: 0.11*Responsive.getWidth(context)),
+                  prefixIconConstraints: BoxConstraints(
+                    minHeight: 0.02 * Responsive.getHeight(context),
+                    minWidth: 0.11 * Responsive.getWidth(context),
+                  ),
                 ),
                 SizedBox(height: 0.015 * Responsive.getHeight(context)),
                 Row(

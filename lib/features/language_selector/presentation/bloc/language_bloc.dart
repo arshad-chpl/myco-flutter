@@ -65,6 +65,7 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
     LoadLanguageToPreferences event,
     Emitter<LanguageState> emit,
   ) async {
+
     // fetch and store language JSON from languageFile
     final success = await repository.getAppLanguageValues(
       "1",
@@ -82,5 +83,6 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
         }
       },
     );
+
   }
 }
