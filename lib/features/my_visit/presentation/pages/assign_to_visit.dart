@@ -39,9 +39,9 @@ class _AssignToVisitState extends State<AssignToVisit> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      appBarText: LanguageManager().get('add_new_visit'),
-      appbartxtcolor: AppTheme.getColor(context).onSurface,
-      size: 16 * Responsive.getResponsive(context),
+      title: LanguageManager().get('add_new_visit'),
+      // appbartxtcolor: AppTheme.getColor(context).onSurface,
+      // size: 16 * Responsive.getResponsive(context),
       appBarBackgoundColor: AppTheme.getColor(context).surface,
       leading: BackButton(),
     ),
