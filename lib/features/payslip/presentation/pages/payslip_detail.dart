@@ -260,6 +260,7 @@ class PayslipDetail extends StatelessWidget {
                       DottedLineWidget(
                         color: AppTheme.getColor(context).onSurface,
                       ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -325,6 +326,7 @@ class PayslipDetail extends StatelessWidget {
                       DottedLineWidget(
                         color: AppTheme.getColor(context).onSurface,
                       ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -390,6 +392,7 @@ class PayslipDetail extends StatelessWidget {
                       DottedLineWidget(
                         color: AppTheme.getColor(context).onSurface,
                       ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -454,6 +457,7 @@ class PayslipDetail extends StatelessWidget {
                       DottedLineWidget(
                         color: AppTheme.getColor(context).onSurface,
                       ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
