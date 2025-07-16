@@ -359,6 +359,11 @@ class AppRouter {
         name: 'swap-assets',
         builder: (context, state) => const SwapAssetsPage(),
       ),
+       GoRoute(
+        path: RoutePaths.AddExpense,
+        name: 'addExpense',
+        builder: (context, state) =>  const AddExpensePage(),
+      ),
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,

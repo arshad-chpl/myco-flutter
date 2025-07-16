@@ -1,35 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/select_attachment_widget.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-class VisitTemplate extends StatefulWidget {
-  const VisitTemplate({super.key});
+class TestNewVisit1 extends StatefulWidget {
+  const TestNewVisit1({super.key});
 
   @override
-  State<VisitTemplate> createState() => _VisitTemplateState();
+  State<TestNewVisit1> createState() => _TestNewVisitState();
 }
 
-class _VisitTemplateState extends State<VisitTemplate> {
+class _TestNewVisitState extends State<TestNewVisit1> {
   final List<String> branchType = [
     'Head Office',
     'Mumbai Branch',
     'Delhi Branch',
-    'Bangalore Warehouse',
-    'Pune Client Site',
-    'Hyderabad Branch',
-    'Chennai Regional Office',
-    'Kolkata Branch',
     'Ahmedabad Branch',
     'Remote Site',
   ];
 
   String? selectedBranchType;
+
   @override
   Widget build(BuildContext context) => Padding(
     padding: EdgeInsets.symmetric(
@@ -43,17 +40,17 @@ class _VisitTemplateState extends State<VisitTemplate> {
         top: 20 * Responsive.getResponsive(context),
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(height: 0.03 * Responsive.getHeight(context)),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
-          // row with title and icon
+          //label for Test New Visit
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CustomText(
-                'Visit Template',
+                'Test New Visit',
                 fontWeight: FontWeight.w600,
                 fontSize: 16 * Responsive.getResponsiveText(context),
               ),
@@ -62,26 +59,7 @@ class _VisitTemplateState extends State<VisitTemplate> {
           ),
           SizedBox(height: 0.03 * Responsive.getHeight(context)),
 
-          // Text field with label "Q1"
-          LabeledTextField(
-            label: 'Q1',
-            hint: 'Type here',
-            textAlignment: TextAlign.start,
-            widthFactor: Responsive.getWidth(context),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
-              ),
-            ),
-            prefix: SvgPicture.asset(
-              AppAssets.assetNoteFavorite,
-              fit: BoxFit.scaleDown,
-            ),
-          ),
-          SizedBox(height: 0.02 * Responsive.getHeight(context)),
-
-          // Custom dropdown to select branch
+          //dropdown for branch selection
           LabeledDropdown(
             label: 'Branch',
             items: branchType,
@@ -97,32 +75,51 @@ class _VisitTemplateState extends State<VisitTemplate> {
             onChanged: (value, index) {},
           ),
 
-          SizedBox(height: 0.10 * Responsive.getHeight(context)),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
-          // Submit button
+          // Section label for media upload
+          CustomText(
+            'Media',
+            fontWeight: FontWeight.w600,
+            fontSize: 16 * Responsive.getResponsiveText(context),
+          ),
+          SizedBox(height: 0.005 * Responsive.getHeight(context)),
+
+          // Media Picker container
+          const SelectAttachmentWidget(
+            label: 'Select Media',
+            iconPath: AppAssets.assetGalleryExport,
+          ),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
+
+          // Text field for "Today's Work"
+          LabeledTextField(
+            label: 'Today Work',
+            hint: 'Type here',
+            widthFactor: Responsive.getWidth(context),
+            textAlignment: TextAlign.start,
+            border: OutlineInputBorder(
+              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
+              borderRadius: BorderRadius.circular(
+                10 * Responsive.getResponsive(context),
+              ),
+            ),
+            prefix: SvgPicture.asset(
+              AppAssets.assetDocumentText,
+              fit: BoxFit.scaleDown,
+            ),
+          ),
+
+          SizedBox(height: 0.08 * Responsive.getHeight(context)),
+
+          //submit button
           MyCoButton(
             boarderRadius: 30 * Responsive.getResponsive(context),
             isShadowBottomLeft: true,
-            onTap: () {
-
-               //use below code to open bottom sheet
-              // showModalBottomSheet(
-              //   context: context,
-              //   isScrollControlled: true,
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.vertical(
-              //       top: Radius.circular(
-              //         16 * Responsive.getResponsive(context),
-              //       ),
-              //     ),
-              //   ),
-              //   builder: (context) => const RemarkBottomSheet(),
-              // );
-            },
+            onTap: () {},
             title: 'SUBMIT',
           ),
-
-          SizedBox(height: 0.01 * Responsive.getHeight(context)),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
         ],
       ),
     ),
