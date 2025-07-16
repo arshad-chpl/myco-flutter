@@ -57,7 +57,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash,
+    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -138,14 +138,14 @@ class AppRouter {
         name: 'leave',
         builder: (context, state) => const LeaveScreen(),
       ),
-      /*GoRoute(
+      GoRoute(
         path: RoutePaths.myVisit,
         name: 'my-visit',
         builder: (context, state) => BlocProvider(
           create: (_) => GetIt.I<VisitBloc>(),
           child: const MyVisitPage(),
         ),
-      ),*/
+      ),
 
       // GoRoute(
       //   path: RoutePaths.language,
