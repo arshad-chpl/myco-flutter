@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widget/all_common_row.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widget/assign_to_and_detail_row_widget.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/widget/common_row.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widget/work_allocation_person_detail_widget.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
 
 class WorkAllocationPage extends StatefulWidget {
   const WorkAllocationPage({super.key});
@@ -31,7 +30,7 @@ class _WorkAllocationPageState extends State<WorkAllocationPage> {
           // ),
           // SizedBox(height: 0.023 * Responsive.getHeight(context),),
           CommonCard(
-            title: 'title',
+            title: '22 May 2025, 10:00 AM',
             headerColor: AppTheme.getColor(context).primary,
             headerPrefixIcon: 'assets/work_allocation/calendar.png',
             showHeaderPrefixIcon: true,
@@ -40,63 +39,14 @@ class _WorkAllocationPageState extends State<WorkAllocationPage> {
               child: Column(
                 children: [
                   const AssignToAndDetailRowWidget(),
-                  const ListTile(
-                    leading: Image(
-                        image: AssetImage(
-                            'assets/work_allocation/person_image.png'
-                        ),
-                    ),
-                    title:  CustomText(
-                      'Ajaj Ajmeri',
-                      fontWeight: FontWeight.w600,
-                    ),
-                    subtitle:  Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomText(
-                          'hod',
-                          isKey: true,
-                          color: AppColors.textGray,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        CustomText(
-                          'Technical - Ahmedabad',
-                          color: AppColors.textGray,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ],
-                    ),
+                  const WorkAllocationPersonDetailWidget(
+                    imagePath: 'assets/work_allocation/person_image.png',
+                    empName: 'Ajaj Ajmeri',
+                    designation: 'hod',
+                    fieldWithCity: 'Technical - Ahmedabad',
                   ),
                   Divider(color: AppTheme.getColor(context).secondary),
-                  CommonRow(
-                    title: 'Work Category',
-                    value: 'AI Tools',
-                    textColor: AppColors.textGray,
-                    onTap: () {},
-                  ),
-                  SizedBox(height: 0.005 * Responsive.getHeight(context)),
-                  CommonRow(
-                    title: 'Project',
-                    value: 'Fjc',
-                    textColor: AppColors.textGray,
-                    onTap: () {},
-                  ),
-                  SizedBox(height: 0.005 * Responsive.getHeight(context)),
-                  CommonRow(
-                    title: 'Work Start Date',
-                    value: '21st May 2025',
-                    textColor: AppColors.textGray,
-                    onTap: () {},
-                  ),
-                  SizedBox(height: 0.005 * Responsive.getHeight(context)),
-                  CommonRow(
-                    title: 'Target Date of Completion',
-                    value: '22nd May 2025',
-                    textColor: AppColors.textGray,
-                    onTap: () {},
-                  ),
-                  SizedBox(height: 0.005 * Responsive.getHeight(context)),
-                  Divider(color: AppTheme.getColor(context).secondary),
+                  const AllCommonRow()
                 ],
               ),
             ),
