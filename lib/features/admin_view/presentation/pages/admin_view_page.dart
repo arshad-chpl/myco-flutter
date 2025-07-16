@@ -7,6 +7,7 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_menu_list.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
@@ -95,9 +96,7 @@ class _AdminViewPageState extends State<AdminViewPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppColors.bgWhite,
-    appBar: CustomAppbar(
-      title: CustomText(LanguageManager().get('admin_view')),
-    ),
+    appBar: CustomAppbar(title: 'admin_view', isKey: true),
     body: RefreshIndicator(
       onRefresh: _refreshData,
       color: AppColors.primary,
@@ -116,6 +115,10 @@ class _AdminViewPageState extends State<AdminViewPage> {
           : null,
       onTap1: _clearSearch,
       boarderRadius: 12.0,
+      height: 0.06 * Responsive.getHeight(context),
+      contentPadding: EdgeInsets.symmetric(
+        vertical: 8 * Responsive.getResponsive(context),
+      ),
     ),
   );
 

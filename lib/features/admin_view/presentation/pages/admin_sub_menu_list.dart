@@ -68,7 +68,8 @@ class AdminSubMenuList extends StatelessWidget {
               padding: const EdgeInsets.all(14.5),
               borderRadius: 12,
               backgroundColor: AppTheme.getColor(context).surfaceBright,
-              // height: Responsive.getHeight(context),
+              height: Responsive.getHeight(context),
+              
               child: CustomShadowContainer(
                 containerHeight: 0.09 * Responsive.getHeight(context),
                 width: 0.2 * Responsive.getWidth(context),

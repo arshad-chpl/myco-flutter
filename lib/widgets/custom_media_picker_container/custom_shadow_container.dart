@@ -84,13 +84,18 @@ class CustomShadowContainer extends StatelessWidget {
           ],
         ),
         // const SizedBox(height: 6),
-        const Spacer(),
-        CustomText(
-          title,
-          color: AppColors.black,
-          fontSize: 11 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.w600,
-          textAlign: textAlign,
+        // const Spacer(),
+        Padding(
+          padding: EdgeInsets.only(
+            top: 8.0 * Responsive.getResponsive(context),
+          ),
+          child: CustomText(
+            title,
+            color: AppColors.black,
+            fontSize: 11 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w600,
+            textAlign: textAlign,
+          ),
         ),
       ],
     ),
