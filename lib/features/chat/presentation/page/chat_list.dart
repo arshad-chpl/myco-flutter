@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/chat/presentation/bloc/chat_bloc.dart';
 import 'package:myco_flutter/features/chat/presentation/widgets/chat_list_card.dart';
@@ -42,7 +43,7 @@ class ChatListScreen extends StatelessWidget {
     ),
     appBar: CustomAppbar(
       title:
-        'Chat List',
+        'chat',
       titleSpacing: 10,
       actions: [
         MyCoButton(
@@ -56,12 +57,18 @@ class ChatListScreen extends StatelessWidget {
               ),
             );
           },
-          title: 'Create new group +',
+          title: LanguageManager().get('new_group'),
           textStyle: TextStyle(
             color: AppTheme.getColor(context).onPrimary,
-            fontSize: 12 * Responsive.getResponsiveText(context),
+            fontSize: 14 * Responsive.getResponsiveText(context),
           ),
-          width: 0.33 * Responsive.getWidth(context),
+          image: Icon(
+            Icons.add,
+            color: AppTheme.getColor(context).onPrimary,
+            size: 18 * Responsive.getResponsive(context),
+          ),
+          imagePosition: AxisDirection.right,
+          width: 0.35 * Responsive.getWidth(context),
           height: 0.028 * Responsive.getHeight(context),
           boarderRadius: 20 * Responsive.getResponsive(context),
           isShadowBottomLeft: true,
@@ -83,7 +90,7 @@ class ChatListScreen extends StatelessWidget {
                   ? state.selectedIndex
                   : 0;
               return MyCustomTabBar(
-                tabs: const ['Employee', 'Group'],
+                tabs:  [LanguageManager().get('resident'), LanguageManager().get('group_colon')],
                 selectedBgColors: [
                   AppTheme.getColor(context).secondary,
                   AppTheme.getColor(context).primary,
@@ -149,7 +156,7 @@ class EmployeesChat extends StatelessWidget {
     builder: (context, state) => Column(
       children: [
         CustomSearchField(
-          hintText: 'Search',
+          hintText: 'search_member',
           onChanged: (value) => {
             context.read<ChatBloc>().add(SearchEvent(value, groupMembers)),
             log(state.toString(), name: "state"),

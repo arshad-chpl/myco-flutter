@@ -30,7 +30,7 @@ class _MultiDepartmentSelectorState extends State<MultiDepartmentSelector> {
     );
     final selectedId = await showCustomSimpleBottomSheet(
       context: context,
-      heading: 'Select Branch',
+      heading: 'select_department',
       icon: AssetImage('assets/chat/down_arrow.png'),
       dataList: departments,
     );
@@ -70,7 +70,7 @@ class _MultiDepartmentSelectorState extends State<MultiDepartmentSelector> {
         children: [
           
           CustomText(
-            'Department',
+            'floors',
             fontSize: 14 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,
             color: AppTheme.getColor(context).onSurface,
@@ -116,7 +116,7 @@ class _MultiDepartmentSelectorState extends State<MultiDepartmentSelector> {
                     ? Container(
                         margin:  EdgeInsets.symmetric(vertical: 6 * Responsive.getResponsive(context)),
                         child: CustomText(
-                          'No department selected',
+                          'select_department',
                           fontSize: 16 * Responsive.getResponsiveText(context),
                             color: AppTheme.getColor(context).outline,
                         

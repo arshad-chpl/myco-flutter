@@ -3,9 +3,11 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/chat/presentation/widgets/select_department.dart';
 import 'package:myco_flutter/features/chat/presentation/widgets/select_employee.dart';
+import 'package:myco_flutter/features/language_selector/model/language_response.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/custom_dropdown_menu.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
@@ -58,13 +60,13 @@ class _StartNewChatState extends State<StartNewChat> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: const CustomAppbar(title: 'Chat'),
+    appBar: const CustomAppbar(title: 'chat'),
     body: Padding(
       padding:  EdgeInsetsGeometry.symmetric(horizontal: 22.0*Responsive.getResponsive(context)),//const EdgeInsets.all(20.0),
       child: Column(
         children: [
           const CustomSearchField(
-            hintText: 'Search Employee',
+            hintText: 'search_employee',
             //  prefixIcon: Icons.search,
           ),
            SizedBox(height: 16 * Responsive.getResponsive(context)),
@@ -78,7 +80,7 @@ class _StartNewChatState extends State<StartNewChat> {
               fontFamily: 'Gilroy-semiBold',
             ) ,
             hintText: selectedDepartments.isEmpty
-                ? 'Select Branch'
+                ? LanguageManager().get('select_block')
                 : selectedDepartments['name'] ?? '',
 
             contentPadding: const EdgeInsets.only(

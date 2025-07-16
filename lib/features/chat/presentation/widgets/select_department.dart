@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
@@ -117,21 +119,9 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
         SizedBox(height: 12 * Responsive.getResponsive(context)),
 
         // Search field
-        MyCoTextfield(
-          prefix: Image.asset('assets/take_order/search-normal.png', scale: 20),
-          hintText: widget.searchHint ?? 'Search',
-          hintTextStyle: TextStyle(
-            fontSize: 14 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-          ),
-          textInputType: TextInputType.text,
-          textAlignment: TextAlign.left,
-          boarderRadius: 10,
-          contentPadding: EdgeInsets.all(
-            10 * Responsive.getResponsive(context),
-          ),
-          onChanged: _onSearch,
+        CustomSearchField(
+          hintText: widget.searchHint ?? 'search',
+          onChanged: _onSearch ,
         ),
 
         SizedBox(height: 12 * Responsive.getResponsive(context)),
@@ -196,7 +186,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
 
         // Submit button
         MyCoButton(
-          title: widget.btnTitle ?? 'Select',
+          title: widget.btnTitle ?? LanguageManager().get('select'),
           boarderRadius: 50,
           height: 0.05 * Responsive.getHeight(context),
           isShadowBottomLeft: true,
