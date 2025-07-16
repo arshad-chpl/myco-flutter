@@ -10,12 +10,12 @@ class DashboardRemoteDataSourceImpl extends DashboardRemoteDataSource {
 ApiClient apiClient;
   DashboardRemoteDataSourceImpl({required this.apiClient});
   @override
-  Future<IdCardDetailResponse> getIDCardDetails(Map dataMap) async{
+  Future<IdCardDetailResponse> getIDCardDetails(Map<String,dynamic> dataMap) async{
     // TODO: implement getIDCardDetails
 final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
-    final response = await apiClient.postDynamic('societyListControllerEnc.php', encryptedBody);
+    final response = await apiClient.postDynamic('profileMenuController.php', encryptedBody);
     return IdCardDetailResponse.fromJson(
-      json.decode(GzipUtil.decryptAES(response)),
+      json.decode(response),
     );
   }
   
