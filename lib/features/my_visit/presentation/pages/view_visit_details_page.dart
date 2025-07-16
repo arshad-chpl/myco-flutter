@@ -21,7 +21,7 @@ class ViewVisitDetailsPage extends StatelessWidget {
           onPressed: () {},
           icon: SvgPicture.asset('assets/visit_svgs/arrow.svg'),
         ),
-        title: CustomText('Visit Details', fontWeight: FontWeight.w700),
+        title: 'Visit Details',
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
