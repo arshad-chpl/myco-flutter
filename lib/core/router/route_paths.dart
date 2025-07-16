@@ -24,10 +24,12 @@ class RoutePaths {
   static const String distributorVisitor = '/distributor-visitor';
   static const String noOrder = '/no-order';
   static const String faceDetection = '/face-detection';
+
   // static const String distributorVisitor = 'distributor-visitor';
   // static const String noOrder = 'no-order';
   static const String selectOtherCompany = '/select-other-company';
   static const String signUpForm = '/sign-up-form';
+
   //
   // static const String addVisit = '/add-visit';
 
@@ -49,7 +51,7 @@ class RoutePaths {
   static const String lostAndFoundAddScreen = '/lost-and-found-add-screen';
   static const String lostAndFoundChatScreen = '/lost-and-found-chat-screen';
   static const String lostAndFoundItemDetails = '/lost-and-found-item-details';
-  static const String AddExpense= '/add_Expense';
+  static const String AddExpense = '/add_Expense';
   static const String myVisit = '/my-visit';
   static const String contactAdmin = '/contact-admin';
   static const String qrScanner = '/qr-scanner';
@@ -57,7 +59,6 @@ class RoutePaths {
   static const String addVisit = '/add-visit';
   static const String viewVisitDetails = '/view-visit-details';
   static const String myProfile = '/my-profile';
-
 
   // ======== Admin View ========
   static const String adminView = '/admin-view';
@@ -116,4 +117,6 @@ class RoutePaths {
   static const String takeoverAssets = '/takeover-assets';
   static const String swapAssets = '/swap-assets';
 
+  //work-allocation
+  static const String workAllocation = '/work-allocation';
 }

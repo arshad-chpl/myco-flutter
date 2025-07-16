@@ -36,13 +36,11 @@ import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_scr
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
@@ -52,13 +50,17 @@ import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart
 import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
+import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
+import 'package:myco_flutter/features/take_order/presentation/pages/take_order_page.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_bloc.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/pages/assign_work_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash,
+    initialLocation: RoutePaths.workAllocation,
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -148,14 +150,14 @@ class AppRouter {
         name: 'leave',
         builder: (context, state) => const LeaveScreen(),
       ),
-      GoRoute(
+      /*GoRoute(
         path: RoutePaths.myVisit,
         name: 'my-visit',
         builder: (context, state) => BlocProvider(
           create: (_) => GetIt.I<VisitBloc>(),
           child: const MyVisitPage(),
         ),
-      ),
+      ),*/
 
       // GoRoute(
       //   path: RoutePaths.language,
@@ -326,9 +328,26 @@ class AppRouter {
         name: 'swap-assets',
         builder: (context, state) => const SwapAssetsPage(),
       ),
+
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,
+      ShellRoute(
+        builder: (context, state, child) => MultiBlocProvider(
+          providers: [BlocProvider(create: (context) => WorkAllocationBloc())],
+          child: child,
+        ),
+        routes: [
+          GoRoute(
+            path: RoutePaths.workAllocation,
+            name: '/work-allocation',
+            builder: (context, state) => BlocProvider(
+              create: (context) => WorkAllocationBloc(),
+              child: AssignWorkPage(),
+            ),
+          ),
+        ],
+      ),
     ],
     // errorBuilder: (context, state) => const ErrorScreen(),
   );
