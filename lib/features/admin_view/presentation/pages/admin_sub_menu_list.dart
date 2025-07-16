@@ -12,10 +12,12 @@ library;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:highlight_text/highlight_text.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/admin_view/domain/entities/admin_view_entity.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
+import 'package:myco_flutter/widgets/border_container_wraper.dart';
+import 'package:myco_flutter/widgets/custom_media_picker_container/custom_shadow_container.dart';
 import 'package:shimmer/shimmer.dart';
 
 /// Displays a grid of admin sub-menu items with images and titles.
@@ -39,168 +41,54 @@ class AdminSubMenuList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-  // Build a grid of sub-menu items.
-  GridView.builder(
-    shrinkWrap: true,
-    // Prevent the grid from taking infinite height.
-    physics: const NeverScrollableScrollPhysics(),
-    // Disable grid scrolling.
-    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 3, // 3 items per row.
-      childAspectRatio: 0.85, // Aspect ratio for each grid item.
-      mainAxisSpacing: 12,
-      crossAxisSpacing: 12,
-    ),
-    itemCount: subMenus.length,
-    itemBuilder: (context, index) {
-      final subMenu = subMenus[index];
-      final pendingCount = subMenu?.pendingCount;
-      final hasPending = pendingCount != null && pendingCount != '0';
-
-      return Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () => onSubMenuTap(subMenu), // Trigger tap callback.
-          borderRadius: BorderRadius.circular(12),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color:
-                    isFromNotificationReminder && hasPending
-                        ? AppColors.error.withOpacity(0.3)
-                        : Colors.grey.shade200,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color:
-                      isFromNotificationReminder && hasPending
-                          ? AppColors.error.withOpacity(0.08)
-                          : Colors.grey.withOpacity(0.06),
-                  blurRadius: 6,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Stack(
-              children: [
-                // Main content: image and title.
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 70,
-                      child: Center(
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withOpacity(0.08),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: CachedNetworkImage(
-                            imageUrl: subMenu?.accessTypeImageNew ?? '',
-                            width: 28,
-                            height: 28,
-                            placeholder:
-                                (context, url) => Shimmer.fromColors(
-                                  baseColor: Colors.grey.shade300,
-                                  highlightColor: Colors.grey.shade100,
-                                  child: Container(
-                                    width: 28,
-                                    height: 28,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                  ),
-                                ),
-                            errorWidget:
-                                (context, url, error) => Image.asset(
-                                  'assets/images/logo.png',
-                                  width: 28,
-                                  height: 28,
-                                ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    // Text section with highlighted search query.
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 6,
-                          vertical: 4,
-                        ),
-                        child: Center(
-                          child: TextHighlight(
-                            text: subMenu?.accessType ?? '',
-                            words: {
-                              searchQuery: HighlightedWord(
-                                textStyle: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.w600,
-                                  backgroundColor: AppColors.primary
-                                      .withOpacity(0.2),
-                                  height: 1.2,
-                                ),
-                              ),
-                            },
-                            textStyle: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w500,
-                              height: 1.2,
-                            ),
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                // Pending count badge, shown if there are pending items.
-                if (hasPending)
-                  Positioned(
-                    top: 6,
-                    right: 6,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color:
-                            isFromNotificationReminder
-                                ? AppColors.error
-                                : AppColors.primary,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: (isFromNotificationReminder
-                                    ? AppColors.error
-                                    : AppColors.primary)
-                                .withOpacity(0.3),
-                            blurRadius: 3,
-                            offset: const Offset(0, 1),
-                          ),
-                        ],
-                      ),
-                      child: CustomText(
-                        pendingCount,
-                        fontSize: 9,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-          ),
+      // Build a grid of sub-menu items.
+      GridView.builder(
+        shrinkWrap: true,
+        // Prevent the grid from taking infinite height.
+        physics: const NeverScrollableScrollPhysics(),
+        // Disable grid scrolling.
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3, // 3 items per row.
+          childAspectRatio: 0.73, // Aspect ratio for each grid item.
+          mainAxisSpacing: 12,
+          crossAxisSpacing: 12,
         ),
+        itemCount: subMenus.length,
+        itemBuilder: (context, index) {
+          final subMenu = subMenus[index];
+
+          final notificationCount = int.tryParse(subMenu?.pendingCount ?? "");
+
+          return GestureDetector(
+            onTap: () => onSubMenuTap(subMenu), // Trigger tap callback.
+            child: BorderContainerWraper(
+              // Badge count and visibility
+              notificationCount: notificationCount.toString(),
+              isNotificationBadge: notificationCount! > 0, // Show badge if > 0
+              padding: const EdgeInsets.all(14.5),
+              borderRadius: 12,
+              backgroundColor: AppTheme.getColor(context).surfaceBright,
+              // height: Responsive.getHeight(context),
+              child: CustomShadowContainer(
+                containerHeight: 0.09 * Responsive.getHeight(context),
+                width: 0.2 * Responsive.getWidth(context),
+
+                // Image with shimmer placeholder and fallback
+                image: CachedImage(
+                  imageUrl: subMenu?.accessTypeImageNew ?? '',
+                  errorWidget: Image.asset(
+                    'assets/images/logo.png',
+                    width: 28,
+                    height: 28,
+                  ),
+                ),
+
+                // Title
+                title: subMenu?.accessType ?? '',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        },
       );
-    },
-  );
 }

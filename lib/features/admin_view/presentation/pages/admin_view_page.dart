@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -93,30 +94,30 @@ class _AdminViewPageState extends State<AdminViewPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(title: CustomText(LanguageManager().get('admin_view'))),
+    backgroundColor: AppColors.bgWhite,
+    appBar: CustomAppbar(
+      title: CustomText(LanguageManager().get('admin_view')),
+    ),
     body: RefreshIndicator(
       onRefresh: _refreshData,
       color: AppColors.primary,
-      child: Column(
-        children: [
-          _buildSearchBar(),
-          _buildContent(),
-        ],
-      ),
+      child: Column(children: [_buildSearchBar(), _buildContent()]),
     ),
   );
 
   Widget _buildSearchBar() => Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-      child: MyCoTextfield(
-        controller: _searchController,
-        hintText: LanguageManager().get('search'),
-        preFixImage: AppAssets.imageSearch,
-        suFixImage: _searchController.text.isNotEmpty ? AppAssets.imageScanner : null,
-        onTap1: _clearSearch,
-        boarderRadius: 12.0,
-      ),
-    );
+    padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+    child: MyCoTextfield(
+      controller: _searchController,
+      hintText: LanguageManager().get('search'),
+      preFixImage: AppAssets.imageSearch,
+      suFixImage: _searchController.text.isNotEmpty
+          ? AppAssets.imageScanner
+          : null,
+      onTap1: _clearSearch,
+      boarderRadius: 12.0,
+    ),
+  );
 
   Widget _buildContent() => Expanded(
     child: BlocBuilder<AdminViewBloc, AdminViewState>(
@@ -159,7 +160,11 @@ class _AdminViewPageState extends State<AdminViewPage> {
                     color: AppColors.error,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.error_outline, size: 48, color: Colors.white),
+                  child: const Icon(
+                    Icons.error_outline,
+                    size: 48,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: 24),
                 CustomText(
@@ -173,7 +178,10 @@ class _AdminViewPageState extends State<AdminViewPage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

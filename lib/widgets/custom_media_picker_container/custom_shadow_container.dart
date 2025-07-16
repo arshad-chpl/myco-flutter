@@ -13,6 +13,7 @@ class CustomShadowContainer extends StatelessWidget {
   final double? width;
   final double? containerHeight;
   final double? borderRadius;
+  final TextAlign? textAlign;
 
   CustomShadowContainer({
     required this.image,
@@ -23,6 +24,7 @@ class CustomShadowContainer extends StatelessWidget {
     this.width,
     this.borderRadius,
     this.containerHeight,
+    this.textAlign,
   });
 
   @override
@@ -81,12 +83,14 @@ class CustomShadowContainer extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 6),
+        // const SizedBox(height: 6),
+        const Spacer(),
         CustomText(
           title,
           color: AppColors.black,
           fontSize: 11 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,
+          textAlign: textAlign,
         ),
       ],
     ),
