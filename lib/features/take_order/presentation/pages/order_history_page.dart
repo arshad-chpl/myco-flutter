@@ -15,7 +15,7 @@ class OrderHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(appBarText: 'order_history'),
+    appBar: CustomAppbar(title: 'Order History'),
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),

@@ -15,7 +15,7 @@ class EditOrderPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
     appBar: CustomAppbar(
-      title: Column(
+      appBarTitleWidget: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(

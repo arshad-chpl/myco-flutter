@@ -249,12 +249,7 @@ class _VisitPageState extends State<MyVisitPage> {
           onPressed: () {},
           icon: SvgPicture.asset('assets/visit/svgs/backarrow.svg'),
         ),
-        title: CustomText(
-          'Visit',
-          fontSize: 24 * multiplier,
-          fontWeight: FontWeight.w700,
-          color: AppTheme.getColor(context).onSurface,
-        ),
+        title: 'Visit',
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 12 * multiplier),
