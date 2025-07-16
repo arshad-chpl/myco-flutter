@@ -99,7 +99,7 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
           CustomText(
-            "Phone number",
+            "Phonenumber",
             fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,
             color: AppTheme.getColor(context).onSurface,
