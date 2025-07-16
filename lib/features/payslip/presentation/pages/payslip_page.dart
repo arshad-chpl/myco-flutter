@@ -23,7 +23,7 @@ class PayslipPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      appBarText: 'Payslip',
+      title: 'Payslip',
       actions: [
         MyCoButton(
           onTap: () {
@@ -229,7 +229,8 @@ class PaySlip extends StatelessWidget {
               isShadowBottomLeft: true,
             ),
             CustomText(
-              'Download All Payslip',
+              'download_all_payslip',
+              // 'Download All Payslip',
               fontSize: 14 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).primary,
               decoration: TextDecoration.underline,
@@ -291,7 +292,8 @@ class OtherEarnings extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
             CustomText(
-              'Net Pay',
+              'net_pay',
+              // 'Net Pay',
               fontSize: 15 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
             ),
@@ -302,7 +304,8 @@ class OtherEarnings extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomText(
-              'Total Leaves Day: 0.50',
+              'total_leave_days' + ': 0.50',
+              // 'Total Leaves Day: 0.50',
               fontSize: 15 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
             ),
