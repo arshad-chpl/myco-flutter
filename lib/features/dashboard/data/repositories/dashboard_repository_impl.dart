@@ -13,7 +13,7 @@ class DashboardRepositoryImpl implements DashboardRepository {
   DashboardRepositoryImpl(this.safeApiCall, {required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, IdCardEntity>> getIDCardDetails(Map dataMap) async {
+  Future<Either<Failure, IdCardEntity>> getIDCardDetails(Map<String,dynamic> dataMap) async {
     final result = await safeApiCall.execute(
       () => remoteDataSource.getIDCardDetails(dataMap),
     );
