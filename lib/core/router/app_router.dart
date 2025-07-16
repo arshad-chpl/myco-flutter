@@ -55,7 +55,7 @@ class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     // initialLocation: RoutePaths.getStarted,
-    initialLocation: RoutePaths.dashboard,
+    initialLocation:  RoutePaths.AddExpense,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -231,12 +231,6 @@ class AppRouter {
         name: 'addCustomer',
         builder: (context, state) => const AddCustomer(),
       ),
-
-      GoRoute(
-        path: RoutePaths.AddExpense,
-        name: 'addExpense',
-        builder: (context, state) =>  const AddExpensePage(),
-      ),
       GoRoute(
         path: RoutePaths.lostAndFoundAddScreen,
         name: 'lost-and-found-add-screen',
@@ -282,6 +276,11 @@ class AppRouter {
         path: RoutePaths.viewVisitDetails,
         name: 'view-visit-details',
         builder: (context, state) => ViewVisitDetailsPage(),
+      ),
+       GoRoute(
+        path: RoutePaths.AddExpense,
+        name: 'addExpense',
+        builder: (context, state) =>  const AddExpensePage(),
       ),
       // Add all modular routes here
       // ...authRoutes,
