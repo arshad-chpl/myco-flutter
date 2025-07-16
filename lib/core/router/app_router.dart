@@ -23,8 +23,6 @@ import 'package:myco_flutter/features/asset/view/swap_assets.dart';
 import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
-import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
-import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/holiday/presentation/pages/holiday_list_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
@@ -46,7 +44,6 @@ import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_pa
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
