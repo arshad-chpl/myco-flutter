@@ -16,4 +16,10 @@ class FetchMyTeamLeaveList extends LeaveEvent{
   const FetchMyTeamLeaveList();
 }
 
+class FetchLeaveHistoryNew extends LeaveEvent{
+  final String monthName;
+  final String year;
+  const FetchLeaveHistoryNew(this.monthName, this.year);
+}
+
 class InitialView extends LeaveEvent {}

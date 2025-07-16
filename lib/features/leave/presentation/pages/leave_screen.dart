@@ -1,123 +1,58 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
-import 'package:go_router/go_router.dart';
-import 'package:myco_flutter/core/router/app_router.dart';
-import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
-import 'package:myco_flutter/features/leave/presentation/pages/add_short_leave_screen.dart';
-import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
-import 'package:myco_flutter/features/leave/presentation/pages/my_team_leaves_screen.dart';
+import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
+import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/custom_fab_menu.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_action_button.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_detail_bottom_sheet.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_filter_bottom_sheet.dart';
-import 'package:myco_flutter/features/leave/presentation/widgets/leave_floating_action_button.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/month_year_header.dart';
-
-import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 
 class LeaveScreen extends StatefulWidget {
   const LeaveScreen({super.key});
+
   @override
   State<LeaveScreen> createState() => _LeaveScreenState();
 }
 
 class _LeaveScreenState extends State<LeaveScreen> {
-  String selectedValue = 'All Leaves';
-  final List<LeaveEntry> leaveList = [
-    LeaveEntry(
-      date: 'Mon , 15 Jan 2024',
-      leaveType: 'Sick Leave (Paid)',
-      subType: 'Half Day Leave',
-      leaveTime: '10:15 AM, 15th Jan 2024',
-      reason: 'Feeling unwell and need to rest.',
-      approvedBy:
-          'Jay', // Assuming 'approvedBy' should reflect who approved the leave
-      // in the detail view.
-      status: 'Approved',
-      payStatus: 'Paid Leave',
-      onViewDetailWidget: const LeaveDetailBottomSheet(
-        requestDate: '10:15 AM, 15th Jan 2024',
-        approvedDate: '10:20 AM, 15th Jan 2024',
-        leaveType: 'Sick Leave (Paid)',
-        leaveDuration: 'Half Day Leave', // This is subType in LeaveEntry
-        reason: 'Feeling unwell and need to rest.',
-        altPhone: '9876543210',
-        taskDependency: 'No',
-        status: 'Approved',
-        dependencyHandle: 'No critical tasks pending. Will catch up on return.',
-        attachments: ['/abs/path/to/medical_certificate.pdf'],
-        detailColor: AppColors.secondary,
+  String selectedFilter = 'All Leaves';
+  int selectedMonth = 0; // 0 means all months
+  int selectedYear = DateTime.now().year;
+  List<LeaveHistoryEntity> leaveHistoryList = [];
+  bool isLoading = true;
+  bool isTeamLeave = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchLeaveHistory();
+  }
+
+  void _fetchLeaveHistory() {
+    setState(() => isLoading = true);
+    context.read<LeaveBloc>().add(
+      FetchLeaveHistoryNew(
+        selectedMonth.toString().padLeft(2, '0'),
+        selectedYear.toString(),
       ),
-    ),
-    LeaveEntry(
-      date: 'Thu, 10 Feb 2024',
-      leaveType: 'Personal Leave (Unpaid)',
-      subType: 'Two Days Leave',
-      leaveTime: '03:30 PM, 10th Feb 2024',
-      reason: 'Attending a family function out of station.',
-      approvedBy: 'Kevin',
-      status: 'Pending',
-      payStatus: 'Unpaid Leave',
-      onViewDetailWidget: const LeaveDetailBottomSheet(
-        requestDate: '03:30 PM, 10th Feb 2024',
-        approvedDate: 'N/A',
-        leaveType: 'Personal Leave (Unpaid)', // This is leaveType in LeaveEntry
-        leaveDuration: 'Two Days Leave',
-        reason: 'Attending a family function out of station.',
-        altPhone: '8765432109',
-        taskDependency: 'Yes',
-        status: 'Pending',
-        dependencyHandle:
-            'John will handle urgent client queries. Project X documentation needs to be completed by me upon return.',
-        attachments: [
-          '/abs/path/to/invitation.jpg',
-          '/abs/path/to/travel_tickets.pdf',
-        ],
-        detailColor: AppColors.spanishYellow,
-      ),
-    ),
-    LeaveEntry(
-      date: 'Thu, 5 Mar 2024',
-      leaveType: 'Work From Home',
-      subType: 'Full Day',
-      leaveTime: '09:00 AM, 5th Mar 2024',
-      reason: 'Internet outage at office. Will work remotely.',
-      approvedBy: 'Alice',
-      status: 'Reject',
-      payStatus: 'Unpaid Leave',
-      onViewDetailWidget: const LeaveDetailBottomSheet(
-        requestDate: '09:00 AM, 5th Mar 2024',
-        approvedDate: '09:05 AM, 5th Mar 2024',
-        leaveType: 'Work From Home',
-        leaveDuration: 'Full Day',
-        reason: 'Internet outage at office. Will work remotely.',
-        altPhone: '7654321098',
-        taskDependency: 'No',
-        status: 'Reject',
-        dependencyHandle:
-            'Will be available online for all communications and tasks.',
-        attachments: ["rtthrthr"],
-        detailColor: AppColors.red,
-      ),
-    ),
-  ];
+    );
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       leading: IconButton(
-        onPressed: () {
-          context.pop();
-        },
+        onPressed: () => context.pop(),
         icon: const Icon(Icons.arrow_back_outlined),
       ),
       title: const Text('Leave balance'),
@@ -127,18 +62,12 @@ class _LeaveScreenState extends State<LeaveScreen> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: MyCoButton(
-            onTap: () {
-              showLeaveFilterBottomSheet(context, selectedValue, (p0) {
-                selectedValue = p0;
-                setState(() {});
-              }, ['All Leaves', 'Paid Leaves', 'UnPaid Leaves']);
-            },
-
+            onTap: () => _showFilterBottomSheet(context),
             textStyle: TextStyle(
               fontSize: 12 * Responsive.getResponsiveText(context),
               color: MyCoButtonTheme.whitemobileBackgroundColor,
             ),
-            title: selectedValue,
+            title: selectedFilter,
             height: 0.035 * Responsive.getHeight(context),
             width: 0.3 * Responsive.getWidth(context),
             imagePosition: AxisDirection.right,
@@ -150,59 +79,152 @@ class _LeaveScreenState extends State<LeaveScreen> {
         ),
       ],
     ),
-    body: SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: Column(
-          spacing: 0.015 * Responsive.getHeight(context),
-          children: [
-            MonthYearHeader(
-              onChanged: (month, year) {
-                // Handle month/year change
-                debugPrint('Selected: ${month + 1}, $year');
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    body: BlocConsumer<LeaveBloc, LeaveState>(
+      listener: (context, state) {
+        if (state is LeaveHistoryNewFetched) {
+          setState(() {
+            leaveHistoryList = state.newLeaveList.leaveHistory ?? [];
+            isLoading = false;
+            isTeamLeave = state.newLeaveList.teamLeave ?? false;
+          });
+        } else if (state is LeaveError) {
+          setState(() => isLoading = false);
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
+        }
+      },
+      builder: (context, state) {
+        if (isLoading) {
+          return const Center();
+        }
+
+        final filteredLeaves = _filterLeaves(leaveHistoryList);
+
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Column(
               children: [
-                LeaveActionButton(
-                  title: 'My Leave Balance',
-                  onTap: () {
-                   context.go(RoutePaths.leaveBalance);
+                MonthYearHeader(
+                  onChanged: (month, year) {
+                    setState(() {
+                      selectedMonth = month + 1; // +1 to make it 1-based
+                      selectedYear = year;
+                    });
+                    _fetchLeaveHistory();
                   },
                 ),
-                LeaveActionButton(
-                  title: 'My Team Leaves',
-                  onTap: () {
-                    context.go(RoutePaths.teamLeaveBalance);
-                  },
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    LeaveActionButton(
+                      title: 'My Leave Balance',
+                      onTap: () => context.go(RoutePaths.leaveBalance),
+                    ),
+                    if (isTeamLeave)
+                      LeaveActionButton(
+                        title: 'My Team Leaves',
+                        onTap: () => context.go(RoutePaths.teamLeaveBalance),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                if (filteredLeaves.isEmpty)
+                  const Center(child: Text('No leaves found')),
+                ...filteredLeaves.map(
+                  (leave) => LeaveCard(leave: _convertToLeaveEntry(leave)),
                 ),
               ],
             ),
-
-            ...leaveList.map((e) => LeaveCard(leave: e)),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     ),
-
     floatingActionButton: CustomFabMenu(
       buttons: [
         FabButtonModel(
           label: 'Apply Leave',
           icon: Icons.event_available_outlined,
-          onTap: () {
-            context.push(RoutePaths.addLeaveScreen);
-          },
+          onTap: () => context.push(RoutePaths.addLeaveScreen),
         ),
         FabButtonModel(
           label: 'Apply Short Leave',
           imagePath: 'assets/images/short_apply_leave.png',
-          onTap: () {
-            context.push(RoutePaths.addShortLeaveScreen);
-          },
+          onTap: () => context.push(RoutePaths.addShortLeaveScreen),
         ),
       ],
     ),
   );
+
+  List<LeaveHistoryEntity> _filterLeaves(List<LeaveHistoryEntity> leaves) {
+    if (selectedFilter == 'All Leaves') return leaves;
+
+    return leaves.where((leave) {
+      if (selectedFilter == 'Paid Leaves') {
+        return leave.paidUnpaidStatus == '0';
+      } else if (selectedFilter == 'Unpaid Leaves') {
+        return leave.paidUnpaidStatus == '1';
+      }
+      return true;
+    }).toList();
+  }
+
+  void _showFilterBottomSheet(BuildContext context) {
+    showLeaveFilterBottomSheet(context, selectedFilter, (newFilter) {
+      setState(() => selectedFilter = newFilter);
+    }, ['All Leaves', 'Paid Leaves', 'Unpaid Leaves']);
+  }
+
+  LeaveEntry _convertToLeaveEntry(LeaveHistoryEntity leave) => LeaveEntry(
+    date: leave.leaveDateView ?? '',
+    leaveType: leave.leaveTypeName ?? '',
+    subType: leave.autoLeave == true ? 'Auto Leave' : 'Manual Leave',
+    leaveTime: leave.shortLeaveTime ?? '',
+    reason: leave.leaveReason ?? '',
+    approvedBy: leave.approvedByName ?? '',
+    status: leave.leaveStatusView ?? '',
+    payStatus: leave.paidUnpaid ?? '',
+    onViewDetailWidget: LeaveDetailBottomSheet(
+      requestDate: leave.leaveCreatedDate ?? '',
+      leaveDateView: leave.leaveDateView ?? '',
+      leaveDayView: leave.leaveDayView ?? '',
+      approvedByName: leave.approvedByName ?? '',
+      leaveRequestedDate: leave.leaveRequestedDate ?? '',
+      approvedDate: leave.leaveApprovedDate ?? '',
+      leaveType: leave.leaveTypeName ?? '',
+      leaveDuration: leave.halfDaySession ?? '',
+      reason: (leave.autoLeave == true)
+          ? leave.autoLeaveReason ?? ''
+          : leave.leaveReason ?? '',
+      altPhone: leave.leaveAlternateNumber ?? '',
+      taskDependency: leave.leaveTaskDependency == true ? 'Yes' : 'No',
+      status: leave.leaveStatusView ?? '',
+      dependencyHandle: leave.leaveHandleDependency ?? '',
+      attachments: leave.leaveAttachment
+          ?.split(',')
+          .where((e) => e.trim().isNotEmpty)
+          .toList() ?? [],
+
+      detailColor: _getStatusColor(leave.leaveStatus, leave.autoLeave),
+      autoLeave: leave.autoLeave ?? false,
+      paidUnpaid: leave.paidUnpaid ?? '',
+    ),
+  );
+
+  Color _getStatusColor(String? status, bool? autoLeave) {
+    if (autoLeave == true) {
+      return AppColors.primary;
+    } else {
+      switch (status) {
+        case '1': // Approved
+          return AppColors.secondary;
+        case '2': // Rejected
+          return AppColors.red;
+        default: // Pending
+          return AppColors.spanishYellow;
+      }
+    }
+  }
 }

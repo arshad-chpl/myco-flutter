@@ -17,7 +17,7 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
           (leaveType) => emit(LeaveListTypeFetched(leaveType)),
         );
       } catch (e) {
-        emit(const LeaveError('Failed to load leaveType'));
+        emit(const LeaveError('Failed to load getNewListType'));
       }
     });
 
@@ -30,12 +30,28 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
           (leaveType) => emit(TeamLeaveListFetched(leaveType)),
         );
       } catch (e) {
-        emit(const LeaveError('Failed to load leaveType'));
+        emit(const LeaveError('Failed to load getMyTeamLeaves'));
       }
     });
 
     on<InitialView>((event, emit) async {
       emit(LeaveInitial());
+    });
+
+    on<FetchLeaveHistoryNew>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.getLeaveHistoryNew(
+          event.monthName,
+          event.year,
+        );
+        results.fold(
+              (failure) => emit(LeaveError(failure.message)),
+              (model) => emit(LeaveHistoryNewFetched(model.toEntity())),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to load leave history: $e'));
+      }
     });
   }
 }

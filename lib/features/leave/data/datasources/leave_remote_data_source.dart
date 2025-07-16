@@ -5,4 +5,6 @@ abstract class LeaveRemoteDataSource {
   Future<LeaveHistoryResponseModel> getNewLeaveListType(String query);
 
   Future<MyTeamResponseModel> getMyTeamLeaves();
+
+  Future<LeaveHistoryResponseModel> getLeaveHistoryNew(String monthName,String year);
 }

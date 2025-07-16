@@ -75,7 +75,7 @@ LeaveHistoryModel _$LeaveHistoryModelFromJson(
   totalShiftHours: json['total_shift_hours'] as String?,
   productiveWorkingHours: json['productive_working_hours'] as String?,
   leaveRequestedDate: json['leave_requested_date'] as String?,
-  isExtraDay: json['is_extra_day'] as bool?,
+  isExtraDay: json['is_extra_day'] as String?,
   attendanceId: json['attendance_id'] as String?,
   attendanceDateStart: json['attendance_date_start'] as String?,
   attendanceDateEnd: json['attendance_date_end'] as String?,

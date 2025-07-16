@@ -143,7 +143,7 @@ class LeaveHistoryModel {
   final String? leaveRequestedDate;
 
   @JsonKey(name: 'is_extra_day')
-  final bool? isExtraDay;
+  final String? isExtraDay;
 
   @JsonKey(name: 'attendance_id')
   final String? attendanceId;

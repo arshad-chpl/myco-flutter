@@ -6,17 +6,26 @@ import 'package:myco_flutter/features/leave/domain/repositories/leave_repository
 import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
 import 'package:myco_flutter/features/leave/model/my_team_response_model.dart';
 
-class LeaveRepositoryImpl implements LeaveRepository{
+class LeaveRepositoryImpl implements LeaveRepository {
   final LeaveRemoteDataSource remoteDataSource;
   final SafeApiCall safeApiCall;
 
   LeaveRepositoryImpl(this.remoteDataSource, this.safeApiCall);
-  @override
-  Future<Either<Failure, LeaveHistoryResponseModel>> getNewListType( String query,
-      ) async =>
-   safeApiCall.execute(() => remoteDataSource.getNewLeaveListType(query));
 
   @override
-  Future<Either<Failure, MyTeamResponseModel>> getMyTeamLeaves() async=>
+  Future<Either<Failure, LeaveHistoryResponseModel>> getNewListType(
+    String query,
+  ) async =>
+      safeApiCall.execute(() => remoteDataSource.getNewLeaveListType(query));
+
+  @override
+  Future<Either<Failure, MyTeamResponseModel>> getMyTeamLeaves() async =>
       safeApiCall.execute(remoteDataSource.getMyTeamLeaves);
+
+  Future<Either<Failure, LeaveHistoryResponseModel>> getLeaveHistoryNew(
+    String monthName,
+    String year,
+  ) async => safeApiCall.execute(
+    () => remoteDataSource.getLeaveHistoryNew(monthName, year),
+  );
 }

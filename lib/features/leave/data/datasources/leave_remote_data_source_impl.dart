@@ -37,6 +37,7 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
     }
   }
 
+  @override
   Future<MyTeamResponseModel> getMyTeamLeaves() async {
     final dataMap = {
       'getMyTeamLeaves':'getMyTeamLeaves',
@@ -53,6 +54,34 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
       ).postFormDynamic('team_controller.php', dataMap);
 
       return MyTeamResponseModel.fromJson(json.decode(response));
+    } catch (e) {
+      if (e is DioException) {
+        print('Dio error: ${e.response?.data}');
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<LeaveHistoryResponseModel> getLeaveHistoryNew(String monthName, String year) async {
+    final dataMap = {
+      'getLeaveHistoryNew':'getLeaveHistoryNew',
+      'society_id':'1',
+      'unit_id':'1387',
+      'user_id':'1365',
+      'floor_id':'1',
+      'level_id':'26',
+      'language_id':'1',
+      'month':monthName,
+      'year':year,
+    };
+
+    try {
+      final response = await GetIt.I<ApiClient>(
+        instanceName: VariableBag.residentApiNew,
+      ).postFormDynamic('leave_controller.php', dataMap);
+
+      return LeaveHistoryResponseModel.fromJson(json.decode(response));
     } catch (e) {
       if (e is DioException) {
         print('Dio error: ${e.response?.data}');

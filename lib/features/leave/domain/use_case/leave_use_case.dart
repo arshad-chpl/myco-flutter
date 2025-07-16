@@ -13,4 +13,7 @@ class LeaveUseCase{
 
   Future<Either<Failure, MyTeamResponseModel>>  getMyTeamLeaves()=> repository.getMyTeamLeaves();
 
+  Future<Either<Failure, LeaveHistoryResponseModel>>  getLeaveHistoryNew(String monthName, String year)=> repository.getLeaveHistoryNew(monthName, year);
+
+
 }
