@@ -11,7 +11,6 @@ import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/get_common_row.dart';
 
 class WorkAllocationPage extends StatefulWidget {
   const WorkAllocationPage({super.key});
