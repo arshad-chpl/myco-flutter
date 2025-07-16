@@ -33,6 +33,9 @@ Future<void> init() async {
   //========Company Selector=========
   companySelectorDi(sl);
 
+  //========Dashboard=========
+  DashboardDi(sl);
+
   //========Inquiry=========
   InquiryDi(sl);
 
