@@ -42,7 +42,6 @@ import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_scr
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
@@ -161,14 +160,14 @@ class AppRouter {
           child: const CompanyInfoPage(),
         ),
       ),
-      GoRoute(
+      /*GoRoute(
         path: RoutePaths.myVisit,
         name: 'my-visit',
         builder: (context, state) => BlocProvider(
           create: (_) => GetIt.I<VisitBloc>(),
           child: const MyVisitPage(),
         ),
-      ),
+      ),*/
 
       // GoRoute(
       //   path: RoutePaths.language,
