@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widget/common_row.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
@@ -25,19 +26,17 @@ class _DetailPageState extends State<DetailPage> {
       ),
       child: Column(
         children: [
-          CommonCard(
+          //common card widget to show Assign tasks
+          const CommonCard(
             title: 'Assign To ',
             bottomWidget: ListTile(
-              leading: Image.asset(
-                width: 47,
-                height: 47,
-                'assets/svgs/visit/userpro.png',
+
+              leading: Image(
+                image: AssetImage('assets/work_allocation/person_image.png'),
               ),
-              title: const CustomText(
-                'Mukund Madhav',
-                fontWeight: FontWeight.w600,
-              ),
-              subtitle: const Column(
+              title: CustomText('Mukund Madhav', fontWeight: FontWeight.w600),
+
+              subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomText(
@@ -54,11 +53,15 @@ class _DetailPageState extends State<DetailPage> {
               ),
             ),
           ),
+
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
+
+          //Border Container
           BorderContainerWraper(
-            child: const Column(
+            borderColor: AppTheme.getColor(context).outline,
+            child: Column(
               children: [
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
@@ -66,13 +69,9 @@ class _DetailPageState extends State<DetailPage> {
                       children: [
                         CustomText(
                           'Work Start Date',
-
                           fontWeight: FontWeight.w700,
                         ),
-                        CustomText(
-                          '21 st May 2025',
-                          color: AppColors.textGray,
-                        ),
+                        CustomText('21 st May 2025', color: AppColors.textGray),
                       ],
                     ),
                     Column(
@@ -82,16 +81,47 @@ class _DetailPageState extends State<DetailPage> {
                           'Work Completion Date',
                           fontWeight: FontWeight.w700,
                         ),
-                        CustomText(
-                          '21 st May 2025',
-                          color: AppColors.textGray,
-                        ),
+                        CustomText('21 st May 2025', color: AppColors.textGray),
                       ],
                     ),
-
-                    Divider(),
-                    
                   ],
+                ),
+                Divider(color: AppTheme.getColor(context).secondary),
+                CommonRow(
+                  title: 'Work Category',
+                  value: 'AI Tools',
+                  onTap: () {},
+                  textColor: AppColors.textGray,
+                ),
+                CommonRow(
+                  title: 'Project',
+                  value: 'Abc',
+                  onTap: () {},
+                  textColor: AppColors.textGray,
+                ),
+                CommonRow(
+                  title: 'Location',
+                  value: 'Abc',
+                  onTap: () {},
+                  textColor: AppColors.textGray,
+                ),
+                CommonRow(
+                  title: 'Site',
+                  value: 'Abc',
+                  onTap: () {},
+                  textColor: AppColors.textGray,
+                ),
+                CommonRow(
+                  title: 'HOD Remark',
+                  value: 'Abc',
+                  onTap: () {},
+                  textColor: AppColors.textGray,
+                ),
+                CommonRow(
+                  title: 'Created Date & Time',
+                  value: '12 May 2025 , 10:00 AM',
+                  onTap: () {},
+                  textColor: AppColors.textGray,
                 ),
               ],
             ),

@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -26,7 +28,10 @@ class _AssignToAndDetailRowWidgetState
         color: AppTheme.getColor(context).primary,
       ),
       MyCoButton(
-        onTap: () {},
+        onTap: () {
+         context.push('/detail-page');
+
+        },
         title: LanguageManager().get('view_details'),
         fontWeight: FontWeight.w700,
         height: 0.03 * Responsive.getHeight(context),
