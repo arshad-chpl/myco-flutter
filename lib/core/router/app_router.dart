@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
+import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
@@ -16,6 +17,7 @@ import 'package:myco_flutter/features/asset/view/handover_assets.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
 import 'package:myco_flutter/features/asset/view/swap_assets.dart';
 import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
+import 'package:myco_flutter/features/chat/presentation/bloc/chat_bloc.dart';
 import 'package:myco_flutter/features/chat/presentation/page/chat_list.dart';
 import 'package:myco_flutter/features/chat/presentation/page/chat_screen.dart';
 import 'package:myco_flutter/features/chat/presentation/page/groupe_detail.dart';
@@ -318,16 +320,7 @@ class AppRouter {
         ),
         routes: adminViewRoutes,
       ),
-      GoRoute(
-        path: RoutePaths.chatList,
-        name: 'chat-list',
-        builder: (context, state) =>  ChatListScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.UserChatScreen,
-        name: 'user-chat',
-        builder: (context, state) =>  UserChatScreen(),
-      ),
+     ...cahatRoutes,
 
       GoRoute(
         path: RoutePaths.assetsHome,

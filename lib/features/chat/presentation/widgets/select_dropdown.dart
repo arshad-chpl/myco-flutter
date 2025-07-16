@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/chat/presentation/widgets/select_department.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class MultiDepartmentSelector extends StatefulWidget {
   const MultiDepartmentSelector({super.key});
@@ -63,41 +64,45 @@ class _MultiDepartmentSelectorState extends State<MultiDepartmentSelector> {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       /// Top Label Row
+      SizedBox(height: 16 * Responsive.getResponsiveText(context)),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          
+          CustomText(
             'Department',
-            style: TextStyle(
-              fontSize: 12 * Responsive.getResponsiveText(context),
-              fontWeight: FontWeight.w700,
-              color: AppTheme.getColor(context).onSurface,
-            ),
+            fontSize: 14 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w600,
+            color: AppTheme.getColor(context).onSurface,
           ),
-          TextButton.icon(
-            onPressed: _openDepartmentPicker,
-            icon: Icon(
-              Icons.add_circle_outline,
-              size: 16 * Responsive.getResponsiveText(context),
+          InkWell(
+            onTap: _openDepartmentPicker,
+            child: Row(
+              children: [
+                Icon(
+                  Icons.add_circle_outline,
+                  size: 16 * Responsive.getResponsiveText(context),
+                ),
+                const SizedBox(width: 8),
+                CustomText(
+                  'select_department',
+                  
+                    fontSize: 14 * Responsive.getResponsiveText(context),
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.getColor(context).onSurface,
+           
+                ),
+              ],
             ),
-            label: Text(
-              'Select Department',
-              style: TextStyle(
-                fontSize: 12 * Responsive.getResponsiveText(context),
-                fontWeight: FontWeight.w700,
-                color: AppTheme.getColor(context).onSurface,
-              ),
-            ),
-            style: TextButton.styleFrom(foregroundColor:AppTheme.getColor(context).primary),
           ),
         ],
       ),
-
+      SizedBox(height: 0.01 * Responsive.getHeight(context)),
       /// Chips or Placeholder Box
       InkWell(
         onTap: _openDepartmentPicker,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          padding:  EdgeInsets.symmetric(horizontal: 12 * Responsive.getResponsive(context), vertical: 8 * Responsive.getResponsive(context)),
           decoration: BoxDecoration(
             border: Border.all(color: AppTheme.getColor(context).outline),
             borderRadius: BorderRadius.circular(12),
@@ -109,54 +114,63 @@ class _MultiDepartmentSelectorState extends State<MultiDepartmentSelector> {
               Expanded(
                 child: selectedDepartments.isEmpty
                     ? Container(
-                      margin: const EdgeInsets.symmetric(vertical: 4),
-                      child:  Text(
+                        margin:  EdgeInsets.symmetric(vertical: 6 * Responsive.getResponsive(context)),
+                        child: CustomText(
                           'No department selected',
-                          style: TextStyle(color: AppTheme.getColor(context).outline),
+                          fontSize: 16 * Responsive.getResponsiveText(context),
+                            color: AppTheme.getColor(context).outline,
+                        
                         ),
-                    )
+                      )
                     : Wrap(
                         spacing: 8,
                         runSpacing: -1,
                         children: selectedDepartments
                             .map(
                               (dept) => Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 6,
+                                padding:  EdgeInsets.symmetric(
+                                  horizontal: 10 * Responsive.getResponsive(context), 
+                                  vertical: 3 * Responsive.getResponsive(context),
                                 ),
-                                margin: const EdgeInsets.symmetric(vertical: 4),
+                                margin:  EdgeInsets.symmetric(vertical: 4 * Responsive.getResponsive(context)),
                                 decoration: BoxDecoration(
-                                  color: AppTheme.getColor(context).surfaceContainer,
+                                  color: AppTheme.getColor(
+                                    context,
+                                  ).surfaceContainer,
                                   borderRadius: BorderRadius.circular(8),
-                                  
                                 ),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Text(
+                                    CustomText(
                                       dept['name'] ?? '',
-                                      style: TextStyle(
+                                    
                                         fontSize:
                                             14 *
                                             Responsive.getResponsiveText(
                                               context,
                                             ),
-                                        color: AppTheme.getColor(context).primary,
+                                        color: AppTheme.getColor(
+                                          context,
+                                        ).primary,
                                         fontWeight: FontWeight.w600,
-                                      ),
+                                     
                                     ),
-                                    const SizedBox(width: 6),
-                                    GestureDetector(
+                                     SizedBox(width: 0.01 * Responsive.getWidth(context)),
+                                    InkWell(
                                       onTap: () => _removeDepartment(dept),
-                                      child: Icon(
-                                        Icons.close,
-                                        size:
-                                            16 *
-                                            Responsive.getResponsiveText(
-                                              context,
-                                            ),
-                                        color: AppTheme.getColor(context).primary,
+                                      child: Ink(
+                                        child: Icon(
+                                          Icons.close,
+                                          size:
+                                              16 *
+                                              Responsive.getResponsiveText(
+                                                context,
+                                              ),
+                                          color: AppTheme.getColor(
+                                            context,
+                                          ).primary,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -168,11 +182,16 @@ class _MultiDepartmentSelectorState extends State<MultiDepartmentSelector> {
               ),
 
               /// Dropdown Icon
-               Image.asset(
-                'assets/chat/arrow_down_sigle.png',
-                height: 26 * Responsive.getResponsive(context),
-                
-                )
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: 6 * Responsive.getResponsive(context)),
+                  Image.asset(
+                    'assets/chat/arrow_down_sigle.png',
+                    height: 22 * Responsive.getResponsive(context),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

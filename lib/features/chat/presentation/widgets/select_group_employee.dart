@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/chat/presentation/widgets/creat_group_bottomsheet.dart';
 import 'package:myco_flutter/features/chat/presentation/widgets/employee_avatar.dart';
 import 'package:myco_flutter/features/chat/presentation/widgets/select_dropdown.dart';
 import 'package:myco_flutter/features/chat/presentation/widgets/select_employee.dart';
+import 'package:myco_flutter/features/language_selector/model/language_response.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -33,7 +35,7 @@ class SelectGroupEmp extends StatelessWidget {
         Row(
           children: [
             CustomText(
-              'Select Group Employee',
+              'select_group_members',
               fontSize: 16 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
               textAlign: TextAlign.center,
@@ -51,11 +53,11 @@ class SelectGroupEmp extends StatelessWidget {
         ),
         // SizedBox(height: 12 * Responsive.getResponsive(context)),
         MyCoTextfield(
-          hintText: 'Search',
+          hintText: LanguageManager().get('search'),
           hintTextStyle: AppTheme.getTextStyle(
             context,
           ).labelLarge!.copyWith(color: AppColors.textSecondary),
-          prefix: const Icon(Icons.search),
+          prefix:Image.asset('assets/chat/search-icon.png', scale: 20),
           contentPadding: EdgeInsets.only(
             top: 0.012 * Responsive.getHeight(context),
           ),
@@ -63,16 +65,16 @@ class SelectGroupEmp extends StatelessWidget {
           onChanged: (value) => {},
         ),
         // SizedBox(height: 0.001 * Responsive.getHeight(context)),
-        MultiDepartmentSelector(),
+        const MultiDepartmentSelector(),
         SizedBox(height: 0.015 * Responsive.getHeight(context)),
-        AvatarList(),
+        const AvatarList(),
         SizedBox(height: 0.012 * Responsive.getHeight(context)),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             MyCoButton(
               onTap: () {},
-              title: 'UnSelect All',
+              title: LanguageManager().get('unselect_all'),
               textStyle: AppTheme.getTextStyle(context).labelMedium!.copyWith(
                 color: AppTheme.getColor(context).onPrimary,
                 fontSize: 12 * Responsive.getResponsiveText(context),
@@ -87,7 +89,7 @@ class SelectGroupEmp extends StatelessWidget {
               backgroundColor: AppTheme.getColor(context).secondary,
               borderColor: AppTheme.getColor(context).secondary,
               onTap: () {},
-              title: 'Select All',
+              title: LanguageManager().get('select_all'),
               textStyle: AppTheme.getTextStyle(context).labelMedium!.copyWith(
                 fontSize: 12 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onPrimary,
@@ -114,7 +116,7 @@ class SelectGroupEmp extends StatelessWidget {
                               top: Radius.circular(16),
                             ),
                           ),
-                          builder: (_) => FilterBottomSheet(
+                          builder: (_) => CreatGroupBottomsheet(
                             headerHeight: 0.06 * Responsive.getHeight(context),
 
                             isHeaderRequired: true,
@@ -122,7 +124,7 @@ class SelectGroupEmp extends StatelessWidget {
                           ),
                         );
           },
-          title: 'Add',
+          title: LanguageManager().get('add'),
           height: 0.055 * Responsive.getHeight(context),
           boarderRadius: 30,
           textStyle: TextStyle(

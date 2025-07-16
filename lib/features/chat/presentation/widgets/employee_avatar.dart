@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/chat/presentation/bloc/chat_bloc.dart';
 
 class AvatarList extends StatefulWidget {
   const AvatarList({super.key});
@@ -11,28 +15,35 @@ class AvatarList extends StatefulWidget {
 
 // AvatarList widget to display a list of avatars
 class _AvatarListState extends State<AvatarList> {
-  List<String> imageUrls = [
-    'assets/chat/profile.jpg',
-    'assets/chat/profile.jpg',
-    'assets/chat/profile.jpg',
+  List<Map<String, dynamic>> imageUrls = [
+    {'id': 'emp123', 'name': 'John Doe', 'image': 'assets/chat/profile.jpg'},
+    {'id': 'emp123', 'name': 'John Doe', 'image': 'assets/chat/profile.jpg'},
+    {'id': 'emp123', 'name': 'John Doe', 'image': 'assets/chat/profile.jpg'},
+    {'id': 'emp123', 'name': 'John Doe', 'image': 'assets/chat/profile.jpg'},
   ];
 
   @override
   Widget build(BuildContext context) => Container(
     height: 0.09 * Responsive.getHeight(context),
-    child: ListView.separated(
-      scrollDirection: Axis.horizontal,
-      itemCount: imageUrls.length,
-      separatorBuilder: (_, __) => const SizedBox(width: 8),
-      itemBuilder: (context, index) => RemovableAvatar(
-        radius: 48 * Responsive.getResponsive(context),
-        imageUrl: imageUrls[index],
-        onRemove: () {
-          setState(() {
-            imageUrls.removeAt(index);
-          });
-        },
-      ),
+    child: BlocBuilder<ChatBloc, ChatState>(
+      builder: (context, state) => ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemCount: state is RemoveAvatarState
+                ? state.updateAvtarList.length
+                : imageUrls.length,
+          separatorBuilder: (_, __) => const SizedBox(width: 8),
+          itemBuilder: (context, index) => RemovableAvatar(
+            radius: 48 * Responsive.getResponsive(context),
+            imageUrl: state is RemoveAvatarState
+                ? state.updateAvtarList[index]['image']
+                : imageUrls[index]['image'],
+            onRemove: () {   
+              log('Remove avatar at index $index');
+              context.read<ChatBloc>().add(RemoveAvatar(imageUrls, index));
+              log('Remove avatar at index ${state is RemoveAvatarState ? state.updateAvtarList : imageUrls[index]['image']}');
+            },
+          ),
+        ),
     ),
   );
 }
