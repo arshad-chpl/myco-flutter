@@ -138,14 +138,14 @@ class AppRouter {
         name: 'leave',
         builder: (context, state) => const LeaveScreen(),
       ),
-      GoRoute(
+      /*GoRoute(
         path: RoutePaths.myVisit,
         name: 'my-visit',
         builder: (context, state) => BlocProvider(
           create: (_) => GetIt.I<VisitBloc>(),
           child: const MyVisitPage(),
         ),
-      ),
+      ),*/
 
       // GoRoute(
       //   path: RoutePaths.language,
