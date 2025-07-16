@@ -88,7 +88,7 @@
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildLabelValueRow(context, (autoLeave==true)?'Auto Leave Reason :':'Leave Reason :', reason),
+                      _buildLabelValueColoum(context, (autoLeave==true)?'Auto Leave Reason :':'Leave Reason :', reason),
                       const Divider(),
                       _buildLabelValueRow(
                         context,
@@ -268,6 +268,34 @@
                   fontSize: 13 * textScale,
                   fontWeight: FontWeight.normal,
                 ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    Widget _buildLabelValueColoum(BuildContext context, String label, String
+    value) {
+      if (value.trim().isEmpty) return const SizedBox.shrink();
+      final double textScale = Responsive.getResponsiveText(context);
+      return Padding(
+        padding: EdgeInsets.only(bottom: Responsive.scaleHeight(12)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 12 * textScale,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: Responsive.scaleHeight(4)),
+            Text(
+              ' $value',
+              style: TextStyle(
+                fontSize: 13 * textScale,
+                fontWeight: FontWeight.normal,
               ),
             ),
           ],
