@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/features/company_info/data/data_sources/company_info_remote_data_source.dart';
 import 'package:myco_flutter/features/company_info/data/data_sources/company_info_remote_data_source_impl.dart';
 import 'package:myco_flutter/features/company_info/data/repositories/company_info_repository_impl.dart';
@@ -17,5 +19,5 @@ Future<void> setupCompanyInfoDI(GetIt sl) async {
   sl.registerLazySingleton<CompanyInfoRepository>(() => CompanyInfoRepositoryImpl(sl(), sl()),);
 
   // Data sources
-  sl.registerLazySingleton<CompanyInfoRemoteDataSource>(() => CompanyInfoRemoteDataSourceImpl(dio: sl()),);
+  sl.registerLazySingleton<CompanyInfoRemoteDataSource>(() => CompanyInfoRemoteDataSourceImpl(dio: sl<Dio>(instanceName: VariableBag.dioWithAuth),));
 }

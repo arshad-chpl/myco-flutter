@@ -22,10 +22,10 @@ class CompanyInfoRemoteDataSourceImpl implements CompanyInfoRemoteDataSource {
     };
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
 
-    final controller = '${VariableBag.subEnd}buildingDetails_controller.php';
+    final controller = 'buildingDetails_controller.php';
 
     final response = await GetIt.I<ApiClient>(
-      instanceName: VariableBag.masterAPICall,
+      instanceName: VariableBag.employeeMobileApi,
     ).postDynamic(controller, encryptedBody);
     return CompanyInfoResponse.fromJson(
       json.decode(GzipUtil.decryptAES(response)),

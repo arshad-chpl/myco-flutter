@@ -26,6 +26,7 @@ import 'package:myco_flutter/features/company_selector/presentation/pages/select
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:myco_flutter/features/holiday/presentation/pages/holiday_list_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
@@ -73,7 +74,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.getStarted,
+    initialLocation: RoutePaths.splash,
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -104,7 +105,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.login,
-        name: 'login',
+        name: RoutePaths.login,
         builder: (context, state) => const OtpVerifyDialog(),
       ),
       // GoRoute(
@@ -163,8 +164,16 @@ class AppRouter {
         builder: (context, state) => const LeaveScreen(),
       ),
       GoRoute(
+        path: RoutePaths.holiday,
+        name: RoutePaths.holiday,
+        builder: (context, state) {
+          final controller = TextEditingController();
+          return HolidayListPage(controller: controller);
+        },
+      ),
+      GoRoute(
         path: RoutePaths.companyInfo,
-        name: 'company-info',
+        name: RoutePaths.companyInfo,
         builder: (context, state) => BlocProvider<CompanyInfoBloc>(
           create: (_) => GetIt.I<CompanyInfoBloc>(),
           child: const CompanyInfoPage(),

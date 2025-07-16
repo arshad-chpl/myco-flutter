@@ -34,7 +34,9 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
     'INA': '+62',
   };
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => _LoginUi(context);
+
+  Container _LoginUi(BuildContext context) => Container(
     height: 0.8 * Responsive.getHeight(context),
     width: Responsive.getWidth(context),
     decoration: BoxDecoration(
@@ -97,6 +99,53 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
           CustomText(
+            "Phone number",
+            fontSize: 16 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w600,
+            color: AppTheme.getColor(context).onSurface,
+          ),
+          PhoneNumberField(
+            selectedCountry: selectedCountry,
+            countries: countryMap.keys.toList(),
+            onCountryChanged: (value, index) {
+              if (value != null) {
+                setState(() {
+                  selectedCountry = value;
+                });
+              }
+            },
+            countryDialCodes: countryMap,
+            phoneController: phoneController,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                15 * Responsive.getResponsive(context),
+              ),
+              border: Border.all(color: AppColors.gray5),
+              color: AppTheme.getColor(context).onPrimary,
+            ),
+          ),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
+          Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CustomText(
+                  "Sign in",
+                  fontSize: 30 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w900,
+                  color: AppTheme.getColor(context).onSurface,
+                ),
+                CustomText(
+                  "Welcome To Delta Corporation",
+                  fontSize: 20 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w800,
+                  color: AppTheme.getColor(context).onSurface,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
+          CustomText(
             'Phone number',
             fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,
@@ -129,9 +178,7 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
             color: AppTheme.getColor(context).onSurface,
           ),
           Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(
                 15 * Responsive.getResponsive(context),
@@ -159,7 +206,7 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                 context: context,
                 title: 'Sign In Phone Number',
                 description:
-                'Sign in code has been sent to +6292121002200, check your inbox to continue the sign in process.',
+                    'Sign in code has been sent to +6292121002200, check your inbox to continue the sign in process.',
                 emailAddress: "example@example.com",
                 onSubmit: (String otp) {
                   dev.log("OTP submitted: $otp");
@@ -294,9 +341,8 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                     isChecked = val;
                   });
                 },
-                borderColor: isChecked
-                    ? AppColors.primary
-                    : Colors.grey, // 🔁 dynamic
+                borderColor: isChecked ? AppColors.primary : Colors.grey,
+                // 🔁 dynamic
                 activeColor: AppTheme.getColor(context).primaryContainer,
                 checkColor: AppTheme.getColor(context).primary,
                 height: 0.026 * Responsive.getHeight(context),
