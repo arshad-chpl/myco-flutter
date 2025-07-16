@@ -111,7 +111,7 @@ class AppAssets {
 
   static const String lostFoundData = '$lostFound/data.png';
   static const String lostFoundMessageEdit = '$lostFound/message-edit.png';
-  static const String location = '$basePath/take_order/location.png';
+  // static const String location = '$basePath/take_order/location.png';
   static const String assetMessageEdit = '$svgsVisit/message-edit.svg';
   static const String assetArrowSquare = '$svgsVisit/arrow-square.svg';
   static const String assetProfileCircle = '$svgsVisit/profile-circle.svg';

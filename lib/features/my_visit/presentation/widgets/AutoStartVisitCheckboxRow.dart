@@ -32,8 +32,6 @@ class AutoStartVisitCheckboxRow extends StatelessWidget {
       Expanded(
         child: CustomText(
           LanguageManager().get('auto_start_visit'),
-          fontSize: 15 * Responsive.getResponsiveText(context),
-          color: AppTheme.getColor(context).onSurface,
         ),
       ),
     ],
