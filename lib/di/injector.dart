@@ -6,6 +6,7 @@ import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.d
 import 'package:myco_flutter/features/company_info/presentation/di/company_info_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/request_otp_di.dart';
+import 'package:myco_flutter/features/dashboard/presentation/di/dashboard_di.dart';
 import 'package:myco_flutter/features/holiday/presentation/di/holiday_di.dart';
 import 'package:myco_flutter/features/language_selector/presentation/di/language_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
