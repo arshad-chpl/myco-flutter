@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
 import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
+import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
@@ -22,6 +23,10 @@ import 'package:myco_flutter/features/company_info/presentation/bloc/company_inf
 import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
 import 'package:myco_flutter/features/asset/view/swap_assets.dart';
 import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
+import 'package:myco_flutter/features/chat/presentation/bloc/chat_bloc.dart';
+import 'package:myco_flutter/features/chat/presentation/page/chat_list.dart';
+import 'package:myco_flutter/features/chat/presentation/page/chat_screen.dart';
+import 'package:myco_flutter/features/chat/presentation/page/groupe_detail.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
@@ -50,6 +55,11 @@ import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_det
 
 import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
+
+
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 
@@ -59,6 +69,10 @@ import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc/visi
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
+
+import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
+
 
 import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
@@ -87,9 +101,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-
-    initialLocation: RoutePaths.splash,
-
+    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
     ],
@@ -304,7 +317,12 @@ class AppRouter {
         name: 'view-visit-details',
         builder: (context, state) => const ViewVisitDetailsPage(),
       ),
-        GoRoute(
+      GoRoute(
+        path: RoutePaths.myProfile,
+        name: 'my-profile',
+        builder: (context, state) => const MyProfilePage(),
+      ),
+      GoRoute(
         path: RoutePaths.adminView,
         name: RoutePaths.adminView,
         builder: (context, state) => BlocProvider(
@@ -313,6 +331,7 @@ class AppRouter {
         ),
         routes: adminViewRoutes,
       ),
+     ...cahatRoutes,
 
       GoRoute(
         path: RoutePaths.assetsHome,

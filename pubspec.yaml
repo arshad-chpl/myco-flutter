@@ -54,12 +54,11 @@ dependencies:
   highlight_text: ^1.8.0
   shimmer: ^3.0.0
   flutter_launcher_icons: ^0.14.4
-
   # Google Map
   google_maps_flutter: ^2.12.3
   geolocator: ^14.0.2
-
   modal_bottom_sheet: ^3.0.0
+
 
 dependency_overrides:
   source_gen: 2.0.0
@@ -100,23 +99,18 @@ flutter:
     - assets/payslip/
     - assets/visit/
     - assets/visit/svgs/
-    - assets/visit_svgs/
-    - assets/visit/svgs/
     - assets/media_picker/
     - assets/lost_and_found/
     - assets/visit_svgs/
     - assets/svgs/visit/
     - assets/add_expense/
     - assets/dashboard/svgs/
-    - assets/svgs/visit/
-    - assets/svgs/visit/
-    - assets/svgs/visit/
-    - assets/svgs/visit/
+    - assets/face_detection/
+    - assets/dashboard/svgs/
     - assets/dashboard/svgs/
     - assets/assets/
     - assets/svgs/take_order/
     - assets/animations/
-    - assets/svgs/visit/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

@@ -9,7 +9,10 @@ class AppAssets {
   static const String splash = '$basePath/splash';
   static const String visit = '$basePath/visit';
   static const String svgsVisit = '$svgsPath/visit';
+
   static const String assetVisit = '$basePath/add_expense';
+
+
   static const String assets = '$basePath/assets';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
@@ -97,7 +100,6 @@ class AppAssets {
   static const String trash = '$svgsVisit/trash.svg';
   static const String smart_car = '$svgsVisit/smart-car.svg';
   static const String global = '$svgsVisit/global.svg';
-  static const String arrow_down = '$svgsVisit/arrow-down.svg';
 
 
   // Visit Assets
@@ -116,6 +118,8 @@ class AppAssets {
   static const String sms = '$svgsVisit/sms.svg';
   static const String downArrow = '$svgsVisit/arrow-down.svg';
   static const String galleryExport = '$svgsVisit/gallery-export.svg';
+  static const String arrow_down = '$svgsVisit/arrow-down.svg';
+
 
   //images visit
   static const String assetBookmark = '$assetVisit/bookmark.svg';
@@ -159,5 +163,4 @@ class AppAssets {
   static const String assetProfileCircle = '$svgsVisit/profile-circle.svg';
   static const String assetClock = '$svgsVisit/clock.svg';
   static const String assetSearchNormal = '$svgsVisit/search-normal.svg';
-
 }
