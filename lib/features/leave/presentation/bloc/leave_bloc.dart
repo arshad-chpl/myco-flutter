@@ -70,5 +70,23 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
         emit(LeaveError('Failed to add short leave: $e'));
       }
     });
+
+    on<DeleteShortLeave>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.deleteShortLeave(
+          event.shortLeaveId,
+          event.shortLeaveDate,
+          event.otherUserId,
+          event.otherUserName,
+        );
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(ShortLeaveDeleted(model)),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to delete short leave: $e'));
+      }
+    });
   }
 }

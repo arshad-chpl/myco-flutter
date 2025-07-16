@@ -16,6 +16,7 @@ import 'package:myco_flutter/features/leave/presentation/widgets/leave_filter_bo
 import 'package:myco_flutter/features/leave/presentation/widgets/month_year_header.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/sandwich_leave_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/short_leave_card.dart';
+import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 
@@ -48,6 +49,23 @@ class _LeaveScreenState extends State<LeaveScreen> {
       FetchLeaveHistoryNew(
         selectedMonth.toString().padLeft(2, '0'),
         selectedYear.toString(),
+      ),
+    );
+  }
+
+  void _deleteShortLeave(
+    String shortLeaveId,
+    String shortLeaveDate,
+    String otherUserId,
+    String otherUserName,
+  ) {
+    setState(() => isLoading = true);
+    context.read<LeaveBloc>().add(
+      DeleteShortLeave(
+        shortLeaveId,
+        shortLeaveDate,
+        otherUserId,
+        otherUserName,
       ),
     );
   }
@@ -142,6 +160,45 @@ class _LeaveScreenState extends State<LeaveScreen> {
                       leave.shortLeave == true) {
                     return ShortLeaveCard(
                       leave: _convertToShortLeaveEntry(leave),
+                      onDelete:
+                          ({
+                            required fullName,
+                            required sandwichLeaveId,
+                            required userId,
+                            required leaveDate,
+                          }) {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) => Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: MediaQuery.of(
+                                    context,
+                                  ).viewInsets.bottom,
+                                ),
+                                // to avoid keyboard overlap if needed
+                                child: CustomAlertDialog(
+                                  alertType: AlertType.delete,
+                                  content: 'do you want delete',
+                                  confirmText: 'Ok',
+                                  cancelText: 'Cancel',
+                                  onCancel: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  onConfirm: () {
+                                    _deleteShortLeave(
+                                      sandwichLeaveId ?? '',
+                                      leaveDate ?? '',
+                                      userId ?? '',
+                                      fullName ?? '',
+                                    );
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ),
+                            );
+                          },
                     );
                   } else if (leave.sandwichLeave == true &&
                       leave.shortLeave == false) {
@@ -168,7 +225,18 @@ class _LeaveScreenState extends State<LeaveScreen> {
         FabButtonModel(
           label: 'Apply Short Leave',
           imagePath: 'assets/images/short_apply_leave.png',
-          onTap: () => context.push(RoutePaths.addShortLeaveScreen),
+          onTap: () async {
+            final result = await context.push(RoutePaths.addShortLeaveScreen);
+            if (result == true) {
+              // refresh your main screen's API
+              context.read<LeaveBloc>().add(
+                FetchLeaveHistoryNew(
+                  selectedMonth.toString().padLeft(2, '0'),
+                  selectedYear.toString(),
+                ),
+              );
+            }
+          },
         ),
       ],
     ),
@@ -267,6 +335,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
         status: leave.shortLeaveStatusView ?? '',
         rejectReason: leave.shortLeaveStatusChangeReason ?? '',
         detailColor: _getShortLeaveStatusColor(leave.shortLeaveStatus),
+        leaveEntity: leave,
       );
 
   SandwichLeaveEntry _convertToSandwichLeaveEntry(LeaveHistoryEntity leave) =>

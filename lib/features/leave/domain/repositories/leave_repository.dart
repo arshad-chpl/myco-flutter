@@ -21,4 +21,11 @@ abstract class LeaveRepository {
     String time,
     String reason,
   );
+
+  Future<Either<Failure, CommonResponse>> deleteShortLeave(
+    String shortLeaveId,
+    String shortLeaveDate,
+    String otherUserId,
+    String otherUserName,
+  );
 }

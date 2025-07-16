@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -13,6 +14,9 @@ class ShortLeaveEntry {
   final String status;
   final String rejectReason;
   final Color detailColor;
+
+  final LeaveHistoryEntity leaveEntity;
+
   ShortLeaveEntry({
     required this.date,
     required this.subType,
@@ -22,13 +26,19 @@ class ShortLeaveEntry {
     required this.status,
     required this.rejectReason,
     required this.detailColor,
+    required this.leaveEntity,
   });
 }
 
 class ShortLeaveCard extends StatelessWidget {
   final ShortLeaveEntry leave;
-
-  const ShortLeaveCard({required this.leave, super.key});
+  final void Function({
+  required String? fullName,
+  required String? sandwichLeaveId,
+  required String? userId,
+  required String? leaveDate,
+  })? onDelete;
+  const ShortLeaveCard({required this.leave, this.onDelete, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +61,20 @@ class ShortLeaveCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        onPressed: () =>
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Still Work Left As no UI'),
-                              ),
-                            ),
+                        onPressed: () {
+                          final entity = leave.leaveEntity;
+                          final sandwichLeaveId = entity.sandwichLeaveId;
+                          final otherFullName = entity.userFullName;
+                          final otherUserId = entity.userId;
+                          final leaveDate = entity.shortLeaveDate;
+
+                          onDelete?.call(
+                            fullName: entity.userFullName,
+                            sandwichLeaveId: entity.sandwichLeaveId,
+                            userId: entity.userId,
+                            leaveDate: entity.shortLeaveDate,
+                          );
+                        },
                         icon: Icon(
                           Icons.delete_outline,
                           size: 0.022 * Responsive.getHeight(context),

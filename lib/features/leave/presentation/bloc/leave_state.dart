@@ -42,6 +42,13 @@ class ShortLeaveAdded extends LeaveState {
   List<Object> get props => [commonResponse];
 }
 
+class ShortLeaveDeleted extends LeaveState {
+  final CommonResponse commonResponse;
+  const ShortLeaveDeleted(this.commonResponse);
+  @override
+  List<Object> get props => [commonResponse];
+}
+
 class LeaveError extends LeaveState {
   final String message;
   const LeaveError(this.message);
