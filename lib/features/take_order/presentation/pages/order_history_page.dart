@@ -5,6 +5,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -13,14 +14,7 @@ class OrderHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      leading: const BackButton(),
-      title: CustomText(
-        'Order History',
-        fontSize: 20 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-      ),
-    ),
+    appBar: CustomAppbar(title: 'Order History'),
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),
@@ -53,7 +47,7 @@ class OrderHistoryCard extends StatelessWidget {
       side: BorderSide(color: AppTheme.getColor(context).outline),
     ),
 
-    color: AppTheme.getColor(context).onPrimary,
+    // color: AppTheme.getColor(context).onPrimary,
     child: Column(
       children: [
         // Header
@@ -261,7 +255,7 @@ class OrderHistoryCard extends StatelessWidget {
   ) => getBottomSheet(
     context,
     Container(
-      color: AppTheme.getColor(context).onPrimary,
+      // color: AppTheme.getColor(context).onPrimary,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -381,7 +375,7 @@ class OrderHistoryCard extends StatelessWidget {
         context,
         Container(
           width: Responsive.getWidth(context),
-          color: AppTheme.getColor(context).onPrimary,
+          // color: AppTheme.getColor(context).onPrimary,
           padding: EdgeInsets.symmetric(
             horizontal: 0.08 * Responsive.getWidth(context),
           ),
@@ -426,7 +420,7 @@ class OrderHistoryCard extends StatelessWidget {
     required String title,
     required String value,
     required VoidCallback onTap,
-    Color textColor = AppColors.black,
+    Color? textColor,
     TextDecoration? decoration,
   }) => Row(
     children: [
@@ -447,7 +441,7 @@ class OrderHistoryCard extends StatelessWidget {
           child: CustomText(
             value,
             decoration: decoration,
-            color: textColor,
+            color: textColor ?? AppTheme.getColor(context).onSurface,
             fontWeight: FontWeight.w500,
             fontSize: 13 * Responsive.getResponsiveText(context),
           ),
@@ -461,7 +455,7 @@ class OrderHistoryCard extends StatelessWidget {
   ) => getBottomSheet(
     context,
     Container(
-      color: AppTheme.getColor(context).onPrimary,
+      // color: AppTheme.getColor(context).onPrimary,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
-// if we do not implement the preferredSizeWidget then it will not let our custom app to be place at appbar:
-// ignore: must_be_immutable
 class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final double height;
-  @override
-  final Key? key;
   final Widget? leading;
   final bool automaticallyImplyLeading;
-  final Widget? title;
   final List<Widget>? actions;
   final Widget? flexibleSpace;
   final PreferredSizeWidget? bottom;
@@ -21,7 +18,6 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final Color? shadowColor;
   final Color? surfaceTintColor;
   final ShapeBorder? shape;
-  final Color? backgroundColor;
   final Color? foregroundColor;
   final IconThemeData? iconTheme;
   final IconThemeData? actionsIconTheme;
@@ -34,22 +30,23 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final double? toolbarHeight;
   final double? leadingWidth;
   final TextStyle? toolbarTextStyle;
-  final TextStyle? titleTextStyle;
   final SystemUiOverlayStyle? systemOverlayStyle;
   final bool forceMaterialTransparency;
   final Clip? clipBehavior;
   final Color? appBarBackgoundColor;
-  final String appBarText;
-  final FontWeight? fontWeight;
-  final double? size;
-  final Color? appbartxtcolor;
+  final String title;
+  final FontWeight? titleFontWeight;
+  final double? titleFontSize;
+  final Color? titileColor;
+  final EdgeInsetsGeometry? actionsPadding;
+  final bool? isKey;
+  final Widget? appBarTitleWidget;
 
-  CustomAppbar({
-    this.key,
-    this.appbartxtcolor,
+  const CustomAppbar({
+    super.key,
+    this.titileColor,
     this.leading,
     this.automaticallyImplyLeading = true,
-    this.title,
     this.actions,
     this.flexibleSpace,
     this.bottom,
@@ -59,7 +56,6 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
     this.shadowColor,
     this.surfaceTintColor,
     this.shape,
-    this.backgroundColor,
     this.foregroundColor,
     this.iconTheme,
     this.actionsIconTheme,
@@ -72,15 +68,14 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
     this.toolbarHeight,
     this.leadingWidth,
     this.toolbarTextStyle,
-    this.titleTextStyle,
     this.systemOverlayStyle,
     this.forceMaterialTransparency = false,
     this.clipBehavior,
     this.height = kToolbarHeight,
     this.appBarBackgoundColor,
-    this.appBarText = '',
-    this.fontWeight,
-    this.size,
+    this.title = '',
+    this.titleFontWeight,
+    this.titleFontSize, this.actionsPadding, this.isKey, this.appBarTitleWidget,
   });
 
   @override
@@ -93,41 +88,37 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
 class _CustomAppbarState extends State<CustomAppbar> {
   @override
   Widget build(BuildContext context) => AppBar(
-    title:
-        widget.title ??
-        Text(
-          widget.appBarText,
-          style: TextStyle(
-            fontSize: widget.size,
-            fontWeight: widget.fontWeight,
-            color:
-                widget.appbartxtcolor ?? AppTheme.getColor(context).onPrimary,
-          ),
+    title: widget.appBarTitleWidget??
+        CustomText(
+          widget.title,
+          fontSize: widget.titleFontSize ?? 24 * Responsive.getResponsiveText(context),
+          fontWeight: widget.titleFontWeight ?? FontWeight.w700,
+          color: widget.titileColor ?? AppTheme.getColor(context).onSurface,
+          isKey: widget.isKey??false,
         ),
-
     backgroundColor:
         widget.appBarBackgoundColor ?? AppTheme.getColor(context).surface,
-    leading:
-        widget.leading ??
-        (widget.automaticallyImplyLeading
-            ? IconButton(
-                icon: Image.asset(
-                  'assets/icons/sort.png',
-                  color: AppTheme.getColor(context).onSurface,
-                ),
-                onPressed: () {},
-              )
-            : null),
+    leading: widget.automaticallyImplyLeading
+        ? (widget.leading ??
+        Padding(
+          padding: EdgeInsets.all(12 * Responsive.getResponsive(context)),
+          child: SvgPicture.asset(
+            "assets/svgs/back_arrow.svg",
+            height: 16,
+            width: 16,
+          ),
+        ))
+        : null,
 
     ///remove padding if leading is null
     surfaceTintColor: widget.surfaceTintColor,
     elevation: widget.elevation,
     shadowColor: widget.shadowColor,
     shape: widget.shape,
-    toolbarHeight: widget.toolbarHeight,
+    toolbarHeight:
+        widget.toolbarHeight ?? 0.045 * Responsive.getHeight(context),
     toolbarOpacity: widget.toolbarOpacity,
-    titleTextStyle: widget.titleTextStyle,
-    centerTitle: widget.centerTitle,
+    centerTitle: widget.centerTitle ?? false,
     toolbarTextStyle: widget.toolbarTextStyle,
     foregroundColor: widget.foregroundColor,
     clipBehavior: widget.clipBehavior,
@@ -136,12 +127,12 @@ class _CustomAppbarState extends State<CustomAppbar> {
     bottomOpacity: widget.bottomOpacity,
     flexibleSpace: widget.flexibleSpace,
     excludeHeaderSemantics: widget.excludeHeaderSemantics,
-    titleSpacing: widget.titleSpacing,
+    titleSpacing: widget.titleSpacing ?? 0.011 * Responsive.getWidth(context),
     primary: widget.primary,
     systemOverlayStyle:
         widget.systemOverlayStyle ??
         SystemUiOverlayStyle(
-          statusBarColor: AppTheme.getColor(context).primary,
+          statusBarColor: AppTheme.getColor(context).surface,
         ),
     forceMaterialTransparency: widget.forceMaterialTransparency,
     key: widget.key,
@@ -150,6 +141,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
     iconTheme: widget.iconTheme,
     leadingWidth: widget.leadingWidth,
     scrolledUnderElevation: widget.scrolledUnderElevation,
+    actionsPadding: widget.actionsPadding,
     // notificationPredicate: ,
   );
 }

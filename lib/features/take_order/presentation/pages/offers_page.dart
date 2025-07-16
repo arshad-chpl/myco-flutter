@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/offer_box.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 
 // ignore: must_be_immutable
 class OffersPage extends StatelessWidget {
@@ -34,15 +34,7 @@ class OffersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
-    appBar: AppBar(
-      backgroundColor: AppTheme.getColor(context).surface,
-      title: CustomText(
-        'Offers',
-        fontSize: 20 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-      ),
-      leading: const BackButton(),
-    ),
+    appBar: CustomAppbar(title: 'Offers'),
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),

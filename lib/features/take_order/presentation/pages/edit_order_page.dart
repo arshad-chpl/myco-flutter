@@ -3,6 +3,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -12,11 +13,8 @@ class EditOrderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
-    appBar: AppBar(
-      backgroundColor: AppTheme.getColor(context).surface,
-      leading: const BackButton(),
-      // centerTitle: false,
-      title: Column(
+    appBar: CustomAppbar(
+      appBarTitleWidget: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
@@ -139,6 +137,7 @@ class EditOrderPage extends StatelessWidget {
                                       12 *
                                       Responsive.getResponsiveText(context),
                                   fontWeight: FontWeight.w500,
+                                  color: AppColors.black,
                                 ),
                               ],
                             ),
@@ -249,7 +248,7 @@ class EditOrderPage extends StatelessWidget {
     BuildContext context, {
     required String leftText,
     required String rightText,
-    Color textColor = AppColors.black,
+    Color? textColor,
   }) => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -257,19 +256,19 @@ class EditOrderPage extends StatelessWidget {
         leftText,
         fontSize: 15 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w600,
-        color: textColor,
+        color: textColor ?? AppTheme.getColor(context).onSurface,
       ),
       CustomText(
         rightText,
         fontSize: 15 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w500,
-        color: textColor,
+        color: textColor ?? AppTheme.getColor(context).onSurface,
       ),
     ],
   );
   BoxDecoration getCommonDecoration(BuildContext context) => BoxDecoration(
     border: Border.all(color: AppTheme.getColor(context).outline),
     borderRadius: BorderRadius.circular(12 * Responsive.getResponsive(context)),
-    color: AppTheme.getColor(context).onPrimary,
+    // color: AppTheme.getColor(context).onPrimary,
   );
 }

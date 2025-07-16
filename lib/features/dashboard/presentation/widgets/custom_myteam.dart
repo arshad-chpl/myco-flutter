@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class PersonData {
   final String firstName;
@@ -52,8 +53,7 @@ class OverlappingPeopleCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
+  Widget build(BuildContext context) => SizedBox(
       height: cardHeight ?? 145,
       width: cardWidth ?? double.infinity,
       child: Stack(
@@ -62,7 +62,7 @@ class OverlappingPeopleCard extends StatelessWidget {
         children: List.generate(people.length, (index) {
           final person = people[index];
           final Color statusColor = person.isActive
-              ? Color(0xFF1CE742)
+              ? const Color(0xFF1CE742)
               : Colors.red;
           return Positioned(
             left: index * 75, // Controls horizontal overlap
@@ -109,24 +109,18 @@ class OverlappingPeopleCard extends StatelessWidget {
                   width: 90,
                   child: Column(
                     children: [
-                      Text(
+                      CustomText(
                         person.firstName,
-                        style:
-                            firstNameStyle ??
-                            TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
+                        fontSize: firstNameStyle?.fontSize ?? 12,
+                        fontWeight: firstNameStyle?.fontWeight ?? FontWeight.bold,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      Text(
+                      CustomText(
                         person.lastName,
-                        style:
-                            lastNameStyle ??
-                            TextStyle(fontSize: 12, color: Colors.black87),
+                        fontSize: firstNameStyle?.fontSize ?? 12,
+                        fontWeight: firstNameStyle?.fontWeight ?? FontWeight.bold,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -140,5 +134,4 @@ class OverlappingPeopleCard extends StatelessWidget {
         }),
       ),
     );
-  }
 }

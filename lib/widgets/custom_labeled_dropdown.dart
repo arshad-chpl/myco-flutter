@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
@@ -27,6 +28,16 @@ class LabeledDropdown<T> extends StatelessWidget {
   final double? popupElevation;
   final double? borderRadius;
   final double? spacing;
+  final Color? textColor;
+  final FontWeight? textFontweight;
+  final double? textFontSize;
+  final TextDecoration? textDecoration;
+  final Color? textDecorationColor;
+  final TextAlign? textAlign;
+  final int? textMaxLine;
+  final TextOverflow? textOverflow;
+  final bool? suffixIconOn;
+  final Widget? suffix;
 
   const LabeledDropdown({
     super.key,
@@ -52,6 +63,16 @@ class LabeledDropdown<T> extends StatelessWidget {
     this.colorBackground,
     this.popupElevation,
     this.borderRadius,
+    this.textColor,
+    this.textFontweight,
+    this.textFontSize,
+    this.textDecoration,
+    this.textDecorationColor,
+    this.textAlign,
+    this.textMaxLine,
+    this.textOverflow,
+    this.suffixIconOn,
+    this.suffix,
   });
 
   @override
@@ -62,9 +83,15 @@ class LabeledDropdown<T> extends StatelessWidget {
         children: [
           CustomText(
             label,
-            color: AppColors.textGray,
-            fontSize: 16 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.bold,
+            color: textColor ??  AppTheme.getColor(context).onSurfaceVariant,
+            fontSize:
+                textFontSize ?? 16 * Responsive.getResponsiveText(context),
+            fontWeight: textFontweight ?? FontWeight.bold,
+            decoration: textDecoration,
+            textAlign: textAlign,
+            decorationColor: textDecorationColor,
+            maxLines: textMaxLine,
+            overflow: textOverflow,
           ),
           if (isRequired)
             CustomText(
@@ -102,6 +129,9 @@ class LabeledDropdown<T> extends StatelessWidget {
         popupElevation: popupElevation,
         popupShape: popupShape,
         useRadioList: useRadioList ?? false,
+        spacing: spacing,
+        suffixIconOn: suffixIconOn,
+        suffix: suffix,
       ),
     ],
   );

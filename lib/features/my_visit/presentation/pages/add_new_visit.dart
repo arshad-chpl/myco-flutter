@@ -44,10 +44,10 @@ class _AddNewVisitState extends State<AddNewVisit> {
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppColors.backgroundPrimary,
     appBar: CustomAppbar(
-      appBarText: 'Add New Visit',
+      title: 'Add New Visit',
       appBarBackgoundColor: Colors.white,
-      appbartxtcolor: Colors.black,
-      fontWeight: FontWeight.bold,
+      titileColor: Colors.black,
+      titleFontWeight: FontWeight.bold,
       leading: IconButton(
         icon: Icon(
           Icons.arrow_back,

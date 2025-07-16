@@ -8,6 +8,7 @@ import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bl
 import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -18,14 +19,7 @@ class DistributorVisitorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
-    appBar: AppBar(
-      backgroundColor: AppTheme.getColor(context).surface,
-      title: CustomText(
-        'Mahakali Tractors (RT43575)',
-        fontSize: 20 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-      ),
-    ),
+    appBar: CustomAppbar(title: 'Mahakali Tractors (RT43575)'),
     body: SingleChildScrollView(
       child: Container(
         height: Responsive.getHeight(context),
@@ -133,7 +127,7 @@ class DistributorVisitorPage extends StatelessWidget {
                     border: Border.all(
                       color: AppTheme.getColor(context).outline,
                     ),
-                    color: AppTheme.getColor(context).onPrimary,
+                    // color: AppTheme.getColor(context).onPrimary,
                     borderRadius: BorderRadius.circular(
                       12 * Responsive.getResponsive(context),
                     ),
@@ -274,7 +268,7 @@ class DistributorVisitorPage extends StatelessWidget {
               width: 0.83 * Responsive.getWidth(context),
               decoration: BoxDecoration(
                 border: Border.all(color: AppTheme.getColor(context).outline),
-                color: AppTheme.getColor(context).onPrimary,
+                // color: AppTheme.getColor(context).onPrimary,
                 borderRadius: BorderRadius.circular(
                   12 * Responsive.getResponsive(context),
                 ),
@@ -370,7 +364,7 @@ class DistributorVisitorPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           12 * Responsive.getResponsive(context),
         ),
-        color: AppTheme.getColor(context).onPrimary,
+        // color: AppTheme.getColor(context).onPrimary,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -393,7 +387,7 @@ class DistributorVisitorPage extends StatelessWidget {
               horizontal: 0.08 * Responsive.getWidth(context),
             ),
             decoration: BoxDecoration(
-              color: AppTheme.getColor(context).onPrimary,
+              // color: AppTheme.getColor(context).onPrimary,
               border: Border.all(color: AppTheme.getColor(context).outline),
               borderRadius: BorderRadius.circular(
                 12 * Responsive.getResponsive(context),
@@ -457,7 +451,7 @@ class DistributorVisitorPage extends StatelessWidget {
   }) => getBottomSheet(
     context,
     Container(
-      color: AppTheme.getColor(context).onPrimary,
+      // color: AppTheme.getColor(context).onPrimary,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
