@@ -5,6 +5,7 @@ import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.dart';
 import 'package:myco_flutter/features/company_info/presentation/di/company_info_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
+import 'package:myco_flutter/features/dashboard/presentation/di/dashboard_di.dart';
 import 'package:myco_flutter/features/language_selector/presentation/di/language_di.dart';
 import 'package:myco_flutter/features/leave/presentation/di/leave_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
@@ -29,6 +30,9 @@ Future<void> init() async {
 
   //========Company Selector=========
   companySelectorDi(sl);
+
+  //========Dashboard=========
+  DashboardDi(sl);
 
   //========Inquiry=========
   InquiryDi(sl);

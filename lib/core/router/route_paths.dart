@@ -15,7 +15,6 @@ class RoutePaths {
   static const String details = '/details';
   static const String visitReport = '/visit_report';
 
-
   static const String offers = '/offers';
   static const String products = '/products';
   static const String orderSummary = '/order-summary';
@@ -31,7 +30,6 @@ class RoutePaths {
   static const String signUpForm = '/sign-up-form';
   //
   // static const String addVisit = '/add-visit';
-
 
   // static const String distributorVisitor = '/distributor-visitor';
   // static const String noOrder = '/no-order';
@@ -115,6 +113,7 @@ class RoutePaths {
   static const String adminEducation = 'education';
   static const String adminAchievements = 'achievements';
   static const String adminEmployeesFace = 'employees-face';
+  static const String CustomerAddNewVisit = 'CustomerAddNewVisit';
 
   //maulik
   static const String assetsDetails = '/assets-details';

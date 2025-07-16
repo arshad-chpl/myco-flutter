@@ -7,7 +7,7 @@ abstract class DashboardRepository {
   /// Fetches the User's ID card details from the remote server.
   ///
   /// Returns a [IdCardDetailResponse] containing the dashboard data.
-  Future<Either<Failure,IdCardEntity>> getIDCardDetails(Map dataMap);
+  Future<Either<Failure,IdCardEntity>> getIDCardDetails(Map<String,dynamic> dataMap);
 
   /// Fetches the latest news articles from the remote server.
   ///
