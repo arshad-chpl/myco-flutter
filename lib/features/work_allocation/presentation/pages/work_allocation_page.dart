@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 
 class WorkAllocationPage extends StatefulWidget {
   const WorkAllocationPage({super.key});
@@ -18,7 +19,9 @@ class _WorkAllocationPageState extends State<WorkAllocationPage> {
     body: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        CustomSearchField(
 
+        )
       ],
     ),
   );

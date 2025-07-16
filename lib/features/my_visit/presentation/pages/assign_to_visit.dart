@@ -36,13 +36,14 @@ class _AssignToVisitState extends State<AssignToVisit> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(
-      appBarText: 'Add New Visit',
-      appbartxtcolor: AppTheme.getColor(context).onSurface,
-      size: 16 * Responsive.getResponsive(context),
-      appBarBackgoundColor: AppTheme.getColor(context).surface,
-      leading: BackButton(),
-    ),
+    // appBar: CustomAppbar(
+    //   title: 'Add New Visit',
+    //   appBarText: 'Add New Visit',
+    //   appbartxtcolor: AppTheme.getColor(context).onSurface,
+    //   size: 16 * Responsive.getResponsive(context),
+    //   appBarBackgoundColor: AppTheme.getColor(context).surface,
+    //   leading: BackButton(),
+    // ),
     body: SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(
