@@ -7,8 +7,6 @@ class AppAssets {
   static const String dashboard = '$basePath/dashboard';
   static const String iconsPath = '$basePath/icons';
   static const String splash = '$basePath/splash';
-  static const String visit = '$basePath/visit';
-  static const String svgsVisit = '$svgsPath/visit';
 
   static const String assetVisit = '$basePath/add_expense';
 
@@ -16,6 +14,9 @@ class AppAssets {
   static const String assets = '$basePath/assets';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
+
+  static const String visit = '$basePath/visit';
+  static const String svgsVisit = '$svgsPath/visit';
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -64,6 +65,7 @@ class AppAssets {
   static const String visitReport = '$svgsVisit/visit_report.png';
   static const String faceMatch = '$svgsVisit/face_match.png';
 
+  static const String result = '$svgsVisit/result.svg';
   static const String arrowDown = '$svgsPath/arrow_down.svg';
   static const String searchIcon = '$svgsPath/search_icon.svg';
 
@@ -115,6 +117,14 @@ class AppAssets {
   static const String assetDocumentText = '$assetVisit/document-text.svg';
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
   static const String Search = '$svgsVisit/search.svg';
+
+  //face detection screen assets
+  static const String assetCircle = '$visit/circle.png';
+  static const String assetCross = '$visit/cross.png';
+  static const String assetsDanger = '$visit/danger.png';
+  static const String locationIcon = '$visit/location_icon.png';
+  static const String locationPreview = '$visit/location_preview.png';
+  static const String outOfRange = '$visit/out_of_range.png';
 
   // assets folder
   static const String assetsDollar = '$assets/dollar-square.svg';

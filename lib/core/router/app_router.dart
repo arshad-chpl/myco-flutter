@@ -50,6 +50,7 @@ import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_det
 
 import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
@@ -63,7 +64,6 @@ import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visi
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
@@ -205,11 +205,20 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
-        builder: (context, state) => BlocProvider(
-          create: (context) =>
-              GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
-          child: const FaceDetectionPage(),
-        ),
+        pageBuilder: (context, state) => MaterialPage(
+              child: BlocProvider(
+                  create: (context) =>
+                GetIt.I<FaceDetectionBloc>()
+                ..add(LaunchCamera()),
+                child: const FaceDetectionPage(),
+              )
+          ),
+        // builder: (context, state) => BlocProvider(
+        //   create: (context) =>
+        //   GetIt.I<FaceDetectionBloc>()
+        //     ..add(LaunchCamera()),
+        //   child: const FaceDetectionPage(),
+        // ),
       ),
       // Add all modular routes here
       // Add all modular routes here
@@ -296,6 +305,11 @@ class AppRouter {
         builder: (context, state) => const ViewVisitDetailsPage(),
       ),
       GoRoute(
+        path: RoutePaths.myProfile,
+        name: 'my-profile',
+        builder: (context, state) => const MyProfilePage(),
+        ),
+        GoRoute(
         path: RoutePaths.adminView,
         name: RoutePaths.adminView,
         builder: (context, state) => BlocProvider(
