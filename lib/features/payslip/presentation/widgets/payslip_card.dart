@@ -157,7 +157,8 @@ class _PayslipCardState extends State<PayslipCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomText(
-                  'Net Pay',
+                  'net_pay',
+                  // 'Net Pay',
                   fontSize: 14 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
@@ -178,7 +179,8 @@ class _PayslipCardState extends State<PayslipCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      'Gross Salary (A)',
+                      'gross_pay' + '(A)',
+                      // 'Gross Salary (A)',
                       fontSize: 15 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w600,
                     ),
@@ -194,7 +196,8 @@ class _PayslipCardState extends State<PayslipCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      'Total Deduction (B)',
+                      'gross_deduction' + '(B)',
+                      // 'Total Deduction (B)',
                       fontSize: 15 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w600,
                     ),
@@ -210,7 +213,8 @@ class _PayslipCardState extends State<PayslipCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      'Net Pay (A-B)',
+                      'net_pay' + '(A-B)',
+                      // 'Net Pay (A-B)',
                       fontSize: 15 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.bold,
                     ),
@@ -228,7 +232,8 @@ class _PayslipCardState extends State<PayslipCard> {
                     GestureDetector(
                       onTap: widget.onDownload,
                       child: CustomText(
-                        'Download Payslip',
+                        'download_payslip',
+                        // 'Download Payslip',
                         fontSize: 14 * Responsive.getResponsiveText(context),
                         color: AppTheme.getColor(context).secondary,
                         decoration: TextDecoration.underline,
@@ -239,7 +244,8 @@ class _PayslipCardState extends State<PayslipCard> {
                     GestureDetector(
                       onTap: widget.onView,
                       child: CustomText(
-                        'View Payslip',
+                        'view_payslip',
+                        // 'View Payslip',
                         fontSize: 13,
                         color: AppTheme.getColor(context).secondary,
                         decoration: TextDecoration.underline,

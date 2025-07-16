@@ -37,7 +37,8 @@ class PayslipDetail extends StatelessWidget {
                         color: AppTheme.getColor(context).onPrimary,
                       ),
                       title: CustomText(
-                        'Payslip March 2025',
+                        'payslip' + 'March 2025',
+                        // 'Payslip March 2025',
                         color: AppTheme.getColor(context).onPrimary,
                         fontWeight: FontWeight.w600,
                       ),
@@ -61,7 +62,7 @@ class PayslipDetail extends StatelessWidget {
                           border: Border.all(
                             color: AppTheme.getColor(context).outline,
                           ),
-                          color: AppTheme.getColor(context).onPrimary,
+                          color: AppTheme.getColor(context).surface,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,11 +71,13 @@ class PayslipDetail extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                  'NET PAY',
+                                  'net_pay',
+                                  // 'NET PAY',
                                   fontWeight: FontWeight.w600,
                                 ),
                                 CustomText(
-                                  'SALARY MODE',
+                                  'salary_mode',
+                                  // 'SALARY MODE',
                                   fontWeight: FontWeight.w600,
                                 ),
                               ],
@@ -95,7 +98,8 @@ class PayslipDetail extends StatelessWidget {
                                   color: AppTheme.getColor(context).primary,
                                 ),
                                 CustomText(
-                                  'Bank Transaction',
+                                  'bank_transaction',
+                                  // 'Bank Transaction',
                                   fontWeight: FontWeight.w600,
                                   fontSize:
                                       16 *
@@ -115,7 +119,8 @@ class PayslipDetail extends StatelessWidget {
                               height: 0.005 * Responsive.getHeight(context),
                             ),
                             const CustomText(
-                              'Net Pay (In Words)',
+                              'net_pay' + '(In Words)',
+                              // 'Net Pay (In Words)',
                               fontWeight: FontWeight.w600,
                               textAlign: TextAlign.start,
                             ),
@@ -185,7 +190,8 @@ class PayslipDetail extends StatelessWidget {
                 horizontal: 0.08 * Responsive.getWidth(context),
               ),
               child: CommonCard(
-                title: 'Earnings',
+                title: 'earnings',
+                // 'Earnings',
                 bottomWidget: Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 0.04 * Responsive.getWidth(context),
@@ -235,7 +241,8 @@ class PayslipDetail extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            'Conveyance',
+                            'conveyance',
+                            // 'Conveyance',
                             color: AppTheme.getColor(context).onSurface,
                             fontSize:
                                 15 * Responsive.getResponsiveText(context),
@@ -250,12 +257,15 @@ class PayslipDetail extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const DottedLineWidget(),
+                      DottedLineWidget(
+                        color: AppTheme.getColor(context).onSurface,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            'Gross Salary (A)',
+                            'gross_pay' + '(A)',
+                            // 'Gross Salary (A)',
                             color: AppTheme.getColor(context).onSurface,
                             fontWeight: FontWeight.w800,
                             fontSize:
@@ -282,7 +292,8 @@ class PayslipDetail extends StatelessWidget {
                 horizontal: 0.08 * Responsive.getWidth(context),
               ),
               child: CommonCard(
-                title: 'Deductions',
+                title: 'deductions',
+                //  'Deductions',
                 headerColor: AppTheme.getColor(context).error,
                 bottomWidget: Container(
                   padding: EdgeInsets.symmetric(
@@ -295,7 +306,8 @@ class PayslipDetail extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            'Professional Tax',
+                            'professional_tex',
+                            // 'Professional Tax',
                             color: AppTheme.getColor(context).onSurface,
                             fontSize:
                                 14 * Responsive.getResponsiveText(context),
@@ -310,12 +322,15 @@ class PayslipDetail extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const DottedLineWidget(),
+                      DottedLineWidget(
+                        color: AppTheme.getColor(context).onSurface,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            'Total Deduction',
+                            'total_deductions',
+                            // 'Total Deduction',
                             color: AppTheme.getColor(context).onSurface,
                             fontWeight: FontWeight.w700,
                             fontSize:
@@ -342,7 +357,8 @@ class PayslipDetail extends StatelessWidget {
                 horizontal: 0.08 * Responsive.getWidth(context),
               ),
               child: CommonCard(
-                title: 'Net Pay',
+                title: 'net_pay',
+                // 'Net Pay',
                 headerColor: AppTheme.getColor(context).primary,
                 bottomWidget: Container(
                   padding: EdgeInsets.symmetric(
@@ -355,7 +371,8 @@ class PayslipDetail extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            'Net Salary (A-B)',
+                            'net_salary' + '(A-B)',
+                            // 'Net Salary (A-B)',
                             color: AppTheme.getColor(context).onSurface,
                             fontWeight: FontWeight.bold,
                             fontSize:
@@ -370,12 +387,15 @@ class PayslipDetail extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const DottedLineWidget(),
+                      DottedLineWidget(
+                        color: AppTheme.getColor(context).onSurface,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            'Net Pay',
+                            'net_pay',
+                            // 'Net Pay',
                             color: AppTheme.getColor(context).primary,
                             fontWeight: FontWeight.bold,
                             fontSize:
@@ -401,7 +421,8 @@ class PayslipDetail extends StatelessWidget {
                 horizontal: 0.08 * Responsive.getWidth(context),
               ),
               child: CommonCard(
-                title: 'Total CTC',
+                title: 'total_ctc',
+                //  'Total CTC',
                 headerColor: AppColors.myCoCyan,
                 bottomWidget: Container(
                   padding: EdgeInsets.symmetric(
@@ -414,7 +435,8 @@ class PayslipDetail extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            'Total Employees Contributiuon',
+                            'total_employers_contribution',
+                            // 'Total Employees Contributiuon',
                             color: AppTheme.getColor(context).onSurface,
                             fontWeight: FontWeight.bold,
                             fontSize:
@@ -429,12 +451,15 @@ class PayslipDetail extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const DottedLineWidget(),
+                      DottedLineWidget(
+                        color: AppTheme.getColor(context).onSurface,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            'Total CTC',
+                            'total_ctc',
+                            // 'Total CTC',
                             color: AppColors.myCoCyan,
                             fontWeight: FontWeight.bold,
                             fontSize:

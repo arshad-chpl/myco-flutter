@@ -31,7 +31,7 @@ class DistributorCard extends StatelessWidget {
       ),
       side: BorderSide(color: AppTheme.getColor(context).outline),
     ),
-    color: AppTheme.getColor(context).onPrimary,
+    // color: AppTheme.getColor(context).onPrimary,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
