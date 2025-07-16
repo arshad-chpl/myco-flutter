@@ -61,6 +61,8 @@ import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
+import 'package:myco_flutter/features/sign_in/domain/usecases/primary_register_usecase.dart';
+import 'package:myco_flutter/features/sign_in/presentation/bloc/primary_register_bloc.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
@@ -257,8 +259,14 @@ class AppRouter {
       // ),
       GoRoute(
         path: RoutePaths.signUpForm,
-        name: 'select-other-company',
-        builder: (context, state) => const SignupFormPage(),
+        name: RoutePaths.signUpForm,
+        builder: (context, state) => BlocProvider(
+
+            create: (context) =>
+            PrimaryRegisterBloc(registerUseCase: GetIt.I<PrimaryRegisterUseCase>())
+              ..add(LoadBranch()),
+
+            child: const SignupFormPage()),
       ),
       GoRoute(
         path: RoutePaths.getStarted,

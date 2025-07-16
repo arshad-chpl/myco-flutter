@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -9,6 +11,7 @@ import 'package:myco_flutter/features/company_selector/data/models/society_respo
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_state.dart';
+import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_term_and_condition.dart';
 import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
@@ -231,25 +234,21 @@ class LoginUi extends StatelessWidget {
             ),
             SizedBox(height: 0.025 * Responsive.getHeight(context)),
             Center(
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Don’t have an account? ',
-                      style: TextStyle(
-                        color: AppTheme.getColor(context).onSurface,
-                        fontSize: 14 * Responsive.getResponsiveText(context),
-                      ),
+              child: Row(
+                children: [
+                  const CustomText('Don’t have an account? ',),
+
+                  InkWell(
+                    onTap: (){
+                      context.go(RoutePaths.signUpForm);
+                    },
+                    child: CustomText(
+                      'Sign Up Here',
+                      fontSize: 20 * Responsive.getResponsiveText(context),
+                      color: AppTheme.getColor(context).primary,
                     ),
-                    TextSpan(
-                      text: 'Sign Up Here',
-                      style: TextStyle(
-                        color: AppTheme.getColor(context).primary,
-                        fontSize: 14 * Responsive.getResponsiveText(context),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 0.025 * Responsive.getHeight(context)),
