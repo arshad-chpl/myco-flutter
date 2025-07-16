@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/visits/presentation/widgets/report_dashed_container.dart';
-import 'package:myco_flutter/features/visits/presentation/widgets/test_text_icon.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/report_dashed_container.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/test_text_icon.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 
 //Bottom sheet for show visit report content
@@ -18,42 +19,44 @@ class TestNewVisit extends StatefulWidget {
 class _TestNewVisitState extends State<TestNewVisit> {
   @override
   Widget build(BuildContext context) => Container(
-    padding: EdgeInsets.symmetric(horizontal: 0.08 * getWidth(context)),
+    padding: EdgeInsets.symmetric(
+      horizontal: 0.08 * Responsive.getWidth(context),
+    ),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(10 * getResponsive(context)),
-        topRight: Radius.circular(10 * getResponsive(context)),
+        topLeft: Radius.circular(10 * Responsive.getResponsive(context)),
+        topRight: Radius.circular(10 * Responsive.getResponsive(context)),
       ),
     ),
 
     child: SingleChildScrollView(
       child: Column(
-        spacing: 10 * getResponsive(context),
+        spacing: 10 * Responsive.getResponsive(context),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 0.015 * getHeight(context)),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
           //Test heading
           TestTextIcon(),
-          SizedBox(height: 0.008 * getHeight(context)),
+          SizedBox(height: 0.008 * Responsive.getHeight(context)),
 
           //Branch LabelTextField
           LabeledTextField(
-            label: 'Branch',
-            hint: 'Sales',
+            label: LanguageManager().get('branch'),
+            hint: LanguageManager().get('sales'),
             hintTextStyle: TextStyle(
               color: AppTheme.getColor(context).onSurface,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
             ),
             textAlignment: TextAlign.start,
             prefix: SvgPicture.asset(AppAssets.data, fit: BoxFit.scaleDown),
-            widthFactor: getWidth(context),
+            widthFactor: Responsive.getWidth(context),
           ),
-          SizedBox(height: 0.002 * getHeight(context)),
+          SizedBox(height: 0.002 * Responsive.getHeight(context)),
 
           //image_Dashed Container
           ReportDashedContainer(),
-          SizedBox(height: 0.012 * getHeight(context)),
+          SizedBox(height: 0.012 * Responsive.getHeight(context)),
 
           //Today work LabelTextField
           LabeledTextField(
@@ -61,13 +64,15 @@ class _TestNewVisitState extends State<TestNewVisit> {
             label: 'Today Work',
             hint: 'SalesNVISWINDO',
             hintTextStyle: TextStyle(
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               color: AppTheme.getColor(context).onSurface,
             ),
-            widthFactor: getWidth(context),
+            widthFactor: Responsive.getWidth(context),
             border: OutlineInputBorder(
               borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(12 * getResponsive(context)),
+              borderRadius: BorderRadius.circular(
+                12 * Responsive.getResponsive(context),
+              ),
             ),
             prefix: SvgPicture.asset(
               AppAssets.docoumentText,

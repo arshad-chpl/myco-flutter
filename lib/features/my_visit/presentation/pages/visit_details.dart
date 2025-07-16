@@ -3,11 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/visits/presentation/widgets/end_remark.dart';
-import 'package:myco_flutter/features/visits/presentation/widgets/person_details.dart';
-import 'package:myco_flutter/features/visits/presentation/widgets/share_btn_row.dart';
-import 'package:myco_flutter/features/visits/presentation/widgets/start_end_time.dart';
-import 'package:myco_flutter/features/visits/presentation/widgets/visit_btn_row.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/end_remark.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/person_details.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/share_btn_row.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/start_end_time.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_btn_row.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -30,13 +30,13 @@ class _DetailsPageState extends State<DetailsPage> {
       title: CustomText(
         'Visit Details',
         fontWeight: FontWeight.w700,
-        fontSize: 18 * getResponsiveText(context),
+        fontSize: 18 * Responsive.getResponsiveText(context),
       ),
     ),
     body: Padding(
       padding: EdgeInsets.only(
-        left: 31 * getResponsive(context),
-        right: 32 * getResponsive(context),
+        left: 31 * Responsive.getResponsive(context),
+        right: 32 * Responsive.getResponsive(context),
       ),
       child: SingleChildScrollView(
         //Common card
@@ -49,14 +49,14 @@ class _DetailsPageState extends State<DetailsPage> {
 
           //bottomWidget of common card
           bottomWidget: Padding(
-            padding: EdgeInsets.all(12 * getResponsive(context)),
+            padding: EdgeInsets.all(12 * Responsive.getResponsive(context)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 0.01 * getWidth(context),
-                    vertical: 0.002 * getHeight(context),
+                    horizontal: 0.01 * Responsive.getWidth(context),
+                    vertical: 0.002 * Responsive.getHeight(context),
                   ),
 
                   //card children
@@ -64,45 +64,42 @@ class _DetailsPageState extends State<DetailsPage> {
                     children: [
                       //person details widget
                       PersonDetails(),
-                      SizedBox(height: 0.016 * getHeight(context)),
+                      SizedBox(height: 0.016 * Responsive.getHeight(context)),
                       Divider(color: AppTheme.getColor(context).primary),
-                      SizedBox(height: 0.012 * getHeight(context)),
+                      SizedBox(height: 0.012 * Responsive.getHeight(context)),
 
                       //start_end_visit_time
                       StartEndTime(),
-                      SizedBox(height: 0.012 * getHeight(context)),
+                      SizedBox(height: 0.012 * Responsive.getHeight(context)),
                       Divider(color: AppTheme.getColor(context).primary),
-                      SizedBox(height: 0.004 * getHeight(context)),
+                      SizedBox(height: 0.004 * Responsive.getHeight(context)),
 
                       //End_remark status
                       EndRemark(),
                     ],
                   ),
                 ),
-                SizedBox(height: 0.005 * getHeight(context)),
+                SizedBox(height: 0.005 * Responsive.getHeight(context)),
 
-                Padding(
-                  padding: EdgeInsets.only(left: 0.013 * getWidth(context)),
-                  child: Row(
-                    children: [
-                      CustomText(
-                        'Visit With',
-                        fontSize: 17 * getResponsiveText(context),
-                        fontWeight: FontWeight.w600,
-                      ),
-                      SizedBox(width: 0.015 * getWidth(context)),
-                      CustomText(
-                        ':',
-                        fontSize: 17 * getResponsiveText(context),
-                      ),
-                    ],
-                  ),
+                Row(
+                  children: [
+                    CustomText(
+                      'Visit With',
+                      fontSize: 50 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w600,
+                    ),
+                    SizedBox(width: 0.015 * Responsive.getWidth(context)),
+                    CustomText(
+                      ':',
+                      fontSize: 17 * Responsive.getResponsiveText(context),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 0.005 * getHeight(context)),
+                SizedBox(height: 0.005 * Responsive.getHeight(context)),
 
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 7 * getResponsive(context),
+                    horizontal: 7 * Responsive.getResponsive(context),
                   ),
                   child: Column(
                     children: [
@@ -111,15 +108,15 @@ class _DetailsPageState extends State<DetailsPage> {
                         name: 'Yash Soni',
                         designation: '(UI UX)',
                       ),
-                      SizedBox(height: 0.012 * getHeight(context)),
+                      SizedBox(height: 0.012 * Responsive.getHeight(context)),
 
                       //visit_complete and view_attachment row
                       VisitBtnRow(),
-                      SizedBox(height: 0.012 * getHeight(context)),
+                      SizedBox(height: 0.012 * Responsive.getHeight(context)),
 
                       //share and view report button row
                       ShareBtn(),
-                      SizedBox(height: 0.040 * getHeight(context)),
+                      SizedBox(height: 0.040 * Responsive.getHeight(context)),
                     ],
                   ),
                 ),

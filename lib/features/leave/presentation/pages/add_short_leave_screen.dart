@@ -4,12 +4,10 @@ import 'package:intl/intl.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/leave/presentation/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/required_text_label.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
-import 'package:myco_flutter/widgets/ios_calendar_time_picker.dart'
-    show DialDatePickerWidget;
+import 'package:myco_flutter/widgets/ios_calendar_time_picker.dart';
 
 class AddShortLeaveScreen extends StatefulWidget {
   AddShortLeaveScreen({super.key});
@@ -77,7 +75,7 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
                           horizontal: 8.0,
                           vertical: 10,
                         ),
-                        child: CustomDatePicker(
+                        child: DialDatePickerWidget(
                           initialDate: DateTime.now(),
                           onSubmit: (selectedDate) {
                             final String date = DateFormat(

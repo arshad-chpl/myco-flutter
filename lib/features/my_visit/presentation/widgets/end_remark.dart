@@ -39,14 +39,14 @@ class EndRemark extends StatelessWidget {
               text: '+91 ',
               style: TextStyle(
                 color: AppTheme.getColor(context).primary,
-                fontSize: 12 * getResponsiveText(context),
+                fontSize: 12 * Responsive.getResponsiveText(context),
               ),
               children: [
                 TextSpan(
                   text: '9356326355',
                   style: TextStyle(
                     color: AppTheme.getColor(context).onSurface,
-                    fontSize: 12 * getResponsiveText(context),
+                    fontSize: 12 * Responsive.getResponsiveText(context),
                   ),
                 ),
               ],

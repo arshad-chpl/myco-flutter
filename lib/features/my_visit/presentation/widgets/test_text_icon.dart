@@ -17,7 +17,7 @@ class TestTextIcon extends StatelessWidget {
         CustomText(
           'Test New Visit',
           fontWeight: FontWeight.w600,
-          fontSize: 17 * getResponsiveText(context),
+          fontSize: 20 * Responsive.getResponsiveText(context),
         ),
         InkWell(
           onTap: () {

@@ -26,14 +26,14 @@ class PersonDetails extends StatelessWidget {
               text: '+91 ',
               style: TextStyle(
                 color: AppTheme.getColor(context).primary,
-                fontSize: 12 * getResponsiveText(context),
+                fontSize: 12 * Responsive.getResponsiveText(context),
               ),
               children: [
                 TextSpan(
                   text: '9356326355',
                   style: TextStyle(
                     color: AppTheme.getColor(context).onSurface,
-                    fontSize: 12 * getResponsiveText(context),
+                    fontSize: 12 * Responsive.getResponsiveText(context),
                   ),
                 ),
               ],
@@ -71,12 +71,12 @@ class PersonDetails extends StatelessWidget {
             children: [
               CustomText(
                 '101, Sarkhej-sanand cross road Makaraba, Ahmedabad, Sarkhej-Gandhinagar Gujarat, 385431, India',
-                fontSize: 10 * getResponsiveText(context),
+                fontSize: 10 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w500,
               ),
               CustomText(
                 '(you are in range)',
-                fontSize: 12 * getResponsiveText(context),
+                fontSize: 12 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).secondary,
               ),
             ],
@@ -84,7 +84,7 @@ class PersonDetails extends StatelessWidget {
           onTap: () {},
           value: '',
         ),
-        SizedBox(height: 0.007 * getHeight(context)),
+        SizedBox(height: 0.007 * Responsive.getHeight(context)),
 
         // Padding(
         //   padding: EdgeInsets.symmetric(

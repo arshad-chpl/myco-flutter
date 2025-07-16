@@ -16,32 +16,32 @@ class StartEndTime extends StatelessWidget {
             children: [
               CustomText(
                 'Start Visit date & Time',
-                fontSize: 14 * getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w700,
               ),
               SizedBox(height: 4),
               CustomText(
                 '09:45AM, 21st May 2025',
-                fontSize: 14 * getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w500,
               ),
             ],
           ),
         ),
-        SizedBox(width: 0.12 * getWidth(context)),
+        SizedBox(width: 0.12 * Responsive.getWidth(context)),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
                 'End Visit date & Time',
-                fontSize: 14 * getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w700,
               ),
               const SizedBox(height: 4),
               CustomText(
                 '12:45PM, 21st May 2025',
-                fontSize: 14 * getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w500,
               ),
             ],
