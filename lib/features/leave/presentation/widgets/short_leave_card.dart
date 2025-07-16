@@ -63,14 +63,9 @@ class ShortLeaveCard extends StatelessWidget {
                       IconButton(
                         onPressed: () {
                           final entity = leave.leaveEntity;
-                          final sandwichLeaveId = entity.sandwichLeaveId;
-                          final otherFullName = entity.userFullName;
-                          final otherUserId = entity.userId;
-                          final leaveDate = entity.shortLeaveDate;
-
                           onDelete?.call(
                             fullName: entity.userFullName,
-                            sandwichLeaveId: entity.sandwichLeaveId,
+                            sandwichLeaveId: entity.shortLeaveId,
                             userId: entity.userId,
                             leaveDate: entity.shortLeaveDate,
                           );

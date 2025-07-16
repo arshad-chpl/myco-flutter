@@ -98,7 +98,7 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
       'short_leave_id':shortLeaveId,
       'short_leave_date':shortLeaveDate,
       'other_user_id':otherUserId,
-      'short_leave_apply_reason':otherUserName,
+      'other_user_name':otherUserName,
     };
 
     final response = await GetIt.I<ApiClient>(
