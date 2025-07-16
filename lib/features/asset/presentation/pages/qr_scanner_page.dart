@@ -6,7 +6,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/asset/widgets/qr_scanner.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/qr_scanner.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -33,7 +33,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
     return Scaffold(
       appBar: CustomAppbar(
         title: CustomText(
-          isKey: true,
+          
           'scan_asset',
           fontSize: 22 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,

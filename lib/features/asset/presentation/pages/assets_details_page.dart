@@ -4,9 +4,9 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/active_assets_card.dart';
 import 'package:myco_flutter/widgets/cached_image_holder.dart';
-import 'package:myco_flutter/features/asset/widgets/image_gredal.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/image_gredal.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/dashed_border_container.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -21,7 +21,6 @@ class AssetsDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: CustomText(
-          isKey: true,
           'assets_details',
           fontSize: 22 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w700,
@@ -41,7 +40,6 @@ class AssetsDetailsPage extends StatelessWidget {
                   color: AppTheme.getColor(context).onSurface,
                 ),
                 CustomText(
-                  isKey: true,
                   'handover_assets',
                   fontSize: 16 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w600,
@@ -91,7 +89,6 @@ class AssetsDetailsPage extends StatelessWidget {
                   ],
                 ),
                 child: CustomText(
-                  isKey: true,
                   'assets_history',
                   color: AppTheme.getColor(context).onPrimary,
                   fontSize: 20 * Responsive.getResponsiveText(context),
@@ -339,7 +336,6 @@ class AssetsDetailsPage extends StatelessWidget {
       SizedBox(
         width: 0.4 * Responsive.getWidth(context),
         child: CustomText(
-          isKey: true,
           title,
           color: AppTheme.getColor(context).onSurface,
           fontWeight: FontWeight.w700,
@@ -442,6 +438,7 @@ class AssetsDetailsPage extends StatelessWidget {
           rowData(context: context, title: 'category', data: 'Desktop'),
           SizedBox(height: 0.012 * Responsive.getHeight(context)),
           rowData(context: context, title: 'brand_name', data: 'Dell'),
+          SizedBox(height: 0.012 * Responsive.getHeight(context)),
           rowData(context: context, title: 'sr_no', data: 'sansxbnaisn'),
           SizedBox(height: 0.012 * Responsive.getHeight(context)),
           rowData(context: context, title: 'purchase_date', data: '21-05-2025'),
@@ -482,7 +479,6 @@ class AssetsDetailsPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           CustomText(
-                            isKey: true,
                             'attachment',
                             fontSize:
                                 22 * Responsive.getResponsiveText(context),
@@ -532,7 +528,6 @@ class AssetsDetailsPage extends StatelessWidget {
                                         0.01 * Responsive.getHeight(context),
                                   ),
                                   CustomText(
-                                    isKey: true,
                                     'file_name',
                                     maxLines: 1,
                                     fontSize:
@@ -569,7 +564,6 @@ class AssetsDetailsPage extends StatelessWidget {
                   );
                 },
                 child: CustomText(
-                  isKey: true,
                   'invoice',
                   fontWeight: FontWeight.w700,
                   color: AppTheme.getColor(context).primary,
@@ -627,14 +621,12 @@ class AssetsDetailsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
-            isKey: true,
             title,
             fontSize: 20 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w700,
             color: AppTheme.getColor(context).primary,
           ),
           CustomText(
-            isKey: true,
             subTitle,
             fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,

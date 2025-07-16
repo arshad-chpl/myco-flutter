@@ -8,7 +8,7 @@ class AppAssets {
   static const String iconsPath = '$basePath/icons';
   static const String splash = '$basePath/splash';
   static const String assetVisit = '$basePath/add_expense';
-  static const String assets = '$basePath/assets';
+  static const String assets = '$basePath/asset';
   static const String lostFound = '$basePath/lost_and_found';
 
   // Images
@@ -63,7 +63,7 @@ class AppAssets {
   static const String assetDocumentText = '$assetVisit/document-text.svg';
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
 
-  // assets folder
+  // asset folder
   static const String assetsDollar = '$assets/dollar-square.svg';
   static const String assetsElementEqual = '$assets/element-equal.svg';
   static const String assetsElement = '$assets/element.svg';

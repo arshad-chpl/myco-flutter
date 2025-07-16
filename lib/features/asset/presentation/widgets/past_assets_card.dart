@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/active_assets_card.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/custom_dash_line.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/image_gredal.dart';
 import 'package:myco_flutter/widgets/cached_image_holder.dart';
-import 'package:myco_flutter/features/asset/widgets/custom_dash_line.dart';
-import 'package:myco_flutter/features/asset/widgets/image_gredal.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 
 class PastAssetsListPage extends StatelessWidget {
@@ -31,14 +31,14 @@ class PastAssetsListPage extends StatelessWidget {
         handoverImageList: [
           'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
           'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-          AppAssets.imageLaptop, 
-          AppAssets.imageLaptop
+          AppAssets.imageLaptop,
+          AppAssets.imageLaptop,
         ],
         takeoverImageList: [
           'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
           'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-         AppAssets.imageLaptop, 
-         AppAssets.imageLaptop
+          AppAssets.imageLaptop,
+          AppAssets.imageLaptop,
         ],
       ),
     ),
@@ -107,10 +107,12 @@ class PastAssetsCard extends StatelessWidget {
                     CachedImage(
                       imageUrl: image,
                       width: 0.3 * Responsive.getWidth(context),
+                      height: 0.3 * Responsive.getWidth(context),
                     )
                   else
                     Image.asset(
                       image,
+                      height: 0.3 * Responsive.getWidth(context),
                       width: 0.3 * Responsive.getWidth(context),
                     ),
                   Padding(
@@ -167,9 +169,11 @@ class PastAssetsCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: spaceBetweenData ?? 0.02 * Responsive.getHeight(context),
-            ),
+            if (handoverImageList.isNotEmpty)
+              SizedBox(
+                height:
+                    spaceBetweenData ?? 0.02 * Responsive.getHeight(context),
+              ),
             if (handoverImageList.isNotEmpty)
               Row(
                 children: [

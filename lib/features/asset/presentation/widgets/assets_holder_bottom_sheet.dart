@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/asset/widgets/active_assets_card.dart';
-import 'package:myco_flutter/features/asset/widgets/custom_dash_line.dart';
-import 'package:myco_flutter/features/asset/widgets/image_gredal.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/active_assets_card.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/custom_dash_line.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/image_gredal.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -124,7 +124,7 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
                               const SizedBox(width: 16),
                               Expanded(
                                 child: CustomText(
-                                  isKey: true,
+                                  
                                   'not_assigned_to_any_user',
                                   fontWeight: FontWeight.w700,
                                   color: AppTheme.getColor(context).primary,
@@ -392,14 +392,14 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
-            isKey: true,
+            
             title,
             fontSize: 20 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w700,
             color: AppTheme.getColor(context).primary,
           ),
           CustomText(
-            isKey: true,
+            
             subTitle,
             fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,

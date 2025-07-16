@@ -12,12 +12,13 @@ class AssetsTextFieldWidget extends StatelessWidget {
   final String hintText;
   final String image;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
   const AssetsTextFieldWidget({
     required this.label,
     required this.image,
     required this.hintText,
     super.key,
-    this.controller,
+    this.controller, this.validator,
   });
 
   @override
@@ -27,7 +28,7 @@ class AssetsTextFieldWidget extends StatelessWidget {
     children: [
       CustomText(
         label,
-        isKey: true,
+        
         fontSize: 16 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w600,
         color: AppTheme.getColor(context).onSurfaceVariant,
@@ -67,6 +68,7 @@ class AssetsTextFieldWidget extends StatelessWidget {
                   fit: BoxFit.contain,
                 ),
         ),
+        validator: validator,
         contentPadding: EdgeInsets.symmetric(
           vertical: 14 * Responsive.getResponsive(context),
         ),

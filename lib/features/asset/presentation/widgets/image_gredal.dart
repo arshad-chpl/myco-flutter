@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -98,7 +99,17 @@ class ImageGridPreviewWidget extends StatelessWidget {
                   ? CachedImage(imageUrl: imageUrl)
                   : Image.asset(imageUrl, fit: BoxFit.cover),
               if (isExtraBox)
-                Center(child: CustomText('+$extraCount', color: Colors.white)),
+                Container(
+                  width: width,
+                  height: height,
+                  color: AppColors.gray10,
+                  child: Center(
+                    child: CustomText(
+                      '+$extraCount',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
             ],
           ),
         ),

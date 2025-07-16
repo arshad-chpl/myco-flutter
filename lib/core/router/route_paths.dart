@@ -15,7 +15,6 @@ class RoutePaths {
   static const String details = '/details';
   static const String visitReport = '/visit_report';
 
-
   static const String offers = '/offers';
   static const String products = '/products';
   static const String orderSummary = '/order-summary';
@@ -31,7 +30,6 @@ class RoutePaths {
   static const String signUpForm = '/sign-up-form';
   //
   // static const String addVisit = '/add-visit';
-
 
   // static const String distributorVisitor = '/distributor-visitor';
   // static const String noOrder = '/no-order';
@@ -51,7 +49,7 @@ class RoutePaths {
   static const String lostAndFoundAddScreen = '/lost-and-found-add-screen';
   static const String lostAndFoundChatScreen = '/lost-and-found-chat-screen';
   static const String lostAndFoundItemDetails = '/lost-and-found-item-details';
-  static const String AddExpense= '/add_Expense';
+  static const String AddExpense = '/add_Expense';
   static const String myVisit = '/my-visit';
   static const String contactAdmin = '/contact-admin';
   static const String qrScanner = '/qr-scanner';
@@ -59,7 +57,6 @@ class RoutePaths {
   static const String addVisit = '/add-visit';
   static const String viewVisitDetails = '/view-visit-details';
   static const String myProfile = '/my-profile';
-
 
   // ======== Admin View ========
   static const String adminView = '/admin-view';
@@ -109,12 +106,11 @@ class RoutePaths {
   static const String adminAchievements = 'achievements';
   static const String adminEmployeesFace = 'employees-face';
 
-  //maulik
+  // --- Asset Routes ---
   static const String assetsDetails = '/assets-details';
   static const String addAssets = '/add-assets';
   static const String editAssets = '/edit-assets';
   static const String handoverAssets = '/handover-assets';
   static const String takeoverAssets = '/takeover-assets';
   static const String swapAssets = '/swap-assets';
-
 }
