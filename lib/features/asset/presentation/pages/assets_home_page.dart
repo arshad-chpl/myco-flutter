@@ -35,11 +35,9 @@ class AssetsHomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.getColor(context).surface,
       appBar: CustomAppbar(
-        title: CustomText(
+        title: 
           'assets',
-          fontSize: 22 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.w700,
-        ),
+          
         titleSpacing: 0,
         actions: [
           Padding(

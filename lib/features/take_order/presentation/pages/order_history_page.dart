@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
@@ -14,7 +16,8 @@ class OrderHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(appBarText: 'Order History'),
+    appBar: CustomAppbar(title: 'Order History'),
+
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),
@@ -82,7 +85,7 @@ class OrderHistoryCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
-                          'Order Number : #230',
+                          'order_number',
                           fontWeight: FontWeight.w800,
                           fontSize: 17 * Responsive.getResponsiveText(context),
                           color: AppTheme.getColor(context).onPrimary,
@@ -108,7 +111,7 @@ class OrderHistoryCard extends StatelessWidget {
                     ),
                     MyCoButton(
                       onTap: () {},
-                      title: 'Approved',
+                      title: LanguageManager().get('approved'),
                       textStyle: AppTheme.getTextStyle(context).bodyMedium!
                           .copyWith(
                             color: AppTheme.getColor(context).onPrimary,
@@ -152,14 +155,14 @@ class OrderHistoryCard extends StatelessWidget {
             children: [
               getCommonRow(
                 context,
-                title: 'Order By',
+                title: 'order_by',
                 value: 'Manish Chandra',
                 onTap: () {},
               ),
               getCommonRow(
                 context,
-                title: 'Order Process Status',
-                value: 'Change',
+                title: 'order_process_status',
+                value: 'change',
                 decoration: TextDecoration.underline,
                 textColor: AppTheme.getColor(context).primary,
                 onTap: () {
@@ -187,7 +190,7 @@ class OrderHistoryCard extends StatelessWidget {
                       orderedProductsBottomSheet(context);
                     },
                     child: CustomText(
-                      'View Ordered Products',
+                      'view_order_product',
                       fontWeight: FontWeight.w600,
                       fontSize: 10 * Responsive.getResponsiveText(context),
                       decoration: TextDecoration.underline,
@@ -202,7 +205,7 @@ class OrderHistoryCard extends StatelessWidget {
                     onTap: () {
                       cancelOrderBottomSheet(context);
                     },
-                    title: 'Cancel Order',
+                    title: LanguageManager().get('cancel_order'),
                     width: 0.25 * Responsive.getWidth(context),
                     height: 0.028 * Responsive.getHeight(context),
                     textStyle: AppTheme.getTextStyle(context).labelMedium!
@@ -215,9 +218,9 @@ class OrderHistoryCard extends StatelessWidget {
                   SizedBox(width: 0.01 * Responsive.getWidth(context)),
                   MyCoButton(
                     onTap: () {
-                      context.pushNamed('order-summary', extra: true);
+                      context.pushNamed(RoutePaths.orderSummary, extra: true);
                     },
-                    title: 'Repeat Order',
+                    title: LanguageManager().get('repeat_order'),
                     width: 0.25 * Responsive.getWidth(context),
                     height: 0.028 * Responsive.getHeight(context),
                     textStyle: AppTheme.getTextStyle(context).labelMedium!
@@ -229,7 +232,7 @@ class OrderHistoryCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   InkWell(
-                    onTap: () => context.pushNamed('edit-order'),
+                    onTap: () => context.pushNamed(RoutePaths.editOrder),
                     child: Image.asset(
                       'assets/take_order/message-edit.png',
                       height: 0.023 * Responsive.getHeight(context),
@@ -275,7 +278,7 @@ class OrderHistoryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      'Order #230',
+                      'order',
                       fontWeight: FontWeight.w600,
                       fontSize: 18 * Responsive.getResponsiveText(context),
                       color: AppTheme.getColor(context).onPrimary,
@@ -349,7 +352,7 @@ class OrderHistoryCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomText(
-                          'Unit: 25',
+                          'Unit',
                           fontWeight: FontWeight.w600,
                           fontSize: 10 * Responsive.getResponsiveText(context),
                         ),
@@ -385,14 +388,14 @@ class OrderHistoryCard extends StatelessWidget {
             children: [
               SizedBox(height: 0.02 * Responsive.getHeight(context)),
               CustomText(
-                'Change Order Process Status',
+                'change_order_process_status',
                 fontWeight: FontWeight.w600,
                 fontSize: 14 * Responsive.getResponsiveText(context),
               ),
               // SizedBox(height: 0.02 * Responsive.getHeight(context)),
               DropdownMenu(
                 width: 0.8 * Responsive.getWidth(context),
-                hintText: 'Select',
+                hintText: LanguageManager().get('select'),
                 leadingIcon: const Icon(Icons.notes),
                 dropdownMenuEntries: const [
                   DropdownMenuEntry(
@@ -404,8 +407,8 @@ class OrderHistoryCard extends StatelessWidget {
               ),
               SizedBox(height: 0.025 * Responsive.getHeight(context)),
               SideBySideButtons(
-                button1Name: 'CANCEL',
-                button2Name: 'SUBMIT',
+                button1Name: LanguageManager().get('cancel'),
+                button2Name: LanguageManager().get('submit'),
                 onTap1: () {},
                 onTap2: () {},
               ),
@@ -473,7 +476,7 @@ class OrderHistoryCard extends StatelessWidget {
                 ),
 
                 child: CustomText(
-                  'Order #232',
+                  'order',
                   color: AppTheme.getColor(context).onPrimary,
                   fontWeight: FontWeight.w700,
                   fontSize: 18 * Responsive.getResponsiveText(context),
@@ -519,8 +522,8 @@ class OrderHistoryCard extends StatelessWidget {
               horizontal: 0.08 * Responsive.getWidth(context),
             ),
             child: SideBySideButtons(
-              button1Name: 'NO',
-              button2Name: 'YES',
+              button1Name: LanguageManager().get('no'),
+              button2Name: LanguageManager().get('yes'),
               onTap1: () {},
               onTap2: () {},
             ),
@@ -564,7 +567,7 @@ class OrderHistoryCard extends StatelessWidget {
         ),
         SizedBox(height: 0.005 * Responsive.getHeight(context)),
         CustomText(
-          'Unit: 25 ₹2000.0',
+          'unit_web',
           fontSize: 10 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w500,
         ),

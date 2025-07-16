@@ -32,12 +32,8 @@ class _QRScannerPageState extends State<QRScannerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppbar(
-        title: CustomText(
-          
-          'scan_asset',
-          fontSize: 22 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.w700,
-        ),
+        title: 'scan_asset',
+
         titleSpacing: 0,
         actions: [
           GestureDetector(
