@@ -1,9 +1,9 @@
 import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class PreferenceManager {
-    static const String companyName = "company_name";
+  static const String companyName = "company_name";
   static const String companyId = "company_id";
   static const String countryId = "country_id";
   static const String companyAddress = "company_address";
@@ -11,7 +11,8 @@ class PreferenceManager {
   static const String appLanguage = "lang_app";
   static const String languageId = "lang_id";
   static const String userId = "user_id";
-  static const String registrationRequestPendingUserId = "registration_request_pending_user_id";
+  static const String registrationRequestPendingUserId =
+      "registration_request_pending_user_id";
   static const String subEnd = "employeeMobileApi/";
   static const String residentApiEnd = "residentApiNew/";
   static const String mainKey = "bmsapikey";
@@ -131,7 +132,7 @@ class PreferenceManager {
   }
 
   //TODO: Dummy static return for now
-  String getUserId() => "40";
+  String getUserId() => "1401";
   String getUserMobile() => "8401565883";
 
   Future<void> setLanguageId(String value) async {

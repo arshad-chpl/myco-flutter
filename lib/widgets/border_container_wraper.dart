@@ -91,12 +91,17 @@ class BorderContainerWraper extends StatelessWidget {
                 ),
               ),
             ),
-            child: CustomText(
-              notificationCount.toString(),
-              color: AppTheme.getColor(context).surface,
-              fontSize: 10 * Responsive.getResponsiveText(context),
-              fontWeight: FontWeight.w600,
-              textAlign: TextAlign.center,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 2.0 * Responsive.getResponsive(context),
+              ),
+              child: CustomText(
+                notificationCount.toString(),
+                color: AppTheme.getColor(context).surface,
+                fontSize: 10 * Responsive.getResponsiveText(context),
+                fontWeight: FontWeight.w600,
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         ),

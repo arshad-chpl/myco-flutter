@@ -32,7 +32,9 @@ class CustomShadowContainer extends StatelessWidget {
     width: width ?? 70,
     height: height,
     child: Column(
-      mainAxisSize: MainAxisSize.min,
+      // mainAxisSize: MainAxisSize.min,
+      // crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Stack(
           children: [
@@ -85,16 +87,17 @@ class CustomShadowContainer extends StatelessWidget {
         ),
         // const SizedBox(height: 6),
         // const Spacer(),
-        Padding(
-          padding: EdgeInsets.only(
-            top: 8.0 * Responsive.getResponsive(context),
-          ),
+        SizedBox(
+          width: Responsive.getWidth(context),
+
           child: CustomText(
             title,
             color: AppColors.black,
-            fontSize: 11 * Responsive.getResponsiveText(context),
+            fontSize: 12 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,
             textAlign: textAlign,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],

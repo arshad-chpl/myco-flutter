@@ -12,7 +12,6 @@ library;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/admin_view/domain/entities/admin_view_entity.dart';
 import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
@@ -49,9 +48,9 @@ class AdminSubMenuList extends StatelessWidget {
         // Disable grid scrolling.
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3, // 3 items per row.
-          childAspectRatio: 0.73, // Aspect ratio for each grid item.
-          mainAxisSpacing: 12,
-          crossAxisSpacing: 12,
+          childAspectRatio: 0.70, // Aspect ratio for each grid item.
+          mainAxisSpacing: 16,
+          crossAxisSpacing: 16,
         ),
         itemCount: subMenus.length,
         itemBuilder: (context, index) {
@@ -63,16 +62,18 @@ class AdminSubMenuList extends StatelessWidget {
             onTap: () => onSubMenuTap(subMenu), // Trigger tap callback.
             child: BorderContainerWraper(
               // Badge count and visibility
-              notificationCount: notificationCount.toString(),
+              notificationCount: notificationCount! > 9
+                  ? '9+'
+                  : notificationCount.toString(),
               isNotificationBadge: notificationCount! > 0, // Show badge if > 0
               padding: const EdgeInsets.all(14.5),
               borderRadius: 12,
-              backgroundColor: AppTheme.getColor(context).surfaceBright,
+              // backgroundColor: AppTheme.getColor(context).,
               height: Responsive.getHeight(context),
-              
+              width: Responsive.getWidth(context),
               child: CustomShadowContainer(
                 containerHeight: 0.09 * Responsive.getHeight(context),
-                width: 0.2 * Responsive.getWidth(context),
+                width: Responsive.getWidth(context),
 
                 // Image with shimmer placeholder and fallback
                 image: CachedImage(

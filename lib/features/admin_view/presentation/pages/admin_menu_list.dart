@@ -105,8 +105,8 @@ class AdminMenuList extends StatelessWidget {
     // Build a scrollable list of categories.
     return ListView.builder(
       padding: EdgeInsets.only(
-        left: 20 * Responsive.getResponsive(context),
-        right: 20 * Responsive.getResponsive(context),
+        left: 16 * Responsive.getResponsive(context),
+        right: 16 * Responsive.getResponsive(context),
         bottom: 24 * Responsive.getResponsive(context),
       ),
       itemCount: filteredCategories.length,

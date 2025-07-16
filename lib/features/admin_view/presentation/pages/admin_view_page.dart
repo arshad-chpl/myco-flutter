@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -95,7 +96,7 @@ class _AdminViewPageState extends State<AdminViewPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    backgroundColor: AppColors.bgWhite,
+    backgroundColor: AppTheme.getColor(context).surface,
     appBar: CustomAppbar(title: 'admin_view', isKey: true),
     body: RefreshIndicator(
       onRefresh: _refreshData,
@@ -105,7 +106,11 @@ class _AdminViewPageState extends State<AdminViewPage> {
   );
 
   Widget _buildSearchBar() => Padding(
-    padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
+    padding: EdgeInsets.only(
+      left: 16.0 * Responsive.getResponsive(context),
+      right: 16.0 * Responsive.getResponsive(context),
+      bottom: 16.0 * Responsive.getResponsive(context),
+    ),
     child: MyCoTextfield(
       controller: _searchController,
       hintText: LanguageManager().get('search'),
@@ -119,6 +124,7 @@ class _AdminViewPageState extends State<AdminViewPage> {
       contentPadding: EdgeInsets.symmetric(
         vertical: 8 * Responsive.getResponsive(context),
       ),
+      // prefixImageHeight: 0. * Responsive.getHeight(context),
     ),
   );
 
