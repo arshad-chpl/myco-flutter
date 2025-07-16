@@ -16,6 +16,10 @@ import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
 import 'package:myco_flutter/features/asset/view/edit_assets_page.dart';
 import 'package:myco_flutter/features/asset/view/handover_assets.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
+// import 'package:myco_flutter/features/asset/view/testing.dart';
+import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
+import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_event.dart';
+import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
 import 'package:myco_flutter/features/asset/view/swap_assets.dart';
 import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
@@ -23,6 +27,9 @@ import 'package:myco_flutter/features/company_selector/presentation/pages/select
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
+import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:myco_flutter/features/holiday/presentation/pages/holiday_list_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
@@ -111,7 +118,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.login,
-        name: 'login',
+        name: RoutePaths.login,
         builder: (context, state) => const OtpVerifyDialog(),
       ),
       // GoRoute(
@@ -160,6 +167,22 @@ class AppRouter {
         path: RoutePaths.leave,
         name: 'leave',
         builder: (context, state) => const LeaveScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.holiday,
+        name: RoutePaths.holiday,
+        builder: (context, state) {
+          final controller = TextEditingController();
+          return HolidayListPage(controller: controller);
+        },
+      ),
+      GoRoute(
+        path: RoutePaths.companyInfo,
+        name: RoutePaths.companyInfo,
+        builder: (context, state) => BlocProvider<CompanyInfoBloc>(
+          create: (_) => GetIt.I<CompanyInfoBloc>(),
+          child: const CompanyInfoPage(),
+        ),
       ),
       GoRoute(
         path: RoutePaths.myVisit,
