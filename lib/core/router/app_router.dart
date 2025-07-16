@@ -26,6 +26,7 @@ import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_m
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/extra_for_bottomsheet.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
@@ -33,13 +34,13 @@ import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/visit_with.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/visit_with.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
@@ -83,20 +84,6 @@ class AppRouter {
           child: const SplashPage(),
         ),
       ),
-
-  GoRoute(
-        path: RoutePaths.Bottom,
-        name: 'visit-with-details',
-        builder: (context, state) => const Bottom(),
-      ),
-
-       GoRoute(
-        path: RoutePaths.assignedTo,
-        name: 'visit-with',
-        builder: (context, state) => const AssignedTo(),
-      ),
-
-
       GoRoute(
         path: RoutePaths.language,
         name: 'language',
@@ -134,7 +121,7 @@ class AppRouter {
 
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
-          providers: [BlocProvider(create: (context) => ListIdeaBloc())],
+          providers: [BlocProvider(create: (context) => ListIdeaBloc()),],
           child: child,
         ),
         routes: [
@@ -214,6 +201,8 @@ class AppRouter {
       //     child: TakeOrderPage(),
       //   ),
       // ),
+
+
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
@@ -335,7 +324,7 @@ class AppRouter {
           child: const AdminViewPage(),
         ),
         routes: adminViewRoutes,
-      ),
+      )
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,

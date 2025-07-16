@@ -57,7 +57,6 @@ class RoutePaths {
   static const String qrScanner = '/qr-scanner';
   static const String assetsHome = '/assets-home';
   static const String VisitWith = '/visit-with';
-  static const String Bottom = '/visit-with-details';
   static const String assignedTo = '/assigned-to';
   static const String addVisit = '/add-visit';
   static const String viewVisitDetails = '/view-visit-details';

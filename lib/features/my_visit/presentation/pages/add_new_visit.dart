@@ -72,6 +72,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
               selectedValue: selectedVisitType,
               onChanged: (value) =>
                   setState(() => selectedVisitType = value),
+              parentcontext: context,
             ),
             CustomText(
               'Customer to visit',

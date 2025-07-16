@@ -323,7 +323,7 @@ class _VisitPageState extends State<MyVisitPage> {
                   label: 'Add Visit',
                   icon: Icons.location_on,
                   onTap: () {
-                    context.push("/add-visit");
+                    context.pushNamed("add-visit");
                   },
                 ),
                 ExpandableFabAction(

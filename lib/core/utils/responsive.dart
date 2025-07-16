@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -60,7 +59,7 @@ class Responsive {
   static double getResponsiveText(context) {
     double width = MediaQuery.of(context).size.width;
     if (kIsWeb) return width > 600 ? 1.5 : 1.0;
-    if (Platform.isAndroid) return getWidth(context) > 600 ? 1.5 : 0.8;
+    if (Platform.isAndroid) return getWidth(context) > 600 ? 1.5 : 1.0;
     return getWidth(context) > 600 ? 1.5 : 0.9;
   }
 
@@ -70,33 +69,20 @@ class Responsive {
   static GridConfig getGridConfig(BuildContext context, {double? screenWide}) {
     final screenWidth = screenWide ?? getWidth(context);
     final spacing = 12.0 * getResponsive(context);
-
-    // final itemCount = screenWidth > 1500
-    //     ? 8
-    //     : screenWidth > 1400
-    //     ? 4
-    //     : 3;
-
     final itemCount = screenWidth > 1200
-        ? 12
-        : screenWidth > 900
-        ? 9
-        : screenWidth > 500
-        ? 5
-        : screenWidth > 400
-        ? 4
+        ? 10
+        : screenWidth > 1000
+        ? 7
+    // : screenWidth > 600
+    // ? 6
         : 3;
-
-
     final itemWidth = (screenWidth - (spacing * (itemCount - 1))) / itemCount;
-
-    // final itemHeight = screenWidth > 600 ? 180.0 : screenWidth > 500 ? 168.0 : 155.0;
-
-    final itemHeight = screenWidth > 500 ? 170.0 : 145.0;
-
-
+    final itemHeight = screenWidth > 600
+        ? 180.0
+        : screenWidth > 500
+        ? 160.0
+        : 155.0;
     final childAspectRatio = itemWidth / itemHeight;
-
     return GridConfig(
       itemCount: itemCount,
       spacing: spacing,
