@@ -70,7 +70,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
               selectedValue: selectedVisitType,
               onChanged: (value) =>(
               // handle radio button selection
-              )),
+              ), ),
 
             /// Customer to Visit dropdown
             LabeledDropdown<String>(

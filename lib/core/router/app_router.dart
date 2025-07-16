@@ -43,7 +43,6 @@ import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_det
 
 import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/extra_for_bottomsheet.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
@@ -261,12 +260,6 @@ class AppRouter {
         name: 'lost-and-found',
         builder: (context, state) => const LostAndFound(),
       ),
-
-      GoRoute(
-        path: RoutePaths.addVisit,
-        name: 'add-visit',
-        builder: (context, state) => const AddNewVisit(),
-      ),
       GoRoute(
         path: RoutePaths.CustomerAddNewVisit,
         name: 'CustomerAddNewVisit',
@@ -277,11 +270,6 @@ class AppRouter {
         path: RoutePaths.viewVisitDetails,
         name: 'view-visit-details',
         builder: (context, state) => const ViewVisitDetailsPage(),
-      ),
-      GoRoute(
-        path: RoutePaths.myProfile,
-        name: 'my-profile',
-        builder: (context, state) => const MyProfilePage(),
       ),
       GoRoute(
         path: RoutePaths.adminView,
@@ -316,24 +304,11 @@ class AppRouter {
         builder: (context, state) => const AddNewVisit(),
       ),
       GoRoute(
-        path: RoutePaths.viewVisitDetails,
-        name: 'view-visit-details',
-        builder: (context, state) => const ViewVisitDetailsPage(),
-      ),
-      GoRoute(
         path: RoutePaths.myProfile,
         name: 'my-profile',
         builder: (context, state) => const MyProfilePage(),
       ),
       GoRoute(
-        path: RoutePaths.adminView,
-        name: RoutePaths.adminView,
-        builder: (context, state) => BlocProvider(
-          create: (_) => GetIt.I<AdminViewBloc>(),
-          child: const AdminViewPage(),
-        ),
-        routes: adminViewRoutes,
-      )
         path: RoutePaths.assetsDetails,
         name: 'assets-details',
         builder: (context, state) => const AssetsDetailsPage(),
@@ -362,11 +337,6 @@ class AppRouter {
         path: RoutePaths.swapAssets,
         name: 'swap-assets',
         builder: (context, state) => const SwapAssetsPage(),
-      ),
-       GoRoute(
-        path: RoutePaths.AddExpense,
-        name: 'addExpense',
-        builder: (context, state) =>  const AddExpensePage(),
       ),
       // Add all modular routes here
       // ...authRoutes,

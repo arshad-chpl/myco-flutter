@@ -11,11 +11,8 @@ class NoOrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-<<<<<<< HEAD
-    appBar: CustomAppbar(appBarText: 'No Order'),
-=======
     appBar: CustomAppbar(title: 'No Order'),
->>>>>>> harshgiri
+
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),

@@ -21,11 +21,7 @@ class OrderSummaryPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
     appBar: CustomAppbar(
-<<<<<<< HEAD
-      title: Column(
-=======
       appBarTitleWidget: Column(
->>>>>>> harshgiri
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Text('Order Summary'),

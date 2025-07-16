@@ -22,7 +22,6 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
   final TextStyle? textStyle;
   final EdgeInsetsGeometry? tilePadding;
   final Color? activeColor;
-  final BuildContext parentcontext;
 
   const CustomVisitTypeRadioButton({
     required this.options,
@@ -37,20 +36,19 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
     this.textStyle,
     this.tilePadding,
     this.activeColor,
-    required this.parentcontext,
   });
 
-  void _openVisitWithBottomSheet(BuildContext parentcontext) {
+  void _openVisitWithBottomSheet(BuildContext context) {
     showModalBottomSheet(
-      context:  parentcontext,
+      context:  context,
       isScrollControlled: true,
-      backgroundColor: AppTheme.getColor(parentcontext).surface,
+      backgroundColor: AppTheme.getColor(context).surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (context) => BlocProvider(
   create: (context) => InputTagBloc(),
-  child: VisitWith(chilcontext: parentcontext),
+  child: VisitWith(chilcontext: context),
 ),
     );
   }
@@ -97,7 +95,7 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
             onChanged: (value) {
               onChanged(value!);
               if (index == options.length - 1) {
-                _openVisitWithBottomSheet(parentcontext);
+                _openVisitWithBottomSheet(context);
               }
             },
           );

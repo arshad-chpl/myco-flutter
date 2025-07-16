@@ -43,12 +43,9 @@ class AppTheme {
       outlineVariant: AppColors.textGrey200, // 0xFFEAECF0
       primaryContainer: AppColors.lightPurple, //0xFFF4F3FF
       onTertiary: AppColors.darksecondary, //0xFF2FBBA4
-<<<<<<< HEAD
-      onTertiaryContainer: AppColors.spanishYellow, //0xFFFDB913
-=======
       onTertiaryContainer: AppColors.spanishYellow,
       inversePrimary: AppColors.primaryLight//0xFF2F648E
->>>>>>> harshgiri
+
     ),
   );
 

@@ -23,11 +23,7 @@ class PayslipPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-<<<<<<< HEAD
-      appBarText: 'Payslip',
-=======
       title: 'Payslip',
->>>>>>> harshgiri
       actions: [
         MyCoButton(
           onTap: () {
@@ -141,11 +137,8 @@ class PayslipPage extends StatelessWidget {
                 unselectedBorderAndTextColor: AppTheme.getColor(
                   context,
                 ).primary,
-<<<<<<< HEAD
-                tabBarBorderColor: AppColors.black,
-=======
                 tabBarBorderColor: AppTheme.getColor(context).onSurface,
->>>>>>> harshgiri
+
                 selectedIndex: selectedIndex,
                 isShadowBottomLeft: true,
                 onTabChange: (index) {
@@ -191,11 +184,8 @@ class PaySlip extends StatelessWidget {
             grossSalary: '3000.00',
             totalDeduction: '200.00',
             onView: () {
-<<<<<<< HEAD
-              context.pushNamed('payslip-detail');
-=======
               context.pushNamed(RoutePaths.payslipDetail);
->>>>>>> harshgiri
+
             },
           ),
           separatorBuilder: (context, index) =>
