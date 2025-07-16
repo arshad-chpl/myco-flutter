@@ -56,6 +56,8 @@ import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart
 import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_bloc.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/pages/work_allocation_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -63,6 +65,7 @@ class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -343,30 +346,8 @@ class AppRouter {
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,
-      ShellRoute(
-        builder: (context, state, child) => MultiBlocProvider(
-          providers: [BlocProvider(create: (context) => WorkAllocationBloc())],
-          child: child,
-        ),
-        routes: [
-          GoRoute(
-            path: RoutePaths.workAllocation,
-            name: '/work-allocation',
-            builder: (context, state) => BlocProvider(
-              create: (context) => WorkAllocationBloc(),
-              child: AssignWorkPage(),
-            ),
-          ),
-          GoRoute(
-            path: RoutePaths.detailPage,
-            name: '/detail-page',
-            builder: (context, state) => BlocProvider(
-              create: (context) => WorkAllocationBloc(),
-              child: DetailPage(),
-            ),
-          ),
-        ],
-      ),
+
+       
     ],
     // errorBuilder: (context, state) => const ErrorScreen(),
   );
