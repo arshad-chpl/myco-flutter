@@ -4,6 +4,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 
 class CustomTextRadioButton extends StatelessWidget {
+
   final String gender;
   final String selectedGender;
   final void Function(String) onSelect;
@@ -19,6 +20,7 @@ class CustomTextRadioButton extends StatelessWidget {
   final TextStyle? textStyle;
   final Widget? leading;
   final Widget? trailing;
+
 
   const CustomTextRadioButton({
     super.key,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/add_order_bottomsheet.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
@@ -62,7 +63,7 @@ class FrequentBuyCard extends StatelessWidget {
               // );
               getBottomSheet(context, const AddOrderBottomsheet());
             },
-            title: 'Add',
+            title: LanguageManager().get('add'),
             textStyle: TextStyle(
               fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
