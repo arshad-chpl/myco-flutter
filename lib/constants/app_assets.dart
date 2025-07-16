@@ -13,6 +13,7 @@ class AppAssets {
   static const String assets = '$basePath/assets';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
+  static const String workAllocation = '$svgsPath/work_allocation';
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -51,6 +52,10 @@ class AppAssets {
   static const String stop = '$svgsTakeOrder/stop.svg';
   static const String calling = '$svgsTakeOrder/calling.svg';
   static const String location = '$svgsTakeOrder/location.svg';
+
+  //work allocation
+  static const String calendarIcon = '$workAllocation/calendar.svg';
+  static const String personImage = '$workAllocation/person_image.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
