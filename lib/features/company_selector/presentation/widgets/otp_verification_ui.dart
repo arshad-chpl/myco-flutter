@@ -15,6 +15,7 @@ import 'package:myco_flutter/features/company_selector/presentation/bloc/login/l
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_state.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/customotp_bottomsheet.dart';
+import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -74,6 +75,37 @@ class OtpVerificationUi extends StatelessWidget {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(state.response.message ?? '')));
+
+          if (state.response.viewDialogApiCall == true) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Device Change Dialog')),
+            );
+            // Device Change Dialog
+          } else if (state.response.viewDialog == true) {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (context) => Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ), // to avoid keyboard overlap if needed
+                child: CustomAlertDialog(
+                  alertType: AlertType.defaultType,
+                  content: state.response.message,
+                  confirmText: 'Ok',
+                  onConfirm: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            );
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Custom Alert Dialog')),
+            );
+            // Custom Alert Dialog
+          }
         }
       },
       child: Container(

@@ -12,6 +12,7 @@ import 'package:myco_flutter/features/company_selector/presentation/bloc/login/l
 import 'package:myco_flutter/features/company_selector/presentation/widgets/login_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/otp_verification_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/select_company_ui.dart';
+import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 
 class SelectCompanyPage extends StatelessWidget {
   const SelectCompanyPage({super.key});
@@ -127,6 +128,17 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(state.response.message ?? '')),
                       );
+                      if (state.response.viewDialogApiCall == true) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Device Change Dialog')),
+                        );
+                        // Device Change Dialog
+                      } else if (state.response.viewDialog == true) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Custom Alert Dialog')),
+                        );
+                        // Custom Alert Dialog
+                      }
                     }
                   },
                   child: LoginUi(
