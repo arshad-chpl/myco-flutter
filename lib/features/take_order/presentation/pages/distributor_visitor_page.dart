@@ -20,7 +20,11 @@ class DistributorVisitorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
+<<<<<<< HEAD
+    appBar: CustomAppbar(appBarText: 'Mahakali Tractors (RT43575)'),
+=======
     appBar: CustomAppbar(title: 'Mahakali Tractors (RT43575)'),
+>>>>>>> harshgiri
     body: SingleChildScrollView(
       child: Container(
         height: Responsive.getHeight(context),

@@ -3,51 +3,86 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
+<<<<<<< HEAD
+=======
 import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
+>>>>>>> harshgiri
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
+<<<<<<< HEAD
+=======
 import 'package:myco_flutter/features/asset/bloc/assets_bloc.dart';
 import 'package:myco_flutter/features/asset/view/add_assets.dart';
 import 'package:myco_flutter/features/asset/view/assets_details_page.dart';
+>>>>>>> harshgiri
 import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
 import 'package:myco_flutter/features/asset/view/edit_assets_page.dart';
 import 'package:myco_flutter/features/asset/view/handover_assets.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
+<<<<<<< HEAD
+import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
+import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
+import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
+=======
 import 'package:myco_flutter/features/asset/view/swap_assets.dart';
 import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
+>>>>>>> harshgiri
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
+<<<<<<< HEAD
+import 'package:myco_flutter/features/language_selector/presentation/bloc/language_bloc.dart';
+import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
+import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+=======
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_bloc.dart';
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
+>>>>>>> harshgiri
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
+<<<<<<< HEAD
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/extra_for_bottomsheet.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
+=======
+>>>>>>> harshgiri
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
+<<<<<<< HEAD
+=======
 import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
+>>>>>>> harshgiri
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
+<<<<<<< HEAD
+import 'package:myco_flutter/features/my_visit/presentation/pages/visit_with.dart';
+import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
+import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
+=======
+import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
+>>>>>>> harshgiri
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
@@ -78,15 +113,25 @@ class AppRouter {
               create: (_) => GetIt.I<SplashBloc>()..add(LoadSplash()),
             ),
             BlocProvider(
+<<<<<<< HEAD
+              create: (_) {
+                return GetIt.I<LanguageBloc>()
+                  ..add(LoadLanguageToPreferences());
+              },
+=======
               create: (_) =>
                   GetIt.I<LanguageBloc>()..add(LoadLanguageToPreferences()),
+>>>>>>> harshgiri
               lazy: false,
             ),
           ],
           child: const SplashPage(),
         ),
       ),
+<<<<<<< HEAD
+=======
 
+>>>>>>> harshgiri
       GoRoute(
         path: RoutePaths.language,
         name: 'language',
@@ -119,16 +164,20 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.dashboard,
         name: RoutePaths.dashboard,
+<<<<<<< HEAD
+        builder: (context, state) => const DashBoardPage(),
+=======
         builder: (context, state) => BlocProvider(
           create: (context) => GetIt.I<DashboardBloc>()
             ..add(GetIDCardDetails()),
           child: const DashBoardPage(),
           lazy: false,),
+>>>>>>> harshgiri
       ),
 
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
-          providers: [BlocProvider(create: (context) => ListIdeaBloc())],
+          providers: [BlocProvider(create: (context) => ListIdeaBloc()),],
           child: child,
         ),
         routes: [
@@ -208,6 +257,8 @@ class AppRouter {
       //     child: TakeOrderPage(),
       //   ),
       // ),
+
+
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
@@ -223,7 +274,10 @@ class AppRouter {
         name: 'companySearch',
         builder: (context, state) => const SearchCompanyScreen(),
       ),
+<<<<<<< HEAD
+=======
       // Payslip routes
+>>>>>>> harshgiri
       ShellRoute(
         builder: (context, state, child) => MultiBlocProvider(
           providers: [BlocProvider(create: (_) => TabbarBloc())],
@@ -232,9 +286,26 @@ class AppRouter {
         routes: [
           GoRoute(
             path: RoutePaths.payslip,
+<<<<<<< HEAD
+            name: 'payslip',
+            builder: (context, state) => PayslipPage(),
+            routes: [
+              GoRoute(
+                path: RoutePaths.salaryBreakUp,
+                name: 'salary-break-up',
+                builder: (context, state) => const SalaryBreakUpPage(),
+              ),
+              GoRoute(
+                path: RoutePaths.payslipDetail,
+                name: 'payslip-detail',
+                builder: (context, state) => const PayslipDetail(),
+              ),
+            ],
+=======
             name: RoutePaths.payslip,
             builder: (context, state) => PayslipPage(),
             routes: payslipRoutes,
+>>>>>>> harshgiri
           ),
         ],
       ),
@@ -330,6 +401,31 @@ class AppRouter {
         builder: (context, state) => const QRScannerPage(),
       ),
       GoRoute(
+<<<<<<< HEAD
+        path: RoutePaths.addVisit,
+        name: 'add-visit',
+        builder: (context, state) => const AddNewVisit(),
+      ),
+      GoRoute(
+        path: RoutePaths.viewVisitDetails,
+        name: 'view-visit-details',
+        builder: (context, state) => const ViewVisitDetailsPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.myProfile,
+        name: 'my-profile',
+        builder: (context, state) => const MyProfilePage(),
+      ),
+      GoRoute(
+        path: RoutePaths.adminView,
+        name: RoutePaths.adminView,
+        builder: (context, state) => BlocProvider(
+          create: (_) => GetIt.I<AdminViewBloc>(),
+          child: const AdminViewPage(),
+        ),
+        routes: adminViewRoutes,
+      )
+=======
         path: RoutePaths.assetsDetails,
         name: 'assets-details',
         builder: (context, state) => const AssetsDetailsPage(),
@@ -364,6 +460,7 @@ class AppRouter {
         name: 'addExpense',
         builder: (context, state) =>  const AddExpensePage(),
       ),
+>>>>>>> harshgiri
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,

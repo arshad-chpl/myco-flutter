@@ -35,7 +35,11 @@ class OffersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
+<<<<<<< HEAD
+    appBar: CustomAppbar(appBarText: 'Offers'),
+=======
     appBar: CustomAppbar(title: 'Offers'),
+>>>>>>> harshgiri
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),

@@ -30,6 +30,10 @@ class RoutePaths {
   static const String signUpForm = '/sign-up-form';
   //
   // static const String addVisit = '/add-visit';
+<<<<<<< HEAD
+
+=======
+>>>>>>> harshgiri
 
   // static const String distributorVisitor = '/distributor-visitor';
   // static const String noOrder = '/no-order';
@@ -54,6 +58,11 @@ class RoutePaths {
   static const String contactAdmin = '/contact-admin';
   static const String qrScanner = '/qr-scanner';
   static const String assetsHome = '/assets-home';
+<<<<<<< HEAD
+  static const String VisitWith = '/visit-with';
+  static const String assignedTo = '/assigned-to';
+=======
+>>>>>>> harshgiri
   static const String addVisit = '/add-visit';
   static const String viewVisitDetails = '/view-visit-details';
   static const String myProfile = '/my-profile';
@@ -106,6 +115,8 @@ class RoutePaths {
   static const String adminEducation = 'education';
   static const String adminAchievements = 'achievements';
   static const String adminEmployeesFace = 'employees-face';
+<<<<<<< HEAD
+=======
   static const String CustomerAddNewVisit = 'CustomerAddNewVisit';
 
   //maulik
@@ -116,4 +127,5 @@ class RoutePaths {
   static const String takeoverAssets = '/takeover-assets';
   static const String swapAssets = '/swap-assets';
 
+>>>>>>> harshgiri
 }

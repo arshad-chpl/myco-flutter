@@ -10,7 +10,11 @@ class ProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
+<<<<<<< HEAD
+    appBar: CustomAppbar(appBarText: 'Products'),
+=======
     appBar: CustomAppbar(title: 'Products'),
+>>>>>>> harshgiri
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),
