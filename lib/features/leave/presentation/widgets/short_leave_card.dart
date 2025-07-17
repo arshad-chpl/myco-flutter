@@ -14,7 +14,6 @@ class ShortLeaveEntry {
   final String status;
   final String rejectReason;
   final Color detailColor;
-
   final LeaveHistoryEntity leaveEntity;
 
   ShortLeaveEntry({
@@ -33,17 +32,25 @@ class ShortLeaveEntry {
 class ShortLeaveCard extends StatelessWidget {
   final ShortLeaveEntry leave;
   final void Function({
-  required String? fullName,
-  required String? sandwichLeaveId,
-  required String? userId,
-  required String? leaveDate,
-  })? onDelete;
+    required String? fullName,
+    required String? sandwichLeaveId,
+    required String? userId,
+    required String? leaveDate,
+  })?
+  onDelete;
+
   const ShortLeaveCard({required this.leave, this.onDelete, super.key});
 
   @override
   Widget build(BuildContext context) {
     final responsive = Responsive.getResponsive(context);
     final textResponsive = Responsive.getResponsiveText(context);
+
+    // Determine if delete icon should be visible based on Java conditions
+    final showDeleteIcon =
+        leave.status == 'Pending' &&
+        !(leave.leaveEntity.isSalaryGenerated ?? false) &&
+        (leave.leaveEntity.isDateGone ?? false);
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8 * responsive),
@@ -56,7 +63,7 @@ class ShortLeaveCard extends StatelessWidget {
         children: [
           CommonCard(
             showHeaderPrefixIcon: true,
-            suffixIcon: leave.status == 'Pending'
+            suffixIcon: showDeleteIcon
                 ? Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -91,11 +98,12 @@ class ShortLeaveCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildBadge(leave.subType, Colors.blue),
-                      CustomText(
-                        leave.leaveTime,
-                        fontSize: 12 * textResponsive,
-                        color: Colors.grey.shade600,
-                      ),
+                      if (leave.leaveTime.isNotEmpty)
+                        CustomText(
+                          leave.leaveTime,
+                          fontSize: 12 * textResponsive,
+                          color: Colors.grey.shade600,
+                        ),
                     ],
                   ),
                   const SizedBox(height: 4),
@@ -108,7 +116,7 @@ class ShortLeaveCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 2),
-                  // Approved by
+                  // Status and approved by
                   RichText(
                     text: TextSpan(
                       children: [
@@ -119,27 +127,38 @@ class ShortLeaveCard extends StatelessWidget {
                             fontSize: 13 * textResponsive,
                           ),
                         ),
-                        TextSpan(
-                          text: leave.approvedBy,
-                          style: TextStyle(
-                            color: AppColors.black,
-                            fontSize: 13 * textResponsive,
+                        if (leave.approvedBy.isNotEmpty)
+                          TextSpan(
+                            text: leave.approvedBy,
+                            style: TextStyle(
+                              color: AppColors.black,
+                              fontSize: 13 * textResponsive,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 6),
-                  if (leave.rejectReason.isNotEmpty)
-                    CustomText(
-                      'Reject Reason : ${leave.rejectReason}',
-                      fontSize: 12 * textResponsive,
-                      color: Colors.black,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                  // Reject reason (only shown for rejected leaves)
+                  if (leave.status == 'Rejected' &&
+                      leave.rejectReason.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          'Rejection Reason:',
+                          fontSize: 12 * textResponsive,
+                          color: AppColors.black,
+                        ),
+                        CustomText(
+                          leave.rejectReason,
+                          fontSize: 12 * textResponsive,
+                          color: Colors.black,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ),
-                  const SizedBox.shrink(),
-                  // Pay Status & View Details
                 ],
               ),
             ),
@@ -152,7 +171,7 @@ class ShortLeaveCard extends StatelessWidget {
   Widget _buildBadge(String label, Color color) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
     decoration: BoxDecoration(
-      color: color.withValues(alpha: 0.1),
+      color: color.withOpacity(0.1),
       border: Border.all(color: color),
       borderRadius: BorderRadius.circular(6),
     ),

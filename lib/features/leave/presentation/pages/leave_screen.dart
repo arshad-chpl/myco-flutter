@@ -297,6 +297,8 @@ class _LeaveScreenState extends State<LeaveScreen> {
       autoLeave: leave.autoLeave ?? false,
       paidUnpaid: leave.paidUnpaid ?? '',
     ),
+    leaveEntity: leave,
+
   );
 
   Color _getStatusColor(String? status, bool? autoLeave) {
