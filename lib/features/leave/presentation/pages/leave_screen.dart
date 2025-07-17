@@ -206,7 +206,11 @@ class _LeaveScreenState extends State<LeaveScreen> {
                       leave: _convertToSandwichLeaveEntry(leave),
                     );
                   } else {
-                    return LeaveCard(leave: _convertToLeaveEntry(leave));
+                    return LeaveCard(leave: _convertToLeaveEntry(leave),
+                      onDelete: ({leaveId}) {
+                       // Call delete api
+                      }
+                    );
                   }
                 }),
               ],

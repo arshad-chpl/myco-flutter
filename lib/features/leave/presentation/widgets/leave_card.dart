@@ -34,7 +34,7 @@ class LeaveEntry {
 class LeaveCard extends StatelessWidget {
   final LeaveEntry leave;
   final Function()? onEdit;
-  final Function()? onDelete;
+  final Function({required String? leaveId})? onDelete;
 
   const LeaveCard({required this.leave, this.onEdit, this.onDelete, super.key});
 
@@ -55,7 +55,6 @@ class LeaveCard extends StatelessWidget {
         ((leave.leaveEntity.autoLeave ?? false) &&
             !(leave.leaveEntity.isSalaryGenerated ?? false));
 
-
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8 * responsive),
       decoration: BoxDecoration(
@@ -67,51 +66,41 @@ class LeaveCard extends StatelessWidget {
         children: [
           CommonCard(
             showHeaderPrefixIcon: true,
-            suffixIcon:
-                 Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (showEditIcon)
-                        IconButton(
-                          onPressed:
-                              onEdit ??
-                              () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      'Edit functionality not implemented',
-                                    ),
-                                  ),
-                                );
-                              },
-                          icon: Icon(
-                            Icons.edit_outlined,
-                            size: 0.022 * Responsive.getHeight(context),
-                            color: AppColors.white,
-                          ),
-                        ),
-                      if (showDeleteIcon)
-                        IconButton(
-                          onPressed:
-                              onDelete ??
-                              () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      'Delete functionality not implemented',
-                                    ),
-                                  ),
-                                );
-                              },
-                          icon: Icon(
-                            Icons.delete_outline,
-                            size: 0.022 * Responsive.getHeight(context),
-                            color: AppColors.white,
-                          ),
-                        ),
-                    ],
-                  )
-                ,
+            suffixIcon: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (showEditIcon)
+                  IconButton(
+                    onPressed:
+                        onEdit ??
+                        () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Edit functionality not implemented',
+                              ),
+                            ),
+                          );
+                        },
+                    icon: Icon(
+                      Icons.edit_outlined,
+                      size: 0.022 * Responsive.getHeight(context),
+                      color: AppColors.white,
+                    ),
+                  ),
+                if (showDeleteIcon)
+                  IconButton(
+                    onPressed: () {
+                      onDelete!(leaveId: leave.leaveEntity.leaveId);
+                    },
+                    icon: Icon(
+                      Icons.delete_outline,
+                      size: 0.022 * Responsive.getHeight(context),
+                      color: AppColors.white,
+                    ),
+                  ),
+              ],
+            ),
             title: leave.date,
             headerColor: leave.status == 'Pending'
                 ? AppColors.spanishYellow
