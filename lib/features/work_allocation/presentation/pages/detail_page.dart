@@ -6,6 +6,7 @@ import 'package:myco_flutter/features/work_allocation/presentation/widget/common
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 // DetailPage to show work allocation details
@@ -28,7 +29,7 @@ class _DetailPageState extends State<DetailPage> {
         // Card displaying assignee details
         children: [
           //common card widget to show Assign tasks
-           const CommonCard(
+          const CommonCard(
             title: 'Assign To',
             bottomWidget: ListTile(
               // User image
@@ -36,7 +37,11 @@ class _DetailPageState extends State<DetailPage> {
                 image: AssetImage('assets/work_allocation/person_image.png'),
               ),
               // Name of the user
-              title: CustomText('Mukund Madhav', fontWeight: FontWeight.w600, color: AppColors.textSecondary,),
+              title: CustomText(
+                'Mukund Madhav',
+                fontWeight: FontWeight.w600,
+                color: AppColors.textSecondary,
+              ),
 
               // User role and location
               subtitle: Column(
@@ -76,7 +81,11 @@ class _DetailPageState extends State<DetailPage> {
                           fontWeight: FontWeight.w700,
                           color: AppColors.textPrimary,
                         ),
-                        CustomText('21 st May 2025', color: AppColors.textGray, fontWeight: FontWeight.w500,),
+                        CustomText(
+                          '21 st May 2025',
+                          color: AppColors.textGray,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ],
                     ),
                     Column(
@@ -85,14 +94,19 @@ class _DetailPageState extends State<DetailPage> {
                         CustomText(
                           'Work Completion Date',
                           fontWeight: FontWeight.w700,
-                           color: AppColors.textPrimary,
+                          color: AppColors.textPrimary,
                         ),
-                        CustomText('22nd May 2025', color: AppColors.textGray, fontWeight: FontWeight.w500,),
+                        CustomText(
+                          '22nd May 2025',
+                          color: AppColors.textGray,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ],
                     ),
                   ],
                 ),
                 Divider(color: AppTheme.getColor(context).secondary),
+
                 // Work-related details using reusable CommonRow
                 const CommonRow(
                   title: 'Work Category',
@@ -127,6 +141,19 @@ class _DetailPageState extends State<DetailPage> {
               ],
             ),
           ),
+
+          //vertical custom stepper for task approval
+          SizedBox(height: 0.03 * Responsive.getHeight(context)),
+
+          //button label Authorize Work
+          MyCoButton(
+            boarderRadius: 30 * Responsive.getResponsive(context),
+            isShadowBottomLeft: true,
+            onTap: () {},
+            title: 'Authorize Work',
+          ),
+
+          SizedBox(height: 0.04 * Responsive.getHeight(context)),
         ],
       ),
     ),
