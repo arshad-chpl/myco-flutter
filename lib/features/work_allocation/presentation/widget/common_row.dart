@@ -35,7 +35,7 @@ class _CommonRowState extends State<CommonRow> {
             flex: 6,
             child: CustomText(
               widget.title,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               fontSize: 17 * Responsive.getResponsiveText(context),
               color: AppColors.black,
             ),
@@ -44,7 +44,7 @@ class _CommonRowState extends State<CommonRow> {
           /// Colon
           CustomText(
             ':',
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
             fontSize: 17 * Responsive.getResponsiveText(context),
             color: AppColors.black,
           ),
@@ -59,7 +59,7 @@ class _CommonRowState extends State<CommonRow> {
                     widget.value,
                     decoration: widget.decoration,
                     color: widget.textColor,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                     fontSize: 17 * Responsive.getResponsiveText(context),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

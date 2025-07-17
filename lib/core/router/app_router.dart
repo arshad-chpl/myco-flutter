@@ -78,7 +78,6 @@ import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visi
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
-
 import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
@@ -137,7 +136,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.login,
-        name: 'login',
+        name: RoutePaths.login,
         builder: (context, state) => const OtpVerifyDialog(),
       ),
       // GoRoute(
@@ -187,14 +186,30 @@ class AppRouter {
         name: 'leave',
         builder: (context, state) => const LeaveScreen(),
       ),
-      /*GoRoute(
+      GoRoute(
+        path: RoutePaths.holiday,
+        name: RoutePaths.holiday,
+        builder: (context, state) {
+          final controller = TextEditingController();
+          return HolidayListPage(controller: controller);
+        },
+      ),
+      GoRoute(
+        path: RoutePaths.companyInfo,
+        name: RoutePaths.companyInfo,
+        builder: (context, state) => BlocProvider<CompanyInfoBloc>(
+          create: (_) => GetIt.I<CompanyInfoBloc>(),
+          child: const CompanyInfoPage(),
+        ),
+      ),
+      GoRoute(
         path: RoutePaths.myVisit,
         name: 'my-visit',
         builder: (context, state) => BlocProvider(
           create: (_) => GetIt.I<VisitBloc>(),
           child: const MyVisitPage(),
         ),
-      ),*/
+      ),
 
       // GoRoute(
       //   path: RoutePaths.language,
@@ -208,13 +223,13 @@ class AppRouter {
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
         pageBuilder: (context, state) => MaterialPage(
-              child: BlocProvider(
-                  create: (context) =>
-                GetIt.I<FaceDetectionBloc>()
+            child: BlocProvider(
+              create: (context) =>
+              GetIt.I<FaceDetectionBloc>()
                 ..add(LaunchCamera()),
-                child: const FaceDetectionPage(),
-              )
-          ),
+              child: const FaceDetectionPage(),
+            )
+        ),
         // builder: (context, state) => BlocProvider(
         //   create: (context) =>
         //   GetIt.I<FaceDetectionBloc>()
@@ -222,16 +237,6 @@ class AppRouter {
         //   child: const FaceDetectionPage(),
         // ),
       ),
-      // Add all modular routes here
-      // Add all modular routes here
-      // GoRoute(
-      //   path: RoutePaths.takeOrder,
-      //   name: 'take-order',
-      //   builder: (context, state) => BlocProvider(
-      //     create: (_) => TakeOrderBloc(),
-      //     child: TakeOrderPage(),
-      //   ),
-      // ),
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
@@ -411,7 +416,6 @@ class AppRouter {
       // ...authRoutes,
       // ...homeRoutes,
 
-       
     ],
     // errorBuilder: (context, state) => const ErrorScreen(),
   );
