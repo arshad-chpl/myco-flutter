@@ -274,11 +274,9 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/lost_and_found/domain/entities/lost_and_found_entity.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/bloc/lost_and_found_bloc.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/bloc/lost_and_found_event.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/bloc/lost_and_found_state.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_inner_shadow.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_loader.dart';
@@ -311,14 +309,16 @@ class _LostAndFoundState extends State<LostAndFound> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(
+    appBar: const CustomAppbar(
       automaticallyImplyLeading: false,
-      title: CustomText(
-        isKey: true,
-        'lost_found',
-        fontSize: 18 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-      ),
+      title: 'lost_found',
+
+      // CustomText(
+      //   isKey: true,
+      //   'lost_found',
+      //   fontSize: 18 * Responsive.getResponsiveText(context),
+      //   fontWeight: FontWeight.w700,
+      // ),
       centerTitle: false,
       elevation: 0,
     ),
@@ -331,10 +331,7 @@ class _LostAndFoundState extends State<LostAndFound> {
           MyCoTextfield(
             height: .044 * Responsive.getHeight(context),
             isSuffixIconOn: false,
-            prefix: SvgPicture.asset(
-              AppAssets.searchNormal,
-              fit: BoxFit.scaleDown,
-            ),
+            prefix: SvgPicture.asset(AppAssets.search, fit: BoxFit.scaleDown),
             contentPadding: EdgeInsets.all(
               9 * Responsive.getResponsive(context),
             ),
@@ -354,16 +351,19 @@ class _LostAndFoundState extends State<LostAndFound> {
           Expanded(
             child: RefreshIndicator(
               onRefresh: () async {
-                context.read<LostAndFoundBloc>().add(
-                  const GetLostAndFoundItemsEvent({
-                    'getListNew': 'getListNew',
-                    'society_id': '1',
-                    'user_id': '10',
-                    'language_id': '1',
-                    'lost_found_master_id': '',
-                    'is_details_view': 0,
-                  }),
-                );
+                onRefresh:
+                () async {
+                  context.read<LostAndFoundBloc>().add(
+                    const GetLostAndFoundItemsEvent({
+                      'getListNew': 'getListNew',
+                      'society_id': '1',
+                      'user_id': '10',
+                      'language_id': '1',
+                      'lost_found_master_id': '',
+                      'is_details_view': 0,
+                    }),
+                  );
+                };
               },
               child: BlocBuilder<LostAndFoundBloc, LostAndFoundState>(
                 builder: (context, state) {

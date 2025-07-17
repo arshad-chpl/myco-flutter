@@ -1,7 +1,7 @@
 import 'package:encrypt/encrypt.dart';
 
 mixin GzipUtil {
-// //for AES Algorithms
+  // //for AES Algorithms
   static Encrypted? encrypted;
 
   static String encryptAES(String plainText) {
@@ -17,8 +17,12 @@ mixin GzipUtil {
   static String decryptAES(String encryptedData) {
     try {
       final key = Key.fromUtf8('4c5cfefcc958f1748eb31dcc609736FK');
-      final iv = IV.fromUtf8('K8Csuc2GiKvetPZg'); // Match the IV used in your Java code
-      final encrypter = Encrypter(AES(key, mode: AESMode.cbc, padding: 'PKCS7'));
+      final iv = IV.fromUtf8(
+        'K8Csuc2GiKvetPZg',
+      ); // Match the IV used in your Java code
+      final encrypter = Encrypter(
+        AES(key, mode: AESMode.cbc, padding: 'PKCS7'),
+      );
       final encrypted = Encrypted.fromBase64(encryptedData.trim());
       var decrypted = encrypter.decrypt(encrypted, iv: iv);
       print('DecryptedData >>> $decrypted');
@@ -28,7 +32,4 @@ mixin GzipUtil {
       return 'Decryption error';
     }
   }
-
-
-
 }

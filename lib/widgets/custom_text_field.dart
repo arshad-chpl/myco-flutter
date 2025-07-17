@@ -114,7 +114,10 @@ class MyCoTextfield extends StatefulWidget {
     this.maxLines,
     this.suFixImage,
     this.suFixImageHeight,
-    this.suFixImageWidth, this.containerPadding, this.suffixIconConstraints, this.prefixIconConstraints,
+    this.suFixImageWidth,
+    this.containerPadding,
+    this.suffixIconConstraints,
+    this.prefixIconConstraints,
   });
 
   @override
@@ -164,7 +167,7 @@ class _MyCoTextfieldState extends State<MyCoTextfield> {
     prefixImageHeight: widget.prefixImageHeight,
     prefixImageWidth: widget.prefixImageWidth,
     maxLenght: widget.maxLenght,
-    textAlignment: widget.textAlignment??TextAlign.start,
+    textAlignment: widget.textAlignment ?? TextAlign.start,
     inputFormater: widget.inputFormater,
     border: widget.border,
     suffix: widget.suffix,
@@ -290,7 +293,10 @@ class TextFieldFormMobile extends StatelessWidget {
     this.maxLines,
     this.suFixImage,
     this.suFixImageWidth,
-    this.suFixImageHeight, this.containerPadding, this.suffixIconConstraints, this.prefixIconConstraints,
+    this.suFixImageHeight,
+    this.containerPadding,
+    this.suffixIconConstraints,
+    this.prefixIconConstraints,
   });
 
   @override
@@ -519,7 +525,7 @@ class TextFieldFormMobile extends StatelessWidget {
                 )
               : null,
           suffixIconConstraints: suffixIconConstraints,
-          prefixIconConstraints: prefixIconConstraints
+          prefixIconConstraints: prefixIconConstraints,
         ),
         style:
             typingtextStyle ??

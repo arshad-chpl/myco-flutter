@@ -16,7 +16,8 @@ class TimeoutFailure extends Failure {
 }
 
 class UnauthorizedFailure extends Failure {
-  const UnauthorizedFailure() : super("Unauthorized request. Please login again.");
+  const UnauthorizedFailure()
+    : super("Unauthorized request. Please login again.");
 }
 
 class ForbiddenFailure extends Failure {
@@ -36,7 +37,8 @@ class CancelledFailure extends Failure {
 }
 
 class UnknownFailure extends Failure {
-  const UnknownFailure([String message = "Unknown error occurred"]) : super(message);
+  const UnknownFailure([String message = "Unknown error occurred"])
+    : super(message);
 }
 
 class ValidationFailure extends Failure {

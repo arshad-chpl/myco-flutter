@@ -166,7 +166,7 @@ class LabeledTextField extends StatelessWidget {
           controller: controller,
           hintText: hint,
           hintTextStyle:
-          hintTextStyle ??
+              hintTextStyle ??
               TextStyle(
                 fontSize: 18 * Responsive.getResponsiveText(context),
                 color: AppColors.gray,
