@@ -13,7 +13,8 @@ class AppAssets {
   static const String assets = '$basePath/assets';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
-  static const String workAllocation = '$svgsPath/work_allocation';
+  static const String workAllocationSvgs = '$svgsPath/work_allocation';
+  static const String workAllocation = '$basePath/work_allocation';
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -53,9 +54,9 @@ class AppAssets {
   static const String calling = '$svgsTakeOrder/calling.svg';
   static const String location = '$svgsTakeOrder/location.svg';
 
-  //work allocation
-  static const String calendarIcon = '$workAllocation/calendar.svg';
-  static const String personImage = '$workAllocation/person_image.svg';
+  //work allocation svgs
+  static const String calendarIcon = '$workAllocationSvgs/calendar.svg';
+  static const String personImage = '$workAllocationSvgs/person_image.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
@@ -109,4 +110,9 @@ class AppAssets {
 
   static const String lostFoundData = '$lostFound/data.png';
   static const String lostFoundMessageEdit = '$lostFound/message-edit.png';
+
+  //work allocation
+  static const String plus = '$workAllocation/plus.png';
+  static const String calendar = '$workAllocation/calendar.png';
+  static const String personProfileImage = '$workAllocation/person_image.png';
 }

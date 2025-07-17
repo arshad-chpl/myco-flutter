@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widget/work_allocation_card_list_view.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
@@ -34,7 +35,7 @@ class _WorkAllocationPageState extends State<WorkAllocationPage> {
     ),
     floatingActionButton: MyCoButton(
       onTap: () {
-        context.push("/");
+        context.push('');
       },
       height: 0.09 * Responsive.getHeight(context),
       width: 0.20 * Responsive.getWidth(context),
@@ -42,7 +43,7 @@ class _WorkAllocationPageState extends State<WorkAllocationPage> {
       isShadowBottomLeft: true,
       isShadowBottomRight: true,
       title: '',
-      image: Image(image: AssetImage('assets/work_allocation/plus.png')),
+      image: const Image(image: AssetImage(AppAssets.plus)),
     ),
   );
 }
