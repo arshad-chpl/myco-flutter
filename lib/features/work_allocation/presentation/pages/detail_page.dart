@@ -93,40 +93,34 @@ class _DetailPageState extends State<DetailPage> {
                 ),
                 Divider(color: AppTheme.getColor(context).secondary),
                 // Work-related details using reusable CommonRow
-                CommonRow(
+                const CommonRow(
                   title: 'Work Category',
                   value: 'AI Tools',
-                  onTap: () {},
                   textColor: AppColors.textGray,
                 ),
-                CommonRow(
+                const CommonRow(
                   title: 'Project',
                   value: 'Abc',
-                  onTap: () {},
                   textColor: AppColors.textGray,
                 ),
-                CommonRow(
+                const CommonRow(
                   title: 'Location',
                   value: 'Abc',
-                  onTap: () {},
                   textColor: AppColors.textGray,
                 ),
-                CommonRow(
+                const CommonRow(
                   title: 'Site',
                   value: 'Abc',
-                  onTap: () {},
                   textColor: AppColors.textGray,
                 ),
-                CommonRow(
+                const CommonRow(
                   title: 'HOD Remark',
                   value: 'Abc',
-                  onTap: () {},
                   textColor: AppColors.textGray,
                 ),
-                CommonRow(
+                const CommonRow(
                   title: 'Created Date & Time',
                   value: '12 May 2025 , 10:00 AM',
-                  onTap: () {},
                   textColor: AppColors.textGray,
                 ),
               ],
