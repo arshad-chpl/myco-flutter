@@ -6,7 +6,6 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 class CommonRow extends StatefulWidget {
   final String title;
   final String value;
-  final VoidCallback onTap;
   final Widget? valueWidget;
   final Color textColor;
   final TextDecoration? decoration;
@@ -15,7 +14,6 @@ class CommonRow extends StatefulWidget {
     super.key,
     required this.title,
     required this.value,
-    required this.onTap,
     this.valueWidget,
     required this.textColor, // Slightly faded like image
     this.decoration,
@@ -28,49 +26,47 @@ class CommonRow extends StatefulWidget {
 class _CommonRowState extends State<CommonRow> {
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 2), // match row height
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        /// Title (left side)
-        Expanded(
-          flex: 6,
-          child: CustomText(
-            widget.title,
-            fontWeight: FontWeight.w700,
+      padding: const EdgeInsets.symmetric(vertical: 2), // match row height
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          /// Title (left side)
+          Expanded(
+            flex: 6,
+            child: CustomText(
+              widget.title,
+              fontWeight: FontWeight.w500,
+              fontSize: 17 * Responsive.getResponsiveText(context),
+              color: AppColors.black,
+            ),
+          ),
+
+          /// Colon
+          CustomText(
+            ':',
+            fontWeight: FontWeight.w600,
             fontSize: 17 * Responsive.getResponsiveText(context),
             color: AppColors.black,
           ),
-        ),
+          SizedBox(width: 0.020 * Responsive.getWidth(context)),
 
-        /// Colon
-        CustomText(
-          ':',
-          fontWeight: FontWeight.w500,
-          fontSize: 17 * Responsive.getResponsiveText(context),
-          color: AppColors.black,
-        ),
-        SizedBox(width: 0.020 * Responsive.getWidth(context)),
-
-        /// Value (right side)
-        Expanded(
-          flex: 5,
-          child: InkWell(
-            onTap: widget.onTap,
-            child:
-                widget.valueWidget ??
-                CustomText(
-                  widget.value,
-                  decoration: widget.decoration,
-                  color: widget.textColor,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 17 * Responsive.getResponsiveText(context),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
+          /// Value (right side)
+          Expanded(
+            flex: 5,
+            child: InkWell(
+              child: widget.valueWidget ??
+                  CustomText(
+                    widget.value,
+                    decoration: widget.decoration,
+                    color: widget.textColor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 17 * Responsive.getResponsiveText(context),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+            ),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+    );
 }
