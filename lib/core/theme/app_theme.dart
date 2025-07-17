@@ -45,6 +45,7 @@ class AppTheme {
       onTertiary: AppColors.darksecondary, //0xFF2FBBA4
       onTertiaryContainer: AppColors.spanishYellow,
       inversePrimary: AppColors.primaryLight//0xFF2F648E
+
     ),
   );
 

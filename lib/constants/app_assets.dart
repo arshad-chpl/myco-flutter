@@ -9,7 +9,10 @@ class AppAssets {
   static const String splash = '$basePath/splash';
   static const String visit = '$basePath/visit';
   static const String svgsVisit = '$svgsPath/visit';
+
   static const String assetVisit = '$basePath/add_expense';
+
+
   static const String assets = '$basePath/assets';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
@@ -56,6 +59,7 @@ class AppAssets {
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
   static const String loaderGif = '$basePath/gifs/mycoLoading.gif';
 
+
   // dashboard Screen
   static const String search = '$dashboard/search.png';
   static const String notification = '$dashboard/notification.png';
@@ -76,6 +80,8 @@ class AppAssets {
   static const String trash = '$svgsVisit/trash.svg';
   static const String smart_car = '$svgsVisit/smart-car.svg';
   static const String global = '$svgsVisit/global.svg';
+  static const String arrow_down = '$svgsVisit/arrow-down.svg';
+
 
   //images visit
   static const String assetBookmark = '$assetVisit/bookmark.svg';
@@ -89,6 +95,7 @@ class AppAssets {
   static const String assetVector = '$assetVisit/Vector.svg';
   static const String assetDocumentText = '$assetVisit/document-text.svg';
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
+  static const String Search = '$svgsVisit/search.svg';
 
   // assets folder
   static const String assetsDollar = '$assets/dollar-square.svg';
@@ -104,4 +111,10 @@ class AppAssets {
 
   static const String lostFoundData = '$lostFound/data.png';
   static const String lostFoundMessageEdit = '$lostFound/message-edit.png';
+  // static const String location = '$basePath/take_order/location.png';
+  static const String assetMessageEdit = '$svgsVisit/message-edit.svg';
+  static const String assetArrowSquare = '$svgsVisit/arrow-square.svg';
+  static const String assetProfileCircle = '$svgsVisit/profile-circle.svg';
+  static const String assetClock = '$svgsVisit/clock.svg';
+  static const String assetSearchNormal = '$svgsVisit/search-normal.svg';
 }
