@@ -86,7 +86,12 @@ class _WorkAllocationCardListViewState extends State<WorkAllocationCardListView>
   @override
   Widget build(BuildContext context) => ListView.builder(
       scrollDirection: Axis.vertical,
-    padding: EdgeInsets.all(13 * Responsive.getResponsive(context)),
+    padding: EdgeInsets.only(
+      top: 13 * Responsive.getResponsive(context),
+      left: 13 * Responsive.getResponsive(context),
+      bottom: 72 * Responsive.getResponsive(context),
+      right: 13 * Responsive.getResponsive(context)
+    ),
       itemCount: workAllocationData.length,
         itemBuilder: (context, index) {
         final workAllocation = workAllocationData[index];
