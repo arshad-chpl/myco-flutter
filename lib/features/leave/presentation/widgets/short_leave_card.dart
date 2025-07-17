@@ -47,10 +47,10 @@ class ShortLeaveCard extends StatelessWidget {
     final textResponsive = Responsive.getResponsiveText(context);
 
     // Determine if delete icon should be visible based on Java conditions
-    final showDeleteIcon =
-        leave.status == 'Pending' &&
-        !(leave.leaveEntity.isSalaryGenerated ?? false) &&
-        (leave.leaveEntity.isDateGone ?? false);
+// Determine if delete icon should be visible to match Java logic
+    final showDeleteIcon = leave.status == 'Pending' &&
+        (!(leave.leaveEntity.isSalaryGenerated ?? false) ||
+            !(leave.leaveEntity.isDateGone ?? false));
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8 * responsive),
