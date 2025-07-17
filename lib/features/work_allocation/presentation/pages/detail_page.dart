@@ -36,7 +36,6 @@ class _DetailPageState extends State<DetailPage> {
                 image: AssetImage('assets/work_allocation/person_image.png'),
               ),
               // Name of the user
-              title: CustomText('Mukund Madhav', fontWeight: FontWeight.w600),
 
               // User role and location
               subtitle: Column(
@@ -74,8 +73,8 @@ class _DetailPageState extends State<DetailPage> {
                         CustomText(
                           'Work Start Date',
                           fontWeight: FontWeight.w700,
+                          color: AppColors.textPrimary,
                         ),
-                        CustomText('21 st May 2025', color: AppColors.textGray),
                       ],
                     ),
                     Column(
@@ -84,8 +83,8 @@ class _DetailPageState extends State<DetailPage> {
                         CustomText(
                           'Work Completion Date',
                           fontWeight: FontWeight.w700,
+                           color: AppColors.textPrimary,
                         ),
-                        CustomText('22nd May 2025', color: AppColors.textGray),
                       ],
                     ),
                   ],
