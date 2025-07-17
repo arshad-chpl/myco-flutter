@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -110,7 +111,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
     leading: widget.automaticallyImplyLeading
         ? (widget.leading ??
               InkWell(
-                onTap: () => Navigator.pop(context),
+                onTap: () => context.pop(),
                 child: Padding(
                   padding: EdgeInsets.all(
                     12 * Responsive.getResponsive(context),

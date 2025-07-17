@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
@@ -172,6 +173,7 @@ class AllProductsScreen extends StatelessWidget {
           onChanged: (value) {
             bloc.add(SearchQueryChangeEvent(value, productList));
           },
+          
         ),
 
         SizedBox(height: 0.025 * Responsive.getHeight(context)),

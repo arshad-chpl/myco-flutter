@@ -96,7 +96,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   index: 3,
                   text: 'Profile',
                   isSelected: state.currentIndex == 3,
-                  imagePath: 'visit/images/user.png',
+                  imagePath: 'visit/images/user1.png',
                   selectedImagePath: 'visit/images/user-selected.png',
                 ),
               ],
