@@ -57,9 +57,15 @@ import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc
 import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 
+
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
+
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
@@ -67,8 +73,11 @@ import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.
 import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 
+
+import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection.dart';
+
+import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
@@ -92,7 +101,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash,
+    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -209,11 +218,20 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
-        builder: (context, state) => BlocProvider(
-          create: (context) =>
-              GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
-          child: const FaceDetectionPage(),
-        ),
+        pageBuilder: (context, state) => MaterialPage(
+              child: BlocProvider(
+                  create: (context) =>
+                GetIt.I<FaceDetectionBloc>()
+                ..add(LaunchCamera()),
+                child: const FaceDetectionPage(),
+              )
+          ),
+        // builder: (context, state) => BlocProvider(
+        //   create: (context) =>
+        //   GetIt.I<FaceDetectionBloc>()
+        //     ..add(LaunchCamera()),
+        //   child: const FaceDetectionPage(),
+        // ),
       ),
       // Add all modular routes here
       // Add all modular routes here
@@ -298,6 +316,11 @@ class AppRouter {
         path: RoutePaths.viewVisitDetails,
         name: 'view-visit-details',
         builder: (context, state) => const ViewVisitDetailsPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.myProfile,
+        name: 'my-profile',
+        builder: (context, state) => const MyProfilePage(),
       ),
       GoRoute(
         path: RoutePaths.adminView,
