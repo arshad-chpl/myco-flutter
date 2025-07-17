@@ -60,9 +60,7 @@ class _DetailPageState extends State<DetailPage> {
                         const Image(
                           width: 90,
                           height: 90,
-                          image: AssetImage(
-                            'assets/work_allocation/person_image.png',
-                          ),
+                          image: AssetImage(AppAssets.personProfileImage),
                         ),
 
                         SizedBox(width: 0.05 * Responsive.getWidth(context)),

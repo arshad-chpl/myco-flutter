@@ -32,7 +32,7 @@ class _CommonRowState extends State<CommonRow> {
         children: [
           /// Title (left side)
           Expanded(
-            flex: 6,
+            flex: 5,
             child: CustomText(
               widget.title,
               fontWeight: FontWeight.w600,
