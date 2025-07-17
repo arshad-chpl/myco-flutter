@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
@@ -13,7 +14,7 @@ import 'package:myco_flutter/features/leave/presentation/widgets/leave_action_bu
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_detail_bottom_sheet.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_filter_bottom_sheet.dart';
-import 'package:myco_flutter/features/leave/presentation/widgets/month_year_header.dart';
+import 'package:myco_flutter/widgets/custom_month_year_picker_header/month_year_header.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/sandwich_leave_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/short_leave_card.dart';
 import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
@@ -72,14 +73,18 @@ class _LeaveScreenState extends State<LeaveScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      leading: IconButton(
-        onPressed: () => context.pop(),
-        icon: const Icon(Icons.arrow_back_outlined),
-      ),
+    // appBar: AppBar(
+    //   leading: IconButton(
+    //     onPressed: () => context.pop(),
+    //     icon: const Icon(Icons.arrow_back_outlined),
+    //   ),
+    //   title: const Text('Leave balance'),
+    //   centerTitle: true,
+    //   elevation: 0,
+    // ),
+    appBar: CustomAppbar(
       title: const Text('Leave balance'),
       centerTitle: true,
-      elevation: 0,
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -91,7 +96,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
             ),
             title: selectedFilter,
             height: 0.035 * Responsive.getHeight(context),
-            width: 0.3 * Responsive.getWidth(context),
+            width: 0.25 * Responsive.getWidth(context),
             imagePosition: AxisDirection.right,
             image: const Icon(
               Icons.keyboard_arrow_down,
@@ -117,9 +122,9 @@ class _LeaveScreenState extends State<LeaveScreen> {
         }
       },
       builder: (context, state) {
-        if (isLoading) {
-          return const Center();
-        }
+        // if (isLoading) {
+        //   return const Center();
+        // }
 
         final filteredLeaves = _filterLeaves(leaveHistoryList);
 
@@ -129,9 +134,12 @@ class _LeaveScreenState extends State<LeaveScreen> {
             child: Column(
               children: [
                 MonthYearHeader(
+                  startYear: 2025,
+                  endYear: 2026,
+                  iconSize: 0.02 * Responsive.getHeight(context),
                   onChanged: (month, year) {
                     setState(() {
-                      selectedMonth = month + 1; // +1 to make it 1-based
+                      selectedMonth = month;
                       selectedYear = year;
                     });
                     _fetchLeaveHistory();
@@ -153,8 +161,10 @@ class _LeaveScreenState extends State<LeaveScreen> {
                   ],
                 ),
                 const SizedBox(height: 16),
+
                 if (filteredLeaves.isEmpty)
                   const Center(child: Text('No leaves found')),
+                if (isLoading) const Center(child: CircularProgressIndicator()),
                 ...filteredLeaves.map((leave) {
                   if (leave.sandwichLeave == false &&
                       leave.shortLeave == true) {
@@ -206,10 +216,11 @@ class _LeaveScreenState extends State<LeaveScreen> {
                       leave: _convertToSandwichLeaveEntry(leave),
                     );
                   } else {
-                    return LeaveCard(leave: _convertToLeaveEntry(leave),
+                    return LeaveCard(
+                      leave: _convertToLeaveEntry(leave),
                       onDelete: ({leaveId}) {
-                       // Call delete api
-                      }
+                        // Call delete api
+                      },
                     );
                   }
                 }),
@@ -302,7 +313,6 @@ class _LeaveScreenState extends State<LeaveScreen> {
       paidUnpaid: leave.paidUnpaid ?? '',
     ),
     leaveEntity: leave,
-
   );
 
   Color _getStatusColor(String? status, bool? autoLeave) {
