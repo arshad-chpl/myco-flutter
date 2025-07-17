@@ -33,27 +33,10 @@ import 'package:myco_flutter/features/language_selector/presentation/bloc/langua
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 
-import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
-import 'package:myco_flutter/features/language_selector/presentation/bloc/language_bloc.dart';
-import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
-import 'package:myco_flutter/features/lost_and_found/data/model/lost_and_found_item_model.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/bloc/lost_and_found_bloc.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/bloc/lost_and_found_event.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/di/lost_and_found_di.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
-
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
-
-
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
@@ -64,7 +47,6 @@ import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.
 
 import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
-
 
 import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
@@ -93,7 +75,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths
+        .splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -211,13 +194,12 @@ class AppRouter {
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
         pageBuilder: (context, state) => MaterialPage(
-              child: BlocProvider(
-                  create: (context) =>
-                GetIt.I<FaceDetectionBloc>()
-                ..add(LaunchCamera()),
-                child: const FaceDetectionPage(),
-              )
+          child: BlocProvider(
+            create: (context) =>
+                GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+            child: const FaceDetectionPage(),
           ),
+        ),
         // builder: (context, state) => BlocProvider(
         //   create: (context) =>
         //   GetIt.I<FaceDetectionBloc>()
@@ -326,7 +308,7 @@ class AppRouter {
         ),
         routes: adminViewRoutes,
       ),
-     ...cahatRoutes,
+      ...cahatRoutes,
 
       GoRoute(
         path: RoutePaths.assetsHome,
