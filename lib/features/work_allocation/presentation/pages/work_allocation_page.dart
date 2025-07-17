@@ -22,7 +22,10 @@ class _WorkAllocationPageState extends State<WorkAllocationPage> {
       padding: EdgeInsets.all(13 * Responsive.getResponsive(context)),
       child: Column(
         children: [
-          const CustomSearchField(hintText: 'Search'),
+          Padding(
+            padding: EdgeInsets.all(13 * Responsive.getResponsive(context)),
+            child: const CustomSearchField(hintText: 'Search'),
+          ),
           SizedBox(height: 0.023 * Responsive.getHeight(context)),
 
           // MonthYearHeader(
