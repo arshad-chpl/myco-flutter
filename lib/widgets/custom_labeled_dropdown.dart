@@ -38,6 +38,8 @@ class LabeledDropdown<T> extends StatelessWidget {
   final TextOverflow? textOverflow;
   final bool? suffixIconOn;
   final Widget? suffix;
+  final FontStyle? titleFontStyle;
+  final bool? isKey;
 
   const LabeledDropdown({
     super.key,
@@ -73,6 +75,8 @@ class LabeledDropdown<T> extends StatelessWidget {
     this.textOverflow,
     this.suffixIconOn,
     this.suffix,
+    this.titleFontStyle,
+    this.isKey,
   });
 
   @override
@@ -83,7 +87,7 @@ class LabeledDropdown<T> extends StatelessWidget {
         children: [
           CustomText(
             label,
-            color: textColor ??  AppTheme.getColor(context).onSurfaceVariant,
+            color: textColor ?? AppTheme.getColor(context).onSurfaceVariant,
             fontSize:
                 textFontSize ?? 16 * Responsive.getResponsiveText(context),
             fontWeight: textFontweight ?? FontWeight.bold,
@@ -92,6 +96,8 @@ class LabeledDropdown<T> extends StatelessWidget {
             decorationColor: textDecorationColor,
             maxLines: textMaxLine,
             overflow: textOverflow,
+            isKey: isKey ?? false,
+            fontStyle: titleFontStyle,
           ),
           if (isRequired)
             CustomText(

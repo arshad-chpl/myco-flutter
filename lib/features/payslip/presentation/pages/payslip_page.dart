@@ -138,6 +138,7 @@ class PayslipPage extends StatelessWidget {
                   context,
                 ).primary,
                 tabBarBorderColor: AppTheme.getColor(context).onSurface,
+
                 selectedIndex: selectedIndex,
                 isShadowBottomLeft: true,
                 onTabChange: (index) {
@@ -184,6 +185,7 @@ class PaySlip extends StatelessWidget {
             totalDeduction: '200.00',
             onView: () {
               context.pushNamed(RoutePaths.payslipDetail);
+
             },
           ),
           separatorBuilder: (context, index) =>

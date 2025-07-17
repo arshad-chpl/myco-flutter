@@ -9,12 +9,17 @@ class AppAssets {
   static const String splash = '$basePath/splash';
   static const String visit = '$basePath/visit';
   static const String svgsVisit = '$svgsPath/visit';
+
   static const String assetVisit = '$basePath/add_expense';
+
+
   static const String assets = '$basePath/assets';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
   static const String workAllocationSvgs = '$svgsPath/work_allocation';
   static const String workAllocation = '$basePath/work_allocation';
+
+  static const String stepper = '$basePath/stepper';
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -38,12 +43,37 @@ class AppAssets {
   static const String punchIn = '$svgsPath/punchIn.svg';
   static const String scanQR = '$svgsPath/scanQR.svg';
   static const String refresh = '$svgsPath/refresh.svg';
+  static const String backarrow = '$svgsVisit/backarrow.svg';
+  static const String calendar = '$svgsVisit/calendar.svg';
+  static const String callCalling = '$svgsVisit/call-calling.svg';
+  static const String CaretCircleDown = '$svgsVisit/CaretCircleDown.svg';
+  static const String CaretCircleUp = '$svgsVisit/CaretCircleUp.svg';
+  static const String cart = '$svgsVisit/cart.svg';
+  static const String cart_no = '$svgsVisit/cart_no.svg';
+  static const String clock = '$svgsVisit/clock.svg';
+  static const String delete = '$svgsVisit/delete.svg';
+  static const String gps = '$svgsVisit/gps.svg';
+  static const String location = '$svgsVisit/location.svg';
+  static const String map = '$svgsVisit/map.svg';
+  static const String message_edit = '$svgsVisit/message_edit.svg';
+  static const String noteFavorite = '$svgsVisit/note-favorite.svg';
+  static const String personalcard = '$svgsVisit/personalcard.svg';
+  static const String profileCircle = '$svgsVisit/profile-circle.svg';
+  static const String share = '$svgsVisit/share.svg';
+  static const String stickynote = '$svgsVisit/stickynote.svg';
+  static const String whatsapp = '$svgsVisit/whatsapp.svg';
+  static const String ref = '$svgsVisit/refresh_new.svg';
+  static const String bookmark = '$svgsPath/bookmark-2.png';
+  static const String user = '$svgsVisit/user1.png';
+  static const String visitReport = '$svgsVisit/visit_report.png';
+  static const String faceMatch = '$svgsVisit/face_match.png';
+
+  static const String result = '$svgsVisit/result.svg';
   static const String arrowDown = '$svgsPath/arrow_down.svg';
   static const String searchIcon = '$svgsPath/search_icon.svg';
 
   // Svgs Take Order
   static const String offers = '$svgsTakeOrder/offers.svg';
-  static const String cart = '$svgsTakeOrder/cart.svg';
   static const String xCircle = '$svgsTakeOrder/XCircle.svg';
   static const String messageEdit = '$svgsTakeOrder/message-edit.svg';
   static const String placeOrder = '$svgsTakeOrder/place-order.svg';
@@ -52,7 +82,6 @@ class AppAssets {
   static const String start = '$svgsTakeOrder/start.svg';
   static const String stop = '$svgsTakeOrder/stop.svg';
   static const String calling = '$svgsTakeOrder/calling.svg';
-  static const String location = '$svgsTakeOrder/location.svg';
 
   //work allocation svgs
   static const String calendarIcon = '$workAllocationSvgs/calendar.svg';
@@ -61,6 +90,7 @@ class AppAssets {
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
   static const String loaderGif = '$basePath/gifs/mycoLoading.gif';
+
 
   // dashboard Screen
   static const String search = '$dashboard/search.png';
@@ -73,15 +103,31 @@ class AppAssets {
 
   // Animations (if using Lottie or similar)
   static const String loadingAnimation = 'visit/animations/loading.json';
-
-  static const String clock = '$svgsVisit/clock.svg';
-  static const String personalcard = '$svgsVisit/personalcard.svg';
   static const String note_favorite = '$svgsVisit/note-favorite.svg';
   static const String sticky_note = '$svgsVisit/sticky_note.svg';
-  static const String gps = '$svgsVisit/gps.svg';
   static const String trash = '$svgsVisit/trash.svg';
   static const String smart_car = '$svgsVisit/smart-car.svg';
   static const String global = '$svgsVisit/global.svg';
+
+
+  // Visit Assets
+  static const String emptyWalletTime = '$svgsVisit/empty-wallet-time.svg';
+  static const String bitCinCard = '$svgsVisit/bitcoin-card.svg';
+  static const String building = '$svgsVisit/building.svg';
+  static const String businessAndTrade = '$svgsVisit/business-and-trade 1.svg';
+  static const String cardCoin = '$svgsVisit/card-coin.svg';
+  static const String element = '$svgsVisit/element-1.svg';
+  static const String addButton = '$svgsVisit/Frame 1000003425.svg';
+  static const String gst = '$svgsVisit/Group 1410104499.svg';
+  static const String locationVisit = '$svgsVisit/location.svg';
+  static const String lock = '$svgsVisit/lock.svg';
+  static const String date = '$svgsVisit/note-favorite.svg';
+  static const String home = '$svgsVisit/home 1.svg';
+  static const String sms = '$svgsVisit/sms.svg';
+  static const String downArrow = '$svgsVisit/arrow-down.svg';
+  static const String galleryExport = '$svgsVisit/gallery-export.svg';
+  static const String arrow_down = '$svgsVisit/arrow-down.svg';
+
 
   //images visit
   static const String assetBookmark = '$assetVisit/bookmark.svg';
@@ -95,6 +141,15 @@ class AppAssets {
   static const String assetVector = '$assetVisit/Vector.svg';
   static const String assetDocumentText = '$assetVisit/document-text.svg';
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
+  static const String Search = '$svgsVisit/search.svg';
+
+  //face detection screen assets
+  static const String assetCircle = '$visit/circle.png';
+  static const String assetCross = '$visit/cross.png';
+  static const String assetsDanger = '$visit/danger.png';
+  static const String locationIcon = '$visit/location_icon.png';
+  static const String locationPreview = '$visit/location_preview.png';
+  static const String outOfRange = '$visit/out_of_range.png';
 
   // assets folder
   static const String assetsDollar = '$assets/dollar-square.svg';
@@ -115,4 +170,13 @@ class AppAssets {
   static const String plus = '$workAllocation/plus.png';
   static const String calendar = '$workAllocation/calendar.png';
   static const String personProfileImage = '$workAllocation/person_image.png';
+  // static const String location = '$basePath/take_order/location.png';
+  static const String assetMessageEdit = '$svgsVisit/message-edit.svg';
+  static const String assetArrowSquare = '$svgsVisit/arrow-square.svg';
+  static const String assetProfileCircle = '$svgsVisit/profile-circle.svg';
+  static const String assetClock = '$svgsVisit/clock.svg';
+  static const String assetSearchNormal = '$svgsVisit/search-normal.svg';
+
+  //images stepper
+  static const String stepperCheckIcon = '$stepper/check.svg';
 }

@@ -18,7 +18,7 @@ class FaceDetectionLoaded extends FaceDetectionState {
     required this.dateTime,
     required this.scanningState,
     required this.remainingTime,
-    required this.progress
+    required this.progress,
   });
 
   FaceDetectionLoaded copyWith({
@@ -28,12 +28,12 @@ class FaceDetectionLoaded extends FaceDetectionState {
     String? remainingTime,
     double? progress,
   }) => FaceDetectionLoaded(
-      controller: controller ?? this.controller,
-      scanningState: scanningState ?? this.scanningState,
-      dateTime: dateTime ?? this.dateTime,
-      remainingTime: remainingTime ?? this.remainingTime,
-      progress: progress ?? this.progress,
-    );
+    controller: controller ?? this.controller,
+    scanningState: scanningState ?? this.scanningState,
+    dateTime: dateTime ?? this.dateTime,
+    remainingTime: remainingTime ?? this.remainingTime,
+    progress: progress ?? this.progress,
+  );
 }
 
 class FaceDetectionError extends FaceDetectionState {
