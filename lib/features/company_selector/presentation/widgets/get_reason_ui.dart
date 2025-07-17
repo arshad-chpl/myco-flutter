@@ -39,19 +39,14 @@ class GetReasonUi extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey),
-                // Set border color here
-                borderRadius: BorderRadius.circular(
-                  12,
-                ), // Optional: rounded corners
+                borderRadius: BorderRadius.circular(12),
               ),
               padding: const EdgeInsets.all(8),
-              // Inner spacing inside border
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 5.0),
-                    // aligns with first line of text
                     child: SvgPicture.asset(
                       'assets/login/ic_ui_message_edit.svg',
                       height: 20,
@@ -72,7 +67,7 @@ class GetReasonUi extends StatelessWidget {
                           vertical: 5,
                           horizontal: 12,
                         ),
-                        border: InputBorder.none, // Remove internal border
+                        border: InputBorder.none,
                       ),
                     ),
                   ),

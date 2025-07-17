@@ -87,8 +87,8 @@ class OtpVerificationUi extends StatelessWidget {
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
                 child: CustomAlertDialog(
-                  alertType: AlertType.defaultType,
-                  // icon: 'assets/login/device_change_icon.svg',
+                  alertType: AlertType.custom,
+                  icon: 'assets/login/device_change_icon.svg',
                   content: state.response.message,
                   cancelText: 'Cancel',
                   confirmText: 'Request',
@@ -107,11 +107,6 @@ class OtpVerificationUi extends StatelessWidget {
                 ),
               ),
             );
-
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Device Change Dialog')),
-            );
-            // Device Change Dialog
           } else if (state.response.viewDialog == true) {
             showModalBottomSheet(
               context: context,
@@ -131,11 +126,6 @@ class OtpVerificationUi extends StatelessWidget {
                 ),
               ),
             );
-
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Custom Alert Dialog')),
-            );
-            // Custom Alert Dialog
           }
         }
       },

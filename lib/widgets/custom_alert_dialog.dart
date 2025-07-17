@@ -8,6 +8,7 @@ import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart'
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
+/// Enum representing different alert types supported by [CustomAlertDialog]
 enum AlertType {
   defaultType,
   error,
@@ -21,6 +22,27 @@ enum AlertType {
   custom,
 }
 
+///
+/// A reusable custom alert dialog widget with animation/icon,
+/// text content, and action buttons (confirm, cancel, neutral).
+///
+/// To use this dialog:
+/// ```dart
+/// showModalBottomSheet(
+///   context: context,
+///   isScrollControlled: true,
+///   shape: RoundedRectangleBorder(
+///     borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+///   ),
+///   builder: (_) => CustomAlertDialog(
+///     alertType: AlertType.success,
+///     title: "Success",
+///     content: "Your operation was completed.",
+///     confirmText: "OK",
+///     onConfirm: () {},
+///   ),
+/// );
+/// ```
 class CustomAlertDialog extends StatelessWidget {
   final AlertType alertType;
   final String? title;
@@ -37,8 +59,7 @@ class CustomAlertDialog extends StatelessWidget {
   final bool showNeutralButton;
 
   const CustomAlertDialog({
-    super.key,
-    required this.alertType,
+    required this.alertType, super.key,
     this.title,
     this.content,
     this.icon,
@@ -53,59 +74,28 @@ class CustomAlertDialog extends StatelessWidget {
     this.showNeutralButton = false,
   });
 
+  /// Returns the appropriate animation or icon based on the [AlertType]
   Widget _getAlertAnimation(AlertType type, BuildContext context) {
     final size = 200 * Responsive.getResponsive(context);
 
     switch (type) {
       case AlertType.error:
-        return Lottie.asset(
-          'assets/animations/error_alert.json',
-          width: size,
-          height: size,
-        );
+        return Lottie.asset('assets/animations/error_alert.json', width: size, height: size);
       case AlertType.success:
-        return Lottie.asset(
-          'assets/animations/success_alert.json',
-          width: size,
-          height: size,
-        );
+        return Lottie.asset('assets/animations/success_alert.json', width: size, height: size);
       case AlertType.warning:
       case AlertType.alert:
-        return Lottie.asset(
-          'assets/animations/warning_alert.json',
-          width: size,
-          height: size,
-        );
+        return Lottie.asset('assets/animations/warning_alert.json', width: size, height: size);
       case AlertType.delete:
-        return Lottie.asset(
-          'assets/animations/delete_alert.json',
-          width: size,
-          height: size,
-        );
+        return Lottie.asset('assets/animations/delete_alert.json', width: size, height: size);
       case AlertType.logout:
-        return Lottie.asset(
-          'assets/animations/logout_alert.json',
-          width: size,
-          height: size,
-        );
+        return Lottie.asset('assets/animations/logout_alert.json', width: size, height: size);
       case AlertType.gpsOff:
-        return Lottie.asset(
-          'assets/animations/gps_alert.json',
-          width: size,
-          height: size,
-        );
+        return Lottie.asset('assets/animations/gps_alert.json', width: size, height: size);
       case AlertType.onlinePaymentRestrict:
-        return Image.asset(
-          'assets/icons/ic_ui_online_payment_restrict.png',
-          width: size,
-          height: size,
-        );
+        return Image.asset('assets/icons/ic_ui_online_payment_restrict.png', width: size, height: size);
       case AlertType.defaultType:
-        return Lottie.asset(
-          'assets/animations/info_alert.json',
-          width: size,
-          height: size,
-        );
+        return Lottie.asset('assets/animations/info_alert.json', width: size, height: size);
       case AlertType.custom:
         if (icon == null) return const SizedBox.shrink();
         if (icon!.endsWith('.svg')) {
@@ -118,6 +108,7 @@ class CustomAlertDialog extends StatelessWidget {
     }
   }
 
+  /// Helper to check if a string is not null or empty
   bool _isNotEmpty(String? value) => value != null && value.trim().isNotEmpty;
 
   @override
@@ -136,13 +127,16 @@ class CustomAlertDialog extends StatelessWidget {
         children: [
           const SizedBox(height: 20),
 
+          // Animation or icon based on alert type
           _getAlertAnimation(alertType, context),
 
+          // Optional title
           if (_isNotEmpty(title)) ...[
             const SizedBox(height: 20),
             CustomText(title!, color: textColor, textAlign: TextAlign.center),
           ],
 
+          // Optional content text
           if (_isNotEmpty(content)) ...[
             const SizedBox(height: 20),
             CustomText(
@@ -154,6 +148,7 @@ class CustomAlertDialog extends StatelessWidget {
 
           const SizedBox(height: 20),
 
+          // Confirm and Cancel buttons
           if ((!hideCancelButton && _isNotEmpty(cancelText)) ||
               (!hideConfirmButton && _isNotEmpty(confirmText)))
             Row(
@@ -170,9 +165,7 @@ class CustomAlertDialog extends StatelessWidget {
                       border: Border.all(
                         color: AppTheme.getColor(context).primary,
                       ),
-                      textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(
-                        context,
-                      ),
+                      textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(context),
                       onTap: onCancel ?? () => Navigator.of(context).pop(),
                     ),
                   ),
@@ -195,6 +188,7 @@ class CustomAlertDialog extends StatelessWidget {
               ],
             ),
 
+          // Neutral button (optional third action)
           if (showNeutralButton && _isNotEmpty(neutralText)) ...[
             const SizedBox(height: 20),
             MyCoButton(

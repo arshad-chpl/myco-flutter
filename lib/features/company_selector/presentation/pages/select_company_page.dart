@@ -127,9 +127,6 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                       );
                       _nextStep();
                     } else if (state is OtpNotSentState) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(state.response.message ?? '')),
-                      );
                       if (state.response.viewDialogApiCall == true) {
                         showModalBottomSheet(
                           context: context,
@@ -140,8 +137,8 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
                             child: CustomAlertDialog(
-                              alertType: AlertType.defaultType,
-                              // icon: 'assets/login/device_change_icon.svg',
+                              alertType: AlertType.custom,
+                              icon: 'assets/login/device_change_icon.svg',
                               content: state.response.message,
                               cancelText: 'Cancel',
                               confirmText: 'Request',
@@ -160,11 +157,6 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                             ),
                           ),
                         );
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Device Change Dialog')),
-                        );
-                        // Device Change Dialog
                       } else if (state.response.viewDialog == true) {
                         showModalBottomSheet(
                           context: context,
@@ -184,11 +176,6 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                             ),
                           ),
                         );
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Custom Alert Dialog')),
-                        );
-                        // Custom Alert Dialog
                       }
                     }
                   },
