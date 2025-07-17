@@ -35,9 +35,7 @@ class AssetsHomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.getColor(context).surface,
       appBar: CustomAppbar(
-        title: 
-          'assets',
-          
+        title: 'assets',
         titleSpacing: 0,
         actions: [
           Padding(
@@ -88,7 +86,7 @@ class AssetsHomePage extends StatelessWidget {
             ),
           ),
         ],
-        appBarBackgoundColor: AppTheme.getColor(context).surface,
+        // appBarBackgoundColor: AppTheme.getColor(context).surface,
       ),
       body: CustomScrollView(
         slivers: [
@@ -420,9 +418,6 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
 //       return [];
 //   }
 // }
-
-
-
 
 ///
 

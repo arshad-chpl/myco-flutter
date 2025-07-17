@@ -16,6 +16,7 @@ import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AssetsHomePage extends StatelessWidget {
   const AssetsHomePage({super.key});
@@ -28,7 +29,7 @@ class AssetsHomePage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppTheme.getColor(context).surface,
         appBar: CustomAppbar(
-          title:'assets',
+          title: 'assets',
           isKey: true,
           titleSpacing: 0,
           actions: [
@@ -78,8 +79,7 @@ class AssetsHomePage extends StatelessWidget {
                   hintTextStyle: AppTheme.getTextStyle(
                     context,
                   ).labelLarge!.copyWith(color: AppColors.textSecondary),
-                  preFixImage:
-                      AppAssets.imageSearch, 
+                  preFixImage: AppAssets.imageSearch,
                   isSuffixIconOn: true,
                   suFixImage: AppAssets.imageScanner,
                   suFixImageWidth: 25,
@@ -303,95 +303,92 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
       child != oldDelegate.child || height != oldDelegate.height;
 }
 
+// List<Widget> _buildAssetListByTab(BuildContext context) {
+//   switch (context.watch<AssetsTabBloc>().state.selectedIndex) {
+//     case 0: // Active Assets
+//       return [const AssetsListPage()];
 
+//     case 1: // Past Assets
+//       return [const PastAssetsListPage()];
 
-
-  // List<Widget> _buildAssetListByTab(BuildContext context) {
-  //   switch (context.watch<AssetsTabBloc>().state.selectedIndex) {
-  //     case 0: // Active Assets
-  //       return [const AssetsListPage()];
-
-  //     case 1: // Past Assets
-  //       return [const PastAssetsListPage()];
-
-  //     case 2: // All Assets
-  //       return [
-  //         SliverPadding(
-  //           padding: EdgeInsets.symmetric(
-  //             horizontal: 0.04 * Responsive.getWidth(context),
-  //           ),
-  //           sliver: SliverPersistentHeader(
-  //             pinned: true,
-  //             delegate: _SliverTabBarDelegate(
-  //               height: 60,
-  //               child: Row(
-  //                 children: [
-  //                   Expanded(
-  //                     child: BlocBuilder<AssetsFilterBloc, AssetsFilterState>(
-  //                       builder: (context, state) => DropDownButton(
-  //                         context,
-  //                         title: state.category, //'All Category',
-  //                         onTap: () async {
-  //                           final data = await showAssetsBottomSheet(
-  //                             context: context,
-  //                             heading: 'Select Category',
-  //                             dataList: const [
-  //                               'All Category',
-  //                               'Desktop',
-  //                               'Laptop',
-  //                               'Mobile',
-  //                               'Tab',
-  //                               'Test Assets',
-  //                             ],
-  //                           );
-  //                           // log('Selected category: $data');
-  //                           if (data != null) {
-  //                             context.read<AssetsFilterBloc>().add(
-  //                               AssetsFilters(category: data),
-  //                             );
-  //                           }
-  //                         },
-  //                       ),
-  //                     ),
-  //                   ),
-  //                   SizedBox(width: 0.06 * Responsive.getWidth(context)),
-  //                   Expanded(
-  //                     child: BlocBuilder<AssetsFilterBloc, AssetsFilterState>(
-  //                       builder: (context, state) => DropDownButton(
-  //                         context,
-  //                         title: state.brand, // 'All Brand',
-  //                         onTap: () async {
-  //                           final data = await showAssetsBottomSheet(
-  //                             context: context,
-  //                             heading: 'Select Brand',
-  //                             dataList: const [
-  //                               'All Brand',
-  //                               'Apple',
-  //                               'Asus',
-  //                               'Samsung',
-  //                               'Acer',
-  //                               'HP',
-  //                             ],
-  //                           );
-  //                           // log('Selected category: $data');
-  //                           if (data != null) {
-  //                             context.read<AssetsFilterBloc>().add(
-  //                               AssetsFilters(brand: data),
-  //                             );
-  //                           }
-  //                         },
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //         const SliverToBoxAdapter(child: SizedBox(height: 10)),
-  //         const AllAssetsListPage(),
-  //       ];
-  //     default:
-  //       return [];
-  //   }
-  // }
+//     case 2: // All Assets
+//       return [
+//         SliverPadding(
+//           padding: EdgeInsets.symmetric(
+//             horizontal: 0.04 * Responsive.getWidth(context),
+//           ),
+//           sliver: SliverPersistentHeader(
+//             pinned: true,
+//             delegate: _SliverTabBarDelegate(
+//               height: 60,
+//               child: Row(
+//                 children: [
+//                   Expanded(
+//                     child: BlocBuilder<AssetsFilterBloc, AssetsFilterState>(
+//                       builder: (context, state) => DropDownButton(
+//                         context,
+//                         title: state.category, //'All Category',
+//                         onTap: () async {
+//                           final data = await showAssetsBottomSheet(
+//                             context: context,
+//                             heading: 'Select Category',
+//                             dataList: const [
+//                               'All Category',
+//                               'Desktop',
+//                               'Laptop',
+//                               'Mobile',
+//                               'Tab',
+//                               'Test Assets',
+//                             ],
+//                           );
+//                           // log('Selected category: $data');
+//                           if (data != null) {
+//                             context.read<AssetsFilterBloc>().add(
+//                               AssetsFilters(category: data),
+//                             );
+//                           }
+//                         },
+//                       ),
+//                     ),
+//                   ),
+//                   SizedBox(width: 0.06 * Responsive.getWidth(context)),
+//                   Expanded(
+//                     child: BlocBuilder<AssetsFilterBloc, AssetsFilterState>(
+//                       builder: (context, state) => DropDownButton(
+//                         context,
+//                         title: state.brand, // 'All Brand',
+//                         onTap: () async {
+//                           final data = await showAssetsBottomSheet(
+//                             context: context,
+//                             heading: 'Select Brand',
+//                             dataList: const [
+//                               'All Brand',
+//                               'Apple',
+//                               'Asus',
+//                               'Samsung',
+//                               'Acer',
+//                               'HP',
+//                             ],
+//                           );
+//                           // log('Selected category: $data');
+//                           if (data != null) {
+//                             context.read<AssetsFilterBloc>().add(
+//                               AssetsFilters(brand: data),
+//                             );
+//                           }
+//                         },
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ),
+//         const SliverToBoxAdapter(child: SizedBox(height: 10)),
+//         const AllAssetsListPage(),
+//       ];
+//     default:
+//       return [];
+//   }
+// }

@@ -106,7 +106,7 @@ flutter:
     - assets/svgs/visit/
     - assets/svgs/visit/
     - assets/dashboard/svgs/
-    - assets/assets/
+    - assets/asset/
     - assets/svgs/take_order/
     - assets/chat/
     - assets/animations/

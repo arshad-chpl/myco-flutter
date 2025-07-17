@@ -5,11 +5,10 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/active_assets_card.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/assets_holder_bottom_sheet.dart';
-import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/custom_dash_line.dart';
+import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
 
 class AllAssetsListPage extends StatelessWidget {
   const AllAssetsListPage({super.key});

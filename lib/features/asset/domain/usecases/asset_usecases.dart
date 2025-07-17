@@ -8,7 +8,7 @@ class AssetsUseCases {
 
   AssetsUseCases({required this.repository});
 
-  Future<Either<Failure, AssetsEntity>> getAssets(Map<String, dynamic> dataMap) {
-    return repository.getAssets(dataMap);
-  }
+  Future<Either<Failure, AssetsEntity>> getAssets(
+    Map<String, dynamic> dataMap,
+  ) => repository.getAssets(dataMap);
 }

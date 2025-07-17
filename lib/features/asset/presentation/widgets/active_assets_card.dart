@@ -4,6 +4,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/custom_dash_line.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/image_gredal.dart';
+import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
 import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -93,6 +94,7 @@ class ActiveAssetsCard extends StatelessWidget {
                   CachedImage(
                     imageUrl: image,
                     width: 0.3 * Responsive.getWidth(context),
+                    height: 0.3 * Responsive.getWidth(context),
                   )
                 else
                   Image.asset(image, width: 0.3 * Responsive.getWidth(context)),

@@ -37,7 +37,7 @@ Future<void> showAssetsHoldersBottomSheet({
         MediaQuery.of(context).viewInsets.bottom,
     child: AssetsHoldersBottomSheet(
       deviceName: deviceName ?? 'HP AS112',
-      image: image ?? AppAssets.imageLaptop,
+      image: image.isNotEmpty ? image : AppAssets.imageLaptop,
       brand: brand ?? 'Acer',
       srNo: srNo ?? 'KJJVKGDWD66t',
       handover: handover ?? '03-04-2025',
@@ -124,7 +124,6 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
                               const SizedBox(width: 16),
                               Expanded(
                                 child: CustomText(
-                                  
                                   'not_assigned_to_any_user',
                                   fontWeight: FontWeight.w700,
                                   color: AppTheme.getColor(context).primary,
@@ -392,14 +391,12 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
-            
             title,
             fontSize: 20 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w700,
             color: AppTheme.getColor(context).primary,
           ),
           CustomText(
-            
             subTitle,
             fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,
