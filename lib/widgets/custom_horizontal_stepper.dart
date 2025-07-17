@@ -63,7 +63,7 @@ class StatusTimeline extends StatelessWidget {
                     );
                   } else {
                     final stepIndex = index ~/ 2;
-                    final isStepActive = stepIndex <= lastActiveIndex;
+                    final isStepActive = steps[stepIndex].isActive;
                     final displayColor = isStepActive ? activeColor : AppTheme.getColor(context).outline;
 
                     return Column(
@@ -95,11 +95,11 @@ class StatusTimeline extends StatelessWidget {
                               child: steps[stepIndex].imagePath != null
                                   ? Image.asset(
                                 steps[stepIndex].imagePath!,
-                                width: circleSize * 0.8,
-                                height: circleSize * 0.6,
+                                width: circleSize * 0.5,
+                                height: circleSize * 0.4,
                                 fit: BoxFit.contain,
                               )
-                                  :  Icon(Icons.image_not_supported, color: AppTheme.getColor(context).surfaceBright),
+                                  : const SizedBox(),
                             ),
                           ),
                         ),

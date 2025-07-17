@@ -166,6 +166,8 @@ class AppAssets {
   static const String plus = '$workAllocation/plus.png';
   static const String calendarIcon = '$workAllocation/calendar.png';
   static const String personProfileImage = '$workAllocation/person_image.png';
+  static const String checkMark = '$workAllocation/check_mark.png';
+  static const String cancelCross = '$workAllocation/cancel_cross.png';
   // static const String location = '$basePath/take_order/location.png';
   static const String assetMessageEdit = '$svgsVisit/message-edit.svg';
   static const String assetArrowSquare = '$svgsVisit/arrow-square.svg';
