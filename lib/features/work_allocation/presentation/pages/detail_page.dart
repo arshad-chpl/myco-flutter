@@ -20,6 +20,12 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Responsive.init(context);
+  }
+
+  @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
       title: 'Work Allocation',
@@ -39,38 +45,55 @@ class _DetailPageState extends State<DetailPage> {
             //common card widget to show Assign tasks
             CommonCard(
               headerPadding: EdgeInsets.all(
-                0.04 * Responsive.getWidth(context),
+                0.03 * Responsive.getWidth(context),
               ),
               title: 'Assign To',
+
               bottomWidget: Padding(
-                padding: EdgeInsets.all(0.03 * Responsive.getWidth(context)),
-                child: ListTile(
-                  // User image
-                  leading: Image.asset(AppAssets.personProfileImage),
+                padding: EdgeInsets.all(0.04 * Responsive.getWidth(context)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        // User image
+                        const Image(
+                          width: 90,
+                          height: 90,
+                          image: AssetImage(
+                            'assets/work_allocation/person_image.png',
+                          ),
+                        ),
 
-                  // Name of the user
-                  title: CustomText(
-                    'Mukund Madhav',
-                    fontWeight: FontWeight.w600,
-                    color: AppTheme.getColor(context).onSurface,
-                  ),
+                        SizedBox(width: 0.05 * Responsive.getWidth(context)),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Name of the user
+                            CustomText(
+                              'Mukund Madhav',
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.getColor(
+                                context,
+                              ).onSurfaceVariant,
+                            ),
 
-                  // User role and location
-                  subtitle: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        'QA',
-                        color: AppColors.textGray,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      CustomText(
-                        'QA Technical - Junagadh',
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textGray,
-                      ),
-                    ],
-                  ),
+                            // User role and location
+                            CustomText(
+                              'QA',
+                              color: AppTheme.getColor(context).outline,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            CustomText(
+                              'QA Technical - Junagadh',
+                              fontWeight: FontWeight.w500,
+                              color: AppTheme.getColor(context).outline,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -115,7 +138,7 @@ class _DetailPageState extends State<DetailPage> {
             //  button label Authorize Work
             MyCoButton(
               textStyle: TextStyle(
-                color: AppTheme.getColor(context).onPrimary,
+                color: AppTheme.getColor(context).surfaceBright,
                 fontSize: 16 * Responsive.getResponsive(context),
               ),
               boarderRadius: 30 * Responsive.getResponsive(context),
