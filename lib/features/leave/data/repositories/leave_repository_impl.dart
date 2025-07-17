@@ -31,6 +31,7 @@ class LeaveRepositoryImpl implements LeaveRepository {
     () => remoteDataSource.getLeaveHistoryNew(monthName, year),
   );
 
+  @override
   Future<Either<Failure, CommonResponse>> addShortLeave(
     String date,
     String time,
@@ -38,4 +39,15 @@ class LeaveRepositoryImpl implements LeaveRepository {
   ) async => safeApiCall.execute(
     () => remoteDataSource.addShortLeave(date, time, reason),
   );
+
+  @override
+  Future<Either<Failure, CommonResponse>> deleteShortLeave(
+    String shortLeaveId,
+    String shortLeaveDate,
+    String otherUserId,
+    String otherUserName,
+  ) async => safeApiCall.execute(
+    () => remoteDataSource.deleteShortLeave(shortLeaveId, shortLeaveDate, otherUserId, otherUserName),
+  );
+
 }

@@ -10,4 +10,6 @@ abstract class LeaveRemoteDataSource {
   Future<LeaveHistoryResponseModel> getLeaveHistoryNew(String monthName,String year);
 
   Future<CommonResponse> addShortLeave(String date,String time,String reason);
+
+  Future<CommonResponse> deleteShortLeave(String shortLeaveId,String shortLeaveDate,String otherUserId,String otherUserName);
 }

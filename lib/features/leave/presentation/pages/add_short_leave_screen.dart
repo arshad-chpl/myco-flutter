@@ -51,7 +51,7 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Short leave added successfully')),
           );
-          Navigator.pop(context);
+          Navigator.pop(context,true);
         } else if (state is LeaveError) {
           ScaffoldMessenger.of(
             context,

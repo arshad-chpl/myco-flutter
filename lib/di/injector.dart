@@ -31,8 +31,6 @@ Future<void> init() async {
   //========Splash=========
   splashDi(sl);
 
-  //========Language Selector=========
-  setupLanguageDI(sl);
   //========Login=========
   await setupLoginDi(sl);
 
@@ -54,8 +52,9 @@ Future<void> init() async {
   //========VISIT WITH=========
   visitWithDi(sl);
 
-  // ========Admin View=========
-  adminViewDi(sl);
+  //========Company Info=========
+  setupCompanyInfoDI(sl);
+
   //Leave
   setUpLeaveDI(sl);
 }

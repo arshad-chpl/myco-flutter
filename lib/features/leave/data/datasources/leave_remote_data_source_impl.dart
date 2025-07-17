@@ -87,6 +87,26 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
     return CommonResponse.fromJson(json.decode(response));
   }
 
+  @override
+  Future<CommonResponse> deleteShortLeave(String shortLeaveId, String shortLeaveDate, String otherUserId, String otherUserName) async {
+    final dataMap = {
+      'deleteShortLeave':'deleteShortLeave',
+      'society_id':'1',
+      'user_id':'1365',
+      'user_name':'Lucky Katre',
+      'language_id':'1',
+      'short_leave_id':shortLeaveId,
+      'short_leave_date':shortLeaveDate,
+      'other_user_id':otherUserId,
+      'other_user_name':otherUserName,
+    };
+
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.residentApiNew,
+    ).postFormDynamic('leave_controller.php', dataMap);
+    return CommonResponse.fromJson(json.decode(response));
+  }
+
 
 
 }

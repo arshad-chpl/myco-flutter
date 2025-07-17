@@ -18,6 +18,9 @@ class LeaveUseCase{
 
   Future<Either<Failure, CommonResponse>> addShortLeave(String date, String time, String reason)=> repository.addShortLeave(date, time, reason);
 
+  Future<Either<Failure, CommonResponse>> deleteShortLeave(String shortLeaveId, String shortLeaveDate, String otherUserId, String otherUserName)=> repository.deleteShortLeave(shortLeaveId, shortLeaveDate, otherUserId, otherUserName);
+
+
 
 
 }
