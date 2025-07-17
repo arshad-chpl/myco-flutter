@@ -59,7 +59,7 @@ Future<void> refreshApiServiceCompany(GetIt sl) async {
     instanceName: VariableBag.masterAPICall,
   );
 if (baseUrl==null) return;
-
+print('new base url'+baseUrl);
   _registerOrReplace<ApiClient>(
     ApiClient(dio, baseUrl: baseUrl + VariableBag.residentApiEnd),
     sl,

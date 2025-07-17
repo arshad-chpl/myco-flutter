@@ -15,7 +15,7 @@ class SharedPreferenceConstants {
 }
 
 class VariableBag {
-  static const String dioWithAuth= 'dioWithAuth';
+  static const String dioWithAuth = 'dioWithAuth';
   static const String companyName = 'company_name';
   static const String companyId = 'company_id';
   static const String countryId = 'country_id';
@@ -30,12 +30,15 @@ class VariableBag {
   static const String residentApiEnd = 'residentApiNew/';
   static const String mainKey = 'bmsapikey';
   static const String mainURL = 'https://master.my-company.app/mainApiEnc/';
+
   // "https://master.my-company.app/mainApiEnc/";
   static const String masterAPICall = 'masterAPICall';
   static const String employeeMobileApi = 'employeeMobileApi';
   static const String residentApiNew = 'residentApiNew';
   static const String employeeApi = 'employeeApi';
   static const String residentAPI = 'residentAPI';
+  static const String employeesData =
+      'https://dev.my-company.app/india/residentApiNew/';
 
   /////////////////////////
   // Admin Menu

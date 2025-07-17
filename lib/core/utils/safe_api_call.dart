@@ -18,8 +18,9 @@ class SafeApiCall {
     try {
       final result = await call();
       return Right(result);
-    } on DioException catch (e) { 
-      final message = e.response?.data['message'] ?? e.message ?? "Server error";
+    } on DioException catch (e) {
+      final message =
+          e.response?.data['message'] ?? e.message ?? "Server error";
       return Left(ServerFailure(message));
     } catch (e) {
       return Left(ServerFailure("Unexpected error"));

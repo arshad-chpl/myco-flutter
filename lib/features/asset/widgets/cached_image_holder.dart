@@ -21,9 +21,9 @@ class CachedImage extends StatefulWidget {
     this.placeholder,
     this.errorWidget,
   }) : assert(
-  imageUrl != null || imageProvider != null,
-  'Either imageUrl or imageProvider must be provided.',
-  );
+         imageUrl != null || imageProvider != null,
+         'Either imageUrl or imageProvider must be provided.',
+       );
 
   @override
   State<CachedImage> createState() => _CachedImageState();
@@ -43,19 +43,19 @@ class _CachedImageState extends State<CachedImage> {
     _provider
         .resolve(const ImageConfiguration())
         .addListener(
-      ImageStreamListener(
+          ImageStreamListener(
             (info, _) {
-          if (mounted) {
-            setState(() => _isLoaded = true);
-          }
-        },
-        onError: (_, __) {
-          if (mounted) {
-            setState(() => _hasError = true);
-          }
-        },
-      ),
-    );
+              if (mounted) {
+                setState(() => _isLoaded = true);
+              }
+            },
+            onError: (_, __) {
+              if (mounted) {
+                setState(() => _hasError = true);
+              }
+            },
+          ),
+        );
   }
 
   @override
@@ -83,6 +83,7 @@ class _CachedImageState extends State<CachedImage> {
     }
 
     return Image(
+      key: ValueKey(widget.imageUrl ?? widget.imageProvider.toString()),
       image: _provider,
       fit: widget.fit,
       width: widget.width,

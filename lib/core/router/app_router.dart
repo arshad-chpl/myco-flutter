@@ -6,6 +6,7 @@ import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
+import 'package:myco_flutter/di/injector.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
 import 'package:myco_flutter/features/asset/bloc/assets_bloc.dart';
@@ -22,6 +23,8 @@ import 'package:myco_flutter/features/company_selector/presentation/pages/select
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
+import 'package:myco_flutter/features/employees/presentation/bloc/employee_bloc.dart';
+import 'package:myco_flutter/features/employees/presentation/bloc/employee_event.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
@@ -181,7 +184,6 @@ class AppRouter {
         ],
       ),
 
-
       GoRoute(
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
@@ -235,7 +237,10 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.employees,
         name: 'employees',
-        builder: (context, state) => const EmployeesScreen(),
+        builder: (context, state) => BlocProvider<EmployeeBloc>(
+          create: (_) => sl<EmployeeBloc>()..add(LoadUserData()),
+          child: EmployeesScreen(),
+        ),
       ),
       GoRoute(
         path: RoutePaths.contactAdmin,

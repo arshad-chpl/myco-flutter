@@ -1,423 +1,261 @@
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
-import 'package:myco_flutter/features/employees/data/models/branch_model.dart';
-import 'package:myco_flutter/features/employees/data/models/department_model.dart';
-import 'package:myco_flutter/features/employees/data/models/employee_model.dart';
-import 'package:myco_flutter/features/employees/presentation/widgets/employee_card.dart';
+import 'package:myco_flutter/features/employees/domain/entites/department.dart';
 import 'package:myco_flutter/widgets/custom_loader.dart';
-import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 
-class EmployeesScreen extends StatefulWidget {
-  const EmployeesScreen({Key? key}) : super(key: key);
+import '../bloc/employee_bloc.dart';
+import '../bloc/employee_event.dart';
+import '../bloc/employee_state.dart';
+import '../widgets/employee_card.dart';
 
-  @override
-  State<EmployeesScreen> createState() => _EmployeesScreenState();
-}
+class EmployeesScreen extends StatelessWidget {
+  EmployeesScreen({Key? key}) : super(key: key);
 
-class _EmployeesScreenState extends State<EmployeesScreen> {
-  final Dio _dio = Dio(
-    BaseOptions(
-      headers: {'key': 'bmsapikey', 'Authorization': 'Basic MTozMEA0MDVAMQ=='},
-      baseUrl: 'https://dev.my-company.app/india/residentApiNew/',
-    ),
-  );
-
-  List<BranchModel> branches = [];
-  List<DepartmentModel> departments = [];
-  List<EmployeeModel> employees = [];
-
-  BranchModel? selectedBranch;
-  DepartmentModel? selectedDepartment;
-
-  final String userId = '21';
-  final String societyId = '1';
-
-  bool isEmployeesLoading = true;
-
-  String searchQuery = '';
-  final Set<String> selectedEmployeeIds = {};
-  final TextEditingController branchController = TextEditingController();
-  final TextEditingController departmentController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _initializeUserData();
-  }
-
-  Future<void> _initializeUserData() async {
-    setState(() => isEmployeesLoading = true);
-
-    final formData = FormData.fromMap({
-      'getEmployees': 'getEmployees',
-      'language_id': '1',
-      'user_id': userId,
-      'society_id': societyId,
-    });
-
-    try {
-      final response = await _dio.post(
-        'employee_controller.php',
-        data: formData,
-      );
-      final data = response.data is String
-          ? jsonDecode(response.data)
-          : response.data;
-
-      final List<BranchModel> fetchedBranches = (data['branch_list'] as List)
-          .map((e) => BranchModel.fromJson(e))
-          .toList();
-
-      final List<DepartmentModel> fetchedDepartments =
-          (data['departments'] as List)
-              .map((e) => DepartmentModel.fromJson(e))
-              .toList();
-
-      final List<EmployeeModel> fetchedEmployees = (data['employees'] as List)
-          .map((e) => EmployeeModel.fromJson(e))
-          .toList();
-
-      final currentUser = fetchedEmployees.firstWhere(
-        (e) => e.userId == userId,
-        orElse: () => fetchedEmployees.first,
-      );
-
-      final userDepartment = fetchedDepartments.firstWhere(
-        (d) => d.floorId == currentUser.floorId,
-        orElse: () => fetchedDepartments.first,
-      );
-
-      final userBranch = fetchedBranches.firstWhere(
-        (b) => b.blockId == userDepartment.blockId,
-        orElse: () => fetchedBranches.first,
-      );
-
-      setState(() {
-        branches = fetchedBranches;
-        departments = fetchedDepartments;
-        selectedBranch = userBranch;
-        selectedDepartment = userDepartment;
-        branchController.text = userBranch.blockName;
-        departmentController.text = userDepartment.departmentName;
-      });
-
-      await _fetchData(
-        blockId: userDepartment.blockId,
-        floorId: userDepartment.floorId,
-        setLoader: true,
-      );
-    } catch (e) {
-      debugPrint('Error initializing user data: $e');
-      setState(() => isEmployeesLoading = false);
-    }
-  }
-
-  Future<void> _fetchData({
-    String? blockId,
-    String? floorId,
-    bool setLoader = true,
-  }) async {
-    if (setLoader) setState(() => isEmployeesLoading = true);
-
-    final formData = FormData.fromMap({
-      'getEmployees': 'getEmployees',
-      'language_id': '1',
-      'user_id': userId,
-      'society_id': societyId,
-      if (floorId != null) 'floor_id': floorId,
-      if (blockId != null) 'block_id': blockId,
-    });
-
-    try {
-      final response = await _dio.post(
-        'employee_controller.php',
-        data: formData,
-      );
-      final data = response.data is String
-          ? jsonDecode(response.data)
-          : response.data;
-
-      final List<EmployeeModel> allEmployees = (data['employees'] as List)
-          .map((e) => EmployeeModel.fromJson(e))
-          .toList();
-
-      final filtered = allEmployees
-          .where((e) => e.blockId == blockId && e.floorId == floorId)
-          .toList();
-
-      setState(() {
-        employees = filtered;
-        isEmployeesLoading = false; // Set loader false only after data loads
-      });
-    } catch (e) {
-      debugPrint('Error fetching employees: $e');
-      setState(() => isEmployeesLoading = false);
-    }
-  }
-
-  void _onBranchChanged(BranchModel? branch) {
-    setState(() {
-      selectedBranch = branch;
-      selectedDepartment = null;
-      branchController.text = branch?.blockName ?? '';
-      departmentController.text = '';
-      searchQuery = '';
-    });
-
-    final branchDepartments = departments
-        .where((d) => d.blockId == branch?.blockId)
-        .toList();
-
-    if (branchDepartments.isNotEmpty) {
-      _onDepartmentChanged(branchDepartments.first);
-    } else {
-      setState(() => employees.clear());
-    }
-  }
-
-  void _onDepartmentChanged(DepartmentModel? department) {
-    setState(() {
-      selectedDepartment = department;
-      departmentController.text = department?.departmentName ?? '';
-      searchQuery = '';
-    });
-
-    if (department != null) {
-      _fetchData(
-        blockId: department.blockId,
-        floorId: department.floorId,
-        setLoader: true,
-      );
-    }
-  }
-
-  void _onSearch(String query) {
-    setState(() => searchQuery = query.trim().toLowerCase());
-  }
+  final EmployeeBloc bloc = GetIt.I<EmployeeBloc>();
 
   @override
   Widget build(BuildContext context) {
     Responsive.init(context);
 
-    final filteredDepartments = selectedBranch == null
-        ? []
-        : departments
-              .where((d) => d.blockId == selectedBranch!.blockId)
-              .toList();
+    return BlocProvider<EmployeeBloc>(
+      create: (_) => bloc..add(LoadUserData()),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: BlocBuilder<EmployeeBloc, EmployeeState>(
+            builder: (context, state) {
+              final selectedBranchName = state is EmployeeLoaded
+                  ? state.selectedBranch?.blockName ?? 'branch'
+                  : 'branch';
 
-    final List<EmployeeModel> filteredEmployees = searchQuery.isEmpty
-        ? employees
-        : employees.where((e) {
-            return e.userFullName.toLowerCase().contains(searchQuery) ||
-                e.designation.toLowerCase().contains(searchQuery);
-          }).toList();
-
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: CustomAppbar(
-        title: CustomText(
-          branchController.text.isEmpty ? 'branch' : branchController.text,
-          isKey: true,
-          fontSize: 18 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.w700,
+              return CustomAppbar(
+                title: CustomText(
+                  selectedBranchName,
+                  isKey: true,
+                  fontSize: 18 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w700,
+                ),
+                appBarBackgoundColor: AppTheme.getColor(context).surface,
+                appbartxtcolor: AppTheme.getColor(context).onSurface,
+              );
+            },
+          ),
         ),
-        appBarBackgoundColor: AppTheme.getColor(context).surface,
-        appbartxtcolor: AppTheme.getColor(context).onSurface,
+        body: BlocBuilder<EmployeeBloc, EmployeeState>(
+          builder: (context, state) {
+            if (state is EmployeeLoading || state is EmployeeInitial) {
+              return const Center(child: CustomLoader());
+            }
+
+            if (state is EmployeeError) {
+              return Center(child: Text('Error: ${state.message}'));
+            }
+
+            if (state is EmployeeLoaded) {
+              return _buildLoadedContent(context, bloc, state);
+            }
+
+            return const SizedBox();
+          },
+        ),
       ),
-      body: isEmployeesLoading
-          ? const Center(child: CustomLoader())
-          : Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  MyCoTextfield(
-                    prefix: SvgPicture.asset(
-                      AppAssets.searchNormal,
-                      fit: BoxFit.scaleDown,
-                    ),
-                    hintText: 'search',
-                    hintTextStyle: TextStyle(
-                      fontSize: 14 * Responsive.getResponsiveText(context),
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
-                    ),
-                    textInputType: TextInputType.text,
-                    textAlignment: TextAlign.left,
-                    boarderRadius: 10,
-                    contentPadding: EdgeInsets.all(
-                      10 * Responsive.getResponsive(context),
-                    ),
-                    onChanged: _onSearch,
-                  ),
-                  SizedBox(height: Responsive.scaleHeight(16)),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 12 * Responsive.getResponsive(context),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () async {
-                              final selectedId =
-                                  await showCustomSimpleBottomSheet(
-                                    context: context,
-                                    heading: 'select_branch',
-                                    icon: const AssetImage(AppAssets.downArrow),
-                                    dataList: branches
-                                        .map(
-                                          (b) => {
-                                            'id': b.blockId,
-                                            'name': b.blockName,
-                                          },
-                                        )
-                                        .toList(),
-                                    selectedId: selectedBranch?.blockId,
-                                  );
-
-                              final branch = branches.firstWhere(
-                                (b) => b.blockId == selectedId,
-                                orElse: () => BranchModel.empty(),
-                              );
-                              if (branch.blockId.isNotEmpty)
-                                _onBranchChanged(branch);
-                            },
-                            child: _buildDropdownBox(
-                              context,
-                              branchController.text.isEmpty
-                                  ? 'select_branch'
-                                  : branchController.text,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: Responsive.scaleWidth(12)),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () async {
-                              final selectedId =
-                                  await showCustomSimpleBottomSheet(
-                                    context: context,
-                                    heading: 'select_department',
-                                    icon: const AssetImage(AppAssets.downArrow),
-                                    dataList: filteredDepartments
-                                        .map(
-                                          (d) => {
-                                            'id': d.floorId.toString(),
-                                            'name': d.departmentName.toString(),
-                                          },
-                                        )
-                                        .toList(),
-                                    selectedId: selectedDepartment?.floorId,
-                                  );
-
-                              final dept = filteredDepartments.firstWhere(
-                                (d) => d.floorId == selectedId,
-                                orElse: () => DepartmentModel.empty(),
-                              );
-                              if (dept.floorId.isNotEmpty)
-                                _onDepartmentChanged(dept);
-                            },
-                            child: _buildDropdownBox(
-                              context,
-                              departmentController.text.isEmpty
-                                  ? 'select_department'
-                                  : departmentController.text,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: filteredEmployees.isEmpty
-                        ? const Center(child: Text('No employees found'))
-                        : GridView.builder(
-                            padding: const EdgeInsets.all(8),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: Responsive.getGridConfig(
-                                    context,
-                                  ).itemCount,
-                                  mainAxisSpacing: Responsive.getGridConfig(
-                                    context,
-                                  ).spacing,
-                                  crossAxisSpacing: Responsive.getGridConfig(
-                                    context,
-                                  ).spacing,
-                                  childAspectRatio: Responsive.getGridConfig(
-                                    context,
-                                  ).childAspectRatio,
-                                ),
-                            itemCount: filteredEmployees.length,
-                            itemBuilder: (context, index) {
-                              final emp = filteredEmployees[index];
-
-                              String getInitials(String name) {
-                                final parts = name.trim().split(RegExp(r'\s+'));
-                                if (parts.isEmpty) return '';
-                                if (parts.length == 1)
-                                  return parts[0][0].toUpperCase();
-                                return (parts[0][0] + parts[1][0])
-                                    .toUpperCase();
-                              }
-
-                              return EmployeeSelectionCard(
-                                name: emp.userFullName,
-                                department: emp.designation,
-                                image: CachedImage(
-                                  errorWidget: Center(
-                                    child: CustomText(
-                                      getInitials(emp.userFullName),
-                                      fontSize:
-                                          16 *
-                                          Responsive.getResponsiveText(context),
-                                      fontWeight: FontWeight.w700,
-                                      color: AppTheme.getColor(context).primary,
-                                    ),
-                                  ),
-                                  imageProvider: NetworkImage(
-                                    emp.userProfilePic,
-                                  ),
-                                ),
-                                isSelected: selectedEmployeeIds.contains(
-                                  emp.userId,
-                                ),
-                                onSelected: (value) {
-                                  debugPrint(
-                                    'Selected Employee: ${jsonEncode(emp.toJson())}',
-                                  );
-                                  setState(() {
-                                    if (selectedEmployeeIds.contains(
-                                      emp.userId,
-                                    )) {
-                                      selectedEmployeeIds.remove(emp.userId);
-                                    } else {
-                                      selectedEmployeeIds.add(emp.userId);
-                                    }
-                                  });
-                                },
-                              );
-                            },
-                          ),
-                  ),
-                ],
-              ),
-            ),
     );
   }
+
+  Widget _buildLoadedContent(
+    BuildContext context,
+    EmployeeBloc bloc,
+    EmployeeLoaded st,
+  ) {
+    final filteredEmployees = st.employees.where((e) {
+      final matchesBranch = e.blockId == st.selectedBranch?.blockId;
+      final matchesDepartment = e.floorId == st.selectedDepartment?.floorId;
+      final matchesSearch =
+          st.searchQuery.isEmpty ||
+          (e.userFullName?.toLowerCase().contains(
+                st.searchQuery.toLowerCase(),
+              ) ??
+              false) ||
+          (e.designation?.toLowerCase().contains(
+                st.searchQuery.toLowerCase(),
+              ) ??
+              false);
+
+      return matchesBranch && matchesDepartment && matchesSearch;
+    }).toList();
+    double gridPadding = 8 * Responsive.getResponsive(context);
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        children: [
+          MyCoTextfield(
+            prefix: SvgPicture.asset(
+              AppAssets.searchNormal,
+              fit: BoxFit.scaleDown,
+            ),
+            hintText: 'search',
+            textInputType: TextInputType.text,
+            textAlignment: TextAlign.left,
+            boarderRadius: 10,
+            hintTextStyle: TextStyle(
+              fontSize: 14 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
+            contentPadding: EdgeInsets.all(
+              10 * Responsive.getResponsive(context),
+            ),
+            onChanged: (q) => bloc.add(SearchEmployees(q)),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(child: _dropdownBranch(context, st)),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _dropdownDepartment(context, st, st.filteredDepartments),
+              ),
+            ],
+          ),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                bloc.add(LoadUserData());
+              },
+              child: filteredEmployees.isEmpty
+                  ? const Center(child: Text('No employees found'))
+                  : GridView.builder(
+                      padding: EdgeInsets.only(
+                        top: gridPadding,
+                        left: gridPadding,
+                        right: gridPadding,
+                        bottom: 20,
+                      ),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: Responsive.getGridConfig(
+                          context,
+                        ).itemCount,
+                        mainAxisSpacing: Responsive.getGridConfig(
+                          context,
+                        ).spacing,
+                        crossAxisSpacing: Responsive.getGridConfig(
+                          context,
+                        ).spacing,
+                        childAspectRatio: Responsive.getGridConfig(
+                          context,
+                        ).childAspectRatio,
+                      ),
+                      itemCount: filteredEmployees.length,
+                      itemBuilder: (_, index) {
+                        final emp = filteredEmployees[index];
+                        return EmployeeSelectionCard(
+                          name: emp.userFullName ?? '',
+                          department: emp.designation ?? '',
+                          image: CachedImage(
+                            key: ValueKey(emp.userId),
+                            errorWidget: Center(
+                              child: CustomText(
+                                Util.getInitials(
+                                  emp.userFullName?.trim().isNotEmpty == true
+                                      ? emp.userFullName!
+                                      : 'NA',
+                                ),
+                                fontSize:
+                                    16 * Responsive.getResponsiveText(context),
+                                fontWeight: FontWeight.w700,
+                                color: AppTheme.getColor(context).primary,
+                              ),
+                            ),
+                            imageProvider: NetworkImage(emp.userProfilePic ?? ''),
+                          ),
+                          isSelected: st.selectedEmployeeIds.contains(emp.userId),
+                          onSelected: (_) {
+                            bloc.add(ToggleEmployeeSelection(emp.userId ?? ''));
+                            // Print all employee details
+                            debugPrint('🧾 Selected Employee Details:');
+                            debugPrint('ID: ${emp.userId}');
+                            debugPrint('Name: ${emp.userFullName}');
+                            debugPrint('Designation: ${emp.designation}');
+                            debugPrint('Floor ID: ${emp.floorId}');
+                            debugPrint('Block ID: ${emp.blockId}');
+                            debugPrint('Phone: ${emp.userMobile}');
+                            debugPrint('Profile Pic: ${emp.userProfilePic}');
+                          },
+                        );
+                      },
+                    ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _dropdownBranch(BuildContext ctx, EmployeeLoaded st) =>
+      GestureDetector(
+        onTap: () async {
+          final id = await showCustomSimpleBottomSheet(
+            context: ctx,
+            heading: 'select_branch',
+            icon: const AssetImage(AppAssets.downArrow),
+            dataList: st.branches
+                .map((b) => {'id': b.blockId ?? '', 'name': b.blockName ?? ''})
+                .toList(),
+            selectedId: st.selectedBranch?.blockId,
+          );
+
+          if (id == null || id == st.selectedBranch?.blockId) return;
+
+          final branch = st.branches.firstWhere((b) => b.blockId == id);
+          ctx.read<EmployeeBloc>().add(ChangeBranch(branch));
+        },
+        child: _buildDropdownBox(
+          ctx,
+          st.selectedBranch?.blockName ?? 'select_branch',
+        ),
+      );
+
+  Widget _dropdownDepartment(
+    BuildContext ctx,
+    EmployeeLoaded st,
+    List<Department> depts,
+  ) => GestureDetector(
+    onTap: () async {
+      final id = await showCustomSimpleBottomSheet(
+        context: ctx,
+        heading: 'select_department',
+        icon: const AssetImage(AppAssets.downArrow),
+        dataList: depts
+            .map((d) => {'id': d.floorId ?? '', 'name': d.departmentName ?? ''})
+            .toList(),
+        selectedId: st.selectedDepartment?.floorId,
+      );
+
+      if (id == null || id == st.selectedDepartment?.floorId) return;
+
+      final dept = depts.firstWhere((d) => d.floorId == id);
+      ctx.read<EmployeeBloc>().add(ChangeDepartment(dept));
+    },
+    child: _buildDropdownBox(
+      ctx,
+      st.selectedDepartment?.departmentName ?? 'select_department',
+    ),
+  );
 
   Widget _buildDropdownBox(BuildContext context, String text) {
     final isWide = Responsive.screenWidth() > 600;
@@ -447,7 +285,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
             ),
           ),
           Icon(
-            CupertinoIcons.chevron_down,
+            Icons.keyboard_arrow_down_rounded,
             size: isWide ? 16 : 14 * Responsive.getResponsiveText(context),
             color: AppTheme.getColor(context).primary,
           ),
@@ -456,97 +294,3 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     );
   }
 }
-
-///Custom loader
-// CustomLoader()
-/// Media picker container
-// Padding(
-//   padding: const EdgeInsets.all(8.0),
-//   child: CustomMediaPickerContainer(
-//     title: 'Assets Image',
-//     titleFontSize: 14 * Responsive.getResponsiveText(context),
-//     imageTitle: 'Capture Image',
-//     // imageTitleSize: 10,
-//     // containerHeight: 100,
-//     multipleImage: 5,
-//     imagePath: AppAssets.assetGalleryExport,
-//     backgroundColor: Colors.blue.shade50,
-//     isCameraShow: true,
-//     isGalleryShow: true,
-//     isDocumentShow: true,
-//     isCropImage: true,
-//     onSelectedMedia: (files) {
-//       final paths = files.map((file) => file.path).toList();
-//       log('Selected file paths: $paths');
-//     },
-//   ),
-// ),
-///Punch in-out Stepper
-// const Text('Punch in-out Demo'),
-// Expanded(
-//   child: SingleChildScrollView(
-//     child: CustomVerticalStepper(
-//       steps: [
-//         StepData(
-//           title: 'PUNCH IN',
-//           // title: '',
-//           subTitle: '10:25:06 AM',
-//           subTitleFontSize: 20,
-//           status: StepStatus.inActive,
-//           // isStepIconShow: false,
-//           customStatusIcon: SvgPicture.asset(
-//             AppAssets.assetGalleryExport,
-//           ),
-//           // customStatusIcon: const Icon(
-//           //   Icons.ac_unit,
-//           //   color: Colors.white,
-//           // ),
-//           details: [
-//             StepDetail(
-//               title: 'title',
-//               description: 'description',
-//             ),
-//             StepDetail(
-//               title: 'Completion Remark',
-//               description: 'description',
-//             ),
-//           ],
-//           subSteps: [
-//             SubStepData(
-//               subStepTitle: 'Lunch Break',
-//               subStepSubTitle: '01:32:56 PM - 02:01:46 PM',
-//               subStepTrailingTitle: '28 min 50 sec',
-//               subStepStatus: StepStatus.pending,
-//               subStepCustomStatusIcon: Icon(
-//                 Icons.lunch_dining,
-//               ),
-//               subStepSubTitleFontSize: 20,
-//               isSubStepIconShow: false,
-//             ),
-//             SubStepData(
-//               subStepTitle: 'Tea Break',
-//               subStepSubTitle: '06:05:02 PM - 06:07:51 PM',
-//               subStepTrailingTitle: '2 min 49 sec',
-//               subStepStatus: StepStatus.pending,
-//               // isSubStepIconShow: false,
-//             ),
-//           ],
-//         ),
-//         StepData(
-//           title: 'PUNCH OUT',
-//           subTitle: '06:08:39 PM',
-//           trillingTitle: '7 hour 43 min 33 sec',
-//           status: StepStatus.pending,
-//           // isStepIconShow: false,
-//         ),
-//         StepData(
-//           title: 'PUNCH IN & OUT',
-//           subTitle: '06:08:39 PM',
-//           trillingTitle: '1 min 18 sec',
-//           status: StepStatus.approved,
-//           // isStepIconShow: true,
-//         ),
-//       ],
-//     ),
-//   ),
-// ),
