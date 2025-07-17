@@ -206,7 +206,11 @@ class _LeaveScreenState extends State<LeaveScreen> {
                       leave: _convertToSandwichLeaveEntry(leave),
                     );
                   } else {
-                    return LeaveCard(leave: _convertToLeaveEntry(leave));
+                    return LeaveCard(leave: _convertToLeaveEntry(leave),
+                      onDelete: ({leaveId}) {
+                       // Call delete api
+                      }
+                    );
                   }
                 }),
               ],
@@ -297,6 +301,8 @@ class _LeaveScreenState extends State<LeaveScreen> {
       autoLeave: leave.autoLeave ?? false,
       paidUnpaid: leave.paidUnpaid ?? '',
     ),
+    leaveEntity: leave,
+
   );
 
   Color _getStatusColor(String? status, bool? autoLeave) {

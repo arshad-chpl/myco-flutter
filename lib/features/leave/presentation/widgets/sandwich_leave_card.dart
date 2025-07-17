@@ -10,19 +10,29 @@ class SandwichLeaveEntry {
   final String reason;
   final String status;
   final bool isSalaryGenerated;
+  final String? nextLeaveDate;
+  final String? prevLeaveDate;
+
   SandwichLeaveEntry({
     required this.date,
     required this.subType,
     required this.reason,
     required this.status,
     required this.isSalaryGenerated,
+    this.nextLeaveDate,
+    this.prevLeaveDate,
   });
 }
 
 class SandwichLeaveCard extends StatelessWidget {
   final SandwichLeaveEntry leave;
+  final VoidCallback? onEdit;
 
-  const SandwichLeaveCard({required this.leave, super.key});
+  const SandwichLeaveCard({
+    required this.leave,
+    this.onEdit,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,27 +50,23 @@ class SandwichLeaveCard extends StatelessWidget {
         children: [
           CommonCard(
             showHeaderPrefixIcon: true,
-            suffixIcon: leave.isSalaryGenerated
-                ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  onPressed: () =>
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Still Work Left As no UI'),
-                        ),
-                      ),
-                  icon: Icon(
-                    Icons.edit_outlined,
-                    size: 0.022 * Responsive.getHeight(context),
-                    color: AppColors.white,
+            suffixIcon: !leave.isSalaryGenerated
+                ? IconButton(
+              onPressed: onEdit ?? () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Edit functionality not implemented'),
                   ),
-                ),
-              ],
+                );
+              },
+              icon: Icon(
+                Icons.edit_outlined,
+                size: 0.022 * Responsive.getHeight(context),
+                color: AppColors.white,
+              ),
             )
                 : null,
-            title: leave.date,
+            title: leave.prevLeaveDate ?? leave.date, // Show prevLeaveDate if available
             headerColor: AppColors.secondary,
             bottomWidget: Padding(
               padding: EdgeInsets.all(10 * responsive),
@@ -71,6 +77,12 @@ class SandwichLeaveCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildBadge(leave.subType, Colors.blue),
+                      if (leave.nextLeaveDate != null && leave.nextLeaveDate!.isNotEmpty)
+                        CustomText(
+                          ' - ${leave.nextLeaveDate}',
+                          fontSize: 12 * textResponsive,
+                          color: Colors.grey.shade600,
+                        ),
                     ],
                   ),
                   const SizedBox(height: 4),
@@ -83,21 +95,13 @@ class SandwichLeaveCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 2),
-                  // Approved by
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: '${leave.status} ',
-                          style: TextStyle(
-                            color: AppColors.secondary,
-                            fontSize: 13 * textResponsive,
-                          ),
-                        ),
-                      ],
-                    ),
+                  // Status
+                  CustomText(
+                    leave.status,
+                      color: AppColors.secondary,
+                      fontSize: 13 * textResponsive,
+
                   ),
-                  // Pay Status & View Details
                 ],
               ),
             ),
@@ -110,7 +114,7 @@ class SandwichLeaveCard extends StatelessWidget {
   Widget _buildBadge(String label, Color color) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
     decoration: BoxDecoration(
-      color: color.withValues(alpha: 0.1),
+      color: color.withOpacity(0.1),
       border: Border.all(color: color),
       borderRadius: BorderRadius.circular(6),
     ),
