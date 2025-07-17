@@ -83,9 +83,6 @@ class _WorkAllocationCardListViewState extends State<WorkAllocationCardListView>
     },
   ];
 
-  final List<String> _statusOrder = ['Pending', 'Approved', 'Completed', 'Authorized', 'Denied'];
-
-
   @override
   Widget build(BuildContext context) => ListView.builder(
       scrollDirection: Axis.vertical,
