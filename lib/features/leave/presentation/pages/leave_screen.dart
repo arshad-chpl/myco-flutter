@@ -14,6 +14,7 @@ import 'package:myco_flutter/features/leave/presentation/widgets/leave_action_bu
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_detail_bottom_sheet.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_filter_bottom_sheet.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_month_year_picker_header/month_year_header.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/sandwich_leave_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/short_leave_card.dart';
@@ -83,7 +84,8 @@ class _LeaveScreenState extends State<LeaveScreen> {
     //   elevation: 0,
     // ),
     appBar: CustomAppbar(
-      title: const Text('Leave balance'),
+      isKey: true,
+      title: 'leave_balance',
       centerTitle: true,
       actions: [
         Padding(
