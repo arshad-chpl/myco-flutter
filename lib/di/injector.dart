@@ -37,5 +37,6 @@ Future<void> init() async {
   // ========Admin View=========
   await adminViewDi(sl);
 
-  registerLostAndFoundDI(sl);
+  //========LostAndFound=========
+  LostAndFoundDI(sl);
 }

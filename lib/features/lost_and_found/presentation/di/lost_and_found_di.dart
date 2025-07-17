@@ -6,7 +6,7 @@ import 'package:myco_flutter/features/lost_and_found/domain/repositories/lost_an
 import 'package:myco_flutter/features/lost_and_found/domain/usecases/lost_and_found_usecases.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/bloc/lost_and_found_bloc.dart';
 
-void registerLostAndFoundDI(GetIt getIt) {
+void LostAndFoundDI(GetIt getIt) {
   // DataSource
   getIt.registerLazySingleton<LostAndFoundDataSource>(
     () => LostAndFoundDataSourceImpl(),
@@ -14,14 +14,16 @@ void registerLostAndFoundDI(GetIt getIt) {
 
   // Repository
   getIt.registerLazySingleton<LostAndFoundRepository>(
-    () => LostAndFoundRepositoryImpl(getIt()),
+    () => LostAndFoundRepositoryImpl(getIt<LostAndFoundDataSource>()),
   );
 
   // UseCase
   getIt.registerLazySingleton<GetLostAndFoundItemsUseCase>(
-    () => GetLostAndFoundItemsUseCase(getIt()),
+    () => GetLostAndFoundItemsUseCase(getIt<LostAndFoundRepository>()),
   );
 
   // Bloc
-  getIt.registerFactory<LostAndFoundBloc>(() => LostAndFoundBloc(getIt()));
+  getIt.registerFactory<LostAndFoundBloc>(
+    () => LostAndFoundBloc(getIt<GetLostAndFoundItemsUseCase>()),
+  );
 }

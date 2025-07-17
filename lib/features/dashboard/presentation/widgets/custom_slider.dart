@@ -14,6 +14,7 @@ class CustomSlider extends StatefulWidget {
   final Duration animationDuration;
   final Color? activeIndicatorColor;
   final Color? inactiveIndicatorColor;
+  final BoxFit? imageFit;
 
   const CustomSlider({
     super.key,
@@ -29,6 +30,7 @@ class CustomSlider extends StatefulWidget {
     this.inactiveIndicatorColor,
     this.isPreviewEnabled = false,
     this.isButton = true,
+    this.imageFit,
   });
 
   @override
@@ -144,7 +146,10 @@ class _CustomSliderState extends State<CustomSlider>
                     child: Stack(
                       children: [
                         Positioned.fill(
-                          child: Image(image: image, fit: BoxFit.cover),
+                          child: Image(
+                            image: image,
+                            fit: widget.imageFit ?? BoxFit.cover,
+                          ),
                         ),
                         if (widget.showBottomShadow)
                           Positioned(
@@ -153,7 +158,7 @@ class _CustomSliderState extends State<CustomSlider>
                             right: 0,
                             height: 40,
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black12,
