@@ -56,6 +56,27 @@ class Responsive {
   static double getResponsiveOnWidth(context) =>
       MediaQuery.of(context).size.width * 0.001;
 
+
+/*double getResponsiveText(context) {
+  if (Platform.isAndroid) {
+    return getWidth(context) > 600 ? 1.5 : 0.8;
+  } else {
+    return getWidth(context) > 600 ? 1.5 : 0.9;
+  }
+}*/
+
+// double getResponsiveText(BuildContext context) {
+//   double width = MediaQuery.of(context).size.width;
+//
+//   if (kIsWeb) {
+//     // Web-specific logic
+//     return width > 600 ? 1.5 : 1.0;
+//   } else {
+//     // Mobile or Desktop
+//     return width > 600 ? 1.5 : 0.9;
+//   }
+// }
+
   static double getResponsiveText(context) {
     double width = MediaQuery.of(context).size.width;
     if (kIsWeb) return width > 600 ? 1.5 : 1.0;
@@ -63,27 +84,27 @@ class Responsive {
     return getWidth(context) > 600 ? 1.5 : 0.9;
   }
 
+
   static double getDashboardResponsiveText(BuildContext context) =>
       getWidth(context) > 600 ? 1.2 : 1;
 
-  static GridConfig getGridConfig(BuildContext context) {
-    final screenWidth = getWidth(context);
+  static GridConfig getGridConfig(BuildContext context, {double? screenWide}) {
+    final screenWidth = screenWide ?? getWidth(context);
     final spacing = 12.0 * getResponsive(context);
-
     final itemCount = screenWidth > 1200
-        ? 12
-        : screenWidth > 900
-        ? 9
-        : screenWidth > 600
-        ? 6
+        ? 10
+        : screenWidth > 1000
+        ? 7
+    // : screenWidth > 600
+    // ? 6
         : 3;
-
     final itemWidth = (screenWidth - (spacing * (itemCount - 1))) / itemCount;
-
-    final itemHeight = screenWidth > 600 ? 180.0 : 150.0;
-
+    final itemHeight = screenWidth > 600
+        ? 180.0
+        : screenWidth > 500
+        ? 160.0
+        : 155.0;
     final childAspectRatio = itemWidth / itemHeight;
-
     return GridConfig(
       itemCount: itemCount,
       spacing: spacing,

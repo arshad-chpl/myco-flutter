@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -79,12 +78,11 @@ class CustomShadowContainer extends StatelessWidget {
           ),
         ],
       ),
-      SizedBox(height: .006 * Responsive.getHeight(context)),
+      const SizedBox(height: 6),
       CustomText(
         title,
-        isKey: true,
         color: AppColors.black,
-        fontSize: 14 * Responsive.getResponsiveText(context),
+        fontSize: 11 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w600,
       ),
     ],

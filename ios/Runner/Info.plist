@@ -98,5 +98,9 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
     <string>We need access to your camera for face detection</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app needs location access to show your current position.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>This app needs location access to track your location even when the app is in the background.</string>
 </dict>
 </plist>
