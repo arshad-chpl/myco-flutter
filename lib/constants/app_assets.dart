@@ -16,7 +16,7 @@ class AppAssets {
   static const String assets = '$basePath/assets';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
-
+  static const String stepper = '$basePath/stepper';
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
   static const String chplLogo = '$imagesPath/chpl_logo.png';
@@ -163,4 +163,7 @@ class AppAssets {
   static const String assetProfileCircle = '$svgsVisit/profile-circle.svg';
   static const String assetClock = '$svgsVisit/clock.svg';
   static const String assetSearchNormal = '$svgsVisit/search-normal.svg';
+
+  //images stepper
+  static const String stepperCheckIcon = '$stepper/check.svg';
 }
