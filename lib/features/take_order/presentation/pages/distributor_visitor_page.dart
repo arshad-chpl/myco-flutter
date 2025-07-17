@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
+import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -366,6 +371,9 @@ class DistributorVisitorPage extends StatelessWidget {
   }) => getBottomSheet(
     context,
     Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.08 * Responsive.getWidth(context),
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           12 * Responsive.getResponsive(context),
@@ -377,73 +385,36 @@ class DistributorVisitorPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 0.03 * Responsive.getHeight(context)),
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 0.08 * Responsive.getWidth(context),
-            ),
-            child: CustomText(
-              'remark',
-              fontSize: 14 * Responsive.getResponsiveText(context),
-              fontWeight: FontWeight.bold,
-            ),
+          CustomText(
+            'remark',
+            fontSize: 14 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.bold,
           ),
-          // SizedBox(height: 0.01 * Responsive.getHeight(context)),
-          Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: 0.08 * Responsive.getWidth(context),
+          SizedBox(height: 0.01 * Responsive.getHeight(context)),
+          BigMyCoTextField(
+            hintText: LanguageManager().get('type_here'),
+            prefixImage: SvgPicture.asset(
+              AppAssets.messageEdit,
+              colorFilter: ColorFilter.mode(
+                AppTheme.getColor(context).primary,
+                BlendMode.srcIn,
+              ),
             ),
             decoration: BoxDecoration(
-              // color: AppTheme.getColor(context).onPrimary,
               border: Border.all(color: AppTheme.getColor(context).outline),
               borderRadius: BorderRadius.circular(
                 12 * Responsive.getResponsive(context),
               ),
             ),
-            padding: EdgeInsets.symmetric(
-              horizontal: 0.018 * Responsive.getWidth(context),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(
-                    top: 0.01 * Responsive.getHeight(context),
-                  ),
-                  child: Image.asset(
-                    'assets/take_order/message-edit.png',
-                    height: 0.022 * Responsive.getHeight(context),
-                  ),
-                ),
-                SizedBox(width: 0.01 * Responsive.getWidth(context)),
-                Expanded(
-                  child: TextFormField(
-                    maxLines: 6,
-                    minLines: 4,
-                    decoration: InputDecoration(
-                      hintText: LanguageManager().get('type_here'),
-                      hintStyle: TextStyle(
-                        color: AppTheme.getColor(context).outline,
-                      ),
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ),
 
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 0.08 * Responsive.getWidth(context),
-            ),
-            child: SideBySideButtons(
-              button1Name: LanguageManager().get('close'),
-              button2Name: LanguageManager().get('end_visit'),
-              onTap1: () {},
-              onTap2: onTap,
-            ),
+          SideBySideButtons(
+            button1Name: LanguageManager().get('close'),
+            button2Name: LanguageManager().get('end_visit'),
+            onTap1: () {},
+            onTap2: onTap,
           ),
           SizedBox(height: 0.03 * Responsive.getHeight(context)),
         ],

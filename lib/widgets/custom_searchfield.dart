@@ -95,7 +95,7 @@ class _CustomSearchFieldState extends State<CustomSearchField> {
     margin: widget.margin,
     height: widget.height ?? 0.055 * Responsive.getHeight(context),
     decoration: BoxDecoration(
-      color: widget.backgroundColor ?? AppTheme.getColor(context).onPrimary,
+      color: widget.backgroundColor ?? AppTheme.getColor(context).surface,
       borderRadius: BorderRadius.circular(
         widget.borderRadius ?? 12 * Responsive.getResponsive(context),
       ),

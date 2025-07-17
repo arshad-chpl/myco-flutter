@@ -32,7 +32,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      title: 'Take Order',
+      title: LanguageManager().get('take_order'),
       actions: [
         MyCoButton(
           onTap: () {},
@@ -51,7 +51,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
           children: [
             MyCoButton(
               onTap: () {
-                context.pushNamed('offers');
+                context.pushNamed(RoutePaths.offers);
               },
               title: LanguageManager().get('offer'),
               textStyle: AppTheme.getTextStyle(context).labelMedium!.copyWith(

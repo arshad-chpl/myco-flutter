@@ -98,7 +98,6 @@ flutter:
     - assets/ideabox/
     - assets/payslip/
     - assets/visit/
-    - assets/visit/svgs/
     - assets/media_picker/
     - assets/lost_and_found/
     - assets/visit_svgs/
@@ -106,7 +105,7 @@ flutter:
     - assets/add_expense/
     - assets/dashboard/svgs/
     - assets/face_detection/
-    - assets/dashboard/svgs/
+    - assets/svgs/visit/
     - assets/dashboard/svgs/
     - assets/assets/
     - assets/svgs/take_order/
