@@ -6,7 +6,6 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 class CommonRow extends StatefulWidget {
   final String title;
   final String value;
-  final VoidCallback onTap;
   final Widget? valueWidget;
   final Color textColor;
   final TextDecoration? decoration;
@@ -15,7 +14,6 @@ class CommonRow extends StatefulWidget {
     super.key,
     required this.title,
     required this.value,
-    required this.onTap,
     this.valueWidget,
     required this.textColor, // Slightly faded like image
     this.decoration,
@@ -37,7 +35,7 @@ class _CommonRowState extends State<CommonRow> {
             flex: 6,
             child: CustomText(
               widget.title,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w500,
               fontSize: 17 * Responsive.getResponsiveText(context),
               color: AppColors.black,
             ),
@@ -46,7 +44,7 @@ class _CommonRowState extends State<CommonRow> {
           /// Colon
           CustomText(
             ':',
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
             fontSize: 17 * Responsive.getResponsiveText(context),
             color: AppColors.black,
           ),
@@ -56,13 +54,12 @@ class _CommonRowState extends State<CommonRow> {
           Expanded(
             flex: 5,
             child: InkWell(
-              onTap: widget.onTap,
               child: widget.valueWidget ??
                   CustomText(
                     widget.value,
                     decoration: widget.decoration,
                     color: widget.textColor,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                     fontSize: 17 * Responsive.getResponsiveText(context),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

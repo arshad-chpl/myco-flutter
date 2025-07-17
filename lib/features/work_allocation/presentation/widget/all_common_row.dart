@@ -15,32 +15,28 @@ class _AllCommonRowState extends State<AllCommonRow> {
   @override
   Widget build(BuildContext context) => Column(
     children: [
-      CommonRow(
+      const CommonRow(
         title: 'Work Category',
         value: 'AI Tools',
         textColor: AppColors.textGray,
-        onTap: () {},
       ),
       SizedBox(height: 0.005 * Responsive.getHeight(context)),
-      CommonRow(
+      const CommonRow(
         title: 'Project',
         value: 'Fjc',
         textColor: AppColors.textGray,
-        onTap: () {},
       ),
       SizedBox(height: 0.005 * Responsive.getHeight(context)),
-      CommonRow(
+      const CommonRow(
         title: 'Work Start Date',
         value: '21st May 2025',
         textColor: AppColors.textGray,
-        onTap: () {},
       ),
       SizedBox(height: 0.005 * Responsive.getHeight(context)),
-      CommonRow(
+      const CommonRow(
         title: 'Target Date of Completion',
         value: '22nd May 2025',
         textColor: AppColors.textGray,
-        onTap: () {},
       ),
       SizedBox(height: 0.005 * Responsive.getHeight(context)),
       Divider(color: AppTheme.getColor(context).secondary),
