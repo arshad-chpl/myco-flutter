@@ -6,11 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:myco_flutter/constants/constants.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/common_api/domain/usecase/common_api_usercase.dart';
+import 'package:myco_flutter/features/common_api/presentation/bloc/common_api_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/features/sign_in/domain/usecases/primary_register_usecase.dart';
 import 'package:myco_flutter/features/sign_in/presentation/bloc/primary_register_bloc.dart';
@@ -19,6 +24,7 @@ import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_term_a
 import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
+import 'package:myco_flutter/widgets/custom_media_picker_container/media_picker.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -248,7 +254,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
         backgroundColor: AppTheme.getColor(context).surface,
         body: Padding(
           padding: EdgeInsets.all(20 * Responsive.getResponsive(context)),
-          child: BlocConsumer<PrimaryRegisterBloc, PrimaryRegisterState>(
+          child: BlocConsumer<CommonApiBloc, CommonApiState>(
             listener: (context, state) {
               if (state is BlockApiSuccess) {
                 branchOptionIds = state.blockList.block!.map((block) => block.blockId ?? '').toList();
@@ -273,10 +279,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
             },
 
             builder: (context, state) {
-              if (state is PrimaryRegisterLoading) {
+              if (state is CommonApiLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
-              if (state is PrimaryRegisterError) {
+              if (state is CommonApiError) {
                 return Center(child: Text('Error: ${state.message}'));
               }
               // Show your form by default
@@ -305,10 +311,21 @@ class _SignupFormPageState extends State<SignupFormPage> {
                 bottom: -22 * Responsive.getResponsive(context),
                 end: -15 * Responsive.getResponsive(context),
               ),
-              badgeContent: Image.asset(
-                'assets/sign_in/camera_icon.png',
-                fit: BoxFit.contain,
-                height: 0.04 * Responsive.getHeight(context),
+              badgeContent: GestureDetector(
+                onTap: () {
+                  showMediaFilePicker(
+                    isDialog: true,
+                    isCameraShow: true,
+                    isGalleryShow: true,
+                    isDocumentShow: false,
+                    context: context,
+                  );
+                },
+                child: Image.asset(
+                  'assets/sign_in/camera_icon.png',
+                  fit: BoxFit.contain,
+                  height: 0.04 * Responsive.getHeight(context),
+                ),
               ),
               child: Image.asset(
                 'assets/sign_in/contact_frame.png',
@@ -340,7 +357,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
               selectedDesignationId = '';
               selectedDesignationName = '';
 
-              context.read<PrimaryRegisterBloc>().add(LoadFloorUnit(selectedBranchId));
+              context.read<CommonApiBloc>().add(LoadFloorUnit(selectedBranchId));
               setState(() {});
             },
           ),
@@ -360,7 +377,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
               selectedSubDepartmentId = '';
               selectedSubDepartmentName = '';
 
-              context.read<PrimaryRegisterBloc>().add(LoadShift(selectedDepartmentId));
+              context.read<CommonApiBloc>().add(LoadShift(selectedDepartmentId));
               setState(() {});
             },
           ),
@@ -743,6 +760,9 @@ class _SignupFormPageState extends State<SignupFormPage> {
             ),
             onTap: () {
 
+
+              context.go(RoutePaths.contactAdmin);
+
               final bool isValid = FormValidator.validateAll(
                   selectedBranchId: selectedBranchId,
                   selectedDepartmentId: selectedDepartmentId,
@@ -791,9 +811,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
               PrimaryRegisterBloc(registerUseCase: GetIt.I<PrimaryRegisterUseCase>())
                   .add(LoadAddPrimaryUser(dataMap));
-
-
-
 
               // showCustomEmailVerificationSheet(
               //   imageUrl: 'assets/sign_in/email.png',
@@ -885,7 +902,7 @@ mixin FormValidator {
   }) {
 
     if (profileImage.isEmpty) {
-      Fluttertoast.showToast(msg: 'Please select profile pic', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+      Fluttertoast.showToast(msg: 'Please select profile picture', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
     }if (selectedBranchId.isEmpty) {
       Fluttertoast.showToast(msg: 'Please select your Branch', backgroundColor: Colors.redAccent, textColor: Colors.white,);

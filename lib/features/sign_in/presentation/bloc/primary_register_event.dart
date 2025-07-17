@@ -7,26 +7,6 @@ abstract class PrimaryRegisterEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadBranch extends PrimaryRegisterEvent {}
-
-class LoadFloorUnit extends PrimaryRegisterEvent {
-  final String branchId;
-
-  const LoadFloorUnit(this.branchId);
-
-  @override
-  List<Object> get props => [branchId];
-}
-
-class LoadShift extends PrimaryRegisterEvent {
-  final String floorId;
-
-  const LoadShift(this.floorId);
-
-  @override
-  List<Object> get props => [floorId];
-}
-
 
 class LoadAddPrimaryUser extends PrimaryRegisterEvent {
   final Map<String, dynamic> dataMap;
@@ -39,3 +19,8 @@ class LoadAddPrimaryUser extends PrimaryRegisterEvent {
 
 
 
+//pending profile
+class LoadPendingProfile extends PrimaryRegisterEvent {}
+class LoadCancelProfile extends PrimaryRegisterEvent {}
+class LoadReminderProfile extends PrimaryRegisterEvent {}
+class LoadSociety extends PrimaryRegisterEvent {}

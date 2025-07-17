@@ -17,6 +17,8 @@ import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
 import 'package:myco_flutter/features/asset/view/edit_assets_page.dart';
 import 'package:myco_flutter/features/asset/view/handover_assets.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
+import 'package:myco_flutter/features/common_api/domain/usecase/common_api_usercase.dart';
+import 'package:myco_flutter/features/common_api/presentation/bloc/common_api_bloc.dart';
 // import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_event.dart';
@@ -262,7 +264,7 @@ class AppRouter {
         builder: (context, state) => BlocProvider(
 
             create: (context) =>
-            PrimaryRegisterBloc(registerUseCase: GetIt.I<PrimaryRegisterUseCase>())
+            CommonApiBloc(registerUseCase: GetIt.I<CommonApiUserCase>())
               ..add(LoadBranch()),
 
             child: const SignupFormPage()),

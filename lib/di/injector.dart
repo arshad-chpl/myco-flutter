@@ -3,6 +3,7 @@ import 'package:myco_flutter/core/router/app_router.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.dart';
+import 'package:myco_flutter/features/common_api/presentation/di/common_api_di.dart';
 import 'package:myco_flutter/features/company_info/presentation/di/company_info_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/request_otp_di.dart';
@@ -32,8 +33,7 @@ Future<void> init() async {
   //========Splash=========
   splashDi(sl);
 
-  //========Language Selector=========
-  setupLanguageDI(sl);
+
   //========Login=========
   await setupLoginDi(sl);
 
@@ -55,11 +55,12 @@ Future<void> init() async {
   //========VISIT WITH=========
   visitWithDi(sl);
 
-  // ========Admin View=========
-  await adminViewDi(sl);
   //Leave
   setUpLeaveDI(sl);
 
   // ========Sign up=========
   setupPrimaryRegisterDi(sl);
+
+  // ========common api=========
+  CommonApiDi(sl);
 }

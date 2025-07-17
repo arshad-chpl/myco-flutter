@@ -1,13 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:myco_flutter/core/error/failure.dart';
 import 'package:myco_flutter/core/models/common_response.dart';
-import 'package:myco_flutter/features/sign_in/models/branch_response.dart';
-import 'package:myco_flutter/features/sign_in/models/floor_and_unit_response.dart';
-import 'package:myco_flutter/features/sign_in/models/shift_response.dart';
+import 'package:myco_flutter/features/sign_in/models/view_pending_profile_response.dart';
 
 abstract class PrimaryRegisterRepository {
-  Future<Either<Failure, BranchResponse>> getBranchList();
-  Future<Either<Failure, FloorAndUnitResponse>> getFloorAndUnit(String branchId);
-  Future<Either<Failure, ShiftResponse>> getShiftList(String floorId);
   Future<Either<Failure, CommonResponse>> addPrimaryUser(Map<String, dynamic> dataMap);
+  Future<Either<Failure, ViewPendingProfileResponse>> getViewPendingProfile();
+  Future<Either<Failure, CommonResponse>> getCancelPendingProfile();
+  Future<Either<Failure, CommonResponse>> getReminderPendingProfile();
+  Future<Either<Failure, CommonResponse>> getSociety();
 }

@@ -11,34 +11,41 @@ class PrimaryRegisterInitial extends PrimaryRegisterState {}
 
 class PrimaryRegisterLoading extends PrimaryRegisterState {}
 
-class BlockApiSuccess extends PrimaryRegisterState {
-  final BranchResponse blockList;
-  const BlockApiSuccess(this.blockList);
-
-  @override
-  List<Object> get props => [blockList];
-}
-
-
-class FloorUnitApiSuccess extends PrimaryRegisterState {
-  final FloorAndUnitResponse floorUnitList;
-  const FloorUnitApiSuccess(this.floorUnitList);
-
-  @override
-  List<Object> get props => [floorUnitList];
-}
-
-class ShiftApiSuccess extends PrimaryRegisterState {
-  final ShiftResponse shiftList;
-  const ShiftApiSuccess(this.shiftList);
-
-  @override
-  List<Object> get props => [shiftList];
-}
-
 class AddPrimaryUserApiSuccess extends PrimaryRegisterState {
   final CommonResponse response;
   const AddPrimaryUserApiSuccess(this.response);
+
+  @override
+  List<Object> get props => [response];
+}
+
+class PendingAccountSuccess extends PrimaryRegisterState {
+  final ViewPendingProfileResponse response;
+  const PendingAccountSuccess(this.response);
+
+  @override
+  List<Object> get props => [response];
+}
+
+class ReminderPendingProfileSuccess extends PrimaryRegisterState {
+  final CommonResponse response;
+  const ReminderPendingProfileSuccess(this.response);
+
+  @override
+  List<Object> get props => [response];
+}
+
+class SocietySuccess extends PrimaryRegisterState {
+  final CommonResponse response;
+  const SocietySuccess(this.response);
+
+  @override
+  List<Object> get props => [response];
+}
+
+class CancelPendingProfileSuccess extends PrimaryRegisterState {
+  final CommonResponse response;
+  const CancelPendingProfileSuccess(this.response);
 
   @override
   List<Object> get props => [response];
