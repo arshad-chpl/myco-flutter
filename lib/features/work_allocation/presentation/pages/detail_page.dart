@@ -20,12 +20,6 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    Responsive.init(context);
-  }
-
-  @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
       title: 'Work Allocation',
@@ -52,7 +46,7 @@ class _DetailPageState extends State<DetailPage> {
                 padding: EdgeInsets.all(0.03 * Responsive.getWidth(context)),
                 child: ListTile(
                   // User image
-                  leading: Image.asset(AppAssets.personImage),
+                  leading: Image.asset(AppAssets.personProfileImage),
 
                   // Name of the user
                   title: CustomText(
