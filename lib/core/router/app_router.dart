@@ -57,6 +57,7 @@ import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_pa
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_bloc.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/pages/detail_page.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/pages/work_allocation_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -303,6 +304,15 @@ class AppRouter {
             //   child: AssignWorkPage(),
             // ),
             builder: (context, state) => const WorkAllocationPage(),
+          ),
+          GoRoute(
+            path: RoutePaths.detailPage,
+            name: '/detail-page',
+            // builder: (context, state) => BlocProvider(
+            //   create: (context) => WorkAllocationBloc(),
+            //   child: AssignWorkPage(),
+            // ),
+            builder: (context, state) => const DetailPage(),
           ),
         ],
       ),

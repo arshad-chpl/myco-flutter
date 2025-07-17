@@ -11,7 +11,7 @@ class CommonRow extends StatefulWidget {
   final Color textColor;
   final TextDecoration? decoration;
 
-   const CommonRow({
+  const CommonRow({
     super.key,
     required this.title,
     required this.value,
@@ -28,48 +28,49 @@ class CommonRow extends StatefulWidget {
 class _CommonRowState extends State<CommonRow> {
   @override
   Widget build(BuildContext context) => Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2), // match row height
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          /// Title (left side)
-          Expanded(
-            flex: 6,
-            child: CustomText(
-              widget.title,
-              fontWeight: FontWeight.w700,
-              fontSize: 17 * Responsive.getResponsiveText(context),
-              color: AppColors.black,
-            ),
-          ),
-
-          /// Colon
-          CustomText(
-            ':',
-            fontWeight: FontWeight.w500,
+    padding: const EdgeInsets.symmetric(vertical: 2), // match row height
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        /// Title (left side)
+        Expanded(
+          flex: 6,
+          child: CustomText(
+            widget.title,
+            fontWeight: FontWeight.w700,
             fontSize: 17 * Responsive.getResponsiveText(context),
             color: AppColors.black,
           ),
-          SizedBox(width: 0.020 * Responsive.getWidth(context)),
+        ),
 
-          /// Value (right side)
-          Expanded(
-            flex: 5,
-            child: InkWell(
-              onTap: widget.onTap,
-              child: widget.valueWidget ??
-                  CustomText(
-                    widget.value,
-                    decoration: widget.decoration,
-                    color: widget.textColor,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 17 * Responsive.getResponsiveText(context),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-            ),
+        /// Colon
+        CustomText(
+          ':',
+          fontWeight: FontWeight.w500,
+          fontSize: 17 * Responsive.getResponsiveText(context),
+          color: AppColors.black,
+        ),
+        SizedBox(width: 0.020 * Responsive.getWidth(context)),
+
+        /// Value (right side)
+        Expanded(
+          flex: 5,
+          child: InkWell(
+            onTap: widget.onTap,
+            child:
+                widget.valueWidget ??
+                CustomText(
+                  widget.value,
+                  decoration: widget.decoration,
+                  color: widget.textColor,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 17 * Responsive.getResponsiveText(context),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
           ),
-        ],
-      ),
-    );
+        ),
+      ],
+    ),
+  );
 }
