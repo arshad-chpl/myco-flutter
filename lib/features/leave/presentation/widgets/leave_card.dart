@@ -33,7 +33,7 @@ class LeaveEntry {
 
 class LeaveCard extends StatelessWidget {
   final LeaveEntry leave;
-  final Function()? onEdit;
+  final Function({required LeaveHistoryEntity leave})? onEdit;
   final Function({required String? leaveId})? onDelete;
 
   const LeaveCard({required this.leave, this.onEdit, this.onDelete, super.key});
@@ -71,17 +71,9 @@ class LeaveCard extends StatelessWidget {
               children: [
                 if (showEditIcon)
                   IconButton(
-                    onPressed:
-                        onEdit ??
-                        () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Edit functionality not implemented',
-                              ),
-                            ),
-                          );
-                        },
+                    onPressed: () {
+                      onEdit!(leave: leave.leaveEntity);
+                    },
                     icon: Icon(
                       Icons.edit_outlined,
                       size: 0.022 * Responsive.getHeight(context),

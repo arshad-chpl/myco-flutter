@@ -2,7 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:myco_flutter/core/error/failure.dart';
 import 'package:myco_flutter/core/models/common_response.dart';
 import 'package:myco_flutter/features/leave/domain/repositories/leave_repository.dart';
+import 'package:myco_flutter/features/leave/model/check_leave_balance_response.dart';
 import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
+import 'package:myco_flutter/features/leave/model/leave_type_response.dart';
 import 'package:myco_flutter/features/leave/model/my_team_response_model.dart';
 
 class LeaveUseCase{
@@ -20,7 +22,12 @@ class LeaveUseCase{
 
   Future<Either<Failure, CommonResponse>> deleteShortLeave(String shortLeaveId, String shortLeaveDate, String otherUserId, String otherUserName)=> repository.deleteShortLeave(shortLeaveId, shortLeaveDate, otherUserId, otherUserName);
 
+  Future<Either<Failure, LeaveTypeResponse>> getLeaveTypesWithData(String unitId, String useId, String userName, String currentYear, String appliedLeaveDate)=> repository.getLeaveTypesWithData(unitId, useId, userName, currentYear, appliedLeaveDate);
 
-
+  Future<Either<Failure, CheckLeaveBalanceResponse>> getLeaveBalanceForAutoLeave(
+      String userId,
+      String leaveDate,
+      String leaveId,
+      ) => repository.getLeaveBalanceForAutoLeave(userId, leaveDate, leaveId);
 
 }

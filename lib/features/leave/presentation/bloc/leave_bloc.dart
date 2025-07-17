@@ -88,5 +88,40 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
         emit(LeaveError('Failed to delete short leave: $e'));
       }
     });
+
+    on<LeaveTypesWithData>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.getLeaveTypesWithData(
+          event.unitId,
+          event.useId,
+          event.userName,
+          event.currentYear,
+          event.appliedLeaveDate,
+        );
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(LeaveTypeWithDataFetched(model)),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to fetch leave types: $e'));
+      }
+    });
+    on<CheckAutoLeaveBalance>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.getLeaveBalanceForAutoLeave(
+          event.userId,
+          event.leaveDate,
+          event.leaveId,
+        );
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(CheckAutoLeaveBalanceFetched(model)),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to fetch leave balance: $e'));
+      }
+    });
   }
 }

@@ -36,4 +36,20 @@ class DeleteShortLeave extends LeaveEvent{
   const DeleteShortLeave(this.shortLeaveId, this.shortLeaveDate, this.otherUserId, this.otherUserName);
 }
 
+class LeaveTypesWithData extends LeaveEvent{
+  final String unitId;
+  final String useId;
+  final String userName;
+  final String currentYear;
+  final String appliedLeaveDate;
+  const LeaveTypesWithData(this.unitId, this.useId, this.userName, this.currentYear, this.appliedLeaveDate);
+}
+
+class CheckAutoLeaveBalance extends LeaveEvent{
+  final String userId;
+  final String leaveDate;
+  final String leaveId;
+  const CheckAutoLeaveBalance(this.userId, this.leaveDate, this.leaveId);
+}
+
 class InitialView extends LeaveEvent {}
