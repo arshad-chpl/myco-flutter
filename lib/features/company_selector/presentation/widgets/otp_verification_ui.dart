@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/models/common_response.dart';
@@ -11,6 +12,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/company_selector/data/models/society_response_model.dart';
 import 'package:myco_flutter/features/company_selector/data/models/verify_otp_request_model.dart';
+import 'package:myco_flutter/features/company_selector/presentation/bloc/device_change/device_change_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_state.dart';
@@ -71,12 +73,12 @@ class OtpVerificationUi extends StatelessWidget {
           preference.setLoginSession(true);
           preference.setUserId(state.response.userId ?? '');
           preference.setCountryId(state.response.countryId ?? '');
+          preference.setCompanyId(state.response.societyId ?? '');
+          preference.setCompanyAddress(state.response.societyAddress ?? '');
+          preference.setCompanyName(state.response.societyName ?? '');
+
           context.go(RoutePaths.dashboard);
         } else if (state is OtpVerificationFailedState) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.response.message ?? '')));
-
           if (state.response.viewDialogApiCall == true) {
             showModalBottomSheet(
               context: context,
@@ -98,7 +100,10 @@ class OtpVerificationUi extends StatelessWidget {
                       context: context,
                       isScrollControlled: true,
                       backgroundColor: Colors.transparent,
-                      builder: (context) => const GetReasonUi(),
+                      builder: (context) => BlocProvider(
+                        create: (context) => GetIt.I<DeviceChangeBloc>(),
+                        child: const GetReasonUi(title: 'Change Request *'),
+                      ),
                     );
                   },
                   onCancel: () {
@@ -126,6 +131,8 @@ class OtpVerificationUi extends StatelessWidget {
                 ),
               ),
             );
+          } else {
+            Fluttertoast.showToast(msg: state.response.message ?? '');
           }
         }
       },

@@ -7,13 +7,13 @@ class RequestDeviceChangeModel {
   final String mac_address_phone_modal;
   final String language_id;
 
-  RequestDeviceChangeModel(
-    this.user_id,
-    this.mac_address_change_reason,
-    this.user_mac_address,
-    this.mac_address_device,
-    this.mac_address_phone_modal,
-    this.language_id, {
+  RequestDeviceChangeModel({
+    required this.user_id,
+    required this.mac_address_change_reason,
+    required this.user_mac_address,
+    required this.mac_address_device,
+    required this.mac_address_phone_modal,
+    required this.language_id,
     required this.societyId,
   });
 

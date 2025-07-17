@@ -3,11 +3,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/models/common_response.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/features/company_selector/data/models/society_response_model.dart';
+import 'package:myco_flutter/features/company_selector/presentation/bloc/device_change/device_change_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_state.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/get_reason_ui.dart';
@@ -36,7 +37,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
   String selectedCountry = 'IND';
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  bool isChecked = false;
+  final ValueNotifier<bool> isChecked = ValueNotifier(false);
 
   final Map<String, String> countryMap = {
     'IND': '+91',
@@ -74,6 +75,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
   void dispose() {
     _debounce?.cancel();
     _controller.dispose();
+    isChecked.dispose();
     super.dispose();
   }
 
@@ -148,7 +150,13 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                                   context: context,
                                   isScrollControlled: true,
                                   backgroundColor: Colors.transparent,
-                                  builder: (context) => const GetReasonUi(),
+                                  builder: (context) => BlocProvider(
+                                    create: (context) =>
+                                        GetIt.I<DeviceChangeBloc>(),
+                                    child: const GetReasonUi(
+                                      title: 'Change Request *',
+                                    ),
+                                  ),
                                 );
                               },
                               onCancel: () {
@@ -176,6 +184,8 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                             ),
                           ),
                         );
+                      } else {
+                        Fluttertoast.showToast(msg: state.response.message ?? '');
                       }
                     }
                   },
@@ -193,11 +203,8 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                     phoneController: phoneController,
                     emailController: emailController,
                     isChecked: isChecked,
-                    onCheckChanged: (val) {
-                      setState(() {
-                        isChecked = val;
-                      });
-                    },
+                    // ✅ pass ValueNotifier
+                    onCheckChanged: (val) => isChecked.value = val,
                     selectedCompany: selectedCompany,
                   ),
                 ),
