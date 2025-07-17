@@ -10,7 +10,7 @@ class CommonRow extends StatefulWidget {
   final Color textColor;
   final TextDecoration? decoration;
 
-   const CommonRow({
+  const CommonRow({
     super.key,
     required this.title,
     required this.value,
