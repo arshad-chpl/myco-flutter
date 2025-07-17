@@ -36,6 +36,14 @@ class ShiftApiSuccess extends PrimaryRegisterState {
   List<Object> get props => [shiftList];
 }
 
+class AddPrimaryUserApiSuccess extends PrimaryRegisterState {
+  final CommonResponse response;
+  const AddPrimaryUserApiSuccess(this.response);
+
+  @override
+  List<Object> get props => [response];
+}
+
 class PrimaryRegisterError extends PrimaryRegisterState {
   final String message;
   const PrimaryRegisterError(this.message);

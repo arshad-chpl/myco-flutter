@@ -1,4 +1,3 @@
-import 'dart:developer' as dev;
 import 'dart:io';
 
 import 'package:badges/badges.dart' as badges;
@@ -7,23 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
-import 'package:myco_flutter/constants/constants.dart';
-import 'package:myco_flutter/core/router/route_paths.dart';
+import 'package:intl/intl.dart';
+import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/utils/language_manager.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/leave/presentation/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/features/sign_in/domain/usecases/primary_register_usecase.dart';
 import 'package:myco_flutter/features/sign_in/presentation/bloc/primary_register_bloc.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/select_custom_dialog.dart';
-import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_get_started.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_term_and_condition.dart';
-import 'package:myco_flutter/features/sign_in/presentation/widgets/customotp_bottomsheet.dart';
 import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
-import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/gallery_picker_screen.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -48,18 +43,22 @@ class _SignupFormPageState extends State<SignupFormPage> {
     'USA': '+1',
     'INA': '+62',
   };
-  String? _selectedValue;
 
-  final List<String> _dropdownItems = ['Option 1', 'Option 2', 'Option 3'];
 
-  final List<String> leaveTypes = [
-    'Paid leave',
-    'Unpaid leave',
-    'Casual leave',
-  ];
-  String? selectedLeaveType;
+  final preferenceManager = GetIt.I<PreferenceManager>();
+
+
 
   //
+
+  String profileImage = '';
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController departmentNumberController = TextEditingController();
+  final TextEditingController joiningDateController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
 
   String selectedBranchId = '';
   String selectedBranchName = '';
@@ -116,15 +115,15 @@ class _SignupFormPageState extends State<SignupFormPage> {
   String getDefaultLabel(String field) {
     switch (field) {
       case 'branch':
-        return 'Select your Branch *';
+        return 'Select your Branch';
       case 'department':
-        return 'Select Your Department *';
+        return 'Select Your Department';
       case 'sub department':
-        return 'Select Sub Department *';
+        return 'Select Sub Department';
       case 'shift':
         return 'Shift time';
       case 'designation':
-        return 'Designation *';
+        return 'Designation';
       default:
         return '';
     }
@@ -198,11 +197,11 @@ class _SignupFormPageState extends State<SignupFormPage> {
                 ),
                 decoration: InputDecoration(
                   prefixIcon: Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.all(14.0),
                     child: Image.asset(
                       prefixIcon,
-                      width: 24,
-                      height: 24,
+                      width: 20,
+                      height: 20,
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -248,22 +247,9 @@ class _SignupFormPageState extends State<SignupFormPage> {
       child: Scaffold(
         backgroundColor: AppTheme.getColor(context).surface,
         body: Padding(
-          padding: EdgeInsets.only(
-            left: 20 * Responsive.getResponsive(context),
-            right: 20 * Responsive.getResponsive(context),
-            top: 20 * Responsive.getResponsive(context),
-            bottom: 20 * Responsive.getResponsive(context),
-          ),
-
-          child: BlocBuilder<PrimaryRegisterBloc, PrimaryRegisterState>(
-            builder: (blocContext, state) {
-
-
-              if (state is PrimaryRegisterLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-
-
+          padding: EdgeInsets.all(20 * Responsive.getResponsive(context)),
+          child: BlocConsumer<PrimaryRegisterBloc, PrimaryRegisterState>(
+            listener: (context, state) {
               if (state is BlockApiSuccess) {
                 branchOptionIds = state.blockList.block!.map((block) => block.blockId ?? '').toList();
                 branchOptionNames = state.blockList.block!.map((block) => block.blockName ?? '').toList();
@@ -284,13 +270,16 @@ class _SignupFormPageState extends State<SignupFormPage> {
                 shiftOptionIds = state.shiftList.shift!.map((s) => s.shiftTimeId ?? '').toList();
                 shiftOptionNames = state.shiftList.shift!.map((s) => s.shiftTimeView ?? '').toList();
               }
+            },
 
-
+            builder: (context, state) {
+              if (state is PrimaryRegisterLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
               if (state is PrimaryRegisterError) {
                 return Center(child: Text('Error: ${state.message}'));
               }
-
-              // Default UI for Initial state
+              // Show your form by default
               return setUi();
             },
           ),
@@ -298,6 +287,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
       ),
     ),
   );
+
+
 
   Widget setUi() => SingleChildScrollView(
       child: Column(
@@ -327,7 +318,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
             ),
           ),
 
-
           SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
           buildCustomSelector(
@@ -353,9 +343,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
               context.read<PrimaryRegisterBloc>().add(LoadFloorUnit(selectedBranchId));
               setState(() {});
             },
-
           ),
-
           SizedBox(height: 0.005 * Responsive.getHeight(context)),
 
           buildCustomSelector(
@@ -376,7 +364,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
               setState(() {});
             },
           ),
-
           SizedBox(height: 0.005 * Responsive.getHeight(context)),
 
           if (subDepartmentOptionIds.isNotEmpty) ...[
@@ -395,7 +382,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
                 setState(() {});
               },
             ),
-
             SizedBox(height: 0.005 * Responsive.getHeight(context)),
           ],
 
@@ -414,8 +400,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
               setState(() {});
             },
           ),
-
-
           SizedBox(height: 0.005 * Responsive.getHeight(context)),
 
           buildCustomSelector(
@@ -432,93 +416,114 @@ class _SignupFormPageState extends State<SignupFormPage> {
               setState(() {});
             },
           ),
-
           SizedBox(height: 0.005 * Responsive.getHeight(context)),
 
-          LabeledDropdown<String>(
-            border: Border.all(color: AppTheme.getColor(context).outline),
-            label: "Joining Date",
-            isRequired: false,
-            items: [],
-            selectedItem: selectedBranch,
-            itemToString: (item) => item,
-            onChanged: (val, index) {
-              setState(() {
-                selectedBranch = val;
-              });
-            },
-            prefix: Image.asset(
-              "assets/sign_in/joining_date_icon.png",
-              height: 0.025 * Responsive.getHeight(context),
-              fit: BoxFit.contain,
-            ),
-          ),
-
-          SizedBox(height: 0.005 * Responsive.getHeight(context)),
-
-          Row(
-            children: [
-              LabeledTextField(
-                label: "First Name",
-                hint: "First Name",
-                textAlignment: TextAlign.start,
-                // controller: _firstNameController,
-                validator: (val) =>
-                val == null || val.isEmpty ? "Required" : null,
-                textInputType: TextInputType.name,
-                widthFactor: 0.43 * Responsive.getWidth(context),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppTheme.getColor(context).outline,
-                  ),
-                  borderRadius: BorderRadius.circular(
-                    10 * Responsive.getResponsive(context),
-                  ),
-                ),
-                textFieldHeight: 0.063 * Responsive.getHeight(context),
-                typingtextStyle: TextStyle(
-                  color: AppTheme.getColor(context).onSurface,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Spacer(),
-              LabeledTextField(
-                typingtextStyle: TextStyle(
-                  color: AppTheme.getColor(context).onSurface,
-                  fontWeight: FontWeight.w600,
-                ),
-                label: "Last Name",
-                hint: "Last Name",
-                textAlignment: TextAlign.start,
-                // controller: _firstNameController,
-                validator: (val) =>
-                val == null || val.isEmpty ? "Required" : null,
-                textInputType: TextInputType.name,
-                widthFactor: 0.43 * Responsive.getWidth(context),
-                textFieldHeight: 0.063 * Responsive.getHeight(context),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: AppTheme.getColor(context).outline,
-                  ),
-                  borderRadius: BorderRadius.circular(
-                    10 * Responsive.getResponsive(context),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 0.015 * Responsive.getHeight(context)),
           CustomText(
-            "Gender",
+            'Joining Date *',
             color: AppTheme.getColor(context).onSurfaceVariant,
             fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.bold,
           ),
           SizedBox(height: 0.005 * Responsive.getHeight(context)),
+
+          MyCoTextfield(
+            controller: joiningDateController,
+            textAlignment: TextAlign.start,
+            hintText: 'Type here',
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10 * Responsive.getResponsive(context),),
+              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
+            ),
+            preFixImage: 'assets/sign_in/joining_date_icon.png',
+            prefixIconConstraints: BoxConstraints(
+              minHeight: 0.02 * Responsive.getHeight(context),
+              minWidth: 0.10 * Responsive.getWidth(context),
+            ),
+
+            onClick: () {
+              showModalBottomSheet(
+                backgroundColor: AppColors.white,
+                context: context,
+                builder: (context) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0,
+                    vertical: 10,
+                  ),
+                  child: DialDatePickerWidget(
+                    initialDate: DateTime.now(),
+                    onSubmit: (selectedDate) {
+                      final String date = DateFormat('dd-MM-yy',).format(selectedDate);
+                      joiningDateController.text = date;
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
+
+
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
+
+          Row(
+            children: [
+              LabeledTextField(
+                label: 'First Name *',
+                hint: 'First Name',
+                textAlignment: TextAlign.start,
+                controller: _firstNameController,
+                validator: (val) =>
+                val == null || val.isEmpty ? 'Required' : null,
+                textInputType: TextInputType.name,
+                widthFactor: 0.43 * Responsive.getWidth(context),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppTheme.getColor(context).outline),
+                  borderRadius: BorderRadius.circular(10 * Responsive.getResponsive(context)),
+                ),
+                textFieldHeight: 0.063 * Responsive.getHeight(context),
+                typingtextStyle: TextStyle(
+                  color: AppTheme.getColor(context).onSurface,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Spacer(),
+              LabeledTextField(
+                typingtextStyle: TextStyle(
+                  color: AppTheme.getColor(context).onSurface,
+                  fontWeight: FontWeight.w600,
+                ),
+                label: 'Last Name *',
+                hint: 'Last Name',
+                textAlignment: TextAlign.start,
+                controller: _lastNameController,
+                validator: (val) =>
+                val == null || val.isEmpty ? 'Required' : null,
+                textInputType: TextInputType.name,
+                widthFactor: 0.43 * Responsive.getWidth(context),
+                textFieldHeight: 0.063 * Responsive.getHeight(context),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppTheme.getColor(context).outline),
+                  borderRadius: BorderRadius.circular(10 * Responsive.getResponsive(context)),
+                ),
+              ),
+            ],
+          ),
+
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
+
+
+          CustomText(
+            'Gender',
+            color: AppTheme.getColor(context).onSurfaceVariant,
+            fontSize: 16 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.bold,
+          ),
+
+          SizedBox(height: 0.005 * Responsive.getHeight(context)),
           Row(
             children: [
               CustomTextRadioButton(
-                gender: "MALE",
+                gender: 'MALE',
                 selectedGender: selectedGender,
                 onSelect: (val) {
                   setState(() {
@@ -530,7 +535,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
               ),
               Spacer(),
               CustomTextRadioButton(
-                gender: "FEMALE",
+                gender: 'FEMALE',
                 selectedGender: selectedGender,
                 onSelect: (val) {
                   setState(() {
@@ -543,8 +548,36 @@ class _SignupFormPageState extends State<SignupFormPage> {
             ],
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
+
+          if('240' == preferenceManager.getCountryId())...[
+            CustomText(
+              'Number of Dependent *',
+              color: AppTheme.getColor(context).onSurfaceVariant,
+              fontSize: 16 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.bold,
+            ),
+            SizedBox(height: 0.005 * Responsive.getHeight(context)),
+
+            MyCoTextfield(
+              controller: departmentNumberController,
+              textAlignment: TextAlign.start,
+              hintText: 'Type here',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10 * Responsive.getResponsive(context)),
+                borderSide: BorderSide(color: AppTheme.getColor(context).outline),
+              ),
+              preFixImage: 'assets/sign_in/unit_number_icon.png',
+              prefixIconConstraints: BoxConstraints(
+                minHeight: 0.02 * Responsive.getHeight(context),
+                minWidth: 0.11 * Responsive.getWidth(context),
+              ),
+            ),
+
+            SizedBox(height: 0.015 * Responsive.getHeight(context)),
+          ],
+
           CustomText(
-            "Phone Number",
+            'Phone Number *',
             color: AppTheme.getColor(context).onSurfaceVariant,
             fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.bold,
@@ -563,33 +596,38 @@ class _SignupFormPageState extends State<SignupFormPage> {
             countryDialCodes: countryMap,
             phoneController: phoneController,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                15 * Responsive.getResponsive(context),
-              ),
-              border: Border.all(
-                color: AppTheme.getColor(context).outline,
-              ),
+              borderRadius: BorderRadius.circular(15 * Responsive.getResponsive(context)),
+              border: Border.all(color: AppTheme.getColor(context).outline),
               color: AppTheme.getColor(context).onPrimary,
             ),
           ),
+
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
+
+          CustomText(
+            'Email Address',
+            color: AppTheme.getColor(context).onSurfaceVariant,
+            fontSize: 16 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.bold,
+          ),
+          SizedBox(height: 0.005 * Responsive.getHeight(context)),
+
           MyCoTextfield(
+            controller: _emailController,
             textAlignment: TextAlign.start,
-            hintText: "abc@gmail.com",
+            hintText: 'abc@gmail.com',
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
-              ),
-              borderSide: BorderSide(
-                color: AppTheme.getColor(context).outline,
-              ),
+              borderRadius: BorderRadius.circular(10 * Responsive.getResponsive(context)),
+              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
             ),
-            preFixImage: "assets/sign_in/email_icon.png",
+            preFixImage: 'assets/sign_in/email_icon.png',
             prefixIconConstraints: BoxConstraints(
               minHeight: 0.02 * Responsive.getHeight(context),
-              minWidth: 0.11 * Responsive.getWidth(context),
+              minWidth: 0.10 * Responsive.getWidth(context),
             ),
           ),
+
+
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
           Row(
             children: [
@@ -602,7 +640,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                 },
                 borderColor: isChecked
                     ? AppTheme.getColor(context).primary
-                    : AppTheme.getColor(context).primary, // 🔁 dynamic
+                    : AppTheme.getColor(context).primary,
                 activeColor: AppTheme.getColor(context).primaryContainer,
                 checkColor: AppTheme.getColor(context).primary,
                 height: 0.026 * Responsive.getHeight(context),
@@ -618,25 +656,22 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   text: TextSpan(
                     style: TextStyle(
                       color: AppTheme.getColor(context).onSurface,
-                      fontSize:
-                      14 * Responsive.getResponsiveText(context),
+                      fontSize: 14 * Responsive.getResponsiveText(context),
                     ),
                     children: [
                       TextSpan(
-                        text: "Please confirm that you agree to our ",
+                        text: 'Please confirm that you agree to our ',
                         style: TextStyle(
                           color: AppTheme.getColor(context).onSurface,
-                          fontSize:
-                          14 * Responsive.getResponsiveText(context),
+                          fontSize: 14 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       TextSpan(
-                        text: "Privacy Policy",
+                        text: 'Privacy Policy',
                         style: TextStyle(
                           color: AppTheme.getColor(context).primary,
-                          fontSize:
-                          14 * Responsive.getResponsiveText(context),
+                          fontSize: 14 * Responsive.getResponsiveText(context),
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
@@ -648,12 +683,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
                             );
                           },
                       ),
-                      TextSpan(text: ", "),
+                      const TextSpan(text: ', '),
                       TextSpan(
-                        text: "Terms & Conditions",
-                        style: TextStyle(
-                          color: AppTheme.getColor(context).primary,
-                        ),
+                        text: 'Terms & Conditions',
+                        style: TextStyle(color: AppTheme.getColor(context).primary),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             showModalBottomSheet(
@@ -665,16 +698,15 @@ class _SignupFormPageState extends State<SignupFormPage> {
                           },
                       ),
                       TextSpan(
-                        text: " & ",
+                        text: ' & ',
                         style: TextStyle(
                           color: AppTheme.getColor(context).onSurface,
-                          fontSize:
-                          14 * Responsive.getResponsiveText(context),
+                          fontSize: 14 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       TextSpan(
-                        text: "Cancellation & Refund Policy",
+                        text: 'Cancellation & Refund Policy',
                         style: TextStyle(
                           color: AppTheme.getColor(context).primary,
                         ),
@@ -689,11 +721,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
                           },
                       ),
                       TextSpan(
-                        text: ".",
+                        text: '.',
                         style: TextStyle(
                           color: AppTheme.getColor(context).onSurface,
-                          fontSize:
-                          14 * Responsive.getResponsiveText(context),
+                          fontSize: 14 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w900,
                         ),
                       ),
@@ -712,54 +743,54 @@ class _SignupFormPageState extends State<SignupFormPage> {
             ),
             onTap: () {
 
-          //     final bool isValid = FormValidator.validateAll(
-          //         formKey: _formKey,
-          //         selectedBranchId: selectedBranchId,
-          //         selectedDepartmentId: selectedDepartmentId,
-          //         selectedDesignationId: selectedDesignationId,
-          //         joiningDate: joiningDateController.text,
-          //         phoneNumber: fullPhoneNumber,
-          //         firstNameController: firstNameController,
-          //         lastNameController: lastNameController,
-          //         emailController: emailController,
-          //         profileImage: profileImage,
-          //         departmentNumberController: departmentNumberController
-          //     );
-          //     if (!isValid) return;
-          //
-          //     final String platform = Platform.isAndroid ? 'android' : 'ios';
-          //
-          //     final dataMap = {
-          //       'addPrimaryUser': 'addPrimaryUser',
-          //       'society_id': '',
-          //       'society_address': '',
-          //       'block_id': selectedBranchId,
-          //       'floor_id': selectedDepartmentId,
-          //       'unit_id': '0',
-          //       'shift_time_id': selectedShiftId,
-          //       'designation': selectedDesignationName,
-          //       'user_first_name': firstNameController.text,
-          //       'user_last_name': lastNameController.text,
-          //       'user_full_name': '${firstNameController.text} ${lastNameController.text}',
-          //       'user_mobile': fullPhoneNumber,
-          //       'user_email': emailController.text,
-          //       'user_profile_pic': profileImage,//
-          //       'user_type': '0',
-          //       'user_token': '',
-          //       'device': platform,
-          //       'gender': selectedGender,
-          //       'country_code': selectedDialCode,
-          //       'unit_name': '',
-          //       'newUserByAdmin': '',
-          //       'joining_date': joiningDateController.text,
-          //       'language_id': LanguageManager().get(VariableBag.languageId),
-          //       'sub_department_id': selectedSubDepartmentId,
-          //       'vi_dependants': departmentNumberController.text,
-          //       'designation_id': selectedDesignationId,
-          //     };
-          //
-          //     PrimaryRegisterBloc(registerUseCase: GetIt.I<PrimaryRegisterUseCase>())
-          //       .add(LoadAddPrimaryUser(dataMap));
+              final bool isValid = FormValidator.validateAll(
+                  selectedBranchId: selectedBranchId,
+                  selectedDepartmentId: selectedDepartmentId,
+                  selectedDesignationId: selectedDesignationId,
+                  joiningDate: joiningDateController.text,
+                  phoneNumber: phoneNumberController,
+                  firstNameController: _firstNameController,
+                  lastNameController: _lastNameController,
+                  emailController: _emailController,
+                  profileImage: profileImage,
+                  departmentNumberController: departmentNumberController,
+                  preferenceManager : preferenceManager
+              );
+              if (!isValid) return;
+
+              final String platform = Platform.isAndroid ? 'android' : 'ios';
+
+              final dataMap = {
+                'addPrimaryUser': 'addPrimaryUser',
+                'society_id': '',
+                'society_address': '',
+                'block_id': selectedBranchId,
+                'floor_id': selectedDepartmentId,
+                'unit_id': '0',
+                'shift_time_id': selectedShiftId,
+                'designation': selectedDesignationName,
+                'user_first_name': _firstNameController.text,
+                'user_last_name': _lastNameController.text,
+                'user_full_name': '${_firstNameController.text} ${_lastNameController.text}',
+                'user_mobile': phoneNumberController,//
+                'user_email': _emailController.text,
+                'user_profile_pic': profileImage,//
+                'user_type': '0',
+                'user_token': '',
+                'device': platform,
+                'gender': selectedGender,
+                'country_code': selectedCountry,//
+                'unit_name': '',
+                'newUserByAdmin': '',
+                'joining_date': joiningDateController.text,
+                'language_id': preferenceManager.getLanguageId(),
+                'sub_department_id': selectedSubDepartmentId,
+                'vi_dependants': departmentNumberController.text,
+                'designation_id': selectedDesignationId,
+              };
+
+              PrimaryRegisterBloc(registerUseCase: GetIt.I<PrimaryRegisterUseCase>())
+                  .add(LoadAddPrimaryUser(dataMap));
 
 
 
@@ -798,7 +829,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
               //   length: 6,
               // );
             },
-            title: "Sign Up",
+            title: 'Sign Up',
             boarderRadius: 30 * Responsive.getResponsive(context),
             isShadowBottomLeft: true,
           ),
@@ -808,14 +839,14 @@ class _SignupFormPageState extends State<SignupFormPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomText(
-                  "Already have an account?",
+                  'Already have an account?',
 
                   fontSize: 18 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.getColor(context).onSurface,
                 ),
                 CustomText(
-                  "Sign in here",
+                  'Sign in here',
 
                   fontSize: 18 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
@@ -839,17 +870,17 @@ mixin FormValidator {
   }
 
   static bool validateAll({
-    required GlobalKey<FormState> formKey,
     required String selectedBranchId,
     required String selectedDepartmentId,
     required String selectedDesignationId,
     required String joiningDate,
-    required String phoneNumber,
+    required TextEditingController phoneNumber,
     required TextEditingController firstNameController,
     required TextEditingController lastNameController,
     required TextEditingController emailController,
     required String profileImage,
-    required TextEditingController departmentNumberController
+    required TextEditingController departmentNumberController,
+    required PreferenceManager preferenceManager
 
   }) {
 
@@ -871,16 +902,16 @@ mixin FormValidator {
     } else if (firstNameController.text.isEmpty) {
       Fluttertoast.showToast(msg: 'Please enter first name', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
-    }  else if (lastNameController.text.isEmpty) {
+    } else if (lastNameController.text.isEmpty) {
       Fluttertoast.showToast(msg: 'Please enter last name', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
-    } /*else if ('240' == preferenceManager.getCountryId() && departmentNumberController.text.isEmpty) {
+    } else if ('240' == preferenceManager.getCountryId() && departmentNumberController.text.isEmpty) {
       Fluttertoast.showToast(msg: 'Please enter number of department', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
-    }*/ else if (emailController.text.toString().isNotEmpty && isValidEmail(emailController.text)) {
+    } else if (emailController.text.toString().isNotEmpty && isValidEmail(emailController.text)) {
       Fluttertoast.showToast(msg: 'Please enter valid email address', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
-    } else if (phoneNumber.length < 7 || phoneNumber.length > 15) {
+    } else if (phoneNumber.text.length < 7 || phoneNumber.text.length > 15) {
       Fluttertoast.showToast(msg: 'Please enter Mobile Number', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
     }
@@ -892,6 +923,6 @@ mixin FormValidator {
 
 bool isValidEmail(String email) {
   // Simple email validation regex
-  final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+  final RegExp emailRegex = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
   return emailRegex.hasMatch(email);
 }

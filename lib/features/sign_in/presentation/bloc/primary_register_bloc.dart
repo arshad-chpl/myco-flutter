@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:myco_flutter/core/error/failure.dart';
+import 'package:myco_flutter/core/models/common_response.dart';
 import 'package:myco_flutter/features/sign_in/domain/usecases/primary_register_usecase.dart';
 import 'package:myco_flutter/features/sign_in/models/branch_response.dart';
 import 'package:myco_flutter/features/sign_in/models/floor_and_unit_response.dart';
@@ -18,6 +19,7 @@ class PrimaryRegisterBloc extends Bloc<PrimaryRegisterEvent, PrimaryRegisterStat
     on<LoadBranch>(_onFetchBranch);
     on<LoadFloorUnit>(_onFetchFloorUnit);
     on<LoadShift>(_onFetchShift);
+    on<LoadAddPrimaryUser>(_onFetchAddPrimaryUser);
   }
 
 
@@ -52,17 +54,17 @@ class PrimaryRegisterBloc extends Bloc<PrimaryRegisterEvent, PrimaryRegisterStat
           (failure) => emit(PrimaryRegisterError(failure.message ?? 'Unexpected Error')),
           (response) => emit(ShiftApiSuccess(response)),
     );
+  }
 
-    // result.fold(
-    //         (failure) => emit(PrimaryRegisterError(failure.message)),
-    //         (response){
-    //       if (response.error == null) {
-    //         emit(OtpVerifiedState(response));
-    //       } else {
-    //         emit(OtpVerificationFailedState(response));
-    //       }
-    //     }
-    // );
+
+  void _onFetchAddPrimaryUser(LoadAddPrimaryUser event, Emitter<PrimaryRegisterState> emit) async {
+    emit(PrimaryRegisterLoading());
+    final Either<Failure, CommonResponse> result = await registerUseCase.callAddPrimaryUser(event.dataMap);
+
+    result.fold(
+          (failure) => emit(PrimaryRegisterError(failure.message ?? 'Unexpected Error')),
+          (response) => emit(AddPrimaryUserApiSuccess(response)),
+    );
   }
 
 
