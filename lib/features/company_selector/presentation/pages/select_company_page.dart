@@ -3,15 +3,18 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/models/common_response.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/features/company_selector/data/models/society_response_model.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_state.dart';
+import 'package:myco_flutter/features/company_selector/presentation/widgets/get_reason_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/login_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/otp_verification_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/select_company_ui.dart';
+import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 
 class SelectCompanyPage extends StatelessWidget {
   const SelectCompanyPage({super.key});
@@ -124,9 +127,56 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                       );
                       _nextStep();
                     } else if (state is OtpNotSentState) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(state.response.message ?? '')),
-                      );
+                      if (state.response.viewDialogApiCall == true) {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) => Padding(
+                            padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom,
+                            ),
+                            child: CustomAlertDialog(
+                              alertType: AlertType.custom,
+                              icon: 'assets/login/device_change_icon.svg',
+                              content: state.response.message,
+                              cancelText: 'Cancel',
+                              confirmText: 'Request',
+                              onConfirm: () {
+                                Navigator.of(context).pop();
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (context) => const GetReasonUi(),
+                                );
+                              },
+                              onCancel: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ),
+                        );
+                      } else if (state.response.viewDialog == true) {
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) => Padding(
+                            padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom,
+                            ),
+                            child: CustomAlertDialog(
+                              alertType: AlertType.defaultType,
+                              content: state.response.message,
+                              confirmText: 'Ok',
+                              onConfirm: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ),
+                        );
+                      }
                     }
                   },
                   child: LoginUi(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
@@ -22,7 +24,7 @@ class AllDistributorPage extends StatelessWidget {
         children: [
           MyCoTextfield(
             prefix: const Icon(Icons.search),
-            hintText: 'Search',
+            hintText: LanguageManager().get('search'),
             hintTextStyle: TextStyle(color: AppTheme.getColor(context).outline),
             border: OutlineInputBorder(
               borderSide: BorderSide(color: AppTheme.getColor(context).outline),
@@ -36,7 +38,7 @@ class AllDistributorPage extends StatelessWidget {
             child: ListView.separated(
               itemCount: 3,
               itemBuilder: (context, index) => InkWell(
-                onTap: () => context.pushNamed('distributor-visitor'),
+                onTap: () => context.pushNamed(RoutePaths.distributorVisitor),
                 child: DistributorCard(
                   headerHeight: 0.045 * Responsive.getHeight(context),
                   title: 'Mukund',

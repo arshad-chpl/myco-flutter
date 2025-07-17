@@ -14,7 +14,9 @@ import 'package:myco_flutter/features/company_selector/data/models/verify_otp_re
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_state.dart';
+import 'package:myco_flutter/features/company_selector/presentation/widgets/get_reason_ui.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/customotp_bottomsheet.dart';
+import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -74,6 +76,57 @@ class OtpVerificationUi extends StatelessWidget {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text(state.response.message ?? '')));
+
+          if (state.response.viewDialogApiCall == true) {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (context) => Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: CustomAlertDialog(
+                  alertType: AlertType.custom,
+                  icon: 'assets/login/device_change_icon.svg',
+                  content: state.response.message,
+                  cancelText: 'Cancel',
+                  confirmText: 'Request',
+                  onConfirm: () {
+                    Navigator.of(context).pop();
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => const GetReasonUi(),
+                    );
+                  },
+                  onCancel: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            );
+          } else if (state.response.viewDialog == true) {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (context) => Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: CustomAlertDialog(
+                  alertType: AlertType.defaultType,
+                  content: state.response.message,
+                  confirmText: 'Ok',
+                  onConfirm: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            );
+          }
         }
       },
       child: Container(

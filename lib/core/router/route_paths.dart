@@ -32,7 +32,6 @@ class RoutePaths {
   //
   // static const String addVisit = '/add-visit';
 
-
   // static const String distributorVisitor = '/distributor-visitor';
   // static const String noOrder = '/no-order';
 
@@ -64,6 +63,8 @@ class RoutePaths {
   static const String contactAdmin = '/contact-admin';
   static const String qrScanner = '/qr-scanner';
   static const String assetsHome = '/assets-home';
+  static const String VisitWith = '/visit-with';
+  static const String assignedTo = '/assigned-to';
   static const String addVisit = '/add-visit';
   static const String viewVisitDetails = '/view-visit-details';
   static const String myProfile = '/my-profile';
@@ -116,6 +117,13 @@ class RoutePaths {
   static const String adminEducation = 'education';
   static const String adminAchievements = 'achievements';
   static const String adminEmployeesFace = 'employees-face';
+  static const String CustomerAddNewVisit = 'CustomerAddNewVisit';
+
+  // ======== Chat ========
+  static const String chatList = '/chat-list';
+  static const String userChatScreen = '/user-chat';
+  static const String startNewChat = '/start-chat';
+  static  const String groupInfo = '/group-info';
 
   //maulik
   static const String assetsDetails = '/assets-details';
