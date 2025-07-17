@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
+import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
 
 class TravelMode extends StatefulWidget {
   const TravelMode({super.key});
@@ -15,11 +15,9 @@ class TravelMode extends StatefulWidget {
 }
 
 class _TravelModeState extends State<TravelMode> {
-  // Dropdown data for travel modes and sites
   final List<String> travelModes = ['Bike', 'Car', 'Bus'];
   final List<String> sites = ['Site A', 'Site B', 'Site C'];
 
-  // Selected dropdown values
   String? selectedTravelMode;
   String? selectedSite;
 
@@ -34,114 +32,97 @@ class _TravelModeState extends State<TravelMode> {
             horizontal: 31.0 * Responsive.getResponsive(context),
           ),
           child: Column(
-            spacing: 15 * Responsive.getResponsive(context),
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Label for Travel Mode Dropdown
-              CustomText(
-                'Select Travel Mode',
-                fontSize: 12 * Responsive.getResponsiveText(context),
-                fontWeight: FontWeight.w400,
-                color: theme.onSurface,
-              ),
+              SizedBox(height: 15 * Responsive.getResponsive(context)),
 
-              /// Travel Mode Dropdown
-              CustomPopupDropdownStyled<String>(
-                height: 0.06 * Responsive.getHeight(context),
-                spacing: 8 * Responsive.getResponsive(context),
+              /// Travel Mode Dropdown with label
+              LabeledDropdown<String>(
+                spacing: 10 * Responsive.getResponsive(context),
+                label: LanguageManager().get('please_select_travel_mode'),
+                items: travelModes,
+                selectedItem: selectedTravelMode,
+                itemToString: (item) => item,
                 prefix: SvgPicture.asset(
                   AppAssets.smart_car,
                   fit: BoxFit.scaleDown,
                 ),
                 prefixImageWidth: 20 * Responsive.getWidth(context),
                 prefixImageHeight: 20 * Responsive.getHeight(context),
-                items: travelModes,
-                hintText: 'Select',
+                hintText: LanguageManager().get('select'),
                 hintTextStyle: TextStyle(
                   fontSize: 20 * Responsive.getResponsiveText(context),
                   color: theme.outline,
                 ),
-                selectedItem: selectedTravelMode,
-                itemToString: (item) => item,
                 onChanged: (value, index) {
-                  // Handle dropdown change
+                  // update value if needed
                 },
               ),
 
-              // Label for Site Dropdown
-              CustomText(
-                'Site',
-                fontSize: 12 * Responsive.getResponsiveText(context),
-                fontWeight: FontWeight.w500,
-                color: theme.onSurface,
-              ),
+              SizedBox(height: 20 * Responsive.getResponsive(context)),
 
-              /// Site Dropdown
-              CustomPopupDropdownStyled<String>(
-                height: 0.06 * Responsive.getHeight(context),
+              /// Site Dropdown with label
+              LabeledDropdown<String>(
                 spacing: 10 * Responsive.getResponsive(context),
+                label: LanguageManager().get('site'),
+                items: sites,
+                selectedItem: selectedSite,
+                itemToString: (item) => item,
                 prefix: SvgPicture.asset(
                   AppAssets.global,
                   fit: BoxFit.scaleDown,
                 ),
-                items: sites,
-                hintText: 'Select',
+                prefixImageWidth: 20 * Responsive.getWidth(context),
+                prefixImageHeight: 20 * Responsive.getHeight(context),
+                hintText: LanguageManager().get('select'),
                 hintTextStyle: TextStyle(
                   fontSize: 20 * Responsive.getResponsiveText(context),
                   color: theme.outline,
                 ),
-                selectedItem: selectedSite,
-                itemToString: (item) => item,
                 onChanged: (value, index) {
-                  // Handle dropdown change
+                  // update value if needed
                 },
               ),
 
-              // Buttons Row: CLOSE and START VISIT
-              Padding(
-                padding:
-                    EdgeInsets.only(top: 20, left: 5, right: 5) *
-                        Responsive.getResponsive(context),
-                child: Row(
-                  spacing: 10 * Responsive.getResponsive(context),
-                  children: [
-                    // CLOSE Button
-                    Expanded(
-                      child: MyCoButton(
-                        onTap: () {
-                          // Add your close logic here
-                        },
-                        title: 'CLOSE',
-                        textStyle: TextStyle(
-                          color: theme.primary,
-                          fontSize: 16 * Responsive.getResponsiveText(context),
-                          fontWeight: FontWeight.w400,
-                        ),
-                        backgroundColor: Colors.white,
-                        borderColor: theme.primary,
-                        boarderRadius: 30 * Responsive.getResponsive(context),
-                      ),
-                    ),
+              SizedBox(height: 30 * Responsive.getResponsive(context)),
 
-                    // START VISIT Button
-                    Expanded(
-                      child: MyCoButton(
-                        onTap: () {
-                          // Add your start visit logic here
-                        },
-                        title: 'START VISIT',
-                        textStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16 * Responsive.getResponsiveText(context),
-                          fontWeight: FontWeight.w400,
-                        ),
-                        backgroundColor: theme.primary,
-                        boarderRadius: 30 * Responsive.getResponsive(context),
-                        isShadowBottomLeft: true,
+              /// Buttons Row
+              Row(
+                children: [
+                  Expanded(
+                    child: MyCoButton(
+                      onTap: () {
+                        // close action
+                      },
+                      title: LanguageManager().get('close'),
+                      textStyle: TextStyle(
+                        color: theme.primary,
+                        fontSize: 16 * Responsive.getResponsiveText(context),
+                        fontWeight: FontWeight.w400,
                       ),
+                      backgroundColor: Colors.white,
+                      borderColor: theme.primary,
+                      boarderRadius: 30 * Responsive.getResponsive(context),
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(width: 10 * Responsive.getResponsive(context)),
+                  Expanded(
+                    child: MyCoButton(
+                      onTap: () {
+                        // start visit action
+                      },
+                      title: LanguageManager().get('start_visit'),
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16 * Responsive.getResponsiveText(context),
+                        fontWeight: FontWeight.w400,
+                      ),
+                      backgroundColor: theme.primary,
+                      boarderRadius: 30 * Responsive.getResponsive(context),
+                      isShadowBottomLeft: true,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
