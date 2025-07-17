@@ -28,14 +28,15 @@ class _DetailPageState extends State<DetailPage> {
         // Card displaying assignee details
         children: [
           //common card widget to show Assign tasks
-          const CommonCard(
-            title: 'Assign To ',
+           const CommonCard(
+            title: 'Assign To',
             bottomWidget: ListTile(
               // User image
               leading: Image(
                 image: AssetImage('assets/work_allocation/person_image.png'),
               ),
               // Name of the user
+              title: CustomText('Mukund Madhav', fontWeight: FontWeight.w600, color: AppColors.textSecondary,),
 
               // User role and location
               subtitle: Column(
@@ -75,6 +76,7 @@ class _DetailPageState extends State<DetailPage> {
                           fontWeight: FontWeight.w700,
                           color: AppColors.textPrimary,
                         ),
+                        CustomText('21 st May 2025', color: AppColors.textGray, fontWeight: FontWeight.w500,),
                       ],
                     ),
                     Column(
@@ -85,6 +87,7 @@ class _DetailPageState extends State<DetailPage> {
                           fontWeight: FontWeight.w700,
                            color: AppColors.textPrimary,
                         ),
+                        CustomText('22nd May 2025', color: AppColors.textGray, fontWeight: FontWeight.w500,),
                       ],
                     ),
                   ],
