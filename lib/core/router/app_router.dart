@@ -22,10 +22,12 @@ import 'package:myco_flutter/features/language_selector/presentation/bloc/langua
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
-import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
+import 'package:myco_flutter/features/lost_and_found/data/model/lost_and_found_item_model.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/bloc/lost_and_found_bloc.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/bloc/lost_and_found_event.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/di/lost_and_found_di.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
@@ -54,7 +56,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.lostAndFound,
+    initialLocation: RoutePaths.splash,
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -260,11 +262,11 @@ class AppRouter {
         builder: (context, state) => const AddExpensePage(),
       ),
 
-      GoRoute(
-        path: RoutePaths.lostAndFoundAddScreen,
-        name: 'lost-and-found-add-screen',
-        builder: (context, state) => const LostAndFoundAddScreen(),
-      ),
+      // GoRoute(
+      //   path: RoutePaths.lostAndFoundAddScreen,
+      //   name: 'lost-and-found-add-screen',
+      //   builder: (context, state) => const LostAndFoundAddScreen(),
+      // ),
       GoRoute(
         path: RoutePaths.lostAndFoundChatScreen,
         name: 'lost-and-found-chat-screen',
@@ -283,7 +285,10 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.lostAndFound,
         name: 'lost-and-found',
-        builder: (context, state) => const LostAndFound(),
+        builder: (context, state) => BlocProvider(
+          create: (_) => GetIt.I<LostAndFoundBloc>(),
+          child: const LostAndFound(),
+        ),
       ),
       GoRoute(
         path: RoutePaths.assetsHome,
