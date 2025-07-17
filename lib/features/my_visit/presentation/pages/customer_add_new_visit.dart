@@ -44,16 +44,17 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
   @override
   Widget build(BuildContext context) => Scaffold(
     // Custom AppBar
-    appBar: CustomAppbar(
-      appBarText: 'Add New Visit',
-      appbartxtcolor: AppTheme.getColor(context).onSurface,
-      size: 16 * Responsive.getResponsiveText(context),
-      appBarBackgoundColor: AppTheme.getColor(context).surface,
-      leading: BackButton(),
-    ),
-
+    // appBar: CustomAppbar(
+    //   appBarText: 'Add New Visit',
+    //   appbartxtcolor: AppTheme.getColor(context).onSurface,
+    //   size: 16 * Responsive.getResponsiveText(context),
+    //   appBarBackgoundColor: AppTheme.getColor(context).surface,
+    //   leading: BackButton(),
+    // ),
     body: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 31.0 * Responsive.getResponsive(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 31.0 * Responsive.getResponsive(context),
+      ),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,7 +218,7 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
             Padding(
               padding:
                   EdgeInsets.only(top: 60, right: 20, bottom: 12, left: 20) *
-                      Responsive.getResponsive(context),
+                  Responsive.getResponsive(context),
               child: MyCoButton(
                 onTap: () {
                   // Handle form submission

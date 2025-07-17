@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -16,7 +18,7 @@ class OrderHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(title: 'Order History'),
+    appBar: CustomAppbar(title: LanguageManager().get('order_history')),
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),
@@ -232,9 +234,14 @@ class OrderHistoryCard extends StatelessWidget {
                   const Spacer(),
                   InkWell(
                     onTap: () => context.pushNamed(RoutePaths.editOrder),
-                    child: Image.asset(
-                      'assets/take_order/message-edit.png',
+                    child: SvgPicture.asset(
+                      // 'assets/take_order/message-edit.png',
+                      AppAssets.messageEdit,
                       height: 0.023 * Responsive.getHeight(context),
+                      colorFilter: ColorFilter.mode(
+                        AppTheme.getColor(context).primary,
+                        BlendMode.srcIn,
+                      ),
                     ),
                   ),
                   SizedBox(width: 0.01 * Responsive.getWidth(context)),
@@ -502,8 +509,8 @@ class OrderHistoryCard extends StatelessWidget {
           ),
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
           Center(
-            child: Image.asset(
-              'assets/take_order/cancel_order.png',
+            child: SvgPicture.asset(
+              AppAssets.cancelOrder,
               height: 0.2 * Responsive.getHeight(context),
             ),
           ),

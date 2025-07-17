@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
@@ -32,7 +31,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      title: 'Take Order',
+      title: LanguageManager().get('take_order'),
       actions: [
         MyCoButton(
           onTap: () {},
@@ -51,7 +50,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
           children: [
             MyCoButton(
               onTap: () {
-                context.pushNamed('offers');
+                context.pushNamed(RoutePaths.offers);
               },
               title: LanguageManager().get('offer'),
               textStyle: AppTheme.getTextStyle(context).labelMedium!.copyWith(
@@ -173,7 +172,6 @@ class AllProductsScreen extends StatelessWidget {
           onChanged: (value) {
             bloc.add(SearchQueryChangeEvent(value, productList));
           },
-          
         ),
 
         SizedBox(height: 0.025 * Responsive.getHeight(context)),

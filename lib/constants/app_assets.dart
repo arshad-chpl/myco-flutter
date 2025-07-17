@@ -38,6 +38,7 @@ class AppAssets {
   static const String refresh = '$svgsPath/refresh.svg';
   static const String arrowDown = '$svgsPath/arrow_down.svg';
   static const String searchIcon = '$svgsPath/search_icon.svg';
+  static const String arrowBack = '$svgsPath/back_arrow.svg';
 
   // Svgs Take Order
   static const String offers = '$svgsTakeOrder/offers.svg';
@@ -51,6 +52,7 @@ class AppAssets {
   static const String stop = '$svgsTakeOrder/stop.svg';
   static const String calling = '$svgsTakeOrder/calling.svg';
   static const String location = '$svgsTakeOrder/location.svg';
+  static const String cancelOrder = '$svgsTakeOrder/cancel_order.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
