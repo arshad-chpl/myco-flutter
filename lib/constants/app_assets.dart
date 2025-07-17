@@ -83,10 +83,6 @@ class AppAssets {
   static const String stop = '$svgsTakeOrder/stop.svg';
   static const String calling = '$svgsTakeOrder/calling.svg';
 
-  //work allocation svgs
-  static const String calendarIcon = '$workAllocationSvgs/calendar.svg';
-  static const String personImage = '$workAllocationSvgs/person_image.svg';
-
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
   static const String loaderGif = '$basePath/gifs/mycoLoading.gif';
@@ -168,7 +164,7 @@ class AppAssets {
 
   //work allocation
   static const String plus = '$workAllocation/plus.png';
-  static const String calendar = '$workAllocation/calendar.png';
+  static const String calendarIcon = '$workAllocation/calendar.png';
   static const String personProfileImage = '$workAllocation/person_image.png';
   // static const String location = '$basePath/take_order/location.png';
   static const String assetMessageEdit = '$svgsVisit/message-edit.svg';
