@@ -265,16 +265,16 @@ class AppRouter {
         name: 'lost-and-found-chat-screen',
         builder: (context, state) => ChatScreen(),
       ),
-      //TODO
-      GoRoute(
-        path: RoutePaths.lostAndFoundItemDetails,
-        name: 'lost-and-found-item-details',
-        builder: (context, state) {
-          LostAndFoundItemModel lostitem = state.extra as LostAndFoundItemModel;
-          return ItemDetailsScreen(item: lostitem);
-        },
-      ),
 
+      //TODO
+      // GoRoute(
+      //   path: RoutePaths.lostAndFoundItemDetails,
+      //   name: 'lost-and-found-item-details',
+      //   builder: (context, state) {
+      //     LostAndFoundItemModel lostitem = state.extra as LostAndFoundItemModel;
+      //     return ItemDetailsScreen(item: lostitem);
+      //   },
+      // ),
       GoRoute(
         path: RoutePaths.lostAndFound,
         name: 'lost-and-found',

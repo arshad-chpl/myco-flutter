@@ -163,7 +163,6 @@ class AppAssets {
 
   // Lost And Found
 
-  static const String arrowDown = '$lostAndFound/arrow-down.svg';
   static const String camera = '$lostAndFound/camera.svg';
   static const String clipboard = '$lostAndFound/clipboard.svg';
   static const String data = '$lostAndFound/data.svg';
@@ -171,9 +170,6 @@ class AppAssets {
   static const String gallaryAdd = '$lostAndFound/gallery-add.svg';
   static const String gallaryExport = '$lostAndFound/gallery-export.svg';
   static const String link = '$lostAndFound/link.svg';
-  static const String messageEdit = '$lostAndFound/message-edit.svg';
-  static const String noteFavorite = '$lostAndFound/note-favorite.svg';
-  static const String profileCircle = '$lostAndFound/profile-circle.svg';
   static const String searchNormal = '$lostAndFound/search-normal.svg';
   static const String send = '$lostAndFound/send.svg';
   static const String vector = '$lostAndFound/Vector.svg';
