@@ -6,7 +6,9 @@ import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/models/common_response.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/leave/data/datasources/leave_remote_data_source.dart';
+import 'package:myco_flutter/features/leave/model/check_leave_balance_response.dart';
 import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
+import 'package:myco_flutter/features/leave/model/leave_type_response.dart';
 import 'package:myco_flutter/features/leave/model/my_team_response_model.dart';
 
 class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
@@ -105,6 +107,41 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
       instanceName: VariableBag.residentApiNew,
     ).postFormDynamic('leave_controller.php', dataMap);
     return CommonResponse.fromJson(json.decode(response));
+  }
+
+  @override
+  Future<LeaveTypeResponse> getLeaveTypesWithData(String unitId, String useId, String userName, String currentYear, String appliedLeaveDate) async {
+    final dataMap = {
+      'getLeaveTypesWithData':'getLeaveTypesWithData',
+      'society_id':'1',
+      'unit_id':unitId,
+      'user_id':useId,
+      'user_name':userName,
+      'language_id':'1',
+      'currentYear':currentYear,
+      'applied_leave_date':appliedLeaveDate,
+    };
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.residentApiNew,
+    ).postFormDynamic('leave_controller.php', dataMap);
+    return LeaveTypeResponse.fromJson(json.decode(response));
+  }
+
+  @override
+  Future<CheckLeaveBalanceResponse> getLeaveBalanceForAutoLeave(String userId, String leaveDate, String leaveId) async {
+    final dataMap = {
+      'getLeaveBalanceForAutoLeave':'getLeaveBalanceForAutoLeave',
+      'society_id':'1',
+      'user_id':userId,
+      'language_id':'1',
+      'leave_date':leaveDate,
+      'leave_id':leaveId,
+      'leave_status':'0',
+    };
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.residentApiNew,
+    ).postFormDynamic('leave_controller.php', dataMap);
+    return CheckLeaveBalanceResponse.fromJson(json.decode(response));
   }
 
 

@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:myco_flutter/core/models/common_response.dart';
 import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
+import 'package:myco_flutter/features/leave/model/check_leave_balance_response.dart';
 import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
+import 'package:myco_flutter/features/leave/model/leave_type_response.dart';
 import 'package:myco_flutter/features/leave/model/my_team_response_model.dart';
 
 abstract class LeaveState extends Equatable {
@@ -47,6 +49,20 @@ class ShortLeaveDeleted extends LeaveState {
   const ShortLeaveDeleted(this.commonResponse);
   @override
   List<Object> get props => [commonResponse];
+}
+
+class LeaveTypeWithDataFetched extends LeaveState {
+  final LeaveTypeResponse leaveType;
+  const LeaveTypeWithDataFetched(this.leaveType);
+  @override
+  List<Object> get props => [leaveType];
+}
+
+class CheckAutoLeaveBalanceFetched extends LeaveState {
+  final CheckLeaveBalanceResponse checkLeaveBalanceResponse;
+  const CheckAutoLeaveBalanceFetched(this.checkLeaveBalanceResponse);
+  @override
+  List<Object> get props => [checkLeaveBalanceResponse];
 }
 
 class LeaveError extends LeaveState {

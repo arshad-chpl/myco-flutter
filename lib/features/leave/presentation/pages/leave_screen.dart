@@ -10,6 +10,7 @@ import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_skeloton/short_leave_card_skeleton.dart';
+import 'package:myco_flutter/features/leave/presentation/widgets/auto_leave_change.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/custom_fab_menu.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_action_button.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_card.dart';
@@ -232,6 +233,56 @@ class _LeaveScreenState extends State<LeaveScreen> {
                             leave: _convertToLeaveEntry(leave),
                             onDelete: ({leaveId}) {
                               // TODO: Implement regular leave delete if needed
+                            },
+                            onEdit: ({required leave}) {
+                              final isAutoChangeable = (leave.autoLeave ?? false) && !(leave.isSalaryGenerated ?? false);
+                              if (isAutoChangeable) {
+                                final leaveBloc = BlocProvider.of<LeaveBloc>(context); // Store the bloc here
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(24),
+                                    ),
+                                  ),
+                                  builder: (bottomSheetContext) => Padding(
+                                    padding: EdgeInsets.only(
+                                      top: 16,
+                                      bottom: MediaQuery.of(bottomSheetContext).viewInsets.bottom,
+                                    ),
+                                    child: DraggableScrollableSheet(
+                                      expand: false,
+                                      initialChildSize: 0.5,
+                                      minChildSize: 0.5,
+                                      maxChildSize: 0.8,
+                                      builder: (bottomSheetContext, scrollController) => BlocProvider.value(
+                                        value: leaveBloc, // Use the stored bloc instance
+                                        child: SingleChildScrollView(
+                                          controller: scrollController,
+                                          child: SafeArea(
+                                            child: AutoLeaveChangeForm(
+                                              onSave: (selectedLeave, remark) {
+                                                Navigator.pop(bottomSheetContext); // Close bottom sheet
+                                                print('Selected: $selectedLeave, Remark: $remark');
+                                              },
+                                              onCancel: () {
+                                                Navigator.pop(bottomSheetContext);
+                                              },
+                                              leaveOptions: const ['a', 'b', 'c'],
+                                              leaveEntity: leave,
+                                              isUser: (leave.autoLeave == true),
+                                              isUserSandwichLeaveUpdate: (leave.autoLeave != true),
+                                              updateStatus: (leave.autoLeave != true),
+                                              leaveBloc: leaveBloc,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
                             },
                           );
                         }
