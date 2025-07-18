@@ -144,6 +144,54 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
     return CheckLeaveBalanceResponse.fromJson(json.decode(response));
   }
 
+  @override
+  Future<CommonResponse> deleteLeaveRequest(String leaveId) async {
+    final dataMap = {
+      'deleteLeaveRequest':'deleteLeaveRequest',
+      'society_id':'1',
+      'user_id':'1365',
+      'language_id':'1',
+      'other_user_name':'Lucky Katre',
+      'user_name':'Lucky Katre',
+      'leave_id':leaveId,
+      'my_user_id':'1365',
+      'delete_restrict':'1',
+      'remove_late_in':'',
+      'remove_early_out':'',
+    };
+
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.residentApiNew,
+    ).postFormDynamic('leave_controller.php', dataMap);
+    return CommonResponse.fromJson(json.decode(response));
+  }
+
+  @override
+  Future<CommonResponse> changeAutoLeave(String userId, String paid, String leaveTypeId, String leaveDate, String leaveDay, String extraDay, String isSpecialDay, String attendanceId, String leaveId, String leavePercentage) async{
+    final dataMap = {
+      'changeAutoLeave':'changeAutoLeave',
+      'society_id':'1',
+      'user_id':userId,
+      'language_id':'1',
+      'paid_unpaid':paid,
+      'leave_type_id':leaveTypeId,
+      'leave_date':leaveDate,
+      'leave_day_type':leaveDay,
+      'is_extra_day':extraDay,
+      'is_special_leave':isSpecialDay,
+      'attendance_id':attendanceId,
+      'user_name':'Lucky Katre',
+      'leave_id':leaveId,
+      'leave_percentage':leavePercentage,
+      'is_from_admin':'0',
+    }
+    ;
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.residentApiNew,
+    ).postFormDynamic('leave_controller.php', dataMap);
+    return CommonResponse.fromJson(json.decode(response));
+  }
+
 
 
 }

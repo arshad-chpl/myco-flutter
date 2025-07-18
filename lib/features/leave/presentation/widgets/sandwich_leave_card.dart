@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -12,6 +13,8 @@ class SandwichLeaveEntry {
   final bool isSalaryGenerated;
   final String? nextLeaveDate;
   final String? prevLeaveDate;
+  final LeaveHistoryEntity leaveEntity;
+
 
   SandwichLeaveEntry({
     required this.date,
@@ -21,12 +24,14 @@ class SandwichLeaveEntry {
     required this.isSalaryGenerated,
     this.nextLeaveDate,
     this.prevLeaveDate,
+    required this.leaveEntity,
+
   });
 }
 
 class SandwichLeaveCard extends StatelessWidget {
   final SandwichLeaveEntry leave;
-  final VoidCallback? onEdit;
+  final Function({required LeaveHistoryEntity leave})? onEdit;
 
   const SandwichLeaveCard({
     required this.leave,
@@ -52,13 +57,9 @@ class SandwichLeaveCard extends StatelessWidget {
             showHeaderPrefixIcon: true,
             suffixIcon: !leave.isSalaryGenerated
                 ? IconButton(
-              onPressed: onEdit ?? () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Edit functionality not implemented'),
-                  ),
-                );
-              },
+                onPressed: () {
+                  onEdit!(leave: leave.leaveEntity);
+                },
               icon: Icon(
                 Icons.edit_outlined,
                 size: 0.022 * Responsive.getHeight(context),

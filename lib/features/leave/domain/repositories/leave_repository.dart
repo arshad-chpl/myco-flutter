@@ -44,4 +44,20 @@ abstract class LeaveRepository {
       String leaveDate,
       String leaveId,
       );
+  Future<Either<Failure, CommonResponse>> deleteLeaveRequest(
+    String leaveId,
+  );
+
+  Future<Either<Failure, CommonResponse>> changeAutoLeave(
+    String userId,
+    String paid,
+    String leaveTypeId,
+    String leaveDate,
+    String leaveDay,
+    String extraDay,
+    String isSpecialDay,
+    String attendanceId,
+    String leaveId,
+    String leavePercentage,
+  );
 }

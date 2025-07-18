@@ -123,5 +123,42 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
         emit(LeaveError('Failed to fetch leave balance: $e'));
       }
     });
+
+    on<DeleteLeaveRequest>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.deleteLeaveRequest(event.leaveId);
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(LeaveRequestDeleted(model)),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to delete leave request: $e'));
+      }
+    });
+
+    on<ChangeAutoLeave>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.changeAutoLeave(
+          event.userId,
+          event.paid,
+          event.leaveTypeId,
+          event.leaveDate,
+          event.leaveDay,
+          event.extraDay,
+          event.isSpecialDay,
+          event.attendanceId,
+          event.leaveId,
+          event.leavePercentage,
+        );
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(AutoLeaveChanged(model)),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to change auto leave: $e'));
+      }
+    });
   }
 }
