@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -14,10 +15,15 @@ class DashboardAppBar extends StatelessWidget {
       spacing: 9,
       children: [
         // TODO: Add NetworkImage for profile picture
-        CircleAvatar(
-          radius: 22 * Responsive.getDashboardResponsiveText(context),
-          backgroundImage: const NetworkImage(
-            'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
+        InkWell(
+          onTap: () {
+            context.pushNamed("my-profile");
+          },
+          child: CircleAvatar(
+            radius: 22 * Responsive.getDashboardResponsiveText(context),
+            backgroundImage: const NetworkImage(
+              'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
+            ),
           ),
         ),
 
