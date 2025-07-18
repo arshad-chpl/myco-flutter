@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:myco_flutter/core/error/failure.dart';
-import 'package:myco_flutter/core/models/common_response.dart';
+import 'package:myco_flutter/core/models/domain/common_response_entity.dart';
 import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
 import 'package:myco_flutter/features/leave/model/my_team_response_model.dart';
 
@@ -16,13 +16,13 @@ abstract class LeaveRepository {
     String year,
   );
 
-  Future<Either<Failure, CommonResponse>> addShortLeave(
+  Future<Either<Failure, CommonResponseModelEntity>> addShortLeave(
     String date,
     String time,
     String reason,
   );
 
-  Future<Either<Failure, CommonResponse>> deleteShortLeave(
+  Future<Either<Failure, CommonResponseModelEntity>> deleteShortLeave(
     String shortLeaveId,
     String shortLeaveDate,
     String otherUserId,
