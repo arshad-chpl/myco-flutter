@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/company_selector/data/models/request_otp_request_model.dart';
+import 'package:myco_flutter/features/company_selector/data/models/request/request_otp_request_model.dart';
 import 'package:myco_flutter/features/company_selector/data/models/society_response_model.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_event.dart';

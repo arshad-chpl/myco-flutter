@@ -4,15 +4,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:myco_flutter/core/models/common_response.dart';
+import 'package:myco_flutter/core/models/data/common_response_model.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
-import 'package:myco_flutter/features/company_selector/data/models/society_response_model.dart';
+import 'package:myco_flutter/features/company_selector/domain/entites/company_response_entity.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_state.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/login_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/otp_verification_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/select_company_ui.dart';
-import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 
 class SelectCompanyPage extends StatelessWidget {
   const SelectCompanyPage({super.key});
@@ -109,7 +108,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
               );
             } else {
               final companyJson = instance.data!;
-              final selectedCompany = SocietyModel.fromJson(
+              final selectedCompany = SocietyEntity.fromJson(
                 jsonDecode(companyJson),
               );
 
@@ -184,10 +183,10 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
               final otpResponseJson = instance.data![0]!;
               final selectedCompanyJson = instance.data![1]!;
 
-              final otpResponse = CommonResponse.fromJson(
+              final otpResponse = CommonResponseModel.fromJson(
                 jsonDecode(otpResponseJson),
               );
-              final selectedCompany = SocietyModel.fromJson(
+              final selectedCompany = SocietyEntity.fromJson(
                 jsonDecode(selectedCompanyJson),
               );
 
