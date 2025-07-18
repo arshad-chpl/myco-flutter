@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class LeaveEntry {
@@ -119,6 +117,37 @@ class LeaveCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 4),
+                  // Reason
+                  CustomText(
+                    'Leave Reason : ${leave.reason}',
+                    fontSize: 12 * textResponsive,
+                    color: Colors.black,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 2),
+                  // Approved by
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Approved By :',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontSize: 13 * textResponsive,
+                          ),
+                        ),
+                        TextSpan(
+                          text: leave.approvedBy,
+                          style: TextStyle(
+                            color: AppColors.black,
+                            fontSize: 13 * textResponsive,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 6),
                   // Pay Status & View Details
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,20 +161,17 @@ class LeaveCard extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                           CustomText(
-                            leave.status,
+                            leave.payStatus,
                             fontSize: 12 * textResponsive,
-                            color: leave.status == 'Pending'
-                                ? AppColors.spanishYellow
-                                : leave.status == 'Reject'
-                                ? AppColors.red
-                                : AppColors.secondary,
+                            color: Colors.grey.shade700,
                           ),
                         ],
                       ),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           CustomText(
-                            leave.payStatus,
+                            leave.status,
                             fontSize: 12 * textResponsive,
                             color: leave.status.toLowerCase() == 'approved'
                                 ? Colors.green
@@ -154,8 +180,8 @@ class LeaveCard extends StatelessWidget {
                                 : Colors.orange,
                           ),
                           const SizedBox(height: 4),
-                          MyCoButton(
-                            onTap: () {
+                          ElevatedButton(
+                            onPressed: () async {
                               showModalBottomSheet(
                                 context: context,
                                 isScrollControlled: true,
@@ -170,47 +196,22 @@ class LeaveCard extends StatelessWidget {
                                 ),
                               );
                             },
-                            title: 'View Details',
-                            textStyle: TextStyle(
-                              fontSize: 10 * textResponsive,
-                              color: AppTheme.getColor(context).surface,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 6,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6),
+                              ),
                             ),
-                            width: 0.2 * Responsive.getWidth(context),
-                            height: 0.025 * Responsive.getHeight(context),
+                            child: CustomText(
+                              'View Details',
+                              fontSize: 12 * textResponsive,
+                              color: Colors.white,
+                            ),
                           ),
-                          // ElevatedButton(
-                          //   onPressed: () async {
-                          //     showModalBottomSheet(
-                          //       context: context,
-                          //       isScrollControlled: true,
-                          //
-                          //       shape: const RoundedRectangleBorder(
-                          //         borderRadius: BorderRadius.vertical(
-                          //           top: Radius.circular(20),
-                          //         ),
-                          //       ),
-                          //       builder: (_) => Padding(
-                          //         padding: EdgeInsets.all(20 * responsive),
-                          //         child: leave.onViewDetailWidget,
-                          //       ),
-                          //     );
-                          //   },
-                          //   style: ElevatedButton.styleFrom(
-                          //     backgroundColor: AppColors.primary,
-                          //     padding: const EdgeInsets.symmetric(
-                          //       horizontal: 12,
-                          //       vertical: 6,
-                          //     ),
-                          //     shape: RoundedRectangleBorder(
-                          //       borderRadius: BorderRadius.circular(6),
-                          //     ),
-                          //   ),
-                          //   child: CustomText(
-                          //     'View Details',
-                          //     fontSize: 12 * textResponsive,
-                          //     color: Colors.white,
-                          //   ),
-                          // ),
                         ],
                       ),
                     ],

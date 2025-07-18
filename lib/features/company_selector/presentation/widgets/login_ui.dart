@@ -45,7 +45,7 @@ class LoginUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocBuilder<LoginBloc, LoginState>(
     builder: (BuildContext context, state) => Container(
-      height: 0.7 * Responsive.getHeight(context),
+      // height: 0.9 * Responsive.getHeight(context),
       width: Responsive.getWidth(context),
       decoration: BoxDecoration(
         color: AppTheme.getColor(context).onPrimary,

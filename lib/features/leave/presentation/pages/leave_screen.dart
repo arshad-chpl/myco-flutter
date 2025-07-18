@@ -4,17 +4,20 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/leave_skeloton/short_leave_card_skeleton.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/auto_leave_change.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/custom_fab_menu.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_action_button.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_detail_bottom_sheet.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_filter_bottom_sheet.dart';
-import 'package:myco_flutter/features/leave/presentation/widgets/month_year_header.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_month_year_picker_header/month_year_header.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/sandwich_leave_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/short_leave_card.dart';
 import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
@@ -73,14 +76,20 @@ class _LeaveScreenState extends State<LeaveScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      leading: IconButton(
-        onPressed: () => context.pop(),
-        icon: const Icon(Icons.arrow_back_outlined),
-      ),
-      title: const Text('Leave balance'),
+    // appBar: AppBar(
+    //   leading: IconButton(
+    //     onPressed: () => context.pop(),
+    //     icon: const Icon(Icons.arrow_back_outlined),
+    //   ),
+    //   title: const Text('Leave balance'),
+    //   centerTitle: true,
+    //   elevation: 0,
+    // ),
+    appBar: CustomAppbar(
+      isKey: true,
+      title: 'leave_balance',
       centerTitle: true,
-      elevation: 0,
+
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -92,7 +101,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
             ),
             title: selectedFilter,
             height: 0.035 * Responsive.getHeight(context),
-            width: 0.3 * Responsive.getWidth(context),
+            width: 0.25 * Responsive.getWidth(context),
             imagePosition: AxisDirection.right,
             image: const Icon(
               Icons.keyboard_arrow_down,
@@ -118,159 +127,173 @@ class _LeaveScreenState extends State<LeaveScreen> {
         }
       },
       builder: (context, state) {
-        if (isLoading) {
-          return const Center();
-        }
-
         final filteredLeaves = _filterLeaves(leaveHistoryList);
 
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Column(
-              children: [
-                MonthYearHeader(
-                  onChanged: (month, year) {
-                    setState(() {
-                      selectedMonth = month + 1; // +1 to make it 1-based
-                      selectedYear = year;
-                    });
-                    _fetchLeaveHistory();
-                  },
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    LeaveActionButton(
-                      title: 'My Leave Balance',
-                      onTap: () => context.go(RoutePaths.leaveBalance),
-                    ),
-                    if (isTeamLeave)
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 16),
+              child: Column(
+                children: [
+                  MonthYearHeader(
+                    startYear: 2025,
+                    endYear: 2026,
+                    iconSize: 0.02 * Responsive.getHeight(context),
+                    onChanged: (month, year) {
+                      setState(() {
+                        selectedMonth = month;
+                        selectedYear = year;
+                      });
+                      _fetchLeaveHistory();
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       LeaveActionButton(
-                        title: 'My Team Leaves',
-                        onTap: () => context.go(RoutePaths.teamLeaveBalance),
+                        title: 'My Leave Balance',
+                        onTap: () => context.go(RoutePaths.leaveBalance),
                       ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                if (filteredLeaves.isEmpty)
-                  const Center(child: Text('No leaves found')),
-                ...filteredLeaves.map((leave) {
-                  if (leave.sandwichLeave == false &&
-                      leave.shortLeave == true) {
-                    return ShortLeaveCard(
-                      leave: _convertToShortLeaveEntry(leave),
-                      onDelete:
-                          ({
-                            required fullName,
-                            required sandwichLeaveId,
-                            required userId,
-                            required leaveDate,
-                          }) {
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              builder: (context) => Padding(
-                                padding: EdgeInsets.only(
-                                  bottom: MediaQuery.of(
-                                    context,
-                                  ).viewInsets.bottom,
-                                ),
-                                // to avoid keyboard overlap if needed
-                                child: CustomAlertDialog(
-                                  alertType: AlertType.delete,
-                                  content: 'do you want delete',
-                                  confirmText: 'Ok',
-                                  cancelText: 'Cancel',
-                                  onCancel: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  onConfirm: () {
-                                    _deleteShortLeave(
-                                      sandwichLeaveId ?? '',
-                                      leaveDate ?? '',
-                                      userId ?? '',
-                                      fullName ?? '',
-                                    );
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                    );
-                  } else if (leave.sandwichLeave == true &&
-                      leave.shortLeave == false) {
-                    return SandwichLeaveCard(
-                      leave: _convertToSandwichLeaveEntry(leave),
-                    );
-                  } else {
-                    return LeaveCard(
-                      leave: _convertToLeaveEntry(leave),
-                      onDelete: ({leaveId}) {
-                        // Call delete api
-                      },
-                      onEdit: ({required leave}) {
-                        final isAutoChangeable = (leave.autoLeave ?? false) && !(leave.isSalaryGenerated ?? false);
-                        if (isAutoChangeable) {
-                          final leaveBloc = BlocProvider.of<LeaveBloc>(context); // Store the bloc here
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(24),
-                              ),
-                            ),
-                            builder: (bottomSheetContext) => Padding(
-                              padding: EdgeInsets.only(
-                                top: 16,
-                                bottom: MediaQuery.of(bottomSheetContext).viewInsets.bottom,
-                              ),
-                              child: DraggableScrollableSheet(
-                                expand: false,
-                                initialChildSize: 0.5,
-                                minChildSize: 0.5,
-                                maxChildSize: 0.8,
-                                builder: (bottomSheetContext, scrollController) => BlocProvider.value(
-                                  value: leaveBloc, // Use the stored bloc instance
-                                  child: SingleChildScrollView(
-                                    controller: scrollController,
-                                    child: SafeArea(
-                                      child: AutoLeaveChangeForm(
-                                        onSave: (selectedLeave, remark) {
-                                          Navigator.pop(bottomSheetContext); // Close bottom sheet
-                                          print('Selected: $selectedLeave, Remark: $remark');
-                                        },
+                      if (isTeamLeave)
+                        LeaveActionButton(
+                          title: 'My Team Leaves',
+                          onTap: () => context.go(RoutePaths.teamLeaveBalance),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: isLoading
+                  ? ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      itemCount: 3,
+                      itemBuilder: (_, __) => const ShortLeaveCardSkeleton(),
+                    )
+                  : filteredLeaves.isEmpty
+                  ? const Center(child: Text("No leaves found"))
+                  : ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      itemCount: filteredLeaves.length,
+                      itemBuilder: (context, index) {
+                        final leave = filteredLeaves[index];
+
+                        if (leave.sandwichLeave == false &&
+                            leave.shortLeave == true) {
+                          return ShortLeaveCard(
+                            leave: _convertToShortLeaveEntry(leave),
+                            onDelete:
+                                ({
+                                  required fullName,
+                                  required sandwichLeaveId,
+                                  required userId,
+                                  required leaveDate,
+                                }) {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    builder: (context) => Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom: MediaQuery.of(
+                                          context,
+                                        ).viewInsets.bottom,
+                                      ),
+                                      child: CustomAlertDialog(
+                                        alertType: AlertType.delete,
+                                        content: 'Do you want to delete?',
+                                        confirmText: 'Ok',
+                                        cancelText: 'Cancel',
                                         onCancel: () {
-                                          Navigator.pop(bottomSheetContext);
+                                          Navigator.of(context).pop();
                                         },
-                                        leaveOptions: const ['a', 'b', 'c'],
-                                        leaveEntity: leave,
-                                        isUser: (leave.autoLeave == true),
-                                        isUserSandwichLeaveUpdate: (leave.autoLeave != true),
-                                        updateStatus: (leave.autoLeave != true),
-                                        leaveBloc: leaveBloc,
+                                        onConfirm: () {
+                                          _deleteShortLeave(
+                                            sandwichLeaveId ?? '',
+                                            leaveDate ?? '',
+                                            userId ?? '',
+                                            fullName ?? '',
+                                          );
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                },
+                          );
+                        } else if (leave.sandwichLeave == true &&
+                            leave.shortLeave == false) {
+                          return SandwichLeaveCard(
+                            leave: _convertToSandwichLeaveEntry(leave),
+                          );
+                        } else {
+                          return LeaveCard(
+                            leave: _convertToLeaveEntry(leave),
+                            onDelete: ({leaveId}) {
+                              // TODO: Implement regular leave delete if needed
+                            },
+                            onEdit: ({required leave}) {
+                              final isAutoChangeable = (leave.autoLeave ?? false) && !(leave.isSalaryGenerated ?? false);
+                              if (isAutoChangeable) {
+                                final leaveBloc = BlocProvider.of<LeaveBloc>(context); // Store the bloc here
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(24),
+                                    ),
+                                  ),
+                                  builder: (bottomSheetContext) => Padding(
+                                    padding: EdgeInsets.only(
+                                      top: 16,
+                                      bottom: MediaQuery.of(bottomSheetContext).viewInsets.bottom,
+                                    ),
+                                    child: DraggableScrollableSheet(
+                                      expand: false,
+                                      initialChildSize: 0.5,
+                                      minChildSize: 0.5,
+                                      maxChildSize: 0.8,
+                                      builder: (bottomSheetContext, scrollController) => BlocProvider.value(
+                                        value: leaveBloc, // Use the stored bloc instance
+                                        child: SingleChildScrollView(
+                                          controller: scrollController,
+                                          child: SafeArea(
+                                            child: AutoLeaveChangeForm(
+                                              onSave: (selectedLeave, remark) {
+                                                Navigator.pop(bottomSheetContext); // Close bottom sheet
+                                                print('Selected: $selectedLeave, Remark: $remark');
+                                              },
+                                              onCancel: () {
+                                                Navigator.pop(bottomSheetContext);
+                                              },
+                                              leaveOptions: const ['a', 'b', 'c'],
+                                              leaveEntity: leave,
+                                              isUser: (leave.autoLeave == true),
+                                              isUserSandwichLeaveUpdate: (leave.autoLeave != true),
+                                              updateStatus: (leave.autoLeave != true),
+                                              leaveBloc: leaveBloc,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
+                                );
+                              }
+                            },
                           );
                         }
                       },
-                    );
-                  }
-                }),
-              ],
+                    ),
             ),
-          ),
+          ],
         );
       },
     ),
+
     floatingActionButton: CustomFabMenu(
       buttons: [
         FabButtonModel(
