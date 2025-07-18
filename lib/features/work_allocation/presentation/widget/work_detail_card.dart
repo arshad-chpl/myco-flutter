@@ -9,87 +9,81 @@ class WorkDetailCard extends StatelessWidget {
   const WorkDetailCard({super.key});
 
   @override
-  Widget build(BuildContext context) => BorderContainerWraper(
-    borderRadius: 16 * Responsive.getResponsive(context),
-    borderColor: AppTheme.getColor(context).outline,
-    padding: EdgeInsets.symmetric(
-      horizontal: 0.03 * Responsive.getWidth(context),
-      vertical: 0.02 * Responsive.getHeight(context),
-    ),
-    child: Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Work Start and Completion Date
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(
-                  'Work Start Date',
-                  fontWeight: FontWeight.w700,
-                  color: AppTheme.getColor(context).onSurface,
-                  fontSize: 18*Responsive.getResponsiveText(context),
-                ),
-                CustomText(
-                  '21 st May 2025',
-                  color: AppTheme.getColor(context).outline,
-                  fontWeight: FontWeight.w500,
-                ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                CustomText(
-                  'Work Completion Date',
-                  fontWeight: FontWeight.w700,
-                  color: AppTheme.getColor(context).onSurface,
-                  fontSize: 18*Responsive.getResponsiveText(context),
-                ),
-                CustomText(
-                  '22nd May 2025',
-                  color: AppTheme.getColor(context).outline,
-                  fontWeight: FontWeight.w500,
-                ),
-              ],
-            ),
-          ],
-        ),
-        Divider(color: AppTheme.getColor(context).secondary),
+  Widget build(BuildContext context) {
+    final List<Map<String, String>> commonRowData = [
+      {'title': 'Work Category', 'value': 'AI Tools'},
+      {'title': 'Project', 'value': 'Abc'},
+      {'title': 'Location', 'value': 'Abc'},
+      {'title': 'Site', 'value': 'Abc'},
+      {'title': 'HOD Remark', 'value': 'Abc'},
+      {'title': 'Created Date & Time', 'value': '12 May 2025 , 10:00 AM'},
+    ];
+    return BorderContainerWraper(
+      borderRadius: 14 * Responsive.getResponsive(context),
+      borderColor: AppTheme.getColor(context).outline,
+      padding: EdgeInsets.only(
+        top: 16 * Responsive.getResponsive(context),
+        bottom: 21 * Responsive.getResponsive(context),
+        left: 12 * Responsive.getResponsive(context),
+        right: 12 * Responsive.getResponsive(context),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Work Start and Completion Date
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomText(
+                    'Work Start Date',
+                    fontWeight: FontWeight.w700,
+                    color: AppTheme.getColor(context).onSurface,
+                    fontSize: 18 * Responsive.getResponsiveText(context),
+                  ),
+                  CustomText(
+                    '21 st May 2025',
+                    color: AppTheme.getColor(context).outline,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 17 * Responsive.getResponsiveText(context),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CustomText(
+                    'Work Completion Date',
+                    fontWeight: FontWeight.w700,
+                    color: AppTheme.getColor(context).onSurface,
+                    fontSize: 18 * Responsive.getResponsiveText(context),
+                  ),
+                  CustomText(
+                    '22nd May 2025',
+                    color: AppTheme.getColor(context).outline,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 17 * Responsive.getResponsiveText(context),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Divider(
+            color: AppTheme.getColor(context).secondary,
+            thickness: 1 * Responsive.getResponsive(context),
+          ),
 
-        // Work-related details using reusable CommonRow
-        CommonRow(
-          title: 'Work Category',
-          value: 'AI Tools',
-          textColor: AppTheme.getColor(context).outline,
-        ),
-        CommonRow(
-          title: 'Project',
-          value: 'Abc',
-          textColor: AppTheme.getColor(context).outline,
-        ),
-        CommonRow(
-          title: 'Location',
-          value: 'Abc',
-          textColor: AppTheme.getColor(context).outline,
-        ),
-        CommonRow(
-          title: 'Site',
-          value: 'Abc',
-          textColor: AppTheme.getColor(context).outline,
-        ),
-        CommonRow(
-          title: 'HOD Remark',
-          value: 'Abc',
-          textColor: AppTheme.getColor(context).outline,
-        ),
-        CommonRow(
-          title: 'Created Date & Time',
-          value: '12 May 2025 , 10:00 AM',
-          textColor: AppTheme.getColor(context).outline,
-        ),
-      ],
-    ),
-  );
+          // Work-related details using reusable CommonRow
+          ...commonRowData.map(
+            (item) => CommonRow(
+              title: item['title'].toString(),
+              value: item['value'].toString(),
+              textColor: AppTheme.getColor(context).outline,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

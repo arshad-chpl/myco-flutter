@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widget/work_detail_card.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
@@ -10,7 +9,7 @@ import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart'
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_vertical_stepper.dart';
 
-// DetailPage to show work allocation details
+// Page to show work allocation details assigned to an employee.
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
 
@@ -27,6 +26,7 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    // Custom app bar with dynamic font scaling
     appBar: CustomAppbar(
       title: 'Work Allocation',
       titleFontWeight: FontWeight.w700,
@@ -40,50 +40,57 @@ class _DetailPageState extends State<DetailPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
 
-          // Card displaying assignee details
+          // Card to show assignee info (name, image, role)
           children: [
             //common card widget to show Assign tasks
             CommonCard(
-              headerPadding: EdgeInsets.all(
-                0.03 * Responsive.getWidth(context),
+              headerPadding: EdgeInsets.only(
+                top: 14 * Responsive.getResponsive(context),
+                bottom: 14 * Responsive.getResponsive(context),
+                left: 20 * Responsive.getResponsive(context),
               ),
               title: 'Assign To',
-
               bottomWidget: Padding(
-                padding: EdgeInsets.all(0.04 * Responsive.getWidth(context)),
+                padding: EdgeInsets.only(
+                  top: 17 * Responsive.getResponsive(context),
+                  bottom: 14 * Responsive.getResponsive(context),
+                  left: 16 * Responsive.getResponsive(context),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        // User image
-                        const Image(
-                          width: 90,
-                          height: 90,
-                          image: AssetImage(AppAssets.personProfileImage),
+                        // Assignee profile image
+                        Image(
+                          width: 75 * Responsive.getResponsive(context),
+                          height: 75 * Responsive.getResponsive(context),
+                          image: const AssetImage(AppAssets.personProfileImage),
                         ),
 
-                        SizedBox(width: 0.05 * Responsive.getWidth(context)),
+                        SizedBox(width: 0.03 * Responsive.getWidth(context)),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Name of the user
+                            // Name, role, and location
                             CustomText(
                               'Mukund Madhav',
+                              fontSize: 16 * Responsive.getResponsive(context),
                               fontWeight: FontWeight.w600,
                               color: AppTheme.getColor(
                                 context,
                               ).onSurfaceVariant,
                             ),
 
-                            // User role and location
                             CustomText(
                               'QA',
+                              fontSize: 14 * Responsive.getResponsive(context),
                               color: AppTheme.getColor(context).outline,
                               fontWeight: FontWeight.w500,
                             ),
                             CustomText(
                               'QA Technical - Junagadh',
+                              fontSize: 14 * Responsive.getResponsive(context),
                               fontWeight: FontWeight.w500,
                               color: AppTheme.getColor(context).outline,
                             ),
@@ -98,23 +105,28 @@ class _DetailPageState extends State<DetailPage> {
 
             SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
-            //widget for work detailed info
+            // Card to show detailed work information
             const WorkDetailCard(),
 
-            SizedBox(height: 0.03 * Responsive.getHeight(context)),
+            SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
-            //vertical custom stepper for task approval
+            // Vertical stepper to show task progress (Pending > Approved > Completed > Authorized)
             CustomVerticalStepper(
               steps: [
+                // Step 1 - PENDING
                 StepData(
                   title: 'PENDING',
                   status: StepStatus.pending,
                   isStepIconShow: false,
                 ),
 
+                // Step 2 - APPROVED
                 StepData(title: 'APPROVED', status: StepStatus.completed),
 
+                // Step 3 - COMPLETED with additional info
                 StepData(
+                  subTitleFontWeight: FontWeight.w600,
+                  subTitleFontSize: 12 * Responsive.getResponsiveText(context),
                   title: 'COMPLETED',
                   status: StepStatus.completed,
                   details: [
@@ -123,6 +135,7 @@ class _DetailPageState extends State<DetailPage> {
                   ],
                 ),
 
+                // Step 4 - AUTHORIZED (yet to be completed)
                 StepData(
                   title: 'AUTHORIZED',
                   status: StepStatus.inActive,
@@ -133,7 +146,7 @@ class _DetailPageState extends State<DetailPage> {
 
             SizedBox(height: 0.03 * Responsive.getHeight(context)),
 
-            //  button label Authorize Work
+            // Button to authorize the work (action pending implementation)
             MyCoButton(
               textStyle: TextStyle(
                 color: AppTheme.getColor(context).surfaceBright,
