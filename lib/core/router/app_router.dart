@@ -10,6 +10,7 @@ import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
+import 'package:myco_flutter/features/appointments/presentation/pages/appointments_page.dart';
 import 'package:myco_flutter/features/asset/bloc/assets_bloc.dart';
 import 'package:myco_flutter/features/asset/view/add_assets.dart';
 import 'package:myco_flutter/features/asset/view/assets_details_page.dart';
@@ -444,6 +445,11 @@ class AppRouter {
         name: 'swap-assets',
         builder: (context, state) => const SwapAssetsPage(),
       ),
+      // GoRoute(
+      //     path: RoutePaths.appointments,
+      //     name: 'appointments',
+      //   builder: (context, state) => const AppointmentsPage(),
+      // )
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,
