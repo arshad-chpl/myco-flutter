@@ -29,6 +29,7 @@ class WorkDetailCard extends StatelessWidget {
                   'Work Start Date',
                   fontWeight: FontWeight.w700,
                   color: AppTheme.getColor(context).onSurface,
+                  fontSize: 18*Responsive.getResponsiveText(context),
                 ),
                 CustomText(
                   '21 st May 2025',
@@ -44,6 +45,7 @@ class WorkDetailCard extends StatelessWidget {
                   'Work Completion Date',
                   fontWeight: FontWeight.w700,
                   color: AppTheme.getColor(context).onSurface,
+                  fontSize: 18*Responsive.getResponsiveText(context),
                 ),
                 CustomText(
                   '22nd May 2025',
