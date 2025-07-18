@@ -134,5 +134,5 @@ class RoutePaths {
   static const String swapAssets = '/swap-assets';
 
   // === Appointments ===
-  static const String appointments = 'appointments';
+  static const String appointments = '/appointments';
 }

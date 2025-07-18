@@ -111,7 +111,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths.appointments, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -238,14 +238,14 @@ class AppRouter {
         name: '/my_team_leaves_screen',
         builder: (context, state) => const MyTeamLeavesScreen(),
       ),
-      GoRoute(
-        path: RoutePaths.addShortLeaveScreen,
-        name: RoutePaths.addShortLeaveScreen,
-        builder: (context, state) => BlocProvider<LeaveBloc>(
-          create: (_) => GetIt.I<LeaveBloc>(),
-          child: const AddShortLeaveScreen(),
-        ),
-      ),
+      // GoRoute(
+      //   path: RoutePaths.addShortLeaveScreen,
+      //   name: RoutePaths.addShortLeaveScreen,
+      //   builder: (context, state) => BlocProvider<LeaveBloc>(
+      //     create: (_) => GetIt.I<LeaveBloc>(),
+      //     child: const AddShortLeaveScreen(),
+      //   ),
+      // ),
       GoRoute(
         path: RoutePaths.addLeaveScreen,
         name: '/add_leave_screen',
@@ -406,6 +406,12 @@ class AppRouter {
       ),
 
       GoRoute(
+          path: RoutePaths.appointments,
+        name: RoutePaths.appointments,
+        builder: (context, state) => const AppointmentsPage(),
+      ),
+
+      GoRoute(
         path: RoutePaths.qrScanner,
         name: 'qr-scanner',
         builder: (context, state) => const QRScannerPage(),
@@ -445,11 +451,6 @@ class AppRouter {
         name: 'swap-assets',
         builder: (context, state) => const SwapAssetsPage(),
       ),
-      // GoRoute(
-      //     path: RoutePaths.appointments,
-      //     name: 'appointments',
-      //   builder: (context, state) => const AppointmentsPage(),
-      // )
       // Add all modular routes here
       // ...authRoutes,
       // ...homeRoutes,
