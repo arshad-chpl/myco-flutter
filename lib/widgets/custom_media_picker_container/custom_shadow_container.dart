@@ -15,7 +15,11 @@ class CustomShadowContainer extends StatelessWidget {
   final double? borderRadius;
   final TextAlign? textAlign;
 
-  CustomShadowContainer({
+  // highlight text
+  final String? highlight;
+  final bool? isHighlightOn;
+
+  const CustomShadowContainer({
     required this.image,
     required this.title,
     super.key,
@@ -25,6 +29,8 @@ class CustomShadowContainer extends StatelessWidget {
     this.borderRadius,
     this.containerHeight,
     this.textAlign,
+    this.highlight,
+    this.isHighlightOn,
   });
 
   @override
@@ -98,6 +104,8 @@ class CustomShadowContainer extends StatelessWidget {
             textAlign: textAlign,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
+            highlightText: highlight, // highlighted text
+            isHighlight: isHighlightOn ?? false, // flag for highlight
           ),
         ),
       ],

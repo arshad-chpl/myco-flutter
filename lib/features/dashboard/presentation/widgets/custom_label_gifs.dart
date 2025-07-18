@@ -20,6 +20,10 @@ class CustomLabelGifs extends StatelessWidget {
   final double? clipBorderRadiusFactor;
   final double? gifHeightFactor;
 
+  // highlight for text
+  final String? highlight;
+  final bool? isHighlightOn;
+
   const CustomLabelGifs({
     super.key,
     required this.title,
@@ -33,6 +37,8 @@ class CustomLabelGifs extends StatelessWidget {
     this.border,
     this.clipBorderRadiusFactor,
     this.gifHeightFactor,
+    this.highlight,
+    this.isHighlightOn,
   });
 
   @override
@@ -59,6 +65,9 @@ class CustomLabelGifs extends StatelessWidget {
             color: AppTheme.getColor(context).onPrimary,
             fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.bold,
+            highlightText: highlight, // highlighted text
+            isHighlight: isHighlightOn ?? false, // flag for highlight
+            
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(

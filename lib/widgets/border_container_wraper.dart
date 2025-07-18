@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
+import 'package:myco_flutter/widgets/custom_inner_outer_shadow.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 /// A customizable container widget with optional border, shadow, padding,
@@ -80,27 +81,49 @@ class BorderContainerWraper extends StatelessWidget {
         Positioned(
           top: 0,
           right: 1,
-          child: Container(
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              color: AppTheme.getColor(context).secondary,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(borderRadius ?? 0),
-                bottomLeft: Radius.circular(
-                  16 * Responsive.getResponsive(context),
+          child: CustomInnerOuterShadow(
+            innerShadows: [
+              Shadow(
+                color: Util.applyOpacity(
+                  AppTheme.getColor(context).shadow,
+                  0.25,
+                ),
+                blurRadius: 3.61,
+                offset: const Offset(0, -2.71),
+              ),
+            ],
+            outerShadows: [
+              BoxShadow(
+                color: Util.applyOpacity(
+                  AppTheme.getColor(context).secondary,
+                  0.10,
+                ),
+                blurRadius: 1.26,
+                offset: const Offset(0, 0.9),
+              ),
+            ],
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: AppTheme.getColor(context).secondary,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(borderRadius ?? 0),
+                  bottomLeft: Radius.circular(
+                    16 * Responsive.getResponsive(context),
+                  ),
                 ),
               ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 2.0 * Responsive.getResponsive(context),
-              ),
-              child: CustomText(
-                notificationCount.toString(),
-                color: AppTheme.getColor(context).surface,
-                fontSize: 10 * Responsive.getResponsiveText(context),
-                fontWeight: FontWeight.w600,
-                textAlign: TextAlign.center,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 2.0 * Responsive.getResponsive(context),
+                ),
+                child: CustomText(
+                  notificationCount.toString(),
+                  color: AppTheme.getColor(context).surface,
+                  fontSize: 10 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w600,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),

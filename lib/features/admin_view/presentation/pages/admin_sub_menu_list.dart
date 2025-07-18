@@ -65,7 +65,7 @@ class AdminSubMenuList extends StatelessWidget {
               notificationCount: notificationCount! > 9
                   ? '9+'
                   : notificationCount.toString(),
-              isNotificationBadge: notificationCount! > 0, // Show badge if > 0
+              isNotificationBadge: notificationCount > 0, // Show badge if > 0
               padding: const EdgeInsets.all(14.5),
               borderRadius: 12,
               // backgroundColor: AppTheme.getColor(context).,
@@ -88,6 +88,8 @@ class AdminSubMenuList extends StatelessWidget {
                 // Title
                 title: subMenu?.accessType ?? '',
                 textAlign: TextAlign.center,
+                highlight: searchQuery, 
+                isHighlightOn: searchQuery.isNotEmpty,
               ),
             ),
           );

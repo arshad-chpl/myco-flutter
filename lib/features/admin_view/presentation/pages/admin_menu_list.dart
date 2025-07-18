@@ -123,6 +123,8 @@ class AdminMenuList extends StatelessWidget {
               CustomLabelGifs(
                 gifAssetPath: AppAssets.quickAccessGif,
                 title: category?.accessType ?? '',
+                highlight: searchQuery,  // on search it highlight
+                isHighlightOn: searchQuery.isNotEmpty, // flag for highlight
               ),
 
               // Divider between header and sub-menus.
