@@ -222,8 +222,9 @@ class _AddShortLeaveScreenState extends State<AddShortLeaveScreen> {
           );
         }
       },
-      title: 'SUBMIT',
+      title: 'ADD',
       height: 0.065 * Responsive.getHeight(context),
+      width: 0.65  * Responsive.getWidth(context),
       boarderRadius: 30,
       textStyle: TextStyle(
         fontSize: 16,
