@@ -32,7 +32,6 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
       return GestureDetector(
         onTap: retry,
         child: Align(
-          alignment: Alignment.center,
           child: Icon(
             Icons.refresh,
             color: AppColors.white,
@@ -48,7 +47,7 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
     if (scanningState == 'success') {
       return Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.all(8 * Responsive.getResponsive(context)),
         color: AppColors.spanishYellow,
         child: CustomText(
           'Face Scan',
@@ -60,10 +59,11 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
     } else if (scanningState == 'failure') {
       return Container(
         width: double.infinity,
-        padding: const EdgeInsets.all(8),
+        padding: EdgeInsets.all(8 * Responsive.getResponsive(context)),
         color: AppTheme.getColor(context).error,
         child: CustomText(
-          'Failed to match current face with your registered face',
+          'failed_to_match_current_face',
+          isKey: true,
           fontSize: 14 * Responsive.getResponsiveText(context),
           color: AppTheme.getColor(context).onPrimary,
           fontWeight: FontWeight.w700,
@@ -87,7 +87,9 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
               right: 0,
               child: Container(
                 height: 0.003 * Responsive.getHeight(context),
-                margin: const EdgeInsets.symmetric(horizontal: 40),
+                margin: EdgeInsets.symmetric(
+                  horizontal: 40 * Responsive.getResponsive(context),
+                ),
                 color: AppTheme.getColor(context).primary,
               ),
             ),
@@ -97,7 +99,9 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
               right: 0,
               child: Container(
                 height: 0.003 * Responsive.getHeight(context),
-                margin: const EdgeInsets.symmetric(horizontal: 40),
+                margin: EdgeInsets.symmetric(
+                  horizontal: 40 * Responsive.getResponsive(context),
+                ),
                 color: AppTheme.getColor(context).primary,
               ),
             ),
@@ -109,22 +113,26 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
     return Stack(
       children: [
         Positioned(
-          top: 40,
+          top: 40 * Responsive.getResponsive(context),
           left: 0,
           right: 0,
           child: Container(
             height: 0.003 * Responsive.getHeight(context),
-            margin: const EdgeInsets.symmetric(horizontal: 40),
+            margin: EdgeInsets.symmetric(
+              horizontal: 40 * Responsive.getResponsive(context),
+            ),
             color: AppTheme.getColor(context).primary,
           ),
         ),
         Positioned(
-          top: 180,
+          top: 230 * Responsive.getResponsive(context),
           left: 0,
           right: 0,
           child: Container(
             height: 0.003 * Responsive.getHeight(context),
-            margin: const EdgeInsets.symmetric(horizontal: 40),
+            margin: EdgeInsets.symmetric(
+              horizontal: 40 * Responsive.getResponsive(context),
+            ),
             color: AppTheme.getColor(context).primary,
           ),
         ),
@@ -134,17 +142,21 @@ class CustomFaceDetectionWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    height: 0.30 * Responsive.getHeight(context),
-    width: double.infinity,
+    height: 0.32 * Responsive.getHeight(context),
+    width: double.infinity * Responsive.getResponsiveOnWidth(context),
     decoration: BoxDecoration(
       border: Border.all(
         color: getBorderColor(context),
         width: 13 * Responsive.getResponsiveOnWidth(context),
       ),
-      borderRadius: BorderRadius.circular(27),
+      borderRadius: BorderRadius.circular(
+        27 * Responsive.getResponsive(context),
+      ),
     ),
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(21),
+      borderRadius: BorderRadius.circular(
+        19 * Responsive.getResponsive(context),
+      ),
       child: Stack(
         fit: StackFit.expand,
         children: [

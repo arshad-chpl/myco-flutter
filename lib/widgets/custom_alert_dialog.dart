@@ -149,44 +149,62 @@ class CustomAlertDialog extends StatelessWidget {
           const SizedBox(height: 20),
 
           // Confirm and Cancel buttons
-          if ((!hideCancelButton && _isNotEmpty(cancelText)) ||
-              (!hideConfirmButton && _isNotEmpty(confirmText)))
+          // Single or double button layout
+          if ((!hideCancelButton && _isNotEmpty(cancelText)) &&
+              (!hideConfirmButton && _isNotEmpty(confirmText))) ...[
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (!hideCancelButton && _isNotEmpty(cancelText))
-                  Expanded(
-                    child: MyCoButton(
-                      title: cancelText!,
-                      height: Responsive.getHeight(context) * .05,
-                      boarderRadius: 30 * Responsive.getResponsive(context),
-                      width: Responsive.getWidth(context) * .450,
-                      backgroundColor: AppColors.white,
-                      border: Border.all(
-                        color: AppTheme.getColor(context).primary,
-                      ),
-                      textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(context),
-                      onTap: onCancel ?? () => Navigator.of(context).pop(),
+                Expanded(
+                  child: MyCoButton(
+                    title: cancelText!,
+                    height: Responsive.getHeight(context) * .05,
+                    boarderRadius: 30 * Responsive.getResponsive(context),
+                    width: Responsive.getWidth(context) * .450,
+                    backgroundColor: AppColors.white,
+                    border: Border.all(
+                      color: AppTheme.getColor(context).primary,
                     ),
+                    textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(context),
+                    onTap: onCancel ?? () => Navigator.of(context).pop(),
                   ),
-                if (!hideCancelButton &&
-                    _isNotEmpty(cancelText) &&
-                    !hideConfirmButton &&
-                    _isNotEmpty(confirmText))
-                  const SizedBox(width: 8),
-                if (!hideConfirmButton && _isNotEmpty(confirmText))
-                  Expanded(
-                    child: MyCoButton(
-                      title: confirmText!,
-                      height: Responsive.getHeight(context) * .05,
-                      isShadowBottomLeft: true,
-                      boarderRadius: 30,
-                      width: Responsive.getWidth(context) * .450,
-                      onTap: onConfirm ?? () => Navigator.of(context).pop(),
-                    ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: MyCoButton(
+                    title: confirmText!,
+                    height: Responsive.getHeight(context) * .05,
+                    isShadowBottomLeft: true,
+                    boarderRadius: 30,
+                    width: Responsive.getWidth(context) * .450,
+                    onTap: onConfirm ?? () => Navigator.of(context).pop(),
                   ),
+                ),
               ],
+            )
+          ] else if (!hideCancelButton && _isNotEmpty(cancelText)) ...[
+            MyCoButton(
+              title: cancelText!,
+              height: Responsive.getHeight(context) * .05,
+              boarderRadius: 30 * Responsive.getResponsive(context),
+              width: double.infinity,
+              backgroundColor: AppColors.white,
+              border: Border.all(
+                color: AppTheme.getColor(context).primary,
+              ),
+              textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(context),
+              onTap: onCancel ?? () => Navigator.of(context).pop(),
             ),
+          ] else if (!hideConfirmButton && _isNotEmpty(confirmText)) ...[
+            MyCoButton(
+              title: confirmText!,
+              height: Responsive.getHeight(context) * .05,
+              isShadowBottomLeft: true,
+              boarderRadius: 30,
+              width: double.infinity,
+              onTap: onConfirm ?? () => Navigator.of(context).pop(),
+            ),
+          ],
 
           // Neutral button (optional third action)
           if (showNeutralButton && _isNotEmpty(neutralText)) ...[

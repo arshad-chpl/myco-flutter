@@ -80,7 +80,7 @@ class LeaveHistoryEntity extends Equatable {
   final String? totalShiftHours;
   final String? productiveWorkingHours;
   final String? leaveRequestedDate;
-  final bool? isExtraDay;
+  final String? isExtraDay;
   final String? attendanceId;
   final String? attendanceDateStart;
   final String? attendanceDateEnd;

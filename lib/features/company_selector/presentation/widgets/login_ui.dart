@@ -26,7 +26,7 @@ class LoginUi extends StatelessWidget {
   final Function(String?, int) onCountryChanged;
   final TextEditingController phoneController;
   final TextEditingController emailController;
-  final bool isChecked;
+  final ValueNotifier<bool> isChecked;
   final Function(bool) onCheckChanged;
   final SocietyModel? selectedCompany;
 
@@ -163,7 +163,8 @@ class LoginUi extends StatelessWidget {
             const SizedBox(height: 20),
             MyCoButton(
               onTap: () {
-                final isEmailLogin = selectedCompany!.loginVia != null &&
+                final isEmailLogin =
+                    selectedCompany!.loginVia != null &&
                     selectedCompany!.loginVia == '1';
                 final contactInfo = isEmailLogin
                     ? emailController.text
@@ -173,7 +174,9 @@ class LoginUi extends StatelessWidget {
                   final String text = isEmailLogin
                       ? 'Please enter your Email Address'
                       : 'Please enter your Phone Number';
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(text)));
                   return;
                 }
 
@@ -187,10 +190,12 @@ class LoginUi extends StatelessWidget {
                 }
 
                 // Validate checkbox
-                if (!isChecked) {
+                if (!isChecked.value) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Please agree to the terms and conditions to continue.'),
+                      content: Text(
+                        'Please agree to the terms and conditions to continue.',
+                      ),
                     ),
                   );
                   return;
@@ -202,7 +207,8 @@ class LoginUi extends StatelessWidget {
                   otpType: selectedCompany?.loginVia == '1' ? '2' : '0',
                   userMobile: contactInfo,
                   isFirebase: true,
-                  userMacAddress: '', // Replace with actual MAC logic if needed
+                  userMacAddress: '',
+                  // Todo Replace with actual MAC logic if needed
                   loginVia: selectedCompany?.loginVia ?? '1',
                   languageId: '1',
                 );
@@ -288,15 +294,18 @@ class LoginUi extends StatelessWidget {
 
   Widget _buildPolicyAgreement(BuildContext context) => Row(
     children: [
-      CustomCheckbox(
-        value: isChecked,
-        onChanged: onCheckChanged,
-        borderColor: isChecked ? AppColors.primary : Colors.grey,
-        activeColor: AppTheme.getColor(context).primaryContainer,
-        checkColor: AppTheme.getColor(context).primary,
-        height: 0.026 * Responsive.getHeight(context),
-        width: 0.056 * Responsive.getWidth(context),
-        unCheckedBackground: AppTheme.getColor(context).primaryContainer,
+      ValueListenableBuilder<bool>(
+        valueListenable: isChecked,
+        builder: (context, value, _) => CustomCheckbox(
+          value: value,
+          onChanged: onCheckChanged,
+          borderColor: value ? AppColors.primary : Colors.grey,
+          activeColor: AppTheme.getColor(context).primaryContainer,
+          checkColor: AppTheme.getColor(context).primary,
+          height: 0.026 * Responsive.getHeight(context),
+          width: 0.056 * Responsive.getWidth(context),
+          unCheckedBackground: AppTheme.getColor(context).primaryContainer,
+        ),
       ),
       SizedBox(width: 0.015 * Responsive.getWidth(context)),
       Expanded(

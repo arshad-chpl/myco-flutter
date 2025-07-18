@@ -10,8 +10,8 @@ import 'package:myco_flutter/widgets/custom_shadow_container.dart';
 class QuickActionSection extends StatelessWidget {
   QuickActionSection({super.key});
 
-  List quickAccessOptions = ["Employee","Leave","Assets","Take Order","Lost and Found","Sales","Visits","CRM","Documents","Attendance","Work Allocation","IdeaBox"];
-  List quickAccessOptionsNavigation = ["/employees","/leave","/assets-home","/take-order","/lost-and-found","","/my-visit","","","","",RoutePaths.adminView];
+  List quickAccessOptions = ["Employee","Leave","Assets","Take Order","Lost and Found","Sales","Visits","CRM","Documents","Attendance","Work Allocation","IdeaBox","Company Info","Holiday"];
+  List quickAccessOptionsNavigation = ["/employees","/leave","/assets-home","/take-order","/lost-and-found","","/my-visit","","","","",RoutePaths.adminView, RoutePaths.companyInfo,RoutePaths.holiday];
 
   @override
   Widget build(BuildContext context) => CustomSection(
@@ -36,7 +36,7 @@ class QuickActionSection extends StatelessWidget {
                       mainAxisSpacing: 16,
                       childAspectRatio: 0.78, // Adjust for container shape
                     ),
-                    itemCount: 12,
+                    itemCount: 14,
                     itemBuilder: (context, index) => InkWell(
                       onTap: () {
                         if(quickAccessOptionsNavigation[index].toString().isNotEmpty) {

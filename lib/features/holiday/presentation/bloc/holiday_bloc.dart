@@ -42,7 +42,7 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayState> {
 
     result.fold(
           (failure) => emit(HolidayError(failure.message ?? 'Apply failed')),
-          (_) => emit(HolidayApplied()),
+          (response) => emit(HolidayApplied()),
     );
   }
 

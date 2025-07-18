@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:myco_flutter/core/models/common_response.dart';
+import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
 import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
 import 'package:myco_flutter/features/leave/model/my_team_response_model.dart';
 
@@ -24,6 +26,27 @@ class TeamLeaveListFetched extends LeaveState {
   const TeamLeaveListFetched(this.teamLeaveList);
   @override
   List<Object> get props => [teamLeaveList];
+}
+
+class LeaveHistoryNewFetched extends LeaveState {
+  final LeaveHistoryResponseEntity newLeaveList;
+  const LeaveHistoryNewFetched(this.newLeaveList);
+  @override
+  List<Object> get props => [newLeaveList];
+}
+
+class ShortLeaveAdded extends LeaveState {
+  final CommonResponse commonResponse;
+  const ShortLeaveAdded(this.commonResponse);
+  @override
+  List<Object> get props => [commonResponse];
+}
+
+class ShortLeaveDeleted extends LeaveState {
+  final CommonResponse commonResponse;
+  const ShortLeaveDeleted(this.commonResponse);
+  @override
+  List<Object> get props => [commonResponse];
 }
 
 class LeaveError extends LeaveState {

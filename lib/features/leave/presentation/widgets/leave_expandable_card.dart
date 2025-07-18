@@ -65,7 +65,7 @@ class _LeaveExpandableCardState extends State<LeaveExpandableCard> {
         children: [
           // Header
           ClipRRect(
-            borderRadius: BorderRadius.circular(_expanded ? 0 : radius),
+            borderRadius: BorderRadius.circular(0),
             child: Container(
               height:
               widget.headerHeight ?? 0.06 * Responsive.getHeight(context),
