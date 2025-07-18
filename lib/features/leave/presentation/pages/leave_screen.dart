@@ -9,6 +9,7 @@ import 'package:myco_flutter/features/leave/domain/intities/leave_history_respon
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/leave_skeloton/short_leave_card_skeleton.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/custom_fab_menu.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_action_button.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_card.dart';
@@ -87,6 +88,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
       isKey: true,
       title: 'leave_balance',
       centerTitle: true,
+
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -124,114 +126,123 @@ class _LeaveScreenState extends State<LeaveScreen> {
         }
       },
       builder: (context, state) {
-        // if (isLoading) {
-        //   return const Center();
-        // }
-
         final filteredLeaves = _filterLeaves(leaveHistoryList);
 
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Column(
-              children: [
-                MonthYearHeader(
-                  startYear: 2025,
-                  endYear: 2026,
-                  iconSize: 0.02 * Responsive.getHeight(context),
-                  onChanged: (month, year) {
-                    setState(() {
-                      selectedMonth = month;
-                      selectedYear = year;
-                    });
-                    _fetchLeaveHistory();
-                  },
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    LeaveActionButton(
-                      title: 'My Leave Balance',
-                      onTap: () => context.go(RoutePaths.leaveBalance),
-                    ),
-                    if (isTeamLeave)
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 16),
+              child: Column(
+                children: [
+                  MonthYearHeader(
+                    startYear: 2025,
+                    endYear: 2026,
+                    iconSize: 0.02 * Responsive.getHeight(context),
+                    onChanged: (month, year) {
+                      setState(() {
+                        selectedMonth = month;
+                        selectedYear = year;
+                      });
+                      _fetchLeaveHistory();
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       LeaveActionButton(
-                        title: 'My Team Leaves',
-                        onTap: () => context.go(RoutePaths.teamLeaveBalance),
+                        title: 'My Leave Balance',
+                        onTap: () => context.go(RoutePaths.leaveBalance),
                       ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-
-                if (filteredLeaves.isEmpty)
-                  const Center(child: Text('No leaves found')),
-                if (isLoading) const Center(child: CircularProgressIndicator()),
-                ...filteredLeaves.map((leave) {
-                  if (leave.sandwichLeave == false &&
-                      leave.shortLeave == true) {
-                    return ShortLeaveCard(
-                      leave: _convertToShortLeaveEntry(leave),
-                      onDelete:
-                          ({
-                            required fullName,
-                            required sandwichLeaveId,
-                            required userId,
-                            required leaveDate,
-                          }) {
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              builder: (context) => Padding(
-                                padding: EdgeInsets.only(
-                                  bottom: MediaQuery.of(
-                                    context,
-                                  ).viewInsets.bottom,
-                                ),
-                                // to avoid keyboard overlap if needed
-                                child: CustomAlertDialog(
-                                  alertType: AlertType.delete,
-                                  content: 'do you want delete',
-                                  confirmText: 'Ok',
-                                  cancelText: 'Cancel',
-                                  onCancel: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  onConfirm: () {
-                                    _deleteShortLeave(
-                                      sandwichLeaveId ?? '',
-                                      leaveDate ?? '',
-                                      userId ?? '',
-                                      fullName ?? '',
-                                    );
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                    );
-                  } else if (leave.sandwichLeave == true &&
-                      leave.shortLeave == false) {
-                    return SandwichLeaveCard(
-                      leave: _convertToSandwichLeaveEntry(leave),
-                    );
-                  } else {
-                    return LeaveCard(
-                      leave: _convertToLeaveEntry(leave),
-                      onDelete: ({leaveId}) {
-                        // Call delete api
-                      },
-                    );
-                  }
-                }),
-              ],
+                      if (isTeamLeave)
+                        LeaveActionButton(
+                          title: 'My Team Leaves',
+                          onTap: () => context.go(RoutePaths.teamLeaveBalance),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
+            Expanded(
+              child: isLoading
+                  ? ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      itemCount: 3,
+                      itemBuilder: (_, __) => const ShortLeaveCardSkeleton(),
+                    )
+                  : filteredLeaves.isEmpty
+                  ? const Center(child: Text("No leaves found"))
+                  : ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      itemCount: filteredLeaves.length,
+                      itemBuilder: (context, index) {
+                        final leave = filteredLeaves[index];
+
+                        if (leave.sandwichLeave == false &&
+                            leave.shortLeave == true) {
+                          return ShortLeaveCard(
+                            leave: _convertToShortLeaveEntry(leave),
+                            onDelete:
+                                ({
+                                  required fullName,
+                                  required sandwichLeaveId,
+                                  required userId,
+                                  required leaveDate,
+                                }) {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    builder: (context) => Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom: MediaQuery.of(
+                                          context,
+                                        ).viewInsets.bottom,
+                                      ),
+                                      child: CustomAlertDialog(
+                                        alertType: AlertType.delete,
+                                        content: 'Do you want to delete?',
+                                        confirmText: 'Ok',
+                                        cancelText: 'Cancel',
+                                        onCancel: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        onConfirm: () {
+                                          _deleteShortLeave(
+                                            sandwichLeaveId ?? '',
+                                            leaveDate ?? '',
+                                            userId ?? '',
+                                            fullName ?? '',
+                                          );
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                },
+                          );
+                        } else if (leave.sandwichLeave == true &&
+                            leave.shortLeave == false) {
+                          return SandwichLeaveCard(
+                            leave: _convertToSandwichLeaveEntry(leave),
+                          );
+                        } else {
+                          return LeaveCard(
+                            leave: _convertToLeaveEntry(leave),
+                            onDelete: ({leaveId}) {
+                              // TODO: Implement regular leave delete if needed
+                            },
+                          );
+                        }
+                      },
+                    ),
+            ),
+          ],
         );
       },
     ),
+
     floatingActionButton: CustomFabMenu(
       buttons: [
         FabButtonModel(
