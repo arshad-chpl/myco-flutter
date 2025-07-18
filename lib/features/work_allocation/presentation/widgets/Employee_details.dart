@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widgets/employee_card.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widgets/label_with_star.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class Employee {
   final String name;
@@ -18,167 +23,240 @@ class AssignEngineerField extends StatefulWidget {
 }
 
 class _AssignEngineerFieldState extends State<AssignEngineerField> {
-  final TextEditingController _controller = TextEditingController();
-  List<Employee> _filteredList = [];
-  Employee? _selectedEmployee;
-  bool _showList = false;
+  final TextEditingController controller = TextEditingController();
+  final LayerLink layerLink = LayerLink();
+  final GlobalKey textFieldKey = GlobalKey();
+  bool showList = false;
+
+  List<Employee> filteredList = [];
+  Employee? selectedEmployee;
+  OverlayEntry? overlayEntry;
 
   @override
   void initState() {
     super.initState();
-    _controller.addListener(_filterList);
+    controller.addListener(filterList);
   }
 
-  void _filterList() {
-    final query = _controller.text.toLowerCase();
+  void filterList() {
+    final query = controller.text.trim().toLowerCase();
+
     if (query.isEmpty) {
-      setState(() => _showList = false);
+      removeOverlay();
+      setState(() {
+        showList = false;
+        filteredList = [];
+      });
       return;
     }
+
+    filteredList = widget.allEmployees
+        .where((e) => e.name.toLowerCase().contains(query))
+        .toList();
+
+    if (filteredList.isEmpty) {
+      removeOverlay();
+      return;
+    }
+
+    setState(() => showList = true);
+    showOverlay();
+  }
+
+  void selectEmployee(Employee emp) {
+    controller.clear();
     setState(() {
-      _filteredList = widget.allEmployees
-          .where((e) => e.name.toLowerCase().contains(query))
-          .toList();
-      _showList = true;
+      selectedEmployee = emp;
+      showList = false;
+    });
+    removeOverlay();
+  }
+
+  void removeSelected() {
+    setState(() {
+      selectedEmployee = null;
     });
   }
 
-  void _selectEmployee(Employee emp) {
-    _controller.clear();
-    setState(() {
-      _selectedEmployee = emp;
-      _showList = false;
-    });
+  void removeOverlay() {
+    overlayEntry?.remove();
+    overlayEntry = null;
   }
 
-  void _removeSelected() {
-    setState(() {
-      _selectedEmployee = null;
-    });
+  void showOverlay() {
+    removeOverlay();
+
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned.fill(
+        child: Padding(
+          padding: EdgeInsets.all(30 * Responsive.getResponsive(context)),
+          child: CompositedTransformFollower(
+            link: layerLink,
+            showWhenUnlinked: false,
+            offset: const Offset(10.0, 94.0),
+            child: Material(
+              child: ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: filteredList.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  final emp = filteredList[index];
+                  return GestureDetector(
+                    onTap: () => selectEmployee(emp),
+                    child: Container(
+                      height: 0.070 * Responsive.getHeight(context),
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 4,
+                        horizontal: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.black),
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1),
+                            blurRadius: 6,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 8),
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(emp.imageUrl),
+                            radius: 18,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomText(
+                                  emp.name,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                      14 *
+                                      Responsive.getResponsiveText(context),
+                                ),
+                                CustomText(
+                                  emp.role.isNotEmpty
+                                      ? emp.role
+                                      : 'No Role Assigned',
+                                  fontSize:
+                                      12 *
+                                      Responsive.getResponsiveText(context),
+                                  color: Colors.grey,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    Overlay.of(context).insert(overlayEntry!);
   }
 
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      const Text(
-        "Assign Work Engineer *",
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      const SizedBox(height: 8),
-      Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade400),
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
-        ),
-        child: Column(
-          children: [
-            TextField(
-              controller: _controller,
-              decoration: InputDecoration(
-                hintText: "Mention Here",
-                border: InputBorder.none,
-                isDense: true,
-                suffixIcon: _controller.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          _controller.clear();
-                          setState(() => _showList = false);
-                        },
-                      )
-                    : null,
-              ),
+  void dispose() {
+    controller.dispose();
+    removeOverlay();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => CompositedTransformTarget(
+    link: layerLink,
+    child: IntrinsicHeight(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          labelWithAsterisk(context, 'Assign Work Engineer'),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey.shade400),
+              borderRadius: BorderRadius.circular(12),
+              color: AppTheme.getColor(context).onPrimary,
             ),
-            if (_showList)
-              Container(
-                constraints: const BoxConstraints(maxHeight: 150),
-                margin: const EdgeInsets.only(top: 4),
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.grey.shade300),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: _filteredList.length,
-                  itemBuilder: (context, index) {
-                    final emp = _filteredList[index];
-                    return ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(emp.imageUrl),
-                      ),
-                      title: Text(emp.name),
-                      subtitle: Text(emp.role),
-                      onTap: () => _selectEmployee(emp),
-                    );
-                  },
-                ),
-              ),
-            if (_selectedEmployee != null)
-              Container(
-                margin: const EdgeInsets.only(top: 12),
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade50,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Stack(
-                  children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundImage: NetworkImage(
-                            _selectedEmployee!.imageUrl,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              _selectedEmployee!.name,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              _selectedEmployee!.role,
-                              style: const TextStyle(color: Colors.grey),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Positioned(
-                      top: -4,
-                      right: -4,
-                      child: GestureDetector(
-                        onTap: _removeSelected,
-                        child: Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.close,
-                            size: 16,
-                            color: Colors.white,
-                          ),
-                        ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  key: textFieldKey,
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: AppTheme.getColor(context).outline,
+                        width: 1.0,
                       ),
                     ),
-                  ],
+                  ),
+                  child: TextField(
+                    controller: controller,
+                    decoration: InputDecoration(
+                      hintText: 'Mention Here',
+                      hintStyle: TextStyle(
+                        fontSize: 14 * Responsive.getResponsiveText(context),
+                        fontWeight: FontWeight.w400,
+                        color: AppTheme.getColor(context).outline,
+                      ),
+                      border: InputBorder.none,
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 14,
+                      ),
+                      // Adds padding for better height
+                      suffixIcon: controller.text.isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(Icons.clear),
+                              onPressed: () {
+                                controller.clear();
+                                removeOverlay();
+                              },
+                            )
+                          : null,
+                    ),
+                  ),
                 ),
-              ),
-          ],
-        ),
+                if (selectedEmployee != null)
+                  SizedBox(
+                    height: 150,
+                    width: 150,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: EmployeeSelectionCard(
+                        name: selectedEmployee?.name ?? 'No emp name',
+                        department: selectedEmployee?.role ?? 'no emp role',
+                        image: const Icon(Icons.person),
+                        isSelected: true,
+                        showDelete: true,
+                        onSelected: (_) => removeSelected(),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ],
       ),
-    ],
+    ),
   );
 }

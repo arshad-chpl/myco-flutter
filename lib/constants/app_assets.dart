@@ -35,8 +35,12 @@ class AppAssets {
   static const String scanQR = '$svgsPath/scanQR.svg';
   static const String refresh = '$svgsPath/refresh.svg';
   static const String arrowDown = '$svgsPath/arrow_down.svg';
+
   static const String element_1 = '$workAllocation/element-1.svg';
   static const String receiptEdittt = '$workAllocation/receiptedittt.svg';
+  static const String monitor = '$workAllocation/monitor.svg';
+  static const String location1 = '$workAllocation/location.svg';
+  static const String msgedit = '$workAllocation/msgedit.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
