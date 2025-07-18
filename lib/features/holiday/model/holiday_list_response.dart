@@ -32,7 +32,7 @@ class Holiday {
   String? optionalHolidayAssignId;
 
   @JsonKey(name: 'society_id')
-  String? societyId;
+  String? companyId;
 
   @JsonKey(name: 'holiday_name')
   String? holidayName;
@@ -100,7 +100,7 @@ class Holiday {
   Holiday({
     this.holidayId,
     this.optionalHolidayAssignId,
-    this.societyId,
+    this.companyId,
     this.holidayName,
     this.holidayDescription,
     this.holidayStartDate,

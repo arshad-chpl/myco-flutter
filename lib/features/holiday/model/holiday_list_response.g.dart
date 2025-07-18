@@ -2,7 +2,8 @@
 
 part of 'holiday_list_response.dart';
 
-// **************************************************************************
+// **************
+// ***********************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
@@ -28,7 +29,7 @@ Map<String, dynamic> _$HolidayListResponseToJson(
 Holiday _$HolidayFromJson(Map<String, dynamic> json) => Holiday(
       holidayId: json['holiday_id'] as String?,
       optionalHolidayAssignId: json['optional_holiday_assign_id'] as String?,
-      societyId: json['society_id'] as String?,
+      companyId: json['society_id'] as String?,
       holidayName: json['holiday_name'] as String?,
       holidayDescription: json['holiday_description'] as String?,
       holidayStartDate: json['holiday_start_date'] == null
@@ -60,7 +61,7 @@ Holiday _$HolidayFromJson(Map<String, dynamic> json) => Holiday(
 Map<String, dynamic> _$HolidayToJson(Holiday instance) => <String, dynamic>{
       'holiday_id': instance.holidayId,
       'optional_holiday_assign_id': instance.optionalHolidayAssignId,
-      'society_id': instance.societyId,
+      'society_id': instance.companyId,
       'holiday_name': instance.holidayName,
       'holiday_description': instance.holidayDescription,
       'holiday_start_date': instance.holidayStartDate?.toIso8601String(),
