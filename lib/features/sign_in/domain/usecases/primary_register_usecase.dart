@@ -13,7 +13,7 @@ class PrimaryRegisterUseCase {
   Future<Either<Failure, CommonResponse>> callAddPrimaryUser(Map<String, dynamic> dataMap) async => await repository.addPrimaryUser(dataMap);
   Future<Either<Failure, ViewPendingProfileResponse>> getViewPendingProfile() async => await repository.getViewPendingProfile();
   Future<Either<Failure, CommonResponse>> getCancelPendingProfile() async => await repository.getCancelPendingProfile();
-  Future<Either<Failure, CommonResponse>> getReminderPendingProfile() async => await repository.getReminderPendingProfile();
-  Future<Either<Failure, CommonResponse>> getSociety() async => await repository.getSociety();
+  Future<Either<Failure, CommonResponse>> getReminderPendingProfile(Map<String, dynamic> dataMap) async => await repository.getReminderPendingProfile(dataMap);
+  Future<Either<Failure, CommonResponse>> getSociety(String societyId) async => await repository.getSociety(societyId);
 
 }

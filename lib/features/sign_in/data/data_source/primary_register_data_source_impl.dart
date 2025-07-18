@@ -33,7 +33,7 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
   Future<ViewPendingProfileResponse> getViewPendingProfile() async {
     final dataMap = {
       'ViewPendingProfile': 'ViewPendingProfile',
-      'user_id': '10', /*preferenceManager.getKeyValueString(VariableBag.registrationRequestPendingUserId),*/
+      'user_id': '1992', /*preferenceManager.getKeyValueString(VariableBag.registrationRequestPendingUserId),*/
       'society_id': '1'
     };
 
@@ -51,7 +51,7 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
   Future<CommonResponse> getCancelPendingProfile() async {
     final dataMap = {
       'CancelPendingProfile': 'CancelPendingProfile',
-      'user_id': preferenceManager.getKeyValueString(VariableBag.registrationRequestPendingUserId),
+      'user_id': '1992', /*preferenceManager.getKeyValueString(VariableBag.registrationRequestPendingUserId),*/
       'society_id': '1'
     };
 
@@ -66,18 +66,7 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
 
 
   @override
-  Future<CommonResponse> getReminderPendingProfile() async {
-    final dataMap = {
-      'ReminderPendingProfile': 'ReminderPendingProfile',
-      'user_id': preferenceManager.getKeyValueString(VariableBag.registrationRequestPendingUserId),
-      'society_id': '1',
-      'block_id': '1',
-      'user_first_name': '',
-      'user_last_name': '',
-      'user_full_name': '',
-      'areaName': '',
-      'blockName': ''
-    };
+  Future<CommonResponse> getReminderPendingProfile(Map<String, dynamic> dataMap) async {
 
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
     final controller = 'resident_register_controller.php';
@@ -90,14 +79,14 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
 
 
   @override
-  Future<CommonResponse> getSociety() async {
+  Future<CommonResponse> getSociety(String societyId) async {
     final dataMap = {
       'getSociety': 'getSociety',
-      'country_id': '0',
-      'state_id': '0',
-      'city_id': '0',
-      'society_id': '1',
-      'company_name': '1',
+      'country_id': '',
+      'state_id': '',
+      'city_id': '',
+      'society_id': societyId,
+      'company_name': '',
       'language_id': ''
     };
 

@@ -27,6 +27,9 @@ class VariableBag {
   static const String userId = 'user_id';
   static const String registrationRequestPendingUserId =
       'registration_request_pending_user_id';
+  static const String REGISTRATION_REQUEST_IS_APPROVE =
+      'registration_request_is_approved';
+  static const String SOCIETY_ID = 'societyId';
   static const String subEnd = 'employeeMobileApi/';
   static const String residentApiEnd = 'residentApiNew/';
   static const String mainKey = 'bmsapikey';

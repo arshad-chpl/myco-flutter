@@ -6,6 +6,6 @@ abstract class PrimaryRegisterDataSource {
   Future<CommonResponse> addPrimaryUser(Map<String, dynamic> dataMap);
   Future<ViewPendingProfileResponse> getViewPendingProfile();
   Future<CommonResponse> getCancelPendingProfile();
-  Future<CommonResponse> getReminderPendingProfile();
-  Future<CommonResponse> getSociety();
+  Future<CommonResponse> getReminderPendingProfile(Map<String, dynamic> dataMap);
+  Future<CommonResponse> getSociety(String societyId);
 }

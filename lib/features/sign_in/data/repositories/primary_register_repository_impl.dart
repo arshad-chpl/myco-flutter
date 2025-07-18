@@ -24,10 +24,10 @@ class PrimaryRegisterRepositoryImpl implements PrimaryRegisterRepository {
   Future<Either<Failure, CommonResponse>> getCancelPendingProfile() async => safeApiCall.execute(remoteDataSource.getCancelPendingProfile);
 
   @override
-  Future<Either<Failure, CommonResponse>> getReminderPendingProfile() async => safeApiCall.execute(remoteDataSource.getReminderPendingProfile);
+  Future<Either<Failure, CommonResponse>> getReminderPendingProfile(Map<String, dynamic> dataMap) async => safeApiCall.execute(() => remoteDataSource.getReminderPendingProfile(dataMap));
 
   @override
-  Future<Either<Failure, CommonResponse>> getSociety() async => safeApiCall.execute(remoteDataSource.getSociety);
+  Future<Either<Failure, CommonResponse>> getSociety(String societyId) async => safeApiCall.execute(() => remoteDataSource.getSociety(societyId));
 
 
 }

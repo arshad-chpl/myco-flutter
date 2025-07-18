@@ -14,7 +14,6 @@ import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/common_api/domain/usecase/common_api_usercase.dart';
 import 'package:myco_flutter/features/common_api/presentation/bloc/common_api_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/features/sign_in/domain/usecases/primary_register_usecase.dart';
@@ -276,6 +275,14 @@ class _SignupFormPageState extends State<SignupFormPage> {
                 shiftOptionIds = state.shiftList.shift!.map((s) => s.shiftTimeId ?? '').toList();
                 shiftOptionNames = state.shiftList.shift!.map((s) => s.shiftTimeView ?? '').toList();
               }
+
+
+              // if(state is AddPrimaryUserApiSuccess){
+              //   Fluttertoast.showToast(msg: state.response.message!, backgroundColor: Colors.green, textColor: Colors.white);
+              //   preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, state.response.trxId ??'');
+              // }
+
+
             },
 
             builder: (context, state) {
@@ -852,24 +859,28 @@ class _SignupFormPageState extends State<SignupFormPage> {
           ),
           SizedBox(height: 0.1 * Responsive.getWidth(context)),
           Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomText(
-                  'Already have an account?',
-
-                  fontSize: 18 * Responsive.getResponsiveText(context),
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.getColor(context).onSurface,
-                ),
-                CustomText(
-                  'Sign in here',
-
-                  fontSize: 18 * Responsive.getResponsiveText(context),
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.getColor(context).primary,
-                ),
-              ],
+            child: GestureDetector(
+              onTap: () {
+              //  context.go(RoutePaths.login);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomText(
+                    'Already have an account?',
+                    fontSize: 18 * Responsive.getResponsiveText(context),
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.getColor(context).onSurface,
+                  ),
+                  SizedBox(width: 5),
+                  CustomText(
+                    'Sign in here',
+                    fontSize: 18 * Responsive.getResponsiveText(context),
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.getColor(context).primary,
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),

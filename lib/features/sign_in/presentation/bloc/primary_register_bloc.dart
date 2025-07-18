@@ -35,7 +35,7 @@ class PrimaryRegisterBloc extends Bloc<PrimaryRegisterEvent, PrimaryRegisterStat
   }
 
 
-  void _onFetchPendingProfile(LoadPendingProfile event, Emitter<PrimaryRegisterState> emit,) async {
+  void _onFetchPendingProfile(LoadPendingProfile event, Emitter<PrimaryRegisterState> emit) async {
     emit(PrimaryRegisterLoading());
 
     final Either<Failure, ViewPendingProfileResponse> result = await registerUseCase.getViewPendingProfile();
@@ -46,7 +46,7 @@ class PrimaryRegisterBloc extends Bloc<PrimaryRegisterEvent, PrimaryRegisterStat
     );
   }
 
-  void _onFetchCancelProfile(LoadCancelProfile event, Emitter<PrimaryRegisterState> emit,) async {
+  void _onFetchCancelProfile(LoadCancelProfile event, Emitter<PrimaryRegisterState> emit) async {
     emit(PrimaryRegisterLoading());
 
     final Either<Failure, CommonResponse> result = await registerUseCase.getCancelPendingProfile();
@@ -57,10 +57,10 @@ class PrimaryRegisterBloc extends Bloc<PrimaryRegisterEvent, PrimaryRegisterStat
     );
   }
 
-  void _onFetchReminderProfile(LoadReminderProfile event, Emitter<PrimaryRegisterState> emit,) async {
+  void _onFetchReminderProfile(LoadReminderProfile event, Emitter<PrimaryRegisterState> emi,) async {
     emit(PrimaryRegisterLoading());
 
-    final Either<Failure, CommonResponse> result = await registerUseCase.getReminderPendingProfile();
+    final Either<Failure, CommonResponse> result = await registerUseCase.getReminderPendingProfile(event.dataMap);
 
     result.fold(
           (failure) => emit(PrimaryRegisterError(failure.message)),
@@ -68,11 +68,11 @@ class PrimaryRegisterBloc extends Bloc<PrimaryRegisterEvent, PrimaryRegisterStat
     );
   }
 
-  void _onFetchSociety(LoadSociety event, Emitter<PrimaryRegisterState> emit,) async {
+  void _onFetchSociety(LoadSociety event, Emitter<PrimaryRegisterState> emit) async {
     emit(PrimaryRegisterLoading());
 
 
-    final Either<Failure, CommonResponse> result = await registerUseCase.getSociety();
+    final Either<Failure, CommonResponse> result = await registerUseCase.getSociety(event.societyId);
 
     result.fold(
           (failure) => emit(PrimaryRegisterError(failure.message)),

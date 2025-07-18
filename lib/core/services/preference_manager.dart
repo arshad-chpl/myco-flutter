@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -122,6 +123,30 @@ class PreferenceManager {
   Future<String> getKeyValueString(String key) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(key) ?? '';
+  }
+
+
+    // Set boolean value
+    Future<void> setKeyValueBoolean(String key, bool value) async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(key, value);
+    }
+
+
+// Get boolean value
+  Future<bool> getKeyValueBoolean(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(key) ?? false; // default to false if null
+  }
+
+  Future<void> setSocietyId(String id) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(VariableBag.SOCIETY_ID, id);
+  }
+
+  Future<String> getSocietyId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(VariableBag.SOCIETY_ID) ?? '0';
   }
 
   // ====== Custom Methods ======

@@ -7,6 +7,6 @@ abstract class PrimaryRegisterRepository {
   Future<Either<Failure, CommonResponse>> addPrimaryUser(Map<String, dynamic> dataMap);
   Future<Either<Failure, ViewPendingProfileResponse>> getViewPendingProfile();
   Future<Either<Failure, CommonResponse>> getCancelPendingProfile();
-  Future<Either<Failure, CommonResponse>> getReminderPendingProfile();
-  Future<Either<Failure, CommonResponse>> getSociety();
+  Future<Either<Failure, CommonResponse>> getReminderPendingProfile(Map<String, dynamic> dataMap);
+  Future<Either<Failure, CommonResponse>> getSociety(String societyId);
 }

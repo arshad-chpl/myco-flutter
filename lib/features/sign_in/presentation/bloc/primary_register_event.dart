@@ -22,5 +22,22 @@ class LoadAddPrimaryUser extends PrimaryRegisterEvent {
 //pending profile
 class LoadPendingProfile extends PrimaryRegisterEvent {}
 class LoadCancelProfile extends PrimaryRegisterEvent {}
-class LoadReminderProfile extends PrimaryRegisterEvent {}
-class LoadSociety extends PrimaryRegisterEvent {}
+
+class LoadReminderProfile extends PrimaryRegisterEvent {
+  final Map<String, dynamic> dataMap;
+
+  const LoadReminderProfile(this.dataMap);
+
+  @override
+  List<Object> get props => [dataMap];
+}
+
+class LoadSociety extends PrimaryRegisterEvent {
+
+  final String societyId;
+
+  const LoadSociety(this.societyId);
+
+  @override
+  List<Object> get props => [societyId];
+}
