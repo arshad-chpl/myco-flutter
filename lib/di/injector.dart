@@ -63,7 +63,10 @@ Future<void> init() async {
   adminViewDi(sl);
 
   //========Company Info=========
-  setupCompanyInfoDI(sl);
+  setupCompanyInfoDi(sl);
+
+  //========Holiday=========
+  setupHolidayDi(sl);
 
   //Leave
   setUpLeaveDI(sl);
