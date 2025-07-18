@@ -12,11 +12,11 @@ class AppAssets {
 
   static const String assetVisit = '$basePath/add_expense';
 
-
   static const String assets = '$basePath/assets';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
   static const String stepper = '$basePath/stepper';
+  static const String appointmentSvgs = '$svgsPath/appointments';
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
   static const String chplLogo = '$imagesPath/chpl_logo.png';
@@ -83,7 +83,6 @@ class AppAssets {
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
   static const String loaderGif = '$basePath/gifs/mycoLoading.gif';
 
-
   // dashboard Screen
   static const String search = '$dashboard/search.png';
   static const String notification = '$dashboard/notification.png';
@@ -100,7 +99,6 @@ class AppAssets {
   static const String trash = '$svgsVisit/trash.svg';
   static const String smart_car = '$svgsVisit/smart-car.svg';
   static const String global = '$svgsVisit/global.svg';
-
 
   // Visit Assets
   static const String emptyWalletTime = '$svgsVisit/empty-wallet-time.svg';
@@ -119,7 +117,6 @@ class AppAssets {
   static const String downArrow = '$svgsVisit/arrow-down.svg';
   static const String galleryExport = '$svgsVisit/gallery-export.svg';
   static const String arrow_down = '$svgsVisit/arrow-down.svg';
-
 
   //images visit
   static const String assetBookmark = '$assetVisit/bookmark.svg';
@@ -166,4 +163,9 @@ class AppAssets {
 
   //images stepper
   static const String stepperCheckIcon = '$stepper/check.svg';
+
+  //Appointments
+  static const String assetPerson = '$appointmentSvgs/person.svg';
+  static const String assetClock2 = '$appointmentSvgs/clock.svg';
+  static const String assetLocation = '$appointmentSvgs/location.svg';
 }
