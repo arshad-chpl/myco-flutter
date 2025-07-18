@@ -256,8 +256,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
           child: BlocConsumer<CommonApiBloc, CommonApiState>(
             listener: (context, state) {
               if (state is BlockApiSuccess) {
-                branchOptionIds = state.blockList.block!.map((block) => block.blockId ?? '').toList();
-                branchOptionNames = state.blockList.block!.map((block) => block.blockName ?? '').toList();
+                branchOptionIds = state.blockList.blocks!.map((block) => block.blockId ?? '').toList();
+                branchOptionNames = state.blockList.blocks!.map((block) => block.blockName ?? '').toList();
               }
 
               if (state is FloorUnitApiSuccess) {

@@ -6,8 +6,9 @@ part of 'uploaded_file_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-UploadFileResponse _$UploadFileResponseFromJson(Map<String, dynamic> json) =>
-    UploadFileResponse(
+UploadFileResponseModel _$UploadFileResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    UploadFileResponseModel(
       baseUrl: json['base_url'] as String?,
       imgNameArr: (json['img_name_arr'] as List<dynamic>?)
           ?.map((e) => e as String)
@@ -16,7 +17,8 @@ UploadFileResponse _$UploadFileResponseFromJson(Map<String, dynamic> json) =>
       status: json['status'] as String?,
     );
 
-Map<String, dynamic> _$UploadFileResponseToJson(UploadFileResponse instance) =>
+Map<String, dynamic> _$UploadFileResponseModelToJson(
+        UploadFileResponseModel instance) =>
     <String, dynamic>{
       'base_url': instance.baseUrl,
       'img_name_arr': instance.imgNameArr,

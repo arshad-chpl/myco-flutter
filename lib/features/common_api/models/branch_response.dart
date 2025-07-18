@@ -1,55 +1,72 @@
-// To parse this JSON data, do
-//
-//     final branchResponse = branchResponseFromJson(jsonString);
+import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
-import 'dart:convert';
+import 'package:myco_flutter/features/common_api/domain/entities/Branch_response_entity.dart';
 
 part 'branch_response.g.dart';
 
-BranchResponse branchResponseFromJson(String str) => BranchResponse.fromJson(json.decode(str));
+BranchResponseModel branchResponseModelFromJson(String str) =>
+    BranchResponseModel.fromJson(json.decode(str));
 
-String branchResponseToJson(BranchResponse data) => json.encode(data.toJson());
+String branchResponseModelToJson(BranchResponseModel data) =>
+    json.encode(data.toJson());
 
 @JsonSerializable()
-class BranchResponse {
+class BranchResponseModel {
   @JsonKey(name: "block")
-  List<Block>? block;
+  final List<BlockModel>? block;
   @JsonKey(name: "message")
-  String? message;
+  final String? message;
   @JsonKey(name: "status")
-  String? status;
+  final String? status;
 
-  BranchResponse({
+  BranchResponseModel({
     this.block,
     this.message,
     this.status,
   });
 
-  factory BranchResponse.fromJson(Map<String, dynamic> json) => _$BranchResponseFromJson(json);
+  factory BranchResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$BranchResponseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$BranchResponseToJson(this);
+  Map<String, dynamic> toJson() => _$BranchResponseModelToJson(this);
+
+  /// Converts the data model to a domain entity.
+  BranchResponseEntity toEntity() => BranchResponseEntity(
+    blocks: block?.map((b) => b.toEntity()).toList(),
+    message: message,
+    status: status,
+  );
 }
 
 @JsonSerializable()
-class Block {
+class BlockModel {
   @JsonKey(name: "block_id")
-  String? blockId;
+  final String? blockId;
   @JsonKey(name: "society_id")
-  String? societyId;
+  final String? societyId;
   @JsonKey(name: "block_name")
-  String? blockName;
+  final String? blockName;
   @JsonKey(name: "block_status")
-  String? blockStatus;
+  final String? blockStatus;
 
-  Block({
+  BlockModel({
     this.blockId,
     this.societyId,
     this.blockName,
     this.blockStatus,
   });
 
-  factory Block.fromJson(Map<String, dynamic> json) => _$BlockFromJson(json);
+  factory BlockModel.fromJson(Map<String, dynamic> json) =>
+      _$BlockModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$BlockToJson(this);
+  Map<String, dynamic> toJson() => _$BlockModelToJson(this);
+
+  /// Converts the block model to its entity.
+  BranchEntity toEntity() => BranchEntity(
+    blockId: blockId,
+    societyId: societyId,
+    blockName: blockName,
+    blockStatus: blockStatus,
+  );
 }

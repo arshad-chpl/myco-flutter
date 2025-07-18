@@ -139,16 +139,6 @@ class PreferenceManager {
     return prefs.getBool(key) ?? false; // default to false if null
   }
 
-  Future<void> setSocietyId(String id) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(VariableBag.SOCIETY_ID, id);
-  }
-
-  Future<String> getSocietyId() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(VariableBag.SOCIETY_ID) ?? '0';
-  }
-
   // ====== Custom Methods ======
 
   Future<void> setUserId(String value) async {

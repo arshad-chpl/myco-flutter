@@ -6,9 +6,9 @@ part of 'floor_and_unit_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-FloorAndUnitResponse _$FloorAndUnitResponseFromJson(
+FloorAndUnitResponseModel _$FloorAndUnitResponseModelFromJson(
         Map<String, dynamic> json) =>
-    FloorAndUnitResponse(
+    FloorAndUnitResponseModel(
       designation: (json['designation'] as List<dynamic>?)
           ?.map((e) => Designation.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -22,8 +22,8 @@ FloorAndUnitResponse _$FloorAndUnitResponseFromJson(
       status: json['status'] as String?,
     );
 
-Map<String, dynamic> _$FloorAndUnitResponseToJson(
-        FloorAndUnitResponse instance) =>
+Map<String, dynamic> _$FloorAndUnitResponseModelToJson(
+        FloorAndUnitResponseModel instance) =>
     <String, dynamic>{
       'designation': instance.designation,
       'floors': instance.floors,

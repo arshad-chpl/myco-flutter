@@ -1,52 +1,67 @@
-// To parse this JSON data, do
-//
-//     final viewPendingProfileResponse = viewPendingProfileResponseFromJson(jsonString);
-
-import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:myco_flutter/features/sign_in/domain/entities/view_pending_profile_entity.dart';
 
 part 'view_pending_profile_response.g.dart';
 
-ViewPendingProfileResponse viewPendingProfileResponseFromJson(String str) => ViewPendingProfileResponse.fromJson(json.decode(str));
+ViewPendingProfileResponse viewPendingProfileResponseFromJson(String str) =>
+    ViewPendingProfileResponse.fromJson(json.decode(str));
 
-String viewPendingProfileResponseToJson(ViewPendingProfileResponse data) => json.encode(data.toJson());
+String viewPendingProfileResponseToJson(ViewPendingProfileResponse data) =>
+    json.encode(data.toJson());
 
 @JsonSerializable()
 class ViewPendingProfileResponse {
   @JsonKey(name: "user_profile_pic")
-  String? userProfilePic;
+  final String? userProfilePic;
+
   @JsonKey(name: "user_full_name")
-  String? userFullName;
+  final String? userFullName;
+
   @JsonKey(name: "user_first_name")
-  String? userFirstName;
+  final String? userFirstName;
+
   @JsonKey(name: "user_last_name")
-  String? userLastName;
+  final String? userLastName;
+
   @JsonKey(name: "country_code")
-  String? countryCode;
+  final String? countryCode;
+
   @JsonKey(name: "user_mobile")
-  String? userMobile;
+  final String? userMobile;
+
   @JsonKey(name: "user_email")
-  String? userEmail;
+  final String? userEmail;
+
   @JsonKey(name: "block_name")
-  String? blockName;
+  final String? blockName;
+
   @JsonKey(name: "floor_name")
-  String? floorName;
+  final String? floorName;
+
   @JsonKey(name: "unit_name")
-  dynamic unitName;
+  final dynamic unitName;
+
   @JsonKey(name: "designation")
-  String? designation;
+  final String? designation;
+
   @JsonKey(name: "gender")
-  String? gender;
+  final String? gender;
+
   @JsonKey(name: "user_id")
-  String? userId;
+  final String? userId;
+
   @JsonKey(name: "block_id")
-  String? blockId;
+  final String? blockId;
+
   @JsonKey(name: "floor_id")
-  String? floorId;
+  final String? floorId;
+
   @JsonKey(name: "user_status")
-  String? userStatus;
+  final String? userStatus;
+
   @JsonKey(name: "message")
-  String? message;
+  final String? message;
 
   ViewPendingProfileResponse({
     this.userProfilePic,
@@ -68,7 +83,28 @@ class ViewPendingProfileResponse {
     this.message,
   });
 
-  factory ViewPendingProfileResponse.fromJson(Map<String, dynamic> json) => _$ViewPendingProfileResponseFromJson(json);
+  factory ViewPendingProfileResponse.fromJson(Map<String, dynamic> json) =>
+      _$ViewPendingProfileResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$ViewPendingProfileResponseToJson(this);
+
+  ViewPendingProfileEntity toEntity() => ViewPendingProfileEntity(
+    userProfilePic: userProfilePic,
+    userFullName: userFullName,
+    userFirstName: userFirstName,
+    userLastName: userLastName,
+    countryCode: countryCode,
+    userMobile: userMobile,
+    userEmail: userEmail,
+    blockName: blockName,
+    floorName: floorName,
+    unitName: unitName,
+    designation: designation,
+    gender: gender,
+    userId: userId,
+    blockId: blockId,
+    floorId: floorId,
+    userStatus: userStatus,
+    message: message,
+  );
 }

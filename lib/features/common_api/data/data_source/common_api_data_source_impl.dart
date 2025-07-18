@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/encryption/gzip_util.dart';
-import 'package:myco_flutter/core/models/common_response.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/features/common_api/data/data_source/common_api_data_source.dart';
@@ -21,14 +20,14 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
 
 
   @override
-  Future<UploadFileResponse> uploadedTemp() async {
+  Future<UploadFileResponseModel> uploadedTemp() async {
     final dataMap = {
       'uploadImageToTemp': 'uploadImageToTemp',
       'society_id': '1',
       'user_id': '0',
       'beforeLogIn': '1',
       'file_format_name': '1',
-      'img': ''  /*List<MultipartBody.Part>*/,
+      'img': '' /*List<MultipartBody.Part>*/,
     };
 
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
@@ -37,11 +36,11 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
     final response = await GetIt.I<ApiClient>(
         instanceName: VariableBag.employeeMobileApi).postDynamic(
         controller, encryptedBody);
-    return UploadFileResponse.fromJson(json.decode(GzipUtil.decryptAES(response)));
+    return UploadFileResponseModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 
   @override
-  Future<BranchResponse> getBranchList() async {
+  Future<BranchResponseModel> getBranchList() async {
     final dataMap = {
       'getBlocks': 'getBlocks',
       'society_id': '1',
@@ -55,11 +54,11 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
     final response = await GetIt.I<ApiClient>(
         instanceName: VariableBag.employeeMobileApi).postDynamic(
         controller, encryptedBody);
-    return BranchResponse.fromJson(json.decode(GzipUtil.decryptAES(response)));
+    return BranchResponseModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 
   @override
-  Future<FloorAndUnitResponse> getFloorAndUnit(String branchId) async {
+  Future<FloorAndUnitResponseModel> getFloorAndUnit(String branchId) async {
     final dataMap = {
       'getFloorandUnitNew': 'getFloorandUnitNew',
       'society_id': '1',
@@ -73,11 +72,11 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
     final response = await GetIt.I<ApiClient>(
         instanceName: VariableBag.employeeMobileApi).postDynamic(
         controller, encryptedBody);
-    return FloorAndUnitResponse.fromJson(json.decode(GzipUtil.decryptAES(response)));
+    return FloorAndUnitResponseModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 
   @override
-  Future<ShiftResponse> getShiftList(String floorId) async {
+  Future<ShiftResponseModel> getShiftList(String floorId) async {
     final dataMap = {
       'getShiftsRegister': 'getShiftsRegister',
       'society_id': '1',
@@ -91,7 +90,7 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
     final response = await GetIt.I<ApiClient>(
         instanceName: VariableBag.employeeMobileApi).postDynamic(
         controller, encryptedBody);
-    return ShiftResponse.fromJson(json.decode(GzipUtil.decryptAES(response)));
+    return ShiftResponseModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 
 }

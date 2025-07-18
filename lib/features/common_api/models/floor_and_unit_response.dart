@@ -1,30 +1,26 @@
-// To parse this JSON data, do
-//
-//     final floorAndUnitResponse = floorAndUnitResponseFromJson(jsonString);
-
-import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:myco_flutter/features/common_api/domain/entities/floor_and_unit_response_entity.dart';
 
 part 'floor_and_unit_response.g.dart';
 
-FloorAndUnitResponse floorAndUnitResponseFromJson(String str) => FloorAndUnitResponse.fromJson(json.decode(str));
-
-String floorAndUnitResponseToJson(FloorAndUnitResponse data) => json.encode(data.toJson());
+FloorAndUnitResponseModel FloorAndUnitResponseModelFromJson(String str) =>
+    FloorAndUnitResponseModel.fromJson(json.decode(str));
 
 @JsonSerializable()
-class FloorAndUnitResponse {
+class FloorAndUnitResponseModel {
   @JsonKey(name: "designation")
-  List<Designation>? designation;
+  final List<Designation>? designation;
   @JsonKey(name: "floors")
-  List<Floor>? floors;
+  final List<Floor>? floors;
   @JsonKey(name: "sub_department_list")
-  List<SubDepartmentList>? subDepartmentList;
+  final List<SubDepartmentList>? subDepartmentList;
   @JsonKey(name: "message")
-  String? message;
+  final String? message;
   @JsonKey(name: "status")
-  String? status;
+  final String? status;
 
-  FloorAndUnitResponse({
+  FloorAndUnitResponseModel({
     this.designation,
     this.floors,
     this.subDepartmentList,
@@ -32,40 +28,57 @@ class FloorAndUnitResponse {
     this.status,
   });
 
-  factory FloorAndUnitResponse.fromJson(Map<String, dynamic> json) => _$FloorAndUnitResponseFromJson(json);
+  factory FloorAndUnitResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$FloorAndUnitResponseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$FloorAndUnitResponseToJson(this);
+  Map<String, dynamic> toJson() => _$FloorAndUnitResponseModelToJson(this);
+
+  /// ✅ Convert to Entity
+  FloorAndUnitResponseEntity toEntity() => FloorAndUnitResponseEntity(
+    designation: designation?.map((e) => e.toEntity()).toList(),
+    floors: floors?.map((e) => e.toEntity()).toList(),
+    subDepartmentList: subDepartmentList?.map((e) => e.toEntity()).toList(),
+    message: message,
+    status: status,
+  );
 }
 
 @JsonSerializable()
 class Designation {
   @JsonKey(name: "designation_id")
-  String? designationId;
+  final String? designationId;
   @JsonKey(name: "designation_name")
-  String? designationName;
+  final String? designationName;
 
   Designation({
     this.designationId,
     this.designationName,
   });
 
-  factory Designation.fromJson(Map<String, dynamic> json) => _$DesignationFromJson(json);
+  factory Designation.fromJson(Map<String, dynamic> json) =>
+      _$DesignationFromJson(json);
 
   Map<String, dynamic> toJson() => _$DesignationToJson(this);
+
+  /// ✅ Convert to Entity
+  DesignationEntity toEntity() => DesignationEntity(
+    designationId: designationId,
+    designationName: designationName,
+  );
 }
 
 @JsonSerializable()
 class Floor {
   @JsonKey(name: "floor_id")
-  String? floorId;
+  final String? floorId;
   @JsonKey(name: "society_id")
-  String? societyId;
+  final String? societyId;
   @JsonKey(name: "block_id")
-  String? blockId;
+  final String? blockId;
   @JsonKey(name: "floor_name")
-  String? floorName;
+  final String? floorName;
   @JsonKey(name: "floor_status")
-  String? floorStatus;
+  final String? floorStatus;
 
   Floor({
     this.floorId,
@@ -75,23 +88,33 @@ class Floor {
     this.floorStatus,
   });
 
-  factory Floor.fromJson(Map<String, dynamic> json) => _$FloorFromJson(json);
+  factory Floor.fromJson(Map<String, dynamic> json) =>
+      _$FloorFromJson(json);
 
   Map<String, dynamic> toJson() => _$FloorToJson(this);
+
+  /// ✅ Convert to Entity
+  FloorEntity toEntity() => FloorEntity(
+    floorId: floorId,
+    societyId: societyId,
+    blockId: blockId,
+    floorName: floorName,
+    floorStatus: floorStatus,
+  );
 }
 
 @JsonSerializable()
 class SubDepartmentList {
   @JsonKey(name: "sub_department_id")
-  String? subDepartmentId;
+  final String? subDepartmentId;
   @JsonKey(name: "society_id")
-  String? societyId;
+  final String? societyId;
   @JsonKey(name: "block_id")
-  String? blockId;
+  final String? blockId;
   @JsonKey(name: "floor_id")
-  String? floorId;
+  final String? floorId;
   @JsonKey(name: "sub_department_name")
-  String? subDepartmentName;
+  final String? subDepartmentName;
 
   SubDepartmentList({
     this.subDepartmentId,
@@ -101,7 +124,17 @@ class SubDepartmentList {
     this.subDepartmentName,
   });
 
-  factory SubDepartmentList.fromJson(Map<String, dynamic> json) => _$SubDepartmentListFromJson(json);
+  factory SubDepartmentList.fromJson(Map<String, dynamic> json) =>
+      _$SubDepartmentListFromJson(json);
 
   Map<String, dynamic> toJson() => _$SubDepartmentListToJson(this);
+
+  /// ✅ Convert to Entity
+  SubDepartmentEntity toEntity() => SubDepartmentEntity(
+    subDepartmentId: subDepartmentId,
+    societyId: societyId,
+    blockId: blockId,
+    floorId: floorId,
+    subDepartmentName: subDepartmentName,
+  );
 }

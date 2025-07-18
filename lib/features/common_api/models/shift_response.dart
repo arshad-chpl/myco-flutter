@@ -1,53 +1,58 @@
-// To parse this JSON data, do
-//
-//     final shiftResponse = shiftResponseFromJson(jsonString);
-
-import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:myco_flutter/features/common_api/domain/entities/shift_response_entity.dart';
 
 part 'shift_response.g.dart';
 
-ShiftResponse shiftResponseFromJson(String str) => ShiftResponse.fromJson(json.decode(str));
+ShiftResponseModel ShiftResponseModelFromJson(String str) =>
+    ShiftResponseModel.fromJson(json.decode(str));
 
-String shiftResponseToJson(ShiftResponse data) => json.encode(data.toJson());
+String ShiftResponseModelToJson(ShiftResponseModel data) => json.encode(data.toJson());
 
 @JsonSerializable()
-class ShiftResponse {
+class ShiftResponseModel {
   @JsonKey(name: "shift")
-  List<Shift>? shift;
+  final List<Shift>? shift;
   @JsonKey(name: "message")
-  String? message;
+  final String? message;
 
-  ShiftResponse({
+  ShiftResponseModel({
     this.shift,
     this.message,
   });
 
-  factory ShiftResponse.fromJson(Map<String, dynamic> json) => _$ShiftResponseFromJson(json);
+  factory ShiftResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$ShiftResponseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ShiftResponseToJson(this);
+  Map<String, dynamic> toJson() => _$ShiftResponseModelToJson(this);
+
+  /// Convert to domain entity
+  ShiftResponseEntity toEntity() => ShiftResponseEntity(
+    shift: shift?.map((e) => e.toEntity()).toList(),
+    message: message,
+  );
 }
 
 @JsonSerializable()
 class Shift {
   @JsonKey(name: "shift_time_id")
-  String? shiftTimeId;
+  final String? shiftTimeId;
   @JsonKey(name: "shift_name")
-  String? shiftName;
+  final String? shiftName;
   @JsonKey(name: "shift_code")
-  String? shiftCode;
+  final String? shiftCode;
   @JsonKey(name: "shift_type")
-  ShiftType? shiftType;
+  final String? shiftType; // Keep as String for JSON mapping
   @JsonKey(name: "shift_start_time")
-  String? shiftStartTime;
+  final String? shiftStartTime;
   @JsonKey(name: "shift_end_time")
-  String? shiftEndTime;
+  final String? shiftEndTime;
   @JsonKey(name: "week_off")
-  WeekOff? weekOff;
+  final String? weekOff; // Keep as String for JSON mapping
   @JsonKey(name: "shift_time_view")
-  String? shiftTimeView;
+  final String? shiftTimeView;
   @JsonKey(name: "shift_time")
-  ShiftTime? shiftTime;
+  final String? shiftTime; // Keep as String for JSON mapping
 
   Shift({
     this.shiftTimeId,
@@ -64,64 +69,59 @@ class Shift {
   factory Shift.fromJson(Map<String, dynamic> json) => _$ShiftFromJson(json);
 
   Map<String, dynamic> toJson() => _$ShiftToJson(this);
-}
 
-enum ShiftTime {
-  @JsonValue("05:30 AM - 05:30 AM")
-  THE_0530_AM_0530_AM
-}
+  /// Map to domain entity with enum conversion
+  ShiftEntity toEntity() => ShiftEntity(
+    shiftTimeId: shiftTimeId,
+    shiftName: shiftName,
+    shiftCode: shiftCode,
+    shiftType: _mapShiftType(shiftType),
+    shiftStartTime: shiftStartTime,
+    shiftEndTime: shiftEndTime,
+    weekOff: _mapWeekOff(weekOff),
+    shiftTimeView: shiftTimeView,
+    shiftTime: _mapShiftTime(shiftTime),
+  );
 
-final shiftTimeValues = EnumValues({
-  "05:30 AM - 05:30 AM": ShiftTime.THE_0530_AM_0530_AM
-});
+  /// --- Mappers ---
+  ShiftType? _mapShiftType(String? type) {
+    switch (type) {
+      case "Day":
+        return ShiftType.DAY;
+      default:
+        return null;
+    }
+  }
 
-enum ShiftType {
-  @JsonValue("Day")
-  DAY
-}
+  WeekOff? _mapWeekOff(String? week) {
+    switch (week) {
+      case "":
+        return WeekOff.EMPTY;
+      case "Monday":
+        return WeekOff.MONDAY;
+      case "Monday,Thursday":
+        return WeekOff.MONDAY_THURSDAY;
+      case "Saturday":
+        return WeekOff.SATURDAY;
+      case "Sunday":
+        return WeekOff.SUNDAY;
+      case "Sunday,Monday":
+        return WeekOff.SUNDAY_MONDAY;
+      case "Sunday,Saturday":
+        return WeekOff.SUNDAY_SATURDAY;
+      case "Thursday":
+        return WeekOff.THURSDAY;
+      default:
+        return null;
+    }
+  }
 
-final shiftTypeValues = EnumValues({
-  "Day": ShiftType.DAY
-});
-
-enum WeekOff {
-  @JsonValue("")
-  EMPTY,
-  @JsonValue("Monday")
-  MONDAY,
-  @JsonValue("Monday,Thursday")
-  MONDAY_THURSDAY,
-  @JsonValue("Saturday")
-  SATURDAY,
-  @JsonValue("Sunday")
-  SUNDAY,
-  @JsonValue("Sunday,Monday")
-  SUNDAY_MONDAY,
-  @JsonValue("Sunday,Saturday")
-  SUNDAY_SATURDAY,
-  @JsonValue("Thursday")
-  THURSDAY
-}
-
-final weekOffValues = EnumValues({
-  "": WeekOff.EMPTY,
-  "Monday": WeekOff.MONDAY,
-  "Monday,Thursday": WeekOff.MONDAY_THURSDAY,
-  "Saturday": WeekOff.SATURDAY,
-  "Sunday": WeekOff.SUNDAY,
-  "Sunday,Monday": WeekOff.SUNDAY_MONDAY,
-  "Sunday,Saturday": WeekOff.SUNDAY_SATURDAY,
-  "Thursday": WeekOff.THURSDAY
-});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
+  ShiftTime? _mapShiftTime(String? time) {
+    switch (time) {
+      case "05:30 AM - 05:30 AM":
+        return ShiftTime.THE_0530_AM_0530_AM;
+      default:
+        return null;
+    }
   }
 }

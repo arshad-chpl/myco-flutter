@@ -3,8 +3,11 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/error/failure.dart';
+import 'package:myco_flutter/features/common_api/domain/entities/Branch_response_entity.dart';
+import 'package:myco_flutter/features/common_api/domain/entities/floor_and_unit_response_entity.dart';
+import 'package:myco_flutter/features/common_api/domain/entities/shift_response_entity.dart';
+import 'package:myco_flutter/features/common_api/domain/entities/uploaded_file_response_entity.dart';
 import 'package:myco_flutter/features/common_api/domain/usecase/common_api_usercase.dart';
-import 'package:myco_flutter/features/common_api/models/branch_response.dart';
 import 'package:myco_flutter/features/common_api/models/floor_and_unit_response.dart';
 import 'package:myco_flutter/features/common_api/models/shift_response.dart';
 import 'package:myco_flutter/features/common_api/models/uploaded_file_response.dart';
@@ -29,7 +32,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
   // uploaded image and pdf api
   void _onFetchUploadedTemp(LoadUploaded event, Emitter<CommonApiState> emit) async {
     emit(CommonApiLoading());
-    final Either<Failure, UploadFileResponse> result = await registerUseCase.uploadedTemp();
+    final Either<Failure, UploadFileResponseEntity> result = await registerUseCase.uploadedTemp();
 
     result.fold(
           (failure) => emit(UploadImagePdfApiError(failure.message)),
@@ -43,7 +46,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
   void _onFetchBranch(
       LoadBranch event, Emitter<CommonApiState> emit) async {
     emit(CommonApiLoading());
-    final Either<Failure, BranchResponse> result = await registerUseCase.callBranch();
+    final Either<Failure, BranchResponseEntity> result = await registerUseCase.callBranch();
 
     result.fold(
           (failure) => emit(BlockApiError(failure.message)),
@@ -54,7 +57,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
 
   void _onFetchFloorUnit(LoadFloorUnit event, Emitter<CommonApiState> emit) async {
     emit(CommonApiLoading());
-    final Either<Failure, FloorAndUnitResponse> result = await registerUseCase.floorList(event.branchId);
+    final Either<Failure, FloorAndUnitResponseEntity> result = await registerUseCase.floorList(event.branchId);
 
     result.fold(
           (failure) => emit(FloorUnitApiError(failure.message)),
@@ -65,7 +68,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
 
   void _onFetchShift(LoadShift event, Emitter<CommonApiState> emit) async {
     emit(CommonApiLoading());
-    final Either<Failure, ShiftResponse> result = await registerUseCase.callShift(event.floorId);
+    final Either<Failure, ShiftResponseEntity> result = await registerUseCase.callShift(event.floorId);
 
     result.fold(
           (failure) => emit(ShiftApiError(failure.message)),

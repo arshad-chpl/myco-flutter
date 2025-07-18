@@ -1,35 +1,46 @@
-// To parse this JSON data, do
-//
-//     final uploadFileResponse = uploadFileResponseFromJson(jsonString);
-
-import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:myco_flutter/features/common_api/domain/entities/uploaded_file_response_entity.dart';
 
 part 'uploaded_file_response.g.dart';
 
-UploadFileResponse uploadFileResponseFromJson(String str) => UploadFileResponse.fromJson(json.decode(str));
+UploadFileResponseModel UploadFileResponseModelFromJson(String str) =>
+    UploadFileResponseModel.fromJson(json.decode(str));
 
-String uploadFileResponseToJson(UploadFileResponse data) => json.encode(data.toJson());
+String UploadFileResponseModelToJson(UploadFileResponseModel data) =>
+    json.encode(data.toJson());
 
 @JsonSerializable()
-class UploadFileResponse {
+class UploadFileResponseModel {
   @JsonKey(name: "base_url")
-  String? baseUrl;
-  @JsonKey(name: "img_name_arr")
-  List<String>? imgNameArr;
-  @JsonKey(name: "message")
-  String? message;
-  @JsonKey(name: "status")
-  String? status;
+  final String? baseUrl;
 
-  UploadFileResponse({
+  @JsonKey(name: "img_name_arr")
+  final List<String>? imgNameArr;
+
+  @JsonKey(name: "message")
+  final String? message;
+
+  @JsonKey(name: "status")
+  final String? status;
+
+  UploadFileResponseModel({
     this.baseUrl,
     this.imgNameArr,
     this.message,
     this.status,
   });
 
-  factory UploadFileResponse.fromJson(Map<String, dynamic> json) => _$UploadFileResponseFromJson(json);
+  factory UploadFileResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$UploadFileResponseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UploadFileResponseToJson(this);
+  Map<String, dynamic> toJson() => _$UploadFileResponseModelToJson(this);
+
+  /// Convert to domain entity
+  UploadFileResponseEntity toEntity() => UploadFileResponseEntity(
+    baseUrl: baseUrl,
+    imgNameArr: imgNameArr,
+    message: message,
+    status: status,
+  );
 }

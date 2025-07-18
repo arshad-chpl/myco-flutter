@@ -97,8 +97,8 @@ class _ContactAdminPageState extends State<ContactAdminPage> {
 
 
                 () async {
-                  String societyId = await preferenceManager.getSocietyId();
-                  context.read<PrimaryRegisterBloc>().add(LoadSociety(societyId));
+                  final societyId = await preferenceManager.getCompanyId();
+                  context.read<PrimaryRegisterBloc>().add(LoadSociety(societyId!));
                 };
 
 

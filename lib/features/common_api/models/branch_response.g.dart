@@ -6,30 +6,32 @@ part of 'branch_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BranchResponse _$BranchResponseFromJson(Map<String, dynamic> json) =>
-    BranchResponse(
+BranchResponseModel _$BranchResponseModelFromJson(Map<String, dynamic> json) =>
+    BranchResponseModel(
       block: (json['block'] as List<dynamic>?)
-          ?.map((e) => Block.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => BlockModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       message: json['message'] as String?,
       status: json['status'] as String?,
     );
 
-Map<String, dynamic> _$BranchResponseToJson(BranchResponse instance) =>
+Map<String, dynamic> _$BranchResponseModelToJson(
+        BranchResponseModel instance) =>
     <String, dynamic>{
       'block': instance.block,
       'message': instance.message,
       'status': instance.status,
     };
 
-Block _$BlockFromJson(Map<String, dynamic> json) => Block(
+BlockModel _$BlockModelFromJson(Map<String, dynamic> json) => BlockModel(
       blockId: json['block_id'] as String?,
       societyId: json['society_id'] as String?,
       blockName: json['block_name'] as String?,
       blockStatus: json['block_status'] as String?,
     );
 
-Map<String, dynamic> _$BlockToJson(Block instance) => <String, dynamic>{
+Map<String, dynamic> _$BlockModelToJson(BlockModel instance) =>
+    <String, dynamic>{
       'block_id': instance.blockId,
       'society_id': instance.societyId,
       'block_name': instance.blockName,

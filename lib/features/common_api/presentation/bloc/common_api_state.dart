@@ -14,7 +14,7 @@ class CommonApiLoading extends CommonApiState {}
 
 // block api success
 class UploadImagePdfApiSuccess extends CommonApiState {
-  final UploadFileResponse blockList;
+  final UploadFileResponseEntity blockList;
   const UploadImagePdfApiSuccess(this.blockList);
 
   @override
@@ -32,7 +32,7 @@ class UploadImagePdfApiError extends CommonApiState {
 
 // block api success
 class BlockApiSuccess extends CommonApiState {
-  final BranchResponse blockList;
+  final BranchResponseEntity blockList;
   const BlockApiSuccess(this.blockList);
 
   @override
@@ -50,7 +50,7 @@ class BlockApiError extends CommonApiState {
 
 // floor unit api error
 class FloorUnitApiSuccess extends CommonApiState {
-  final FloorAndUnitResponse floorUnitList;
+  final FloorAndUnitResponseEntity floorUnitList;
   const FloorUnitApiSuccess(this.floorUnitList);
 
   @override
@@ -68,7 +68,7 @@ class FloorUnitApiError extends CommonApiState {
 
 // Shift api error
 class ShiftApiSuccess extends CommonApiState {
-  final ShiftResponse shiftList;
+  final ShiftResponseEntity shiftList;
   const ShiftApiSuccess(this.shiftList);
 
   @override
