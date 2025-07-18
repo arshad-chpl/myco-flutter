@@ -7,6 +7,8 @@ import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/admin_view/data/models/admin_view_request.dart';
 import 'package:myco_flutter/features/admin_view/data/models/admin_view_response_model.dart';
 import 'package:myco_flutter/features/work_allocation/data/data_source/work_allocation_remote_data_source.dart';
+import 'package:myco_flutter/features/work_allocation/data/models/get_work_category_request.dart';
+import 'package:myco_flutter/features/work_allocation/data/models/get_work_category_response.dart';
 import 'package:myco_flutter/features/work_allocation/data/models/work_allocation_request.dart';
 import 'package:myco_flutter/features/work_allocation/data/models/work_allocation_response.dart';
 
@@ -22,6 +24,18 @@ class WorkAllocationRemoteDataSourceImpl
       instanceName: VariableBag.employeeMobileApi,
     ).postDynamic('workAllocationController.php', encryptedBody);
     return WorkAllocationResponseModel.fromJson(
+      json.decode(GzipUtil.decryptAES(response)),
+    );
+  }
+
+  @override
+  Future<GetWorkCategoryResponseModel> getWorkCategoryList(
+      GetWorkCategoryRequest request) async {
+    final encryptedBody = GzipUtil.decryptAES(jsonEncode(request));
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.employeeMobileApi, // added here for only ref
+    ).postDynamic('workAllocationController.php', encryptedBody);
+    return GetWorkCategoryResponseModel.fromJson(
       json.decode(GzipUtil.decryptAES(response)),
     );
   }
