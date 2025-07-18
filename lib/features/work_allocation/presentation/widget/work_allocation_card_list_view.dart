@@ -144,6 +144,9 @@ class _WorkAllocationCardListViewState extends State<WorkAllocationCardListView>
                   SizedBox(height: 0.005 * Responsive.getHeight(context)),
                   StatusTimeline(
                     steps: getTimelineSteps(workAllocation['status']),
+                    // linewidth: 72,
+                    // circleSize: 14,
+                    textSlotWidthMultiplier: 3.5
                   ),
                   SizedBox(height: 0.005 * Responsive.getHeight(context)),
 
