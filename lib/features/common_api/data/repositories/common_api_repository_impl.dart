@@ -6,6 +6,7 @@ import 'package:myco_flutter/features/common_api/domain/repositories/common_api_
 import 'package:myco_flutter/features/common_api/models/branch_response.dart';
 import 'package:myco_flutter/features/common_api/models/floor_and_unit_response.dart';
 import 'package:myco_flutter/features/common_api/models/shift_response.dart';
+import 'package:myco_flutter/features/common_api/models/uploaded_file_response.dart';
 
 
 class CommonApiRepositoryImpl implements CommonApiRepository {
@@ -13,6 +14,9 @@ class CommonApiRepositoryImpl implements CommonApiRepository {
   final SafeApiCall safeApiCall;
 
   CommonApiRepositoryImpl(this.remoteDataSource, this.safeApiCall);
+
+  @override
+  Future<Either<Failure, UploadFileResponse>> uploadedTemp() async => safeApiCall.execute(remoteDataSource.uploadedTemp);
 
   @override
   Future<Either<Failure, BranchResponse>> getBranchList() async => safeApiCall.execute(remoteDataSource.getBranchList);

@@ -7,6 +7,9 @@ abstract class CommonApiEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class LoadUploaded extends CommonApiEvent {}
+
+
 class LoadBranch extends CommonApiEvent {}
 
 class LoadFloorUnit extends CommonApiEvent {

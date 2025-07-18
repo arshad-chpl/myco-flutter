@@ -282,7 +282,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
               //   preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, state.response.trxId ??'');
               // }
 
-
             },
 
             builder: (context, state) {
