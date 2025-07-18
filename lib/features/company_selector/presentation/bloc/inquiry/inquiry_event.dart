@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:myco_flutter/features/company_selector/data/models/request_society_model.dart';
+import 'package:myco_flutter/features/company_selector/data/models/request/request_society_model.dart';
 
 abstract class InquiryEvent extends Equatable {
   const InquiryEvent();
