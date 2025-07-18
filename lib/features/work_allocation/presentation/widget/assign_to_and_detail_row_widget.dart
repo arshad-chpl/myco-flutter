@@ -30,7 +30,6 @@ class _AssignToAndDetailRowWidgetState
       MyCoButton(
         onTap: () {
          context.push('/detail-page');
-
         },
         title: LanguageManager().get('view_details'),
         fontWeight: FontWeight.w700,
@@ -39,6 +38,7 @@ class _AssignToAndDetailRowWidgetState
         backgroundColor: AppTheme.getColor(context).secondary,
         borderColor: AppTheme.getColor(context).secondary,
         boarderRadius: 23,
+        isShadowBottomLeft: true,
       ),
     ],
   );
