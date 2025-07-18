@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 // The main entity for the OTP verification response.
 class VerifyOtpResponseEntity extends Equatable {
+  final String? error;
   final String? userId;
   final String? shiftTimeId;
   final String? societyId;
@@ -81,6 +82,7 @@ class VerifyOtpResponseEntity extends Equatable {
   final bool? viewDialogApiCall;
 
   const VerifyOtpResponseEntity({
+    this.error,
     this.userId,
     this.shiftTimeId,
     this.societyId,
@@ -162,21 +164,84 @@ class VerifyOtpResponseEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    userId, shiftTimeId, societyId, userFullName, userFirstName, userLastName,
-    userMobile, userEmail, userIdProof, userType, blockId, blockName,
-    floorName, unitName, baseUrl, floorId, gender, unitId, zoneId, stateId,
-    levelId, unitStatus, userStatus, memberStatus, publicMobile,
-    visitorApproved, memberDateOfBirth, weddingAnniversaryDate, facebook,
-    instagram, linkedin, altMobile, countryCode, countryCodeAlt, companyName,
-    companyAddress, plotLattitude, plotLongitude, getBusinessData, bloodGroup,
-    newUser, designation, businessCategories, businessCategoriesSub,
-    businessCategoriesOther, professionalOther, society, labelMemberType,
-    labelSettingApartment, labelSettingResident, userProfilePic, ownerName,
-    ownerEmail, ownerMobile, societyAddress, aboutBusiness, societyLatitude,
-    societyLongitude, societyName, countryId, stateIdEmployee, cityId,
-    cityName, isExpenseON, maxExpenseAmount, apiKey, socieatyLogo, currency,
-    member, emergency, message, status, facultyUsername, facultyPassword,
-    facultyToken, facultyTokenData, viewDialogApiCall
+    error,
+    userId,
+    shiftTimeId,
+    societyId,
+    userFullName,
+    userFirstName,
+    userLastName,
+    userMobile,
+    userEmail,
+    userIdProof,
+    userType,
+    blockId,
+    blockName,
+    floorName,
+    unitName,
+    baseUrl,
+    floorId,
+    gender,
+    unitId,
+    zoneId,
+    stateId,
+    levelId,
+    unitStatus,
+    userStatus,
+    memberStatus,
+    publicMobile,
+    visitorApproved,
+    memberDateOfBirth,
+    weddingAnniversaryDate,
+    facebook,
+    instagram,
+    linkedin,
+    altMobile,
+    countryCode,
+    countryCodeAlt,
+    companyName,
+    companyAddress,
+    plotLattitude,
+    plotLongitude,
+    getBusinessData,
+    bloodGroup,
+    newUser,
+    designation,
+    businessCategories,
+    businessCategoriesSub,
+    businessCategoriesOther,
+    professionalOther,
+    society,
+    labelMemberType,
+    labelSettingApartment,
+    labelSettingResident,
+    userProfilePic,
+    ownerName,
+    ownerEmail,
+    ownerMobile,
+    societyAddress,
+    aboutBusiness,
+    societyLatitude,
+    societyLongitude,
+    societyName,
+    countryId,
+    stateIdEmployee,
+    cityId,
+    cityName,
+    isExpenseON,
+    maxExpenseAmount,
+    apiKey,
+    socieatyLogo,
+    currency,
+    member,
+    emergency,
+    message,
+    status,
+    facultyUsername,
+    facultyPassword,
+    facultyToken,
+    facultyTokenData,
+    viewDialogApiCall,
   ];
 }
 
@@ -206,8 +271,15 @@ class MemberEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    userId, userFirstName, userLastName, userMobile, memberDateOfBirth,
-    memberAge, memberRelationName, userStatus, memberStatus
+    userId,
+    userFirstName,
+    userLastName,
+    userMobile,
+    memberDateOfBirth,
+    memberAge,
+    memberRelationName,
+    userStatus,
+    memberStatus,
   ];
 }
 
@@ -229,6 +301,10 @@ class EmergencyEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    emergencyContactId, personName, personMobile, relationId, relation
+    emergencyContactId,
+    personName,
+    personMobile,
+    relationId,
+    relation,
   ];
 }

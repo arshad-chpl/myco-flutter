@@ -11,6 +11,8 @@ VerifyOtpResponseModel verifyOtpResponseModelFromJson(String str) =>
 // The main data model that mirrors the JSON structure
 @JsonSerializable()
 class VerifyOtpResponseModel {
+  @JsonKey(name: 'error')
+  final String? error;
   @JsonKey(name: 'user_id')
   final String? userId;
   @JsonKey(name: 'shift_time_id')
@@ -167,6 +169,7 @@ class VerifyOtpResponseModel {
   final bool viewDialogApiCall;
 
   VerifyOtpResponseModel({
+    this.error,
     this.userId,
     this.shiftTimeId,
     this.societyId,
@@ -253,6 +256,7 @@ class VerifyOtpResponseModel {
 
   /// Converts the data model to a domain entity.
   VerifyOtpResponseEntity toEntity() => VerifyOtpResponseEntity(
+    error: error,
     userId: userId,
     shiftTimeId: shiftTimeId,
     societyId: societyId,
