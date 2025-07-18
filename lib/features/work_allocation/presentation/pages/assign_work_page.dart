@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/Employee_details.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/label_with_star.dart';
@@ -21,7 +20,7 @@ class AssignWorkPage extends StatefulWidget {
 }
 
 class _AssignWorkPageState extends State<AssignWorkPage> {
-  final List<String> visitPurposes = ['Sales', 'Support', 'Demo'];
+  final List<String> visitPurposes = ['Select', 'Testing', 'AI Tools'];
   String? selectedVisitPurpose;
 
   // Controllers for text fields
@@ -35,6 +34,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: const CustomAppbar(title: 'Assign Work'),
+
     body: SingleChildScrollView(
       padding: EdgeInsets.symmetric(
         horizontal: 16 * Responsive.getResponsive(context),
@@ -58,7 +58,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
             hintTextStyle: TextStyle(
               fontSize: 14 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).outline,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w600,
             ),
             border: Border.all(color: AppTheme.getColor(context).outline),
           ),
@@ -112,7 +112,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
           ),
 
           //Assign Work Engineer
-          AssignEngineerField(
+          const AssignEngineerField(
             allEmployees: [
               Employee(
                 name: 'Rushda Baqui',
@@ -181,10 +181,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
           BigMyCoTextField(
             controller: remarkController,
             hintText: 'Type here',
-            prefixImage: SvgPicture.asset(
-              AppAssets.msgedit,
-              fit: BoxFit.contain,
-            ),
+            prefixImage: SvgPicture.asset(AppAssets.msgedit),
             maxLines: 5,
             height: 120 * Responsive.getResponsive(context),
             textInputType: TextInputType.multiline,
@@ -192,6 +189,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
             hintStyle: TextStyle(
               color: AppTheme.getColor(context).outline,
               fontSize: 14 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.w600,
             ),
             style: TextStyle(
               fontSize: 16 * Responsive.getResponsiveText(context),
@@ -215,10 +213,10 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
             child: MyCoButton(
               title: 'Submit',
               onTap: () {},
-              backgroundColor: AppColors.primary,
+              backgroundColor: AppTheme.getColor(context).primary,
               textStyle: TextStyle(
                 fontSize: 16 * Responsive.getResponsiveText(context),
-                color: Colors.white,
+                color: AppTheme.getColor(context).onPrimary,
                 fontWeight: FontWeight.w500,
               ),
               width: double.infinity,
@@ -231,6 +229,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
     ),
   );
 
+  //for label text feild
   Widget buildLabeledField(
     BuildContext context, {
     required String label,
@@ -246,7 +245,8 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
         hint: hint,
         hintTextStyle: TextStyle(
           color: AppTheme.getColor(context).outline,
-          fontWeight: FontWeight.w400,
+          fontSize: 14 * Responsive.getResponsiveText(context),
+          fontWeight: FontWeight.w600,
         ),
         controller: controller,
         widthFactor: Responsive.getWidth(context),
