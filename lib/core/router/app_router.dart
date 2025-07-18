@@ -198,8 +198,6 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.leave,
         name: '/leave',
-        builder: (context, state) => const LeaveScreen(),
-        name: RoutePaths.leave,
         builder: (context, state) => BlocProvider<LeaveBloc>(
           create: (_) => GetIt.I<LeaveBloc>(),
           child: const LeaveScreen(),
@@ -248,26 +246,7 @@ class AppRouter {
         name: '/my_team_leaves_screen',
         builder: (context, state) => const MyTeamLeavesScreen(),
       ),
-      GoRoute(
-        path: RoutePaths.addShortLeaveScreen,
-        name: '/add_short_leave_screen',
-        builder: (context, state) => AddShortLeaveScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.addLeaveScreen,
-        name: '/add_leave_screen',
-        builder: (context, state) => const AddLeaveScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.myLeaveBalanceScreen,
-        name: '/my_leave_balance_screen',
-        builder: (context, state) => const MyLeaveBalanceScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.myTeamLeavesScreen,
-        name: '/my_team_leaves_screen',
-        builder: (context, state) => const MyTeamLeavesScreen(),
-      ),
+
       GoRoute(
         path: RoutePaths.addShortLeaveScreen,
         name: RoutePaths.addShortLeaveScreen,
@@ -428,22 +407,6 @@ class AppRouter {
         ),
       ),
      ...cahatRoutes,
-      GoRoute(
-        path: RoutePaths.leaveBalance,
-        name: RoutePaths.leaveBalance,
-        builder: (context, state) => BlocProvider<LeaveBloc>(
-          create: (_) => GetIt.I<LeaveBloc>(),
-          child: const MyLeaveBalanceScreen(),
-        ),
-      ),
-      GoRoute(
-        path: RoutePaths.teamLeaveBalance,
-        name: RoutePaths.teamLeaveBalance,
-        builder: (context, state) => BlocProvider<LeaveBloc>(
-          create: (_) => GetIt.I<LeaveBloc>(),
-          child: const MyTeamLeavesScreen(),
-        ),
-      ),
 
       GoRoute(
         path: RoutePaths.assetsHome,
