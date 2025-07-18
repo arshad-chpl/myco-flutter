@@ -9,6 +9,7 @@ import 'package:myco_flutter/features/company_selector/presentation/di/request_o
 import 'package:myco_flutter/features/dashboard/presentation/di/dashboard_di.dart';
 import 'package:myco_flutter/features/holiday/presentation/di/holiday_di.dart';
 import 'package:myco_flutter/features/language_selector/presentation/di/language_di.dart';
+import 'package:myco_flutter/features/leave/presentation/di/leave_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
@@ -30,8 +31,6 @@ Future<void> init() async {
   //========Splash=========
   splashDi(sl);
 
-  //========Language Selector=========
-  setupLanguageDI(sl);
   //========Login=========
   await setupLoginDi(sl);
 
@@ -53,6 +52,9 @@ Future<void> init() async {
   //========VISIT WITH=========
   visitWithDi(sl);
 
-  // ========Admin View=========
-  adminViewDi(sl);
+  //========Company Info=========
+  setupCompanyInfoDI(sl);
+
+  //Leave
+  setUpLeaveDI(sl);
 }
