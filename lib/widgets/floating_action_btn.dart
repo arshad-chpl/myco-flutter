@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-
-
+import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_inner_shadow.dart';
 
 class ExpandableFabAction {
   final String label;
@@ -32,9 +31,9 @@ class ExpandableFab extends StatefulWidget {
   final double? innerimagewidth;
   final double? circleavataradius;
   final Color? innericonbgr;
-  final EdgeInsetsGeometry ? margin;
-  final EdgeInsetsGeometry ? padding;
-  final Decoration ? decoration;
+  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
+  final Decoration? decoration;
 
   const ExpandableFab({
     super.key,
@@ -80,15 +79,13 @@ class _ExpandableFabState extends State<ExpandableFab>
     );
 
     // ✅ Initialize _textAnimation AFTER _controller is ready
-    _textAnimation = Tween<double>(
-      begin: 0,
-      end: _closeText.length.toDouble(),
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.3, 1.0, curve: Curves.easeInOut),
-      ),
-    );
+    _textAnimation = Tween<double>(begin: 0, end: _closeText.length.toDouble())
+        .animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: const Interval(0.3, 1.0, curve: Curves.easeInOut),
+          ),
+        );
   }
 
   @override
@@ -119,15 +116,20 @@ class _ExpandableFabState extends State<ExpandableFab>
         return FadeTransition(
           opacity: _fadeAnimation,
           child: SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(0, 0.3),
-              end: Offset.zero,
-            ).animate(
-              CurvedAnimation(
-                parent: _controller,
-                curve: Interval(0.0, 1.0 - index * 0.1, curve: Curves.easeOut),
-              ),
-            ),
+            position:
+                Tween<Offset>(
+                  begin: const Offset(0, 0.3),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(
+                    parent: _controller,
+                    curve: Interval(
+                      0.0,
+                      1.0 - index * 0.1,
+                      curve: Curves.easeOut,
+                    ),
+                  ),
+                ),
             child: Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: _buildOption(
@@ -145,30 +147,35 @@ class _ExpandableFabState extends State<ExpandableFab>
           ),
         );
       }),
+
       GestureDetector(
         onTap: widget.onTap ?? _toggle,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
+        child: InnerShadowContainer(
           height: widget.imageSize,
           width: _isExpanded ? 130 : widget.imageSize,
-          padding:
-              _isExpanded
-                  ? const EdgeInsets.symmetric(horizontal: 5)
-                  : EdgeInsets.zero,
-          decoration:BoxDecoration(
-            color: AppTheme.getColor(context).primary,
-            borderRadius: BorderRadius.circular(_isExpanded ? 30 : 100),
-            boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 4)],
-          ),
-          child: Center(
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 200),
-              transitionBuilder:
-                  (child, animation) =>
-                      FadeTransition(opacity: animation, child: child),
-              child:
-                  _isExpanded
-                      ? Row(
+          borderRadius: _isExpanded ? 30 : 100,
+          isShadowBottomLeft: true,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            height: widget.imageSize,
+            width: _isExpanded ? 130 : widget.imageSize,
+            padding: _isExpanded
+                ? const EdgeInsets.symmetric(horizontal: 5)
+                : EdgeInsets.zero,
+            decoration: BoxDecoration(
+              color: AppTheme.getColor(context).primary,
+              borderRadius: BorderRadius.circular(_isExpanded ? 30 : 100),
+              boxShadow: const [
+                BoxShadow(color: Colors.black26, blurRadius: 4),
+              ],
+            ),
+            child: Center(
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                transitionBuilder: (child, animation) =>
+                    FadeTransition(opacity: animation, child: child),
+                child: _isExpanded
+                    ? Row(
                         key: const ValueKey('close'),
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -199,7 +206,7 @@ class _ExpandableFabState extends State<ExpandableFab>
                           ),
                         ],
                       )
-                      : FittedBox(
+                    : FittedBox(
                         key: const ValueKey('open'),
                         fit: BoxFit.cover,
                         child: Icon(
@@ -208,6 +215,7 @@ class _ExpandableFabState extends State<ExpandableFab>
                           size: widget.imageSize * 0.9,
                         ),
                       ),
+              ),
             ),
           ),
         ),
@@ -222,8 +230,8 @@ class _ExpandableFabState extends State<ExpandableFab>
     double? innerimagewidth,
     double? circleavataradius,
     Color? innericonbgr,
-    EdgeInsetsGeometry?margin,
-    EdgeInsetsGeometry?padding,
+    EdgeInsetsGeometry? margin,
+    EdgeInsetsGeometry? padding,
     Decoration? decoration,
   ) => Row(
     mainAxisSize: MainAxisSize.min,
@@ -233,12 +241,18 @@ class _ExpandableFabState extends State<ExpandableFab>
         onTap: action.onTap,
         child: Container(
           margin: margin ?? const EdgeInsets.only(right: 10),
-          padding: padding ??const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-          decoration:decoration?? BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(30),
-            boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5)],
-          ),
+          padding:
+              padding ??
+              const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+          decoration:
+              decoration ??
+              BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: const [
+                  BoxShadow(color: Colors.black12, blurRadius: 5),
+                ],
+              ),
           child: Text(
             action.label,
             style: const TextStyle(
@@ -249,21 +263,20 @@ class _ExpandableFabState extends State<ExpandableFab>
         ),
       ),
       CircleAvatar(
-        backgroundColor:innericonbgr?? Colors.white,
+        backgroundColor: innericonbgr ?? Colors.white,
         radius: circleavataradius ?? 23,
-        child:
-            action.iconPath != null
-                ? Image.asset(
-                  action.iconPath!,
-                  fit: BoxFit.cover,
-                  width: innerimagewidth ?? 30,
-                  height: innerimageheight ?? 30,
-                )
-                : Icon(
-                  action.icon,
-                  size: innericonsize ?? 25,
-                  color: AppColors.primary,
-                ),
+        child: action.iconPath != null
+            ? Image.asset(
+                action.iconPath!,
+                fit: BoxFit.cover,
+                width: innerimagewidth ?? 30,
+                height: innerimageheight ?? 30,
+              )
+            : Icon(
+                action.icon,
+                size: innericonsize ?? 25,
+                color: AppColors.primary,
+              ),
       ),
     ],
   );
