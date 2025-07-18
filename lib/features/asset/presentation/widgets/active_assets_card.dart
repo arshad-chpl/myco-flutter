@@ -4,40 +4,39 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/custom_dash_line.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/image_gredal.dart';
-import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
 import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-class AssetsListPage extends StatelessWidget {
-  const AssetsListPage({super.key});
+// class AssetsListPage extends StatelessWidget {
+//   const AssetsListPage({super.key});
 
-  @override
-  Widget build(BuildContext context) => SliverPadding(
-    padding: EdgeInsets.symmetric(
-      horizontal: 0.04 * Responsive.getWidth(context),
-    ),
-    sliver: SliverList.separated(
-      itemCount: 8,
-      separatorBuilder: (_, __) =>
-          SizedBox(height: 0.02 * Responsive.getHeight(context)),
-      itemBuilder: (_, index) => const ActiveAssetsCard(
-        title: 'Laptop',
-        subTitle: '(AS101)',
-        image: AppAssets.imageLaptop,
-        brand: 'Dell',
-        srNo: 'DELL123456',
-        handOverDate: '01-01-2024',
-        handoverImageList: [
-          'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
-          'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-          AppAssets.imageLaptop,
-          AppAssets.imageLaptop,
-        ],
-      ),
-    ),
-  );
-}
+//   @override
+//   Widget build(BuildContext context) => SliverPadding(
+//     padding: EdgeInsets.symmetric(
+//       horizontal: 0.04 * Responsive.getWidth(context),
+//     ),
+//     sliver: SliverList.separated(
+//       itemCount: 8,
+//       separatorBuilder: (_, __) =>
+//           SizedBox(height: 0.02 * Responsive.getHeight(context)),
+//       itemBuilder: (_, index) => const ActiveAssetsCard(
+//         title: 'Laptop',
+//         subTitle: '(AS101)',
+//         image: AppAssets.imageLaptop,
+//         brand: 'Dell',
+//         srNo: 'DELL123456',
+//         handOverDate: '01-01-2024',
+//         handoverImageList: [
+//           'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+//           'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+//           AppAssets.imageLaptop,
+//           AppAssets.imageLaptop,
+//         ],
+//       ),
+//     ),
+//   );
+// }
 
 class ActiveAssetsCard extends StatelessWidget {
   final String title;

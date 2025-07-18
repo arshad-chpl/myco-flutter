@@ -1,8 +1,23 @@
+// class AssetsEntity {
+//   final List<AssetEntity>? assets;
+//   final String? message;
+
+//   AssetsEntity({this.assets, this.message});
+// }
+
 class AssetsEntity {
   final List<AssetEntity>? assets;
   final String? message;
 
   AssetsEntity({this.assets, this.message});
+
+  AssetsEntity copyWith({
+    List<AssetEntity>? assets,
+    String? message,
+  }) => AssetsEntity(
+      assets: assets ?? this.assets,
+      message: message ?? this.message,
+    );
 }
 
 class AssetEntity {

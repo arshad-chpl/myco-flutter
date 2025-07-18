@@ -125,176 +125,6 @@ Future<String?> showPicker(
   );
 }
 
-class DialDatePickerWidget extends StatefulWidget {
-  final void Function(DateTime selectedDate) onSubmit;
-  final DateTime? minDate;
-  final DateTime? maxDate;
-  final bool pickDay;
-  final bool timePicker;
-  final Widget? image;
-  final double? bottomSheetHeight;
-  final double? height;
-  final double? width;
-  final bool? use24hFormat;
-
-  const DialDatePickerWidget({
-    required this.onSubmit,
-    super.key,
-    this.minDate,
-    this.maxDate,
-    this.pickDay = true,
-    this.timePicker = false,
-    this.image,
-    this.height,
-    this.width,
-    this.bottomSheetHeight,
-    this.use24hFormat,
-  });
-
-  @override
-  State<DialDatePickerWidget> createState() => _DialDatePickerWidgetState();
-}
-
-class _DialDatePickerWidgetState extends State<DialDatePickerWidget> {
-  late DateTime _selectedDate;
-  final GlobalKey<_CustomTimePickerState> _timePickerKey = GlobalKey();
-  final GlobalKey<_CustomDatePickerState> _datePickerKey = GlobalKey();
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedDate = DateTime.now();
-    if (widget.minDate != null && _selectedDate.isBefore(widget.minDate!)) {
-      _selectedDate = widget.minDate!;
-    }
-    if (widget.maxDate != null && _selectedDate.isAfter(widget.maxDate!)) {
-      _selectedDate = widget.maxDate!;
-    }
-  }
-
-  void _showPicker(BuildContext context) {
-    showCupertinoModalPopup(
-      context: context,
-      builder: (_) => Container(
-        height: widget.bottomSheetHeight ?? Responsive.getHeight(context) * 0.4,
-        width: double.infinity,
-        color: CupertinoColors.systemBackground.resolveFrom(context),
-        child: Column(
-          children: [
-            Expanded(
-              child: widget.timePicker
-                  ? CustomTimePicker(
-                      key: _timePickerKey,
-                      initialDateTime: _selectedDate,
-                      use24hFormat: widget.use24hFormat ?? false,
-                      onTimeChanged: (_) {},
-                    )
-                  : CustomDatePicker(
-                      key: _datePickerKey,
-                      initialDate: _selectedDate,
-                      minDate: widget.minDate ?? DateTime(1800, 1, 1),
-                      maxDate: widget.maxDate ?? DateTime(2200, 12, 31),
-                      pickDay: widget.pickDay,
-                      onDateChanged: (_) {},
-                    ),
-            ),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.only(
-                left: 16 * Responsive.getResponsive(context),
-                right: 16 * Responsive.getResponsive(context),
-                bottom: 16 * Responsive.getResponsive(context),
-              ),
-              child: CupertinoButton(
-                borderRadius: BorderRadius.circular(
-                  50 * Responsive.getResponsive(context),
-                ),
-                color: AppTheme.getColor(context).primary,
-                child: Center(
-                  child: Text(
-                    'Submit',
-                    style: MyCoButtonTheme.getMobileTextStyle(context),
-                  ),
-                ),
-                onPressed: () {
-                  DateTime newDateTime;
-                  if (widget.timePicker) {
-                    final selectedTime = _timePickerKey.currentState
-                        ?.getSelectedTime();
-                    newDateTime = DateTime(
-                      _selectedDate.year,
-                      _selectedDate.month,
-                      _selectedDate.day,
-                      selectedTime?.hour ?? _selectedDate.hour,
-                      selectedTime?.minute ?? _selectedDate.minute,
-                    );
-                  } else {
-                    final selectedDate = _datePickerKey.currentState
-                        ?.getSelectedDate();
-                    newDateTime = DateTime(
-                      selectedDate?.year ?? _selectedDate.year,
-                      selectedDate?.month ?? _selectedDate.month,
-                      selectedDate?.day ?? _selectedDate.day,
-                      _selectedDate.hour,
-                      _selectedDate.minute,
-                    );
-                  }
-                  setState(() => _selectedDate = newDateTime);
-                  widget.onSubmit(_selectedDate);
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  String _formatDate(DateTime date) {
-    if (widget.timePicker) {
-      return DateFormat('hh:mm a').format(date);
-    } else if (widget.pickDay) {
-      return '${_monthName(date.month)} ${date.day}, ${date.year}';
-    } else {
-      return '${_monthName(date.month)} ${date.year}';
-    }
-  }
-
-  String _monthName(int month) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return months[month - 1];
-  }
-
-  @override
-  Widget build(BuildContext context) => MyCoButton(
-    onTap: () => _showPicker(context),
-    title: _formatDate(_selectedDate),
-    textStyle: const TextStyle(
-      color: AppColors.black,
-      fontFamily: 'Gilroy-semiBold',
-    ),
-    image: widget.image,
-    width: widget.width,
-    height: widget.height,
-    backgroundColor: AppColors.white,
-    border: Border.all(color: AppColors.borderColor, width: 1.2),
-  );
-}
-
 // -- For Time Picker --
 class CustomTimePicker extends StatefulWidget {
   final DateTime initialDateTime;
@@ -529,49 +359,35 @@ Widget _buildLoopingPicker<T>({
   required int selectedIndex,
   required ValueChanged<int> onChanged,
   required String Function(T item) displayText,
-}) {
-  const int loopMultiplier = 1000;
-  final int totalCount = items.length * loopMultiplier;
-  final int middleIndex = (totalCount / 2).floor();
-  final int initialLoopIndex =
-      middleIndex - (middleIndex % items.length) + selectedIndex;
-
-  return Expanded(
-    child: CupertinoPicker.builder(
-      scrollController: FixedExtentScrollController(
-        initialItem: initialLoopIndex,
-      ),
-      diameterRatio: 1,
-      itemExtent: 32,
-      childCount: totalCount,
-      selectionOverlay: Container(
-        decoration: BoxDecoration(
-          border: Border.symmetric(
-            horizontal: BorderSide(
-              color: AppTheme.getColor(context).primary,
-              width: 1.5,
-            ),
+}) => Expanded(
+  child: CupertinoPicker(
+    scrollController: FixedExtentScrollController(initialItem: selectedIndex),
+    diameterRatio: 1,
+    itemExtent: 32,
+    selectionOverlay: Container(
+      decoration: BoxDecoration(
+        border: Border.symmetric(
+          horizontal: BorderSide(
+            color: AppTheme.getColor(context).primary,
+            width: 1.5,
           ),
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 6),
       ),
-      itemBuilder: (context, index) {
-        final actualIndex = index % items.length;
-        final isSelected = actualIndex == selectedIndex;
-        final item = items[actualIndex];
-
-        return Center(
-          child: CustomText(
-            displayText(item),
-            fontSize: 22 * Responsive.getResponsiveText(context),
-            color: isSelected
-                ? AppTheme.getColor(context).primary
-                : AppColors.textPrimary,
-            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-          ),
-        );
-      },
-      onSelectedItemChanged: (index) => onChanged(index % items.length),
+      margin: const EdgeInsets.symmetric(horizontal: 6),
     ),
-  );
-}
+    onSelectedItemChanged: onChanged,
+    children: items.map((item) {
+      final isSelected = items.indexOf(item) == selectedIndex;
+      return Center(
+        child: CustomText(
+          displayText(item),
+          fontSize: 22 * Responsive.getResponsiveText(context),
+          color: isSelected
+              ? AppTheme.getColor(context).primary
+              : AppColors.textPrimary,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+        ),
+      );
+    }).toList(),
+  ),
+);

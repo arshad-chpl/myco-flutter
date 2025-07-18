@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/cached_image_holder.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class ImageGridPreviewWidget extends StatelessWidget {
@@ -155,16 +155,7 @@ class _ImagePreviewState extends State<_ImagePreview> {
     final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        title: CustomText(
-          'Assets',
-          fontSize: 20 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.w700,
-        ),
-        titleSpacing: 0,
-        leading: const BackButton(),
-        backgroundColor: AppTheme.getColor(context).surface,
-      ),
+      appBar: const CustomAppbar(title: 'assets', titleSpacing: 0),
       body: Center(
         child: Stack(
           children: [

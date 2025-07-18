@@ -99,7 +99,7 @@ class CommonCard extends StatelessWidget {
                 const BoxShadow(
                   color: Colors.black26,
                   offset: Offset(0, 3),
-                  blurRadius: 4,
+                  blurRadius: 6,
                 ),
               BoxShadow(
                 color:

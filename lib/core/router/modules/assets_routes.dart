@@ -21,7 +21,7 @@ List<RouteBase> assetsRoutes = [
         BlocProvider<AssetsBloc>(
           create: (_) => sl<AssetsBloc>(), // ✅ using GetIt
         ),
-        BlocProvider<AssetsTabBloc>(create: (_) => AssetsTabBloc()),
+        // BlocProvider<AssetsTabBloc>(create: (_) => AssetsTabBloc()),
         BlocProvider<AssetsFilterBloc>(create: (_) => AssetsFilterBloc()),
       ],
       child: const AssetsHomePage(),

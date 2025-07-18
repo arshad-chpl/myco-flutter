@@ -1,12 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class AssetsTabEvent {}
 abstract class AssetsFilterEvent {}
-
-class TabChanged extends AssetsTabEvent {
-  final int index;
-  TabChanged(this.index);
-}
 
 class AssetsFilters extends AssetsFilterEvent {
   final String? category;
@@ -14,17 +8,27 @@ class AssetsFilters extends AssetsFilterEvent {
   AssetsFilters({this.category, this.brand});
 }
 
-
 abstract class AssetsEvent extends Equatable {
+  const AssetsEvent();
+
   @override
   List<Object?> get props => [];
 }
 
-class FetchAssetsEvent extends AssetsEvent {
-  final String oldItems; // "0" for active, "1" for past
+class TabChanged extends AssetsEvent {
+  final int index;
 
-  FetchAssetsEvent({required this.oldItems});
+  const TabChanged(this.index);
 
   @override
-  List<Object?> get props => [oldItems];
+  List<Object?> get props => [index];
+}
+
+class SearchAssetsEvent extends AssetsEvent {
+  final String query;
+
+  const SearchAssetsEvent(this.query);
+
+  @override
+  List<Object?> get props => [query];
 }

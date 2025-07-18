@@ -10,6 +10,7 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/text_controllers/takeover_controllers.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/assets_bottom_sheet.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/assets_label_text_field.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -56,16 +57,7 @@ class _HandoverAssetsPageState extends State<HandoverAssetsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: const Color(0xFFF6F7FB),
-      appBar: AppBar(
-        title: CustomText(
-          'handover_assets',
-          fontSize: 22 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.w700,
-        ),
-        titleSpacing: 0,
-        leading: const BackButton(),
-        // backgroundColor: const Color(0xFFF6F7FB),
-      ),
+      appBar: const CustomAppbar(title: 'handover_assets', titleSpacing: 0),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(

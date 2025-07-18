@@ -5,10 +5,11 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/active_assets_card.dart';
-import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/image_gredal.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/dashed_border_container.dart';
+import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -19,15 +20,9 @@ class AssetsDetailsPage extends StatelessWidget {
   // ignore: prefer_expression_function_bodies
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: CustomText(
-          'assets_details',
-          fontSize: 22 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.w700,
-        ),
+      appBar: CustomAppbar(
+        title: 'assets_details',
         titleSpacing: 0,
-        leading: const BackButton(),
-        backgroundColor: AppTheme.getColor(context).surface,
         actions: [
           GestureDetector(
             onTap: () => context.push('/handover-assets'),

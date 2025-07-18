@@ -1,11 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:myco_flutter/features/asset/domain/entities/asset_entity.dart';
 
-class AssetsTabState {
-  final int selectedIndex;
-  AssetsTabState({required this.selectedIndex});
-}
-
 class AssetsFilterState {
   final String category;
   final String brand;
@@ -14,28 +9,50 @@ class AssetsFilterState {
 }
 
 abstract class AssetsState extends Equatable {
+  final int selectedIndex;
+  const AssetsState({required this.selectedIndex});
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [selectedIndex];
 }
 
-class AssetsInitial extends AssetsState {}
+class AssetsInitial extends AssetsState {
+  const AssetsInitial() : super(selectedIndex: 0);
+}
 
-class AssetsLoading extends AssetsState {}
+class AssetsLoading extends AssetsState {
+  const AssetsLoading({required super.selectedIndex});
+}
+
+// class AssetsLoaded extends AssetsState {
+//   final AssetsEntity assets;
+
+//   const AssetsLoaded({required this.assets, required super.selectedIndex});
+
+//   @override
+//   List<Object?> get props => [assets, selectedIndex];
+// }
 
 class AssetsLoaded extends AssetsState {
-  final AssetsEntity assets;
+  final List<AssetEntity> assets;
+  final List<AssetEntity> originalAssets;
+  final int selectedIndex;
 
-  AssetsLoaded(this.assets);
+  const AssetsLoaded({
+    required this.assets,
+    required this.originalAssets,
+    required this.selectedIndex,
+  }) : super(selectedIndex: 0);
 
   @override
-  List<Object?> get props => [assets];
+  List<Object?> get props => [assets, originalAssets, selectedIndex];
 }
 
 class AssetsError extends AssetsState {
   final String message;
 
-  AssetsError(this.message);
+  const AssetsError({required this.message, required super.selectedIndex});
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [message, selectedIndex];
 }
