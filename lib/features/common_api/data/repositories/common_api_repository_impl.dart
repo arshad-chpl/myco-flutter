@@ -16,9 +16,9 @@ class CommonApiRepositoryImpl implements CommonApiRepository {
   CommonApiRepositoryImpl(this.remoteDataSource, this.safeApiCall);
 
   @override
-  Future<Either<Failure, UploadFileResponseEntity>> uploadedTemp() async =>
+  Future<Either<Failure, UploadFileResponseEntity>> uploadedTemp(String loginType, List<String> filePath) async =>
       safeApiCall.execute(() async {
-        final responseModel = await remoteDataSource.uploadedTemp();
+        final responseModel = await remoteDataSource.uploadedTemp(loginType, filePath);
         return responseModel.toEntity();
       });
 

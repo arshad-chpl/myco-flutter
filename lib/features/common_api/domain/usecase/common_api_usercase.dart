@@ -13,7 +13,8 @@ class CommonApiUserCase {
   CommonApiUserCase({required this.repository});
 
   //uploaded image pdf
-  Future<Either<Failure, UploadFileResponseEntity>> uploadedTemp() async => await repository.uploadedTemp();
+  Future<Either<Failure, UploadFileResponseEntity>> uploadedTemp(String loginType, List<String> filePath)
+  async => await repository.uploadedTemp(loginType, filePath);
 
   Future<Either<Failure, BranchResponseEntity>> callBranch() async => await repository.getBranchList();
   Future<Either<Failure, FloorAndUnitResponseEntity>> floorList(String branchId) async => await repository.getFloorAndUnit(branchId);

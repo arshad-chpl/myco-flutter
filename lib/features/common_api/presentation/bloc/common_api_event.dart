@@ -7,7 +7,20 @@ abstract class CommonApiEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadUploaded extends CommonApiEvent {}
+
+// uploaded image and pdf api
+class LoadUploaded extends CommonApiEvent {
+
+  final String loginType;
+  final List<String> filePath;
+
+  const LoadUploaded(
+      this.loginType,
+      this.filePath);
+
+  @override
+  List<Object> get props => [loginType, filePath];
+}
 
 
 class LoadBranch extends CommonApiEvent {}

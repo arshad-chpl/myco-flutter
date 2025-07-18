@@ -6,7 +6,7 @@ import 'package:myco_flutter/features/common_api/domain/entities/shift_response_
 import 'package:myco_flutter/features/common_api/domain/entities/uploaded_file_response_entity.dart';
 
 abstract class CommonApiRepository {
-  Future<Either<Failure, UploadFileResponseEntity>> uploadedTemp();
+  Future<Either<Failure, UploadFileResponseEntity>> uploadedTemp(String loginType, List<String> filePath);
 
   Future<Either<Failure, BranchResponseEntity>> getBranchList();
   Future<Either<Failure, FloorAndUnitResponseEntity>> getFloorAndUnit(String branchId);

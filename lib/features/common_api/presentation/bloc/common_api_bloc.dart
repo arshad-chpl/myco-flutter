@@ -8,9 +8,6 @@ import 'package:myco_flutter/features/common_api/domain/entities/floor_and_unit_
 import 'package:myco_flutter/features/common_api/domain/entities/shift_response_entity.dart';
 import 'package:myco_flutter/features/common_api/domain/entities/uploaded_file_response_entity.dart';
 import 'package:myco_flutter/features/common_api/domain/usecase/common_api_usercase.dart';
-import 'package:myco_flutter/features/common_api/models/floor_and_unit_response.dart';
-import 'package:myco_flutter/features/common_api/models/shift_response.dart';
-import 'package:myco_flutter/features/common_api/models/uploaded_file_response.dart';
 
 
 part 'common_api_event.dart';
@@ -20,7 +17,8 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
   final CommonApiUserCase registerUseCase;
 
   CommonApiBloc({required this.registerUseCase}) : super(CommonInitial()) {
-    //upload imagePdf
+
+    //upload image and Pdf api
     on<LoadUploaded>(_onFetchUploadedTemp);
 
     on<LoadBranch>(_onFetchBranch);
@@ -32,7 +30,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
   // uploaded image and pdf api
   void _onFetchUploadedTemp(LoadUploaded event, Emitter<CommonApiState> emit) async {
     emit(CommonApiLoading());
-    final Either<Failure, UploadFileResponseEntity> result = await registerUseCase.uploadedTemp();
+    final Either<Failure, UploadFileResponseEntity> result = await registerUseCase.uploadedTemp(event.loginType, event.filePath);
 
     result.fold(
           (failure) => emit(UploadImagePdfApiError(failure.message)),

@@ -253,47 +253,52 @@ class _SignupFormPageState extends State<SignupFormPage> {
         backgroundColor: AppTheme.getColor(context).surface,
         body: Padding(
           padding: EdgeInsets.all(20 * Responsive.getResponsive(context)),
-          child: BlocConsumer<CommonApiBloc, CommonApiState>(
-            listener: (context, state) {
-              if (state is BlockApiSuccess) {
-                branchOptionIds = state.blockList.blocks!.map((block) => block.blockId ?? '').toList();
-                branchOptionNames = state.blockList.blocks!.map((block) => block.blockName ?? '').toList();
-              }
+          child: MultiBlocListener(
+            listeners: [
+              BlocListener<CommonApiBloc, CommonApiState>(
+                listener: (context, state) {
+                  if (state is BlockApiSuccess) {
+                    branchOptionIds = state.blockList.blocks!.map((block) => block.blockId ?? '').toList();
+                    branchOptionNames = state.blockList.blocks!.map((block) => block.blockName ?? '').toList();
+                  }
 
-              if (state is FloorUnitApiSuccess) {
-                floorUnitOptionIds = state.floorUnitList.designation!.map((d) => d.designationId ?? '').toList();
-                floorUnitOptionNames = state.floorUnitList.designation!.map((d) => d.designationName ?? '').toList();
+                  if (state is FloorUnitApiSuccess) {
+                    floorUnitOptionIds = state.floorUnitList.designation!.map((d) => d.designationId ?? '').toList();
+                    floorUnitOptionNames = state.floorUnitList.designation!.map((d) => d.designationName ?? '').toList();
 
-                departmentOptionIds = state.floorUnitList.floors!.map((f) => f.floorId ?? '').toList();
-                departmentOptionNames = state.floorUnitList.floors!.map((f) => f.floorName ?? '').toList();
+                    departmentOptionIds = state.floorUnitList.floors!.map((f) => f.floorId ?? '').toList();
+                    departmentOptionNames = state.floorUnitList.floors!.map((f) => f.floorName ?? '').toList();
 
-                subDepartmentOptionIds = state.floorUnitList.subDepartmentList!.map((sd) => sd.subDepartmentId ?? '').toList();
-                subDepartmentOptionNames = state.floorUnitList.subDepartmentList!.map((sd) => sd.subDepartmentName ?? '').toList();
-              }
+                    subDepartmentOptionIds = state.floorUnitList.subDepartmentList!.map((sd) => sd.subDepartmentId ?? '').toList();
+                    subDepartmentOptionNames = state.floorUnitList.subDepartmentList!.map((sd) => sd.subDepartmentName ?? '').toList();
+                  }
 
-              if (state is ShiftApiSuccess) {
-                shiftOptionIds = state.shiftList.shift!.map((s) => s.shiftTimeId ?? '').toList();
-                shiftOptionNames = state.shiftList.shift!.map((s) => s.shiftTimeView ?? '').toList();
-              }
-
-
-              // if(state is AddPrimaryUserApiSuccess){
-              //   Fluttertoast.showToast(msg: state.response.message!, backgroundColor: Colors.green, textColor: Colors.white);
-              //   preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, state.response.trxId ??'');
-              // }
-
-            },
-
-            builder: (context, state) {
-              if (state is CommonApiLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (state is CommonApiError) {
-                return Center(child: Text('Error: ${state.message}'));
-              }
-              // Show your form by default
-              return setUi();
-            },
+                  if (state is ShiftApiSuccess) {
+                    shiftOptionIds = state.shiftList.shift!.map((s) => s.shiftTimeId ?? '').toList();
+                    shiftOptionNames = state.shiftList.shift!.map((s) => s.shiftTimeView ?? '').toList();
+                  }
+                },
+              ),
+              BlocListener<PrimaryRegisterBloc, PrimaryRegisterState>(
+                listener: (context, state) {
+                  if (state is AddPrimaryUserApiSuccess) {
+                    Fluttertoast.showToast(msg: state.response.message!, backgroundColor: Colors.green, textColor: Colors.white);
+                    preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, state.response.trxId ?? '');
+                  }
+                },
+              ),
+            ],
+            child: BlocBuilder<CommonApiBloc, CommonApiState>(
+              builder: (context, state) {
+                if (state is CommonApiLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (state is CommonApiError) {
+                  return Center(child: Text('Error: ${state.message}'));
+                }
+                return setUi();
+              },
+            ),
           ),
         ),
       ),

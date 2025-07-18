@@ -299,14 +299,21 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.signUpForm,
         name: RoutePaths.signUpForm,
-        builder: (context, state) => BlocProvider(
-
-            create: (context) =>
-            CommonApiBloc(registerUseCase: GetIt.I<CommonApiUserCase>())
-              ..add(LoadBranch()),
-
-            child: const SignupFormPage()),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => CommonApiBloc(registerUseCase: GetIt.I<CommonApiUserCase>(),
+              )..add(LoadBranch()),
+            ),
+            BlocProvider(
+              create: (context) => PrimaryRegisterBloc(registerUseCase: GetIt.I<PrimaryRegisterUseCase>(),
+              ),
+            ),
+          ],
+          child: const SignupFormPage(),
+        ),
       ),
+
       GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',

@@ -20,14 +20,14 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
 
 
   @override
-  Future<UploadFileResponseModel> uploadedTemp() async {
+  Future<UploadFileResponseModel> uploadedTemp(String loginType, List<String> filePath) async {
     final dataMap = {
       'uploadImageToTemp': 'uploadImageToTemp',
-      'society_id': '1',
-      'user_id': '0',
-      'beforeLogIn': '1',
-      'file_format_name': '1',
-      'img': '' /*List<MultipartBody.Part>*/,
+      'society_id': preferenceManager.getCompanyId(),
+      'user_id': preferenceManager.getUserId(),
+      'beforeLogIn': loginType,
+      'file_format_name': '',
+      'img': filePath,
     };
 
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
