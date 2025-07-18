@@ -7,6 +7,7 @@ import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
 import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
 import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
+import 'package:myco_flutter/core/router/modules/work_allocation_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
@@ -397,32 +398,7 @@ class AppRouter {
         ),
       ),
 
-      ShellRoute(
-        builder: (context, state, child) => MultiBlocProvider(
-          providers: [BlocProvider(create: (context) => WorkAllocationBloc())],
-          child: child,
-        ),
-        routes: [
-          GoRoute(
-            path: RoutePaths.workAllocation,
-            name: '/work-allocation',
-            // builder: (context, state) => BlocProvider(
-            //   create: (context) => WorkAllocationBloc(),
-            //   child: AssignWorkPage(),
-            // ),
-            builder: (context, state) => const WorkAllocationPage(),
-          ),
-          GoRoute(
-            path: RoutePaths.detailPage,
-            name: '/detail-page',
-            // builder: (context, state) => BlocProvider(
-            //   create: (context) => WorkAllocationBloc(),
-            //   child: AssignWorkPage(),
-            // ),
-            builder: (context, state) => const DetailPage(),
-          ),
-        ],
-      ),
+      ...WorkAllocationRoutes,
 
       GoRoute(
         path: RoutePaths.qrScanner,
