@@ -108,6 +108,7 @@ flutter:
     - assets/dashboard/svgs/
     - assets/dashboard/svgs/
     - assets/assets/
+    - assets/svgs/work_allocation/
     - assets/svgs/take_order/
     - assets/work_allocation/
     - assets/svgs/work_allocation/

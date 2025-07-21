@@ -1,6 +1,7 @@
 class AppAssets {
   // commmon paths for visit in the application
   static const String basePath = 'assets';
+
   // static const String fontsPath = '$basePath/fonts';
   static const String imagesPath = '$basePath/images';
   static const String svgsPath = '$basePath/svgs';
@@ -20,7 +21,7 @@ class AppAssets {
 
   static const String stepper = '$basePath/stepper';
   static const String workAllocationSvgs = '$svgsPath/work_allocation';
- 
+
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -78,17 +79,22 @@ class AppAssets {
   static const String xCircle = '$svgsTakeOrder/XCircle.svg';
   static const String messageEdit = '$svgsTakeOrder/message-edit.svg';
   static const String placeOrder = '$svgsTakeOrder/place-order.svg';
-  static const String 
+  static const String
   y = '$svgsTakeOrder/order-history.svg';
   static const String noOrder = '$svgsTakeOrder/no-order.svg';
   static const String start = '$svgsTakeOrder/start.svg';
   static const String stop = '$svgsTakeOrder/stop.svg';
   static const String calling = '$svgsTakeOrder/calling.svg';
 
+  static const String element_1 = '$workAllocationSvgs/element-1.svg';
+  static const String receiptEdittt = '$workAllocationSvgs/receiptedittt.svg';
+  static const String monitor = '$workAllocationSvgs/monitor.svg';
+  static const String location1 = '$workAllocationSvgs/location.svg';
+  static const String msgedit = '$workAllocationSvgs/msgedit.svg';
+
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
   static const String loaderGif = '$basePath/gifs/mycoLoading.gif';
-
 
   // dashboard Screen
   static const String search = '$dashboard/search.png';
@@ -163,6 +169,10 @@ class AppAssets {
 
   static const String lostFoundData = '$lostFound/data.png';
   static const String lostFoundMessageEdit = '$lostFound/message-edit.png';
+/*
+  static const String location = '$basePath/take_order/location.png';
+*/
+
 
   //work allocation
   static const String plus = '$workAllocation/plus.png';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widget/work_allocation_card_list_view.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
@@ -41,6 +42,7 @@ class _WorkAllocationPageState extends State<WorkAllocationPage> {
       onTap: () {
         context.go('/assign-work');
 
+        context.go(RoutePaths.assignWork);
       },
       openIcon: Icons.add,
       closeIcon: Icons.close,

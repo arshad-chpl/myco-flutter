@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widgets/Employee_details.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widgets/label_with_star.dart';
 import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
@@ -13,55 +16,47 @@ class AssignWorkPage extends StatefulWidget {
   const AssignWorkPage({super.key});
 
   @override
-  State<AssignWorkPage> createState() => _AssignWorkState();
+  State<AssignWorkPage> createState() => _AssignWorkPageState();
 }
 
-class _AssignWorkState extends State<AssignWorkPage> {
-  final List<String> visitPurposes = ['Sales', 'Support', 'Demo'];
+class _AssignWorkPageState extends State<AssignWorkPage> {
+  final List<String> visitPurposes = ['Select', 'Testing', 'AI Tools'];
   String? selectedVisitPurpose;
-  final TextEditingController amountController = TextEditingController();
+
+  // Controllers for text fields
+  final TextEditingController srNoController = TextEditingController();
+  final TextEditingController siteController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
+  final TextEditingController startDateController = TextEditingController();
+  final TextEditingController targetDateController = TextEditingController();
+  final TextEditingController remarkController = TextEditingController();
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(
-      appBarBackgoundColor: AppTheme.getColor(context).surface,
-      elevation: 0,
-      centerTitle: false,
-      leading: const BackButton(),
-      appBarTitleWidget: CustomText(
-        'Assign Work',
-        fontSize: 24 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-        color: AppTheme.getColor(context).onSurface,
-      ),
-    ),
+    appBar: const CustomAppbar(title: 'Assign Work'),
+
     body: SingleChildScrollView(
       padding: EdgeInsets.symmetric(
-        horizontal: 20 * Responsive.getResponsive(context),
-        vertical: 12 * Responsive.getResponsive(context),
+        horizontal: 16 * Responsive.getResponsive(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //Work Category
-          CustomText(
-            'Category *',
-            isKey: true,
-            color: AppTheme.getColor(context).onSurfaceVariant,
-            fontSize: 14 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.w600,
-          ),
+          labelWithAsterisk(context, 'Category'),
           SizedBox(height: 6 * Responsive.getResponsive(context)),
           CustomPopupDropdownStyled<String>(
             items: visitPurposes,
-            hintText: 'Work Category',
-            /*prefix: SvgPicture.asset(AppAssets.gps, fit: BoxFit.scaleDown),*/
+            hintText: '  Work Category',
+            prefix: SvgPicture.asset(
+              AppAssets.element_1,
+              fit: BoxFit.scaleDown,
+            ),
             selectedItem: selectedVisitPurpose,
             onChanged: (v, i) => setState(() => selectedVisitPurpose = v),
             itemToString: (item) => item,
-            /*spacing: 0.02 * Responsive.getWidth(context),*/
             hintTextStyle: TextStyle(
-              fontSize: 16 * Responsive.getResponsiveText(context),
+              fontSize: 14 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).outline,
               fontWeight: FontWeight.w600,
             ),
@@ -69,98 +64,110 @@ class _AssignWorkState extends State<AssignWorkPage> {
           ),
           SizedBox(height: 12 * Responsive.getResponsive(context)),
 
-          //Type here
-          LabeledTextField(
+          //Project Sr No
+          buildLabeledField(
+            context,
             label: 'Project Sr No *',
-            hint: 'Type here',
-            hintTextStyle: TextStyle(color: AppTheme.getColor(context).outline),
-            controller: amountController,
-            widthFactor: Responsive.getWidth(context),
-            textInputType: TextInputType.datetime,
-            textAlignment: TextAlign.start,
-            /* prefix: SvgPicture.asset(
-              AppAssets.noteFavorite,
-              fit: BoxFit.scaleDown,
-            ),*/
-            validator: (v) =>
-                v == null || v.isEmpty ? 'Please enter Project Sr No' : null,
+            controller: srNoController,
+            icon: AppAssets.receiptEdittt,
+            validator: (v) => validateRequired(v, 'Project Sr No'),
           ),
-          SizedBox(height: 12 * Responsive.getResponsive(context)),
 
           //Site
-          LabeledTextField(
+          buildLabeledField(
+            context,
             label: 'Site *',
-            hint: 'Type here',
-            hintTextStyle: TextStyle(color: AppTheme.getColor(context).outline),
-            controller: amountController,
-            widthFactor: Responsive.getWidth(context),
-            textInputType: TextInputType.datetime,
-            textAlignment: TextAlign.start,
-            /*prefix: SvgPicture.asset(
-              AppAssets.noteFavorite,
-              fit: BoxFit.scaleDown,
-            ),*/
-            validator: (v) =>
-                v == null || v.isEmpty ? 'Please enter Site' : null,
+            controller: siteController,
+            icon: AppAssets.monitor,
+            validator: (v) => validateRequired(v, 'Site'),
           ),
-          SizedBox(height: 12 * Responsive.getResponsive(context)),
 
           //Location
-          LabeledTextField(
+          buildLabeledField(
+            context,
             label: 'Location *',
-            hint: 'Type here',
-            hintTextStyle: TextStyle(color: AppTheme.getColor(context).outline),
-            controller: amountController,
-            widthFactor: Responsive.getWidth(context),
-            textInputType: TextInputType.datetime,
-            textAlignment: TextAlign.start,
-            /* prefix: SvgPicture.asset(
-              AppAssets.noteFavorite,
-              fit: BoxFit.scaleDown,
-            ),*/
-            validator: (v) =>
-                v == null || v.isEmpty ? 'Please enter Location' : null,
+            controller: locationController,
+            icon: AppAssets.location1,
+            validator: (v) => validateRequired(v, 'Location'),
           ),
-          SizedBox(height: 12 * Responsive.getResponsive(context)),
 
           //Start Date
-          LabeledTextField(
+          buildLabeledField(
+            context,
             label: 'Start Date (DD/MM/YYYY) *',
             hint: 'Select',
-            hintTextStyle: TextStyle(color: AppTheme.getColor(context).outline),
-            controller: amountController,
-            widthFactor: Responsive.getWidth(context),
-            textInputType: TextInputType.datetime,
-            textAlignment: TextAlign.start,
-            /*prefix: SvgPicture.asset(
-              AppAssets.noteFavorite,
-              fit: BoxFit.scaleDown,
-            ),*/
-            validator: (v) =>
-                v == null || v.isEmpty ? 'Please enter Start Date' : null,
+            controller: startDateController,
+            icon: AppAssets.assetNoteFavorite,
+            validator: (v) => validateRequired(v, 'Start Date'),
           ),
-          SizedBox(height: 12 * Responsive.getResponsive(context)),
 
           //Target Date of Completion
-          LabeledTextField(
+          buildLabeledField(
+            context,
             label: 'Target Date of Completion (DD/MM/YYYY) *',
             hint: 'Select',
-            hintTextStyle: TextStyle(color: AppTheme.getColor(context).outline),
-            controller: amountController,
-            widthFactor: Responsive.getWidth(context),
-            textInputType: TextInputType.datetime,
-            textAlignment: TextAlign.start,
-            /*prefix: SvgPicture.asset(
-              AppAssets.noteFavorite,
-              fit: BoxFit.scaleDown,
-            ),*/
-            validator: (v) => v == null || v.isEmpty
-                ? 'Please enter Target Date of Completion'
-                : null,
+            controller: targetDateController,
+            icon: AppAssets.assetNoteFavorite,
+            validator: (v) => validateRequired(v, 'Target Date of Completion'),
           ),
-          SizedBox(height: 12 * Responsive.getResponsive(context)),
 
-          //Assign Work Engineer *
+          //Assign Work Engineer
+          const AssignEngineerField(
+            allEmployees: [
+              Employee(
+                name: 'Rushda Baqui',
+                role: 'iOS developer',
+                imageUrl: 'https://example.com/avatar1.jpg',
+              ),
+              Employee(
+                name: 'Shivangi Abhani',
+                role: 'QA',
+                imageUrl: 'https://example.com/avatar2.jpg',
+              ),
+              Employee(
+                name: 'Bhakti Dalwadi',
+                role: 'Flutter',
+                imageUrl: 'https://example.com/avatar2.jpg',
+              ),
+              Employee(
+                name: 'Shantanu Limje',
+                role: 'QA',
+                imageUrl: 'https://example.com/avatar2.jpg',
+              ),
+              Employee(
+                name: 'Demo',
+                role: 'Flutter',
+                imageUrl: 'https://example.com/avatar2.jpg',
+              ),
+              Employee(
+                name: 'Rushda Baqui',
+                role: 'iOS developer',
+                imageUrl: 'https://example.com/avatar1.jpg',
+              ),
+              Employee(
+                name: 'Shivangi Abhani',
+                role: 'QA',
+                imageUrl: 'https://example.com/avatar2.jpg',
+              ),
+              Employee(
+                name: 'Bhakti Dalwadi',
+                role: 'Flutter',
+                imageUrl: 'https://example.com/avatar2.jpg',
+              ),
+              Employee(
+                name: 'Shantanu Limje',
+                role: 'QA',
+                imageUrl: 'https://example.com/avatar2.jpg',
+              ),
+              Employee(
+                name: 'Demo',
+                role: 'Flutter',
+                imageUrl: 'https://example.com/avatar2.jpg',
+              ),
+            ],
+          ),
+
+          SizedBox(height: 12 * Responsive.getResponsive(context)),
 
           //Remark
           CustomText(
@@ -168,56 +175,96 @@ class _AssignWorkState extends State<AssignWorkPage> {
             isKey: true,
             color: AppTheme.getColor(context).onSurfaceVariant,
             fontSize: 14 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
           SizedBox(height: 8 * Responsive.getResponsive(context)),
           BigMyCoTextField(
-            controller: amountController,
+            controller: remarkController,
             hintText: 'Type here',
-            /*prefixImage: SvgPicture.asset(
-              AppAssets.stickynote,
-              fit: BoxFit.scaleDown,
-              height: 20 * Responsive.getResponsive(context),
-              width: 20 * Responsive.getResponsive(context),
-            ),*/
+            prefixImage: SvgPicture.asset(AppAssets.msgedit),
             maxLines: 5,
             height: 120 * Responsive.getResponsive(context),
             textInputType: TextInputType.multiline,
-            validator: (v) =>
-                v == null || v.isEmpty ? 'Please enter a remark' : null,
+            validator: (v) => validateRequired(v, 'Remark'),
             hintStyle: TextStyle(
               color: AppTheme.getColor(context).outline,
-              fontSize: 16 * Responsive.getResponsiveText(context),
+              fontSize: 14 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.w600,
             ),
             style: TextStyle(
               fontSize: 16 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).primary,
             ),
             border: OutlineInputBorder(
-              borderSide: const BorderSide(color: AppColors.borderColor),
+              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
               borderRadius: BorderRadius.circular(
                 12 * Responsive.getResponsive(context),
               ),
             ),
           ),
-          SizedBox(height: 12 * Responsive.getResponsive(context)),
 
-          //Submit
-          MyCoButton(
-            title: 'Submit',
-            onTap: () {},
-            backgroundColor: AppColors.primary,
-            textStyle: TextStyle(
-              fontSize: 16 * Responsive.getResponsiveText(context),
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
+          SizedBox(height: 0.050 * Responsive.getHeight(context)),
+
+          //Submit Button
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: 50 * Responsive.getResponsive(context),
             ),
-            width: double.infinity,
-            isShadowBottomLeft: true,
-            boarderRadius: 30,
+            child: MyCoButton(
+              title: 'Submit',
+              onTap: () {},
+              backgroundColor: AppTheme.getColor(context).primary,
+              textStyle: TextStyle(
+                fontSize: 16 * Responsive.getResponsiveText(context),
+                color: AppTheme.getColor(context).onPrimary,
+                fontWeight: FontWeight.w500,
+              ),
+              width: double.infinity,
+              isShadowBottomLeft: true,
+              boarderRadius: 30,
+            ),
           ),
         ],
       ),
     ),
   );
+
+  //for label text feild
+  Widget buildLabeledField(
+    BuildContext context, {
+    required String label,
+    String hint = 'Type here',
+    required TextEditingController controller,
+    String? icon,
+    String? Function(String?)? validator,
+  }) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      LabeledTextField(
+        label: label,
+        hint: hint,
+        hintTextStyle: TextStyle(
+          color: AppTheme.getColor(context).outline,
+          fontSize: 14 * Responsive.getResponsiveText(context),
+          fontWeight: FontWeight.w600,
+        ),
+        controller: controller,
+        widthFactor: Responsive.getWidth(context),
+        textInputType: TextInputType.text,
+        textAlignment: TextAlign.start,
+        prefix: icon != null
+            ? SvgPicture.asset(icon, fit: BoxFit.scaleDown)
+            : null,
+        validator: validator,
+      ),
+      SizedBox(height: 12 * Responsive.getResponsive(context)),
+    ],
+  );
+
+  String? validateRequired(String? value, String field) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Please enter $field';
+    }
+    return null;
+  }
 }
