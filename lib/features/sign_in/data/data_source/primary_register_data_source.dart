@@ -1,11 +1,10 @@
-
-import 'package:myco_flutter/core/models/common_response.dart';
+import 'package:myco_flutter/core/models/data/common_response_model.dart';
 import 'package:myco_flutter/features/sign_in/models/view_pending_profile_response.dart';
 
 abstract class PrimaryRegisterDataSource {
-  Future<CommonResponse> addPrimaryUser(Map<String, dynamic> dataMap);
+  Future<CommonResponseModel> addPrimaryUser(Map<String, dynamic> dataMap);
   Future<ViewPendingProfileResponse> getViewPendingProfile();
-  Future<CommonResponse> getCancelPendingProfile();
-  Future<CommonResponse> getReminderPendingProfile(Map<String, dynamic> dataMap);
-  Future<CommonResponse> getSociety(String societyId);
+  Future<CommonResponseModel> getCancelPendingProfile();
+  Future<CommonResponseModel> getReminderPendingProfile(Map<String, dynamic> dataMap);
+  Future<CommonResponseModel> getSociety(String societyId);
 }

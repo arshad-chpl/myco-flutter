@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/encryption/gzip_util.dart';
-import 'package:myco_flutter/core/models/common_response.dart';
+import 'package:myco_flutter/core/models/data/common_response_model.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/features/sign_in/data/data_source/primary_register_data_source.dart';
@@ -17,7 +17,7 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
   final preferenceManager = GetIt.I<PreferenceManager>();
 
   @override
-  Future<CommonResponse> addPrimaryUser(Map<String, dynamic> dataMap) async {
+  Future<CommonResponseModel> addPrimaryUser(Map<String, dynamic> dataMap) async {
 
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
     final controller = 'resident_register_controller.php';
@@ -25,7 +25,7 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
     final response = await GetIt.I<ApiClient>(
         instanceName: VariableBag.employeeMobileApi).postDynamic(
         controller, encryptedBody);
-    return CommonResponse.fromJson(json.decode(GzipUtil.decryptAES(response)));
+    return CommonResponseModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 
   //pending profile api
@@ -48,7 +48,7 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
 
 
   @override
-  Future<CommonResponse> getCancelPendingProfile() async {
+  Future<CommonResponseModel> getCancelPendingProfile() async {
     final dataMap = {
       'CancelPendingProfile': 'CancelPendingProfile',
       'user_id': '1992', /*preferenceManager.getKeyValueString(VariableBag.registrationRequestPendingUserId),*/
@@ -61,12 +61,12 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
     final response = await GetIt.I<ApiClient>(
         instanceName: VariableBag.employeeMobileApi).postDynamic(
         controller, encryptedBody);
-    return CommonResponse.fromJson(json.decode(GzipUtil.decryptAES(response)));
+    return CommonResponseModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 
 
   @override
-  Future<CommonResponse> getReminderPendingProfile(Map<String, dynamic> dataMap) async {
+  Future<CommonResponseModel> getReminderPendingProfile(Map<String, dynamic> dataMap) async {
 
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
     final controller = 'resident_register_controller.php';
@@ -74,12 +74,12 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
     final response = await GetIt.I<ApiClient>(
         instanceName: VariableBag.employeeMobileApi).postDynamic(
         controller, encryptedBody);
-    return CommonResponse.fromJson(json.decode(GzipUtil.decryptAES(response)));
+    return CommonResponseModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 
 
   @override
-  Future<CommonResponse> getSociety(String societyId) async {
+  Future<CommonResponseModel> getSociety(String societyId) async {
     final dataMap = {
       'getSociety': 'getSociety',
       'country_id': '',
@@ -96,7 +96,7 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
     final response = await GetIt.I<ApiClient>(
         instanceName: VariableBag.employeeMobileApi).postDynamic(
         controller, encryptedBody);
-    return CommonResponse.fromJson(json.decode(GzipUtil.decryptAES(response)));
+    return CommonResponseModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 
 }

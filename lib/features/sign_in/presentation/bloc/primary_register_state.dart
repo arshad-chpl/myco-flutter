@@ -12,7 +12,7 @@ class PrimaryRegisterInitial extends PrimaryRegisterState {}
 class PrimaryRegisterLoading extends PrimaryRegisterState {}
 
 class AddPrimaryUserApiSuccess extends PrimaryRegisterState {
-  final CommonResponse response;
+  final CommonResponseModelEntity response;
   const AddPrimaryUserApiSuccess(this.response);
 
   @override
@@ -20,7 +20,7 @@ class AddPrimaryUserApiSuccess extends PrimaryRegisterState {
 }
 
 class PendingAccountSuccess extends PrimaryRegisterState {
-  final ViewPendingProfileResponse response;
+  final ViewPendingProfileEntity response;
   const PendingAccountSuccess(this.response);
 
   @override
@@ -28,7 +28,7 @@ class PendingAccountSuccess extends PrimaryRegisterState {
 }
 
 class ReminderPendingProfileSuccess extends PrimaryRegisterState {
-  final CommonResponse response;
+  final CommonResponseModelEntity response;
   const ReminderPendingProfileSuccess(this.response);
 
   @override
@@ -36,7 +36,7 @@ class ReminderPendingProfileSuccess extends PrimaryRegisterState {
 }
 
 class SocietySuccess extends PrimaryRegisterState {
-  final CommonResponse response;
+  final CommonResponseModelEntity response;
   const SocietySuccess(this.response);
 
   @override
@@ -44,7 +44,7 @@ class SocietySuccess extends PrimaryRegisterState {
 }
 
 class CancelPendingProfileSuccess extends PrimaryRegisterState {
-  final CommonResponse response;
+  final CommonResponseModelEntity response;
   const CancelPendingProfileSuccess(this.response);
 
   @override

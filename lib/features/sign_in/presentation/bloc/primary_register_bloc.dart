@@ -2,9 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:myco_flutter/core/error/failure.dart';
-import 'package:myco_flutter/core/models/common_response.dart';
+import 'package:myco_flutter/core/models/domain/common_response_entity.dart';
+import 'package:myco_flutter/features/sign_in/domain/entities/view_pending_profile_entity.dart';
 import 'package:myco_flutter/features/sign_in/domain/usecases/primary_register_usecase.dart';
-import 'package:myco_flutter/features/sign_in/models/view_pending_profile_response.dart';
 
 part 'primary_register_event.dart';
 part 'primary_register_state.dart';
@@ -26,7 +26,7 @@ class PrimaryRegisterBloc extends Bloc<PrimaryRegisterEvent, PrimaryRegisterStat
 
   void _onFetchAddPrimaryUser(LoadAddPrimaryUser event, Emitter<PrimaryRegisterState> emit) async {
     emit(PrimaryRegisterLoading());
-    final Either<Failure, CommonResponse> result = await registerUseCase.callAddPrimaryUser(event.dataMap);
+    final Either<Failure, CommonResponseModelEntity> result = await registerUseCase.callAddPrimaryUser(event.dataMap);
 
     result.fold(
           (failure) => emit(PrimaryRegisterError(failure.message)),
@@ -38,7 +38,7 @@ class PrimaryRegisterBloc extends Bloc<PrimaryRegisterEvent, PrimaryRegisterStat
   void _onFetchPendingProfile(LoadPendingProfile event, Emitter<PrimaryRegisterState> emit) async {
     emit(PrimaryRegisterLoading());
 
-    final Either<Failure, ViewPendingProfileResponse> result = await registerUseCase.getViewPendingProfile();
+    final Either<Failure, ViewPendingProfileEntity> result = await registerUseCase.getViewPendingProfile();
 
     result.fold(
           (failure) => emit(PrimaryRegisterError(failure.message)),
@@ -49,7 +49,7 @@ class PrimaryRegisterBloc extends Bloc<PrimaryRegisterEvent, PrimaryRegisterStat
   void _onFetchCancelProfile(LoadCancelProfile event, Emitter<PrimaryRegisterState> emit) async {
     emit(PrimaryRegisterLoading());
 
-    final Either<Failure, CommonResponse> result = await registerUseCase.getCancelPendingProfile();
+    final Either<Failure, CommonResponseModelEntity> result = await registerUseCase.getCancelPendingProfile();
 
     result.fold(
           (failure) => emit(PrimaryRegisterError(failure.message)),
@@ -60,7 +60,7 @@ class PrimaryRegisterBloc extends Bloc<PrimaryRegisterEvent, PrimaryRegisterStat
   void _onFetchReminderProfile(LoadReminderProfile event, Emitter<PrimaryRegisterState> emi,) async {
     emit(PrimaryRegisterLoading());
 
-    final Either<Failure, CommonResponse> result = await registerUseCase.getReminderPendingProfile(event.dataMap);
+    final Either<Failure, CommonResponseModelEntity> result = await registerUseCase.getReminderPendingProfile(event.dataMap);
 
     result.fold(
           (failure) => emit(PrimaryRegisterError(failure.message)),
@@ -72,7 +72,7 @@ class PrimaryRegisterBloc extends Bloc<PrimaryRegisterEvent, PrimaryRegisterStat
     emit(PrimaryRegisterLoading());
 
 
-    final Either<Failure, CommonResponse> result = await registerUseCase.getSociety(event.societyId);
+    final Either<Failure, CommonResponseModelEntity> result = await registerUseCase.getSociety(event.societyId);
 
     result.fold(
           (failure) => emit(PrimaryRegisterError(failure.message)),
