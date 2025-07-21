@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/inner_shadow_painter.dart';
@@ -81,9 +80,9 @@ class CustomShadowContainer extends StatelessWidget {
       ),
       const SizedBox(height: 6),
       CustomText(
-        LanguageManager().get(title),
+        title,
         color: AppColors.black,
-        fontSize: 14 * Responsive.getResponsiveText(context),
+        fontSize: 11 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w600,
       ),
     ],

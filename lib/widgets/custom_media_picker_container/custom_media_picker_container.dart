@@ -20,7 +20,8 @@ class CustomMediaPickerContainer extends StatefulWidget {
       imageTitleSize,
       imageHeight,
       imageWidth;
-  final String title, imageTitle;
+  final String? title;
+  final String imageTitle;
   final String imagePath;
   final int multipleImage;
   final Color? titleColor, backgroundColor, imageTitleColor;
@@ -33,7 +34,7 @@ class CustomMediaPickerContainer extends StatefulWidget {
   final Function(List<File> files)? onSelectedMedia;
 
   const CustomMediaPickerContainer({
-    required this.title,
+    this.title,
     required this.imageTitle,
     required this.multipleImage,
     required this.imagePath,
@@ -70,14 +71,17 @@ class _CustomMediaPickerContainerState
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      CustomText(
-        widget.title,
-        isKey: widget.titleIsKey,
-        fontSize:
-            widget.titleFontSize ?? 14 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-        color: widget.titleColor ?? AppTheme.getColor(context).onSurfaceVariant,
-      ),
+      if (widget.title != null) //check this......................
+        CustomText(
+          widget.title ?? '',
+          isKey: widget.titleIsKey,
+          fontSize:
+              widget.titleFontSize ??
+              14 * Responsive.getResponsiveText(context),
+          fontWeight: FontWeight.w700,
+          color:
+              widget.titleColor ?? AppTheme.getColor(context).onSurfaceVariant,
+        ),
       const SizedBox(height: 8),
       _buildPickerContent(),
     ],

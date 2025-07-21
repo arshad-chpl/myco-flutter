@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:myco_flutter/core/env/environment.dart';
 
 class AppConstants {
   // App Info
@@ -37,8 +38,6 @@ class VariableBag {
   static const String residentApiNew = 'residentApiNew';
   static const String employeeApi = 'employeeApi';
   static const String residentAPI = 'residentAPI';
-  static const String employeesData =
-      'https://dev.my-company.app/india/residentApiNew/';
 
   /////////////////////////
   // Admin Menu

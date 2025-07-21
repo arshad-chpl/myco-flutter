@@ -23,7 +23,7 @@ class PayslipPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      appBarText: 'Payslip',
+      title: 'Payslip',
       actions: [
         MyCoButton(
           onTap: () {
@@ -138,6 +138,7 @@ class PayslipPage extends StatelessWidget {
                   context,
                 ).primary,
                 tabBarBorderColor: AppTheme.getColor(context).onSurface,
+
                 selectedIndex: selectedIndex,
                 isShadowBottomLeft: true,
                 onTabChange: (index) {
@@ -184,6 +185,7 @@ class PaySlip extends StatelessWidget {
             totalDeduction: '200.00',
             onView: () {
               context.pushNamed(RoutePaths.payslipDetail);
+
             },
           ),
           separatorBuilder: (context, index) =>
@@ -229,7 +231,8 @@ class PaySlip extends StatelessWidget {
               isShadowBottomLeft: true,
             ),
             CustomText(
-              'Download All Payslip',
+              'download_all_payslip',
+              // 'Download All Payslip',
               fontSize: 14 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).primary,
               decoration: TextDecoration.underline,
@@ -291,7 +294,8 @@ class OtherEarnings extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
             CustomText(
-              'Net Pay',
+              'net_pay',
+              // 'Net Pay',
               fontSize: 15 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
             ),
@@ -302,7 +306,8 @@ class OtherEarnings extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomText(
-              'Total Leaves Day: 0.50',
+              'total_leave_days' + ': 0.50',
+              // 'Total Leaves Day: 0.50',
               fontSize: 15 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
             ),

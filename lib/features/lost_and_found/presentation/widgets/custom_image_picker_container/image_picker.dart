@@ -92,7 +92,7 @@ class _ImageFilePickerWidgetState extends State<_ImageFilePickerWidget> {
             children: [
               if (widget.isCameraShow == true)
                 _pickerButton(
-                  icon: AppAssets.mediaPickerCamera,
+                  icon: AppAssets.galleryExport,
                   title: 'Camera',
                   onTap: () async {
                     final hasPermission =

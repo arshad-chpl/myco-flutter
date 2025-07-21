@@ -200,25 +200,36 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
                 GestureDetector(
                   onTap: () => _pickImage(ImageSource.camera),
                   child: CustomShadowContainer(
-                    image: SvgPicture.asset(AppAssets.mediaPickerCamera, height: 0.32 * Responsive.getHeight(context),),
+                    image: SvgPicture.asset(
+                      AppAssets.mediaPickerCamera,
+                      height: 0.32 * Responsive.getHeight(context),
+                    ),
                     title: 'camera',
                   ),
                 ),
-              if (widget.isCameraShow) SizedBox(width: 0.05 * Responsive.getWidth(context)),
+              if (widget.isCameraShow)
+                SizedBox(width: 0.05 * Responsive.getWidth(context)),
               if (widget.isGalleryShow)
                 GestureDetector(
                   onTap: () => _pickImage(ImageSource.gallery),
                   child: CustomShadowContainer(
-                    image: SvgPicture.asset(AppAssets.mediaPickerGallery, height: 0.32 * Responsive.getHeight(context),),
+                    image: SvgPicture.asset(
+                      AppAssets.mediaPickerGallery,
+                      height: 0.32 * Responsive.getHeight(context),
+                    ),
                     title: 'gallery',
                   ),
                 ),
-              if (widget.isGalleryShow) SizedBox(width: 0.05 * Responsive.getWidth(context)),
+              if (widget.isGalleryShow)
+                SizedBox(width: 0.05 * Responsive.getWidth(context)),
               if (widget.isDocumentShow)
                 GestureDetector(
                   onTap: _pickDocument,
                   child: CustomShadowContainer(
-                    image:SvgPicture.asset(AppAssets.mediaPickerDocument, height: 0.32 * Responsive.getHeight(context),),
+                    image: SvgPicture.asset(
+                      AppAssets.mediaPickerDocument,
+                      height: 0.32 * Responsive.getHeight(context),
+                    ),
                     title: 'documents',
                   ),
                 ),
@@ -251,9 +262,6 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
       widget.onLoading?.call(true);
 
       if (source == ImageSource.gallery) {
-        print(
-          'widget.isCropImage:----------------------------------${widget.isCropImage}',
-        );
         await Navigator.push(
           context,
           MaterialPageRoute(
@@ -263,12 +271,10 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
               onSelectionDone: (List<dynamic> assets) async {
                 List<File> files = [];
 
-                // If cropping was enabled, assets will already be List<File>
+                // Convert assets to List<File>
                 if (assets.isNotEmpty && assets.first is File) {
                   files = assets.cast<File>();
-                }
-                // If cropping wasn't enabled, assets will be List<AssetEntity>
-                else if (assets.isNotEmpty && assets.first is AssetEntity) {
+                } else if (assets.isNotEmpty && assets.first is AssetEntity) {
                   for (final asset in assets.cast<AssetEntity>()) {
                     final file = await asset.file;
                     if (file != null) files.add(file);
@@ -276,8 +282,8 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
                 }
 
                 if (mounted) {
-                  Navigator.pop(context); // Close GalleryPickerScreen
-                  Navigator.pop(context, files); // Send selected files back
+                  Navigator.pop(context);
+                  Navigator.pop(context, files);
                 }
               },
             ),
@@ -291,9 +297,9 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
           imageQuality: 80,
         );
 
+        // Return picked camera image
         if (pickedFile != null && mounted) {
-          final file = File(pickedFile.path);
-          Navigator.pop(context, [file]);
+          Navigator.pop(context, [File(pickedFile.path)]);
         } else {
           if (mounted) Navigator.pop(context);
         }

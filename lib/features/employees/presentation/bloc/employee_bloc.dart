@@ -71,6 +71,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
             selectedBranch: userBranch,
             selectedDepartment: userDept,
             selectedEmployeeIds: <String>{},
+            searchQuery: ''
           ),
         );
       },
@@ -116,6 +117,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
               selectedDepartment: newDept,
               searchQuery: st.searchQuery,
               selectedEmployeeIds: <String>{},
+
             ),
           );
         },

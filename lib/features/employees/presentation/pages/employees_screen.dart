@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
@@ -10,21 +9,21 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/employees/domain/entites/department.dart';
-import 'package:myco_flutter/widgets/custom_loader.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
-import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
+import 'package:myco_flutter/features/employees/presentation/bloc/employee_bloc.dart';
+import 'package:myco_flutter/features/employees/presentation/bloc/employee_event.dart';
+import 'package:myco_flutter/features/employees/presentation/bloc/employee_state.dart';
+import 'package:myco_flutter/features/employees/presentation/widgets/employee_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-
-import '../bloc/employee_bloc.dart';
-import '../bloc/employee_event.dart';
-import '../bloc/employee_state.dart';
-import '../widgets/employee_card.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
+import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class EmployeesScreen extends StatelessWidget {
-  EmployeesScreen({Key? key}) : super(key: key);
+  EmployeesScreen({super.key});
 
   final EmployeeBloc bloc = GetIt.I<EmployeeBloc>();
+
+  TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,28 +36,19 @@ class EmployeesScreen extends StatelessWidget {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: BlocBuilder<EmployeeBloc, EmployeeState>(
-            builder: (context, state) {
-              final selectedBranchName = state is EmployeeLoaded
-                  ? state.selectedBranch?.blockName ?? 'branch'
-                  : 'branch';
-
-              return CustomAppbar(
-                title: CustomText(
-                  selectedBranchName,
-                  isKey: true,
-                  fontSize: 18 * Responsive.getResponsiveText(context),
-                  fontWeight: FontWeight.w700,
-                ),
-                appBarBackgoundColor: AppTheme.getColor(context).surface,
-                appbartxtcolor: AppTheme.getColor(context).onSurface,
-              );
-            },
+            builder: (context, state) => CustomAppbar(
+              title: 'employees',
+              isKey: true,
+              titleFontSize: 18 * Responsive.getResponsiveText(context),
+              titleFontWeight: FontWeight.w700,
+              appBarBackgoundColor: AppTheme.getColor(context).surface,
+            ),
           ),
         ),
         body: BlocBuilder<EmployeeBloc, EmployeeState>(
           builder: (context, state) {
             if (state is EmployeeLoading || state is EmployeeInitial) {
-              return const Center(child: CustomLoader());
+              return _buildLoadedContent(context, bloc, null);
             }
 
             if (state is EmployeeError) {
@@ -79,47 +69,43 @@ class EmployeesScreen extends StatelessWidget {
   Widget _buildLoadedContent(
     BuildContext context,
     EmployeeBloc bloc,
-    EmployeeLoaded st,
+    EmployeeLoaded? st,
   ) {
-    final filteredEmployees = st.employees.where((e) {
-      final matchesBranch = e.blockId == st.selectedBranch?.blockId;
-      final matchesDepartment = e.floorId == st.selectedDepartment?.floorId;
-      final matchesSearch =
-          st.searchQuery.isEmpty ||
-          (e.userFullName?.toLowerCase().contains(
-                st.searchQuery.toLowerCase(),
-              ) ??
-              false) ||
-          (e.designation?.toLowerCase().contains(
-                st.searchQuery.toLowerCase(),
-              ) ??
-              false);
+    final bool isShimmer = st == null;
+    final filteredEmployees = isShimmer
+        ? List.generate(8, (_) => null)
+        : st.employees.where((e) {
+            final matchesBranch = e.blockId == st.selectedBranch?.blockId;
+            final matchesDepartment =
+                e.floorId == st.selectedDepartment?.floorId;
+            final matchesSearch =
+                st.searchQuery.isEmpty ||
+                (e.userFullName?.toLowerCase().contains(
+                      st.searchQuery.toLowerCase(),
+                    ) ??
+                    false) ||
+                (e.designation?.toLowerCase().contains(
+                      st.searchQuery.toLowerCase(),
+                    ) ??
+                    false);
+            return matchesBranch && matchesDepartment && matchesSearch;
+          }).toList();
 
-      return matchesBranch && matchesDepartment && matchesSearch;
-    }).toList();
-    double gridPadding = 8 * Responsive.getResponsive(context);
+    final double gridPadding = 8 * Responsive.getResponsive(context);
+
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          MyCoTextfield(
-            prefix: SvgPicture.asset(
-              AppAssets.searchNormal,
-              fit: BoxFit.scaleDown,
-            ),
+          CustomSearchField(
             hintText: 'search',
-            textInputType: TextInputType.text,
-            textAlignment: TextAlign.left,
-            boarderRadius: 10,
-            hintTextStyle: TextStyle(
-              fontSize: 14 * Responsive.getResponsiveText(context),
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-            contentPadding: EdgeInsets.all(
-              10 * Responsive.getResponsive(context),
-            ),
-            onChanged: (q) => bloc.add(SearchEmployees(q)),
+            controller: _searchController,
+            onChanged: (q) {
+              if (!isShimmer) bloc.add(SearchEmployees(q));
+            },
+            onSubmitted: (value) {
+              debugPrint('value------------>$value');
+            },
           ),
           const SizedBox(height: 12),
           Row(
@@ -127,7 +113,11 @@ class EmployeesScreen extends StatelessWidget {
               Expanded(child: _dropdownBranch(context, st)),
               const SizedBox(width: 12),
               Expanded(
-                child: _dropdownDepartment(context, st, st.filteredDepartments),
+                child: _dropdownDepartment(
+                  context,
+                  st,
+                  st?.filteredDepartments ?? [],
+                ),
               ),
             ],
           ),
@@ -135,17 +125,18 @@ class EmployeesScreen extends StatelessWidget {
           Expanded(
             child: RefreshIndicator(
               onRefresh: () async {
-                bloc.add(LoadUserData());
+                // _searchController.clear();
+                context.read<EmployeeBloc>().add(LoadUserData());
               },
-              child: filteredEmployees.isEmpty
-                  ? const Center(child: Text('No employees found'))
-                  : GridView.builder(
+              child: isShimmer
+                  ? GridView.builder(
                       padding: EdgeInsets.only(
                         top: gridPadding,
                         left: gridPadding,
                         right: gridPadding,
-                        bottom: 20,
+                        bottom: 20 * Responsive.getResponsive(context),
                       ),
+                      itemCount: filteredEmployees.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: Responsive.getGridConfig(
                           context,
@@ -160,9 +151,39 @@ class EmployeesScreen extends StatelessWidget {
                           context,
                         ).childAspectRatio,
                       ),
+                      itemBuilder: (_, __) => const EmployeeSelectionCard(
+                        name: '',
+                        department: '',
+                        image: SizedBox(),
+                        isSelected: false,
+                      ),
+                    )
+                  : filteredEmployees.isEmpty
+                  ? const Center(child: Text('No employees found'))
+                  : GridView.builder(
+                      padding: EdgeInsets.only(
+                        top: gridPadding,
+                        left: gridPadding,
+                        right: gridPadding,
+                        bottom: 20 * Responsive.getResponsive(context),
+                      ),
                       itemCount: filteredEmployees.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: Responsive.getGridConfig(
+                          context,
+                        ).itemCount,
+                        mainAxisSpacing: Responsive.getGridConfig(
+                          context,
+                        ).spacing,
+                        crossAxisSpacing: Responsive.getGridConfig(
+                          context,
+                        ).spacing,
+                        childAspectRatio: Responsive.getGridConfig(
+                          context,
+                        ).childAspectRatio,
+                      ),
                       itemBuilder: (_, index) {
-                        final emp = filteredEmployees[index];
+                        final emp = filteredEmployees[index]!;
                         return EmployeeSelectionCard(
                           name: emp.userFullName ?? '',
                           department: emp.designation ?? '',
@@ -176,17 +197,20 @@ class EmployeesScreen extends StatelessWidget {
                                       : 'NA',
                                 ),
                                 fontSize:
-                                    16 * Responsive.getResponsiveText(context),
+                                    20 * Responsive.getResponsiveText(context),
                                 fontWeight: FontWeight.w700,
                                 color: AppTheme.getColor(context).primary,
                               ),
                             ),
-                            imageProvider: NetworkImage(emp.userProfilePic ?? ''),
+                            imageProvider: NetworkImage(
+                              emp.userProfilePic ?? '',
+                            ),
                           ),
-                          isSelected: st.selectedEmployeeIds.contains(emp.userId),
+                          isSelected: st.selectedEmployeeIds.contains(
+                            emp.userId,
+                          ),
                           onSelected: (_) {
                             bloc.add(ToggleEmployeeSelection(emp.userId ?? ''));
-                            // Print all employee details
                             debugPrint('🧾 Selected Employee Details:');
                             debugPrint('ID: ${emp.userId}');
                             debugPrint('Name: ${emp.userFullName}');
@@ -206,13 +230,14 @@ class EmployeesScreen extends StatelessWidget {
     );
   }
 
-  Widget _dropdownBranch(BuildContext ctx, EmployeeLoaded st) =>
+  Widget _dropdownBranch(BuildContext ctx, EmployeeLoaded? st) =>
       GestureDetector(
         onTap: () async {
+          if (st == null) return;
           final id = await showCustomSimpleBottomSheet(
             context: ctx,
-            heading: 'select_branch',
-            icon: const AssetImage(AppAssets.downArrow),
+            heading: 'branch',
+            icon: AppAssets.downArrowBottomSheet,
             dataList: st.branches
                 .map((b) => {'id': b.blockId ?? '', 'name': b.blockName ?? ''})
                 .toList(),
@@ -220,26 +245,26 @@ class EmployeesScreen extends StatelessWidget {
           );
 
           if (id == null || id == st.selectedBranch?.blockId) return;
-
           final branch = st.branches.firstWhere((b) => b.blockId == id);
           ctx.read<EmployeeBloc>().add(ChangeBranch(branch));
         },
         child: _buildDropdownBox(
           ctx,
-          st.selectedBranch?.blockName ?? 'select_branch',
+          st?.selectedBranch?.blockName ?? 'branch',
         ),
       );
 
   Widget _dropdownDepartment(
     BuildContext ctx,
-    EmployeeLoaded st,
+    EmployeeLoaded? st,
     List<Department> depts,
   ) => GestureDetector(
     onTap: () async {
+      if (st == null) return;
       final id = await showCustomSimpleBottomSheet(
         context: ctx,
-        heading: 'select_department',
-        icon: const AssetImage(AppAssets.downArrow),
+        heading: 'departement',
+        icon: AppAssets.downArrowBottomSheet,
         dataList: depts
             .map((d) => {'id': d.floorId ?? '', 'name': d.departmentName ?? ''})
             .toList(),
@@ -247,13 +272,12 @@ class EmployeesScreen extends StatelessWidget {
       );
 
       if (id == null || id == st.selectedDepartment?.floorId) return;
-
       final dept = depts.firstWhere((d) => d.floorId == id);
       ctx.read<EmployeeBloc>().add(ChangeDepartment(dept));
     },
     child: _buildDropdownBox(
       ctx,
-      st.selectedDepartment?.departmentName ?? 'select_department',
+      st?.selectedDepartment?.departmentName ?? 'departement',
     ),
   );
 
@@ -294,3 +318,102 @@ class EmployeesScreen extends StatelessWidget {
     );
   }
 }
+
+// body: Column(
+//   children: [
+///Media picker container
+// Padding(
+//   padding: const EdgeInsets.all(8.0),
+//   child: CustomMediaPickerContainer(
+//     title: 'Assets Image',
+//     titleFontSize: 14 * Responsive.getResponsiveText(context),
+//     imageTitle: 'Capture Image',
+//     // imageTitleSize: 10,
+//     // containerHeight: 100,
+//     multipleImage: 5,
+//     imagePath: AppAssets.assetGalleryExport,
+//     backgroundColor: Colors.blue.shade50,
+//     isCameraShow: true,
+//     isGalleryShow: true,
+//     isDocumentShow: true,
+//     isCropImage: true,
+//     onSelectedMedia: (files) {
+//       final paths = files.map((file) => file.path).toList();
+//       log('Selected file paths: $paths');
+//     },
+//   ),
+// ),
+
+/// stepper
+// const SizedBox(height: 10),
+// const Text('Punch in-out Demo'),
+// Expanded(
+//   child: SingleChildScrollView(
+//     child: Padding(
+//       padding: const EdgeInsets.all(10.0),
+//       child: CustomVerticalStepper(
+//         steps: [
+//           StepData(
+//             title: 'PUNCH IN',
+//             // title: '',
+//             subTitle: '10:25:06 AM',
+//             subTitleFontSize: 20,
+//             status: StepStatus.inActive,
+//             // isStepIconShow: false,
+//             customStatusIcon: SvgPicture.asset(
+//               AppAssets.assetGalleryExport,
+//             ),
+//             // customStatusIcon: const Icon(
+//             //   Icons.ac_unit,
+//             //   color: Colors.white,
+//             // ),
+//             details: [
+//               StepDetail(title: 'title', description: 'description'),
+//               StepDetail(
+//                 title: 'Remark',
+//                 description: 'description',
+//               ), StepDetail(
+//                 title: 'Remark Remark',
+//                 description: 'description',
+//               ),
+//             ],
+//             subSteps: [
+//               SubStepData(
+//                 subStepTitle: 'Lunch Break',
+//                 subStepSubTitle: '01:32:56 PM - 02:01:46 PM',
+//                 subStepTrailingTitle: '28 min 50 sec',
+//                 subStepStatus: StepStatus.pending,
+//                 subStepCustomStatusIcon: Icon(Icons.lunch_dining),
+//                 subStepSubTitleFontSize: 20,
+//                 isSubStepIconShow: false,
+//               ),
+//               SubStepData(
+//                 subStepTitle: 'Tea Break',
+//                 subStepSubTitle: '06:05:02 PM - 06:07:51 PM',
+//                 subStepTrailingTitle: '2 min 49 sec',
+//                 subStepStatus: StepStatus.pending,
+//                 // isSubStepIconShow: false,
+//               ),
+//             ],
+//           ),
+//           StepData(
+//             title: 'PUNCH OUT',
+//             subTitle: '06:08:39 PM',
+//             trillingTitle: '7 hour 43 min 33 sec',
+//             status: StepStatus.pending,
+//             // isStepIconShow: false,
+//           ),
+//           StepData(
+//             title: 'PUNCH IN & OUT',
+//             subTitle: '06:08:39 PM',
+//             trillingTitle: '1 min 18 sec',
+//             status: StepStatus.approved,
+//             // isStepIconShow: true,
+//           ),
+//         ],
+//       ),
+//     ),
+//   ),
+// ),
+// ],
+// ),

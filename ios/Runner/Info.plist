@@ -1,102 +1,85 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-<key>NSCameraUsageDescription</key>
-<string>Need camera access to take pictures</string>
-<key>NSPhotoLibraryUsageDescription</key>
-<string>Need photo access to select images</string>
-<key>NSDocumentsFolderUsageDescription</key>
-<string>Need access to select documents</string>
-<!-- Required Permissions -->
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera to take pictures or record videos.</string>
+    <dict>
+        <key>CFBundleDevelopmentRegion</key>
+        <string>$(DEVELOPMENT_LANGUAGE)</string>
+        <key>CFBundleDisplayName</key>
+        <string>MyCo</string>
+        <key>CFBundleExecutable</key>
+        <string>$(EXECUTABLE_NAME)</string>
+        <key>CFBundleIdentifier</key>
+        <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+        <key>CFBundleInfoDictionaryVersion</key>
+        <string>6.0</string>
+        <key>CFBundleName</key>
+        <string>myco_flutter</string>
+        <key>CFBundlePackageType</key>
+        <string>APPL</string>
+        <key>CFBundleShortVersionString</key>
+        <string>$(FLUTTER_BUILD_NAME)</string>
+        <key>CFBundleSignature</key>
+        <string>????</string>
+        <key>CFBundleVersion</key>
+        <string>$(FLUTTER_BUILD_NUMBER)</string>
+        <key>LSRequiresIPhoneOS</key>
+        <true />
+        <key>UILaunchStoryboardName</key>
+        <string>LaunchScreen</string>
+        <key>UIMainStoryboardFile</key>
+        <string>Main</string>
 
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library to select images and videos.</string>
+        <!-- Orientation Support -->
+        <key>UISupportedInterfaceOrientations</key>
+        <array>
+            <string>UIInterfaceOrientationPortrait</string>
+            <string>UIInterfaceOrientationLandscapeLeft</string>
+            <string>UIInterfaceOrientationLandscapeRight</string>
+        </array>
+        <key>UISupportedInterfaceOrientations~ipad</key>
+        <array>
+            <string>UIInterfaceOrientationPortrait</string>
+            <string>UIInterfaceOrientationPortraitUpsideDown</string>
+            <string>UIInterfaceOrientationLandscapeLeft</string>
+            <string>UIInterfaceOrientationLandscapeRight</string>
+        </array>
 
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>This app needs permission to save photos and videos to your library.</string>
+        <!-- Permissions -->
+        <key>NSCameraUsageDescription</key>
+        <string>Allows camera access to take photos.</string>
 
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<true/>
-	<key>UIFileSharingEnabled</key>
-	<true/>
+        <key>NSPhotoLibraryUsageDescription</key>
+        <string>Allows access to select images from your photo library.</string>
 
-	<!-- Optional: Required if using background fetch/location -->
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>fetch</string>
-	</array>
+        <key>NSPhotoLibraryAddUsageDescription</key>
+        <string>Allows saving images to your photo library.</string>
 
-<key>NSDocumentsFolderUsageDescription</key>
-<string>This app needs access to documents.</string>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>CFBundleDisplayName</key>
-	<string>MyCo</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>myco_flutter</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
+        <key>NSDocumentsFolderUsageDescription</key>
+        <string>Allows access to select documents.</string>
 
-    <!-- Required Permissions -->
-    <key>NSCameraUsageDescription</key>
-	<string>We need access to your camera to take pictures or record videos.</string>
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>Allows access to your location while using the app.</string>
 
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library to select images and videos.</string>
+        <key>NSLocationAlwaysUsageDescription</key>
+        <string>Allows background location access for continuous tracking.</string>
 
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>This app needs permission to save photos and videos to your library.</string>
 
-	<key>LSSupportsOpeningDocumentsInPlace</key>
-	<true/>
-	<key>UIFileSharingEnabled</key>
-	<true/>
+        <!-- File Sharing -->
+        <key>LSSupportsOpeningDocumentsInPlace</key>
+        <true />
+        <key>UIFileSharingEnabled</key>
+        <true />
 
-	<!-- Optional: Required if using background fetch/location -->
-    <key>UIBackgroundModes</key>
-    <array>
-        <string>fetch</string>
-    </array>
+        <!-- Background Modes -->
+        <key>UIBackgroundModes</key>
+        <array>
+            <string>fetch</string>
+        </array>
 
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>NSCameraUsageDescription</key>
-    <string>We need access to your camera for face detection</string>
-</dict>
+        <!-- Other -->
+        <key>CADisableMinimumFrameDurationOnPhone</key>
+        <true />
+        <key>UIApplicationSupportsIndirectInputEvents</key>
+        <true />
+    </dict>
 </plist>
