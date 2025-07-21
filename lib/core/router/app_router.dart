@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
+import 'package:myco_flutter/core/router/modules/my_visit_routes.dart';
 import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
 import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
@@ -140,11 +141,6 @@ class AppRouter {
       //   name: 'details',
       //   builder: (context, state) => const DetailsPage(),
       // ),
-      GoRoute(
-        path: RoutePaths.visitReport,
-        name: 'visit_report',
-        builder: (context, state) => const VisitReport(),
-      ),
 
       GoRoute(
         path: RoutePaths.selectCompany,
@@ -196,14 +192,6 @@ class AppRouter {
         builder: (context, state) => BlocProvider<CompanyInfoBloc>(
           create: (_) => GetIt.I<CompanyInfoBloc>(),
           child: const CompanyInfoPage(),
-        ),
-      ),
-      GoRoute(
-        path: RoutePaths.myVisit,
-        name: 'my-visit',
-        builder: (context, state) => BlocProvider(
-          create: (_) => GetIt.I<VisitBloc>(),
-          child: const MyVisitPage(),
         ),
       ),
 
@@ -269,17 +257,9 @@ class AppRouter {
         name: 'contact-admin',
         builder: (context, state) => const ContactAdminPage(),
       ),
-      GoRoute(
-        path: RoutePaths.addCustomer,
-        name: 'addCustomer',
-        builder: (context, state) => const AddCustomer(),
-      ),
 
-      GoRoute(
-        path: RoutePaths.AddExpense,
-        name: 'addExpense',
-        builder: (context, state) => const AddExpensePage(),
-      ),
+      ...myVisitRoutes,
+
       GoRoute(
         path: RoutePaths.lostAndFoundAddScreen,
         name: 'lost-and-found-add-screen',
@@ -306,22 +286,7 @@ class AppRouter {
         name: 'lost-and-found',
         builder: (context, state) => const LostAndFound(),
       ),
-      GoRoute(
-        path: RoutePaths.CustomerAddNewVisit,
-        name: 'CustomerAddNewVisit',
-        builder: (context, state) => const CustomerAddNewVisit(),
-      ),
 
-      GoRoute(
-        path: RoutePaths.viewVisitDetails,
-        name: 'view-visit-details',
-        builder: (context, state) => const ViewVisitDetailsPage(),
-      ),
-      GoRoute(
-        path: RoutePaths.myProfile,
-        name: 'my-profile',
-        builder: (context, state) => const MyProfilePage(),
-      ),
       GoRoute(
         path: RoutePaths.adminView,
         name: RoutePaths.adminView,
@@ -349,11 +314,6 @@ class AppRouter {
         path: RoutePaths.qrScanner,
         name: 'qr-scanner',
         builder: (context, state) => const QRScannerPage(),
-      ),
-      GoRoute(
-        path: RoutePaths.addVisit,
-        name: 'add-visit',
-        builder: (context, state) => const AddNewVisit(),
       ),
       GoRoute(
         path: RoutePaths.myProfile,
