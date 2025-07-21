@@ -215,8 +215,8 @@ class _AssignEngineerFieldState extends State<AssignEngineerField> {
             //selected emp show(emp card)
             if (selectedEmployee != null)
               SizedBox(
-                height: 150,
-                width: 140,
+                height: 160,
+                width: 160,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: EmployeeSelectionCard(

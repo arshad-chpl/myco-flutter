@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/util.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/reschedule_visit_page.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/end_visit_bottom_sheet.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/get_common_row.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/start_visit_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -15,37 +19,41 @@ Widget buildVisitCard(
   Map<String, dynamic> visit,
   int index,
   Size screenSize,
+    int totalLength,
 ) {
   final bool showExtraButtons = visit['showExtraButtons'] == true;
   final bool showStartedVisit = visit['showStartedVisit'] == true;
   final String statusText = visit['status']?.toString().toLowerCase() ?? '';
   final Color statusColor = statusText == 'visit started'
-      ? AppColors.secondary
+      ? AppTheme.getColor(context).secondary
       : AppColors.spanishYellow;
 
   final bool isSixthContainer = visit['isSixthContainer'] == true;
-  final double multiplier = Responsive.getResponsiveText(context);
-  final double screenHeight = Responsive.getHeight(context);
-  final double screenWidth = Responsive.getWidth(context);
 
   return Padding(
-    padding: EdgeInsets.only(bottom: screenHeight * 0.02),
+    padding: EdgeInsets.only(bottom: Responsive.getHeight(context) * 0.02),
     child: Container(
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.8),
-        border: Border.all(color: AppColors.textfieldBorder),
       ),
       child: CommonCard(
         title: visit['title'],
+        borderRadius: 12.8,
+        suffixIcon: index >= totalLength - 5
+            ? SvgPicture.asset(
+          AppAssets.ref,
+        )
+            : null,
         subTitle: visit['time'],
-        subTitleIcon: SvgPicture.asset('assets/visit/svgs/calendar.svg'),
+        subTitleIcon: SvgPicture.asset(
+            AppAssets.calendar),
         onTap: () {},
         headerColor: AppTheme.getColor(context).primary,
         borderColor: AppTheme.getColor(context).outline,
         showBlackShadowInChild: true,
         bottomWidget: Padding(
-          padding: EdgeInsets.all(screenWidth * 0.03),
+          padding: EdgeInsets.all(Responsive.getWidth(context) * 0.03),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -60,7 +68,7 @@ Widget buildVisitCard(
                       backgroundColor: Colors.transparent,
                       textStyle: TextStyle(
                         color: statusColor,
-                        fontSize: 13 * multiplier,
+                        fontSize: 13 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w400,
                       ),
                       boarderRadius: 40,
@@ -69,7 +77,7 @@ Widget buildVisitCard(
                       wantBorder: true,
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: Responsive.getWidth(context) * 0.010),
                   Expanded(
                     child: MyCoButton(
                       onTap: () {
@@ -78,8 +86,8 @@ Widget buildVisitCard(
                       title: 'View Details',
                       backgroundColor: AppTheme.getColor(context).primary,
                       textStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13 * multiplier,
+                        color: AppTheme.getColor(context).onPrimary,
+                        fontSize: 13 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w400,
                       ),
                       boarderRadius: 40,
@@ -90,7 +98,7 @@ Widget buildVisitCard(
                 ],
               ),
 
-              SizedBox(height: screenHeight * 0.02),
+              SizedBox(height: Responsive.getHeight(context) * 0.02),
 
               // details
               ...visit['details'].entries.map((e) {
@@ -98,59 +106,70 @@ Widget buildVisitCard(
                 final value = e.value.toString();
                 final lowerKey = key.toLowerCase();
 
-                Color valueColor = AppColors.black;
+                Color valueColor = AppTheme.getColor(context).onSurface;
                 if (lowerKey == 'visit status') {
                   valueColor = value.toLowerCase() == 'approved'
-                      ? AppColors.secondary
+                      ?  AppTheme.getColor(context).secondary
                       : AppColors.spanishYellow;
                 } else if (lowerKey == 'visit') {
                   valueColor = AppColors.textGray;
                 }
 
-                return Padding(
-                  padding: EdgeInsets.only(bottom: screenHeight * 0.015),
-                  child: getCommonRow(
-                    context,
-                    title: key,
-                    value: value,
-                    textColor: valueColor,
-                    onTap: () {},
-                    showMap:
-                        lowerKey == 'address' && visit['showImage'] == true,
-                  ),
+                return getCommonRow(
+                  context,
+                  title: key,
+                  value: value,
+                  textColor: valueColor,
+                  onTap: () {},
+                  showMap:
+                      lowerKey == 'address' && visit['showImage'] == true,
                 );
               }).toList(),
-
+              SizedBox(height: 0.020 * Responsive.getHeight(context),),
               // Reschedule Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomText(
-                    'Reschedule Visit?',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14 * multiplier,
-                    color: AppTheme.getColor(context).primary,
-                    decoration: TextDecoration.underline,
-                    decorationColor: AppTheme.getColor(context).primary,
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RescheduleVisitPage(),
+                        ),
+                      );
+                    },
+                    child: CustomText(
+                      'Reschedule Visit?',
+                      isKey: true,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14 * Responsive.getResponsiveText(context),
+                      color: AppTheme.getColor(context).primary,
+                      decoration: TextDecoration.underline,
+                      decorationColor: AppTheme.getColor(context).primary,
+                    ),
                   ),
+
                   Row(
                     children: [
-                      if (visit['showWhatsapp'] == true) ...[
-                        SvgPicture.asset('assets/visit/svgs/whatsapp.svg'),
-                        SizedBox(width: screenWidth * 0.03),
-                      ],
-                      if (visit['showShare'] == true) ...[
-                        SvgPicture.asset('assets/visit/svgs/share.svg'),
-                        SizedBox(width: screenWidth * 0.03),
-                      ],
+                      if (visit['showWhatsapp'] == true)
+                        ...[
+                          SvgPicture.asset(AppAssets.whatsapp),
+                          SizedBox(width: Responsive.getWidth(context) * 0.03),
+                        ],
+                      if (visit['showShare'] == true)
+                        ...[
+                          SvgPicture.asset(AppAssets.share),
+                          SizedBox(width: Responsive.getWidth(context) * 0.03),
+                        ],
                       if (visit['showDelete'] == true)
-                        SvgPicture.asset('assets/visit/svgs/delete.svg'),
+                        SvgPicture.asset(AppAssets.delete),
                     ],
                   ),
                 ],
               ),
 
-              SizedBox(height: screenHeight * 0.02),
+              SizedBox(height: Responsive.getHeight(context) * 0.02),
 
               // Buttons
               if (index == 2 || index == 3)
@@ -158,55 +177,85 @@ Widget buildVisitCard(
                   children: [
                     Expanded(
                       child: MyCoButton(
-                        onTap: () {},
+                        onTap: () => showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                          ),
+                          builder: (_) => const EndVisitBottomSheet(),
+                        ),
                         boarderRadius: 40,
                         backgroundColor: Util.applyOpacity(AppColors.red, 0.1),
                         isShadowBottomLeft: true,
                         title: 'END VISIT',
                         textStyle: TextStyle(
                           color: AppColors.red,
-                          fontSize: 13.5 * multiplier,
+                          fontSize: 13.5 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 5),
+                    SizedBox(width: Responsive.getWidth(context) * 0.03),
                     Expanded(
                       child: MyCoButton(
                         onTap: () {},
                         title: 'TAKE ORDER',
-                        backgroundColor: AppColors.primary,
+                        backgroundColor: AppTheme.getColor(context).primary,
                         boarderRadius: 40,
                         textStyle: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 13.5 * multiplier,
+                          fontSize: 13.5 * Responsive.getResponsiveText(context),
                         ),
                         isShadowBottomLeft: true,
                       ),
                     ),
                   ],
                 ),
-
-              SizedBox(height: screenHeight * 0.02),
+              SizedBox(height: Responsive.getHeight(context) * 0.02),
+              if (isSixthContainer && index == 5)
+                Padding(
+                  padding: EdgeInsets.only(bottom: Responsive.getHeight(context) * 0.008),
+                  child: Center(
+                    child: CustomText(
+                      'forgot_to_end_visit',
+                      isKey: true,
+                      fontSize: 14 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.getColor(context).primary,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
 
               if (visit['isSeventhContainer'] != true)
                 MyCoButton(
                   onTap: () {
-                    context.push("/");
+                    if (!showExtraButtons && !isSixthContainer) {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: AppTheme.getColor(context).onPrimary,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                        ),
+                        builder: (_) => startVisitBottomSheet(context),
+                      );
+                    }
                   },
                   title: isSixthContainer
                       ? 'ADD REQUEST TO END VISIT'
                       : showExtraButtons
                       ? (visit['hideOrderButtons'] != true && showStartedVisit
-                            ? 'ADD REQUEST TO END VISIT'
-                            : 'ADD EXPENSES')
+                      ? 'ADD REQUEST TO END VISIT'
+                      : 'ADD EXPENSES')
                       : 'START VISIT',
-                  backgroundColor: AppColors.secondary,
+                  backgroundColor: AppTheme.getColor(context).secondary,
                   textStyle: TextStyle(
-                    color: Colors.white,
+                    color: AppTheme.getColor(context).onPrimary,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14 * multiplier,
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                   ),
                   boarderRadius: 30,
                   wantBorder: false,
@@ -215,40 +264,41 @@ Widget buildVisitCard(
 
               // Rejection Message
               if (visit['isEighthContainer'] == true) ...[
-                SizedBox(height: screenHeight * 0.03),
+                SizedBox(height: Responsive.getHeight(context) * 0.03),
                 CustomText(
-                  'End Visit Request',
+                  'end_visit_request',
+                  isKey: true,
                   fontWeight: FontWeight.w600,
-                  fontSize: 14 * multiplier,
-                  color: AppColors.primary,
+                  fontSize: 14 * Responsive.getResponsiveText(context),
+                  color: AppTheme.getColor(context).primary,
                 ),
-                SizedBox(height: screenHeight * 0.015),
+                SizedBox(height: Responsive.getHeight(context) * 0.015),
                 getCommonRow(
                   context,
-                  title: 'Rejected By',
+                  title: 'rejected_by',
                   value: 'vatsal soni (UIUX Designer)',
-                  onTap: () {},
                   textColor: AppTheme.getColor(context).onSurface,
+                  onTap: () {},
                 ),
                 getCommonRow(
                   context,
                   title: 'Date',
                   value: '03:58 PM , 03 Jun 2025',
-                  onTap: () {},
                   textColor: AppTheme.getColor(context).onSurface,
+                  onTap: () {},
                 ),
                 getCommonRow(
                   context,
                   title: 'Reason',
                   value: 'There were lots of missing data here',
-                  onTap: () {},
                   textColor: AppTheme.getColor(context).onSurface,
+                  onTap: () {},
                 ),
               ],
             ],
           ),
         ),
-      ),
+      )
     ),
   );
 }
