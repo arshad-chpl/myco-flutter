@@ -4,7 +4,7 @@ import 'package:myco_flutter/features/holiday/model/request/delete_optional_holi
 import 'package:myco_flutter/features/holiday/model/request/holiday_list_request_model.dart';
 
 abstract class HolidayRemoteDataSource {
-  Future<HolidayListResponse> fetchHolidays(HolidayListRequestModel model);
-  Future<HolidayListResponse> applyHoliday(ApplyOptionalHoliday model);
-  Future<HolidayListResponse> deleteHoliday(DeleteOptionalHoliday model,);
+  Future<HolidayListResponseModel> fetchHolidays(HolidayListRequestModel model);
+  Future<HolidayListResponseModel> applyHoliday(ApplyOptionalHoliday model);
+  Future<HolidayListResponseModel> deleteHoliday(DeleteOptionalHoliday model,);
 }

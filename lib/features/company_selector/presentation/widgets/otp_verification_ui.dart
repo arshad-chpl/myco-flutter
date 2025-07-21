@@ -12,10 +12,12 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/company_selector/data/models/request/verify_otp_request_model.dart';
 import 'package:myco_flutter/features/company_selector/domain/entites/company_response_entity.dart';
+import 'package:myco_flutter/features/company_selector/presentation/bloc/device_change/device_change_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_event.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_state.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/select_company_step/select_company_step_bloc.dart';
+import 'package:myco_flutter/features/company_selector/presentation/widgets/get_reason_ui.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/customotp_bottomsheet.dart';
 import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -59,9 +61,6 @@ class OtpVerificationUi extends StatelessWidget {
 
           context.go(RoutePaths.dashboard);
         } else if (state is OtpVerificationFailedState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.response.message ?? 'OTP Verification Failed')),
-          );
           // You can add more complex dialog logic here if needed based on the response
           if (state.response.viewDialogApiCall == true) {
             showModalBottomSheet(

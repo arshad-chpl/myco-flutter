@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -111,21 +113,37 @@ class LoginUi extends StatelessWidget {
               const SizedBox(height: 20),
               MyCoButton(
                 onTap: () {
-                  final contactInfo = isEmailLogin ? emailController.text : phoneController.text;
+                  final contactInfo = isEmailLogin
+                      ? emailController.text
+                      : phoneController.text;
 
                   if (contactInfo.isEmpty) {
-                    final String text = isEmailLogin ? 'Please enter your Email Address' : 'Please enter your Phone Number';
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
+                    final String text = isEmailLogin
+                        ? 'Please enter your Email Address'
+                        : 'Please enter your Phone Number';
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(text)));
                     return;
                   }
 
                   if (isEmailLogin && !_isValidEmail(contactInfo)) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter a valid Email Address')));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please enter a valid Email Address'),
+                      ),
+                    );
                     return;
                   }
 
                   if (!isChecked) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please agree to the terms and conditions to continue.')));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Please agree to the terms and conditions to continue.',
+                        ),
+                      ),
+                    );
                     return;
                   }
 
@@ -147,7 +165,38 @@ class LoginUi extends StatelessWidget {
                 isShadowBottomLeft: true,
               ),
               SizedBox(height: 0.025 * Responsive.getHeight(context)),
-              // ... Social Buttons and other UI elements
+              const DividerWithText(text: 'OR'),
+              SizedBox(height: 0.025 * Responsive.getHeight(context)),
+              _buildSocialButton(
+                context,
+                'Google',
+                'assets/sign_in/google_logo.png',
+              ),
+              SizedBox(height: 0.015 * Responsive.getHeight(context)),
+              _buildSocialButton(
+                context,
+                'Apple',
+                'assets/sign_in/apple_logo.png',
+              ),
+              SizedBox(height: 0.025 * Responsive.getHeight(context)),
+              Center(
+                child: Row(
+                  children: [
+                    const CustomText('Don’t have an account? ',),
+                    InkWell(
+                      onTap: (){
+                        context.go(RoutePaths.signUpForm);
+                      },
+                      child: CustomText(
+                        'Sign Up Here',
+                        fontSize: 20 * Responsive.getResponsiveText(context),
+                        color: AppTheme.getColor(context).primary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 0.025 * Responsive.getHeight(context)),
               _buildPolicyAgreement(context),
             ],
           ),
@@ -156,51 +205,104 @@ class LoginUi extends StatelessWidget {
     );
   }
 
+  Widget _buildSocialButton(
+    BuildContext context,
+    String provider,
+    String asset,
+  ) => MyCoButton(
+    onTap: () {},
+    title: 'Sign In with $provider',
+    textStyle: TextStyle(
+      color: AppTheme.getColor(context).onSurface.withOpacity(0.5),
+      fontSize: 20 * Responsive.getResponsiveText(context),
+      fontWeight: FontWeight.w900,
+    ),
+    image: Image.asset(
+      asset,
+      fit: BoxFit.contain,
+      height: 0.02 * Responsive.getHeight(context),
+    ),
+    spacing: 10 * Responsive.getResponsive(context),
+    decoration: BoxDecoration(
+      border: Border.all(color: AppTheme.getColor(context).primary),
+      color: AppColors.white,
+      borderRadius: BorderRadius.circular(
+        40 * Responsive.getResponsive(context),
+      ),
+    ),
+  );
+
   Widget _buildPolicyAgreement(BuildContext context) => Row(
-        children: [
-          CustomCheckbox(
-            value: isChecked,
-            onChanged: onCheckChanged,
-            borderColor: isChecked ? AppColors.primary : Colors.grey,
-            activeColor: AppTheme.getColor(context).primaryContainer,
-            checkColor: AppTheme.getColor(context).primary, height: 20, width: 20, unCheckedBackground: AppTheme.getColor(context).surface,
-          ),
-          SizedBox(width: 0.015 * Responsive.getWidth(context)),
-          Expanded(
-            child: RichText(
-              text: TextSpan(
-                style: TextStyle(color: AppTheme.getColor(context).onSurface, fontSize: 14 * Responsive.getResponsiveText(context)),
-                children: [
-                  const TextSpan(text: 'Please confirm that you agree to our ', style: TextStyle(fontWeight: FontWeight.w600)),
-                  _linkSpan(context, 'Privacy Policy'),
-                  const TextSpan(text: ', '),
-                  _linkSpan(context, 'Terms & Conditions'),
-                  const TextSpan(text: ' & '),
-                  _linkSpan(context, 'Cancellation & Refund Policy'),
-                  const TextSpan(text: '.'),
-                ],
-              ),
+    children: [
+      CustomCheckbox(
+        value: isChecked,
+        onChanged: onCheckChanged,
+        borderColor: isChecked ? AppColors.primary : Colors.grey,
+        activeColor: AppTheme.getColor(context).primaryContainer,
+        checkColor: AppTheme.getColor(context).primary,
+        height: 20,
+        width: 20,
+        unCheckedBackground: AppTheme.getColor(context).surface,
+      ),
+      SizedBox(width: 0.015 * Responsive.getWidth(context)),
+      Expanded(
+        child: RichText(
+          text: TextSpan(
+            style: TextStyle(
+              color: AppTheme.getColor(context).onSurface,
+              fontSize: 14 * Responsive.getResponsiveText(context),
             ),
+            children: [
+              const TextSpan(
+                text: 'Please confirm that you agree to our ',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              _linkSpan(context, 'Privacy Policy'),
+              const TextSpan(text: ', '),
+              _linkSpan(context, 'Terms & Conditions'),
+              const TextSpan(text: ' & '),
+              _linkSpan(context, 'Cancellation & Refund Policy'),
+              const TextSpan(text: '.'),
+            ],
           ),
-        ],
-      );
+        ),
+      ),
+    ],
+  );
 
   TextSpan _linkSpan(BuildContext context, String text) => TextSpan(
-        text: text,
-        style: TextStyle(color: AppTheme.getColor(context).primary),
-        recognizer: TapGestureRecognizer()
-          ..onTap = () => showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                builder: (_) => const BottomTermAndCondition(),
-              ),
-      );
+    text: text,
+    style: TextStyle(color: AppTheme.getColor(context).primary),
+    recognizer: TapGestureRecognizer()
+      ..onTap = () => showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (_) => const BottomTermAndCondition(),
+      ),
+  );
 
   bool _isValidEmail(String email) {
     final emailRegex = RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
     return emailRegex.hasMatch(email);
   }
+}
+
+class DividerWithText extends StatelessWidget {
+  final String text;
+
+  const DividerWithText({required this.text, super.key});
+
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      const Expanded(child: Divider(color: AppColors.gray5, thickness: 2)),
+      SizedBox(width: 0.018 * Responsive.getHeight(context)),
+      Text(text),
+      SizedBox(width: 0.018 * Responsive.getHeight(context)),
+      const Expanded(child: Divider(color: AppColors.gray5, thickness: 2)),
+    ],
+  );
 }
 
 class _EmailInput extends StatelessWidget {
@@ -216,12 +318,17 @@ class _EmailInput extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15 * Responsive.getResponsive(context)),
+            borderRadius: BorderRadius.circular(
+              15 * Responsive.getResponsive(context),
+            ),
             border: Border.all(color: AppColors.gray5),
           ),
           child: TextField(
             controller: emailController,
-            decoration: const InputDecoration(hintText: 'Please Enter Email Id', border: InputBorder.none),
+            decoration: const InputDecoration(
+              hintText: 'Please Enter Email Id',
+              border: InputBorder.none,
+            ),
           ),
         ),
       ],
@@ -255,7 +362,9 @@ class _PhoneInput extends StatelessWidget {
           countryDialCodes: countryMap,
           phoneController: phoneController,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15 * Responsive.getResponsive(context)),
+            borderRadius: BorderRadius.circular(
+              15 * Responsive.getResponsive(context),
+            ),
             border: Border.all(color: AppColors.gray5),
           ),
         ),

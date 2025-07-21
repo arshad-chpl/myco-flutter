@@ -5,6 +5,8 @@ class CommonResponseModelEntity extends Equatable {
   final List<OutOfRangeReasonListModelEntity>? outOfRangeReason;
   final String? status;
   final String? error;
+  final bool? viewDialogApiCall;
+  final bool? viewDialog;
   final String? reminingDocumentCount;
   final String? message;
   final String? viewMessage;
@@ -65,6 +67,8 @@ class CommonResponseModelEntity extends Equatable {
     this.outOfRangeReason,
     this.status,
     this.error,
+    this.viewDialogApiCall,
+    this.viewDialog,
     this.reminingDocumentCount,
     this.message,
     this.viewMessage,
@@ -124,18 +128,64 @@ class CommonResponseModelEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    outOfRangeReason, status, error, reminingDocumentCount, message,
-    viewMessage, workReportOn, reminderId, travelModeId, noStockProductVariantIds,
-    startTime, leaveStatus, leaveStatusView, workReportAdded, totalWorkReport,
-    punchOutWorkReportRequirement, template, workReportMessage, remainingWorkReport,
-    availableBalance, accountDeactive, otpPopup, isEmailOtp, isVoiceOtp, lateIn,
-    earlyOut, trxId, taskImportantId, taskMyDayId, purchaseCartId, cartCount,
-    userId, userMobile, isFirebase, allowPunchInAfterWorkReport, totalPunchInWorkReport,
-    viewPunchInWrView, totalReportAdded, remainingPunchInWorkReport, workReportId,
-    visitId, userVisitingCard, userVisitingCardBack, faceImageTwo, faceImageOne,
-    faceAddedDate, retailerId, retailerCode, addedCount, returnCount, verifyCount,
-    viewDate, taskId, isApprove, shortName, userProfilePic, wfhAddressId,
-    availableWfhBalance
+    outOfRangeReason,
+    status,
+    error,
+    reminingDocumentCount,
+    message,
+    viewMessage,
+    workReportOn,
+    reminderId,
+    travelModeId,
+    noStockProductVariantIds,
+    startTime,
+    leaveStatus,
+    leaveStatusView,
+    workReportAdded,
+    totalWorkReport,
+    punchOutWorkReportRequirement,
+    template,
+    workReportMessage,
+    remainingWorkReport,
+    availableBalance,
+    accountDeactive,
+    otpPopup,
+    isEmailOtp,
+    isVoiceOtp,
+    lateIn,
+    earlyOut,
+    trxId,
+    taskImportantId,
+    taskMyDayId,
+    purchaseCartId,
+    cartCount,
+    userId,
+    userMobile,
+    isFirebase,
+    allowPunchInAfterWorkReport,
+    totalPunchInWorkReport,
+    viewPunchInWrView,
+    totalReportAdded,
+    remainingPunchInWorkReport,
+    workReportId,
+    visitId,
+    userVisitingCard,
+    userVisitingCardBack,
+    faceImageTwo,
+    faceImageOne,
+    faceAddedDate,
+    retailerId,
+    retailerCode,
+    addedCount,
+    returnCount,
+    verifyCount,
+    viewDate,
+    taskId,
+    isApprove,
+    shortName,
+    userProfilePic,
+    wfhAddressId,
+    availableWfhBalance,
   ];
 }
 
@@ -164,5 +214,10 @@ class TemplateEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [reportAdded, isRequired, templateId, templateName];
+  List<Object?> get props => [
+    reportAdded,
+    isRequired,
+    templateId,
+    templateName,
+  ];
 }

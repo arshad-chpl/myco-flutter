@@ -3,11 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/holiday/model/holiday_list_response.dart';
+import 'package:myco_flutter/features/holiday/domain/entities/holiday_list_response_entity.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
 class HolidayItemCard extends StatelessWidget {
-  final Holiday holiday;
+  final HolidayEntity holiday;
   final int index;
   final List<Color> backgroundColors;
   final BuildContext context;

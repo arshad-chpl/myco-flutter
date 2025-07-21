@@ -19,7 +19,7 @@ class HolidayRemoteDataSourceImpl implements HolidayRemoteDataSource {
   /*RequestOtpRequestModel model*/
 
   @override
-  Future<HolidayListResponse> fetchHolidays(HolidayListRequestModel model) async {
+  Future<HolidayListResponseModel> fetchHolidays(HolidayListRequestModel model) async {
 
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(model.toMap()));
     const controller = 'holiday_controller.php';
@@ -28,13 +28,13 @@ class HolidayRemoteDataSourceImpl implements HolidayRemoteDataSource {
       instanceName: VariableBag.employeeMobileApi,
     ).postDynamic(controller, encryptedBody);
 
-    return HolidayListResponse.fromJson(
+    return HolidayListResponseModel.fromJson(
       json.decode(GzipUtil.decryptAES(response)),
     );
   }
 
   @override
-  Future<HolidayListResponse> applyHoliday(ApplyOptionalHoliday model) async {
+  Future<HolidayListResponseModel> applyHoliday(ApplyOptionalHoliday model) async {
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(model.toMap()));
     const controller = 'holiday_controller.php';
 
@@ -42,13 +42,13 @@ class HolidayRemoteDataSourceImpl implements HolidayRemoteDataSource {
       instanceName: VariableBag.employeeMobileApi,
     ).postDynamic(controller, encryptedBody);
 
-    return HolidayListResponse.fromJson(
+    return HolidayListResponseModel.fromJson(
       json.decode(GzipUtil.decryptAES(response)),
     );
   }
 
   @override
-  Future<HolidayListResponse> deleteHoliday(
+  Future<HolidayListResponseModel> deleteHoliday(
     DeleteOptionalHoliday model,
   ) async {
 
@@ -59,7 +59,7 @@ class HolidayRemoteDataSourceImpl implements HolidayRemoteDataSource {
       instanceName: VariableBag.employeeMobileApi,
     ).postDynamic(controller, encryptedBody);
 
-    return HolidayListResponse.fromJson(
+    return HolidayListResponseModel.fromJson(
       json.decode(GzipUtil.decryptAES(response)),
     );
   }
