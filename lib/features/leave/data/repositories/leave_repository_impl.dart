@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:myco_flutter/core/error/failure.dart';
-import 'package:myco_flutter/core/models/common_response.dart';
+import 'package:myco_flutter/core/models/domain/common_response_entity.dart';
 import 'package:myco_flutter/core/utils/safe_api_call.dart';
 import 'package:myco_flutter/features/leave/data/datasources/leave_remote_data_source.dart';
 import 'package:myco_flutter/features/leave/domain/repositories/leave_repository.dart';
@@ -34,38 +34,48 @@ class LeaveRepositoryImpl implements LeaveRepository {
   );
 
   @override
-  Future<Either<Failure, CommonResponse>> addShortLeave(
+  Future<Either<Failure, CommonResponseModelEntity>> addShortLeave(
     String date,
     String time,
     String reason,
-  ) async => safeApiCall.execute(
-    () => remoteDataSource.addShortLeave(date, time, reason),
-  );
+  ) async => safeApiCall.execute(() async {
+    // Await the response from the data source
+    final responseModel = await remoteDataSource.addShortLeave(
+      date,
+      time,
+      reason,
+    );
+    // Convert the Model to an Entity before returning
+    return responseModel.toEntity();
+  });
 
   @override
-  Future<Either<Failure, CommonResponse>> deleteShortLeave(
+  Future<Either<Failure, CommonResponseModelEntity>> deleteShortLeave(
     String shortLeaveId,
     String shortLeaveDate,
     String otherUserId,
     String otherUserName,
-  ) async => safeApiCall.execute(
-    () => remoteDataSource.deleteShortLeave(
+  ) async => safeApiCall.execute(() async {
+    // Await the response from the data source
+    final responseModel = await remoteDataSource.deleteShortLeave(
       shortLeaveId,
       shortLeaveDate,
       otherUserId,
       otherUserName,
-    ),
-  );
+    );
+    // Convert the Model to an Entity before returning
+    return responseModel.toEntity();
+  });
 
   @override
   Future<Either<Failure, LeaveTypeResponse>> getLeaveTypesWithData(
-    String unitId,
-    String useId,
-    String userName,
-    String currentYear,
-    String appliedLeaveDate,
-  ) async => safeApiCall.execute(
-    () => remoteDataSource.getLeaveTypesWithData(
+      String unitId,
+      String useId,
+      String userName,
+      String currentYear,
+      String appliedLeaveDate,
+      ) async => safeApiCall.execute(
+        () => remoteDataSource.getLeaveTypesWithData(
       unitId,
       useId,
       userName,
@@ -76,11 +86,11 @@ class LeaveRepositoryImpl implements LeaveRepository {
 
   @override
   Future<Either<Failure, CheckLeaveBalanceResponse>> getLeaveBalanceForAutoLeave(
-    String userId,
-    String leaveDate,
-    String leaveId,
-  ) async => safeApiCall.execute(
-    () => remoteDataSource.getLeaveBalanceForAutoLeave(
+      String userId,
+      String leaveDate,
+      String leaveId,
+      ) async => safeApiCall.execute(
+        () => remoteDataSource.getLeaveBalanceForAutoLeave(
       userId,
       leaveDate,
       leaveId,

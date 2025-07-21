@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:myco_flutter/core/models/common_response.dart';
+import 'package:myco_flutter/core/models/domain/common_response_entity.dart';
 import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
 import 'package:myco_flutter/features/leave/model/check_leave_balance_response.dart';
 import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
@@ -38,14 +38,14 @@ class LeaveHistoryNewFetched extends LeaveState {
 }
 
 class ShortLeaveAdded extends LeaveState {
-  final CommonResponse commonResponse;
+  final CommonResponseModelEntity commonResponse;
   const ShortLeaveAdded(this.commonResponse);
   @override
   List<Object> get props => [commonResponse];
 }
 
 class ShortLeaveDeleted extends LeaveState {
-  final CommonResponse commonResponse;
+  final CommonResponseModelEntity commonResponse;
   const ShortLeaveDeleted(this.commonResponse);
   @override
   List<Object> get props => [commonResponse];
