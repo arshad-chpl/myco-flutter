@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/constants.dart';
-import 'package:myco_flutter/core/models/common_response.dart';
+import 'package:myco_flutter/core/models/data/common_response_model.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/leave/data/datasources/leave_remote_data_source.dart';
 import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
@@ -69,7 +68,7 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
   }
 
   @override
-  Future<CommonResponse> addShortLeave(String date, String time, String reason) async {
+  Future<CommonResponseModel> addShortLeave(String date, String time, String reason) async {
     final dataMap = {
       'addShortLeave':'addShortLeave',
       'society_id':'1',
@@ -84,11 +83,11 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.residentApiNew,
     ).postFormDynamic('leave_controller.php', dataMap);
-    return CommonResponse.fromJson(json.decode(response));
+    return CommonResponseModel.fromJson(json.decode(response));
   }
 
   @override
-  Future<CommonResponse> deleteShortLeave(String shortLeaveId, String shortLeaveDate, String otherUserId, String otherUserName) async {
+  Future<CommonResponseModel> deleteShortLeave(String shortLeaveId, String shortLeaveDate, String otherUserId, String otherUserName) async {
     final dataMap = {
       'deleteShortLeave':'deleteShortLeave',
       'society_id':'1',
@@ -104,7 +103,7 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.residentApiNew,
     ).postFormDynamic('leave_controller.php', dataMap);
-    return CommonResponse.fromJson(json.decode(response));
+    return CommonResponseModel.fromJson(json.decode(response));
   }
 
 
