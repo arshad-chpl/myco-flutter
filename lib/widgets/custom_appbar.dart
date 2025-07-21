@@ -96,13 +96,16 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
 class _CustomAppbarState extends State<CustomAppbar> {
   @override
   Widget build(BuildContext context) => AppBar(
-    title: widget.appBarTitleWidget??
+    title:
+        widget.appBarTitleWidget ??
         CustomText(
           widget.title,
-          fontSize: widget.titleFontSize ?? 24 * Responsive.getResponsiveText(context),
+          fontSize:
+              widget.titleFontSize ??
+              24 * Responsive.getResponsiveText(context),
           fontWeight: widget.titleFontWeight ?? FontWeight.w700,
           color: widget.titileColor ?? AppTheme.getColor(context).onSurface,
-          isKey: widget.isKey??false,
+          isKey: widget.isKey ?? false,
         ),
     backgroundColor:
         widget.appBarBackgoundColor ?? AppTheme.getColor(context).surface,
