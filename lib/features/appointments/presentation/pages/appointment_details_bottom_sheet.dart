@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_timer.dart';
 import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -46,6 +47,7 @@ class _AppointmentDetailsBottomSheetState
           subtitle: CustomText(
             '7980239236',
             color: AppTheme.getColor(context).surfaceBright,
+            fontSize: 12 * Responsive.getResponsiveText(context),
           ),
         ),
       ),
@@ -54,6 +56,7 @@ class _AppointmentDetailsBottomSheetState
         padding: EdgeInsets.only(
           left: 12 * Responsive.getResponsive(context),
           top: 16 * Responsive.getResponsive(context),
+          bottom: 24 * Responsive.getResponsive(context),
         ),
         child: CustomText(
           'Appointment Details',
@@ -63,18 +66,26 @@ class _AppointmentDetailsBottomSheetState
       ),
 
       Padding(
-        padding: EdgeInsets.all(32 * Responsive.getResponsive(context)),
+        padding: EdgeInsets.only(
+          left: 30 * Responsive.getResponsive(context),
+          right: 30 * Responsive.getResponsive(context),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 16,
+          spacing: 10 * Responsive.getResponsive(context),
           children: [
             LabeledTextField(
-              textFieldHeight: 0.06 * Responsive.getHeight(context),
+              textFieldHeight: 0.055 * Responsive.getHeight(context),
               textAlignment: TextAlign.start,
               label: 'Time',
               hint: 'Select Time',
               widthFactor: Responsive.getWidth(context),
-              onClick: () {},
+              onClick: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => const CustomTimer(),
+                );
+              },
               isReadOnly: true,
               border: OutlineInputBorder(
                 borderSide: BorderSide(
@@ -90,10 +101,11 @@ class _AppointmentDetailsBottomSheetState
               ),
             ),
             LabeledTextField(
-              textFieldHeight: 0.06 * Responsive.getHeight(context),
+              textFieldHeight: 0.055 * Responsive.getHeight(context),
               textAlignment: TextAlign.start,
               label: 'Place',
               hint: 'Type Here',
+
               widthFactor: Responsive.getWidth(context),
               isSuffixIconOn: true,
               onClick: () {},
@@ -127,13 +139,13 @@ class _AppointmentDetailsBottomSheetState
               ),
             ),
 
-            //SizedBox(height: 40 * Responsive.getResponsive(context)),
+            SizedBox(height: 0.02 * Responsive.getHeight(context)),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 MyCoButton(
                   boarderRadius: 30 * Responsive.getResponsive(context),
-                  width: 0.40 * Responsive.getWidth(context),
+                  width: 0.42 * Responsive.getWidth(context),
                   height: 0.06 * Responsive.getHeight(context),
                   onTap: () {},
                   backgroundColor: AppTheme.getColor(context).surfaceBright,
@@ -145,13 +157,14 @@ class _AppointmentDetailsBottomSheetState
                 ),
                 MyCoButton(
                   boarderRadius: 30 * Responsive.getResponsive(context),
-                  width: 0.40 * Responsive.getWidth(context),
+                  width: 0.42 * Responsive.getWidth(context),
                   height: 0.06 * Responsive.getHeight(context),
                   onTap: () {},
                   title: 'SEND REQUEST',
                 ),
               ],
             ),
+            SizedBox(height: 0.02 * Responsive.getHeight(context)),
           ],
         ),
       ),
