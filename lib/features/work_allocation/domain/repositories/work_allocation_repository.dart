@@ -8,7 +8,7 @@ import 'package:myco_flutter/features/work_allocation/data/models/request/hod_ap
 import 'package:myco_flutter/features/work_allocation/data/models/request/re_assign_engineer_request.dart';
 import 'package:myco_flutter/features/work_allocation/data/models/request/task_approval_request.dart';
 import 'package:myco_flutter/features/work_allocation/data/models/request/task_completion_request.dart';
-import 'package:myco_flutter/features/work_allocation/data/models/work_allocation_request.dart';
+import 'package:myco_flutter/features/work_allocation/data/models/request/work_allocation_request.dart';
 import 'package:myco_flutter/features/work_allocation/domain/entities/get_assignee_entity.dart';
 import 'package:myco_flutter/features/work_allocation/domain/entities/get_work_category_entity.dart';
 import 'package:myco_flutter/features/work_allocation/domain/entities/work_allocation_entity.dart';
