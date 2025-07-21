@@ -6,6 +6,7 @@ import 'package:myco_flutter/core/encryption/gzip_util.dart';
 import 'package:myco_flutter/core/models/data/common_response_model.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/appointments/data/data_source/appointment_remote_data_source.dart';
+import 'package:myco_flutter/features/appointments/data/models/request/approve_appointment_entity_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/add_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/delete_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/get_appointment_request_model.dart';
@@ -76,6 +77,24 @@ class AppointmentRemoteDataSourceImpl extends AppointmentRemoteDataSource {
     SendAppointmentReminderRequestModel request,
   ) async {
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.employeeMobileApi,
+    ).postDynamic('appointment_controller.php', encryptedBody);
+    return CommonResponseModel.fromJson(
+      json.decode(GzipUtil.decryptAES(response)),
+    );
+    return CommonResponseModel.fromJson(
+      json.decode(GzipUtil.decryptAES(response)),
+    );
+  }
+
+  @override
+  Future<CommonResponseModel> approveAppointment(
+    ApproveAppointmentRequestModel approveAppointmentRequest,
+  ) async {
+    final encryptedBody = GzipUtil.encryptAES(
+      jsonEncode(approveAppointmentRequest),
+    );
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.employeeMobileApi,
     ).postDynamic('appointment_controller.php', encryptedBody);
