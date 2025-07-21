@@ -1,14 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:myco_flutter/core/error/failure.dart';
-import 'package:myco_flutter/core/models/common_response.dart';
+import 'package:myco_flutter/core/models/domain/common_response_entity.dart';
 import 'package:myco_flutter/core/utils/safe_api_call.dart';
-import 'package:myco_flutter/features/company_info/data/data_sources/company_info_remote_data_source.dart';
-import 'package:myco_flutter/features/company_info/domain/repositories/company_info_repository.dart';
-import 'package:myco_flutter/features/company_info/model/company_info_response.dart';
 import 'package:myco_flutter/features/company_selector/data/datasources/request_otp_remote_data_source.dart';
-import 'package:myco_flutter/features/company_selector/data/models/request_otp_request_model.dart';
-import 'package:myco_flutter/features/company_selector/data/models/verify_otp_reponse.dart';
-import 'package:myco_flutter/features/company_selector/data/models/verify_otp_request_model.dart';
+import 'package:myco_flutter/features/company_selector/data/models/request/request_otp_request_model.dart';
+import 'package:myco_flutter/features/company_selector/data/models/request/verify_otp_request_model.dart';
+import 'package:myco_flutter/features/company_selector/domain/entites/verify_otp_response_entity.dart';
 import 'package:myco_flutter/features/company_selector/domain/repositories/request_otp_repository.dart';
 
 class RequestOtpRepositoryImpl implements RequestOtpRepository {
@@ -18,8 +15,22 @@ class RequestOtpRepositoryImpl implements RequestOtpRepository {
   RequestOtpRepositoryImpl(this.remoteDataSource, this.safeApiCall);
 
   @override
-  Future<Either<Failure, CommonResponse>> requestOtp(RequestOtpRequestModel model) async => safeApiCall.execute(() => remoteDataSource.requestOtp(model));
+  Future<Either<Failure, CommonResponseModelEntity>> requestOtp(
+    RequestOtpRequestModel model,
+  ) async => safeApiCall.execute(() async {
+    // Await the response from the data source
+    final responseModel = await remoteDataSource.requestOtp(model);
+    // Convert the Model to an Entity before returning
+    return responseModel.toEntity();
+  });
 
   @override
-  Future<Either<Failure, VerifyOtpResponse>> verifyOtp(VerifyOtpRequestModel model) async => safeApiCall.execute(() => remoteDataSource.verifyOtp(model));
+  Future<Either<Failure, VerifyOtpResponseEntity>> verifyOtp(
+    VerifyOtpRequestModel model,
+  ) async => safeApiCall.execute(() async {
+    // Await the response from the data source
+    final responseModel = await remoteDataSource.verifyOtp(model);
+    // Convert the Model to an Entity before returning
+    return responseModel.toEntity();
+  });
 }
