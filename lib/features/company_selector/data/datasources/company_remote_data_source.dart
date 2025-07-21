@@ -1,4 +1,5 @@
-import 'package:myco_flutter/features/company_selector/data/models/company_response_model.dart';
+
+import 'package:myco_flutter/features/company_selector/data/models/response/company_response_model.dart';
 
 abstract class CompanyRemoteDataSource {
   /// Searches for companies based on the provided query.
