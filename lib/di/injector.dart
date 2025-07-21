@@ -56,6 +56,11 @@ Future<void> init() async {
   //========Company Info=========
   setupCompanyInfoDI(sl);
 
+  //========Holiday=========
+  setupHolidayDI(sl);
+
+  // ========Admin View=========
+  adminViewDi(sl);
   //Leave
   setUpLeaveDI(sl);
 
