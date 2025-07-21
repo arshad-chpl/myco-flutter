@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -29,6 +30,7 @@ class _MyAppointmentsListViewWidgetsState extends State<MyAppointmentsListViewWi
       'reason': 'To meet and learn',
       'location': 'CHPL',
       'phoneNo': '+91 7980239236',
+      'rejectionReason': 'Lmnopq',
     },
     {
       'status' : 'Rejected',
@@ -39,6 +41,7 @@ class _MyAppointmentsListViewWidgetsState extends State<MyAppointmentsListViewWi
       'reason': 'To meet and learn',
       'location': 'CHPL',
       'phoneNo': '+91 7980239236',
+      'rejectionReason': 'Lmnopq',
     },
     {
       'status' : 'Pending',
@@ -49,6 +52,7 @@ class _MyAppointmentsListViewWidgetsState extends State<MyAppointmentsListViewWi
       'reason': 'XYZ',
       'location': 'CHPL',
       'phoneNo': '+91 7980239236',
+      'rejectionReason': 'Lmnopq',
     }
   ];
 
@@ -80,6 +84,7 @@ class _MyAppointmentsListViewWidgetsState extends State<MyAppointmentsListViewWi
     scrollDirection: Axis.vertical,
       itemBuilder: (context, index) {
       final myAppointment = myAppointmentData[index];
+      final isRejected = myAppointment['status'].toLowerCase() == 'rejected';
 
         return Padding(
           padding: EdgeInsets.only(bottom: 21 * Responsive.getResponsive(context)),
@@ -88,6 +93,16 @@ class _MyAppointmentsListViewWidgetsState extends State<MyAppointmentsListViewWi
             headerPrefixIcon: AppAssets.myCoLogo,
             showHeaderPrefixIcon: true,
             headerColor: getHeaderColor(myAppointment['status']),
+            suffixIcon: isRejected
+                ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SvgPicture.asset(AppAssets.assetBellRinging),
+                SizedBox(width: 0.01 * Responsive.getWidth(context)),
+                SvgPicture.asset(AppAssets.assetTrashIcon),
+              ],
+            )
+                : null,
             bottomWidget: Padding(
               padding: EdgeInsets.all(13 * Responsive.getResponsive(context)),
               child: Column(
@@ -139,6 +154,16 @@ class _MyAppointmentsListViewWidgetsState extends State<MyAppointmentsListViewWi
                     heading: 'Phone No. ',
                     value: myAppointment['phoneNo'],
                   ),
+                  if (isRejected && myAppointment['rejectionReason'] != null)
+                    Column(
+                      children: [
+                        SizedBox(height: 0.01 * Responsive.getHeight(context)),
+                        ReasonValueCommonRowWidget(
+                          heading: 'Reason for Rejection',
+                          value: myAppointment['rejectionReason'],
+                        ),
+                      ],
+                    ),
                   SizedBox(height: 0.01 * Responsive.getHeight(context)),
                   Align(
                     alignment: Alignment.topRight,

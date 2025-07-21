@@ -168,4 +168,7 @@ class AppAssets {
   static const String assetPerson = '$appointmentSvgs/person.svg';
   static const String assetClock2 = '$appointmentSvgs/clock.svg';
   static const String assetLocation = '$appointmentSvgs/location.svg';
+  static const String assetCalendar = '$appointmentSvgs/calendar.svg';
+  static const String assetTrashIcon = '$appointmentSvgs/trash_icon.svg';
+  static const String assetBellRinging = '$appointmentSvgs/bell_ringing.svg';
 }
