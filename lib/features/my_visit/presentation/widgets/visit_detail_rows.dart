@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/get_common_row.dart';
-
+import 'package:myco_flutter/widgets/get_common_row.dart' hide getCommonRow;
 
 class VisitDetailRows extends StatelessWidget {
   final String visit;

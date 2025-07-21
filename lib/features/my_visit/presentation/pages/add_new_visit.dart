@@ -68,9 +68,10 @@ class _AddNewVisitState extends State<AddNewVisit> {
               borderColor: AppTheme.getColor(context).primary,
               options: visitTypes,
               selectedValue: selectedVisitType,
-              onChanged: (value) =>(
-              // handle radio button selection
-              ), ),
+              onChanged: (value) => (
+                // handle radio button selection
+              ),
+            ),
 
             /// Customer to Visit dropdown
             LabeledDropdown<String>(
@@ -80,7 +81,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
               itemToString: (item) => item,
               onChanged: (value, index) {
                 // handle dropdown selection
-                  },
+              },
               hintText: LanguageManager().get('select'),
               hintTextStyle: TextStyle(
                 fontSize: 14 * Responsive.getResponsiveText(context),
@@ -200,7 +201,6 @@ class _AddNewVisitState extends State<AddNewVisit> {
               },
             ),
 
-
             /// Submit button
             Padding(
               padding: EdgeInsets.only(
@@ -208,7 +208,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
               ),
               child: MyCoButton(
                 onTap: () {
-                  
+                  // handle submit button tap
                 },
                 title: LanguageManager().get('submit'),
                 textStyle: TextStyle(

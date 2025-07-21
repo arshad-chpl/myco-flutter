@@ -19,7 +19,7 @@ Widget buildVisitCard(
   Map<String, dynamic> visit,
   int index,
   Size screenSize,
-    int totalLength,
+  int totalLength,
 ) {
   final bool showExtraButtons = visit['showExtraButtons'] == true;
   final bool showStartedVisit = visit['showStartedVisit'] == true;
@@ -34,20 +34,15 @@ Widget buildVisitCard(
     padding: EdgeInsets.only(bottom: Responsive.getHeight(context) * 0.02),
     child: Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.8),
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.8)),
       child: CommonCard(
         title: visit['title'],
         borderRadius: 12.8,
         suffixIcon: index >= totalLength - 5
-            ? SvgPicture.asset(
-          AppAssets.ref,
-        )
+            ? SvgPicture.asset(AppAssets.ref)
             : null,
         subTitle: visit['time'],
-        subTitleIcon: SvgPicture.asset(
-            AppAssets.calendar),
+        subTitleIcon: SvgPicture.asset(AppAssets.calendar),
         onTap: () {},
         headerColor: AppTheme.getColor(context).primary,
         borderColor: AppTheme.getColor(context).outline,
@@ -109,7 +104,7 @@ Widget buildVisitCard(
                 Color valueColor = AppTheme.getColor(context).onSurface;
                 if (lowerKey == 'visit status') {
                   valueColor = value.toLowerCase() == 'approved'
-                      ?  AppTheme.getColor(context).secondary
+                      ? AppTheme.getColor(context).secondary
                       : AppColors.spanishYellow;
                 } else if (lowerKey == 'visit') {
                   valueColor = AppColors.textGray;
@@ -121,11 +116,10 @@ Widget buildVisitCard(
                   value: value,
                   textColor: valueColor,
                   onTap: () {},
-                  showMap:
-                      lowerKey == 'address' && visit['showImage'] == true,
+                  showMap: lowerKey == 'address' && visit['showImage'] == true,
                 );
               }).toList(),
-              SizedBox(height: 0.020 * Responsive.getHeight(context),),
+              SizedBox(height: 0.020 * Responsive.getHeight(context)),
               // Reschedule Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -152,16 +146,14 @@ Widget buildVisitCard(
 
                   Row(
                     children: [
-                      if (visit['showWhatsapp'] == true)
-                        ...[
-                          SvgPicture.asset(AppAssets.whatsapp),
-                          SizedBox(width: Responsive.getWidth(context) * 0.03),
-                        ],
-                      if (visit['showShare'] == true)
-                        ...[
-                          SvgPicture.asset(AppAssets.share),
-                          SizedBox(width: Responsive.getWidth(context) * 0.03),
-                        ],
+                      if (visit['showWhatsapp'] == true) ...[
+                        SvgPicture.asset(AppAssets.whatsapp),
+                        SizedBox(width: Responsive.getWidth(context) * 0.03),
+                      ],
+                      if (visit['showShare'] == true) ...[
+                        SvgPicture.asset(AppAssets.share),
+                        SizedBox(width: Responsive.getWidth(context) * 0.03),
+                      ],
                       if (visit['showDelete'] == true)
                         SvgPicture.asset(AppAssets.delete),
                     ],
@@ -181,7 +173,9 @@ Widget buildVisitCard(
                           context: context,
                           isScrollControlled: true,
                           shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(16),
+                            ),
                           ),
                           builder: (_) => const EndVisitBottomSheet(),
                         ),
@@ -191,7 +185,8 @@ Widget buildVisitCard(
                         title: 'END VISIT',
                         textStyle: TextStyle(
                           color: AppColors.red,
-                          fontSize: 13.5 * Responsive.getResponsiveText(context),
+                          fontSize:
+                              13.5 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -206,7 +201,8 @@ Widget buildVisitCard(
                         textStyle: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 13.5 * Responsive.getResponsiveText(context),
+                          fontSize:
+                              13.5 * Responsive.getResponsiveText(context),
                         ),
                         isShadowBottomLeft: true,
                       ),
@@ -216,7 +212,9 @@ Widget buildVisitCard(
               SizedBox(height: Responsive.getHeight(context) * 0.02),
               if (isSixthContainer && index == 5)
                 Padding(
-                  padding: EdgeInsets.only(bottom: Responsive.getHeight(context) * 0.008),
+                  padding: EdgeInsets.only(
+                    bottom: Responsive.getHeight(context) * 0.008,
+                  ),
                   child: Center(
                     child: CustomText(
                       'forgot_to_end_visit',
@@ -238,7 +236,9 @@ Widget buildVisitCard(
                         isScrollControlled: true,
                         backgroundColor: AppTheme.getColor(context).onPrimary,
                         shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(16),
+                          ),
                         ),
                         builder: (_) => startVisitBottomSheet(context),
                       );
@@ -248,8 +248,8 @@ Widget buildVisitCard(
                       ? 'ADD REQUEST TO END VISIT'
                       : showExtraButtons
                       ? (visit['hideOrderButtons'] != true && showStartedVisit
-                      ? 'ADD REQUEST TO END VISIT'
-                      : 'ADD EXPENSES')
+                            ? 'ADD REQUEST TO END VISIT'
+                            : 'ADD EXPENSES')
                       : 'START VISIT',
                   backgroundColor: AppTheme.getColor(context).secondary,
                   textStyle: TextStyle(
@@ -298,7 +298,7 @@ Widget buildVisitCard(
             ],
           ),
         ),
-      )
+      ),
     ),
   );
 }

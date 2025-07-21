@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/auto_expense_card.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/build_other_employee_visit_tab.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/custom_visit_calender.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_tab.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_card.dart';
-import 'package:myco_flutter/features/visit/presentation/widgets/build_other_employee_visit_tab.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -235,14 +236,10 @@ class _VisitPageState extends State<MyVisitPage> {
 
     return Scaffold(
       appBar: CustomAppbar(
-        appBarBackgoundColor: AppTheme.getColor(context).onPrimary,
         elevation: 0,
         centerTitle: false,
-        leading: IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset('assets/visit/svgs/backarrow.svg'),
-        ),
         title: 'Visit',
+        titileColor: AppTheme.getColor(context).onSurface,
         actions: [
           Padding(
             padding: EdgeInsets.only(
@@ -303,16 +300,17 @@ class _VisitPageState extends State<MyVisitPage> {
                     buildAutoExpenseCard: buildAutoExpenseCard(context),
                   )
                 //other emp visit tab
-                : buildOtherEmployeeVisitTab(
-                    context,
-                    MediaQuery.of(context).size,
-                    searchController: searchController,
-                    searchFocus: searchFocus,
-                    formattedDate: formattedDate,
-                    goToPreviousDate: goToPreviousDate,
-                    goToNextDate: goToNextDate,
-                    selectDateFromPicker: selectDateFromPicker,
-                  ),
+                :buildOtherEmployeeVisitTab(
+              context,
+              MediaQuery.of(context).size,
+              searchController: searchController,
+              searchFocus: searchFocus,
+              formattedDate: formattedDate,
+              goToPreviousDate: goToPreviousDate,
+              goToNextDate: goToNextDate,
+              selectDateFromPicker: selectDateFromPicker,
+            ),
+
           ),
         ],
       ),
@@ -324,12 +322,16 @@ class _VisitPageState extends State<MyVisitPage> {
                 ExpandableFabAction(
                   label: 'Add Visit',
                   icon: Icons.location_on,
-                  onTap: () {},
+                  onTap: () {
+                    context.pushNamed("add-visit");
+                  },
                 ),
                 ExpandableFabAction(
                   label: 'Add Expense',
                   icon: Icons.money,
-                  onTap: () {},
+                  onTap: () {
+                    context.pushNamed("addExpense");
+                  },
                 ),
               ],
               imageSize: 66 * Responsive.getResponsiveText(context),

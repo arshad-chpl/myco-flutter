@@ -1,23 +1,14 @@
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:myco_flutter/core/theme/app_theme.dart';
-
 import 'package:myco_flutter/core/utils/responsive.dart';
-
 import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
-
 import 'package:myco_flutter/features/my_visit/presentation/widgets/customer_card_no_order.dart';
-
 import 'package:myco_flutter/features/my_visit/presentation/widgets/customer_card_only_visit.dart';
-
 import 'package:myco_flutter/features/my_visit/presentation/widgets/customer_card_order_now.dart';
-
 import 'package:myco_flutter/features/my_visit/presentation/widgets/refresh_reset_buttons_row.dart';
-
-import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_search_bar.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -72,16 +63,11 @@ class _CustomerPageState extends State<CustomerPage> {
 
           children: [
             // Search
-            VisitSearchBar(
-              controller: searchController,
-
-              focusNode: searchFocus,
-
-              hintText: 'Search',
-            ),
-
+            // VisitSearchBar(
+            //   controller: searchController,
+            //   hintText: 'Search With Customer',
+            // ),
             SizedBox(height: 16 * Responsive.getResponsive(context)),
-
             // Cards
             Column(
               children: customerCardList.map((cardType) {

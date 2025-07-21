@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -129,66 +130,65 @@ class _VisitWithState extends State<VisitWith> {
           //Branch selection
           BlocBuilder<InputTagBloc, InputTagState>(
             builder: (context, state) => Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  LabelRow(
-                    title: 'blocks',
-                    actionLabel: 'select_branch',
-                    onTap: () async {
-                      final selectedId = await showCustomSimpleBottomSheet(
-                        context: context,
-                        btnTitle: 'add',
-                        heading: 'select_branch',
-                        dataList: branches,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                LabelRow(
+                  title: 'blocks',
+                  actionLabel: 'select_branch',
+                  onTap: () async {
+                    final selectedId = await showCustomSimpleBottomSheet(
+                      context: context,
+                      btnTitle: 'add',
+                      heading: 'select_branch',
+                      dataList: branches,
+                    );
+                    if (selectedId != null) {
+                      final selectedMap = branches.firstWhere(
+                        (e) => e['id'] == selectedId,
+                        orElse: () => {'id': '', 'name': ''},
                       );
-                      if (selectedId != null) {
-                        final selectedMap = branches.firstWhere(
-                          (e) => e['id'] == selectedId,
-                          orElse: () => {'id': '', 'name': ''},
-                        );
-                        context.read<InputTagBloc>().add(
-                          AddBranchTagFromSheet((selectedMap['name'] ?? '')),
-                        );
-                      }
-                    },
-                  ),
-                  //Tag input field for branches
-                  CustomTagInputField(
-                    tags: state.Branchtags,
-                    hint: 'block',
-                    onAdd: (value) {
-                      final cleanValue = value.replaceAll(',', '').trim();
-                      if (cleanValue.isNotEmpty &&
-                          !_branchTags.contains(cleanValue)) {
-                        context.read<InputTagBloc>().add(
-                          AddBranchTagFromSheet(cleanValue),
-                        );
-                      }
-                    },
-                    onRemove: (tag) {
                       context.read<InputTagBloc>().add(
-                          RemoveBranchTag(tag));
-                    },
-                    onArrowTap: () async {
-                      final selectedId = await showCustomSimpleBottomSheet(
-                        context: context,
-                        heading: 'select_department',
-                        dataList: branches,
-                        btnTitle: 'add',
+                        AddBranchTagFromSheet((selectedMap['name'] ?? '')),
                       );
-                      if (selectedId != null) {
-                        final selectedMap = branches.firstWhere(
-                              (e) => e['id'] == selectedId,
-                          orElse: () => {'id': '', 'name': ''},
-                        );
-                        context.read<InputTagBloc>().add(
-                          AddBranchTagFromSheet(selectedMap['name'] ?? ''),
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
+                    }
+                  },
+                ),
+                //Tag input field for branches
+                CustomTagInputField(
+                  tags: state.Branchtags,
+                  hint: 'block',
+                  onAdd: (value) {
+                    final cleanValue = value.replaceAll(',', '').trim();
+                    if (cleanValue.isNotEmpty &&
+                        !_branchTags.contains(cleanValue)) {
+                      context.read<InputTagBloc>().add(
+                        AddBranchTagFromSheet(cleanValue),
+                      );
+                    }
+                  },
+                  onRemove: (tag) {
+                    context.read<InputTagBloc>().add(RemoveBranchTag(tag));
+                  },
+                  onArrowTap: () async {
+                    final selectedId = await showCustomSimpleBottomSheet(
+                      context: context,
+                      heading: 'select_department',
+                      dataList: branches,
+                      btnTitle: 'add',
+                    );
+                    if (selectedId != null) {
+                      final selectedMap = branches.firstWhere(
+                        (e) => e['id'] == selectedId,
+                        orElse: () => {'id': '', 'name': ''},
+                      );
+                      context.read<InputTagBloc>().add(
+                        AddBranchTagFromSheet(selectedMap['name'] ?? ''),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
 
           //Department selection
