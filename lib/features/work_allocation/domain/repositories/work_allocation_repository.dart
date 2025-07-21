@@ -11,8 +11,6 @@ import 'package:myco_flutter/features/work_allocation/data/models/request/task_c
 import 'package:myco_flutter/features/work_allocation/data/models/work_allocation_request.dart';
 import 'package:myco_flutter/features/work_allocation/domain/entities/get_assignee_entity.dart';
 import 'package:myco_flutter/features/work_allocation/domain/entities/get_work_category_entity.dart';
-import 'package:myco_flutter/features/work_allocation/domain/entities/hod_approval_entity.dart';
-import 'package:myco_flutter/features/work_allocation/domain/entities/re_assign_engineer_entity.dart';
 import 'package:myco_flutter/features/work_allocation/domain/entities/work_allocation_entity.dart';
 
 abstract class WorkAllocationRepository {
