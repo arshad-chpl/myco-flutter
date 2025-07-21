@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -47,18 +48,15 @@ class UserChatScreen extends StatelessWidget {
                     'Vedant',
                     fontSize: 20 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w700,
+                    color: AppTheme.getColor(context).onPrimary,
                   ),
                 ],
               ),
+              actionsPadding:  EdgeInsets.only(right: 0.07 * Responsive.getWidth(context)),
               titleSpacing: 10,
               actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.more_vert,
-                    color: AppTheme.getColor(context).onSurface,
-                  ),
-                ),
+                SvgPicture.asset(
+                  'assets/chat/menu.svg',)
               ],
             ),
             SizedBox(height: 0.01 * Responsive.getHeight(context)),
@@ -118,14 +116,14 @@ class UserChatScreen extends StatelessWidget {
                 suffix: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Image.asset(
-                      'assets/chat/attachment.png',
-                      scale: 30 * Responsive.getResponsive(context),
+                    SvgPicture.asset(
+                      'assets/chat/attchment.svg',
+                      width: 25 * Responsive.getResponsive(context),
                     ),
                     SizedBox(width: 0.05 * Responsive.getWidth(context)),
-                    Image.asset(
-                      'assets/chat/send.png',
-                      scale: 30 * Responsive.getResponsive(context),
+                    SvgPicture.asset(
+                      'assets/chat/send.svg',
+                     width: 25 * Responsive.getResponsive(context),
                     ),
                     SizedBox(width: 0.05 * Responsive.getWidth(context)),
                   ],

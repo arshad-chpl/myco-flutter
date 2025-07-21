@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
@@ -35,9 +36,9 @@ class ChatListScreen extends StatelessWidget {
       backgroundColor: AppTheme.getColor(context).primary,
 
       shape: const CircleBorder(),
-      child: Image.asset(
-        'assets/chat/message.png',
-        color: AppTheme.getColor(context).onPrimary,
+      child: SvgPicture.asset(
+        'assets/chat/message.svg',
+
         width: 0.08 * Responsive.getWidth(context),
       ),
     ),
@@ -62,10 +63,9 @@ class ChatListScreen extends StatelessWidget {
             color: AppTheme.getColor(context).onPrimary,
             fontSize: 14 * Responsive.getResponsiveText(context),
           ),
-          image: Icon(
-            Icons.add,
-            color: AppTheme.getColor(context).onPrimary,
-            size: 18 * Responsive.getResponsive(context),
+          image: Padding(
+            padding:  EdgeInsets.only(left:  8.0),
+            child: SvgPicture.asset('assets/chat/plus.svg'),
           ),
           imagePosition: AxisDirection.right,
           width: 0.35 * Responsive.getWidth(context),
@@ -112,7 +112,7 @@ class ChatListScreen extends StatelessWidget {
               );
             },
           ),
-          SizedBox(height: 0.02 * Responsive.getHeight(context)),
+          SizedBox(height: 0.03 * Responsive.getHeight(context)),
           Expanded(
             child: BlocBuilder<TabbarBloc, TabbarState>(
               builder: (context, state) {

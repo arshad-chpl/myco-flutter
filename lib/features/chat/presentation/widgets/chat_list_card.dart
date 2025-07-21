@@ -62,6 +62,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -89,10 +90,6 @@ class ChatListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Responsive.init(context);
     return Container(
-      margin: EdgeInsets.symmetric(
-        vertical: 6 * Responsive.getResponsive(context),
-        horizontal: 8 * Responsive.getResponsive(context),
-      ),
       decoration: BoxDecoration(
         color: AppTheme.getColor(context).onPrimary,
         border: Border.all(color: AppTheme.getColor(context).outline),
@@ -128,7 +125,7 @@ class ChatListCard extends StatelessWidget {
         ),
         trailing: isSufixIcon! == true ? Column(
           children: [
-            Icon(Icons.cancel_outlined , color: AppTheme.getColor(context).error,),
+            SvgPicture.asset("assets/chat/close-circle.svg")
             
           ],
         ):Column(

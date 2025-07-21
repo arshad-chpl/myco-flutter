@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
@@ -7,6 +8,7 @@ import 'package:myco_flutter/features/language_selector/model/language_response.
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/text_field.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
@@ -44,39 +46,36 @@ class CreatGroupBottomsheet extends StatelessWidget {
       children: [
         // Header
         Container(
-                height: headerHeight,
-                width: headerWidth ?? double.infinity,
-                padding:
-                    headerPadding ??
-                    EdgeInsets.symmetric(horizontal: 28, vertical: 12),
-                decoration:
-                    decoration ??
-                    BoxDecoration(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(16),
-                      ),
+          height: headerHeight,
+          width: headerWidth ?? double.infinity,
+          padding:
+              headerPadding ??
+              EdgeInsets.symmetric(horizontal: 28, vertical: 12),
+          decoration:
+              decoration ??
+              BoxDecoration(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
 
-                      boxShadow: [
-                        BoxShadow(
-                          color:
-                              headerColor?.withAlpha(200) ??
-                              AppTheme.getColor(context).primary.withAlpha(200),
-                        ),
-                        BoxShadow(
-                          color:
-                              headerColor ?? AppTheme.getColor(context).primary,
-                          spreadRadius: -4.0,
-                          blurRadius: 8.0,
-                        ),
-                      ],
-                    ),
-                child: CustomText(
-                  "create_group",
-                  fontSize: 22 * Responsive.getResponsiveText(context),
-                  fontWeight: FontWeight.w700,
-                  color: AppTheme.getColor(context).onPrimary,
-                ),
+                boxShadow: [
+                  BoxShadow(
+                    color:
+                        headerColor?.withAlpha(200) ??
+                        AppTheme.getColor(context).primary.withAlpha(200),
+                  ),
+                  BoxShadow(
+                    color: headerColor ?? AppTheme.getColor(context).primary,
+                    spreadRadius: -4.0,
+                    blurRadius: 8.0,
+                  ),
+                ],
               ),
+          child: CustomText(
+            "create_group",
+            fontSize: 22 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w700,
+            color: AppTheme.getColor(context).onPrimary,
+          ),
+        ),
 
         // Radio List
          SizedBox(height: 50 * Responsive.getResponsive(context)),
@@ -104,11 +103,7 @@ class CreatGroupBottomsheet extends StatelessWidget {
                      // shape: BoxShape.circle,
                    ),
                    padding: const EdgeInsets.all(6),
-                   child:  Icon(
-                     Icons.camera_alt,
-                     size: 18,
-                     color: AppTheme.getColor(context).onPrimary,
-                   ),
+                   child:  SvgPicture.asset('assets/chat/camera.svg',width: 0.05 * Responsive.getWidth(context),),
                  ),
                ),
              ],
@@ -118,17 +113,9 @@ class CreatGroupBottomsheet extends StatelessWidget {
 
         Padding(
           padding: const EdgeInsets.all(12.0),
-          child: MyCoTextfield(
+          child: CustomSearchField(
             hintText: LanguageManager().get('enter_group_name'),
-            hintTextStyle: AppTheme.getTextStyle(
-              context,
-            ).labelLarge!.copyWith(color:AppTheme.getColor(context).outline),
-            prefix: const Icon(Icons.search),
-            contentPadding: EdgeInsets.only(
-              top: 0.012 * Responsive.getHeight(context),
-            ),
-            boarderRadius: 12 * Responsive.getResponsive(context),
-          
+
             onChanged: (value) => {},
           ),
         ),

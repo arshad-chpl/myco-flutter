@@ -11,6 +11,7 @@ import 'package:myco_flutter/features/chat/presentation/widgets/employee_avatar.
 import 'package:myco_flutter/features/chat/presentation/widgets/select_employee.dart';
 import 'package:myco_flutter/widgets/custom_multiselect_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
@@ -61,16 +62,9 @@ class SelectGroupEmp extends StatelessWidget {
             ],
           ),
           // SizedBox(height: 12 * Responsive.getResponsive(context)),
-          MyCoTextfield(
+          CustomSearchField(
             hintText: LanguageManager().get('search'),
-            hintTextStyle: AppTheme.getTextStyle(
-              context,
-            ).labelLarge!.copyWith(color: AppColors.textSecondary),
-            prefix: Image.asset('assets/chat/search-icon.png', scale: 20),
-            contentPadding: EdgeInsets.only(
-              top: 0.012 * Responsive.getHeight(context),
-            ),
-            boarderRadius: 12 * Responsive.getResponsive(context),
+          
             onChanged: (value) => {},
           ),
           // SizedBox(height: 0.001 * Responsive.getHeight(context)),

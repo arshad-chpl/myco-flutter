@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -73,9 +74,9 @@ class _StartNewChatState extends State<StartNewChat> {
             hintText: 'search_employee',
             //  prefixIcon: Icons.search,
           ),
-           SizedBox(height: 16 * Responsive.getResponsive(context)),
+           SizedBox(height: 30 * Responsive.getResponsive(context)),
           NewTextField(
-            prefixIconPath: " ",
+            // prefixIconPath: " ",
             enabled: true,
             // isReadOnly: true,
             hintText: selectedDepartments.isEmpty
@@ -96,16 +97,16 @@ class _StartNewChatState extends State<StartNewChat> {
                 bottom: 10 * Responsive.getResponsive(context),
                 left: 10 * Responsive.getResponsive(context),
               ),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: 2 / 2.5,
+              gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: Responsive.getGridConfig(context).itemCount,
+              mainAxisSpacing: Responsive.getGridConfig(context).spacing,
+              crossAxisSpacing: Responsive.getGridConfig(context).spacing,
+              childAspectRatio: 2 / 2.7,
               ),
               itemCount: 12, // example count
               itemBuilder: (context, index) => const StartNewChatProfileCard(
-                name: 'Ajit Maurya',
-                departments: 'QA',
+                name: 'Harshgiri Goswami',
+                departments: 'QA Sales',
               ),
               shrinkWrap: true,
             ),
@@ -154,7 +155,7 @@ class StartNewChatProfileCard extends StatelessWidget {
             children: [
               SizedBox(height: 0.018 * Responsive.getHeight(context)),
               CircleAvatar(
-                radius: 34 * Responsive.getResponsive(context),
+                radius: 32 * Responsive.getResponsive(context),
                 backgroundImage: const AssetImage(
                   'assets/chat/profile.jpg',
                 ), // For assets, use AssetImage
@@ -162,12 +163,14 @@ class StartNewChatProfileCard extends StatelessWidget {
               ),
               SizedBox(height: 0.01 * Responsive.getHeight(context)),
               CustomText(
+                textAlign:  TextAlign.center,
                 name,
                 fontWeight: FontWeight.w600,
                 fontSize: 16 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurface,
               ),
               CustomText(
+                textAlign:  TextAlign.center,
                 departments,
                 fontSize: 14 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurface,
