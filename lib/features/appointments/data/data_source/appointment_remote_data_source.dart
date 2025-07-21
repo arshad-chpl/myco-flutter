@@ -21,6 +21,8 @@ abstract class AppointmentRemoteDataSource {
 
   Future<CommonResponseModel> deleteAppointment(
     DeleteAppointmentRequestModel deleteAppointmentRequest,
+  );
+
   Future<CommonResponseModel> sendAppointmentReminder(
     SendAppointmentReminderRequestModel request,
   );

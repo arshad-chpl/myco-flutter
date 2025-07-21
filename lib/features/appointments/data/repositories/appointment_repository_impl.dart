@@ -48,13 +48,14 @@ class AppointmentRepositoryImpl extends AppointmentRepository {
     final responseModel = await remoteDataSource.getMyAppointments(request);
     return responseModel.toEntity();
   });
-      });
 
   @override
   Future<Either<Failure, CommonResponseModelEntity>> sendAppointmentReminder(
-      SendAppointmentReminderRequestModel request
-      ) async => safeApiCall.execute(() async {
-        final responseModel = await remoteDataSource.sendAppointmentReminder(request);
-        return responseModel.toEntity();
-      });
+    SendAppointmentReminderRequestModel request,
+  ) async => safeApiCall.execute(() async {
+    final responseModel = await remoteDataSource.sendAppointmentReminder(
+      request,
+    );
+    return responseModel.toEntity();
+  });
 }

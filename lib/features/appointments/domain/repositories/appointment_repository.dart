@@ -22,6 +22,8 @@ abstract class AppointmentRepository {
   );
   Future<Either<Failure, CommonResponseModelEntity>> deleteAppointmentRequest(
     DeleteAppointmentRequestModel request,
+  );
+
   Future<Either<Failure, CommonResponseModelEntity>> sendAppointmentReminder(
     SendAppointmentReminderRequestModel request,
   );
