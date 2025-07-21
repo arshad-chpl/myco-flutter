@@ -9,7 +9,7 @@ class AppAssets {
   static const String splash = '$basePath/splash';
   static const String visit = '$basePath/visit';
   static const String svgsVisit = '$svgsPath/visit';
-
+  static const String calenderPath= '$basePath/calender';
   static const String assetVisit = '$basePath/add_expense';
 
 
@@ -166,4 +166,10 @@ class AppAssets {
 
   //images stepper
   static const String stepperCheckIcon = '$stepper/check.svg';
+
+
+    // calender 
+  static const String caretLeft = '$calenderPath/CaretLeft.png';
+  static const String caretRight = '$calenderPath/CaretRight.png';
+  
 }
