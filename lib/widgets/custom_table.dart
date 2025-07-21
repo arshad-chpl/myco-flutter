@@ -5,10 +5,10 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class CustomTableWidget extends StatelessWidget {
-  final String name = 'Yash Soni';
-  final String designation = '( UI UX )';
+  final String? name;
+  final String? designation;
 
-  CustomTableWidget({super.key});
+  CustomTableWidget({super.key, required this.name, required this.designation});
 
   TableRow _buildRow(BuildContext context) {
     return TableRow(
@@ -34,14 +34,14 @@ class CustomTableWidget extends StatelessWidget {
       children: [
         CustomText(
           '$name',
-          fontSize: 12 * Responsive.getResponsiveText(context),
+          fontSize: 14 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,
           color: AppTheme.getColor(context).onSurface,
         ),
         SizedBox(width: 0.006 * Responsive.getWidth(context)),
         CustomText(
           '$designation',
-          fontSize: 12 * Responsive.getResponsiveText(context),
+          fontSize: 14 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,
           color: AppTheme.getColor(context).outline,
         ),

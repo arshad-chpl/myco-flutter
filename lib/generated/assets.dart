@@ -7,61 +7,90 @@ class Assets {
   static const String addExpenseBookmark2 = 'assets/add_expense/bookmark-2.svg';
   static const String addExpenseCardEdit = 'assets/add_expense/card-edit.png';
   static const String addExpenseData = 'assets/add_expense/data.svg';
-  static const String addExpenseDocumentText = 'assets/add_expense/document-text.svg';
-  static const String addExpenseGalleryExport = 'assets/add_expense/gallery-export.svg';
+  static const String addExpenseDocumentText =
+      'assets/add_expense/document-text.svg';
+  static const String addExpenseGalleryExport =
+      'assets/add_expense/gallerdatay-export.svg';
   static const String addExpenseGlobal = 'assets/add_expense/global.png';
-  static const String addExpenseNoteFavorite = 'assets/add_expense/note-favorite.svg';
-  static const String addExpenseStickynote = 'assets/add_expense/stickynote.svg';
+  static const String addExpenseNoteFavorite =
+      'assets/add_expense/note-favorite.svg';
+  static const String addExpenseStickynote =
+      'assets/add_expense/stickynote.svg';
   static const String addExpenseVector = 'assets/add_expense/Vector.svg';
-  static const String assetsAddExpenseCardEdit = 'assets/add_expense/card-edit.svg';
+  static const String assetsAddExpenseCardEdit =
+      'assets/add_expense/card-edit.svg';
   static const String assetsAddExpenseGlobal = 'assets/add_expense/global.svg';
   static const String assetsSplashMycoSplash = 'assets/splash/myco_splash.json';
   static const String assetsVisitClock = 'assets/visit/clock.svg';
   static const String assetsVisitFaceMatch = 'assets/visit/face_match.png';
   static const String assetsVisitLocation = 'assets/visit/location.svg';
   static const String assetsVisitMap = 'assets/visit/map.svg';
-  static const String assetsVisitNoteFavorite = 'assets/visit/note-favorite.svg';
+  static const String assetsVisitNoteFavorite =
+      'assets/visit/note-favorite.svg';
   static const String assetsVisitPersonalcard = 'assets/visit/personalcard.svg';
-  static const String assetsVisitProfileCircle = 'assets/visit/profile-circle.svg';
+  static const String assetsVisitProfileCircle =
+      'assets/visit/profile-circle.svg';
   static const String assetsVisitVisitReport = 'assets/visit/visit_report.png';
-  static const String dashboardFacebookLogo = 'assets/dashboard/facebook_logo.png';
-  static const String dashboardInstagramLogo = 'assets/dashboard/instagram_logo.png';
-  static const String dashboardLinkedInLogo = 'assets/dashboard/linked_in_logo.png';
-  static const String dashboardNotification = 'assets/dashboard/notification.png';
-  static const String dashboardPersonPhoto = 'assets/dashboard/person_photo.png';
+  static const String dashboardFacebookLogo =
+      'assets/dashboard/facebook_logo.png';
+  static const String dashboardInstagramLogo =
+      'assets/dashboard/instagram_logo.png';
+  static const String dashboardLinkedInLogo =
+      'assets/dashboard/linked_in_logo.png';
+  static const String dashboardNotification =
+      'assets/dashboard/notification.png';
+  static const String dashboardPersonPhoto =
+      'assets/dashboard/person_photo.png';
   static const String dashboardSearch = 'assets/dashboard/search.png';
-  static const String dashboardSvgsCallCalling = 'assets/dashboard/svgs/call-calling.svg';
-  static const String dashboardSvgsMessageEdit = 'assets/dashboard/svgs/message-edit.svg';
+  static const String dashboardSvgsCallCalling =
+      'assets/dashboard/svgs/call-calling.svg';
+  static const String dashboardSvgsMessageEdit =
+      'assets/dashboard/svgs/message-edit.svg';
   static const String dashboardVerified = 'assets/dashboard/verified.png';
-  static const String dashboardWhatsappLogo = 'assets/dashboard/whatsapp_logo.png';
+  static const String dashboardWhatsappLogo =
+      'assets/dashboard/whatsapp_logo.png';
   static const String dashboardXLogo = 'assets/dashboard/x_logo.png';
   static const String faceDetectionCircle = 'assets/face_detection/circle.png';
   static const String faceDetectionDanger = 'assets/face_detection/danger.png';
   static const String fontsGilroyBlack = 'assets/fonts/Gilroy-Black.ttf';
-  static const String fontsGilroyBlackItalic = 'assets/fonts/Gilroy-BlackItalic.ttf';
+  static const String fontsGilroyBlackItalic =
+      'assets/fonts/Gilroy-BlackItalic.ttf';
   static const String fontsGilroyBold = 'assets/fonts/Gilroy-Bold.ttf';
-  static const String fontsGilroyBoldItalic = 'assets/fonts/Gilroy-BoldItalic.ttf';
-  static const String fontsGilroyExtraBold = 'assets/fonts/Gilroy-ExtraBold.ttf';
-  static const String fontsGilroyExtraBoldItalic = 'assets/fonts/Gilroy-ExtraBoldItalic.ttf';
+  static const String fontsGilroyBoldItalic =
+      'assets/fonts/Gilroy-BoldItalic.ttf';
+  static const String fontsGilroyExtraBold =
+      'assets/fonts/Gilroy-ExtraBold.ttf';
+  static const String fontsGilroyExtraBoldItalic =
+      'assets/fonts/Gilroy-ExtraBoldItalic.ttf';
   static const String fontsGilroyHeavy = 'assets/fonts/Gilroy-Heavy.ttf';
-  static const String fontsGilroyHeavyItalic = 'assets/fonts/Gilroy-HeavyItalic.ttf';
+  static const String fontsGilroyHeavyItalic =
+      'assets/fonts/Gilroy-HeavyItalic.ttf';
   static const String fontsGilroyLight = 'assets/fonts/Gilroy-Light.ttf';
-  static const String fontsGilroyLightItalic = 'assets/fonts/Gilroy-LightItalic.ttf';
+  static const String fontsGilroyLightItalic =
+      'assets/fonts/Gilroy-LightItalic.ttf';
   static const String fontsGilroyMedium = 'assets/fonts/Gilroy-Medium.ttf';
-  static const String fontsGilroyMediumItalic = 'assets/fonts/Gilroy-MediumItalic.ttf';
+  static const String fontsGilroyMediumItalic =
+      'assets/fonts/Gilroy-MediumItalic.ttf';
   static const String fontsGilroyRegular = 'assets/fonts/Gilroy-Regular.ttf';
-  static const String fontsGilroyRegularItalic = 'assets/fonts/Gilroy-RegularItalic.ttf';
+  static const String fontsGilroyRegularItalic =
+      'assets/fonts/Gilroy-RegularItalic.ttf';
   static const String fontsGilroySemiBold = 'assets/fonts/Gilroy-SemiBold.ttf';
-  static const String fontsGilroySemiBoldItalic = 'assets/fonts/Gilroy-SemiBoldItalic.ttf';
+  static const String fontsGilroySemiBoldItalic =
+      'assets/fonts/Gilroy-SemiBoldItalic.ttf';
   static const String fontsGilroyThin = 'assets/fonts/Gilroy-Thin.ttf';
-  static const String fontsGilroyThinItalic = 'assets/fonts/Gilroy-ThinItalic.ttf';
-  static const String fontsGilroyUltraLight = 'assets/fonts/Gilroy-UltraLight.ttf';
-  static const String fontsGilroyUltraLightItalic = 'assets/fonts/Gilroy-UltraLightItalic.ttf';
+  static const String fontsGilroyThinItalic =
+      'assets/fonts/Gilroy-ThinItalic.ttf';
+  static const String fontsGilroyUltraLight =
+      'assets/fonts/Gilroy-UltraLight.ttf';
+  static const String fontsGilroyUltraLightItalic =
+      'assets/fonts/Gilroy-UltraLightItalic.ttf';
   static const String fontsInter = 'assets/fonts/Inter.ttf';
   static const String gifsMycoLoading = 'assets/gifs/mycoLoading.gif';
   static const String gifsProfileInfo = 'assets/gifs/profile_info.gif';
-  static const String gifsProfileToolSupportSetting = 'assets/gifs/profile_tool_support_setting.gif';
-  static const String gifsProfileWorkAttendance = 'assets/gifs/profile_work_attendance.gif';
+  static const String gifsProfileToolSupportSetting =
+      'assets/gifs/profile_tool_support_setting.gif';
+  static const String gifsProfileWorkAttendance =
+      'assets/gifs/profile_work_attendance.gif';
   static const String gifsQuickAccess = 'assets/gifs/quickAccess.gif';
   static const String ideaboxAttachment = 'assets/ideabox/attachment.png';
   static const String ideaboxDelete = 'assets/ideabox/delete.png';
@@ -87,7 +116,8 @@ class Assets {
   static const String imagesMenu = 'assets/images/menu.png';
   static const String imagesMenuSelected = 'assets/images/menu-selected.png';
   static const String imagesMessageEdit = 'assets/images/message-edit.png';
-  static const String imagesMessageQuestion = 'assets/images/message-question.png';
+  static const String imagesMessageQuestion =
+      'assets/images/message-question.png';
   static const String imagesMycoLogo = 'assets/images/myco_logo.png';
   static const String imagesMycobanner = 'assets/images/mycobanner.png';
   static const String imagesMycobanner1 = 'assets/images/mycobanner1.png';
@@ -99,7 +129,8 @@ class Assets {
   static const String imagesSearchCompany = 'assets/images/search_company.png';
   static const String imagesShare = 'assets/images/share.png';
   static const String imagesShareArrow = 'assets/images/share_arrow.png';
-  static const String imagesShortApplyLeave = 'assets/images/short_apply_leave.png';
+  static const String imagesShortApplyLeave =
+      'assets/images/short_apply_leave.png';
   static const String imagesUser = 'assets/images/user.png';
   static const String imagesUserSelected = 'assets/images/user-selected.png';
   static const String imagesWallet = 'assets/images/wallet.png';
@@ -108,84 +139,120 @@ class Assets {
   static const String imagesWhatsappIcon = 'assets/images/whatsapp_icon.png';
   static const String lostAndFoundBranch = 'assets/lost_and_found/branch.png';
   static const String lostAndFoundData = 'assets/lost_and_found/data.png';
-  static const String lostAndFoundIcNewUiLostFound = 'assets/lost_and_found/ic_new_ui_lost_found.png';
-  static const String lostAndFoundItemName = 'assets/lost_and_found/item-name.png';
+  static const String lostAndFoundIcNewUiLostFound =
+      'assets/lost_and_found/ic_new_ui_lost_found.png';
+  static const String lostAndFoundItemName =
+      'assets/lost_and_found/item-name.png';
   static const String lostAndFoundLink = 'assets/lost_and_found/link.png';
-  static const String lostAndFoundMessageEdit = 'assets/lost_and_found/message-edit.png';
-  static const String lostAndFoundNoteFavorite = 'assets/lost_and_found/note-favorite.png';
-  static const String lostAndFoundProfileCircle = 'assets/lost_and_found/profile-circle.png';
-  static const String lostAndFoundSearchNormal = 'assets/lost_and_found/search-normal.png';
+  static const String lostAndFoundMessageEdit =
+      'assets/lost_and_found/message-edit.png';
+  static const String lostAndFoundNoteFavorite =
+      'assets/lost_and_found/note-favorite.png';
+  static const String lostAndFoundProfileCircle =
+      'assets/lost_and_found/profile-circle.png';
+  static const String lostAndFoundSearchNormal =
+      'assets/lost_and_found/search-normal.png';
   static const String lostAndFoundSend = 'assets/lost_and_found/send.png';
   static const String mediaPickerCamera = 'assets/media_picker/camera.png';
   static const String mediaPickerDocument = 'assets/media_picker/document.png';
-  static const String mediaPickerGalleryAdd = 'assets/media_picker/gallery-add.png';
-  static const String mediaPickerGalleryExport = 'assets/media_picker/gallery-export.png';
+  static const String mediaPickerGalleryAdd =
+      'assets/media_picker/gallery-add.png';
+  static const String mediaPickerGalleryExport =
+      'assets/media_picker/gallery-export.png';
   static const String mediaPickerTrash = 'assets/media_picker/trash.png';
   static const String mycoFlutter = '.env';
   static const String payslipCalendar = 'assets/payslip/calendar.png';
-  static const String searchSocietyCompanyIcon = 'assets/search_society/company_icon.png';
-  static const String searchSocietyContactAdmin = 'assets/search_society/contact_admin.png';
-  static const String searchSocietyGetStarted = 'assets/search_society/get-started.png';
-  static const String searchSocietyPlaceholder = 'assets/search_society/placeholder.png';
-  static const String searchSocietySearchCompany = 'assets/search_society/search-company.png';
+  static const String searchSocietyCompanyIcon =
+      'assets/search_society/company_icon.png';
+  static const String searchSocietyContactAdmin =
+      'assets/search_society/contact_admin.png';
+  static const String searchSocietyGetStarted =
+      'assets/search_society/get-started.png';
+  static const String searchSocietyPlaceholder =
+      'assets/search_society/placeholder.png';
+  static const String searchSocietySearchCompany =
+      'assets/search_society/search-company.png';
   static const String signInAppleLogo = 'assets/sign_in/apple_logo.png';
   static const String signInBackArrow = 'assets/sign_in/back_arrow.png';
   static const String signInBranchIcon = 'assets/sign_in/branch_icon.png';
   static const String signInCameraIcon = 'assets/sign_in/camera_icon.png';
   static const String signInClockIcon = 'assets/sign_in/clock_icon.png';
   static const String signInContactFrame = 'assets/sign_in/contact_frame.png';
-  static const String signInDepartmentIcon = 'assets/sign_in/department_icon.png';
-  static const String signInDesignationIcon = 'assets/sign_in/designation_icon.png';
+  static const String signInDepartmentIcon =
+      'assets/sign_in/department_icon.png';
+  static const String signInDesignationIcon =
+      'assets/sign_in/designation_icon.png';
   static const String signInEmail = 'assets/sign_in/email.png';
   static const String signInEmailIcon = 'assets/sign_in/email_icon.png';
   static const String signInGoogleLogo = 'assets/sign_in/google_logo.png';
-  static const String signInJoiningDateIcon = 'assets/sign_in/joining_date_icon.png';
+  static const String signInJoiningDateIcon =
+      'assets/sign_in/joining_date_icon.png';
   static const String signInMessageEdit = 'assets/sign_in/message_edit.png';
   static const String signInMycoLogo = 'assets/sign_in/myco_logo.png';
   static const String signInPhone = 'assets/sign_in/phone.png';
-  static const String signInSubDepartmentIcon = 'assets/sign_in/sub_department_icon.png';
-  static const String signInUnitNumberIcon = 'assets/sign_in/unit_number_icon.png';
+  static const String signInSubDepartmentIcon =
+      'assets/sign_in/sub_department_icon.png';
+  static const String signInUnitNumberIcon =
+      'assets/sign_in/unit_number_icon.png';
   static const String signInUpdate = 'assets/sign_in/update.png';
   static const String splashMycoSplash = 'assets/splash/myco_splash.json';
   static const String svgsAdminView = 'assets/dashboard/svgs/admin_view.svg';
-  static const String svgsAdminViewIcon = 'assets/dashboard/svgs/admin_view_icon.svg';
+  static const String svgsAdminViewIcon =
+      'assets/dashboard/svgs/admin_view_icon.svg';
   static const String svgsAppSupport = 'assets/dashboard/svgs/app_support.svg';
-  static const String svgsAttendanceFace = 'assets/dashboard/svgs/attendance_face.svg';
+  static const String svgsAttendanceFace =
+      'assets/dashboard/svgs/attendance_face.svg';
   static const String svgsBackarrow = 'assets/visit/svgs/backarrow.svg';
   static const String svgsBookmark2 = 'assets/svgs/bookmark-2.png';
   static const String svgsCalendar = 'assets/visit/svgs/calendar.svg';
   static const String svgsCallCalling = 'assets/visit/svgs/call-calling.svg';
-  static const String svgsCaretCircleDown = 'assets/visit/svgs/CaretCircleDown.svg';
+  static const String svgsCaretCircleDown =
+      'assets/visit/svgs/CaretCircleDown.svg';
   static const String svgsCaretCircleUp = 'assets/visit/svgs/CaretCircleUp.svg';
   static const String svgsCart = 'assets/visit/svgs/cart.svg';
   static const String svgsCartNo = 'assets/visit/svgs/cart_no.svg';
   static const String svgsClock = 'assets/visit/svgs/clock.svg';
-  static const String svgsContactDetails = 'assets/dashboard/svgs/contact_details.svg';
+  static const String svgsContactDetails =
+      'assets/dashboard/svgs/contact_details.svg';
   static const String svgsDanger = 'assets/svgs/danger.svg';
   static const String svgsDelete = 'assets/visit/svgs/delete.svg';
-  static const String svgsEducationAchievement = 'assets/dashboard/svgs/education_&_achievement.svg';
-  static const String svgsEmploymentDetail = 'assets/dashboard/svgs/employment_detail.svg';
+  static const String svgsEducationAchievement =
+      'assets/dashboard/svgs/education_&_achievement.svg';
+  static const String svgsEmploymentDetail =
+      'assets/dashboard/svgs/employment_detail.svg';
   static const String svgsGps = 'assets/visit/svgs/gps.svg';
-  static const String svgsHoldTeamSalary = 'assets/dashboard/svgs/hold_team_salary.svg';
-  static const String svgsLocalAttendance = 'assets/dashboard/svgs/local_attendance.svg';
+  static const String svgsHoldTeamSalary =
+      'assets/dashboard/svgs/hold_team_salary.svg';
+  static const String svgsLocalAttendance =
+      'assets/dashboard/svgs/local_attendance.svg';
   static const String svgsLocation = 'assets/visit/svgs/location.svg';
   static const String svgsLogOut = 'assets/dashboard/svgs/log_out.svg';
   static const String svgsMap = 'assets/visit/svgs/map.svg';
   static const String svgsMessageEdit = 'assets/visit/svgs/message_edit.svg';
-  static const String svgsMyActivities = 'assets/dashboard/svgs/my_activities.svg';
+  static const String svgsMyActivities =
+      'assets/dashboard/svgs/my_activities.svg';
   static const String svgsMyTimeline = 'assets/dashboard/svgs/my_timeline.svg';
-  static const String svgsMyTransaction = 'assets/dashboard/svgs/my_transaction.svg';
-  static const String svgsMyTravelSummary = 'assets/dashboard/svgs/my_travel_summary.svg';
+  static const String svgsMyTransaction =
+      'assets/dashboard/svgs/my_transaction.svg';
+  static const String svgsMyTravelSummary =
+      'assets/dashboard/svgs/my_travel_summary.svg';
   static const String svgsNominees = 'assets/dashboard/svgs/nominees.svg';
   static const String svgsNoteFavorite = 'assets/visit/svgs/note-favorite.svg';
-  static const String svgsNotficationSettings = 'assets/dashboard/svgs/notfication_settings.svg';
-  static const String svgsPastExperience = 'assets/dashboard/svgs/past_experience.svg';
-  static const String svgsPersonalInfo = 'assets/dashboard/svgs/personal_Info.svg';
+  static const String svgsNotficationSettings =
+      'assets/dashboard/svgs/notfication_settings.svg';
+  static const String svgsPastExperience =
+      'assets/dashboard/svgs/past_experience.svg';
+  static const String svgsPersonalInfo =
+      'assets/dashboard/svgs/personal_Info.svg';
   static const String svgsPersonalcard = 'assets/visit/svgs/personalcard.svg';
-  static const String svgsProfileCircle = 'assets/visit/svgs/profile-circle.svg';
-  static const String svgsProfileExit = 'assets/dashboard/svgs/profile_exit.svg';
-  static const String svgsProfileSetting = 'assets/dashboard/svgs/profile_setting.svg';
-  static const String svgsProfileShare = 'assets/dashboard/svgs/profile_share.svg';
+  static const String svgsProfileCircle =
+      'assets/visit/svgs/profile-circle.svg';
+  static const String svgsProfileExit =
+      'assets/dashboard/svgs/profile_exit.svg';
+  static const String svgsProfileSetting =
+      'assets/dashboard/svgs/profile_setting.svg';
+  static const String svgsProfileShare =
+      'assets/dashboard/svgs/profile_share.svg';
   static const String svgsPunchIn = 'assets/svgs/punchIn.svg';
   static const String svgsRateApp = 'assets/dashboard/svgs/rate_app.svg';
   static const String svgsRefresh = 'assets/svgs/refresh.svg';
@@ -193,52 +260,68 @@ class Assets {
   static const String svgsSetting = 'assets/dashboard/svgs/setting.svg';
   static const String svgsShare = 'assets/visit/svgs/share.svg';
   static const String svgsShareApp = 'assets/dashboard/svgs/share_app.svg';
-  static const String svgsShiftDetails = 'assets/dashboard/svgs/shift_details.svg';
+  static const String svgsShiftDetails =
+      'assets/dashboard/svgs/shift_details.svg';
   static const String svgsSms = 'assets/dashboard/svgs/sms.svg';
   static const String svgsStickynote = 'assets/visit/svgs/stickynote.svg';
   static const String svgsTimeCardBtn = 'assets/svgs/timeCardBtn.svg';
   static const String svgsUser1 = 'assets/visit/svgs/user1.png';
   static const String svgsWhatsapp = 'assets/visit/svgs/whatsapp.svg';
   static const String takeOrderAppleImage = 'assets/take_order/apple_image.png';
-  static const String takeOrderCallCalling = 'assets/take_order/call-calling.png';
-  static const String takeOrderCancelOrder = 'assets/take_order/cancel_order.png';
+  static const String takeOrderCallCalling =
+      'assets/take_order/call-calling.png';
+  static const String takeOrderCancelOrder =
+      'assets/take_order/cancel_order.png';
   static const String takeOrderCart = 'assets/take_order/cart.png';
   static const String takeOrderDownArrow = 'assets/take_order/down_arrow.png';
-  static const String takeOrderFluentShare = 'assets/take_order/fluent_share.png';
-  static const String takeOrderGeoLocation = 'assets/take_order/geo_location.png';
+  static const String takeOrderFluentShare =
+      'assets/take_order/fluent_share.png';
+  static const String takeOrderGeoLocation =
+      'assets/take_order/geo_location.png';
   static const String takeOrderLocation = 'assets/take_order/location.png';
-  static const String takeOrderMessageEdit = 'assets/take_order/message-edit.png';
-  static const String takeOrderMicrophone2 = 'assets/take_order/microphone-2.png';
+  static const String takeOrderMessageEdit =
+      'assets/take_order/message-edit.png';
+  static const String takeOrderMicrophone2 =
+      'assets/take_order/microphone-2.png';
   static const String takeOrderNoOrder = 'assets/take_order/no_order.png';
   static const String takeOrderOffer = 'assets/take_order/offer.png';
-  static const String takeOrderOrderHistory = 'assets/take_order/order_history.png';
+  static const String takeOrderOrderHistory =
+      'assets/take_order/order_history.png';
   static const String takeOrderPlaceOrder = 'assets/take_order/place_order.png';
   static const String takeOrderPlayButton = 'assets/take_order/play-button.png';
-  static const String takeOrderProfileCircle = 'assets/take_order/profile-circle.png';
-  static const String takeOrderSearchNormal = 'assets/take_order/search-normal.png';
+  static const String takeOrderProfileCircle =
+      'assets/take_order/profile-circle.png';
+  static const String takeOrderSearchNormal =
+      'assets/take_order/search-normal.png';
   static const String takeOrderStopButton = 'assets/take_order/stop-button.png';
   static const String takeOrderXcircle = 'assets/take_order/xcircle.png';
   static const String visitBackarrow = 'assets/svgs/visit/backarrow.svg';
   static const String visitBitcoinCard = 'assets/visit/bitcoin-card.svg';
   static const String visitBookmark2 = 'assets/visit/bookmark-2.png';
   static const String visitBuilding = 'assets/visit/building.svg';
-  static const String visitBusinessAndTrade1 = 'assets/visit/business-and-trade 1.svg';
+  static const String visitBusinessAndTrade1 =
+      'assets/visit/business-and-trade 1.svg';
   static const String visitCalendar = 'assets/svgs/visit/calendar.svg';
   static const String visitCallCalling = 'assets/svgs/visit/call-calling.svg';
   static const String visitCardCoin = 'assets/visit/card-coin.svg';
-  static const String visitCaretCircleDown = 'assets/svgs/visit/CaretCircleDown.svg';
-  static const String visitCaretCircleUp = 'assets/svgs/visit/CaretCircleUp.svg';
+  static const String visitCaretCircleDown =
+      'assets/svgs/visit/CaretCircleDown.svg';
+  static const String visitCaretCircleUp =
+      'assets/svgs/visit/CaretCircleUp.svg';
   static const String visitCart = 'assets/svgs/visit/cart.svg';
   static const String visitCartNo = 'assets/svgs/visit/cart_no.svg';
   static const String visitClock = 'assets/svgs/visit/clock.svg';
   static const String visitDelete = 'assets/svgs/visit/delete.svg';
   static const String visitElement1 = 'assets/visit/element-1.svg';
-  static const String visitEmptyWalletTime = 'assets/visit/empty-wallet-time.svg';
+  static const String visitEmptyWalletTime =
+      'assets/visit/empty-wallet-time.svg';
   static const String visitFaceMatch = 'assets/svgs/visit/face_match.png';
-  static const String visitFrame1000003425 = 'assets/visit/Frame 1000003425.svg';
+  static const String visitFrame1000003425 =
+      'assets/visit/Frame 1000003425.svg';
   static const String visitGlobal = 'assets/visit/global.svg';
   static const String visitGps = 'assets/svgs/visit/gps.svg';
-  static const String visitGroup1410104499 = 'assets/visit/Group 1410104499.svg';
+  static const String visitGroup1410104499 =
+      'assets/visit/Group 1410104499.svg';
   static const String visitHome1 = 'assets/visit/home 1.svg';
   static const String visitLocation = 'assets/svgs/visit/location.svg';
   static const String visitLock = 'assets/visit/lock.svg';
@@ -246,7 +329,8 @@ class Assets {
   static const String visitMessageEdit = 'assets/svgs/visit/message_edit.svg';
   static const String visitNoteFavorite = 'assets/svgs/visit/note-favorite.svg';
   static const String visitPersonalcard = 'assets/svgs/visit/personalcard.svg';
-  static const String visitProfileCircle = 'assets/svgs/visit/profile-circle.svg';
+  static const String visitProfileCircle =
+      'assets/svgs/visit/profile-circle.svg';
   static const String visitRefreshNew = 'assets/svgs/visit/refresh_new.svg';
   static const String visitShare = 'assets/svgs/visit/share.svg';
   static const String visitSms = 'assets/visit/sms.svg';
@@ -263,5 +347,4 @@ class Assets {
   static const String visitUserpro = 'assets/svgs/visit/userpro.png';
   static const String visitVisitReport = 'assets/svgs/visit/visit_report.png';
   static const String visitWhatsapp = 'assets/svgs/visit/whatsapp.svg';
-
 }
