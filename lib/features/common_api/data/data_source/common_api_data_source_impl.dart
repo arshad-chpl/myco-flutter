@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -11,6 +12,7 @@ import 'package:myco_flutter/features/common_api/models/branch_response.dart';
 import 'package:myco_flutter/features/common_api/models/floor_and_unit_response.dart';
 import 'package:myco_flutter/features/common_api/models/shift_response.dart';
 import 'package:myco_flutter/features/common_api/models/uploaded_file_response.dart';
+import 'package:http_parser/http_parser.dart';
 
 class CommonApiDataSourceImpl implements CommonApiDataSource {
   final Dio dio;
@@ -18,26 +20,51 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
   CommonApiDataSourceImpl({required this.dio});
   final preferenceManager = GetIt.I<PreferenceManager>();
 
-
   @override
-  Future<UploadFileResponseModel> uploadedTemp(String loginType, List<String> filePath) async {
-    final dataMap = {
-      'uploadImageToTemp': 'uploadImageToTemp',
-      'society_id': preferenceManager.getCompanyId(),
-      'user_id': preferenceManager.getUserId(),
-      'beforeLogIn': loginType,
-      'file_format_name': '',
-      'img': filePath,
-    };
+  Future<UploadFileResponseModel> uploadedTemp(bool loginType, List<String> filePath) async {
+    final List<MultipartFile> files = [];
 
-    final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
-    final controller = 'blockListControllerEnc.php';
+    for (int i = 0; i < filePath.length; i++) {
+      final path = filePath[i];
+      if (path.isNotEmpty) {
+        final file = File(path);
+        final basename = file.uri.pathSegments.last;
+        final extension = basename.split('.').last.toLowerCase();
+        String mimeType = 'image/jpeg';
+        if (extension == 'png') mimeType = 'image/png';
+
+        files.add(
+          await MultipartFile.fromFile(
+            path,
+            filename: 'img[$i]_$basename',
+            contentType: MediaType.parse(mimeType),
+          ),
+        );
+      }
+    }
+
+    final controller = 'imageUploadController.php';
 
     final response = await GetIt.I<ApiClient>(
-        instanceName: VariableBag.employeeMobileApi).postDynamic(
-        controller, encryptedBody);
-    return UploadFileResponseModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
+      instanceName: VariableBag.employeeMobileApi,
+    ).postMultipartImage(
+      controller,
+      'uploadImageToTemp',
+      '1',
+      '0',
+      loginType ? '1' : '0',
+      'Rohit Malviya_2025-07-21_10',
+      files,
+    );
+
+    print('✅ Raw response: $response');
+
+    // Direct parse, NO decrypt:
+    return UploadFileResponseModel.fromJson(json.decode(response));
   }
+
+
+
 
   @override
   Future<BranchResponseModel> getBranchList() async {
@@ -51,9 +78,7 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
     final controller = 'blockListControllerEnc.php';
 
-    final response = await GetIt.I<ApiClient>(
-        instanceName: VariableBag.employeeMobileApi).postDynamic(
-        controller, encryptedBody);
+    final response = await GetIt.I<ApiClient>(instanceName: VariableBag.employeeMobileApi).postDynamic(controller, encryptedBody);
     return BranchResponseModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 

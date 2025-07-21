@@ -26,39 +26,19 @@ Widget buildCustomSelector({
       GestureDetector(
         onTap: () {
           if (defaultLabelKey == 'branch' && optionIds.isEmpty) {
-            Fluttertoast.showToast(
-              msg: 'No branch found.',
-              backgroundColor: Colors.redAccent,
-              textColor: Colors.white,
-            );
+            Fluttertoast.showToast(msg: 'No branch found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
             return;
           } else if (defaultLabelKey == 'department' && optionIds.isEmpty) {
-            Fluttertoast.showToast(
-              msg: 'No department found.',
-              backgroundColor: Colors.redAccent,
-              textColor: Colors.white,
-            );
+            Fluttertoast.showToast(msg: 'No department found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
             return;
           } else if (defaultLabelKey == 'sub department' && optionIds.isEmpty) {
-            Fluttertoast.showToast(
-              msg: 'No sub department found.',
-              backgroundColor: Colors.redAccent,
-              textColor: Colors.white,
-            );
+            Fluttertoast.showToast(msg: 'No sub department found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
             return;
           } else if (defaultLabelKey == 'shift' && optionIds.isEmpty) {
-            Fluttertoast.showToast(
-              msg: 'No shift found.',
-              backgroundColor: Colors.redAccent,
-              textColor: Colors.white,
-            );
+            Fluttertoast.showToast(msg: 'No shift found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
             return;
           } else if (defaultLabelKey == 'designation' && optionIds.isEmpty) {
-            Fluttertoast.showToast(
-              msg: 'No designation found.',
-              backgroundColor: Colors.redAccent,
-              textColor: Colors.white,
-            );
+            Fluttertoast.showToast(msg: 'No designation found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
             return;
           }
 

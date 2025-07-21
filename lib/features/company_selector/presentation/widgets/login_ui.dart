@@ -1,8 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
+import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -45,6 +47,8 @@ class LoginUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isEmailLogin = selectedCompany?.loginVia == '1';
+
+    final preferenceManager = GetIt.I<PreferenceManager>();
 
     return Container(
       height: 0.7 * Responsive.getHeight(context),
@@ -185,7 +189,28 @@ class LoginUi extends StatelessWidget {
                     const CustomText('Don’t have an account? '),
                     InkWell(
                       onTap: () {
-                        context.push(RoutePaths.signUpForm);
+                        context.push(
+                          RoutePaths.signUpForm,
+                          extra: {
+                            'BlockNo': preferenceManager.getBlockId(),
+                            'blockId': preferenceManager.getBlockId(),
+                            'floorId': '0',
+                            'unitId': '0',
+                            'isFamily': false,
+                            'societyId': preferenceManager.getCompanyId(),
+                            'type': '0',
+                            'from': '0',
+                            'baseUrl': preferenceManager.getBaseUrl(),
+                            'apiKey': preferenceManager.getApiKey(),
+                            'isAddMore': false,
+                            'isAddByAdmin': false,
+                            'isAddMoreUnit': false,
+                            'isSociety': false,
+                            'loginVia': selectedCompany?.loginVia,
+                            'societyAddress': selectedCompany?.societyAddress,
+                          },
+                        );
+
                       },
                       child: CustomText(
                         'Sign Up Here',

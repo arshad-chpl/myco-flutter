@@ -33,7 +33,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
     final Either<Failure, UploadFileResponseEntity> result = await registerUseCase.uploadedTemp(event.loginType, event.filePath);
 
     result.fold(
-          (failure) => emit(UploadImagePdfApiError(failure.message)),
+          (failure) => emit(CommonApiError(failure.message)),
           (response) => emit(UploadImagePdfApiSuccess(response)),
     );
   }
@@ -47,7 +47,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
     final Either<Failure, BranchResponseEntity> result = await registerUseCase.callBranch();
 
     result.fold(
-          (failure) => emit(BlockApiError(failure.message)),
+          (failure) => emit(CommonApiError(failure.message)),
           (response) => emit(BlockApiSuccess(response)),
     );
   }
@@ -58,7 +58,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
     final Either<Failure, FloorAndUnitResponseEntity> result = await registerUseCase.floorList(event.branchId);
 
     result.fold(
-          (failure) => emit(FloorUnitApiError(failure.message)),
+          (failure) => emit(CommonApiError(failure.message)),
           (response) => emit(FloorUnitApiSuccess(response)),
     );
   }
@@ -69,7 +69,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
     final Either<Failure, ShiftResponseEntity> result = await registerUseCase.callShift(event.floorId);
 
     result.fold(
-          (failure) => emit(ShiftApiError(failure.message)),
+          (failure) => emit(CommonApiError(failure.message)),
           (response) => emit(ShiftApiSuccess(response)),
     );
   }

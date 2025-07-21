@@ -16,6 +16,7 @@ import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/common_api/domain/usecase/common_api_usercase.dart';
 import 'package:myco_flutter/features/common_api/presentation/bloc/common_api_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/features/sign_in/domain/usecases/primary_register_usecase.dart';
@@ -42,6 +43,70 @@ class SignupFormPage extends StatefulWidget {
 }
 
 class _SignupFormPageState extends State<SignupFormPage> {
+  // ✅ CLASS-LEVEL VARIABLES!
+  late String blockNo;
+  late String blockId;
+  late String floorId;
+  late String unitId;
+  late bool isFamily;
+  late String societyId;
+  late String type;
+  late String from;
+  late String baseUrl;
+  late String apiKey;
+  late bool isAddMore;
+  late bool isAddByAdmin;
+  late bool isAddMoreUnit;
+  late bool isSociety;
+  String? loginVia; // nullable
+  String? societyAddress; // nullable
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+
+    final args = GoRouterState.of(context).extra as Map<String, dynamic>?;
+    log(args.toString(), name: "Kevin");
+    // ✅ Always null-check your `args`
+    if (args != null) {
+      log(args.toString(), name: "Kevin");
+      blockNo = args['BlockNo'] ?? '';
+      blockId = args['blockId'] ?? '';
+      floorId = args['floorId'] ?? '0';
+      unitId = args['unitId'] ?? '0';
+      isFamily = args['isFamily'] ?? false;
+      societyId = args['societyId'] ?? '';
+      type = args['type'] ?? '0';
+      from = args['from'] ?? '0';
+      baseUrl = args['baseUrl'] ?? '';
+      apiKey = args['apiKey'] ?? '';
+      isAddMore = args['isAddMore'] ?? false;
+      isAddByAdmin = args['isAddByAdmin'] ?? false;
+      isAddMoreUnit = args['isAddMoreUnit'] ?? false;
+      isSociety = args['isSociety'] ?? false;
+      loginVia = args['loginVia'];
+      societyAddress = args['societyAddress'];
+    } else {
+      // fallback if args is null
+      blockNo = '';
+      blockId = '';
+      floorId = '0';
+      unitId = '0';
+      isFamily = false;
+      societyId = '';
+      type = '0';
+      from = '0';
+      baseUrl = '';
+      apiKey = '';
+      isAddMore = false;
+      isAddByAdmin = false;
+      isAddMoreUnit = false;
+      isSociety = false;
+      loginVia = null;
+      societyAddress = null;
+    }
+  }
+
   String? selectedBranch;
   String selectedGender = 'Male';
   bool gender = false;
@@ -98,18 +163,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: AppTheme.getColor(context).surface,
-          appBar: CustomAppbar(
-            leading: TextButton(
-              onPressed: () {
-                context.pop();
-              },
-              child: SvgPicture.asset(
-                'assets/svgs/back_arrow.svg',
-                height: 16,
-                width: 16,
-              ),
-            ),
-          ),
           body: MultiBlocListener(
             listeners: [
               BlocListener<CommonApiBloc, CommonApiState>(
@@ -121,68 +174,53 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   if (state is BlockApiSuccess ||
                       state is FloorUnitApiSuccess ||
                       state is ShiftApiSuccess ||
-                      state is CommonApiError) {
+                      state is UploadImagePdfApiSuccess ||
+                      state is CommonApiError ) {
                     // This is safe even if the loader is not open: pop will do nothing if no dialog
                     Navigator.of(context, rootNavigator: true).pop();
                   }
                   if (state is BlockApiSuccess) {
-                    branchOptionIds = state.blockList.blocks!
-                        .map((block) => block.blockId ?? '')
-                        .toList();
-                    branchOptionNames = state.blockList.blocks!
-                        .map((block) => block.blockName ?? '')
-                        .toList();
+                    branchOptionIds = state.blockList.blocks!.map((block) => block.blockId ?? '').toList();
+                    branchOptionNames = state.blockList.blocks!.map((block) => block.blockName ?? '').toList();
                   }
 
                   if (state is FloorUnitApiSuccess) {
-                    floorUnitOptionIds = state.floorUnitList.designation!
-                        .map((d) => d.designationId ?? '')
-                        .toList();
-                    floorUnitOptionNames = state.floorUnitList.designation!
-                        .map((d) => d.designationName ?? '')
-                        .toList();
+                    floorUnitOptionIds = state.floorUnitList.designation!.map((d) => d.designationId ?? '').toList();
+                    floorUnitOptionNames = state.floorUnitList.designation!.map((d) => d.designationName ?? '').toList();
 
-                    departmentOptionIds = state.floorUnitList.floors!
-                        .map((f) => f.floorId ?? '')
-                        .toList();
-                    departmentOptionNames = state.floorUnitList.floors!
-                        .map((f) => f.floorName ?? '')
-                        .toList();
+                    departmentOptionIds = state.floorUnitList.floors!.map((f) => f.floorId ?? '').toList();
+                    departmentOptionNames = state.floorUnitList.floors!.map((f) => f.floorName ?? '').toList();
 
-                    subDepartmentOptionIds = state
-                        .floorUnitList
-                        .subDepartmentList!
-                        .map((sd) => sd.subDepartmentId ?? '')
-                        .toList();
-                    subDepartmentOptionNames = state
-                        .floorUnitList
-                        .subDepartmentList!
-                        .map((sd) => sd.subDepartmentName ?? '')
-                        .toList();
+                    subDepartmentOptionIds = state.floorUnitList.subDepartmentList!.map((sd) => sd.subDepartmentId ?? '').toList();
+                    subDepartmentOptionNames = state.floorUnitList.subDepartmentList!.map((sd) => sd.subDepartmentName ?? '').toList();
                   }
 
                   if (state is ShiftApiSuccess) {
-                    shiftOptionIds = state.shiftList.shift!
-                        .map((s) => s.shiftTimeId ?? '')
-                        .toList();
-                    shiftOptionNames = state.shiftList.shift!
-                        .map((s) => s.shiftTimeView ?? '')
-                        .toList();
+                    shiftOptionIds = state.shiftList.shift!.map((s) => s.shiftTimeId ?? '').toList();
+                    shiftOptionNames = state.shiftList.shift!.map((s) => s.shiftTimeView ?? '').toList();
                   }
+
+                  if (state is UploadImagePdfApiSuccess) {
+                    String? baseUrl = state.imgPdfList.baseUrl;
+                    List<String>? dataList = state.imgPdfList.imgNameArr;
+
+                    String image = (dataList != null && dataList.isNotEmpty)
+                        ? dataList.join(',')
+                        : '';
+                    profileImage = image.toString();
+
+                    selectedImage = File('$baseUrl$image');
+
+                    print('Selected image URL: $selectedImage');
+                  }
+
                 },
               ),
               BlocListener<PrimaryRegisterBloc, PrimaryRegisterState>(
                 listener: (context, state) {
                   if (state is AddPrimaryUserApiSuccess) {
-                    Fluttertoast.showToast(
-                      msg: state.response.message!,
-                      backgroundColor: Colors.green,
-                      textColor: Colors.white,
-                    );
-                    preferenceManager.setKeyValueString(
-                      VariableBag.registrationRequestPendingUserId,
-                      state.response.trxId ?? '',
-                    );
+                    Fluttertoast.showToast(msg: state.response.message!, backgroundColor: Colors.green, textColor: Colors.white,);
+                    preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, state.response.trxId ?? '',);
                   }
                 },
               ),
@@ -190,22 +228,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
             child: BlocBuilder<CommonApiBloc, CommonApiState>(
               builder: (context, state) {
                 if (state is CommonApiError) {
-                  return Center(child: Text('Error: ${state.message}'));
+                //  Navigator.of(context, rootNavigator: true).pop();
+                  Fluttertoast.showToast(msg: state.message, backgroundColor: Colors.green, textColor: Colors.white,);
                 }
-                return Stack(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(
-                        20 * Responsive.getResponsive(context),
-                      ),
-                      child: setUi(),
-                    ),
-
-                    // if (state is CommonApiLoading) ...[
-                    //   // This blocks interaction
-                    //   const Center(child: CustomLoaderDialog()),
-                    // ],
-                  ],
+                return Padding(
+                  padding: EdgeInsets.all(20 * Responsive.getResponsive(context)),
+                  child: setUi(),
                 );
               },
             ),
@@ -238,7 +266,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   context: context,
                 );
                 if (files == null) return;
-                selectedImage = files.first;
+                final List<String> imgList = [selectedImage!.path.toString()];
+                context.read<CommonApiBloc>().add(LoadUploaded(true, imgList));
                 setState(() {});
                 log('files: $files', name: "Click");
               },
@@ -248,30 +277,16 @@ class _SignupFormPageState extends State<SignupFormPage> {
                 height: 0.04 * Responsive.getHeight(context),
               ),
             ),
-            child:
-                // selectedImage != null
-                //     ?
-                FramedProfileImage(
-                  selectedImage: selectedImage,
-                  borderColor: AppTheme.getColor(context).primary,
-                ),
-            // ClipRRect(
-            //         borderRadius: BorderRadius.circular(10),
-            //         child: Image.file(
-            //           selectedImage!,
-            //           fit: BoxFit.contain,
-            //           height: 0.11 * Responsive.getHeight(context),
-            //         ),
-            //       )
-            // : Image.asset(
-            //     'assets/sign_in/contact_frame.png',
-            //     fit: BoxFit.contain,
-            //     height: 0.11 * Responsive.getHeight(context),
-            //   ),
+            child: FramedProfileImage(
+              selectedImage: selectedImage,
+              borderColor: AppTheme.getColor(context).primary,
+              borderWidth: 1,
+              size: 100,
+            ),
           ),
         ),
 
-        SizedBox(height: 0.020 * Responsive.getHeight(context)),
+        SizedBox(height: 0.030 * Responsive.getHeight(context)),
 
         buildCustomSelector(
           context: context,
@@ -378,7 +393,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
         CustomText(
           'Joining Date *',
           color: AppTheme.getColor(context).onSurfaceVariant,
-          fontSize: 16 * Responsive.getResponsiveText(context),
+          fontSize: 14 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.bold,
         ),
         SizedBox(height: 0.005 * Responsive.getHeight(context)),
@@ -386,7 +401,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
         MyCoTextfield(
           controller: joiningDateController,
           textAlignment: TextAlign.start,
-          hintText: 'Type here',
+          hintText: 'Select here',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(
               10 * Responsive.getResponsive(context),
@@ -423,7 +438,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
           },
         ),
 
-        SizedBox(height: 0.015 * Responsive.getHeight(context)),
+        SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
         Row(
           children: [
@@ -477,12 +492,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
           ],
         ),
 
-        SizedBox(height: 0.015 * Responsive.getHeight(context)),
+        SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
         CustomText(
           'Gender',
           color: AppTheme.getColor(context).onSurfaceVariant,
-          fontSize: 16 * Responsive.getResponsiveText(context),
+          fontSize: 14 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.bold,
         ),
 
@@ -514,13 +529,13 @@ class _SignupFormPageState extends State<SignupFormPage> {
             ),
           ],
         ),
-        SizedBox(height: 0.015 * Responsive.getHeight(context)),
+        SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
         if ('240' == preferenceManager.getCountryId()) ...[
           CustomText(
             'Number of Dependent *',
             color: AppTheme.getColor(context).onSurfaceVariant,
-            fontSize: 16 * Responsive.getResponsiveText(context),
+            fontSize: 14 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.bold,
           ),
           SizedBox(height: 0.005 * Responsive.getHeight(context)),
@@ -542,13 +557,13 @@ class _SignupFormPageState extends State<SignupFormPage> {
             ),
           ),
 
-          SizedBox(height: 0.015 * Responsive.getHeight(context)),
+          SizedBox(height: 0.020 * Responsive.getHeight(context)),
         ],
 
         CustomText(
           'Phone Number *',
           color: AppTheme.getColor(context).onSurfaceVariant,
-          fontSize: 16 * Responsive.getResponsiveText(context),
+          fontSize: 14 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.bold,
         ),
         SizedBox(height: 0.005 * Responsive.getHeight(context)),
@@ -573,12 +588,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
           ),
         ),
 
-        SizedBox(height: 0.015 * Responsive.getHeight(context)),
+        SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
         CustomText(
           'Email Address',
           color: AppTheme.getColor(context).onSurfaceVariant,
-          fontSize: 16 * Responsive.getResponsiveText(context),
+          fontSize: 14 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.bold,
         ),
         SizedBox(height: 0.005 * Responsive.getHeight(context)),
@@ -710,7 +725,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
         MyCoButton(
           textStyle: TextStyle(
             color: AppTheme.getColor(context).onPrimary,
-            fontSize: 20 * Responsive.getResponsiveText(context),
+            fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.bold,
           ),
           onTap: () {
@@ -809,21 +824,21 @@ class _SignupFormPageState extends State<SignupFormPage> {
         Center(
           child: GestureDetector(
             onTap: () {
-              //  context.go(RoutePaths.login);
+              context.pop();
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomText(
                   'Already have an account?',
-                  fontSize: 18 * Responsive.getResponsiveText(context),
+                  fontSize: 15 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.getColor(context).onSurface,
                 ),
                 const SizedBox(width: 5),
                 CustomText(
                   'Sign in here',
-                  fontSize: 18 * Responsive.getResponsiveText(context),
+                  fontSize: 15 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.getColor(context).primary,
                 ),

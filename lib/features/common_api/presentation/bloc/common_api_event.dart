@@ -11,7 +11,7 @@ abstract class CommonApiEvent extends Equatable {
 // uploaded image and pdf api
 class LoadUploaded extends CommonApiEvent {
 
-  final String loginType;
+  final bool loginType;
   final List<String> filePath;
 
   const LoadUploaded(

@@ -52,12 +52,14 @@ abstract class ApiClient {
 
   @POST('{path}')
   @MultiPart()
-  Future<String> postMultipartImage({
-    @Part(name: 'society_id') required String societyId,
-    @Part(name: 'user_id') required String userId,
-    @Part(name: 'beforeLogIn') required String beforeLogIn,
-    @Part(name: 'file_format_name') required String fileFormatName,
-    @Part(name: 'img[]') required List<File> images,
-    @Path('path') String path,
-  });
+  Future<String> postMultipartImage(
+      @Path('path') String path, // <-- must be positional!
+      @Part(name: 'uploadImageToTemp') String tag,
+      @Part(name: 'society_id') String societyId,
+      @Part(name: 'user_id') String userId,
+      @Part(name: 'beforeLogIn') String beforeLogIn,
+      @Part(name: 'file_format_name') String fileFormatName,
+      @Part(name: 'img[]') List<MultipartFile> images
+      );
+
 }
