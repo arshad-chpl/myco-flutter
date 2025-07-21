@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:myco_flutter/core/error/failure.dart';
 import 'package:myco_flutter/core/models/domain/common_response_entity.dart';
+import 'package:myco_flutter/features/appointments/data/models/request/add_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/delete_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/get_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/get_my_apppointments_request_model.dart';
@@ -20,11 +21,16 @@ abstract class AppointmentRepository {
   Future<Either<Failure, CommonResponseModelEntity>> getMyAppointment(
     GetMyAppointmentsRequestModel request,
   );
+
   Future<Either<Failure, CommonResponseModelEntity>> deleteAppointmentRequest(
     DeleteAppointmentRequestModel request,
   );
 
   Future<Either<Failure, CommonResponseModelEntity>> sendAppointmentReminder(
     SendAppointmentReminderRequestModel request,
+  );
+
+  Future<Either<Failure, CommonResponseModelEntity>> addAppointment(
+    AddAppointmentRequestModel request,
   );
 }
