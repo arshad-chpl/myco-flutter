@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:myco_flutter/core/error/failure.dart';
-import 'package:myco_flutter/core/models/common_response.dart';
-import 'package:myco_flutter/features/company_selector/data/models/verify_otp_reponse.dart';
+import 'package:myco_flutter/core/models/domain/common_response_entity.dart';
+import 'package:myco_flutter/features/company_selector/domain/entites/verify_otp_response_entity.dart';
 import 'package:myco_flutter/features/company_selector/domain/usecases/request_otp.dart';
 import 'package:myco_flutter/features/company_selector/domain/usecases/verify_otp.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_event.dart';
@@ -20,7 +20,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future<void> _onSendOtp(SendOtpEvent event, Emitter<LoginState> emit) async {
     emit(LoginLoading());
-    final Either<Failure, CommonResponse> result = await requestOtp(
+    final Either<Failure, CommonResponseModelEntity> result = await requestOtp(
       event.model,
     );
 
@@ -38,19 +38,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) async {
     emit(LoginLoading());
-    final Either<Failure, VerifyOtpResponse> result = await verifyOtp(
+    final Either<Failure, VerifyOtpResponseEntity> result = await verifyOtp(
       event.model,
     );
 
-    result.fold(
-      (failure) => emit(LoginError(failure.message)),
-      (response){
-        if (response.error == null) {
-          emit(OtpVerifiedState(response));
-        } else {
-          emit(OtpVerificationFailedState(response));
-        }
+    result.fold((failure) => emit(LoginError(failure.message)), (response) {
+      if (response.error == null) {
+        emit(OtpVerifiedState(response));
+      } else {
+        emit(OtpVerificationFailedState(response));
       }
-    );
+    });
   }
 }
