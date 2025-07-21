@@ -23,7 +23,7 @@ abstract class ApiClient {
 
   // PUT
   @PUT('{path}')
-  Future<String> putDynamic(@Path("path") String path, @Body() String body);
+  Future<String> putDynamic(@Path('path') String path, @Body() String body);
 
   // DELETE
   @DELETE('{path}')
@@ -49,4 +49,15 @@ abstract class ApiClient {
     @Part(name: 'description') String description,
     @Part(name: 'file') File file, // File will be converted to MultipartFile
   );
+
+  @POST('{path}')
+  @MultiPart()
+  Future<String> postMultipartImage({
+    @Part(name: 'society_id') required String societyId,
+    @Part(name: 'user_id') required String userId,
+    @Part(name: 'beforeLogIn') required String beforeLogIn,
+    @Part(name: 'file_format_name') required String fileFormatName,
+    @Part(name: 'img[]') required List<File> images,
+    @Path('path') String path,
+  });
 }
