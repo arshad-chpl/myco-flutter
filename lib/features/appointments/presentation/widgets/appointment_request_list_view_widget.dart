@@ -115,8 +115,8 @@ class _AppointmentRequestListViewWidgetState extends State<AppointmentRequestLis
                               color: AppTheme.getColor(context).error
                           ),
                           height: 0.045 * Responsive.getHeight(context),
-                          width: 0.42 * Responsive.getWidth(context),
-                          boarderRadius: 23,
+                          width: 0.40 * Responsive.getWidth(context),
+                          boarderRadius: 23 * Responsive.getResponsive(context),
                           borderColor: AppTheme.getColor(context).error,
                           backgroundColor: AppColors.removeBackground,
                         ),
@@ -127,9 +127,9 @@ class _AppointmentRequestListViewWidgetState extends State<AppointmentRequestLis
                               color: AppTheme.getColor(context).surface
                           ),
                           height: 0.045 * Responsive.getHeight(context),
-                          width: 0.42 * Responsive.getWidth(context),
+                          width: 0.40 * Responsive.getWidth(context),
                           isShadowBottomLeft: true,
-                          boarderRadius: 23,
+                          boarderRadius: 23 * Responsive.getResponsive(context),
                           borderColor: AppTheme.getColor(context).secondary,
                           backgroundColor: AppTheme.getColor(context).secondary,
                         )
