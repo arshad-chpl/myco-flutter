@@ -6,6 +6,7 @@ import 'package:myco_flutter/features/work_allocation/presentation/widget/work_a
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
+import 'package:myco_flutter/widgets/floating_action_btn.dart';
 
 class WorkAllocationPage extends StatefulWidget {
   const WorkAllocationPage({super.key});
@@ -36,17 +37,16 @@ class _WorkAllocationPageState extends State<WorkAllocationPage> {
         ],
       ),
     ),
-    floatingActionButton: MyCoButton(
+    floatingActionButton: ExpandableFab(
+      innericonsize: 30 * Responsive.getResponsive(context),
+      imageSize: 50 * Responsive.getResponsive(context),
       onTap: () {
-        context.push('');
+        context.go('/assign-work');
+
       },
-      height: 0.09 * Responsive.getHeight(context),
-      width: 0.20 * Responsive.getWidth(context),
-      boarderRadius: 100,
-      isShadowBottomLeft: true,
-      isShadowBottomRight: true,
-      title: '',
-      image: const Image(image: AssetImage(AppAssets.plus)),
+      openIcon: Icons.add,
+      closeIcon: Icons.close,
+      actions: [],
     ),
   );
 }

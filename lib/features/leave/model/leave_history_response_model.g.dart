@@ -13,15 +13,18 @@ LeaveHistoryResponseModel _$LeaveHistoryResponseModelFromJson(
   totalUsedLeaves: json['total_used_leaves'] as String?,
   totalRemainingLeaves: json['total_remaining_leaves'] as String?,
   hideLateInEarlyOut: json['hide_late_in_early_out'] as bool?,
-  leaveTypes: (json['leave_types'] as List<dynamic>?)
-      ?.map((e) => LeaveTypeModel.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  leaveHistory: (json['leave_history'] as List<dynamic>?)
-      ?.map((e) => LeaveHistoryModel.fromJson(e as Map<String, dynamic>))
-      .toList(),
-  allLeaves: (json['all_leaves'] as List<dynamic>?)
-      ?.map((e) => LeaveHistoryModel.fromJson(e as Map<String, dynamic>))
-      .toList(),
+  leaveTypes:
+      (json['leave_types'] as List<dynamic>?)
+          ?.map((e) => LeaveTypeModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+  leaveHistory:
+      (json['leave_history'] as List<dynamic>?)
+          ?.map((e) => LeaveHistoryModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+  allLeaves:
+      (json['all_leaves'] as List<dynamic>?)
+          ?.map((e) => LeaveHistoryModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
   message: json['message'] as String?,
   status: json['status'] as String?,
   totalApprovedLeaves: json['total_approved_leaves'] as String?,
@@ -40,9 +43,9 @@ Map<String, dynamic> _$LeaveHistoryResponseModelToJson(
   'total_used_leaves': instance.totalUsedLeaves,
   'total_remaining_leaves': instance.totalRemainingLeaves,
   'hide_late_in_early_out': instance.hideLateInEarlyOut,
-  'leave_types': instance.leaveTypes?.map((e) => e.toJson()).toList(),
-  'leave_history': instance.leaveHistory?.map((e) => e.toJson()).toList(),
-  'all_leaves': instance.allLeaves?.map((e) => e.toJson()).toList(),
+  'leave_types': instance.leaveTypes,
+  'leave_history': instance.leaveHistory,
+  'all_leaves': instance.allLeaves,
   'message': instance.message,
   'status': instance.status,
   'total_approved_leaves': instance.totalApprovedLeaves,
@@ -124,9 +127,10 @@ LeaveHistoryModel _$LeaveHistoryModelFromJson(
   isDateGone: json['is_date_gone'] as bool?,
   isSalaryGenerated: json['is_salary_generated'] as bool?,
   isMultiLevelApproval: json['is_multi_level_approval'] as bool?,
-  approvalUsers: (json['approval_users'] as List<dynamic>?)
-      ?.map((e) => ApprovalUserModel.fromJson(e as Map<String, dynamic>))
-      .toList(),
+  approvalUsers:
+      (json['approval_users'] as List<dynamic>?)
+          ?.map((e) => ApprovalUserModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
   isMyApproval: json['is_my_approval'] as bool?,
   multiApprovedByMe: json['multi_approved_by_me'] as bool?,
   expanded: json['expanded'] as bool?,
@@ -213,7 +217,7 @@ Map<String, dynamic> _$LeaveHistoryModelToJson(LeaveHistoryModel instance) =>
       'is_date_gone': instance.isDateGone,
       'is_salary_generated': instance.isSalaryGenerated,
       'is_multi_level_approval': instance.isMultiLevelApproval,
-      'approval_users': instance.approvalUsers?.map((e) => e.toJson()).toList(),
+      'approval_users': instance.approvalUsers,
       'is_my_approval': instance.isMyApproval,
       'multi_approved_by_me': instance.multiApprovedByMe,
       'expanded': instance.expanded,
@@ -238,10 +242,9 @@ LeaveTypeModel _$LeaveTypeModelFromJson(
   viewLeaveCount: json['view_leave_count'] as String?,
   specialLeave: json['is_special_leave'] as String?,
   applicableLeavesInMonth: json['applicable_leaves_in_month'] as String?,
-  userMonthlyLeaveBalanceData:
-      (json['user_monthly_leave_balance_data'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
-      ),
+  userMonthlyLeaveBalanceData: (json['user_monthly_leave_balance_data']
+          as Map<String, dynamic>?)
+      ?.map((k, e) => MapEntry(k, e as String)),
   leaveCalculation: json['leave_calculation'] as String?,
   applyLeaveStartDate: json['apply_leave_start_date'] as String?,
   assignLeaveFrequency: json['assign_leave_frequency'] as String?,
@@ -255,11 +258,13 @@ LeaveTypeModel _$LeaveTypeModelFromJson(
   maxLeavePerMonthDuringProbationPeriod:
       json['max_leave_per_month_during_probation_period'] as String?,
   leaveRestrictions: json['leave_restrictions'] as bool?,
-  leaveRestrictionsRules: (json['leave_restrictions_rules'] as List<dynamic>?)
-      ?.map(
-        (e) => LeaveRestrictionRulesModel.fromJson(e as Map<String, dynamic>),
-      )
-      .toList(),
+  leaveRestrictionsRules:
+      (json['leave_restrictions_rules'] as List<dynamic>?)
+          ?.map(
+            (e) =>
+                LeaveRestrictionRulesModel.fromJson(e as Map<String, dynamic>),
+          )
+          .toList(),
   userTotalUsedLeave: json['user_total_used_leave'] as String?,
   userTotalLeave: json['user_total_leave'] as String?,
   remainingLeave: json['remaining_leave'] as String?,
@@ -279,11 +284,12 @@ LeaveTypeModel _$LeaveTypeModelFromJson(
   previouslyUsedUnpaidLeave: json['previously_used_unpaid_leave'] as String?,
   leaveEncashmentOption: json['leave_encashment_option'] as String?,
   encashmentAllowed: json['encashmentAllowed'] as String?,
-  encasementSummary: json['encasement_summary'] == null
-      ? null
-      : EncasementSummaryModel.fromJson(
-          json['encasement_summary'] as Map<String, dynamic>,
-        ),
+  encasementSummary:
+      json['encasement_summary'] == null
+          ? null
+          : EncasementSummaryModel.fromJson(
+            json['encasement_summary'] as Map<String, dynamic>,
+          ),
 );
 
 Map<String, dynamic> _$LeaveTypeModelToJson(
@@ -305,9 +311,7 @@ Map<String, dynamic> _$LeaveTypeModelToJson(
   'max_leave_per_month_during_probation_period':
       instance.maxLeavePerMonthDuringProbationPeriod,
   'leave_restrictions': instance.leaveRestrictions,
-  'leave_restrictions_rules': instance.leaveRestrictionsRules
-      ?.map((e) => e.toJson())
-      .toList(),
+  'leave_restrictions_rules': instance.leaveRestrictionsRules,
   'user_total_used_leave': instance.userTotalUsedLeave,
   'user_total_leave': instance.userTotalLeave,
   'remaining_leave': instance.remainingLeave,
@@ -326,7 +330,7 @@ Map<String, dynamic> _$LeaveTypeModelToJson(
   'previously_used_unpaid_leave': instance.previouslyUsedUnpaidLeave,
   'leave_encashment_option': instance.leaveEncashmentOption,
   'encashmentAllowed': instance.encashmentAllowed,
-  'encasement_summary': instance.encasementSummary?.toJson(),
+  'encasement_summary': instance.encasementSummary,
 };
 
 ApprovalUserModel _$ApprovalUserModelFromJson(Map<String, dynamic> json) =>
