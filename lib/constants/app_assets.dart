@@ -165,7 +165,8 @@ class AppAssets {
   static const String stepperCheckIcon = '$stepper/check.svg';
 
   //Appointments
-  static const String assetPerson = '$appointmentSvgs/person.svg';
+  static const String assetPerson = 'assets/svgs/appointments/person_img.svg';
   static const String assetClock2 = '$appointmentSvgs/clock.svg';
   static const String assetLocation = '$appointmentSvgs/location.svg';
+  static const String assetMsgEdit = '$appointmentSvgs/message-edit.svg';
 }
