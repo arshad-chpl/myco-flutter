@@ -1,4 +1,5 @@
 import 'package:myco_flutter/core/models/data/common_response_model.dart';
+import 'package:myco_flutter/features/appointments/data/models/request/approve_appointment_entity_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/delete_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/get_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/get_my_apppointments_request_model.dart';
@@ -25,5 +26,9 @@ abstract class AppointmentRemoteDataSource {
 
   Future<CommonResponseModel> sendAppointmentReminder(
     SendAppointmentReminderRequestModel request,
+  );
+
+  Future<CommonResponseModel> approveAppointment(
+    ApproveAppointmentRequestModel approveAppointmentRequest,
   );
 }
