@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
+import 'package:myco_flutter/features/leave/domain/entities/leave_history_response_entity.dart';
 
 part 'leave_history_response_model.g.dart';
 
@@ -58,32 +58,48 @@ class LeaveHistoryResponseModel {
   @JsonKey(name: 'modification_access')
   final bool? modificationAccess;
 
-  LeaveHistoryResponseModel(
-      {this.totalLeaves, this.totalUsedLeaves, this.totalRemainingLeaves, this.hideLateInEarlyOut, this.leaveTypes, this.leaveHistory, this.allLeaves, this.message, this.status, this.totalApprovedLeaves, this.totalRejectedLeaves, this.totalPendingLeaves, this.totalAuto, this.previouslyUsedPaidLeave, this.teamLeave, this.modificationAccess,});
+  LeaveHistoryResponseModel({
+    this.totalLeaves,
+    this.totalUsedLeaves,
+    this.totalRemainingLeaves,
+    this.hideLateInEarlyOut,
+    this.leaveTypes,
+    this.leaveHistory,
+    this.allLeaves,
+    this.message,
+    this.status,
+    this.totalApprovedLeaves,
+    this.totalRejectedLeaves,
+    this.totalPendingLeaves,
+    this.totalAuto,
+    this.previouslyUsedPaidLeave,
+    this.teamLeave,
+    this.modificationAccess,
+  });
 
   factory LeaveHistoryResponseModel.fromJson(Map<String, dynamic> json) =>
       _$LeaveHistoryResponseModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$LeaveHistoryResponseModelToJson(this);
 
-  LeaveHistoryResponseEntity toEntity() =>
-      LeaveHistoryResponseEntity(
-        totalLeaves: totalLeaves,
-        totalUsedLeaves: totalUsedLeaves,
-        totalRemainingLeaves: totalRemainingLeaves,
-        hideLateInEarlyOut: hideLateInEarlyOut,
-        leaveTypes: leaveTypes?.map((model) => model.toEntity()).toList(),
-        leaveHistory: leaveHistory?.map((model) => model.toEntity()).toList(),
-        allLeaves: allLeaves?.map((model) => model.toEntity()).toList(),
-        message: message,
-        status: status,
-        totalApprovedLeaves: totalApprovedLeaves,
-        totalRejectedLeaves: totalRejectedLeaves,
-        totalPendingLeaves: totalPendingLeaves,
-        totalAuto: totalAuto,
-        previouslyUsedPaidLeave: previouslyUsedPaidLeave,
-        teamLeave: teamLeave,
-        modificationAccess: modificationAccess,);
+  LeaveHistoryResponseEntity toEntity() => LeaveHistoryResponseEntity(
+    totalLeaves: totalLeaves,
+    totalUsedLeaves: totalUsedLeaves,
+    totalRemainingLeaves: totalRemainingLeaves,
+    hideLateInEarlyOut: hideLateInEarlyOut,
+    leaveTypes: leaveTypes?.map((model) => model.toEntity()).toList(),
+    leaveHistory: leaveHistory?.map((model) => model.toEntity()).toList(),
+    allLeaves: allLeaves?.map((model) => model.toEntity()).toList(),
+    message: message,
+    status: status,
+    totalApprovedLeaves: totalApprovedLeaves,
+    totalRejectedLeaves: totalRejectedLeaves,
+    totalPendingLeaves: totalPendingLeaves,
+    totalAuto: totalAuto,
+    previouslyUsedPaidLeave: previouslyUsedPaidLeave,
+    teamLeave: teamLeave,
+    modificationAccess: modificationAccess,
+  );
 }
 
 @JsonSerializable()
@@ -334,98 +350,180 @@ class LeaveHistoryModel {
   @JsonKey(name: 'converted_from_auto_leave')
   final String? convertedFromAutoLeave;
 
-  LeaveHistoryModel(
-      {this.sandwichLeave, this.sandwichLeaveId, this.isSpecialLeave, this.lateIn, this.earlyOut, this.leaveCreatedDate, this.leaveApprovedDate, this.previousLeaveId, this.nextLeaveDate, this.prevLeaveDate, this.sandwichLeaveDate, this.sandwichLeaveDateView, this.shortLeaveTime, this.shortLeaveAvailable, this.totalWorkingHours, this.totalShiftHours, this.productiveWorkingHours, this.leaveRequestedDate, this.isExtraDay, this.attendanceId, this.attendanceDateStart, this.attendanceDateEnd, this.punchInTime, this.punchOutTime, this.leaveId, this.societyId, this.userId, this.unitId, this.floorId, this.userFullName, this.floorName, this.blockName, this.year, this.yearNew, this.month, this.leaveTypeName, this.userDesignation, this.userProfilePic, this.shortName, this.leaveReason, this.leaveAlternateNumber, this.leaveAttachment, this.leaveTaskDependency, this.leaveHandleDependency, this.leaveStatus, this.halfDaySession, this.leaveDayType, this.leaveDayTypeStatus, this.leaveStatusView, this.leaveDayView, this.leaveDate, this.leaveTypeId, this.leaveDateView, this.leaveAdminReason, this.paidUnpaid, this.approvedByName, this.rejectedByName, this.paidUnpaidStatus, this.userTotalLeave, this.userTotalUsedLeave, this.remainingLeave, this.autoLeaveReason, this.leavePercentage, this.autoLeave, this.isDateGone, this.isSalaryGenerated, this.isMultiLevelApproval, this.approvalUsers, this.isMyApproval, this.multiApprovedByMe, this.expanded, this.shortLeaveId, this.shortLeave, this.shortLeaveStatus, this.shortLeaveDate, this.shortLeaveApplyReason, this.shortLeaveDateView, this.shortLeaveStatusView, this.shortLeaveStatusChangeName, this.shortLeaveStatusChangeReason, this.shortLeaveStatusChangeDate, this.convertedFromAutoLeave,});
+  LeaveHistoryModel({
+    this.sandwichLeave,
+    this.sandwichLeaveId,
+    this.isSpecialLeave,
+    this.lateIn,
+    this.earlyOut,
+    this.leaveCreatedDate,
+    this.leaveApprovedDate,
+    this.previousLeaveId,
+    this.nextLeaveDate,
+    this.prevLeaveDate,
+    this.sandwichLeaveDate,
+    this.sandwichLeaveDateView,
+    this.shortLeaveTime,
+    this.shortLeaveAvailable,
+    this.totalWorkingHours,
+    this.totalShiftHours,
+    this.productiveWorkingHours,
+    this.leaveRequestedDate,
+    this.isExtraDay,
+    this.attendanceId,
+    this.attendanceDateStart,
+    this.attendanceDateEnd,
+    this.punchInTime,
+    this.punchOutTime,
+    this.leaveId,
+    this.societyId,
+    this.userId,
+    this.unitId,
+    this.floorId,
+    this.userFullName,
+    this.floorName,
+    this.blockName,
+    this.year,
+    this.yearNew,
+    this.month,
+    this.leaveTypeName,
+    this.userDesignation,
+    this.userProfilePic,
+    this.shortName,
+    this.leaveReason,
+    this.leaveAlternateNumber,
+    this.leaveAttachment,
+    this.leaveTaskDependency,
+    this.leaveHandleDependency,
+    this.leaveStatus,
+    this.halfDaySession,
+    this.leaveDayType,
+    this.leaveDayTypeStatus,
+    this.leaveStatusView,
+    this.leaveDayView,
+    this.leaveDate,
+    this.leaveTypeId,
+    this.leaveDateView,
+    this.leaveAdminReason,
+    this.paidUnpaid,
+    this.approvedByName,
+    this.rejectedByName,
+    this.paidUnpaidStatus,
+    this.userTotalLeave,
+    this.userTotalUsedLeave,
+    this.remainingLeave,
+    this.autoLeaveReason,
+    this.leavePercentage,
+    this.autoLeave,
+    this.isDateGone,
+    this.isSalaryGenerated,
+    this.isMultiLevelApproval,
+    this.approvalUsers,
+    this.isMyApproval,
+    this.multiApprovedByMe,
+    this.expanded,
+    this.shortLeaveId,
+    this.shortLeave,
+    this.shortLeaveStatus,
+    this.shortLeaveDate,
+    this.shortLeaveApplyReason,
+    this.shortLeaveDateView,
+    this.shortLeaveStatusView,
+    this.shortLeaveStatusChangeName,
+    this.shortLeaveStatusChangeReason,
+    this.shortLeaveStatusChangeDate,
+    this.convertedFromAutoLeave,
+  });
 
   factory LeaveHistoryModel.fromJson(Map<String, dynamic> json) =>
       _$LeaveHistoryModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$LeaveHistoryModelToJson(this);
 
-  LeaveHistoryEntity toEntity() =>
-      LeaveHistoryEntity(
-        sandwichLeave: sandwichLeave,
-        sandwichLeaveId: sandwichLeaveId,
-        isSpecialLeave: isSpecialLeave,
-        lateIn: lateIn,
-        earlyOut: earlyOut,
-        leaveCreatedDate: leaveCreatedDate,
-        leaveApprovedDate: leaveApprovedDate,
-        previousLeaveId: previousLeaveId,
-        nextLeaveDate: nextLeaveDate,
-        prevLeaveDate: prevLeaveDate,
-        sandwichLeaveDate: sandwichLeaveDate,
-        sandwichLeaveDateView: sandwichLeaveDateView,
-        shortLeaveTime: shortLeaveTime,
-        shortLeaveAvailable: shortLeaveAvailable,
-        totalWorkingHours: totalWorkingHours,
-        totalShiftHours: totalShiftHours,
-        productiveWorkingHours: productiveWorkingHours,
-        leaveRequestedDate: leaveRequestedDate,
-        isExtraDay: isExtraDay,
-        attendanceId: attendanceId,
-        attendanceDateStart: attendanceDateStart,
-        attendanceDateEnd: attendanceDateEnd,
-        punchInTime: punchInTime,
-        punchOutTime: punchOutTime,
-        leaveId: leaveId,
-        societyId: societyId,
-        userId: userId,
-        unitId: unitId,
-        floorId: floorId,
-        userFullName: userFullName,
-        floorName: floorName,
-        blockName: blockName,
-        year: year,
-        yearNew: yearNew,
-        month: month,
-        leaveTypeName: leaveTypeName,
-        userDesignation: userDesignation,
-        userProfilePic: userProfilePic,
-        shortName: shortName,
-        leaveReason: leaveReason,
-        leaveAlternateNumber: leaveAlternateNumber,
-        leaveAttachment: leaveAttachment,
-        leaveTaskDependency: leaveTaskDependency,
-        leaveHandleDependency: leaveHandleDependency,
-        leaveStatus: leaveStatus,
-        halfDaySession: halfDaySession,
-        leaveDayType: leaveDayType,
-        leaveDayTypeStatus: leaveDayTypeStatus,
-        leaveStatusView: leaveStatusView,
-        leaveDayView: leaveDayView,
-        leaveDate: leaveDate,
-        leaveTypeId: leaveTypeId,
-        leaveDateView: leaveDateView,
-        leaveAdminReason: leaveAdminReason,
-        paidUnpaid: paidUnpaid,
-        approvedByName: approvedByName,
-        rejectedByName: rejectedByName,
-        paidUnpaidStatus: paidUnpaidStatus,
-        userTotalLeave: userTotalLeave,
-        userTotalUsedLeave: userTotalUsedLeave,
-        remainingLeave: remainingLeave,
-        autoLeaveReason: autoLeaveReason,
-        leavePercentage: leavePercentage,
-        autoLeave: autoLeave,
-        isDateGone: isDateGone,
-        isSalaryGenerated: isSalaryGenerated,
-        isMultiLevelApproval: isMultiLevelApproval,
-        approvalUsers: approvalUsers?.map((model) => model.toEntity()).toList(),
-        isMyApproval: isMyApproval,
-        multiApprovedByMe: multiApprovedByMe,
-        expanded: expanded,
-        shortLeaveId: shortLeaveId,
-        shortLeave: shortLeave,
-        shortLeaveStatus: shortLeaveStatus,
-        shortLeaveDate: shortLeaveDate,
-        shortLeaveApplyReason: shortLeaveApplyReason,
-        shortLeaveDateView: shortLeaveDateView,
-        shortLeaveStatusView: shortLeaveStatusView,
-        shortLeaveStatusChangeName: shortLeaveStatusChangeName,
-        shortLeaveStatusChangeReason: shortLeaveStatusChangeReason,
-        shortLeaveStatusChangeDate: shortLeaveStatusChangeDate,
-        convertedFromAutoLeave: convertedFromAutoLeave,);
+  LeaveHistoryEntity toEntity() => LeaveHistoryEntity(
+    sandwichLeave: sandwichLeave,
+    sandwichLeaveId: sandwichLeaveId,
+    isSpecialLeave: isSpecialLeave,
+    lateIn: lateIn,
+    earlyOut: earlyOut,
+    leaveCreatedDate: leaveCreatedDate,
+    leaveApprovedDate: leaveApprovedDate,
+    previousLeaveId: previousLeaveId,
+    nextLeaveDate: nextLeaveDate,
+    prevLeaveDate: prevLeaveDate,
+    sandwichLeaveDate: sandwichLeaveDate,
+    sandwichLeaveDateView: sandwichLeaveDateView,
+    shortLeaveTime: shortLeaveTime,
+    shortLeaveAvailable: shortLeaveAvailable,
+    totalWorkingHours: totalWorkingHours,
+    totalShiftHours: totalShiftHours,
+    productiveWorkingHours: productiveWorkingHours,
+    leaveRequestedDate: leaveRequestedDate,
+    isExtraDay: isExtraDay,
+    attendanceId: attendanceId,
+    attendanceDateStart: attendanceDateStart,
+    attendanceDateEnd: attendanceDateEnd,
+    punchInTime: punchInTime,
+    punchOutTime: punchOutTime,
+    leaveId: leaveId,
+    societyId: societyId,
+    userId: userId,
+    unitId: unitId,
+    floorId: floorId,
+    userFullName: userFullName,
+    floorName: floorName,
+    blockName: blockName,
+    year: year,
+    yearNew: yearNew,
+    month: month,
+    leaveTypeName: leaveTypeName,
+    userDesignation: userDesignation,
+    userProfilePic: userProfilePic,
+    shortName: shortName,
+    leaveReason: leaveReason,
+    leaveAlternateNumber: leaveAlternateNumber,
+    leaveAttachment: leaveAttachment,
+    leaveTaskDependency: leaveTaskDependency,
+    leaveHandleDependency: leaveHandleDependency,
+    leaveStatus: leaveStatus,
+    halfDaySession: halfDaySession,
+    leaveDayType: leaveDayType,
+    leaveDayTypeStatus: leaveDayTypeStatus,
+    leaveStatusView: leaveStatusView,
+    leaveDayView: leaveDayView,
+    leaveDate: leaveDate,
+    leaveTypeId: leaveTypeId,
+    leaveDateView: leaveDateView,
+    leaveAdminReason: leaveAdminReason,
+    paidUnpaid: paidUnpaid,
+    approvedByName: approvedByName,
+    rejectedByName: rejectedByName,
+    paidUnpaidStatus: paidUnpaidStatus,
+    userTotalLeave: userTotalLeave,
+    userTotalUsedLeave: userTotalUsedLeave,
+    remainingLeave: remainingLeave,
+    autoLeaveReason: autoLeaveReason,
+    leavePercentage: leavePercentage,
+    autoLeave: autoLeave,
+    isDateGone: isDateGone,
+    isSalaryGenerated: isSalaryGenerated,
+    isMultiLevelApproval: isMultiLevelApproval,
+    approvalUsers: approvalUsers?.map((model) => model.toEntity()).toList(),
+    isMyApproval: isMyApproval,
+    multiApprovedByMe: multiApprovedByMe,
+    expanded: expanded,
+    shortLeaveId: shortLeaveId,
+    shortLeave: shortLeave,
+    shortLeaveStatus: shortLeaveStatus,
+    shortLeaveDate: shortLeaveDate,
+    shortLeaveApplyReason: shortLeaveApplyReason,
+    shortLeaveDateView: shortLeaveDateView,
+    shortLeaveStatusView: shortLeaveStatusView,
+    shortLeaveStatusChangeName: shortLeaveStatusChangeName,
+    shortLeaveStatusChangeReason: shortLeaveStatusChangeReason,
+    shortLeaveStatusChangeDate: shortLeaveStatusChangeDate,
+    convertedFromAutoLeave: convertedFromAutoLeave,
+  );
 }
 
 @JsonSerializable()
@@ -535,52 +633,89 @@ class LeaveTypeModel {
   @JsonKey(name: 'encasement_summary')
   final EncasementSummaryModel? encasementSummary;
 
-  LeaveTypeModel(
-      {this.leaveTypeId, this.leaveTypeName, this.viewLeaveCount, this.specialLeave, this.applicableLeavesInMonth, this.userMonthlyLeaveBalanceData, this.leaveCalculation, this.applyLeaveStartDate, this.assignLeaveFrequency, this.leavesAccordingToPayrollCycle, this.takeLeaveDuringNoticePeriod, this.maxLeaveDuringNoticePeriod, this.takeLeaveDuringProbationPeriod, this.maxLeavePerMonthDuringProbationPeriod, this.leaveRestrictions, this.leaveRestrictionsRules, this.userTotalUsedLeave, this.userTotalLeave, this.remainingLeave, this.startDate, this.endDate, this.leaveAllocationType, this.currentMonthLeave, this.remainingPastMonthsLeave, this.totalPayout, this.totalCarryForward, this.leaveExpireAfterDays, this.leaveCreditLastDate, this.carryForwardIncludes, this.previousYearCarryForwardLeave, this.previouslyUsedPaidLeave, this.previouslyUsedUnpaidLeave, this.leaveEncashmentOption, this.encashmentAllowed, this.encasementSummary,});
+  LeaveTypeModel({
+    this.leaveTypeId,
+    this.leaveTypeName,
+    this.viewLeaveCount,
+    this.specialLeave,
+    this.applicableLeavesInMonth,
+    this.userMonthlyLeaveBalanceData,
+    this.leaveCalculation,
+    this.applyLeaveStartDate,
+    this.assignLeaveFrequency,
+    this.leavesAccordingToPayrollCycle,
+    this.takeLeaveDuringNoticePeriod,
+    this.maxLeaveDuringNoticePeriod,
+    this.takeLeaveDuringProbationPeriod,
+    this.maxLeavePerMonthDuringProbationPeriod,
+    this.leaveRestrictions,
+    this.leaveRestrictionsRules,
+    this.userTotalUsedLeave,
+    this.userTotalLeave,
+    this.remainingLeave,
+    this.startDate,
+    this.endDate,
+    this.leaveAllocationType,
+    this.currentMonthLeave,
+    this.remainingPastMonthsLeave,
+    this.totalPayout,
+    this.totalCarryForward,
+    this.leaveExpireAfterDays,
+    this.leaveCreditLastDate,
+    this.carryForwardIncludes,
+    this.previousYearCarryForwardLeave,
+    this.previouslyUsedPaidLeave,
+    this.previouslyUsedUnpaidLeave,
+    this.leaveEncashmentOption,
+    this.encashmentAllowed,
+    this.encasementSummary,
+  });
 
   factory LeaveTypeModel.fromJson(Map<String, dynamic> json) =>
       _$LeaveTypeModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$LeaveTypeModelToJson(this);
 
-  LeaveTypeEntity toEntity() =>
-      LeaveTypeEntity(
-        leaveTypeId: leaveTypeId,
-        leaveTypeName: leaveTypeName,
-        viewLeaveCount: viewLeaveCount,
-        specialLeave: specialLeave,
-        applicableLeavesInMonth: applicableLeavesInMonth,
-        userMonthlyLeaveBalanceData: userMonthlyLeaveBalanceData,
-        leaveCalculation: leaveCalculation,
-        applyLeaveStartDate: applyLeaveStartDate,
-        assignLeaveFrequency: assignLeaveFrequency,
-        leavesAccordingToPayrollCycle: leavesAccordingToPayrollCycle,
-        takeLeaveDuringNoticePeriod: takeLeaveDuringNoticePeriod,
-        maxLeaveDuringNoticePeriod: maxLeaveDuringNoticePeriod,
-        takeLeaveDuringProbationPeriod: takeLeaveDuringProbationPeriod,
-        maxLeavePerMonthDuringProbationPeriod: maxLeavePerMonthDuringProbationPeriod,
-        leaveRestrictions: leaveRestrictions,
-        leaveRestrictionsRules: leaveRestrictionsRules?.map((model) =>
-            model.toEntity()).toList(),
-        userTotalUsedLeave: userTotalUsedLeave,
-        userTotalLeave: userTotalLeave,
-        remainingLeave: remainingLeave,
-        startDate: startDate,
-        endDate: endDate,
-        leaveAllocationType: leaveAllocationType,
-        currentMonthLeave: currentMonthLeave,
-        remainingPastMonthsLeave: remainingPastMonthsLeave,
-        totalPayout: totalPayout,
-        totalCarryForward: totalCarryForward,
-        leaveExpireAfterDays: leaveExpireAfterDays,
-        leaveCreditLastDate: leaveCreditLastDate,
-        carryForwardIncludes: carryForwardIncludes,
-        previousYearCarryForwardLeave: previousYearCarryForwardLeave,
-        previouslyUsedPaidLeave: previouslyUsedPaidLeave,
-        previouslyUsedUnpaidLeave: previouslyUsedUnpaidLeave,
-        leaveEncashmentOption: leaveEncashmentOption,
-        encashmentAllowed: encashmentAllowed,
-        encasementSummary: encasementSummary?.toEntity(),);
+  LeaveTypeEntity toEntity() => LeaveTypeEntity(
+    leaveTypeId: leaveTypeId,
+    leaveTypeName: leaveTypeName,
+    viewLeaveCount: viewLeaveCount,
+    specialLeave: specialLeave,
+    applicableLeavesInMonth: applicableLeavesInMonth,
+    userMonthlyLeaveBalanceData: userMonthlyLeaveBalanceData,
+    leaveCalculation: leaveCalculation,
+    applyLeaveStartDate: applyLeaveStartDate,
+    assignLeaveFrequency: assignLeaveFrequency,
+    leavesAccordingToPayrollCycle: leavesAccordingToPayrollCycle,
+    takeLeaveDuringNoticePeriod: takeLeaveDuringNoticePeriod,
+    maxLeaveDuringNoticePeriod: maxLeaveDuringNoticePeriod,
+    takeLeaveDuringProbationPeriod: takeLeaveDuringProbationPeriod,
+    maxLeavePerMonthDuringProbationPeriod:
+        maxLeavePerMonthDuringProbationPeriod,
+    leaveRestrictions: leaveRestrictions,
+    leaveRestrictionsRules: leaveRestrictionsRules
+        ?.map((model) => model.toEntity())
+        .toList(),
+    userTotalUsedLeave: userTotalUsedLeave,
+    userTotalLeave: userTotalLeave,
+    remainingLeave: remainingLeave,
+    startDate: startDate,
+    endDate: endDate,
+    leaveAllocationType: leaveAllocationType,
+    currentMonthLeave: currentMonthLeave,
+    remainingPastMonthsLeave: remainingPastMonthsLeave,
+    totalPayout: totalPayout,
+    totalCarryForward: totalCarryForward,
+    leaveExpireAfterDays: leaveExpireAfterDays,
+    leaveCreditLastDate: leaveCreditLastDate,
+    carryForwardIncludes: carryForwardIncludes,
+    previousYearCarryForwardLeave: previousYearCarryForwardLeave,
+    previouslyUsedPaidLeave: previouslyUsedPaidLeave,
+    previouslyUsedUnpaidLeave: previouslyUsedUnpaidLeave,
+    leaveEncashmentOption: leaveEncashmentOption,
+    encashmentAllowed: encashmentAllowed,
+    encasementSummary: encasementSummary?.toEntity(),
+  );
 }
 
 @JsonSerializable()
@@ -609,24 +744,32 @@ class ApprovalUserModel {
   @JsonKey(name: 'date')
   final String? date;
 
-  ApprovalUserModel(
-      {this.id, this.name, this.designation, this.branch, this.department, this.profile, this.status, this.date,});
+  ApprovalUserModel({
+    this.id,
+    this.name,
+    this.designation,
+    this.branch,
+    this.department,
+    this.profile,
+    this.status,
+    this.date,
+  });
 
   factory ApprovalUserModel.fromJson(Map<String, dynamic> json) =>
       _$ApprovalUserModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ApprovalUserModelToJson(this);
 
-  ApprovalUserEntity toEntity() =>
-      ApprovalUserEntity(
-        id: id,
-        name: name,
-        designation: designation,
-        branch: branch,
-        department: department,
-        profile: profile,
-        status: status,
-        date: date,);
+  ApprovalUserEntity toEntity() => ApprovalUserEntity(
+    id: id,
+    name: name,
+    designation: designation,
+    branch: branch,
+    department: department,
+    profile: profile,
+    status: status,
+    date: date,
+  );
 }
 
 @JsonSerializable()
@@ -659,18 +802,20 @@ class EncasementSummaryModel {
   @JsonKey(name: 'total_unpaid')
   final String? totalUnpaid;
 
-  EncasementSummaryModel(
-      {this.totalPaid, this.totalEncashment, this.totalUnpaid,});
+  EncasementSummaryModel({
+    this.totalPaid,
+    this.totalEncashment,
+    this.totalUnpaid,
+  });
 
   factory EncasementSummaryModel.fromJson(Map<String, dynamic> json) =>
       _$EncasementSummaryModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$EncasementSummaryModelToJson(this);
 
-  EncasementSummaryEntity toEntity() =>
-      EncasementSummaryEntity(
-        totalPaid: totalPaid,
-        totalEncashment: totalEncashment,
-        totalUnpaid: totalUnpaid,
-      );
+  EncasementSummaryEntity toEntity() => EncasementSummaryEntity(
+    totalPaid: totalPaid,
+    totalEncashment: totalEncashment,
+    totalUnpaid: totalUnpaid,
+  );
 }
