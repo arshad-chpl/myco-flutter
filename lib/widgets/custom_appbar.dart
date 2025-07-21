@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -75,7 +76,10 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
     this.appBarBackgoundColor,
     this.title = '',
     this.titleFontWeight,
-    this.titleFontSize, this.actionsPadding, this.isKey, this.appBarTitleWidget,
+    this.titleFontSize,
+    this.actionsPadding,
+    this.isKey,
+    this.appBarTitleWidget,
   });
 
   @override
@@ -88,26 +92,37 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
 class _CustomAppbarState extends State<CustomAppbar> {
   @override
   Widget build(BuildContext context) => AppBar(
-    title: widget.appBarTitleWidget??
+    title:
+        widget.appBarTitleWidget ??
         CustomText(
           widget.title,
-          fontSize: widget.titleFontSize ?? 24 * Responsive.getResponsiveText(context),
+          fontSize:
+              widget.titleFontSize ??
+              24 * Responsive.getResponsiveText(context),
           fontWeight: widget.titleFontWeight ?? FontWeight.w700,
           color: widget.titileColor ?? AppTheme.getColor(context).onSurface,
-          isKey: widget.isKey??false,
+          isKey: widget.isKey ?? false,
         ),
     backgroundColor:
         widget.appBarBackgoundColor ?? AppTheme.getColor(context).surface,
     leading: widget.automaticallyImplyLeading
-        ? (widget.leading ??
-        Padding(
-          padding: EdgeInsets.all(12 * Responsive.getResponsive(context)),
-          child: SvgPicture.asset(
-            "assets/svgs/back_arrow.svg",
-            height: 16,
-            width: 16,
-          ),
-        ))
+        ? InkWell(
+            onTap: () {
+              context.pop();
+            },
+            child:
+                (widget.leading ??
+                Padding(
+                  padding: EdgeInsets.all(
+                    12 * Responsive.getResponsive(context),
+                  ),
+                  child: SvgPicture.asset(
+                    "assets/svgs/back_arrow.svg",
+                    height: 16,
+                    width: 16,
+                  ),
+                )),
+          )
         : null,
 
     ///remove padding if leading is null
