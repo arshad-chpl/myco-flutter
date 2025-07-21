@@ -53,16 +53,27 @@ class _MyAppointmentsListViewWidgetsState extends State<MyAppointmentsListViewWi
   ];
 
   Color getHeaderColor(String status) {
-    if(status.toLowerCase() == 'Approved') {
+    if(status.toLowerCase() == 'approved') {
       return AppTheme.getColor(context).secondary;
-    } else if (status.toLowerCase() == 'Pending') {
+    } else if (status.toLowerCase() == 'pending') {
       return AppColors.spanishYellow;
-    } else if(status.toLowerCase() == 'Rejected') {
+    } else if(status.toLowerCase() == 'rejected') {
       return AppTheme.getColor(context).error;
     }
     return AppTheme.getColor(context).secondary;
   }
 
+  String getStatusLabel(String label) {
+    if(label.toLowerCase() == 'approved') {
+      return 'Approved';
+    } else if (label.toLowerCase() == 'pending') {
+      return 'Pending';
+    } else if(label.toLowerCase() == 'rejected') {
+      return 'Rejected';
+    }
+    return 'not define';
+  }
+  
   @override
   Widget build(BuildContext context) => ListView.builder(
     itemCount: myAppointmentData.length,
@@ -94,14 +105,14 @@ class _MyAppointmentsListViewWidgetsState extends State<MyAppointmentsListViewWi
                       ),
                       MyCoButton(
                         onTap: () {},
-                        title: 'Approved',
+                        title: getStatusLabel(myAppointment['status']),
                         textStyle: TextStyle(
-                            color: AppTheme.getColor(context).secondary
+                            color: getHeaderColor(myAppointment['status']),
                         ),
                         height: 0.030 * Responsive.getHeight(context),
                         width: 0.23 * Responsive.getWidth(context),
                         boarderRadius: 23 * Responsive.getResponsive(context),
-                        borderColor: AppTheme.getColor(context).secondary,
+                        borderColor: getHeaderColor(myAppointment['status']),
                         borderWidth: 2,
                         backgroundColor: AppTheme.getColor(context).surface,
                       )
