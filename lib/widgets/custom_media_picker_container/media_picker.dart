@@ -49,14 +49,15 @@ Future<List<File>?> showMediaFilePicker({
             ),
           ),
         )
-      : showDialog<List<File>>(
+      : showModalBottomSheet<List<File>>(
           context: context,
-          barrierColor: Colors.transparent,
-          barrierDismissible: false,
-          builder: (context) => _AnimatedBottomSheet(
+          // barrierColor: Colors.transparent,
+          // barrierDismissible: false,
+          builder: (context) => _MediaFilePickerWidget(
             isCameraShow: isCameraShow,
             isGalleryShow: isGalleryShow,
             isDocumentShow: isDocumentShow,
+            // onLoading: (val) => setState(() => _isLoading = val),
             maxCount: maxCount,
             isCropImage: isCropImage,
           ),

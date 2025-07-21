@@ -182,10 +182,10 @@ class LoginUi extends StatelessWidget {
               Center(
                 child: Row(
                   children: [
-                    const CustomText('Don’t have an account? ',),
+                    const CustomText('Don’t have an account? '),
                     InkWell(
-                      onTap: (){
-                        context.go(RoutePaths.signUpForm);
+                      onTap: () {
+                        context.push(RoutePaths.signUpForm);
                       },
                       child: CustomText(
                         'Sign Up Here',
@@ -307,6 +307,7 @@ class DividerWithText extends StatelessWidget {
 
 class _EmailInput extends StatelessWidget {
   final TextEditingController emailController;
+
   const _EmailInput({required this.emailController});
 
   @override
