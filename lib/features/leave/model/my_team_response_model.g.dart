@@ -8,31 +8,19 @@ part of 'my_team_response_model.dart';
 
 MyTeamResponseModel _$MyTeamResponseModelFromJson(Map<String, dynamic> json) =>
     MyTeamResponseModel(
-      myTeam:
-          (json['my_team'] as List<dynamic>?)
-              ?.map((e) => MyTeamModel.fromJson(e as Map<String, dynamic>))
-              .toList(),
-      leaveList:
-          (json['leave_list'] as List<dynamic>?)
-              ?.map((e) => LeaveModel.fromJson(e as Map<String, dynamic>))
-              .toList(),
-      leaveListNextWeek:
-          (json['leave_list_next_week'] as List<dynamic>?)
-              ?.map((e) => LeaveModel.fromJson(e as Map<String, dynamic>))
-              .toList(),
+      myTeam: (json['my_team'] as List<dynamic>?)
+          ?.map((e) => MyTeamModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      leaveList: (json['leave_list'] as List<dynamic>?)
+          ?.map((e) => LeaveModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      leaveListNextWeek: (json['leave_list_next_week'] as List<dynamic>?)
+          ?.map((e) => LeaveModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       message: json['message'] as String?,
       status: json['status'] as String?,
     );
 
-Map<String, dynamic> _$MyTeamResponseModelToJson(
-  MyTeamResponseModel instance,
-) => <String, dynamic>{
-  'my_team': instance.myTeam,
-  'leave_list': instance.leaveList,
-  'leave_list_next_week': instance.leaveListNextWeek,
-  'message': instance.message,
-  'status': instance.status,
-};
 Map<String, dynamic> _$MyTeamResponseModelToJson(
         MyTeamResponseModel instance) =>
     <String, dynamic>{
