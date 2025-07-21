@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class AppointmentEntityModel extends Equatable {
   final String? status;
   final String? message;
-  final List<MyAppointmentEntity>? myAppointments; 
+  final List<MyAppointmentEntity>? myAppointments;
 
   const AppointmentEntityModel({
     this.status,
@@ -12,11 +12,7 @@ class AppointmentEntityModel extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-    status,
-    message,
-    myAppointments,
-  ];
+  List<Object?> get props => [status, message, myAppointments];
 }
 
 class MyAppointmentEntity extends Equatable {

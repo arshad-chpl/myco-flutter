@@ -29,6 +29,6 @@ abstract class AppointmentRemoteDataSource {
   );
 
   Future<CommonResponseModel> addAppointment(
-      AddAppointmentRequestModel request,
-      );
+    AddAppointmentRequestModel request,
+  );
 }

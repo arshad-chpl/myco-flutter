@@ -79,21 +79,21 @@ class AppointmentRemoteDataSourceImpl extends AppointmentRemoteDataSource {
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.employeeMobileApi,
     ).postDynamic('appointment_controller.php', encryptedBody);
-   return CommonResponseModel.fromJson(
-     json.decode(GzipUtil.decryptAES(response))
-   );
+    return CommonResponseModel.fromJson(
+      json.decode(GzipUtil.decryptAES(response)),
+    );
   }
 
   @override
   Future<CommonResponseModel> addAppointment(
-      AddAppointmentRequestModel request
-      ) async {
+    AddAppointmentRequestModel request,
+  ) async {
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.employeeMobileApi,
     ).postDynamic('appointment_controller.php', encryptedBody);
     return CommonResponseModel.fromJson(
-        json.decode(GzipUtil.decryptAES(response))
+      json.decode(GzipUtil.decryptAES(response)),
     );
   }
 }
