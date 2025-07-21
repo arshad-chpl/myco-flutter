@@ -7,11 +7,14 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/AutoStartVisitCheckboxRow.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/AutoStartVisitCheckboxRow.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_custom_radio_button.dart';
 import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
+import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
@@ -24,6 +27,7 @@ class AddNewVisit extends StatefulWidget {
 }
 
 class _AddNewVisitState extends State<AddNewVisit> {
+  /// State variables for form data
   String selectedVisitType = 'Self Visit';
   bool autoStartVisit = false;
 
