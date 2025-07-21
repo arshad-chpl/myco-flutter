@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -6,9 +8,12 @@ part 'chat_event.dart';
 part 'chat_state.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
+   final List<Map<String, String>> _selectedDepartments = [];
   ChatBloc() : super(ChatInitial()) {
    on<SearchEvent> (_onSearch); 
    on<RemoveAvatar>(onRemove);
+   on<SelectDepEvent>(onSelectDept);
+   on<RemoveDepEvent>(onRemoveDep);
   }
   void _onSearch(SearchEvent event, Emitter<ChatState> emit) {
   final query = event.query.trim().toLowerCase();
@@ -44,5 +49,21 @@ void onRemove(RemoveAvatar event, Emitter<ChatState> emit){
     
 }
 
+void onSelectDept(SelectDepEvent event, Emitter<ChatState> emit){
+ 
+  final alreadyExists = _selectedDepartments.any(
+      (d) => d['id'] == event.department['id'],
+    );
+
+    if (!alreadyExists && event.department['id']!.isNotEmpty) {
+      _selectedDepartments.add(event.department);
+      emit(SelectDepState(selectedDepartments: List.from(_selectedDepartments)));
+    }
 }
 
+void onRemoveDep(RemoveDepEvent event, Emitter<ChatState> emit){
+ _selectedDepartments.removeWhere((d) => d['id'] == event.departmentId);
+    emit(SelectDepState(selectedDepartments: List.from(_selectedDepartments)));
+}
+
+}

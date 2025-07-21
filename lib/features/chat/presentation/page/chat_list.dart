@@ -24,7 +24,7 @@ import 'package:myco_flutter/widgets/custom_text_field.dart';
 class ChatListScreen extends StatelessWidget {
   ChatListScreen({super.key});
 
-  List<Widget> screens = [EmployeesChat(), EmployeesChat()];
+  List<Widget> screens = [EmployeesChat(), GroupChat()];
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -53,7 +53,7 @@ class ChatListScreen extends StatelessWidget {
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
               builder: (_) => BlocBuilder<ChatBloc, ChatState>(
-                builder: (context, state) => const SelectGroupEmp(),
+                builder: (context, state) =>  SelectGroupEmp(),
               ),
             );
           },
@@ -185,15 +185,75 @@ class EmployeesChat extends StatelessWidget {
           ),
         ),
         SizedBox(height: 0.02 * Responsive.getHeight(context)),
-        // SideBySideButtons(
-        //   button1Name: 'Reset Cart',
-        //   button2Name: 'Add Order',
-        //   onTap1: () {},
-        //   onTap2: () {
-        //     context.pushNamed('order-summary');
-        //   },
-        // ),
+      ],
+    ),
+  );
+}
+
+class GroupChat extends StatelessWidget {
+  GroupChat({super.key});
+  final List<Map<String, String>> groups = [
+    {
+      'name': 'QA dev',
+      'message': 'Let’s start the meeting',
+      'time': '5 mins ago',
+      'image': 'assets/chat/profile.jpg',
+    },
+    {
+      'name': 'Office',
+      'message': 'Shared the document',
+      'time': '10 mins ago',
+      'image': 'assets/chat/profile.jpg',
+    },
+    {
+      'name': 'Team',
+      'message': 'Got it',
+      'time': '15 mins ago',
+      'image': 'assets/chat/profile.jpg',
+    },
+  ];
+  @override
+  Widget build(BuildContext context) => BlocBuilder<ChatBloc, ChatState>(
+    builder: (context, state) => Column(
+      children: [
+        CustomSearchField(
+          hintText: 'search_member',
+          onChanged: (value) => {
+            context.read<ChatBloc>().add(SearchEvent(value, groups)),
+            log(state.toString(), name: "state"),
+          },
+        ),
+        SizedBox(height: 0.025 * Responsive.getHeight(context)),
+        MyCoTextfield(
+          controller: TextEditingController(),
+          hintText: 'Type a message',
+          suffix: const Icon(Icons.send),
+        ),
+        Expanded(
+          child: ListView.separated(
+            itemCount: state is SearchQueryState
+                ? state.filteredList.length
+                : groups.length,
+            itemBuilder: (context, index) {
+              final member = state is SearchQueryState
+                  ? state.filteredList[index]
+                  : groups[index];
+              return ChatListCard(
+                name: member['name']!,
+                lastMessage: member['message']!,
+                timeAgo: member['time']!,
+                profileImagePath: member['image']!,
+                onTap: () => {
+                  context.pushNamed('group-info'),
+                },
+              );
+            },
+            separatorBuilder: (context, index) =>
+                SizedBox(height: 0.015 * Responsive.getHeight(context)),
+          ),
+        ),
         SizedBox(height: 0.02 * Responsive.getHeight(context)),
+        
       ],
     ),
   );

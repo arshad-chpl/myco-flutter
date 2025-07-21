@@ -88,15 +88,9 @@ class CreatGroupBottomsheet extends StatelessWidget {
              children: [
                /// Main CircleAvatar with logo inside
                
-               CircleAvatar(
-                 radius: 50,
-                 backgroundColor: AppTheme.getColor(context).surfaceContainer, // light background like in the image
-                 child: Image.asset(
-                   'assets/chat/creat_group.png', // replace with your logo path
-                   width: 55,
-                   height: 60,
-                   fit: BoxFit.contain,
-                 ),
+               Image.asset(
+                 'assets/chat/MYCO_Logo_2027.png',
+                 width: 0.25 * Responsive.getWidth(context),
                ),
            
                /// Camera icon on bottom-right

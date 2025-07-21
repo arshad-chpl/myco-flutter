@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
+import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
 import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
-import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
@@ -205,6 +205,7 @@ class AppRouter {
       // ),
       ...takeOrderRoutes,
       ...payslipRoutes,
+      ...chatRoutes,
 
       GoRoute(
         path: RoutePaths.faceDetection,
@@ -308,7 +309,7 @@ class AppRouter {
         ),
         routes: adminViewRoutes,
       ),
-     ...cahatRoutes,
+
 
       GoRoute(
         path: RoutePaths.assetsHome,

@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -11,6 +13,7 @@ import 'package:myco_flutter/features/language_selector/model/language_response.
 import 'package:myco_flutter/features/my_visit/presentation/widgets/custom_dropdown_menu.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
+import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
@@ -91,6 +94,7 @@ class _StartNewChatState extends State<StartNewChat> {
             ),
             suffix: Image.asset('assets/chat/arrow_down_sigle.png', scale: 20),
             onClick: () => _openDepartmentPicker(),
+            
           ),
 
            SizedBox(height: 16 * Responsive.getResponsive(context)),
@@ -110,7 +114,10 @@ class _StartNewChatState extends State<StartNewChat> {
                 childAspectRatio: 2 / 2.5,
               ),
               itemCount: 12, // example count
-              itemBuilder: (context, index) => StartNewChatProfileCard(),
+              itemBuilder: (context, index) => const StartNewChatProfileCard(
+                name: 'Ajit Maurya',
+                departments: 'QA',
+              ),
               shrinkWrap: true,
             ),
           ),
@@ -121,55 +128,63 @@ class _StartNewChatState extends State<StartNewChat> {
 }
 
 class StartNewChatProfileCard extends StatelessWidget {
-  const StartNewChatProfileCard({super.key});
+  final String name;
+  final String departments;
+  final VoidCallback? onTap;
+  const StartNewChatProfileCard({super.key, this.name = '' , this.departments = '' , this.onTap});
 
   @override
   // ignore: prefer_expression_function_bodies
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Container(
-      height: 0.28 * Responsive.getHeight(context),
-      width: 0.3 * Responsive.getWidth(context),
-      decoration: BoxDecoration(
-        
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.grey.shade300,
-        //     spreadRadius: 2,
-        //     blurRadius: 5,
-        //     offset: const Offset(0, 3),
-        //   ),
-        // ],
-        border: Border.all(color: AppTheme.getColor(context).primary, width: 1),
-      ),
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+    return InkWell(
+      onTap: onTap ?? () {
+        context.pushNamed('user-chat');
+      },
+      child: Container(
+        height: 0.28 * Responsive.getHeight(context),
+        width: 0.3 * Responsive.getWidth(context),
+        decoration: BoxDecoration(
           
-          children: [
-            SizedBox(height: 0.018 * Responsive.getHeight(context)),
-            CircleAvatar(
-              radius: 34 * Responsive.getResponsive(context),
-              backgroundImage: const AssetImage(
-                'assets/chat/profile.jpg',
-              ), // For assets, use AssetImage
-              backgroundColor: AppTheme.getColor(context).onPrimary,
-            ),
-            SizedBox(height: 0.01 * Responsive.getHeight(context)),
-            CustomText(
-              'Adi K',
-              fontWeight: FontWeight.w600,
-              fontSize: 16 * Responsive.getResponsiveText(context),
-              color: AppTheme.getColor(context).onSurface,
-            ),
-            CustomText(
-              'QA',
-              fontSize: 14 * Responsive.getResponsiveText(context),
-              color: AppTheme.getColor(context).onSurface,
-            ),
-          ],
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.grey.shade300,
+          //     spreadRadius: 2,
+          //     blurRadius: 5,
+          //     offset: const Offset(0, 3),
+          //   ),
+          // ],
+          border: Border.all(color: AppTheme.getColor(context).primary, width: 1),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            
+            children: [
+              SizedBox(height: 0.018 * Responsive.getHeight(context)),
+              CircleAvatar(
+                radius: 34 * Responsive.getResponsive(context),
+                backgroundImage: const AssetImage(
+                  'assets/chat/profile.jpg',
+                ), // For assets, use AssetImage
+                backgroundColor: AppTheme.getColor(context).onPrimary,
+              ),
+              SizedBox(height: 0.01 * Responsive.getHeight(context)),
+              CustomText(
+                name,
+                fontWeight: FontWeight.w600,
+                fontSize: 16 * Responsive.getResponsiveText(context),
+                color: AppTheme.getColor(context).onSurface,
+              ),
+              CustomText(
+                departments,
+                fontSize: 14 * Responsive.getResponsiveText(context),
+                color: AppTheme.getColor(context).onSurface,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -10,12 +8,12 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 class UserChatScreen extends StatelessWidget {
-  UserChatScreen({super.key});
-  // ScrollController _scrollController = ScrollController();
+  final bool? isNewChat;
+  const UserChatScreen({super.key, this.isNewChat = false});
+  
   @override
   Widget build(BuildContext context) => Scaffold(
     resizeToAvoidBottomInset: true,
-
     body: Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -65,25 +63,32 @@ class UserChatScreen extends StatelessWidget {
             ),
             SizedBox(height: 0.01 * Responsive.getHeight(context)),
             Expanded(
-              flex: 14,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 0.06 * Responsive.getWidth(context),
-                ),
-                child: ListView.builder(
-                  reverse: true,
-                  // controller: _scrollController,
-                  itemBuilder: (context, index) => const MessageCard(
-                    title: 'Vedant',
-                    message: 'Open by Mukund Madhav',
-                    timestamp: 'May 30 10:30 AM',
-                    // isSentByUser: true,
-                  ),
-                  itemCount: 15,
-                  shrinkWrap: true,
-                ),
-              ),
+              child: isNewChat! || false // Replace 'true' with your actual condition for empty chat
+                  ? Center(
+                      child: CustomText(
+                        "start a conversation",
+                        fontSize: 15 * Responsive.getResponsiveText(context),
+                        fontWeight: FontWeight.w500,
+                        color: AppTheme.getColor(context).onSurface,
+                      ),
+                    )
+                  : Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 0.06 * Responsive.getWidth(context),
+                      ),
+                      child: ListView.builder(
+                        reverse: true,
+                        itemBuilder: (context, index) => const MessageCard(
+                          title: 'Vedant',
+                          message: 'Open by Mukund Madhav',
+                          timestamp: 'May 30 10:30 AM',
+                        ),
+                        itemCount: 15,
+                        shrinkWrap: true,
+                      ),
+                    ),
             ),
+            SizedBox(height: 0.02 * Responsive.getHeight(context)),
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: 0.06 * Responsive.getWidth(context),
@@ -108,17 +113,10 @@ class UserChatScreen extends StatelessWidget {
                   right: 0.03 * Responsive.getWidth(context),
                   bottom: 0.012 * Responsive.getHeight(context),
                 ),
-                onClick: () {
-                  // _scrollController.animateTo(
-                  //   _scrollController.position.maxScrollExtent,
-                  //   duration: const Duration(milliseconds: 300),
-                  //   curve: Curves.easeOut,
-                  // );
-                },
+                onClick: () {},
                 boarderRadius: 12 * Responsive.getResponsive(context),
                 suffix: Row(
                   mainAxisSize: MainAxisSize.min,
-
                   children: [
                     Image.asset(
                       'assets/chat/attachment.png',

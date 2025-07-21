@@ -23,3 +23,10 @@ final class RemoveAvatarState extends ChatState{
   @override
   List<Object> get props => [updateAvtarList];
 }
+
+final class SelectDepState extends ChatState {
+   final List<Map<String, String>> selectedDepartments;
+  const SelectDepState({required this.selectedDepartments});
+  @override
+  List<Object> get props => [selectedDepartments];
+}

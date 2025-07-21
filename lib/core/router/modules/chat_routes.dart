@@ -8,7 +8,7 @@ import 'package:myco_flutter/features/chat/presentation/page/groupe_detail.dart'
 import 'package:myco_flutter/features/chat/presentation/page/start_chat.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 
-List<RouteBase> cahatRoutes = [
+List<RouteBase> chatRoutes = [
   ShellRoute(
     builder: (context, state, child) => MultiBlocProvider(
       providers: [
@@ -26,7 +26,7 @@ List<RouteBase> cahatRoutes = [
       GoRoute(
         path: RoutePaths.userChatScreen,
         name: 'user-chat',
-        builder: (context, state) => UserChatScreen(),
+        builder: (context, state) => const UserChatScreen(),
       ),
       GoRoute(
         path: RoutePaths.startNewChat,

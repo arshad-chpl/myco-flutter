@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
@@ -8,60 +10,62 @@ import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
-Future<String?> showCustomSimpleBottomSheet({
+Future<List<String>?> showMultiSelectBottomSheet({
   required BuildContext context,
   required List<Map<String, String>> dataList,
   required String heading,
-  String? selectedId,
+  final List<String>? selectedIds,
   ImageProvider? icon,
   String? searchHint,
   String? btnTitle,
-}) => showModalBottomSheet<String>(
+}) => showModalBottomSheet<List<String>>(
   context: context,
   isScrollControlled: true,
   backgroundColor: Colors.transparent,
-  builder: (_) => _CustomSimpleBottomSheet(
+  builder: (_) => _MultiSelectBottomSheet(
     heading: heading,
     dataList: dataList,
-    selectedId: selectedId,
+    selectedIds: selectedIds,
     icon: icon,
     searchHint: searchHint,
     btnTitle: btnTitle,
   ),
 );
 
-class _CustomSimpleBottomSheet extends StatefulWidget {
+class _MultiSelectBottomSheet extends StatefulWidget {
   final List<Map<String, String>> dataList;
   final String heading;
-  final String? selectedId;
+  final List<String>? selectedIds;
   final String? searchHint;
   final String? btnTitle;
   final ImageProvider? icon;
 
-  const _CustomSimpleBottomSheet({
+  const _MultiSelectBottomSheet({
     required this.dataList,
     required this.heading,
-    this.selectedId,
+    this.selectedIds,
     this.searchHint,
     this.btnTitle,
     this.icon,
   });
 
   @override
-  State<_CustomSimpleBottomSheet> createState() =>
-      _CustomSimpleBottomSheetState();
+  State<_MultiSelectBottomSheet> createState() =>
+      _MultiSelectBottomSheetState();
 }
 
-class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
+class _MultiSelectBottomSheetState extends State<_MultiSelectBottomSheet> {
   String searchQuery = '';
-  String? selectedItemId;
+
+  Set<String> selectedIds = {};
+
   late List<Map<String, String>> filteredList;
 
   @override
   void initState() {
     super.initState();
-    selectedItemId = widget.selectedId;
     filteredList = List.from(widget.dataList);
+    selectedIds = widget.selectedIds != null ? widget.selectedIds!.toSet() : {};
   }
 
   void _onSearch(String query) {
@@ -69,7 +73,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
       searchQuery = query;
       filteredList = widget.dataList
           .where(
-            (item) => (item['name'] ?? '').toLowerCase().contains(
+            (item) => (item['department'] ?? '').toLowerCase().contains(
               query.toLowerCase(),
             ),
           )
@@ -121,7 +125,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
         // Search field
         CustomSearchField(
           hintText: widget.searchHint ?? 'search',
-          onChanged: _onSearch ,
+          onChanged: _onSearch,
         ),
 
         SizedBox(height: 12 * Responsive.getResponsive(context)),
@@ -133,8 +137,8 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
             itemBuilder: (context, index) {
               final item = filteredList[index];
               final id = item['id'];
-              final name = item['name'] ?? '';
-              final isSelected = id == selectedItemId;
+              final name = item['department'] ?? '';
+              final isSelected = selectedIds.contains(id);
 
               if (id == null || name.isEmpty) return const SizedBox.shrink();
 
@@ -143,19 +147,26 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                   vertical: 6 * Responsive.getResponsive(context),
                 ),
                 decoration: BoxDecoration(
-                  color: isSelected
-                      ? AppTheme.getColor(context).primary
-                      : Colors.white,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: AppTheme.getColor(context).primary.withOpacity(0.3),
+                    color: isSelected
+                        ? AppTheme.getColor(context).primary
+                        : AppTheme.getColor(context).outline,
+                    width: isSelected ? 1.5 : 1,
                   ),
                 ),
                 child: InkWell(
                   onTap: () {
                     setState(() {
-                      selectedItemId = id;
+                      if (isSelected) {
+                        selectedIds.remove(id);
+                      } else {
+                        selectedIds.add(id!);
+                      }
                     });
+
+                    log(selectedIds.toString(), name: "selectedIds");
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(
@@ -193,15 +204,11 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
           fontFamily: 'Inter',
           fontWeight: FontWeight.w500,
           onTap: () {
-            if (selectedItemId != null) {
-              Navigator.pop(context, selectedItemId!);
-            } else {
-              Navigator.pop(context);
-            }
+            log(selectedIds.toString(), name: "selectedIds");
+            Navigator.pop(context, selectedIds.toList());
           },
         ),
         SizedBox(height: Responsive.getResponsive(context) * 12),
-
       ],
     ),
   );
