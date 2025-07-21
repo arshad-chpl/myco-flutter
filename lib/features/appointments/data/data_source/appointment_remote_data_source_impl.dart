@@ -20,7 +20,7 @@ class AppointmentRemoteDataSourceImpl extends AppointmentRemoteDataSource {
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.employeeMobileApi,
-    ).postDynamic('admin_view_controller.php', encryptedBody);
+    ).postDynamic('appointment_controller.php', encryptedBody);
     return AppointmentResponseModel.fromJson(
       json.decode(GzipUtil.decryptAES(response))
     );
@@ -33,7 +33,7 @@ class AppointmentRemoteDataSourceImpl extends AppointmentRemoteDataSource {
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.employeeMobileApi,
-    ).postDynamic('admin_view_controller.php', encryptedBody);
+    ).postDynamic('appointment_controller.php', encryptedBody);
     return CommonResponseModel.fromJson(
       json.decode(GzipUtil.decryptAES(response)),
     );
@@ -46,7 +46,7 @@ class AppointmentRemoteDataSourceImpl extends AppointmentRemoteDataSource {
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.employeeMobileApi,
-    ).postDynamic('admin_view_controller.php', encryptedBody);
+    ).postDynamic('appointment_controller.php', encryptedBody);
    return CommonResponseModel.fromJson(
      json.decode(GzipUtil.decryptAES(response))
    );
