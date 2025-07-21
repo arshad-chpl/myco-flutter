@@ -1,5 +1,5 @@
 class AppAssets {
-  // commmon paths for visit in the application
+  // commmmon paths for visit in the application
   static const String basePath = 'assets';
 
   // static const String fontsPath = '$basePath/fonts';
@@ -10,9 +10,7 @@ class AppAssets {
   static const String splash = '$basePath/splash';
   static const String visit = '$basePath/visit';
   static const String svgsVisit = '$svgsPath/visit';
-
   static const String assetVisit = '$basePath/add_expense';
-
 
   static const String assets = '$basePath/assets';
   static const String lostFound = '$basePath/lost_and_found';
@@ -85,6 +83,8 @@ class AppAssets {
   static const String start = '$svgsTakeOrder/start.svg';
   static const String stop = '$svgsTakeOrder/stop.svg';
   static const String calling = '$svgsTakeOrder/calling.svg';
+  static const String arrowBack = '$svgsPath/back_arrow.svg';
+  static const String cancelOrder = '$svgsTakeOrder/cancel_order.svg';
 
   static const String element_1 = '$workAllocationSvgs/element-1.svg';
   static const String receiptEdittt = '$workAllocationSvgs/receiptedittt.svg';
@@ -113,7 +113,6 @@ class AppAssets {
   static const String smart_car = '$svgsVisit/smart-car.svg';
   static const String global = '$svgsVisit/global.svg';
 
-
   // Visit Assets
   static const String emptyWalletTime = '$svgsVisit/empty-wallet-time.svg';
   static const String bitCinCard = '$svgsVisit/bitcoin-card.svg';
@@ -131,7 +130,6 @@ class AppAssets {
   static const String downArrow = '$svgsVisit/arrow-down.svg';
   static const String galleryExport = '$svgsVisit/gallery-export.svg';
   static const String arrow_down = '$svgsVisit/arrow-down.svg';
-
 
   //images visit
   static const String assetBookmark = '$assetVisit/bookmark.svg';
