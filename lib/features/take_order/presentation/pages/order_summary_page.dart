@@ -9,6 +9,7 @@ import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
+import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -256,47 +257,20 @@ class OrderSummaryPage extends StatelessWidget {
               fontSize: 13 * Responsive.getResponsiveText(context),
             ),
             SizedBox(height: 0.005 * Responsive.getHeight(context)),
-            Container(
-              height: 0.115 * Responsive.getHeight(context),
+            BigMyCoTextField(
+              hintText: LanguageManager().get('type_here'),
+              prefixImage: SvgPicture.asset(
+                AppAssets.messageEdit,
+                colorFilter: ColorFilter.mode(
+                  AppTheme.getColor(context).primary,
+                  BlendMode.srcIn,
+                ),
+              ),
               decoration: BoxDecoration(
-                // color: AppTheme.getColor(context).onPrimary,
                 border: Border.all(color: AppTheme.getColor(context).outline),
                 borderRadius: BorderRadius.circular(
                   12 * Responsive.getResponsive(context),
                 ),
-              ),
-              padding: EdgeInsets.symmetric(
-                horizontal: 0.03 * Responsive.getWidth(context),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(
-                      top: 0.01 * Responsive.getHeight(context),
-                    ),
-                    child: SvgPicture.asset(
-                      // 'assets/take_order/message-edit.png',
-                      AppAssets.messageEdit,
-                      height: 0.022 * Responsive.getHeight(context),
-                    ),
-                  ),
-                  SizedBox(width: 0.03 * Responsive.getWidth(context)),
-                  Expanded(
-                    child: TextFormField(
-                      maxLines: 5,
-                      minLines: 3,
-                      decoration: InputDecoration(
-                        hintText: LanguageManager().get('type_here'),
-                        hintStyle: TextStyle(
-                          color: AppTheme.getColor(context).outline,
-                          fontSize: 14 * Responsive.getResponsiveText(context),
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ),
             SizedBox(height: 0.015 * Responsive.getHeight(context)),
