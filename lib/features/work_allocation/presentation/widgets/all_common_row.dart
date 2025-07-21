@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/widget/common_row.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widgets/common_row.dart';
 
 class AllCommonRow extends StatefulWidget {
   const AllCommonRow({super.key});

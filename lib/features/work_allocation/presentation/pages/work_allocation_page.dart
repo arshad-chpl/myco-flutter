@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/widget/work_allocation_card_list_view.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widgets/work_allocation_card_list_view.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/floating_action_btn.dart';
