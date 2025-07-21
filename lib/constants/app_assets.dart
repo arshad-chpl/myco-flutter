@@ -1,5 +1,5 @@
 class AppAssets {
-  // commmon paths for visit in the application
+  // commmmon paths for visit in the application
   static const String basePath = 'assets';
   // static const String fontsPath = '$basePath/fonts';
   static const String imagesPath = '$basePath/images';
@@ -9,7 +9,6 @@ class AppAssets {
   static const String splash = '$basePath/splash';
   static const String visit = '$basePath/visit';
   static const String svgsVisit = '$svgsPath/visit';
-
   static const String assetVisit = '$basePath/add_expense';
 
   static const String assets = '$basePath/assets';
@@ -79,6 +78,8 @@ class AppAssets {
   static const String start = '$svgsTakeOrder/start.svg';
   static const String stop = '$svgsTakeOrder/stop.svg';
   static const String calling = '$svgsTakeOrder/calling.svg';
+  static const String arrowBack = '$svgsPath/back_arrow.svg';
+  static const String cancelOrder = '$svgsTakeOrder/cancel_order.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';

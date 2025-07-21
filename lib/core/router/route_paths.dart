@@ -61,7 +61,6 @@ class RoutePaths {
   static const String assetsHome = '/assets-home';
   static const String myProfile = '/my-profile';
 
-
   // ======== Admin View ========
   static const String adminView = '/admin-view';
 
@@ -115,7 +114,7 @@ class RoutePaths {
   static const String chatList = '/chat-list';
   static const String userChatScreen = '/user-chat';
   static const String startNewChat = '/start-chat';
-  static  const String groupInfo = '/group-info';
+  static const String groupInfo = '/group-info';
 
   //maulik
   static const String assetsDetails = '/assets-details';
