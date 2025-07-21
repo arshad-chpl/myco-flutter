@@ -59,14 +59,8 @@ Future<void> init() async {
   //========VISIT WITH=========
   visitWithDi(sl);
 
-  // ========Admin View=========
-  adminViewDi(sl);
-
   // ========Employee View=========
   employeeDi(sl);
-
-  //========VISIT WITH=========
-  visitWithDi(sl);
 
   //========Company Info=========
   setupCompanyInfoDI(sl);
@@ -74,8 +68,6 @@ Future<void> init() async {
   //========Holiday=========
   setupHolidayDI(sl);
 
-  // ========Admin View=========
-  adminViewDi(sl);
   //Leave
   setUpLeaveDI(sl);
 

@@ -113,7 +113,7 @@ class EmployeeSelectionCard extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Colors.black12, Colors.black26],
+                    colors: [Colors.black12, Colors.black26, Colors.black38],
                   ),
                 ),
                 child: Column(

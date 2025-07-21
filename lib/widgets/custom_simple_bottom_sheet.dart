@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
@@ -87,7 +88,6 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
   }
 
   ///For toggle selection
-  ///Ali
   void _toggleSelection(String id) {
     setState(() {
       if (selectedItemIds.contains(id)) {
@@ -103,7 +103,6 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
   }
 
   ///For SelectionAll
-  ///Ali
   void _selectAll() {
     if (isAllSelected) {
       setState(() {
@@ -123,7 +122,9 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
   Widget build(BuildContext context) => Container(
     height: Responsive.getHeight(context) * 0.75,
     width: Responsive.getWidth(context),
-    padding: EdgeInsets.all(16 * Responsive.getResponsive(context)),
+    padding: EdgeInsets.all(
+      VariableBag.screenHorizontalPadding * Responsive.getResponsive(context),
+    ),
     decoration: BoxDecoration(
       color: AppTheme.getColor(context).surface,
       borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
@@ -145,9 +146,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
               ),
             if (widget.icon != null)
               IconButton(
-                padding: const EdgeInsets.all(0),
                 onPressed: () => Navigator.pop(context),
-
                 icon: SvgPicture.asset(
                   widget.icon ?? 'NO_Image||Icon',
                   width: Responsive.isTablet

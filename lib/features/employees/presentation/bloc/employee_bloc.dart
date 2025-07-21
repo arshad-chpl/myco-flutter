@@ -219,10 +219,47 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     RefreshEmployeeData event,
     Emitter<EmployeeState> emit,
   ) async {
+    if (state is! EmployeeLoaded) return;
+
+    final st = state as EmployeeLoaded;
+    final selectedDept = st.selectedDepartment;
+    final selectedBranch = st.selectedBranch;
+
+    if (selectedDept == null || selectedBranch == null) {
+      emit(EmployeeError('No selected branch or department to refresh.'));
+      return;
+    }
+
     emit(EmployeeLoading());
-    await preferenceManager.delete('cached_employee_response');
-    _hasLoadedOnce = false;
-    add(LoadUserData());
+
+    final userId = await preferenceManager.getUserId();
+    final societyId = await preferenceManager.getCompanyId() ?? '';
+
+    final result = await getEmployees.call(
+      GetEmployeesParams(
+        userId: userId,
+        societyId: societyId,
+        blockId: selectedDept.blockId,
+        floorId: selectedDept.floorId,
+      ),
+    );
+
+    result.fold(
+      (failure) => emit(EmployeeError(_mapFailureToMessage(failure))),
+      (employees) {
+        emit(
+          EmployeeLoaded(
+            branches: st.branches,
+            departments: st.departments,
+            employees: employees,
+            selectedBranch: selectedBranch,
+            selectedDepartment: selectedDept,
+            searchQuery: '',
+            selectedEmployeeIds: <String>{},
+          ),
+        );
+      },
+    );
   }
 
   String _mapFailureToMessage(Failure failure) {

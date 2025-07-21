@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
@@ -94,7 +95,9 @@ class EmployeesScreen extends StatelessWidget {
     final double gridPadding = 8 * Responsive.getResponsive(context);
 
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(
+        VariableBag.screenHorizontalPadding * Responsive.getResponsive(context),
+      ),
       child: Column(
         children: [
           CustomSearchField(
@@ -107,11 +110,14 @@ class EmployeesScreen extends StatelessWidget {
               debugPrint('value------------>$value');
             },
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 0.012 * Responsive.getHeight(context)),
           Row(
             children: [
               Expanded(child: _dropdownBranch(context, st)),
-              const SizedBox(width: 12),
+              SizedBox(
+                height: 0.016 * Responsive.getHeight(context),
+                width: 0.013 * Responsive.getWidth(context),
+              ),
               Expanded(
                 child: _dropdownDepartment(
                   context,
@@ -121,13 +127,13 @@ class EmployeesScreen extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 0.02 * Responsive.getHeight(context)),
+          SizedBox(height: 0.024 * Responsive.getHeight(context)),
           Expanded(
             child: RefreshIndicator(
               onRefresh: () async {
-                // _searchController.clear();
-                context.read<EmployeeBloc>().add(LoadUserData());
+                context.read<EmployeeBloc>().add(RefreshEmployeeData());
               },
+
               child: isShimmer
                   ? GridView.builder(
                       padding: EdgeInsets.only(
