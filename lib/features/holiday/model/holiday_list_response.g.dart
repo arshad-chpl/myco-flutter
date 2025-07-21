@@ -6,18 +6,19 @@ part of 'holiday_list_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-HolidayListResponse _$HolidayListResponseFromJson(Map<String, dynamic> json) =>
-    HolidayListResponse(
+HolidayListResponseModel _$HolidayListResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    HolidayListResponseModel(
       holiday: (json['holiday'] as List<dynamic>?)
-          ?.map((e) => Holiday.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => HolidayModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       count: (json['count'] as num?)?.toInt(),
       currentMonth: json['current_month'] as String?,
       message: json['message'] as String?,
     );
 
-Map<String, dynamic> _$HolidayListResponseToJson(
-        HolidayListResponse instance) =>
+Map<String, dynamic> _$HolidayListResponseModelToJson(
+        HolidayListResponseModel instance) =>
     <String, dynamic>{
       'holiday': instance.holiday?.map((e) => e.toJson()).toList(),
       'count': instance.count,
@@ -25,10 +26,10 @@ Map<String, dynamic> _$HolidayListResponseToJson(
       'message': instance.message,
     };
 
-Holiday _$HolidayFromJson(Map<String, dynamic> json) => Holiday(
+HolidayModel _$HolidayModelFromJson(Map<String, dynamic> json) => HolidayModel(
       holidayId: json['holiday_id'] as String?,
       optionalHolidayAssignId: json['optional_holiday_assign_id'] as String?,
-      societyId: json['society_id'] as String?,
+      companyId: json['society_id'] as String?,
       holidayName: json['holiday_name'] as String?,
       holidayDescription: json['holiday_description'] as String?,
       holidayStartDate: json['holiday_start_date'] == null
@@ -57,10 +58,11 @@ Holiday _$HolidayFromJson(Map<String, dynamic> json) => Holiday(
           json['optional_holiday_assign_delete_id'] as String?,
     );
 
-Map<String, dynamic> _$HolidayToJson(Holiday instance) => <String, dynamic>{
+Map<String, dynamic> _$HolidayModelToJson(HolidayModel instance) =>
+    <String, dynamic>{
       'holiday_id': instance.holidayId,
       'optional_holiday_assign_id': instance.optionalHolidayAssignId,
-      'society_id': instance.societyId,
+      'society_id': instance.companyId,
       'holiday_name': instance.holidayName,
       'holiday_description': instance.holidayDescription,
       'holiday_start_date': instance.holidayStartDate?.toIso8601String(),

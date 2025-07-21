@@ -21,41 +21,41 @@ class HolidayBloc extends Bloc<HolidayEvent, HolidayState> {
   }
 
   Future<void> _onFetchHolidayList(
-      FetchHolidayList event,
-      Emitter<HolidayState> emit,
-      ) async {
+    FetchHolidayList event,
+    Emitter<HolidayState> emit,
+  ) async {
     emit(HolidayLoading());
-    final result = await getHolidayList(event.year);
+    final result = await getHolidayList(event.model);
 
     result.fold(
-          (failure) => emit(HolidayError(failure.message ?? 'Unexpected error')),
-          (response) => emit(HolidayListLoaded(response.holiday ?? [])),
+      (failure) => emit(HolidayError(failure.message ?? 'Unexpected error')),
+      (response) => emit(HolidayListLoaded(response.holiday ?? [])),
     );
   }
 
   Future<void> _onApplyHoliday(
-      ApplyHolidayEvent event,
-      Emitter<HolidayState> emit,
-      ) async {
+    ApplyHolidayEvent event,
+    Emitter<HolidayState> emit,
+  ) async {
     emit(HolidayLoading());
-    final result = await applyHoliday(event.holidayId);
+    final result = await applyHoliday(event.model);
 
     result.fold(
-          (failure) => emit(HolidayError(failure.message ?? 'Apply failed')),
-          (response) => emit(HolidayApplied()),
+      (failure) => emit(HolidayError(failure.message ?? 'Apply failed')),
+      (response) => emit(HolidayApplied(response))
     );
   }
 
   Future<void> _onDeleteHoliday(
-      DeleteHolidayEvent event,
-      Emitter<HolidayState> emit,
-      ) async {
+    DeleteHolidayEvent event,
+    Emitter<HolidayState> emit,
+  ) async {
     emit(HolidayLoading());
-    final result = await deleteHoliday(event.holidayAssignId);
+    final result = await deleteHoliday(event.model);
 
     result.fold(
-          (failure) => emit(HolidayError(failure.message ?? 'Delete failed')),
-          (_) => emit(HolidayDeleted()),
+      (failure) => emit(HolidayError(failure.message ?? 'Delete failed')),
+      (response)  => emit(HolidayDeleted(response))
     );
   }
 }

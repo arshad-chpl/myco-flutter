@@ -1,6 +1,6 @@
-import 'package:myco_flutter/core/models/common_response.dart';
+import 'package:myco_flutter/core/models/data/common_response_model.dart';
 import 'package:myco_flutter/features/company_selector/data/models/request_device_change_model.dart';
 
 abstract class DeviceChangeRemoteDataSource {
-  Future<CommonResponse> requestDeviceChange(RequestDeviceChangeModel model);
+  Future<CommonResponseModel> requestDeviceChange(RequestDeviceChangeModel model);
 }

@@ -19,16 +19,12 @@ import 'package:myco_flutter/features/asset/view/handover_assets.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
 import 'package:myco_flutter/features/common_api/domain/usecase/common_api_usercase.dart';
 import 'package:myco_flutter/features/common_api/presentation/bloc/common_api_bloc.dart';
+
 // import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
-import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_event.dart';
 import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
 import 'package:myco_flutter/features/asset/view/swap_assets.dart';
 import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
-import 'package:myco_flutter/features/chat/presentation/bloc/chat_bloc.dart';
-import 'package:myco_flutter/features/chat/presentation/page/chat_list.dart';
-import 'package:myco_flutter/features/chat/presentation/page/chat_screen.dart';
-import 'package:myco_flutter/features/chat/presentation/page/groupe_detail.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
@@ -49,9 +45,6 @@ import 'package:myco_flutter/features/language_selector/presentation/pages/langu
 import 'package:myco_flutter/features/leave/presentation/pages/add_leave_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 
-import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
-import 'package:myco_flutter/features/language_selector/presentation/bloc/language_bloc.dart';
-import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/my_team_leaves_screen.dart';
@@ -60,15 +53,7 @@ import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_scre
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
 
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
-
-
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
@@ -77,14 +62,8 @@ import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.d
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
 
-import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 
-
-import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
-
-import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
@@ -119,7 +98,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths.splash,
+    // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -197,7 +177,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.leave,
-        name: '/leave',
+        name: RoutePaths.leave,
         builder: (context, state) => BlocProvider<LeaveBloc>(
           create: (_) => GetIt.I<LeaveBloc>(),
           child: const LeaveScreen(),
@@ -272,13 +252,12 @@ class AppRouter {
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
         pageBuilder: (context, state) => MaterialPage(
-              child: BlocProvider(
-                  create: (context) =>
-                GetIt.I<FaceDetectionBloc>()
-                ..add(LaunchCamera()),
-                child: const FaceDetectionPage(),
-              )
+          child: BlocProvider(
+            create: (context) =>
+                GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+            child: const FaceDetectionPage(),
           ),
+        ),
         // builder: (context, state) => BlocProvider(
         //   create: (context) =>
         //   GetIt.I<FaceDetectionBloc>()
@@ -413,7 +392,7 @@ class AppRouter {
           child: const MyTeamLeavesScreen(),
         ),
       ),
-     ...cahatRoutes,
+      ...cahatRoutes,
 
       GoRoute(
         path: RoutePaths.assetsHome,

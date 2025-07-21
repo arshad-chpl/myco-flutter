@@ -35,7 +35,7 @@ class CompanyInfoPage extends StatelessWidget {
           } else if (state is CompanyInfoLoaded) {
             final company = state.companyInfo;
             final commitie = company.commitie ?? [];
-            final logoUrl = state.companyInfo.socieatyLogo;
+            final logoUrl = state.companyInfo.companyLogo;
 
             return SingleChildScrollView(
               child: Column(
@@ -75,7 +75,7 @@ class CompanyInfoPage extends StatelessWidget {
                             horizontal: 16,
                           ),
                           child: Text(
-                            company.societyName ?? 'My Company',
+                            company.companyName ?? 'My Company',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize:
@@ -118,11 +118,11 @@ class CompanyInfoPage extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                final companyName = company.societyName ?? 'My Company';
-                                final address = company.societyAddress ?? 'No address available';
+                                final companyName = company.companyName ?? 'My Company';
+                                final address = company.companyAddress ?? 'No address available';
 
-                                final latitude = company.societyLatitude;
-                                final longitude = company.societyLongitude;
+                                final latitude = company.companyLatitude;
+                                final longitude = company.companyLongitude;
 
                                 final googleMapsLink = (latitude != null && longitude != null)
                                     ? 'https://maps.google.com/?q=$latitude,$longitude'
@@ -150,7 +150,7 @@ class CompanyInfoPage extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          company.societyAddress ?? 'No address available',
+                          company.companyAddress ?? 'No address available',
                           style: TextStyle(
                             fontSize:
                                 18 * Responsive.getResponsiveText(context),
