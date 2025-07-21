@@ -6,7 +6,7 @@ import 'package:myco_flutter/features/appointments/data/data_source/appointment_
 import 'package:myco_flutter/features/appointments/data/models/request/approve_appointment_entity_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/delete_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/get_appointment_request_model.dart';
-import 'package:myco_flutter/features/appointments/data/models/request/get_my_apppointments_request_model.dart';
+import 'package:myco_flutter/features/appointments/data/models/request/get_my_appointments_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/reject_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/send_appointment_reminder_request_model.dart';
 import 'package:myco_flutter/features/appointments/domain/entities/appointment_entities_model.dart';
