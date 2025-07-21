@@ -16,5 +16,7 @@ abstract class LeaveRemoteDataSource {
   Future<LeaveTypeResponse>getLeaveTypesWithData(String unitId,String useId,String userName,String currentYear,String appliedLeaveDate);
 
   Future<CheckLeaveBalanceResponse>getLeaveBalanceForAutoLeave(String userId,String leaveDate,String leaveId);
+
+  Future<CommonResponseModel>changeAutoLeave(String userId,String paid,String leaveTypeId,String leaveDate,String leaveDay,String extraDay,String isSpecialDay,String attendanceId,String leaveId,String leavePercentage);
   Future<CommonResponseModel> deleteShortLeave(String shortLeaveId,String shortLeaveDate,String otherUserId,String otherUserName);
 }

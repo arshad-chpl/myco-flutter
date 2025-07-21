@@ -65,6 +65,20 @@ class CheckAutoLeaveBalanceFetched extends LeaveState {
   List<Object> get props => [checkLeaveBalanceResponse];
 }
 
+class LeaveRequestDeleted extends LeaveState {
+  final CommonResponse commonResponse;
+  const LeaveRequestDeleted(this.commonResponse);
+  @override
+  List<Object> get props => [commonResponse];
+}
+
+class AutoLeaveChanged extends LeaveState {
+  final CommonResponse commonResponse;
+  const AutoLeaveChanged(this.commonResponse);
+  @override
+  List<Object> get props => [commonResponse];
+}
+
 class LeaveError extends LeaveState {
   final String message;
   const LeaveError(this.message);

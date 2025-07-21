@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:myco_flutter/core/error/failure.dart';
+import 'package:myco_flutter/core/models/data/common_response_model.dart';
 import 'package:myco_flutter/core/models/domain/common_response_entity.dart';
 import 'package:myco_flutter/core/utils/safe_api_call.dart';
 import 'package:myco_flutter/features/leave/data/datasources/leave_remote_data_source.dart';
@@ -85,15 +86,48 @@ class LeaveRepositoryImpl implements LeaveRepository {
   );
 
   @override
-  Future<Either<Failure, CheckLeaveBalanceResponse>> getLeaveBalanceForAutoLeave(
-      String userId,
-      String leaveDate,
-      String leaveId,
-      ) async => safeApiCall.execute(
-        () => remoteDataSource.getLeaveBalanceForAutoLeave(
+  Future<Either<Failure, CheckLeaveBalanceResponse>>
+  getLeaveBalanceForAutoLeave(
+    String userId,
+    String leaveDate,
+    String leaveId,
+  ) async => safeApiCall.execute(
+    () => remoteDataSource.getLeaveBalanceForAutoLeave(
       userId,
       leaveDate,
       leaveId,
+    ),
+  );
+
+  @override
+  Future<Either<Failure, CommonResponseModel>> deleteLeaveRequest(
+    String leaveId,
+  ) async =>
+      safeApiCall.execute(() => remoteDataSource.deleteLeaveRequest(leaveId));
+
+  Future<Either<Failure, CommonResponseModel>> changeAutoLeave(
+    String userId,
+    String paid,
+    String leaveTypeId,
+    String leaveDate,
+    String leaveDay,
+    String extraDay,
+    String isSpecialDay,
+    String attendanceId,
+    String leaveId,
+    String leavePercentage,
+  ) async => safeApiCall.execute(
+    () => remoteDataSource.changeAutoLeave(
+      userId,
+      paid,
+      leaveTypeId,
+      leaveDate,
+      leaveDay,
+      extraDay,
+      isSpecialDay,
+      attendanceId,
+      leaveId,
+      leavePercentage,
     ),
   );
 }

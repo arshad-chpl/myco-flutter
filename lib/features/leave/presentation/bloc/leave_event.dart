@@ -52,4 +52,23 @@ class CheckAutoLeaveBalance extends LeaveEvent{
   const CheckAutoLeaveBalance(this.userId, this.leaveDate, this.leaveId);
 }
 
+class DeleteLeaveRequest extends LeaveEvent{
+  final String leaveId;
+  const DeleteLeaveRequest(this.leaveId);
+}
+
+class ChangeAutoLeave extends LeaveEvent{
+  final String userId;
+  final String paid;
+  final String leaveTypeId;
+  final String leaveDate;
+  final String leaveDay;
+  final String extraDay;
+  final String isSpecialDay;
+  final String attendanceId;
+  final String leaveId;
+  final String leavePercentage;
+  const ChangeAutoLeave(this.userId, this.paid, this.leaveTypeId, this.leaveDate, this.leaveDay, this.extraDay, this.isSpecialDay, this.attendanceId, this.leaveId, this.leavePercentage);
+}
+
 class InitialView extends LeaveEvent {}

@@ -30,4 +30,32 @@ class LeaveUseCase{
       String leaveId,
       ) => repository.getLeaveBalanceForAutoLeave(userId, leaveDate, leaveId);
 
+  Future<Either<Failure, CommonResponse>> deleteLeaveRequest(String leaveId)=> repository.deleteLeaveRequest(leaveId);
+
+  Future<Either<Failure, CommonResponse>> changeAutoLeave(
+    String userId,
+    String paid,
+    String leaveTypeId,
+    String leaveDate,
+    String leaveDay,
+    String extraDay,
+    String isSpecialDay,
+    String attendanceId,
+    String leaveId,
+    String leavePercentage,
+  )=> repository.changeAutoLeave(
+    userId,
+    paid,
+    leaveTypeId,
+    leaveDate,
+    leaveDay,
+    extraDay,
+    isSpecialDay,
+    attendanceId,
+    leaveId,
+    leavePercentage,
+  );
+
+
+
 }

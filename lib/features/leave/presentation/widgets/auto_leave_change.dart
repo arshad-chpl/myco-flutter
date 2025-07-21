@@ -19,7 +19,7 @@ class DialogChangeAutoLeave extends StatefulWidget {
   final bool isUser;
   final bool isUserSandwichLeaveUpdate;
   final bool updateStatus;
-  final Function(LeaveSubmitData) onSubmit;
+  final onSubmit;
   final VoidCallback onClose;
   final LeaveBloc leaveBloc;
 
@@ -54,11 +54,33 @@ class LeaveSubmitData {
   });
 }
 
+class EditSandwichLeaveData {
+  final String leaveName;
+  final String leaveId;
+  final bool isPaidUnpaid;
+  final String useFullName;
+  final String unitId;
+  final String sandwichId;
+  final String userId;
+  final double leavePercentage;
+
+  EditSandwichLeaveData({
+    required this.leaveName,
+    required this.leaveId,
+    required this.isPaidUnpaid,
+    required this.useFullName,
+    required this.unitId,
+    required this.sandwichId,
+    required this.userId,
+    required this.leavePercentage,
+  });
+}
+
 class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
   late LeaveHistoryEntity leaveHistory;
   bool isLoading = true;
   bool showLeaveBalance = false;
-  bool showLeaveBalanceData = false;
+  bool showCommOffLeaveBalanceData = false;
   bool showAllUiData = false;
   bool isPaidLeave = false;
   bool isDecimalConditionTrue = false;
@@ -162,7 +184,6 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
 
   void _onLeaveTypeSelected(String selectedValue) {
     final index = leaveTypeNames.indexOf(selectedValue);
-    bool isDateValid = true; // Flag to track date validation
 
     if (index != -1 && index != selectedLeaveTypePosition) {
       setState(() {
@@ -190,7 +211,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                 final selectedMyBirthDayMonth = dateMyBirthDay[1];
                 final selectedMyBirthDayDay = dateMyBirthDay[2];
                 myFinalSelectedBirthDate =
-                '$selectedMyBirthDayDay-$selectedMyBirthDayMonth';
+                    '$selectedMyBirthDayDay-$selectedMyBirthDayMonth';
               }
             }
             if (anniversaryDate != null && anniversaryDate.trim().isNotEmpty) {
@@ -199,7 +220,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                 final selectedAnniversaryMonth = dateMyAnniversary[1];
                 final selectedAnniversaryDay = dateMyAnniversary[2];
                 myFinalSelectedAnniversaryDate =
-                '$selectedAnniversaryDay-$selectedAnniversaryMonth';
+                    '$selectedAnniversaryDay-$selectedAnniversaryMonth';
               }
             }
 
@@ -210,14 +231,11 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                 if (index > 0) {
                   showAllUiData = false;
                   showLeaveBalance = false;
-                  showLeaveBalanceData = false;
                   _getLeaveBalanceForAutoLeave(isSpecialLeave);
                 }
               } else {
-                isDateValid = false; // Mark date as invalid
                 showAllUiData = false;
                 showLeaveBalance = false;
-                showLeaveBalanceData = false;
                 Fluttertoast.showToast(
                   msg: 'please select correct $leaveName',
                   toastLength: Toast.LENGTH_SHORT,
@@ -231,18 +249,10 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
           }
         } else {
           if (index > 0) {
+            showAllUiData = false;
+            showLeaveBalance = false;
             _getLeaveBalanceForAutoLeave(isSpecialLeave);
           }
-        }
-
-        // Only set showAllUiData to true if the date is valid
-        if (index == 0) {
-          showAllUiData = false;
-          showLeaveBalance = false;
-          showLeaveBalanceData = false;
-        } else if (isDateValid) {
-          showAllUiData = true;
-          showLeaveBalance = true;
         }
       });
     }
@@ -276,18 +286,17 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
         applicableLeaveMonth =
             double.tryParse(response.leave?.availablePaidLeave ?? '0') ?? 0;
         applicableLeaveMonthGlobal = applicableLeaveMonth;
+        showLeaveBalance = true;
 
         _setLeaveDayType();
         _setDataPaidUnpaidFilterNew();
 
         if (isSpecialLeave == '1' && applicableLeaveMonth == 0) {
           showLeaveBalance = false;
-          showLeaveBalanceData = true;
+          showCommOffLeaveBalanceData = true;
           showAllUiData = false;
         } else {
-          showLeaveBalance = true;
-          showLeaveBalanceData = false;
-          showAllUiData = true;
+          showCommOffLeaveBalanceData = false;
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -589,21 +598,34 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
   void _onSubmit() {
     if (widget.isUserSandwichLeaveUpdate) {
       if (selectedLeaveTypePosition == 0) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select leave type')),
+        Fluttertoast.showToast(
+          msg: 'Please select leave type',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.black54,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       } else {
         if (applicableLeaveMonth < 1) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Paid leave is not available')),
+          Fluttertoast.showToast(
+            msg: 'Paid leave is not available',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.black54,
+            textColor: Colors.white,
+            fontSize: 16.0,
           );
         } else {
           widget.onSubmit(
-            LeaveSubmitData(
-              leaveTypeId: leaveId ?? '',
-              isPaidLeave: isPaidLeave,
-              leaveDayTypeStatus: leaveHistory.leaveDayTypeStatus ?? '0',
-              isSpecialLeave: isSpecialLeave,
+            EditSandwichLeaveData(
+              leaveName: leaveName ?? '',
+              leaveId: leaveId ?? '',
+              isPaidUnpaid: isPaidLeave,
+              useFullName: leaveHistory.userFullName ?? '',
+              unitId: leaveHistory.unitId ?? '',
+              sandwichId: leaveHistory.sandwichLeaveId ?? '',
+              userId: leaveHistory.userId ?? '',
               leavePercentage: leavePercentage.toDouble(),
             ),
           );
@@ -612,18 +634,31 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
       }
     } else {
       if (selectedLeaveTypePosition == 0) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select leave type')),
+        Fluttertoast.showToast(
+          msg: 'Please select leave type',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.black54,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       } else if (_paidUnpaidController.text.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select paid/unpaid')),
+        Fluttertoast.showToast(
+          msg: 'Please select paid/unpaid',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.black54,
         );
       } else if (applicableLeaveMonth == 0.5 &&
           leaveHistory.leaveDayTypeStatus == '0' &&
           _paidUnpaidController.text == 'Paid') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please change to half day leave')),
+        Fluttertoast.showToast(
+          msg: 'Please change to half day leave',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.black54,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       } else {
         widget.onSubmit(
@@ -675,7 +710,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                leaveHistory.leaveDateView ?? 'N/A',
+                leaveHistory.leaveDate ?? 'N/A',
                 style: TextStyle(
                   fontSize: width * 0.045,
                   fontWeight: FontWeight.bold,
@@ -874,7 +909,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                 ),
                 SizedBox(height: height * 0.025),
               ],
-              if (showLeaveBalanceData) ...[
+              if (showCommOffLeaveBalanceData) ...[
                 Text(
                   'Your not eligible for Comp-Off leave because your available leave balance for it is leave 0',
                   style: TextStyle(
