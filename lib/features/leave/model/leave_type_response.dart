@@ -1,33 +1,36 @@
-import 'dart:convert';
-
-LeaveTypeResponse leaveTypeResponseFromJson(String str) => LeaveTypeResponse.fromJson(json.decode(str));
-
-String leaveTypeResponseToJson(LeaveTypeResponse data) => json.encode(data.toJson());
+import 'package:myco_flutter/features/leave/domain/entities/leave_type_response_entity.dart';
 
 class LeaveTypeResponse {
   List<LeaveType>? leaveTypes;
   String? message;
   String? status;
 
-  LeaveTypeResponse({
-    this.leaveTypes,
-    this.message,
-    this.status,
-  });
+  LeaveTypeResponse({this.leaveTypes, this.message, this.status});
 
-  factory LeaveTypeResponse.fromJson(Map<String, dynamic> json) => LeaveTypeResponse(
-    leaveTypes: json['leave_types'] == null
-        ? []
-        : List<LeaveType>.from(json['leave_types']!.map((x) => LeaveType.fromJson(x))),
-    message: json['message'],
-    status: json['status'],
-  );
+  factory LeaveTypeResponse.fromJson(Map<String, dynamic> json) =>
+      LeaveTypeResponse(
+        leaveTypes: json['leave_types'] == null
+            ? []
+            : List<LeaveType>.from(
+                json['leave_types']!.map((x) => LeaveType.fromJson(x)),
+              ),
+        message: json['message'],
+        status: json['status'],
+      );
 
   Map<String, dynamic> toJson() => {
-    'leave_types': leaveTypes == null ? [] : List<dynamic>.from(leaveTypes!.map((x) => x.toJson())),
+    'leave_types': leaveTypes == null
+        ? []
+        : List<dynamic>.from(leaveTypes!.map((x) => x.toJson())),
     'message': message,
     'status': status,
   };
+
+  LeaveTypeResponseEntity toEntity() => LeaveTypeResponseEntity(
+    leaveTypes: leaveTypes?.map((e) => e.toEntity()).toList(),
+    message: message,
+    status: status,
+  );
 }
 
 class LeaveType {
@@ -76,7 +79,8 @@ class LeaveType {
     maxPastDateAllowed: json['max_past_date_allowed'],
     leaveApplyOnDate: json['leave_apply_on_date'],
     leaveAppliedOnPastDays: json['leave_applied_on_past_days'],
-    userSelectedLeaveCount: json['user_selected_leave_count']?.toDouble() ?? 0.0,
+    userSelectedLeaveCount:
+        json['user_selected_leave_count']?.toDouble() ?? 0.0,
     asUnPaidLeave: json['as_un_paid_leave'] ?? false,
   );
 
@@ -96,4 +100,21 @@ class LeaveType {
     'user_selected_leave_count': userSelectedLeaveCount,
     'as_un_paid_leave': asUnPaidLeave,
   };
+
+  LeaveTypeEntity toEntity() => LeaveTypeEntity(
+    leaveTypeId: leaveTypeId,
+    leaveTypeName: leaveTypeName,
+    userTotalLeave: userTotalLeave,
+    isAttachmentRequired: isAttachmentRequired,
+    userTotalUsedLeave: userTotalUsedLeave,
+    remainingLeave: remainingLeave,
+    applicableLeavesInMonth: applicableLeavesInMonth,
+    specialLeave: specialLeave,
+    pastDaysLeaveAppliedDays: pastDaysLeaveAppliedDays,
+    maxPastDateAllowed: maxPastDateAllowed,
+    leaveApplyOnDate: leaveApplyOnDate,
+    leaveAppliedOnPastDays: leaveAppliedOnPastDays,
+    userSelectedLeaveCount: userSelectedLeaveCount,
+    asUnPaidLeave: asUnPaidLeave,
+  );
 }

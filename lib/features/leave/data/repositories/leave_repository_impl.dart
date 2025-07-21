@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:myco_flutter/core/error/failure.dart';
-import 'package:myco_flutter/core/models/common_response.dart';
+import 'package:myco_flutter/core/models/domain/common_response_entity.dart';
 import 'package:myco_flutter/core/utils/safe_api_call.dart';
 import 'package:myco_flutter/features/leave/data/datasources/leave_remote_data_source.dart';
+import 'package:myco_flutter/features/leave/domain/entities'
+    '/leave_history_response_entity.dart';
+import 'package:myco_flutter/features/leave/domain/entities/leave_type_response_entity.dart';
 import 'package:myco_flutter/features/leave/domain/repositories/leave_repository.dart';
 import 'package:myco_flutter/features/leave/model/check_leave_balance_response.dart';
-import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
-import 'package:myco_flutter/features/leave/model/leave_type_response.dart';
 import 'package:myco_flutter/features/leave/model/my_team_response_model.dart';
 
 class LeaveRepositoryImpl implements LeaveRepository {
@@ -16,63 +17,86 @@ class LeaveRepositoryImpl implements LeaveRepository {
   LeaveRepositoryImpl(this.remoteDataSource, this.safeApiCall);
 
   @override
-  Future<Either<Failure, LeaveHistoryResponseModel>> getNewListType(
+  Future<Either<Failure, LeaveHistoryResponseEntity>> getNewListType(
     String query,
-  ) async =>
-      safeApiCall.execute(() => remoteDataSource.getNewLeaveListType(query));
+  ) async => safeApiCall.execute(() async {
+    // Await the response from the data source
+    final responseModel = await remoteDataSource.getNewLeaveListType(query);
+    // Convert the Model to an Entity before returning
+    return responseModel.toEntity();
+  });
 
   @override
   Future<Either<Failure, MyTeamResponseModel>> getMyTeamLeaves() async =>
       safeApiCall.execute(remoteDataSource.getMyTeamLeaves);
 
   @override
-  Future<Either<Failure, LeaveHistoryResponseModel>> getLeaveHistoryNew(
+  Future<Either<Failure, LeaveHistoryResponseEntity>> getLeaveHistoryNew(
     String monthName,
     String year,
-  ) async => safeApiCall.execute(
-    () => remoteDataSource.getLeaveHistoryNew(monthName, year),
-  );
+  ) async => safeApiCall.execute(() async {
+    // Await the response from the data source
+    final responseModel = await remoteDataSource.getLeaveHistoryNew(
+      monthName,
+      year,
+    );
+    // Convert the Model to an Entity before returning
+    return responseModel.toEntity();
+  });
 
   @override
-  Future<Either<Failure, CommonResponse>> addShortLeave(
+  Future<Either<Failure, CommonResponseModelEntity>> addShortLeave(
     String date,
     String time,
     String reason,
-  ) async => safeApiCall.execute(
-    () => remoteDataSource.addShortLeave(date, time, reason),
-  );
+  ) async => safeApiCall.execute(() async {
+    // Await the response from the data source
+    final responseModel = await remoteDataSource.addShortLeave(
+      date,
+      time,
+      reason,
+    );
+    // Convert the Model to an Entity before returning
+    return responseModel.toEntity();
+  });
 
   @override
-  Future<Either<Failure, CommonResponse>> deleteShortLeave(
+  Future<Either<Failure, CommonResponseModelEntity>> deleteShortLeave(
     String shortLeaveId,
     String shortLeaveDate,
     String otherUserId,
     String otherUserName,
-  ) async => safeApiCall.execute(
-    () => remoteDataSource.deleteShortLeave(
+  ) async => safeApiCall.execute(() async {
+    // Await the response from the data source
+    final responseModel = await remoteDataSource.deleteShortLeave(
       shortLeaveId,
       shortLeaveDate,
       otherUserId,
       otherUserName,
-    ),
-  );
+    );
+    // Convert the Model to an Entity before returning
+    return responseModel.toEntity();
+  });
 
   @override
-  Future<Either<Failure, LeaveTypeResponse>> getLeaveTypesWithData(
+  Future<Either<Failure, LeaveTypeResponseEntity>> getLeaveTypesWithData(
     String unitId,
     String useId,
     String userName,
     String currentYear,
     String appliedLeaveDate,
-  ) async => safeApiCall.execute(
-    () => remoteDataSource.getLeaveTypesWithData(
+  ) async => safeApiCall.execute(() async {
+    // Await the response from the data source
+    final responseModel = await remoteDataSource.getLeaveTypesWithData(
       unitId,
       useId,
       userName,
       currentYear,
       appliedLeaveDate,
-    ),
-  );
+    );
+    // Convert the Model to an Entity before returning
+    return responseModel.toEntity();
+  });
 
   @override
   Future<Either<Failure, CheckLeaveBalanceResponse>>
@@ -89,13 +113,17 @@ class LeaveRepositoryImpl implements LeaveRepository {
   );
 
   @override
-  Future<Either<Failure, CommonResponse>> deleteLeaveRequest(
+  Future<Either<Failure, CommonResponseModelEntity>> deleteLeaveRequest(
     String leaveId,
-  ) async =>
-      safeApiCall.execute(() => remoteDataSource.deleteLeaveRequest(leaveId));
+  ) async => safeApiCall.execute(() async {
+    // Await the response from the data source
+    final responseModel = await remoteDataSource.deleteLeaveRequest(leaveId);
+    // Convert the Model to an Entity before returning
+    return responseModel.toEntity();
+  });
 
   @override
-  Future<Either<Failure, CommonResponse>> changeAutoLeave(
+  Future<Either<Failure, CommonResponseModelEntity>> changeAutoLeave(
     String userId,
     String paid,
     String leaveTypeId,
@@ -106,8 +134,9 @@ class LeaveRepositoryImpl implements LeaveRepository {
     String attendanceId,
     String leaveId,
     String leavePercentage,
-  ) async => safeApiCall.execute(
-    () => remoteDataSource.changeAutoLeave(
+  ) async => safeApiCall.execute(() async {
+    // Await the response from the data source
+    final responseModel = await remoteDataSource.changeAutoLeave(
       userId,
       paid,
       leaveTypeId,
@@ -118,11 +147,13 @@ class LeaveRepositoryImpl implements LeaveRepository {
       attendanceId,
       leaveId,
       leavePercentage,
-    ),
-  );
+    );
+    // Convert the Model to an Entity before returning
+    return responseModel.toEntity();
+  });
 
   @override
-  Future<Either<Failure, CommonResponse>> changeSandwichLeave(
+  Future<Either<Failure, CommonResponseModelEntity>> changeSandwichLeave(
     String userId,
     String paid,
     String leaveId,
@@ -131,8 +162,9 @@ class LeaveRepositoryImpl implements LeaveRepository {
     String unitId,
     String userFullName,
     String leavePercentage,
-  ) async => safeApiCall.execute(
-    () => remoteDataSource.changeSandwichLeave(
+  ) async => safeApiCall.execute(() async {
+    // Await the response from the data source
+    final responseModel = await remoteDataSource.changeSandwichLeave(
       userId,
       paid,
       leaveId,
@@ -141,6 +173,8 @@ class LeaveRepositoryImpl implements LeaveRepository {
       unitId,
       userFullName,
       leavePercentage,
-    ),
-  );
+    );
+    // Convert the Model to an Entity before returning
+    return responseModel.toEntity();
+  });
 }

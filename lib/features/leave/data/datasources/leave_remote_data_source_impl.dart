@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/constants.dart';
-import 'package:myco_flutter/core/models/common_response.dart';
+import 'package:myco_flutter/core/models/data/common_response_model.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/leave/data/datasources/leave_remote_data_source.dart';
 import 'package:myco_flutter/features/leave/model/check_leave_balance_response.dart';
@@ -73,7 +73,7 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
   }
 
   @override
-  Future<CommonResponse> addShortLeave(
+  Future<CommonResponseModel> addShortLeave(
     String date,
     String time,
     String reason,
@@ -92,11 +92,11 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.residentApiNew,
     ).postFormDynamic('leave_controller.php', dataMap);
-    return CommonResponse.fromJson(json.decode(response));
+    return CommonResponseModel.fromJson(json.decode(response));
   }
 
   @override
-  Future<CommonResponse> deleteShortLeave(
+  Future<CommonResponseModel> deleteShortLeave(
     String shortLeaveId,
     String shortLeaveDate,
     String otherUserId,
@@ -117,7 +117,7 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.residentApiNew,
     ).postFormDynamic('leave_controller.php', dataMap);
-    return CommonResponse.fromJson(json.decode(response));
+    return CommonResponseModel.fromJson(json.decode(response));
   }
 
   @override
@@ -166,7 +166,7 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
   }
 
   @override
-  Future<CommonResponse> deleteLeaveRequest(String leaveId) async {
+  Future<CommonResponseModel> deleteLeaveRequest(String leaveId) async {
     final dataMap = {
       'deleteLeaveRequest': 'deleteLeaveRequest',
       'society_id': '1',
@@ -184,11 +184,11 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.residentApiNew,
     ).postFormDynamic('leave_controller.php', dataMap);
-    return CommonResponse.fromJson(json.decode(response));
+    return CommonResponseModel.fromJson(json.decode(response));
   }
 
   @override
-  Future<CommonResponse> changeAutoLeave(
+  Future<CommonResponseModel> changeAutoLeave(
     String userId,
     String paid,
     String leaveTypeId,
@@ -220,11 +220,11 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.residentApiNew,
     ).postFormDynamic('leave_controller.php', dataMap);
-    return CommonResponse.fromJson(json.decode(response));
+    return CommonResponseModel.fromJson(json.decode(response));
   }
 
   @override
-  Future<CommonResponse> changeSandwichLeave(
+  Future<CommonResponseModel> changeSandwichLeave(
     String userId,
     String paid,
     String leaveTypeId,
@@ -254,6 +254,6 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.residentApiNew,
     ).postFormDynamic('leave_controller.php', dataMap);
-    return CommonResponse.fromJson(json.decode(response));
+    return CommonResponseModel.fromJson(json.decode(response));
   }
 }

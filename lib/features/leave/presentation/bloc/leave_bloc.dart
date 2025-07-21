@@ -47,7 +47,7 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
         );
         results.fold(
           (failure) => emit(LeaveError(failure.message)),
-          (model) => emit(LeaveHistoryNewFetched(model.toEntity())),
+          (model) => emit(LeaveHistoryNewFetched(model)),
         );
       } catch (e) {
         emit(LeaveError('Failed to load leave history: $e'));

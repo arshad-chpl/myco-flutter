@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
+import 'package:myco_flutter/features/leave/domain/entities'
+    '/leave_history_response_entity.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -15,7 +16,6 @@ class SandwichLeaveEntry {
   final String? prevLeaveDate;
   final LeaveHistoryEntity leaveEntity;
 
-
   SandwichLeaveEntry({
     required this.date,
     required this.subType,
@@ -25,7 +25,6 @@ class SandwichLeaveEntry {
     this.nextLeaveDate,
     this.prevLeaveDate,
     required this.leaveEntity,
-
   });
 }
 
@@ -33,11 +32,7 @@ class SandwichLeaveCard extends StatelessWidget {
   final SandwichLeaveEntry leave;
   final Function({required LeaveHistoryEntity leave})? onEdit;
 
-  const SandwichLeaveCard({
-    required this.leave,
-    this.onEdit,
-    super.key,
-  });
+  const SandwichLeaveCard({required this.leave, this.onEdit, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,17 +52,18 @@ class SandwichLeaveCard extends StatelessWidget {
             showHeaderPrefixIcon: true,
             suffixIcon: !leave.isSalaryGenerated
                 ? IconButton(
-                onPressed: () {
-                  onEdit!(leave: leave.leaveEntity);
-                },
-              icon: Icon(
-                Icons.edit_outlined,
-                size: 0.022 * Responsive.getHeight(context),
-                color: AppColors.white,
-              ),
-            )
+                    onPressed: () {
+                      onEdit!(leave: leave.leaveEntity);
+                    },
+                    icon: Icon(
+                      Icons.edit_outlined,
+                      size: 0.022 * Responsive.getHeight(context),
+                      color: AppColors.white,
+                    ),
+                  )
                 : null,
-            title: leave.prevLeaveDate ?? leave.date, // Show prevLeaveDate if available
+            title: leave.prevLeaveDate ?? leave.date,
+            // Show prevLeaveDate if available
             headerColor: AppColors.secondary,
             bottomWidget: Padding(
               padding: EdgeInsets.all(10 * responsive),
@@ -78,7 +74,8 @@ class SandwichLeaveCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildBadge(leave.subType, Colors.blue),
-                      if (leave.nextLeaveDate != null && leave.nextLeaveDate!.isNotEmpty)
+                      if (leave.nextLeaveDate != null &&
+                          leave.nextLeaveDate!.isNotEmpty)
                         CustomText(
                           ' - ${leave.nextLeaveDate}',
                           fontSize: 12 * textResponsive,
@@ -99,9 +96,8 @@ class SandwichLeaveCard extends StatelessWidget {
                   // Status
                   CustomText(
                     leave.status,
-                      color: AppColors.secondary,
-                      fontSize: 13 * textResponsive,
-
+                    color: AppColors.secondary,
+                    fontSize: 13 * textResponsive,
                   ),
                 ],
               ),

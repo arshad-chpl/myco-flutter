@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
+import 'package:myco_flutter/features/leave/domain/entities'
+    '/leave_history_response_entity.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 

@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
+import 'package:myco_flutter/features/leave/domain/entities'
+    '/leave_history_response_entity.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
@@ -311,42 +312,57 @@ class _LeaveScreenState extends State<LeaveScreen> {
                                     maxChildSize: 0.8,
                                     builder:
                                         (
-                                        bottomSheetContext,
-                                        scrollController,
+                                          bottomSheetContext,
+                                          scrollController,
                                         ) => BlocProvider.value(
-                                      value: leaveBloc,
-                                      // Use the stored bloc instance
-                                      child: SingleChildScrollView(
-                                        controller: scrollController,
-                                        child: SafeArea(
-                                          child: DialogChangeAutoLeave(
-                                            isUser: false,
-                                            isUserSandwichLeaveUpdate: true,
-                                            updateStatus: true,
-                                            leaveBloc: leaveBloc,
-                                            leaveHistory: leave,
-                                            onSubmit: (EditSandwichLeaveData) {
-                                              final String paid='0';
-                                              _changeSandwichLeave(
-                                                EditSandwichLeaveData.userId ?? '',
-                                                paid,
-                                                EditSandwichLeaveData.leaveId ?? '',
-                                                EditSandwichLeaveData.leaveName ?? '',
-                                                EditSandwichLeaveData.sandwichId,
-                                                EditSandwichLeaveData.unitId ?? '',
-                                                EditSandwichLeaveData.userFullName ?? '',
-                                                EditSandwichLeaveData.leavePercentage.toString(),
-
-                                              );
-                                              Navigator.of(context).pop();
-                                            },
-                                            onClose: () {
-                                              Navigator.pop(context);
-                                            },
+                                          value: leaveBloc,
+                                          // Use the stored bloc instance
+                                          child: SingleChildScrollView(
+                                            controller: scrollController,
+                                            child: SafeArea(
+                                              child: DialogChangeAutoLeave(
+                                                isUser: false,
+                                                isUserSandwichLeaveUpdate: true,
+                                                updateStatus: true,
+                                                leaveBloc: leaveBloc,
+                                                leaveHistory: leave,
+                                                onSubmit:
+                                                    (EditSandwichLeaveData) {
+                                                      final String paid = '0';
+                                                      _changeSandwichLeave(
+                                                        EditSandwichLeaveData
+                                                                .userId ??
+                                                            '',
+                                                        paid,
+                                                        EditSandwichLeaveData
+                                                                .leaveId ??
+                                                            '',
+                                                        EditSandwichLeaveData
+                                                                .leaveName ??
+                                                            '',
+                                                        EditSandwichLeaveData
+                                                            .sandwichId,
+                                                        EditSandwichLeaveData
+                                                                .unitId ??
+                                                            '',
+                                                        EditSandwichLeaveData
+                                                                .userFullName ??
+                                                            '',
+                                                        EditSandwichLeaveData
+                                                            .leavePercentage
+                                                            .toString(),
+                                                      );
+                                                      Navigator.of(
+                                                        context,
+                                                      ).pop();
+                                                    },
+                                                onClose: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ),
                                   ),
                                 ),
                               );

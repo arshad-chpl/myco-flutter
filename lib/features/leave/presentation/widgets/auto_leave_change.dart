@@ -4,9 +4,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
+import 'package:myco_flutter/features/leave/domain/entities'
+    '/leave_history_response_entity.dart';
+import 'package:myco_flutter/features/leave/domain/entities/leave_type_response_entity.dart';
 import 'package:myco_flutter/features/leave/model/check_leave_balance_response.dart';
-import 'package:myco_flutter/features/leave/model/leave_type_response.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
@@ -76,7 +77,6 @@ class EditSandwichLeaveData {
   });
 }
 
-
 class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
   late LeaveHistoryEntity leaveHistory;
   bool isLoading = true;
@@ -123,7 +123,8 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
     super.initState();
     leaveHistory = widget.leaveHistory;
     tempLeaveDayTypeSelected = leaveHistory.leaveDayTypeStatus ?? '0';
-    leavePercentage = double.tryParse(leaveHistory.leavePercentage ?? '100')?.toInt() ?? 100;
+    leavePercentage =
+        double.tryParse(leaveHistory.leavePercentage ?? '100')?.toInt() ?? 100;
 
     if (leaveHistory.isExtraDay == '1') {
       showLeaveCountData = true;
@@ -137,14 +138,17 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
       _fetchLeaveTypesWithData();
     }
 
-
     if (widget.isUser) {
       showShiftHours = false;
       showWorkingHours = false;
       showLeaveDayTypeSpinner = false;
     } else {
-      showShiftHours = leaveHistory.totalShiftHours != null && leaveHistory.totalShiftHours!.isNotEmpty;
-      showWorkingHours = leaveHistory.totalWorkingHours != null && leaveHistory.totalWorkingHours!.isNotEmpty;
+      showShiftHours =
+          leaveHistory.totalShiftHours != null &&
+          leaveHistory.totalShiftHours!.isNotEmpty;
+      showWorkingHours =
+          leaveHistory.totalWorkingHours != null &&
+          leaveHistory.totalWorkingHours!.isNotEmpty;
     }
 
     if (widget.isUserSandwichLeaveUpdate) {
@@ -154,8 +158,6 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
       showWorkingHours = false;
       showLeaveDayTypeSpinner = false;
     }
-
-
   }
 
   void _fetchLeaveTypesWithData() {
@@ -170,7 +172,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
     );
   }
 
-  void _setLeaveTypes(LeaveTypeResponse response) {
+  void _setLeaveTypes(LeaveTypeResponseEntity response) {
     if (response.leaveTypes == null || response.leaveTypes!.isEmpty) {
       setState(() {
         isLoading = false;
@@ -233,8 +235,10 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
             String myFinalSelectedBirthDate = '';
             String myFinalSelectedAnniversaryDate = '';
 
-            final String birthdayDate = '2025-03-13'; // Replace with actual birthday from preferences
-            final String anniversaryDate = '2024-04-01'; // Replace with actual anniversary from preferences
+            final String birthdayDate =
+                '2025-03-13'; // Replace with actual birthday from preferences
+            final String anniversaryDate =
+                '2024-04-01'; // Replace with actual anniversary from preferences
 
             if (birthdayDate != null && birthdayDate.trim().isNotEmpty) {
               final dateMyBirthDay = birthdayDate.split('-');
@@ -242,7 +246,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                 final selectedMyBirthDayMonth = dateMyBirthDay[1];
                 final selectedMyBirthDayDay = dateMyBirthDay[2];
                 myFinalSelectedBirthDate =
-                '$selectedMyBirthDayDay-$selectedMyBirthDayMonth';
+                    '$selectedMyBirthDayDay-$selectedMyBirthDayMonth';
               }
             }
             if (anniversaryDate != null && anniversaryDate.trim().isNotEmpty) {
@@ -251,7 +255,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                 final selectedAnniversaryMonth = dateMyAnniversary[1];
                 final selectedAnniversaryDay = dateMyAnniversary[2];
                 myFinalSelectedAnniversaryDate =
-                '$selectedAnniversaryDay-$selectedAnniversaryMonth';
+                    '$selectedAnniversaryDay-$selectedAnniversaryMonth';
               }
             }
 
@@ -689,7 +693,8 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
-      } else if (_paidUnpaidController.text.isEmpty || _paidUnpaidController.text == 'Select') {
+      } else if (_paidUnpaidController.text.isEmpty ||
+          _paidUnpaidController.text == 'Select') {
         Fluttertoast.showToast(
           msg: 'Please select paid/unpaid',
           toastLength: Toast.LENGTH_SHORT,
@@ -737,7 +742,9 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
         } else if (state is CheckAutoLeaveBalanceFetched) {
           _onLeaveBalanceFetched(state.checkLeaveBalanceResponse);
         } else if (state is LeaveError) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
           setState(() {
             isLoading = false;
             showLeaveCountData = false;
@@ -801,10 +808,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
               if (showNoLeaveMessage)
                 Text(
                   'Leave not assigned',
-                  style: TextStyle(
-                    fontSize: width * 0.035,
-                    color: Colors.red,
-                  ),
+                  style: TextStyle(fontSize: width * 0.035, color: Colors.red),
                 ),
 
               // Show "Select Leave Type" field if visible
@@ -828,53 +832,50 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                 isLoading
                     ? const Center(child: CircularProgressIndicator())
                     : MyCoTextfield(
-                  isReadOnly: true,
-                  validator: (value) =>
-                  value == null || value.isEmpty || value == 'Select'
-                      ? 'Please select a type of leave'
-                      : null,
-                  controller: _leaveTypeController,
-                  hintText: 'Select',
-                  hintTextStyle: TextStyle(
-                    fontSize: 18 * Responsive.getResponsiveText(context),
-                    color: AppTheme.getColor(context).outline,
-                  ),
-                  image1: 'assets/images/arrow-down.png',
-                  onClick: () {
-                    if (leaveTypeNames.isNotEmpty) {
-                      showLeaveFilterBottomSheet(
-                        context,
-                        _leaveTypeController.text,
-                            (selectedValue) {
-                          _leaveTypeController.text = selectedValue;
-                          _onLeaveTypeSelected(selectedValue);
+                        isReadOnly: true,
+                        validator: (value) =>
+                            value == null || value.isEmpty || value == 'Select'
+                            ? 'Please select a type of leave'
+                            : null,
+                        controller: _leaveTypeController,
+                        hintText: 'Select',
+                        hintTextStyle: TextStyle(
+                          fontSize: 18 * Responsive.getResponsiveText(context),
+                          color: AppTheme.getColor(context).outline,
+                        ),
+                        image1: 'assets/images/arrow-down.png',
+                        onClick: () {
+                          if (leaveTypeNames.isNotEmpty) {
+                            showLeaveFilterBottomSheet(
+                              context,
+                              _leaveTypeController.text,
+                              (selectedValue) {
+                                _leaveTypeController.text = selectedValue;
+                                _onLeaveTypeSelected(selectedValue);
+                              },
+                              leaveTypeNames,
+                            );
+                          }
                         },
-                        leaveTypeNames,
-                      );
-                    }
-                  },
-                  preFixImage: 'assets/images/note-favorite.png',
-                  suffix: Icon(
-                    Icons.keyboard_arrow_down_sharp,
-                    color: AppTheme.getColor(context).primary,
-                    size: 30 * Responsive.getResponsive(context),
-                  ),
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    borderSide: BorderSide(color: Color(0xFF98A2B3)),
-                  ),
-                  textAlignment: TextAlign.start,
-                ),
+                        preFixImage: 'assets/images/note-favorite.png',
+                        suffix: Icon(
+                          Icons.keyboard_arrow_down_sharp,
+                          color: AppTheme.getColor(context).primary,
+                          size: 30 * Responsive.getResponsive(context),
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(color: Color(0xFF98A2B3)),
+                        ),
+                        textAlignment: TextAlign.start,
+                      ),
               SizedBox(height: height * 0.025),
 
               // Show "No comp-off leave balance available" message if visible
               if (showSalaryGeneratedMessage)
                 Text(
                   'No comp-off leave balance available',
-                  style: TextStyle(
-                    fontSize: width * 0.035,
-                    color: Colors.red,
-                  ),
+                  style: TextStyle(fontSize: width * 0.035, color: Colors.red),
                 ),
 
               // Show leave count data if visible
@@ -917,7 +918,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                         showLeaveFilterBottomSheet(
                           context,
                           _leaveDayTypeController.text,
-                              (selectedValue) {
+                          (selectedValue) {
                             _onLeaveDayTypeSelected(selectedValue);
                           },
                           leaveDayTypes,
@@ -941,51 +942,52 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
 
                 // Paid or Unpaid
                 if (showPaidUnpaidSpinner) ...[
-                Text(
-                  'Paid or Unpaid',
-                  style: TextStyle(
-                    fontSize: width * 0.038,
-                    fontWeight: FontWeight.w600,
+                  Text(
+                    'Paid or Unpaid',
+                    style: TextStyle(
+                      fontSize: width * 0.038,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                SizedBox(height: height * 0.008),
-                MyCoTextfield(
-                  isReadOnly: true,
-                  validator: (value) => value == null || value.isEmpty || value == 'Select'
-                      ? 'Please select paid/unpaid'
-                      : null,
-                  controller: _paidUnpaidController,
-                  hintText: 'Select',
-                  hintTextStyle: TextStyle(
-                    fontSize: 18 * Responsive.getResponsiveText(context),
-                    color: AppTheme.getColor(context).outline,
+                  SizedBox(height: height * 0.008),
+                  MyCoTextfield(
+                    isReadOnly: true,
+                    validator: (value) =>
+                        value == null || value.isEmpty || value == 'Select'
+                        ? 'Please select paid/unpaid'
+                        : null,
+                    controller: _paidUnpaidController,
+                    hintText: 'Select',
+                    hintTextStyle: TextStyle(
+                      fontSize: 18 * Responsive.getResponsiveText(context),
+                      color: AppTheme.getColor(context).outline,
+                    ),
+                    image1: 'assets/images/arrow-down.png',
+                    onClick: () {
+                      showLeaveFilterBottomSheet(
+                        context,
+                        _paidUnpaidController.text,
+                        (selectedValue) {
+                          _paidUnpaidController.text = selectedValue;
+                          _onPaidUnpaidSelected(selectedValue);
+                        },
+                        paidUnpaidOptions,
+                      );
+                    },
+                    preFixImage: 'assets/images/note-favorite.png',
+                    suffix: Icon(
+                      Icons.keyboard_arrow_down_sharp,
+                      color: AppTheme.getColor(context).primary,
+                      size: 30 * Responsive.getResponsive(context),
+                    ),
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(color: Color(0xFF98A2B3)),
+                    ),
+                    textAlignment: TextAlign.start,
                   ),
-                  image1: 'assets/images/arrow-down.png',
-                  onClick: () {
-                    showLeaveFilterBottomSheet(
-                      context,
-                      _paidUnpaidController.text,
-                          (selectedValue) {
-                        _paidUnpaidController.text = selectedValue;
-                        _onPaidUnpaidSelected(selectedValue);
-                      },
-                      paidUnpaidOptions,
-                    );
-                  },
-                  preFixImage: 'assets/images/note-favorite.png',
-                  suffix: Icon(
-                    Icons.keyboard_arrow_down_sharp,
-                    color: AppTheme.getColor(context).primary,
-                    size: 30 * Responsive.getResponsive(context),
-                  ),
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    borderSide: BorderSide(color: Color(0xFF98A2B3)),
-                  ),
-                  textAlignment: TextAlign.start,
-                ),
-                SizedBox(height: height * 0.025),
-                ]
+                  SizedBox(height: height * 0.025),
+                ],
               ],
 
               // Buttons
