@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/date_selection_row.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_search_bar.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 
 class MyVisitTab extends StatelessWidget {
   final TextEditingController searchController;
@@ -50,9 +50,8 @@ class MyVisitTab extends StatelessWidget {
           SizedBox(height: Responsive.getHeight(context) * 0.010),
 
           // Search Field
-          VisitSearchBar(
+          CustomSearchField(
             controller: searchController,
-            focusNode: searchFocus,
             hintText: 'Search with Customer',
           ),
           SizedBox(height: Responsive.getHeight(context) * 0.010),

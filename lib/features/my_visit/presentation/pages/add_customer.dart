@@ -5,9 +5,9 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/label_with_add_botton.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/phone_field.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_calendar_bottom_sheet.dart';
+import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
@@ -22,7 +22,7 @@ class AddCustomer extends StatefulWidget {
 }
 
 class _AddCustomerState extends State<AddCustomer> {
-  // Dropdown selected values
+  /// Dropdown selected values
   String? selectedCity;
   String? selectedAreaList;
 
@@ -35,7 +35,7 @@ class _AddCustomerState extends State<AddCustomer> {
     'Thaltej',
   ];
 
-  // Country code selections for phone number fields
+  /// Country code selections for phone number fields
   String selectedCountry1 = 'INA';
   String selectedCountry2 = 'INA';
 
@@ -45,7 +45,7 @@ class _AddCustomerState extends State<AddCustomer> {
   final TextEditingController anniversaryController = TextEditingController();
   final TextEditingController birthDateController = TextEditingController();
 
-  // Country code mapping
+  /// Country code mapping
   final Map<String, String> countryMap = {
     'INA': '+62',
     'USA': '+1',
@@ -54,17 +54,7 @@ class _AddCustomerState extends State<AddCustomer> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(
-      leading: BackButton(
-        style: ButtonStyle(
-          iconSize: WidgetStatePropertyAll(0.05 * Responsive.getWidth(context)),
-        ),
-      ),
-      appBarBackgoundColor: AppTheme.getColor(context).surface,
-      elevation: 0,
-      title: 'add_customer',
-      isKey: true,
-    ),
+    appBar: const CustomAppbar(title: 'add_customer', isKey: true),
     body: SingleChildScrollView(
       padding: EdgeInsets.symmetric(
         horizontal: 15.0 * Responsive.getResponsive(context),
@@ -74,28 +64,28 @@ class _AddCustomerState extends State<AddCustomer> {
         spacing: 16 * Responsive.getResponsive(context),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Customer Company Name
+          /// Customer Company Name
           CommonTextField(
             'Customer Company Name',
             LanguageManager().get('type_here'),
             AppAssets.building,
           ),
 
-          // Customer Category
+          /// Customer Category
           CommonTextField(
             'customer_category',
             LanguageManager().get('select_category'),
             AppAssets.element,
           ),
 
-          // Contact Person Name
+          /// Contact Person Name
           CommonTextField(
             'contact_person_name',
             LanguageManager().get('type_here'),
             AppAssets.profileCircle,
           ),
 
-          // Contact Person Mobile Number field with country code
+          /// Contact Person Mobile Number field with country code
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -106,30 +96,31 @@ class _AddCustomerState extends State<AddCustomer> {
                 color: AppTheme.getColor(context).onSurfaceVariant,
               ),
               SizedBox(height: 0.005 * Responsive.getHeight(context)),
-              PhoneField(
+              PhoneNumberField(
                 selectedCountry: selectedCountry1,
                 countries: countryMap.keys.toList(),
-                onCountryChanged: (_) {},
-                controller: phoneController1,
+                onCountryChanged: (p0, p1) {},
+                phoneController: phoneController2,
                 countryDialCodes: countryMap,
-                borderRadius: 5 * Responsive.getResponsive(context),
-                textFieldHeight: 47,
-                borderColor: AppTheme.getColor(context).outline,
-                hintText: '000 00 000 00',
-                phoneFontWeight: FontWeight.w600,
+                textFieldHeight: 0.055 * Responsive.getHeight(context),
                 hintTextStyle: TextStyle(
+                  fontWeight: FontWeight.w600,
                   color: AppTheme.getColor(context).outline,
+                  fontSize: 14 * Responsive.getResponsiveText(context),
                 ),
-                countryFontSize: 16 * Responsive.getResponsiveText(context),
-                countryCodeFontSize: 14 * Responsive.getResponsiveText(context),
-                countryCodeTextStyle: TextStyle(
-                  color: AppTheme.getColor(context).outline,
+                hintText: '000 00 000 00',
+                decoration: BoxDecoration(
+                  color: AppTheme.getColor(context).onPrimary,
+                  border: Border.all(color: AppTheme.getColor(context).outline),
+                  borderRadius: BorderRadius.circular(
+                    5 * Responsive.getResponsive(context),
+                  ),
                 ),
               ),
             ],
           ),
 
-          // Alternative Phone Number
+          /// Alternative Phone Number
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -140,30 +131,31 @@ class _AddCustomerState extends State<AddCustomer> {
                 color: AppTheme.getColor(context).onSurfaceVariant,
               ),
               SizedBox(height: 0.005 * Responsive.getHeight(context)),
-              PhoneField(
-                selectedCountry: selectedCountry2,
+              PhoneNumberField(
+                selectedCountry: selectedCountry1,
                 countries: countryMap.keys.toList(),
-                onCountryChanged: (_) {},
-                controller: phoneController2,
+                onCountryChanged: (p0, p1) {},
+                phoneController: phoneController2,
                 countryDialCodes: countryMap,
-                borderRadius: 5 * Responsive.getResponsive(context),
-                textFieldHeight: 47,
-                borderColor: AppTheme.getColor(context).outline,
-                hintText: '000 00 000 00',
-                phoneFontWeight: FontWeight.w600,
+                textFieldHeight: 0.055 * Responsive.getHeight(context),
                 hintTextStyle: TextStyle(
+                  fontWeight: FontWeight.w600,
                   color: AppTheme.getColor(context).outline,
+                  fontSize: 14 * Responsive.getResponsiveText(context),
                 ),
-                countryFontSize: 16 * Responsive.getResponsiveText(context),
-                countryCodeFontSize: 14 * Responsive.getResponsiveText(context),
-                countryCodeTextStyle: TextStyle(
-                  color: AppTheme.getColor(context).outline,
+                hintText: '000 00 000 00',
+                decoration: BoxDecoration(
+                  color: AppTheme.getColor(context).onPrimary,
+                  border: Border.all(color: AppTheme.getColor(context).outline),
+                  borderRadius: BorderRadius.circular(
+                    5 * Responsive.getResponsive(context),
+                  ),
                 ),
               ),
             ],
           ),
 
-          // Date Of Birth
+          /// Date Of Birth
           CommonTextField(
             'anniversary_date',
             'Enter Anniversary Date',
@@ -185,7 +177,7 @@ class _AddCustomerState extends State<AddCustomer> {
             },
           ),
 
-          // Anniversary Date
+          /// Anniversary Date
           CommonTextField(
             'date_of_birth',
             'Enter Birth Date',
@@ -207,35 +199,35 @@ class _AddCustomerState extends State<AddCustomer> {
             },
           ),
 
-          // Email ID
+          /// Email ID
           CommonTextField(
             'email_id',
             LanguageManager().get('email_contact_finca'),
             AppAssets.sms,
           ),
 
-          // Select Location
+          /// Select Location
           CommonTextField(
             'select_location',
             LanguageManager().get('select_location'),
             AppAssets.locationVisit,
           ),
 
-          // Address
+          /// Address
           CommonTextField(
             'address',
             LanguageManager().get('type_here'),
             AppAssets.home,
           ),
 
-          // Pincode
+          /// Pincode
           CommonTextField(
             'pincode',
             LanguageManager().get('type_here'),
             AppAssets.lock,
           ),
 
-          // City dropdown with Add button
+          /// City dropdown with Add button
           Column(
             children: [
               LabelWithAddButton(
@@ -249,9 +241,10 @@ class _AddCustomerState extends State<AddCustomer> {
                 items: cityList,
                 selectedItem: selectedCity,
                 hintText: LanguageManager().get('state_not_assigned'),
+                height: 0.055 * Responsive.getHeight(context),
                 itemToString: (item) => item,
                 onChanged: (value, index) {},
-                borderRadius: 8 * Responsive.getResponsive(context),
+                borderRadius: 5 * Responsive.getResponsive(context),
                 popupElevation: 6 * Responsive.getResponsive(context),
                 spacing: 25 * Responsive.getResponsive(context),
                 hintTextStyle: TextStyle(
@@ -265,7 +258,7 @@ class _AddCustomerState extends State<AddCustomer> {
             ],
           ),
 
-          // Area dropdown with Add button
+          /// Area dropdown with Add button
           Column(
             children: [
               LabelWithAddButton(
@@ -279,9 +272,10 @@ class _AddCustomerState extends State<AddCustomer> {
                 items: areaList,
                 selectedItem: selectedAreaList,
                 hintText: LanguageManager().get('select_area'),
+                height: 0.055 * Responsive.getHeight(context),
                 itemToString: (item) => item,
                 onChanged: (value, index) {},
-                borderRadius: 8 * Responsive.getResponsive(context),
+                borderRadius: 5 * Responsive.getResponsive(context),
                 popupElevation: 6 * Responsive.getResponsive(context),
                 spacing: 25 * Responsive.getResponsive(context),
                 hintTextStyle: TextStyle(
@@ -289,55 +283,55 @@ class _AddCustomerState extends State<AddCustomer> {
                   color: AppTheme.getColor(context).outline,
                   fontSize: 14 * Responsive.getResponsiveText(context),
                 ),
-                prefix: SvgPicture.asset(AppAssets.map),
+                prefix: SvgPicture.asset(AppAssets.areaMap),
                 border: Border.all(color: AppTheme.getColor(context).outline),
               ),
             ],
           ),
 
-          // Retailer Type
+          /// Retailer Type
           CommonTextField(
             'retailer_type',
             LanguageManager().get('select'),
             AppAssets.businessAndTrade,
           ),
 
-          // Website
+          /// Website
           CommonTextField(
             'website_contact_finca',
             LanguageManager().get('type_here'),
             AppAssets.global,
           ),
 
-          // GST Number
+          /// GST Number
           CommonTextField(
             'tax_number',
             LanguageManager().get('type_here'),
             AppAssets.gst,
           ),
 
-          // Select Distributor
+          /// Select Distributor
           CommonTextField(
             'select_distributor',
             LanguageManager().get('select_distributor'),
             AppAssets.cardCoin,
           ),
 
-          // Credit Limit
+          /// Credit Limit
           CommonTextField(
             'credit_limit',
             LanguageManager().get('type_here'),
             AppAssets.bitCinCard,
           ),
 
-          // Credit Days
+          /// Credit Days
           CommonTextField(
             'credit_days',
             LanguageManager().get('type_here'),
             AppAssets.emptyWalletTime,
           ),
 
-          // Shop Photo media picker
+          /// Shop Photo media picker
           CustomMediaPickerContainer(
             title: 'shop_photo',
             titleColor: AppTheme.getColor(context).onSurfaceVariant,
@@ -355,10 +349,10 @@ class _AddCustomerState extends State<AddCustomer> {
             imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
           ),
 
-          //  space below media picker
+          ///  space below media picker
           SizedBox(height: 0.03 * Responsive.getHeight(context)),
 
-          // Submit button
+          /// Submit button
           MyCoButton(
             onTap: () {},
             title: LanguageManager().get('submit'),
@@ -371,7 +365,7 @@ class _AddCustomerState extends State<AddCustomer> {
             ),
           ),
 
-          // Extra spacing at end
+          /// Extra spacing at end
           const SizedBox(),
           const SizedBox(),
         ],
@@ -379,7 +373,7 @@ class _AddCustomerState extends State<AddCustomer> {
     ),
   );
 
-  // Common text field widget
+  /// Common text field widget
   Widget CommonTextField(
     String label,
     String hint,
@@ -389,6 +383,7 @@ class _AddCustomerState extends State<AddCustomer> {
     VoidCallback? onTap,
   }) => LabeledTextField(
     label: label,
+    isKey: true,
     hint: hint,
     textColor: AppTheme.getColor(context).onSurfaceVariant,
     textFontSize: 12 * Responsive.getResponsiveText(context),
@@ -397,7 +392,8 @@ class _AddCustomerState extends State<AddCustomer> {
     heightFactor: 44,
     onClick: onTap,
     boarderRadius: 8 * Responsive.getResponsive(context),
-    contentPadding: EdgeInsets.all(9 * Responsive.getResponsive(context)),
+    contentPadding: EdgeInsets.all(12 * Responsive.getResponsive(context)),
+    textFieldHeight: 0.055 * Responsive.getHeight(context),
     hintTextStyle: TextStyle(
       fontWeight: FontWeight.w600,
       color: AppTheme.getColor(context).outline,

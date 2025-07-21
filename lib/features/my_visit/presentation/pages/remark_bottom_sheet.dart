@@ -3,12 +3,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/close_end_visit_button_widget.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/follow_up_widget.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/select_attachment_widget.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_type_selection.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/test_new_visit1.dart';
 import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
+import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
+import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
+import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class RemarkBottomSheet extends StatefulWidget {
@@ -95,17 +96,45 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
           ),
 
           //  widget Follow-up time and date selection
-          FollowUpWidget(
-            visitTimes: visitTimes,
-            selectedVisitTime: selectedVisitTime,
-            visitDates: visitDates,
-            selectedVisitDate: selectedVisitDate,
+          Row(
+            children: [
+              Expanded(
+                child: LabeledDropdown<String>(
+                  label: 'Follow Up Visit Time',
+                  border: Border.all(color: AppTheme.getColor(context).outline),
+                  prefix: SvgPicture.asset(
+                    AppAssets.assetClock,
+                    fit: BoxFit.scaleDown,
+                  ),
+                  items: visitTimes,
+                  itemToString: (item) => item,
+                  selectedItem: selectedVisitTime,
+                  onChanged: (_, __) {},
+                ),
+              ),
+              SizedBox(width: 12), // spacing between dropdowns
+              Expanded(
+                child: LabeledDropdown<String>(
+                  label: 'Follow Up Visit Date',
+                  border: Border.all(color: AppTheme.getColor(context).outline),
+                  prefix: SvgPicture.asset(
+                    AppAssets.assetNoteFavorite,
+                    fit: BoxFit.scaleDown,
+                  ),
+                  items: visitDates,
+                  itemToString: (item) => item,
+                  selectedItem: selectedVisitDate,
+                  onChanged: (_, __) {},
+                ),
+              ),
+            ],
           ),
 
-          // widget for visit type selector
-          VisitTypeSelector(
-            initialSelection: 'Field Visit',
-            onChanged: (val) {},
+          CustomRadioButton(
+            options: const ['Field Visit', 'Virtual Visit'],
+            onChanged: (_) {},
+            height: 44,
+            width: 160,
           ),
 
           // Textfield for Visit Area
@@ -169,17 +198,21 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
           ),
 
           // label for Attachment
-          CustomText(
-            'Attachment',
-            fontWeight: FontWeight.w700,
-            fontSize: 16 * Responsive.getResponsiveText(context),
-            color: AppTheme.getColor(context).onSurfaceVariant,
-          ),
-
-          // Media Picker container
-          const SelectAttachmentWidget(
-            label: 'Select Attachment',
-            iconPath: AppAssets.assetBookmark_2,
+          CustomMediaPickerContainer(
+            title: 'attachment',
+            titleColor: AppTheme.getColor(context).onSurfaceVariant,
+            titleFontSize: 16 * Responsive.getResponsiveText(context),
+            imageTitle: 'select_attachment',
+            containerHeight: 90,
+            multipleImage: 5,
+            imagePath: 'assets/media_picker/gallery-export.png',
+            backgroundColor: AppTheme.getColor(context).surfaceContainer,
+            isCameraShow: true,
+            isGalleryShow: true,
+            isDocumentShow: true,
+            isCropImage: true,
+            imageTitleSize: 14 * Responsive.getResponsiveText(context),
+            imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
           ),
 
           SizedBox(height: 0.05 * Responsive.getHeight(context)),
@@ -203,8 +236,52 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
           ),
 
           // Buttons Close & End Visit
-          const CloseEndVistButtonWidget(),
-          SizedBox(height: 0.06 * Responsive.getHeight(context)),
+          Row(
+            children: [
+              MyCoButton(
+                onTap: () => Navigator.pop(context),
+                title: 'CLOSE',
+                textStyle: TextStyle(
+                  color: AppTheme.getColor(context).primary,
+                  fontWeight: FontWeight.bold,
+                ),
+                backgroundColor: Colors.transparent,
+                boarderRadius: 30,
+                width: 0.40 * Responsive.getWidth(context),
+                height: 0.06 * Responsive.getHeight(context),
+                borderColor: AppTheme.getColor(context).primary,
+              ),
+              SizedBox(width: 0.045 * Responsive.getWidth(context),),
+              MyCoButton(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(
+                          16 * Responsive.getResponsive(context),
+                        ),
+                      ),
+                    ),
+                    builder: (context) => const TestNewVisit1(),
+                  );
+                },
+                title: 'END VISIT',
+                textStyle: TextStyle(
+                  color: AppTheme.getColor(context).onPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+                backgroundColor: AppTheme.getColor(context).primary,
+                boarderRadius: 30,
+                width: 0.40 * Responsive.getWidth(context),
+                height: 0.06 * Responsive.getHeight(context),
+                wantBorder: false,
+                isShadowBottomLeft: true,
+              ),
+            ],
+          ),
+          SizedBox(height: 49,)
         ],
       ),
     ),

@@ -3,9 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/select_attachment_widget.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
+import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -77,18 +77,22 @@ class _TestNewVisitState extends State<TestNewVisit1> {
 
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
-          // Section label for media upload
-          CustomText(
-            'Media',
-            fontWeight: FontWeight.w600,
-            fontSize: 16 * Responsive.getResponsiveText(context),
-          ),
-          SizedBox(height: 0.005 * Responsive.getHeight(context)),
-
           // Media Picker container
-          const SelectAttachmentWidget(
-            label: 'Select Media',
-            iconPath: AppAssets.assetGalleryExport,
+          CustomMediaPickerContainer(
+            title: 'Media',
+            titleColor: AppTheme.getColor(context).onSurfaceVariant,
+            titleFontSize: 16 * Responsive.getResponsiveText(context),
+            imageTitle: 'Select Media',
+            containerHeight: 90,
+            multipleImage: 5,
+            imagePath: 'assets/media_picker/gallery-export.png',
+            backgroundColor: AppTheme.getColor(context).surfaceContainer,
+            isCameraShow: true,
+            isGalleryShow: true,
+            isDocumentShow: true,
+            isCropImage: true,
+            imageTitleSize: 14 * Responsive.getResponsiveText(context),
+            imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
           ),
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
 

@@ -22,14 +22,14 @@ class CustomerCardOnlyVisit extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         border: Border.all(
           color: AppTheme.getColor(context).onPrimary, // White border
-          width: 1.2,
+          width:  0.003 * Responsive.getWidth(context),
         ),
-        color: Colors.transparent, // Transparent background
+        color: AppColors.spanishYellow
       ),
         child: CustomText(
           'only_visit',
           isKey: true,
-          color: Colors.white,
+          color:AppTheme.getColor(context).onSecondary,
           fontSize: 12 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,
         )

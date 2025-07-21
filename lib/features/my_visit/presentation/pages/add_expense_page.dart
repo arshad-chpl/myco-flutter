@@ -3,12 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/select_attachment_widget.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/yes_or_no_button_widget.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/remark_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
+import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -50,7 +51,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(title: 'Add Expense',),
+    appBar: CustomAppbar(title: 'Add Expense'),
     body: Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 30.0 * Responsive.getResponsive(context),
@@ -58,7 +59,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 14 * Responsive.getResponsive(context),
+          spacing: 16 * Responsive.getResponsive(context),
           children: [
             // Text field for entering expense title
             LabeledTextField(
@@ -72,7 +73,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                   color: AppTheme.getColor(context).outline,
                 ),
                 borderRadius: BorderRadius.circular(
-                  10 * Responsive.getResponsive(context),
+                  8 * Responsive.getResponsive(context),
                 ),
               ),
               prefix: SvgPicture.asset(
@@ -132,7 +133,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 fit: BoxFit.scaleDown,
               ),
               itemToString: (item) => item,
-              useRadioList: true,
               selectedItem: selectedSiteType,
               onChanged: (value, index) {},
             ),
@@ -187,46 +187,57 @@ class _AddExpensePageState extends State<AddExpensePage> {
             ),
 
             //widget for upload or attach files (images, documents)
-            const SelectAttachmentWidget(
-              label: 'Select Attachment',
-              iconPath: AppAssets.assetBookmark_2,
+          // const Padding(
+          //    padding: const EdgeInsets.all(1.0),
+          //    child: const SelectAttachmentWidget(
+          //      label: 'Select Attachment',
+          //      iconPath: AppAssets.assetBookmark_2,
+          //    ),
+          //  ),
+            Padding(
+              padding: const EdgeInsets.all(1.0),
+              child: CustomMediaPickerContainer(
+                title: '',
+                titleColor: AppTheme.getColor(context).onSurfaceVariant,
+                titleFontSize: 16 * Responsive.getResponsiveText(context),
+                imageTitle: 'select_attachment',
+                containerHeight: 90,
+                multipleImage: 5,
+                imagePath: 'assets/media_picker/gallery-export.png',
+                backgroundColor: AppTheme.getColor(context).surfaceContainer,
+                isCameraShow: true,
+                isGalleryShow: true,
+                isDocumentShow: true,
+                isCropImage: true,
+                imageTitleSize: 14 * Responsive.getResponsiveText(context),
+                imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
+              ),
             ),
-
-            // label for select if the invoice includes GST
-            CustomText(
-              'Is GST Invoice?',
-              fontWeight: FontWeight.w700,
-              fontSize: 16 * Responsive.getResponsiveText(context),
-              color: AppTheme.getColor(context).onSurfaceVariant,
-            ),
-
             //Radio buttons to select if the invoice includes GST
-            YesOrNoButtonWidget(initialGender: 'Yes', onChanged: (val) {}),
+            CustomRadioButton(options: const ['Yes', 'No'], onChanged: (_) {},height:44,width:155, title: 'Is GST Invoice',),
 
             SizedBox(height: 0.09 * Responsive.getHeight(context)),
 
             //submit button
+            // MyCoButton(
+            //   onTap: () {},
+            //   title: 'SUBMIT',
+            //   boarderRadius: 30 * Responsive.getResponsive(context),
+            //   isShadowBottomLeft: true,
+            // ),
             MyCoButton(
-              onTap: () {
-                //use below code to open bottom sheet
-                // showModalBottomSheet(
-                //   context: context,
-                //   isScrollControlled: true,
-                //   shape: RoundedRectangleBorder(
-                //     borderRadius: BorderRadius.vertical(
-                //       top: Radius.circular(
-                //         16 * Responsive.getResponsive(context),
-                //       ),
-                //     ),
-                //   ),
-                //   //builder: (context) => const VisitTemplate(),
-                //   builder: (context) => const RemarkBottomSheet(),
-                // );
-              },
               title: 'SUBMIT',
               boarderRadius: 30 * Responsive.getResponsive(context),
               isShadowBottomLeft: true,
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) => const RemarkBottomSheet(),
+                );
+              },
             ),
+
             SizedBox(height: 0.03 * Responsive.getHeight(context)),
           ],
         ),

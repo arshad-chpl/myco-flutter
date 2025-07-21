@@ -119,6 +119,7 @@ class AppAssets {
   static const String downArrow = '$svgsVisit/arrow-down.svg';
   static const String galleryExport = '$svgsVisit/gallery-export.svg';
   static const String arrow_down = '$svgsVisit/arrow-down.svg';
+  static const String areaMap = '$svgsVisit/area_map.svg';
 
 
   //images visit
