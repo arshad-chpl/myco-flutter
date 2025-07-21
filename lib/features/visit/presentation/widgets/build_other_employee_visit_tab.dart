@@ -9,8 +9,8 @@ import 'package:myco_flutter/features/my_visit/presentation/widgets/employee_inf
 import 'package:myco_flutter/features/my_visit/presentation/widgets/get_common_row.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/reschedule_visit_row.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_action_row.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_search_bar.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 
 Widget buildOtherEmployeeVisitTab(
     BuildContext context,
@@ -36,11 +36,9 @@ Widget buildOtherEmployeeVisitTab(
         SizedBox(height: 16 * Responsive.getResponsiveText(context)),
 
         // Search Field
-        VisitSearchBar(
-          controller: searchController,
-          focusNode: searchFocus,
-          hintText: 'Search with Customer',
-        ),
+
+        CustomSearchField(controller: searchController,
+          hintText: 'Search with Customer',),
         SizedBox(height: screenSize.height * 0.012),
 
         // CommonCard
@@ -60,7 +58,6 @@ Widget buildOtherEmployeeVisitTab(
                 // Top Row
                 RescheduleVisitRow(
                   onTap: () {
-                    print('Reschedule Visit tapped!');
                   },
                 ),
 

@@ -15,9 +15,8 @@ import 'package:myco_flutter/features/my_visit/presentation/widgets/customer_car
 import 'package:myco_flutter/features/my_visit/presentation/widgets/customer_card_order_now.dart';
 
 import 'package:myco_flutter/features/my_visit/presentation/widgets/refresh_reset_buttons_row.dart';
-
-import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_search_bar.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -72,13 +71,10 @@ class _CustomerPageState extends State<CustomerPage> {
 
           children: [
             // Search
-            VisitSearchBar(
-              controller: searchController,
-
-              focusNode: searchFocus,
-
+            CustomSearchField(controller: searchController,
               hintText: 'Search',
             ),
+
 
             SizedBox(height: 16 * Responsive.getResponsive(context)),
 

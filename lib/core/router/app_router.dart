@@ -355,11 +355,7 @@ class AppRouter {
         name: 'add-visit',
         builder: (context, state) => const AddNewVisit(),
       ),
-      GoRoute(
-        path: RoutePaths.myProfile,
-        name: 'my-profile',
-        builder: (context, state) => const MyProfilePage(),
-      ),
+
       GoRoute(
         path: RoutePaths.assetsDetails,
         name: 'assets-details',
