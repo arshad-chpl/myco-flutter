@@ -155,25 +155,11 @@ class AllProductsScreen extends StatelessWidget {
     return Column(
       children: [
         // Search Field
-        // MyCoTextfield(
-        //   hintText: LanguageManager().get('search'),
-        //   hintTextStyle: AppTheme.getTextStyle(
-        //     context,
-        //   ).labelLarge!.copyWith(color: AppColors.textSecondary),
-        //   prefix: const Icon(Icons.search),
-        //   contentPadding: EdgeInsets.only(
-        //     top: 0.012 * Responsive.getHeight(context),
-        //   ),
-        //   boarderRadius: 12 * Responsive.getResponsive(context),
-        //   onChanged: (value) =>
-        //       bloc.add(SearchQueryChangeEvent(value, productList)),
-        // ),
         CustomSearchField(
           hintText: 'Search',
           onChanged: (value) {
             bloc.add(SearchQueryChangeEvent(value, productList));
           },
-          
         ),
 
         SizedBox(height: 0.025 * Responsive.getHeight(context)),

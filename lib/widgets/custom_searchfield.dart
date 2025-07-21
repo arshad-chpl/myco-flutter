@@ -102,7 +102,7 @@ class _CustomSearchFieldState extends State<CustomSearchField> {
       border: Border.all(
         color: widget.borderColor ?? AppTheme.getColor(context).outline,
       ),
-    ),
+    ),  
     child: TextField(
       controller: _controller,
       autofocus: widget.autofocus,

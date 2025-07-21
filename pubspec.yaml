@@ -58,6 +58,7 @@ dependencies:
   google_maps_flutter: ^2.12.3
   geolocator: ^14.0.2
   modal_bottom_sheet: ^3.0.0
+  bloc: ^9.0.0
 
 
 dependency_overrides:
