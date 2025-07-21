@@ -4,13 +4,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/leave/domain/entities'
-    '/leave_history_response_entity.dart';
+import 'package:myco_flutter/core/utils/util.dart';
+import 'package:myco_flutter/features/leave/domain/entities/leave_history_response_entity.dart';
 import 'package:myco_flutter/features/leave/domain/entities/leave_type_response_entity.dart';
 import 'package:myco_flutter/features/leave/model/check_leave_balance_response.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/leave_skeloton/leave_type_shimmer.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_filter_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
@@ -20,7 +21,7 @@ class DialogChangeAutoLeave extends StatefulWidget {
   final bool isUser;
   final bool isUserSandwichLeaveUpdate;
   final bool updateStatus;
-  final onSubmit;
+  final Function onSubmit;
   final VoidCallback onClose;
   final LeaveBloc leaveBloc;
 
@@ -92,6 +93,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
   bool showShiftHours = false;
   bool showWorkingHours = false;
   bool showLeaveDayTypeSpinner = true;
+  bool isUpdateButtonEnabled = true; // New state for button enable/disable
 
   String? leaveId;
   String? leaveName;
@@ -126,6 +128,9 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
     leavePercentage =
         double.tryParse(leaveHistory.leavePercentage ?? '100')?.toInt() ?? 100;
 
+    // Initialize button as disabled
+    disableAddButton();
+
     if (leaveHistory.isExtraDay == '1') {
       showLeaveCountData = true;
       showLeaveTypeField = false;
@@ -145,10 +150,10 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
     } else {
       showShiftHours =
           leaveHistory.totalShiftHours != null &&
-          leaveHistory.totalShiftHours!.isNotEmpty;
+              leaveHistory.totalShiftHours!.isNotEmpty;
       showWorkingHours =
           leaveHistory.totalWorkingHours != null &&
-          leaveHistory.totalWorkingHours!.isNotEmpty;
+              leaveHistory.totalWorkingHours!.isNotEmpty;
     }
 
     if (widget.isUserSandwichLeaveUpdate) {
@@ -158,6 +163,25 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
       showWorkingHours = false;
       showLeaveDayTypeSpinner = false;
     }
+  }
+
+  void disableAddButton() {
+    setState(() {
+      isUpdateButtonEnabled = false;
+    });
+  }
+
+  void enableAddButton() {
+    setState(() {
+      isUpdateButtonEnabled = true;
+    });
+  }
+
+  void leaveNotAvailable() {
+    setState(() {
+      disableAddButton();
+      showSalaryGeneratedMessage = true;
+    });
   }
 
   void _fetchLeaveTypesWithData() {
@@ -246,7 +270,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                 final selectedMyBirthDayMonth = dateMyBirthDay[1];
                 final selectedMyBirthDayDay = dateMyBirthDay[2];
                 myFinalSelectedBirthDate =
-                    '$selectedMyBirthDayDay-$selectedMyBirthDayMonth';
+                '$selectedMyBirthDayDay-$selectedMyBirthDayMonth';
               }
             }
             if (anniversaryDate != null && anniversaryDate.trim().isNotEmpty) {
@@ -255,7 +279,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                 final selectedAnniversaryMonth = dateMyAnniversary[1];
                 final selectedAnniversaryDay = dateMyAnniversary[2];
                 myFinalSelectedAnniversaryDate =
-                    '$selectedAnniversaryDay-$selectedAnniversaryMonth';
+                '$selectedAnniversaryDay-$selectedAnniversaryMonth';
               }
             }
 
@@ -277,6 +301,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                   textColor: Colors.white,
                   fontSize: 16.0,
                 );
+                disableAddButton();
               }
             }
           }
@@ -323,9 +348,10 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
         _setDataPaidUnpaidFilterNew();
 
         if (isSpecialLeave == '1' && applicableLeaveMonth == 0) {
-          showSalaryGeneratedMessage = true;
+          leaveNotAvailable();
           showLeaveCountData = false;
         } else {
+          enableAddButton();
           showSalaryGeneratedMessage = false;
         }
       } else {
@@ -335,6 +361,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
           ),
         );
         showLeaveCountData = false;
+        disableAddButton();
       }
       isLoading = false;
     });
@@ -621,26 +648,24 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
         if (!isPaidLeave) {
           if (applyLeaveWithActualDecimalLeaveBalance &&
               unpaidLeaveAvailable == '1') {
-            showSalaryGeneratedMessage = true;
+            leaveNotAvailable();
           } else if (unpaidLeaveAvailable == '1') {
-            showSalaryGeneratedMessage = true;
+            leaveNotAvailable();
           } else {
+            enableAddButton();
             showSalaryGeneratedMessage = false;
           }
         } else {
           if (applicableLeaveMonthGlobal == 0 && unpaidLeaveAvailable == '1') {
-            showSalaryGeneratedMessage = true;
+            leaveNotAvailable();
           } else if (isDecimalConditionTrue &&
               applyLeaveWithActualDecimalLeaveBalance &&
               unpaidLeaveAvailable == '1') {
-            showSalaryGeneratedMessage = true;
+            leaveNotAvailable();
           } else {
+            enableAddButton();
             showSalaryGeneratedMessage = false;
           }
-        }
-
-        if (applicableLeaveMonthGlobal == 0 && unpaidLeaveAvailable == '1') {
-          showSalaryGeneratedMessage = true;
         }
       }
     });
@@ -748,6 +773,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
           setState(() {
             isLoading = false;
             showLeaveCountData = false;
+            disableAddButton();
           });
         }
       },
@@ -765,7 +791,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                leaveHistory.leaveDate ?? 'N/A',
+                Util.getFormattedDateLeave(leaveHistory.leaveDate),
                 style: TextStyle(
                   fontSize: width * 0.045,
                   fontWeight: FontWeight.bold,
@@ -830,45 +856,45 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
               // Show leave type spinner if visible
               if (showLeaveTypeSpinner)
                 isLoading
-                    ? const Center(child: CircularProgressIndicator())
+                    ? const LeaveTypeShimmer()
                     : MyCoTextfield(
-                        isReadOnly: true,
-                        validator: (value) =>
-                            value == null || value.isEmpty || value == 'Select'
-                            ? 'Please select a type of leave'
-                            : null,
-                        controller: _leaveTypeController,
-                        hintText: 'Select',
-                        hintTextStyle: TextStyle(
-                          fontSize: 18 * Responsive.getResponsiveText(context),
-                          color: AppTheme.getColor(context).outline,
-                        ),
-                        image1: 'assets/images/arrow-down.png',
-                        onClick: () {
-                          if (leaveTypeNames.isNotEmpty) {
-                            showLeaveFilterBottomSheet(
-                              context,
-                              _leaveTypeController.text,
-                              (selectedValue) {
-                                _leaveTypeController.text = selectedValue;
-                                _onLeaveTypeSelected(selectedValue);
-                              },
-                              leaveTypeNames,
-                            );
-                          }
+                  isReadOnly: true,
+                  validator: (value) =>
+                  value == null || value.isEmpty || value == 'Select'
+                      ? 'Please select a type of leave'
+                      : null,
+                  controller: _leaveTypeController,
+                  hintText: 'Select',
+                  hintTextStyle: TextStyle(
+                    fontSize: 18 * Responsive.getResponsiveText(context),
+                    color: AppTheme.getColor(context).outline,
+                  ),
+                  image1: 'assets/images/arrow-down.png',
+                  onClick: () {
+                    if (leaveTypeNames.isNotEmpty) {
+                      showLeaveFilterBottomSheet(
+                        context,
+                        _leaveTypeController.text,
+                            (selectedValue) {
+                          _leaveTypeController.text = selectedValue;
+                          _onLeaveTypeSelected(selectedValue);
                         },
-                        preFixImage: 'assets/images/note-favorite.png',
-                        suffix: Icon(
-                          Icons.keyboard_arrow_down_sharp,
-                          color: AppTheme.getColor(context).primary,
-                          size: 30 * Responsive.getResponsive(context),
-                        ),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          borderSide: BorderSide(color: Color(0xFF98A2B3)),
-                        ),
-                        textAlignment: TextAlign.start,
-                      ),
+                        leaveTypeNames,
+                      );
+                    }
+                  },
+                  preFixImage: 'assets/images/note-favorite.png',
+                  suffix: Icon(
+                    Icons.keyboard_arrow_down_sharp,
+                    color: AppTheme.getColor(context).primary,
+                    size: 30 * Responsive.getResponsive(context),
+                  ),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    borderSide: BorderSide(color: Color(0xFF98A2B3)),
+                  ),
+                  textAlignment: TextAlign.start,
+                ),
               SizedBox(height: height * 0.025),
 
               // Show "No comp-off leave balance available" message if visible
@@ -918,7 +944,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                         showLeaveFilterBottomSheet(
                           context,
                           _leaveDayTypeController.text,
-                          (selectedValue) {
+                              (selectedValue) {
                             _onLeaveDayTypeSelected(selectedValue);
                           },
                           leaveDayTypes,
@@ -953,7 +979,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                   MyCoTextfield(
                     isReadOnly: true,
                     validator: (value) =>
-                        value == null || value.isEmpty || value == 'Select'
+                    value == null || value.isEmpty || value == 'Select'
                         ? 'Please select paid/unpaid'
                         : null,
                     controller: _paidUnpaidController,
@@ -967,7 +993,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                       showLeaveFilterBottomSheet(
                         context,
                         _paidUnpaidController.text,
-                        (selectedValue) {
+                            (selectedValue) {
                           _paidUnpaidController.text = selectedValue;
                           _onPaidUnpaidSelected(selectedValue);
                         },
@@ -1008,7 +1034,7 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                     backgroundColor: AppColors.transparent,
                   ),
                   MyCoButton(
-                    onTap: _onSubmit,
+                    onTap: isUpdateButtonEnabled ? _onSubmit : null,
                     title: 'Update',
                     height: 0.06 * Responsive.getHeight(context),
                     boarderRadius: 30,
@@ -1016,9 +1042,13 @@ class _DialogChangeAutoLeaveState extends State<DialogChangeAutoLeave> {
                     textStyle: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: AppTheme.getColor(context).onPrimary,
+                      color: isUpdateButtonEnabled
+                          ? AppTheme.getColor(context).onPrimary
+                          : Colors.grey,
                     ),
-                    backgroundColor: AppTheme.getColor(context).primary,
+                    backgroundColor: isUpdateButtonEnabled
+                        ? AppTheme.getColor(context).primary
+                        : Colors.grey.shade400,
                     isShadowBottomLeft: true,
                   ),
                 ],

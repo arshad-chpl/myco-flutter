@@ -6,6 +6,7 @@ import 'package:myco_flutter/core/models/data/common_response_model.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/leave/data/datasources/leave_remote_data_source.dart';
 import 'package:myco_flutter/features/leave/model/check_leave_balance_response.dart';
+import 'package:myco_flutter/features/leave/model/comp_off_leave_response_model.dart';
 import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
 import 'package:myco_flutter/features/leave/model/leave_type_response.dart';
 import 'package:myco_flutter/features/leave/model/my_team_response_model.dart';
@@ -255,5 +256,20 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
       instanceName: VariableBag.residentApiNew,
     ).postFormDynamic('leave_controller.php', dataMap);
     return CommonResponseModel.fromJson(json.decode(response));
+  }
+
+  @override
+  Future<CompOffLeaveResponseModel> getCompOffLeaves(String startDate, String endDate) {
+    final dataMap = {
+      'getCompOffLeaves': 'getCompOffLeaves',
+      'society_id': '1',
+      'user_id': '1365',
+      'language_id': '1',
+      'start_date': startDate,
+      'end_date': endDate,
+    };
+    return GetIt.I<ApiClient>(
+      instanceName: VariableBag.residentApiNew,
+    ).postFormDynamic('leave_controller.php', dataMap).then((value) => CompOffLeaveResponseModel.fromJson(json.decode(value)));
   }
 }

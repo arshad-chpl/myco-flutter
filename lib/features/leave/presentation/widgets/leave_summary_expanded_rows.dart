@@ -12,7 +12,7 @@ class LeaveRowData {
   LeaveRowData({
     required this.label,
     required this.value,
-    this.isVisible = true,
+    required this.isVisible,
     this.onTap,
     this.isMonthlyData = false,
     this.monthlyData,
@@ -37,6 +37,7 @@ class LeaveSummaryExpandedRows extends StatelessWidget {
       child: Column(
         children: [
           ...rows.map((row) {
+            if (!row.isVisible) return const SizedBox.shrink();
             if (row.label == 'View Dates' ||
                 row.label == 'Apply for leave encashment') {
               return InkWell(
@@ -85,9 +86,9 @@ class LeaveSummaryExpandedRows extends StatelessWidget {
               TextSpan(
                 children: [
                   TextSpan(text: title, style: const TextStyle(fontSize: 14)),
-                  const TextSpan(text: " ", style: TextStyle(fontSize: 14)),
+                  const TextSpan(text: ' ', style: TextStyle(fontSize: 14)),
                   const TextSpan(
-                    text: "............................",
+                    text: '............................',
                     style: TextStyle(
                       fontSize: 14,
                       letterSpacing: 2,
