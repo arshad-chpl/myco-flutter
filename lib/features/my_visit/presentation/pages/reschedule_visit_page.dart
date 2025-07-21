@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_card_type.dart';
@@ -18,6 +19,7 @@ import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class RescheduleVisitPage extends StatefulWidget {
   const RescheduleVisitPage({super.key});
@@ -64,8 +66,8 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
 
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
-          horizontal: 20 * Responsive.getResponsive(context),
-          vertical: 12 * Responsive.getResponsive(context),
+          horizontal: 31 * Responsive.getResponsive(context),
+          // vertical: 12 * Responsive.getResponsive(context),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,24 +85,16 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
             SizedBox(height: 12 * Responsive.getResponsive(context)),
 
             //Select Customer *
-            LabeledDropdown<String>(
+            NewTextField(
               label: 'Customer',
-              items: const [],
-              selectedItem: selectedCustomer,
-              itemToString: (item) => item,
+              prefixIconPath: AppAssets.personalcard,
+              suffixIconPath: AppAssets.arrow_down,
               hintText: selectedCustomer ?? 'Select Customer *',
-              prefix: SvgPicture.asset(AppAssets.personalcard),
-              spacing: 0.02 * Responsive.getWidth(context),
-              hintTextStyle: TextStyle(
-                fontSize: 16 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).outline,
-                fontWeight: FontWeight.w600,
+              controller: TextEditingController(
+                text: selectedCustomer ?? '',
               ),
-              border: Border.all(color: AppTheme.getColor(context).outline),
-              onChanged: (v, i) async {
-                final selected = await context.pushNamed<String>(
-                  'customerPage',
-                );
+              onTap: () async {
+                final selected = await context.pushNamed<String>('customerPage');
                 if (selected != null) {
                   setState(() => selectedCustomer = selected);
                 }
@@ -110,47 +104,33 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
             SizedBox(height: 12 * Responsive.getResponsive(context)),
 
             // Visit Date
-            LabeledTextField(
-              color: AppTheme.getColor(context).onSurface,
+            NewTextField(
               label: 'Visit Date',
-              hint: 'Select Date',
-              hintTextStyle: TextStyle(
-                color: AppTheme.getColor(context).outline,
-                fontSize: 14 * Responsive.getResponsiveText(context),
-              ),
+              prefixIconPath: AppAssets.calendar,
+              hintText: 'Select Date',
               controller: amountController,
-              widthFactor: Responsive.getWidth(context),
-              textInputType: TextInputType.datetime,
-              textAlignment: TextAlign.start,
-              prefix: SvgPicture.asset(
-                AppAssets.calendar,
-                fit: BoxFit.scaleDown,
-                height: 0.02 * Responsive.getHeight(context),
-                width: 0.02 * Responsive.getWidth(context),
-              ),
+              keyboardType: TextInputType.datetime,
               validator: (v) =>
-                  v == null || v.isEmpty ? 'Please enter a date' : null,
+              v == null || v.isEmpty ? 'Please enter a date' : null,
+              onTap: () async {
+                // Example: show date picker
+              },
             ),
 
             SizedBox(height: 12 * Responsive.getResponsive(context)),
 
             //Select Slot
-            LabeledDropdown<String>(
+            NewTextField(
               label: 'visit_slots',
-              isKey: true,
-              items: timeSlots,
-              selectedItem: selectedTimeSlot,
-              onChanged: (v, i) => setState(() => selectedTimeSlot = v),
-              itemToString: (item) => item,
-              hintText: 'Select Slot',
-              prefix: SvgPicture.asset(AppAssets.clock, fit: BoxFit.scaleDown),
-              spacing: 0.02 * Responsive.getWidth(context),
-              hintTextStyle: TextStyle(
-                fontSize: 16 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).outline,
-                fontWeight: FontWeight.w600,
+              prefixIconPath: AppAssets.clock,
+              suffixIconPath: AppAssets.arrow_down,
+              hintText: selectedTimeSlot ?? 'Select Slot',
+              controller: TextEditingController(
+                text: selectedTimeSlot ?? '',
               ),
-              border: Border.all(color: AppTheme.getColor(context).outline),
+              onTap: ()  {
+                // handle tap function
+              },
             ),
 
             SizedBox(height: 12 * Responsive.getResponsive(context)),
@@ -162,84 +142,42 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
             ),
             SizedBox(height: 12 * Responsive.getResponsive(context)),
             //Select Purpose
-            LabeledDropdown<String>(
+            NewTextField(
               label: 'visit_type',
-              isKey: true,
-              items: visitPurposes,
-              selectedItem: selectedVisitPurpose,
-              itemToString: (item) => item,
-              hintText: 'Select Purpose',
-              prefix: SvgPicture.asset(AppAssets.gps),
-              spacing: 0.02 * Responsive.getWidth(context),
-              hintTextStyle: TextStyle(
-                fontSize: 16 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).outline,
-                fontWeight: FontWeight.w600,
+              prefixIconPath: AppAssets.gps,
+              suffixIconPath: AppAssets.arrow_down,
+              hintText: selectedVisitPurpose ?? 'Select Purpose',
+              controller: TextEditingController(
+                text: selectedVisitPurpose ?? '',
               ),
-              border: Border.all(color: AppTheme.getColor(context).outline),
-              onChanged: (v, i) => setState(() => selectedVisitPurpose = v),
+              onTap: ()  {
+                // handle tap function
+              },
             ),
 
             SizedBox(height: 12 * Responsive.getResponsive(context)),
 
             // Visit Purpose dropdown
-            LabeledDropdown<String>(
+            NewTextField(
               label: 'visit_purpose',
-              isKey: true,
-              items: rescheduleReasons,
-              selectedItem: selectedRescheduleReason,
-              onChanged: (v, i) => setState(() => selectedRescheduleReason = v),
-              itemToString: (item) => item,
-              hintText: 'Select Reason',
-              prefix: SvgPicture.asset(AppAssets.gps, fit: BoxFit.scaleDown),
-              hintTextStyle: TextStyle(
-                fontSize: 16 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).outline,
-                fontWeight: FontWeight.w600,
+              prefixIconPath: AppAssets.gps,
+              suffixIconPath: AppAssets.arrow_down,
+              hintText: selectedRescheduleReason ?? 'Select Reason',
+              controller: TextEditingController(
+                text: selectedRescheduleReason ?? '',
               ),
-              border: Border.all(color: AppTheme.getColor(context).outline),
+              onTap: () {
+                // handle on tap function
+              },
             ),
 
             SizedBox(height: 12 * Responsive.getResponsive(context)),
-
-            // Reason
-            CustomText(
-              'reason_for_reschedule',
-              isKey: true,
-              color: AppTheme.getColor(context).onSurfaceVariant,
-              fontSize: 14 * Responsive.getResponsiveText(context),
-              fontWeight: FontWeight.w600,
+            NewTextField(
+              label: LanguageManager().get('purpose_of_visit'),
+              prefixIconPath: AppAssets.sticky_note,
+              hintText: LanguageManager().get('write_here'),
+              maxLines: 10,
             ),
-            SizedBox(height: 12 * Responsive.getResponsive(context)),
-            // Type here...
-            BigMyCoTextField(
-              controller: amountController,
-              hintText: 'Type here...',
-              prefixImage: SvgPicture.asset(
-                AppAssets.stickynote,
-                // height: 20 * Responsive.getResponsive(context),
-                // width: 20 * Responsive.getResponsive(context),
-              ),
-              maxLines: 5,
-              textInputType: TextInputType.multiline,
-              validator: (v) =>
-                  v == null || v.isEmpty ? 'Please enter a reason' : null,
-              hintStyle: TextStyle(
-                color: AppTheme.getColor(context).outline,
-                fontSize: 16 * Responsive.getResponsiveText(context),
-              ),
-              style: TextStyle(
-                fontSize: 16 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).primary,
-              ),
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(color: AppColors.borderColor),
-                borderRadius: BorderRadius.circular(
-                  12 * Responsive.getResponsive(context),
-                ),
-              ),
-            ),
-
             SizedBox(height: 12 * Responsive.getResponsive(context)),
 
             const CustomMediaPickerContainer(

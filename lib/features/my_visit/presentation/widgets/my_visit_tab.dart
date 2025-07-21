@@ -43,12 +43,6 @@ class MyVisitTab extends StatelessWidget {
         ),
         SizedBox(height: Responsive.getHeight(context) * 0.010),
 
-        // Search Field
-        // VisitSearchBar(
-        //   controller: searchController,
-        //   focusNode: searchFocus,
-        //   hintText: 'Search with Customer',
-        // ),
         CustomSearchField(
           controller: searchController,
           hintText: 'Search With Customer',

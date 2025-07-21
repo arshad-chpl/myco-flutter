@@ -3,10 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/widgets/custom_label_textfield.dart';
-import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class VisitTemplate extends StatefulWidget {
   const VisitTemplate({super.key});
@@ -28,6 +26,10 @@ class _VisitTemplateState extends State<VisitTemplate> {
     'Ahmedabad Branch',
     'Remote Site',
   ];
+  final TextEditingController q1Controller = TextEditingController();
+  final TextEditingController branchTypeController = TextEditingController();
+
+
 
   String? selectedBranchType;
   @override
@@ -47,54 +49,24 @@ class _VisitTemplateState extends State<VisitTemplate> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 0.03 * Responsive.getHeight(context)),
-
-          // row with title and icon
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CustomText(
-                'Visit Template',
-                fontWeight: FontWeight.w600,
-                fontSize: 16 * Responsive.getResponsiveText(context),
-              ),
-              SvgPicture.asset(AppAssets.assetVector, fit: BoxFit.scaleDown),
-            ],
-          ),
-          SizedBox(height: 0.03 * Responsive.getHeight(context)),
-
           // Text field with label "Q1"
-          LabeledTextField(
+          NewTextField(
             label: 'Q1',
-            hint: 'Type here',
-            textAlignment: TextAlign.start,
-            widthFactor: Responsive.getWidth(context),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
-              ),
-            ),
-            prefix: SvgPicture.asset(
-              AppAssets.assetNoteFavorite,
-              fit: BoxFit.scaleDown,
-            ),
+            hintText: 'Type here',
+            prefixIconPath: AppAssets.assetNoteFavorite,
+            controller: q1Controller,
           ),
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
           // Custom dropdown to select branch
-          LabeledDropdown(
+          NewTextField(
             label: 'Branch',
-            items: branchType,
-            width: Responsive.getWidth(context),
             hintText: 'Select',
-            border: BoxBorder.all(color: AppTheme.getColor(context).outline),
-            prefix: SvgPicture.asset(
-              AppAssets.assetData,
-              fit: BoxFit.scaleDown,
-            ),
-            itemToString: (item) => item,
-            selectedItem: selectedBranchType,
-            onChanged: (value, index) {},
+            prefixIconPath: AppAssets.assetData,
+            controller: branchTypeController,
+            onTap: () async {
+              // handle branch selection
+            },
           ),
 
           SizedBox(height: 0.10 * Responsive.getHeight(context)),
@@ -104,20 +76,7 @@ class _VisitTemplateState extends State<VisitTemplate> {
             boarderRadius: 30 * Responsive.getResponsive(context),
             isShadowBottomLeft: true,
             onTap: () {
-
-               //use below code to open bottom sheet
-              // showModalBottomSheet(
-              //   context: context,
-              //   isScrollControlled: true,
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.vertical(
-              //       top: Radius.circular(
-              //         16 * Responsive.getResponsive(context),
-              //       ),
-              //     ),
-              //   ),
-              //   builder: (context) => const RemarkBottomSheet(),
-              // );
+              // handle submit button
             },
             title: 'SUBMIT',
           ),

@@ -40,16 +40,16 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
 
   void _openVisitWithBottomSheet(BuildContext context) {
     showModalBottomSheet(
-      context:  context,
+      context: context,
       isScrollControlled: true,
       backgroundColor: AppTheme.getColor(context).surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (context) => BlocProvider(
-  create: (context) => InputTagBloc(),
-  child: VisitWith(chilcontext: context),
-),
+        create: (context) => InputTagBloc(),
+        child: VisitWith(chilcontext: context),
+      ),
     );
   }
 
@@ -69,7 +69,7 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
       ),
       padding: EdgeInsets.symmetric(
         vertical: 10 * Responsive.getResponsive(context),
-        horizontal: 10* Responsive.getResponsive(context),
+        horizontal: 10 * Responsive.getResponsive(context),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -79,12 +79,14 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
 
           return RadioListTile<String>(
             dense: true,
-            contentPadding: tilePadding ?? const EdgeInsets.symmetric(horizontal: 0),
+            contentPadding:
+                tilePadding ?? const EdgeInsets.symmetric(horizontal: 0),
             visualDensity: VisualDensity.compact,
             activeColor: activeColor ?? theme.primary,
             title: Text(
               option,
-              style: textStyle ??
+              style:
+                  textStyle ??
                   TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 18 * Responsive.getResponsiveText(context),
