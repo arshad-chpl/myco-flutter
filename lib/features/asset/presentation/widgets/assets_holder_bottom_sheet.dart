@@ -121,7 +121,9 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
                                 AppAssets.imageNoAssets,
                                 width: 0.12 * Responsive.getWidth(context),
                               ),
-                              const SizedBox(width: 16),
+                              SizedBox(
+                                width: 16 * Responsive.getResponsive(context),
+                              ),
                               Expanded(
                                 child: CustomText(
                                   'not_assigned_to_any_user',
@@ -162,7 +164,7 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
                                     color: AppTheme.getColor(context).primary,
                                     fontWeight: FontWeight.w700,
                                     fontSize:
-                                        24 *
+                                        18 *
                                         Responsive.getResponsiveText(context),
                                   ),
                                   SizedBox(
@@ -392,19 +394,19 @@ class AssetsHoldersBottomSheet extends StatelessWidget {
         children: [
           CustomText(
             title,
-            fontSize: 20 * Responsive.getResponsiveText(context),
+            fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w700,
             color: AppTheme.getColor(context).primary,
           ),
           CustomText(
             subTitle,
-            fontSize: 16 * Responsive.getResponsiveText(context),
+            fontSize: 12 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,
             color: AppTheme.getColor(context).onSurfaceVariant,
           ),
           CustomText(
             address,
-            fontSize: 16 * Responsive.getResponsiveText(context),
+            fontSize: 12 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,
             color: AppTheme.getColor(context).onSurfaceVariant,
           ),

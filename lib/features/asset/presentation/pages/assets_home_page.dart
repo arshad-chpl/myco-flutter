@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
@@ -22,6 +23,7 @@ import 'package:myco_flutter/features/asset/presentation/widgets/assets_bottom_s
 import 'package:myco_flutter/features/asset/presentation/widgets/past_assets_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
@@ -44,7 +46,7 @@ class AssetsHomePage extends StatelessWidget {
               right: 0.04 * Responsive.getWidth(context),
             ),
             child: GestureDetector(
-              // onTap: () => context.push('/add-assets'),
+              onTap: () => context.push('/add-assets'),
               // onTap: () async {
               //   final dataMap = {
               //     "getAssetsNew": "getAssetsNew",
@@ -127,27 +129,36 @@ class AssetsHomePage extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                 horizontal: 0.04 * Responsive.getWidth(context),
               ),
-              child: MyCoTextfield(
-                key: ValueKey(bloc.state.selectedIndex),
+              child: CustomSearchField(
                 hintText: 'Search',
-                maxLines: 1,
-                textAlignment: TextAlign.start,
-                hintTextStyle: AppTheme.getTextStyle(
-                  context,
-                ).labelLarge!.copyWith(color: AppColors.textSecondary),
-                preFixImage: AppAssets.imageSearch,
                 isSuffixIconOn: true,
-                suFixImage: AppAssets.imageScanner,
-                suFixImageWidth: 25,
-                onTap1: () => context.push('/qr-scanner'),
-                contentPadding: EdgeInsets.only(
-                  top: 0.012 * Responsive.getHeight(context),
+                suffixIcon: Image.asset(
+                  AppAssets.imageScanner,
+                  height: 0.03 * Responsive.getHeight(context),
+                  // fit: BoxFit.cover,
                 ),
-                onChanged: (value) {
-                  context.read<AssetsBloc>().add(SearchAssetsEvent(value));
-                },
-                boarderRadius: 12 * Responsive.getResponsive(context),
               ),
+              //  MyCoTextfield(
+              //   key: ValueKey(bloc.state.selectedIndex),
+              //   hintText: 'Search',
+              //   maxLines: 1,
+              //   textAlignment: TextAlign.start,
+              //   hintTextStyle: AppTheme.getTextStyle(
+              //     context,
+              //   ).labelLarge!.copyWith(color: AppColors.textSecondary),
+              //   preFixImage: AppAssets.imageSearch,
+              //   isSuffixIconOn: true,
+              //   suFixImage: AppAssets.imageScanner,
+              //   suFixImageWidth: 25,
+              //   onTap1: () => context.push('/qr-scanner'),
+              //   contentPadding: EdgeInsets.only(
+              //     top: 0.012 * Responsive.getHeight(context),
+              //   ),
+              //   onChanged: (value) {
+              //     context.read<AssetsBloc>().add(SearchAssetsEvent(value));
+              //   },
+              //   boarderRadius: 12 * Responsive.getResponsive(context),
+              // ),
             ),
           ),
 
@@ -172,11 +183,7 @@ class AssetsHomePage extends StatelessWidget {
                       const Color(0xFF08A4BB),
                     ],
                     selectedIndex: state.selectedIndex,
-                    tabs: const [
-                      'Active Assets (3)',
-                      'Past Assets (2)',
-                      'All Assets (2)',
-                    ],
+                    tabs: const ['Active Assets', 'Past Assets', 'All Assets'],
                     onTabChange: (int index) {
                       bloc.add(TabChanged(index));
                     },
@@ -201,18 +208,6 @@ class AssetsHomePage extends StatelessWidget {
     );
   }
 
-  // List<Widget> _buildAssetListByTab(BuildContext context) {
-  //   final index = context.watch<AssetsTabBloc>().state.selectedIndex;
-
-  //   final tabBuilders = <int, List<Widget> Function()>{
-  //     0: _buildActiveAssetsTab,
-  //     1: _buildPastAssetsTab,
-  //     2: () => _buildAllAssetsTab(context),
-  //   };
-
-  //   return tabBuilders[index]?.call() ?? [];
-  // }
-
   List<Widget> _buildAssetListByTab(BuildContext context) {
     final state = context.watch<AssetsBloc>().state;
 
@@ -227,10 +222,6 @@ class AssetsHomePage extends StatelessWidget {
 
     return [const SizedBox.shrink()];
   }
-
-  // List<Widget> _buildActiveAssetsTab() => [const AssetsListPage()];
-
-  // List<Widget> _buildPastAssetsTab() => [const PastAssetsListPage()];
 
   // ignore: prefer_expression_function_bodies
   List<Widget> _buildAllAssetsTab(BuildContext context) {
@@ -374,6 +365,113 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(covariant _SliverTabBarDelegate oldDelegate) =>
       child != oldDelegate.child || height != oldDelegate.height;
 }
+
+class AssetsListPage extends StatelessWidget {
+  final String oldItems;
+
+  const AssetsListPage({required this.oldItems, super.key});
+
+  @override
+  Widget build(BuildContext context) => SliverPadding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 0.04 * Responsive.getWidth(context),
+    ),
+    sliver: BlocBuilder<AssetsBloc, AssetsState>(
+      builder: (context, state) {
+        if (state is AssetsLoading) {
+          return SliverToBoxAdapter(
+            child: Column(
+              children: List.generate(
+                4,
+                (index) => Padding(
+                  padding: EdgeInsets.only(
+                    bottom: 0.020 * Responsive.getHeight(context),
+                  ),
+                  child: const ActiveAssetsCardShimmer(),
+                ),
+              ),
+            ),
+          );
+        } else if (state is AssetsLoaded) {
+          final assets = state.assets;
+
+          return SliverList.separated(
+            itemCount: assets.length,
+            separatorBuilder: (_, __) =>
+                SizedBox(height: 0.02 * Responsive.getHeight(context)),
+            itemBuilder: (_, index) {
+              final item = assets[index];
+
+              if (oldItems == '1') {
+                return PastAssetsCard(
+                  title: item.assetsName ?? '',
+                  subTitle: '(${item.assetsIdView ?? ''})',
+                  image: item.assetsFile ?? AppAssets.imageLaptop,
+                  brand: item.assetsBrandName ?? '',
+                  srNo: item.srNo ?? '',
+                  handover: item.handoverDate ?? '',
+                  takeover: item.takeoverDate ?? '',
+                  handoverImageList:
+                      item.assetsFiles?.map((e) => e.document ?? '').toList() ??
+                      [],
+                  takeoverImageList:
+                      item.assetsFilesTakeover
+                          ?.map((e) => e['file']?.toString())
+                          .whereType<String>()
+                          .toList() ??
+                      [],
+                );
+              }
+
+              return ActiveAssetsCard(
+                title: item.assetsName ?? '',
+                subTitle: '(${item.assetsIdView ?? ''})',
+                image: item.assetsFile ?? AppAssets.imageLaptop,
+                brand: item.assetsBrandName ?? '',
+                srNo: item.srNo ?? '--',
+                handOverDate: item.handoverDate ?? '',
+                handoverImageList:
+                    item.assetsFiles?.map((e) => e.document ?? '').toList() ??
+                    [],
+              );
+            },
+          );
+        } else if (state is AssetsError) {
+          return SliverToBoxAdapter(child: Center(child: Text(state.message)));
+        }
+
+        return const SliverToBoxAdapter(child: SizedBox());
+      },
+    ),
+  );
+}
+
+
+
+
+
+
+
+
+
+  // List<Widget> _buildAssetListByTab(BuildContext context) {
+  //   final index = context.watch<AssetsTabBloc>().state.selectedIndex;
+
+  //   final tabBuilders = <int, List<Widget> Function()>{
+  //     0: _buildActiveAssetsTab,
+  //     1: _buildPastAssetsTab,
+  //     2: () => _buildAllAssetsTab(context),
+  //   };
+
+  //   return tabBuilders[index]?.call() ?? [];
+  // }
+
+  // List<Widget> _buildActiveAssetsTab() => [const AssetsListPage()];
+
+  // List<Widget> _buildPastAssetsTab() => [const PastAssetsListPage()];
+
+
+
 
 // List<Widget> _buildAssetListByTab(BuildContext context) {
 //   switch (context.watch<AssetsTabBloc>().state.selectedIndex) {
@@ -595,83 +693,3 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
 //     );
 //   }
 // }
-
-class AssetsListPage extends StatelessWidget {
-  final String oldItems;
-
-  const AssetsListPage({required this.oldItems, super.key});
-
-  @override
-  Widget build(BuildContext context) => SliverPadding(
-    padding: EdgeInsets.symmetric(
-      horizontal: 0.04 * Responsive.getWidth(context),
-    ),
-    sliver: BlocBuilder<AssetsBloc, AssetsState>(
-      builder: (context, state) {
-        if (state is AssetsLoading) {
-          return SliverToBoxAdapter(
-            child: Column(
-              children: List.generate(
-                4,
-                (index) => Padding(
-                  padding: EdgeInsets.only(
-                    bottom: 0.020 * Responsive.getHeight(context),
-                  ),
-                  child: const ActiveAssetsCardShimmer(),
-                ),
-              ),
-            ),
-          );
-        } else if (state is AssetsLoaded) {
-          final assets = state.assets;
-
-          return SliverList.separated(
-            itemCount: assets.length,
-            separatorBuilder: (_, __) =>
-                SizedBox(height: 0.02 * Responsive.getHeight(context)),
-            itemBuilder: (_, index) {
-              final item = assets[index];
-
-              if (oldItems == '1') {
-                return PastAssetsCard(
-                  title: item.assetsName ?? '',
-                  subTitle: '(${item.assetsIdView ?? ''})',
-                  image: item.assetsFile ?? AppAssets.imageLaptop,
-                  brand: item.assetsBrandName ?? '',
-                  srNo: item.srNo ?? '',
-                  handover: item.handoverDate ?? '',
-                  takeover: item.takeoverDate ?? '',
-                  handoverImageList:
-                      item.assetsFiles?.map((e) => e.document ?? '').toList() ??
-                      [],
-                  takeoverImageList:
-                      item.assetsFilesTakeover
-                          ?.map((e) => e['file']?.toString())
-                          .whereType<String>()
-                          .toList() ??
-                      [],
-                );
-              }
-
-              return ActiveAssetsCard(
-                title: item.assetsName ?? '',
-                subTitle: '(${item.assetsIdView ?? ''})',
-                image: item.assetsFile ?? AppAssets.imageLaptop,
-                brand: item.assetsBrandName ?? '',
-                srNo: item.srNo ?? '--',
-                handOverDate: item.handoverDate ?? '',
-                handoverImageList:
-                    item.assetsFiles?.map((e) => e.document ?? '').toList() ??
-                    [],
-              );
-            },
-          );
-        } else if (state is AssetsError) {
-          return SliverToBoxAdapter(child: Center(child: Text(state.message)));
-        }
-
-        return const SliverToBoxAdapter(child: SizedBox());
-      },
-    ),
-  );
-}

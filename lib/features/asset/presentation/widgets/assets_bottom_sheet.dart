@@ -83,9 +83,8 @@ class _AssetsBottomSheetState extends State<AssetsBottomSheet> {
       mainAxisSize: MainAxisSize.min,
       children: [
         CustomText(
-          
           widget.heading,
-          fontSize: 22 * Responsive.getResponsiveText(context),
+          fontSize: 20 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,
           color: AppTheme.getColor(context).onSurfaceVariant,
         ),
@@ -150,7 +149,7 @@ class _AssetsBottomSheetState extends State<AssetsBottomSheet> {
                         textAlign: TextAlign.center,
                         color: AppTheme.getColor(context).onSurface,
                         fontWeight: FontWeight.w600,
-                        fontSize: 20 * Responsive.getResponsiveText(context),
+                        fontSize: 16 * Responsive.getResponsiveText(context),
                       ),
                     ),
                   ),

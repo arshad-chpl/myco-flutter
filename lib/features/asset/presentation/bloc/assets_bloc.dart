@@ -97,11 +97,13 @@ class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
 
     if (oldItems == '2') {
       // All tab — no API call, show cached or empty
-      emit(AssetsLoaded(
-        assets: _allAssetsEntity?.assets ?? [],
-        originalAssets: _allAssetsEntity?.assets ?? [],
-        selectedIndex: event.index,
-      ));
+      emit(
+        AssetsLoaded(
+          assets: _allAssetsEntity?.assets ?? [],
+          originalAssets: _allAssetsEntity?.assets ?? [],
+          selectedIndex: event.index,
+        ),
+      );
       return;
     }
 
@@ -123,11 +125,13 @@ class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
       ),
       (entity) {
         _allAssetsEntity = entity;
-        emit(AssetsLoaded(
-          assets: entity.assets ?? [],
-          originalAssets: entity.assets ?? [],
-          selectedIndex: event.index,
-        ));
+        emit(
+          AssetsLoaded(
+            assets: entity.assets ?? [],
+            originalAssets: entity.assets ?? [],
+            selectedIndex: event.index,
+          ),
+        );
       },
     );
   }
@@ -141,14 +145,18 @@ class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
         final name = asset.assetsName?.toLowerCase() ?? '';
         final brand = asset.assetsBrandName?.toLowerCase() ?? '';
         final category = asset.assetsCategory?.toLowerCase() ?? '';
-        return name.contains(query) || brand.contains(query) || category.contains(query);
+        return name.contains(query) ||
+            brand.contains(query) ||
+            category.contains(query);
       }).toList();
 
-      emit(AssetsLoaded(
-        assets: filtered,
-        originalAssets: currentState.originalAssets,
-        selectedIndex: currentState.selectedIndex,
-      ));
+      emit(
+        AssetsLoaded(
+          assets: filtered,
+          originalAssets: currentState.originalAssets,
+          selectedIndex: currentState.selectedIndex,
+        ),
+      );
     }
   }
 

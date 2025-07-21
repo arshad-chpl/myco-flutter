@@ -136,14 +136,13 @@ class CommonCard extends StatelessWidget {
                       children: [
                         Expanded(
                           child: CustomText(
-                            isKey: true,
                             title,
                             color:
                                 titleColor ??
                                 AppTheme.getColor(context).onPrimary,
                             fontSize:
                                 titleFontSize ??
-                                18 * Responsive.getResponsiveText(context),
+                                16 * Responsive.getResponsiveText(context),
                             fontWeight: titleFontWeight ?? FontWeight.w700,
                           ),
                         ),
@@ -155,14 +154,13 @@ class CommonCard extends StatelessWidget {
                     SizedBox(height: titleSecondTitleBetweenSpace),
                     if (secondTitle != null)
                       CustomText(
-                        isKey: true,
                         '$secondTitle',
                         color:
                             secondTitleColor ??
                             AppTheme.getColor(context).onPrimary,
                         fontSize:
                             secondTitleFontSize ??
-                            18 * Responsive.getResponsiveText(context),
+                            16 * Responsive.getResponsiveText(context),
                         fontWeight: secondTitleFontWeight ?? FontWeight.w700,
                       ),
                     SizedBox(height: secondTitleSubTitleBetweenSpace),
@@ -179,14 +177,13 @@ class CommonCard extends StatelessWidget {
 
                           Expanded(
                             child: CustomText(
-                              isKey: true,
                               '$subTitle',
                               color:
                                   subTitleColor ??
                                   AppTheme.getColor(context).onPrimary,
                               fontSize:
                                   subTitleFontSize ??
-                                  15 * Responsive.getResponsiveText(context),
+                                  12 * Responsive.getResponsiveText(context),
                               fontWeight: subTitleFontWeight ?? FontWeight.w600,
                             ),
                           ),

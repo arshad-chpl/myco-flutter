@@ -6,9 +6,7 @@ class AssetsFilters extends AssetsFilterEvent {
   final String? category;
   final String? brand;
   AssetsFilters({this.category, this.brand});
-}
-
-abstract class AssetsEvent extends Equatable {
+}abstract class AssetsEvent extends Equatable {
   const AssetsEvent();
 
   @override

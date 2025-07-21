@@ -18,7 +18,8 @@ class AssetsTextFieldWidget extends StatelessWidget {
     required this.image,
     required this.hintText,
     super.key,
-    this.controller, this.validator,
+    this.controller,
+    this.validator,
   });
 
   @override
@@ -28,8 +29,8 @@ class AssetsTextFieldWidget extends StatelessWidget {
     children: [
       CustomText(
         label,
-        
-        fontSize: 16 * Responsive.getResponsiveText(context),
+
+        fontSize: 14 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w600,
         color: AppTheme.getColor(context).onSurfaceVariant,
       ),
@@ -43,13 +44,13 @@ class AssetsTextFieldWidget extends StatelessWidget {
         hintTextStyle: TextStyle(
           fontFamily: 'Gilroy-semibold',
           fontWeight: FontWeight.w400,
-          fontSize: 20 * Responsive.getResponsiveText(context),
+          fontSize: 16 * Responsive.getResponsiveText(context),
           color: AppColors.gray,
         ),
         typingtextStyle: TextStyle(
           fontFamily: 'Gilroy-semiBold',
           fontWeight: FontWeight.w400,
-          fontSize: 20 * Responsive.getResponsiveText(context),
+          fontSize: 16 * Responsive.getResponsiveText(context),
           // color: AppColors.gray,
         ),
         maxLines: 1,

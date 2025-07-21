@@ -166,12 +166,12 @@ class AssetsDetailsPage extends StatelessWidget {
                                 textStyle: TextStyle(
                                   fontFamily: 'Gilroy-semiBold',
                                   fontSize:
-                                      14 *
+                                      12 *
                                       Responsive.getResponsiveText(context),
                                   color: AppTheme.getColor(context).onPrimary,
                                 ),
 
-                                width: 0.28 * Responsive.getWidth(context),
+                                width: 0.3 * Responsive.getWidth(context),
                                 height: 0.08 * Responsive.getWidth(context),
                                 boarderRadius:
                                     50 * Responsive.getResponsive(context),
@@ -184,7 +184,7 @@ class AssetsDetailsPage extends StatelessWidget {
                                 textStyle: TextStyle(
                                   fontFamily: 'Gilroy-semiBold',
                                   fontSize:
-                                      14 *
+                                      12 *
                                       Responsive.getResponsiveText(context),
                                   color: AppTheme.getColor(context).onPrimary,
                                 ),
@@ -329,26 +329,26 @@ class AssetsDetailsPage extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       SizedBox(
-        width: 0.4 * Responsive.getWidth(context),
+        width: 0.35 * Responsive.getWidth(context),
         child: CustomText(
           title,
           color: AppTheme.getColor(context).onSurface,
           fontWeight: FontWeight.w700,
-          fontSize: 18 * Responsive.getResponsiveText(context),
+          fontSize: 14 * Responsive.getResponsiveText(context),
         ),
       ),
       CustomText(
-        ':   ',
+        ' :   ',
         fontWeight: FontWeight.w700,
         color: AppTheme.getColor(context).onSurface,
-        fontSize: 18 * Responsive.getResponsiveText(context),
+        fontSize: 14 * Responsive.getResponsiveText(context),
       ),
       Expanded(
         child: CustomText(
           data,
           color: AppTheme.getColor(context).outline,
           fontWeight: FontWeight.w500,
-          fontSize: 18 * Responsive.getResponsiveText(context),
+          fontSize: 14 * Responsive.getResponsiveText(context),
         ),
       ),
     ],
@@ -476,7 +476,7 @@ class AssetsDetailsPage extends StatelessWidget {
                           CustomText(
                             'attachment',
                             fontSize:
-                                22 * Responsive.getResponsiveText(context),
+                                20 * Responsive.getResponsiveText(context),
                             fontWeight: FontWeight.w600,
                             color: AppTheme.getColor(context).onSurfaceVariant,
                           ),
@@ -489,7 +489,7 @@ class AssetsDetailsPage extends StatelessWidget {
                               radius: 12 * Responsive.getResponsive(context),
                             ),
                             child: Container(
-                              width: 0.40 * Responsive.getWidth(context),
+                              width: 0.35 * Responsive.getWidth(context),
                               decoration: BoxDecoration(
                                 color: const Color(0xFFEEF7FD),
                                 borderRadius: BorderRadius.circular(
@@ -503,8 +503,8 @@ class AssetsDetailsPage extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Container(
-                                    width: 0.35 * Responsive.getWidth(context),
-                                    height: 0.35 * Responsive.getWidth(context),
+                                    width: 0.3 * Responsive.getWidth(context),
+                                    height: 0.3 * Responsive.getWidth(context),
                                     padding: EdgeInsets.all(
                                       12 * Responsive.getResponsive(context),
                                     ),
@@ -526,7 +526,7 @@ class AssetsDetailsPage extends StatelessWidget {
                                     'file_name',
                                     maxLines: 1,
                                     fontSize:
-                                        18 *
+                                        14 *
                                         Responsive.getResponsiveText(context),
                                     fontWeight: FontWeight.w600,
                                     overflow: TextOverflow.ellipsis,
@@ -617,19 +617,19 @@ class AssetsDetailsPage extends StatelessWidget {
         children: [
           CustomText(
             title,
-            fontSize: 20 * Responsive.getResponsiveText(context),
+            fontSize: 16 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w700,
             color: AppTheme.getColor(context).primary,
           ),
           CustomText(
             subTitle,
-            fontSize: 16 * Responsive.getResponsiveText(context),
+            fontSize: 12 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,
             color: AppTheme.getColor(context).onSurfaceVariant,
           ),
           CustomText(
             address,
-            fontSize: 16 * Responsive.getResponsiveText(context),
+            fontSize: 12 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w600,
             color: AppTheme.getColor(context).onSurfaceVariant,
           ),

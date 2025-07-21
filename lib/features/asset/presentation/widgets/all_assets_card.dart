@@ -244,7 +244,7 @@ class AllAssetsCard extends StatelessWidget {
                   title: 'View Details',
                   textStyle: TextStyle(
                     fontFamily: 'Gilroy-semiBold',
-                    fontSize: 14 * Responsive.getResponsiveText(context),
+                    fontSize: 12 * Responsive.getResponsiveText(context),
                     color: AppTheme.getColor(context).onPrimary,
                   ),
                   width: 0.26 * Responsive.getWidth(context),

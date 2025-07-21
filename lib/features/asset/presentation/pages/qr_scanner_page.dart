@@ -8,7 +8,6 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/qr_scanner.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
 
 class QRScannerPage extends StatefulWidget {
   const QRScannerPage({super.key});
@@ -33,7 +32,6 @@ class _QRScannerPageState extends State<QRScannerPage> {
     return Scaffold(
       appBar: CustomAppbar(
         title: 'scan_asset',
-
         titleSpacing: 0,
         actions: [
           GestureDetector(
