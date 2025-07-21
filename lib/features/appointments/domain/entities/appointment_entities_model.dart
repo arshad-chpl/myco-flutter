@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class AppointmentEntityModel extends Equatable {
   final String? status;
   final String? message;
-  final List<MyAppointmentEntity>? myAppointments; // List of nested entities
+  final List<MyAppointmentEntity>? myAppointments; 
 
   const AppointmentEntityModel({
     this.status,
