@@ -224,11 +224,7 @@ class GroupChat extends StatelessWidget {
           },
         ),
         SizedBox(height: 0.025 * Responsive.getHeight(context)),
-        MyCoTextfield(
-          controller: TextEditingController(),
-          hintText: 'Type a message',
-          suffix: const Icon(Icons.send),
-        ),
+        
         Expanded(
           child: ListView.separated(
             itemCount: state is SearchQueryState

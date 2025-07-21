@@ -7,7 +7,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/chat/presentation/widgets/select_department.dart';
+import 'package:myco_flutter/widgets/custom_multiselect_bottomsheet.dart';
 import 'package:myco_flutter/features/chat/presentation/widgets/select_employee.dart';
 import 'package:myco_flutter/features/language_selector/model/language_response.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/custom_dropdown_menu.dart';
@@ -16,6 +16,7 @@ import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class StartNewChat extends StatefulWidget {
   StartNewChat({super.key});
@@ -73,27 +74,15 @@ class _StartNewChatState extends State<StartNewChat> {
             //  prefixIcon: Icons.search,
           ),
            SizedBox(height: 16 * Responsive.getResponsive(context)),
-          MyCoTextfield(
-            boarderRadius: 10,
-            isReadOnly: true,
-            hintTextStyle: selectedDepartments.isEmpty ? null :TextStyle(
-              fontWeight: FontWeight.w400,
-              color: AppTheme.getColor(context).primary,  
-              fontSize: 18 * Responsive.getResponsive(context),
-              fontFamily: 'Gilroy-semiBold',
-            ) ,
+          NewTextField(
+            prefixIconPath: " ",
+            enabled: true,
+            // isReadOnly: true,
             hintText: selectedDepartments.isEmpty
                 ? LanguageManager().get('select_block')
                 : selectedDepartments['name'] ?? '',
-
-            contentPadding: const EdgeInsets.only(
-              top: 10,
-              bottom: 10,
-              left: 10,
-              right: 10,
-            ),
-            suffix: Image.asset('assets/chat/arrow_down_sigle.png', scale: 20),
-            onClick: () => _openDepartmentPicker(),
+            suffixIconPath: 'assets/chat/chevron-down.svg',
+            onTap: () => _openDepartmentPicker(),
             
           ),
 

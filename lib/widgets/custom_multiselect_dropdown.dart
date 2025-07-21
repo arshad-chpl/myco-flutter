@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/features/chat/presentation/widgets/select_department.dart';
+import 'package:myco_flutter/widgets/custom_multiselect_bottomsheet.dart';
 
 class CustomMultiSelectChipWidget extends StatefulWidget {
   /// List of items to select from
@@ -14,6 +14,7 @@ class CustomMultiSelectChipWidget extends StatefulWidget {
   final String hintText;
   final String addButtonText;
   final String? prefixIcon;
+  final String? bottomSheetHeading;
   
   /// Callback function to handle item selection
   final void Function(List<String> selectedIds) onSelectionChanged;
@@ -25,6 +26,7 @@ class CustomMultiSelectChipWidget extends StatefulWidget {
     required this.labelText,
     required this.hintText,
     required this.addButtonText,
+    this.bottomSheetHeading,
      this.prefixIcon,
     required this.onSelectionChanged, // <--- New parameter
   }) : super(key: key);
@@ -39,7 +41,7 @@ class _CustomMultiSelectChipWidgetState extends State<CustomMultiSelectChipWidge
   void _openSelectionPicker() async {
   final List<String>? selectedIds = await showMultiSelectBottomSheet(
     context: context,
-    heading: widget.addButtonText,
+    heading: widget.bottomSheetHeading ?? widget.addButtonText,
     icon: const AssetImage('assets/chat/down_arrow.png'),
     dataList: widget.items,
   );

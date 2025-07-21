@@ -109,6 +109,7 @@ flutter:
     - assets/dashboard/svgs/
     - assets/dashboard/svgs/
     - assets/assets/
+    - assets/chat/
     - assets/svgs/take_order/
     - assets/animations/
     - assets/stepper/

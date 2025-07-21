@@ -37,73 +37,11 @@ class PhoneNumberField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
-    // final textTheme = theme.textTheme;
-
-    // return MyCoTextfield(
-    //   // contentPadding: EdgeInsets.all(8 * Responsive.getResponsive(context)),
-    //   prefix: Padding(
-    //     padding: const EdgeInsets.only(left: 8.0,top: 8),
-    //     child: Container(
-    //       width: 0.25 * Responsive.getWidth(context),
-    //       child: Row(
-    //         // mainAxisSize: MainAxisSize.min,
-    //         crossAxisAlignment: CrossAxisAlignment.center,
-    //         children: [
-    //           Container(
-    //             width: 0.2 * Responsive.getWidth(context),
-    //             child: CustomPopupDropdownStyled<String>(
-    //               items: countries,
-    //               spacing:  1,
-    //               border: Border.all(color: Colors.transparent),
-    //               selectedItem: selectedCountry,
-    //               itemToString: (val) => val,
-    //               onChanged: onCountryChanged,
-    //               height: 40,
-    //               width: 70,
-    //               hintTextStyle: TextStyle(
-    //                 fontSize: 14 * Responsive.getResponsiveText(context),
-    //                 fontWeight: FontWeight.w600,
-    //               ),
-    //               // hintTextStyle: AppTheme.lightTheme(context).textTheme.bodyMedium?.copyWith(
-    //               //   color: AppColors.primary,
-    //               //     ),
-    //               // useRadioList: false,
-    //             ),
-    //           ),
-    //         CustomText(
-    //           countryDialCodes[selectedCountry] ?? '',
-    //             color: AppTheme.getColor(context).outline,
-    //             fontSize: 14 * Responsive.getResponsiveText(context),
-    //             fontWeight: FontWeight.w600,
-    //             // fontSize: AppTheme.lightTheme(context).textTheme.bodyMedium?.fontSize ,
-             
-    //         ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    //   // textAlignment: TextAlign.start,
-    //   isSuffixIconOn: false,
-    //   controller: phoneController,
-    //   hintText: hintText ?? '1234567890',
-    //   hintTextStyle:
-    //       hintTextStyle ??
-    //       TextStyle(
-    //         fontFamily: "Gilroy-Bold",
-    //         color: AppTheme.getColor(context).outline,
-    //         fontSize:
-    //             AppTheme.getTextStyle(context).bodyMedium?.fontSize ??
-    //             14.0 * Responsive.getResponsiveText(context),
-    //       ),
-    //   textInputType: TextInputType.phone,
-    //   inputFormater: [FilteringTextInputFormatter.digitsOnly],
-    //   border: InputBorder.none,
-    // );
     return MyCoTextfield(
       controller: phoneController,
       textInputType: TextInputType.phone,
       inputFormater: [FilteringTextInputFormatter.digitsOnly],
+      // maxLenght: 10,
       // border: InputBorder.none,
       decoration: decoration,
       textAlignment: TextAlign.start,
