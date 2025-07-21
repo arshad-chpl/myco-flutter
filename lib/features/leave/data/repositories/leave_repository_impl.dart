@@ -94,6 +94,7 @@ class LeaveRepositoryImpl implements LeaveRepository {
   ) async =>
       safeApiCall.execute(() => remoteDataSource.deleteLeaveRequest(leaveId));
 
+  @override
   Future<Either<Failure, CommonResponse>> changeAutoLeave(
     String userId,
     String paid,
@@ -116,6 +117,29 @@ class LeaveRepositoryImpl implements LeaveRepository {
       isSpecialDay,
       attendanceId,
       leaveId,
+      leavePercentage,
+    ),
+  );
+
+  @override
+  Future<Either<Failure, CommonResponse>> changeSandwichLeave(
+    String userId,
+    String paid,
+    String leaveId,
+    String leaveName,
+    String sandwichId,
+    String unitId,
+    String userFullName,
+    String leavePercentage,
+  ) async => safeApiCall.execute(
+    () => remoteDataSource.changeSandwichLeave(
+      userId,
+      paid,
+      leaveId,
+      leaveName,
+      sandwichId,
+      unitId,
+      userFullName,
       leavePercentage,
     ),
   );

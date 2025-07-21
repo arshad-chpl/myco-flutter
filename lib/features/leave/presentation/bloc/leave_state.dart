@@ -79,6 +79,13 @@ class AutoLeaveChanged extends LeaveState {
   List<Object> get props => [commonResponse];
 }
 
+class SandwichLeaveChanged extends LeaveState {
+  final CommonResponse commonResponse;
+  const SandwichLeaveChanged(this.commonResponse);
+  @override
+  List<Object> get props => [commonResponse];
+}
+
 class LeaveError extends LeaveState {
   final String message;
   const LeaveError(this.message);

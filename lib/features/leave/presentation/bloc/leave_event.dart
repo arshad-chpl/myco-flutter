@@ -71,4 +71,16 @@ class ChangeAutoLeave extends LeaveEvent{
   const ChangeAutoLeave(this.userId, this.paid, this.leaveTypeId, this.leaveDate, this.leaveDay, this.extraDay, this.isSpecialDay, this.attendanceId, this.leaveId, this.leavePercentage);
 }
 
+class ChangeSandwichLeave extends LeaveEvent{
+  final String userId;
+  final String paid;
+  final String leaveId;
+  final String leaveName;
+  final String sandwichId;
+  final String unitId;
+  final String userFullName;
+  final String leavePercentage;
+  const ChangeSandwichLeave(this.userId, this.paid, this.leaveId, this.leaveName, this.sandwichId, this.unitId, this.userFullName, this.leavePercentage);
+}
+
 class InitialView extends LeaveEvent {}

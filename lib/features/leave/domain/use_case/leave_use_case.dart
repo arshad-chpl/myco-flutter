@@ -56,6 +56,26 @@ class LeaveUseCase{
     leavePercentage,
   );
 
+  Future<Either<Failure, CommonResponse>> changeSandwichLeave(
+    String userId,
+    String paid,
+    String leaveId,
+    String leaveName,
+    String sandwichId,
+    String unitId,
+    String userFullName,
+    String leavePercentage,
+  )=> repository.changeSandwichLeave(
+    userId,
+    paid,
+    leaveId,
+    leaveName,
+    sandwichId,
+    unitId,
+    userFullName,
+    leavePercentage,
+  );
+
 
 
 }
