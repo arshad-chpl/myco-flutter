@@ -4,11 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
+import 'package:myco_flutter/core/router/modules/employee_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
 import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
-import 'package:myco_flutter/di/injector.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
 import 'package:myco_flutter/features/asset/bloc/assets_bloc.dart';
@@ -18,6 +18,7 @@ import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
 import 'package:myco_flutter/features/asset/view/edit_assets_page.dart';
 import 'package:myco_flutter/features/asset/view/handover_assets.dart';
 import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
+
 // import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_event.dart';
@@ -33,24 +34,25 @@ import 'package:myco_flutter/features/company_selector/presentation/pages/select
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
-import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:myco_flutter/features/employees/presentation/bloc/employee_bloc.dart';
-import 'package:myco_flutter/features/employees/presentation/bloc/employee_event.dart';
-import 'package:myco_flutter/features/holiday/presentation/pages/holiday_list_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
+import 'package:myco_flutter/features/holiday/presentation/pages/holiday_list_page.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
 import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
+import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_bloc.dart';
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/add_leave_screen.dart';
+import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_bloc.dart';
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/my_team_leaves_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
@@ -59,7 +61,6 @@ import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_det
 import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
-
 
 import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
@@ -73,9 +74,9 @@ import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.d
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
 
+import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
-
 
 import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
@@ -84,12 +85,15 @@ import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_n
 import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/add_short_leave_screen.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/my_team_leaves_screen.dart';
+import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
+import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_with.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_detail.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 import 'package:myco_flutter/features/payslip/presentation/pages/salary_break_up_page.dart';
-
-import 'package:myco_flutter/features/payslip/presentation/pages/payslip_page.dart';
 
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
@@ -104,7 +108,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths.splash,
+    // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -120,7 +125,7 @@ class AppRouter {
             ),
             BlocProvider(
               create: (_) =>
-              GetIt.I<LanguageBloc>()..add(LoadLanguageToPreferences()),
+                  GetIt.I<LanguageBloc>()..add(LoadLanguageToPreferences()),
               lazy: false,
             ),
           ],
@@ -182,8 +187,19 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.leave,
-        name: 'leave',
-        builder: (context, state) => const LeaveScreen(),
+        name: RoutePaths.leave,
+        builder: (context, state) => BlocProvider<LeaveBloc>(
+          create: (_) => GetIt.I<LeaveBloc>(),
+          child: const LeaveScreen(),
+        ),
+      ),
+      GoRoute(
+        path: RoutePaths.companyInfo,
+        name: 'company-info',
+        builder: (context, state) => BlocProvider<CompanyInfoBloc>(
+          create: (_) => GetIt.I<CompanyInfoBloc>(),
+          child: const CompanyInfoPage(),
+        ),
       ),
       GoRoute(
         path: RoutePaths.holiday,
@@ -210,6 +226,29 @@ class AppRouter {
         ),
       ),
 
+      GoRoute(
+        path: RoutePaths.myLeaveBalanceScreen,
+        name: '/my_leave_balance_screen',
+        builder: (context, state) => const MyLeaveBalanceScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.myTeamLeavesScreen,
+        name: '/my_team_leaves_screen',
+        builder: (context, state) => const MyTeamLeavesScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.addShortLeaveScreen,
+        name: RoutePaths.addShortLeaveScreen,
+        builder: (context, state) => BlocProvider<LeaveBloc>(
+          create: (_) => GetIt.I<LeaveBloc>(),
+          child: const AddShortLeaveScreen(),
+        ),
+      ),
+      GoRoute(
+        path: RoutePaths.addLeaveScreen,
+        name: '/add_leave_screen',
+        builder: (context, state) => const AddLeaveScreen(),
+      ),
       // GoRoute(
       //   path: RoutePaths.language,
       //   name: 'language',
@@ -222,12 +261,11 @@ class AppRouter {
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
         pageBuilder: (context, state) => MaterialPage(
-            child: BlocProvider(
-              create: (context) =>
-              GetIt.I<FaceDetectionBloc>()
-                ..add(LaunchCamera()),
-              child: const FaceDetectionPage(),
-            )
+          child: BlocProvider(
+            create: (context) =>
+                GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+            child: const FaceDetectionPage(),
+          ),
         ),
         // builder: (context, state) => BlocProvider(
         //   create: (context) =>
@@ -261,6 +299,8 @@ class AppRouter {
         name: 'companySearch',
         builder: (context, state) => const SearchCompanyScreen(),
       ),
+
+      ...employeeRoute,
 
       GoRoute(
         path: RoutePaths.contactAdmin,
@@ -329,6 +369,22 @@ class AppRouter {
         ),
         routes: adminViewRoutes,
       ),
+      GoRoute(
+        path: RoutePaths.leaveBalance,
+        name: RoutePaths.leaveBalance,
+        builder: (context, state) => BlocProvider<LeaveBloc>(
+          create: (_) => GetIt.I<LeaveBloc>(),
+          child: const MyLeaveBalanceScreen(),
+        ),
+      ),
+      GoRoute(
+        path: RoutePaths.teamLeaveBalance,
+        name: RoutePaths.teamLeaveBalance,
+        builder: (context, state) => BlocProvider<LeaveBloc>(
+          create: (_) => GetIt.I<LeaveBloc>(),
+          child: const MyTeamLeavesScreen(),
+        ),
+      ),
       ...cahatRoutes,
 
       GoRoute(
@@ -342,14 +398,6 @@ class AppRouter {
           child: const AssetsHomePage(),
         ),
       ),
-      GoRoute(
-        path: RoutePaths.employees,
-        name: 'employees',
-        builder: (context, state) => BlocProvider<EmployeeBloc>(
-          create: (_) => sl<EmployeeBloc>()..add(LoadUserData()),
-          child: EmployeesScreen(),
-        ),
-      ),
 
       GoRoute(
         path: RoutePaths.qrScanner,
@@ -361,6 +409,12 @@ class AppRouter {
         name: 'add-visit',
         builder: (context, state) => const AddNewVisit(),
       ),
+
+      // GoRoute(
+      //   path: RoutePaths.myProfile,
+      //   name: 'my-profile',
+      //   builder: (context, state) => const MyProfilePage(),
+      // ),
       GoRoute(
         path: RoutePaths.assetsDetails,
         name: 'assets-details',
@@ -398,4 +452,3 @@ class AppRouter {
     // errorBuilder: (context, state) => const ErrorScreen(),
   );
 }
-

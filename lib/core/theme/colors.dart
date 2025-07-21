@@ -86,6 +86,8 @@ class AppColors {
 
 
   static const Color deleteIcon = Color(0xFFD01515);
+  static const Color greenDark = Color(0xFF4FC44B);
+  static const Color transparent = Colors.transparent;
 
   // Stepper color
   static const Color stepperDenied = Color(0xFFFF2121);

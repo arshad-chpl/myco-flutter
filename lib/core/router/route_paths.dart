@@ -15,7 +15,6 @@ class RoutePaths {
   static const String details = '/details';
   static const String visitReport = '/visit_report';
 
-
   static const String offers = '/offers';
   static const String products = '/products';
   static const String orderSummary = '/order-summary';
@@ -25,13 +24,14 @@ class RoutePaths {
   static const String distributorVisitor = '/distributor-visitor';
   static const String noOrder = '/no-order';
   static const String faceDetection = '/face-detection';
+
   // static const String distributorVisitor = 'distributor-visitor';
   // static const String noOrder = 'no-order';
   static const String selectOtherCompany = '/select-other-company';
   static const String signUpForm = '/sign-up-form';
+
   //
   // static const String addVisit = '/add-visit';
-
 
   // static const String distributorVisitor = '/distributor-visitor';
   // static const String noOrder = '/no-order';
@@ -46,6 +46,12 @@ class RoutePaths {
   static const String leave = '/leave';
   static const String companyInfo = '/company-info';
   static const String holiday = '/holiday';
+  static const String leaveBalance = '/my-leave-balance';
+  static const String teamLeaveBalance = '/my-team-leave-balance';
+  static const String myLeaveBalanceScreen = '/my_leave_balance_screen';
+  static const String myTeamLeavesScreen = '/my_team_leaves_screen';
+  static const String addShortLeaveScreen = '/add_short_leave_screen';
+  static const String addLeaveScreen = '/add_leave_screen';
 
   static const String employees = '/employees';
 
@@ -63,7 +69,6 @@ class RoutePaths {
   static const String addVisit = '/add-visit';
   static const String viewVisitDetails = '/view-visit-details';
   static const String myProfile = '/my-profile';
-
 
   // ======== Admin View ========
   static const String adminView = '/admin-view';
@@ -118,7 +123,7 @@ class RoutePaths {
   static const String chatList = '/chat-list';
   static const String userChatScreen = '/user-chat';
   static const String startNewChat = '/start-chat';
-  static  const String groupInfo = '/group-info';
+  static const String groupInfo = '/group-info';
 
   //maulik
   static const String assetsDetails = '/assets-details';
@@ -127,5 +132,4 @@ class RoutePaths {
   static const String handoverAssets = '/handover-assets';
   static const String takeoverAssets = '/takeover-assets';
   static const String swapAssets = '/swap-assets';
-
 }

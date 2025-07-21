@@ -1,5 +1,5 @@
 class AppAssets {
-  // common paths for visit in the application
+  // commmmon paths for visit in the application
   static const String basePath = 'assets';
 
   // static const String fontsPath = '$basePath/fonts';
@@ -10,15 +10,14 @@ class AppAssets {
   static const String splash = '$basePath/splash';
   static const String visit = '$basePath/visit';
   static const String svgsVisit = '$svgsPath/visit';
-
   static const String assetVisit = '$basePath/add_expense';
+
+  static const String assets = '$basePath/assets';
+  static const String lostFound = '$basePath/lost_and_found';
+  static const String svgsTakeOrder = '$svgsPath/take_order';
   static const String employees = '$basePath/employees';
   static const String mediaPicker = '$basePath/media_picker';
   static const String stepper = '$basePath/stepper';
-  static const String assets = '$basePath/assets';
-  static const String lostFound = '$basePath/lost_and_found';
-
-  static const String svgsTakeOrder = '$svgsPath/take_order';
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -81,6 +80,8 @@ class AppAssets {
   static const String start = '$svgsTakeOrder/start.svg';
   static const String stop = '$svgsTakeOrder/stop.svg';
   static const String calling = '$svgsTakeOrder/calling.svg';
+  static const String arrowBack = '$svgsPath/back_arrow.svg';
+  static const String cancelOrder = '$svgsTakeOrder/cancel_order.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';

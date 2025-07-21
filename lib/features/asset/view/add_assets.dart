@@ -161,9 +161,6 @@ class _AddAssets extends State<AddAssets> {
                 imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
                 backgroundColor: const Color(0xFFEEF7FD),
                 containerHeight: 0.1 * Responsive.getHeight(context),
-                // pickerBoxBorderRadius: 10,
-                // titleFontWeight: FontWeight.w600,
-                // titleWidgetBetweenSpace: 0.006 * Responsive.getHeight(context),
               ),
               SizedBox(height: 0.024 * Responsive.getHeight(context)),
 
@@ -181,9 +178,6 @@ class _AddAssets extends State<AddAssets> {
                 imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
                 backgroundColor: const Color(0xFFEEF7FD),
                 containerHeight: 0.1 * Responsive.getHeight(context),
-                // pickerBoxBorderRadius: 10,
-                // titleFontWeight: FontWeight.w600,
-                // titleWidgetBetweenSpace: 0.006 * Responsive.getHeight(context),
               ),
               SizedBox(height: 0.035 * Responsive.getHeight(context)),
 
