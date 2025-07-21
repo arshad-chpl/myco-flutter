@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/company_info/domain/entities/company_info_entity.dart';
 import 'package:myco_flutter/features/company_info/model/company_info_response.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AuthorityCard extends StatelessWidget {
-  final Commitie authority;
+  final CommitieEntity authority;
   final BuildContext context;
 
   const AuthorityCard({

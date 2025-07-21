@@ -2,10 +2,12 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/company_selector/domain/entites/company_response_entity.dart';
@@ -27,6 +29,14 @@ class SelectCompanyUi extends StatelessWidget {
     // It doesn't need to be part of a State object as its lifecycle
     // is contained within this build method.
     final TextEditingController controller = TextEditingController();
+    final FocusNode focusNode = FocusNode();
+
+    // Schedule focus request after build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!focusNode.hasFocus) {
+        focusNode.requestFocus();
+      }
+    });
 
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -45,6 +55,7 @@ class SelectCompanyUi extends StatelessWidget {
           SizedBox(height: 0.01 * Responsive.getHeight(context)),
           MyCoTextfield(
             controller: controller,
+            focusNode: focusNode,
             onChanged: (value) {
               if (value.length >= 3) {
                 context.read<CompanyBloc>().add(SearchCompany(value));
@@ -58,10 +69,10 @@ class SelectCompanyUi extends StatelessWidget {
               fontSize: 14 * Responsive.getResponsiveText(context),
               color: AppTheme.getColor(context).outline,
             ),
-            height: 50,
+            height: 50 * Responsive.getResponsiveText(context),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
-              borderSide: BorderSide(color: Color(0xFF98A2B3), width: 1),
+              borderSide: BorderSide(color: Color(0xFF98A2B3)),
             ),
           ),
           SizedBox(height: 0.025 * Responsive.getHeight(context)),
@@ -71,7 +82,8 @@ class SelectCompanyUi extends StatelessWidget {
                 if (state is CompanyLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is CompanyLoaded) {
-                  if (state.companies.society == null || state.companies.society!.isEmpty) {
+                  if (state.companies.society == null ||
+                      state.companies.society!.isEmpty) {
                     return const _NoCompanyFoundWidget();
                   }
                   return _CompanyList(
@@ -101,71 +113,85 @@ class _CompanyList extends StatelessWidget {
   const _CompanyList({required this.companies, required this.selectedIndex});
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: companies.length,
-            itemBuilder: (_, index) {
-              final company = companies[index];
-              final isSelected = selectedIndex == index;
-              return GestureDetector(
-                onTap: () => context.read<CompanyBloc>().add(CompanyIndex(index)),
-                child: _CompanyListItem(company: company, isSelected: isSelected),
-              );
-            },
-          ),
+  Widget build(BuildContext context) => Column(
+    children: [
+      Expanded(
+        child: ListView.builder(
+          itemCount: companies.length,
+          itemBuilder: (_, index) {
+            final company = companies[index];
+            final isSelected = selectedIndex == index;
+            return GestureDetector(
+              onTap: () => context.read<CompanyBloc>().add(CompanyIndex(index)),
+              child: _CompanyListItem(company: company, isSelected: isSelected),
+            );
+          },
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.0 * Responsive.getResponsive(context)),
-          child: Row(
-            children: [
-              Expanded(
-                child: MyCoButton(
-                  title: 'Close',
-                  onTap: () => Navigator.pop(context),
-                  backgroundColor: Colors.white,
-                  border: Border.all(color: AppTheme.getColor(context).primary),
-                  textStyle: TextStyle(color: AppTheme.getColor(context).primary),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: MyCoButton(
-                  title: 'Submit',
-                  isShadowBottomLeft: true,
-                  onTap: selectedIndex >= 0
-                      ? () {
-                          final company = companies[selectedIndex];
-                          final preference = GetIt.I<PreferenceManager>();
-                          
-                          // Save company details
-                          preference.setCompanyId(company.societyId.toString());
-                          preference.setCompanyName(company.societyName.toString());
-                          preference.setCompanyAddress(company.societyAddress.toString());
-                          preference.setBaseUrl(company.subDomain.toString());
-                          preference.setLoginSession(false);
-                          refreshApiServiceCompany(GetIt.instance);
-
-                          dev.log("Company details saved for ${company.societyName}", name: "CompanyPref");
-
-                          // Add event to the step BLoC to move to the next page
-                          context.read<SelectCompanyStepBloc>().add(GoToLoginStep(company));
-                        }
-                      : null, // Button is disabled if no company is selected
-                ),
-              ),
-            ],
-          ),
+      ),
+      Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 10.0 * Responsive.getResponsive(context),
         ),
-      ],
-    );
-  }
+        child: Row(
+          children: [
+            Expanded(
+              child: MyCoButton(
+                title: 'Close',
+                height: 0.05 * Responsive.getHeight(context),
+                onTap: () => Navigator.pop(context),
+                backgroundColor: Colors.white,
+                boarderRadius: 30 * Responsive.getResponsive(context),
+                border: Border.all(color: AppTheme.getColor(context).primary),
+                textStyle: TextStyle(color: AppTheme.getColor(context).primary),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: MyCoButton(
+                title: 'Submit',
+                isShadowBottomLeft: true,
+                boarderRadius: 30 * Responsive.getResponsive(context),
+                onTap: () {
+                  if (selectedIndex >= 0) {
+                    final company = companies[selectedIndex];
+                    final preference = GetIt.I<PreferenceManager>();
+
+                    // Save company details
+                    preference.setCompanyId(company.societyId.toString());
+                    preference.setCompanyName(company.societyName.toString());
+                    preference.setCompanyAddress(
+                      company.societyAddress.toString(),
+                    );
+                    preference.setBaseUrl(company.subDomain.toString());
+                    preference.setLoginSession(false);
+                    refreshApiServiceCompany(GetIt.instance);
+
+                    dev.log(
+                      "Company details saved for ${company.societyName}",
+                      name: "CompanyPref",
+                    );
+
+                    context.read<SelectCompanyStepBloc>().add(
+                      GoToLoginStep(company),
+                    );
+                  } else {
+                    Fluttertoast.showToast(
+                      msg: LanguageManager().get('please_select_company'),
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
 }
 
 class _CompanyListItem extends StatelessWidget {
   const _CompanyListItem({required this.company, required this.isSelected});
+
   final SocietyEntity company;
   final bool isSelected;
 
@@ -178,7 +204,9 @@ class _CompanyListItem extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 12 * Responsive.getResponsive(context)),
       decoration: BoxDecoration(
         border: Border.all(color: colorScheme.outline),
-        borderRadius: BorderRadius.circular(14 * Responsive.getResponsive(context)),
+        borderRadius: BorderRadius.circular(
+          14 * Responsive.getResponsive(context),
+        ),
         color: isSelected ? colorScheme.primary : colorScheme.surface,
       ),
       child: Row(
@@ -186,10 +214,10 @@ class _CompanyListItem extends StatelessWidget {
         children: [
           CircleAvatar(
             backgroundColor: colorScheme.primary,
-            radius: 20 * Responsive.getResponsive(context),
+            radius: 18 * Responsive.getResponsive(context),
             child: CircleAvatar(
               backgroundColor: colorScheme.onPrimary,
-              radius: 17 * Responsive.getResponsive(context),
+              radius: 15 * Responsive.getResponsive(context),
               child: Center(
                 child: CustomText(
                   company.societyName!.substring(0, 1),
@@ -209,17 +237,21 @@ class _CompanyListItem extends StatelessWidget {
                 CustomText(
                   company.societyName!,
                   fontWeight: FontWeight.w600,
-                  fontSize: 16 * Responsive.getResponsiveText(context),
+                  fontSize: 14 * Responsive.getResponsiveText(context),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  color: isSelected ? colorScheme.onPrimary : colorScheme.onSurface,
+                  color: isSelected
+                      ? colorScheme.onPrimary
+                      : colorScheme.onSurface,
                 ),
                 CustomText(
                   company.societyAddress!,
-                  fontSize: 14 * Responsive.getResponsiveText(context),
+                  fontSize: 12 * Responsive.getResponsiveText(context),
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  color: isSelected ? colorScheme.onPrimary : colorScheme.onSurface,
+                  color: isSelected
+                      ? colorScheme.onPrimary
+                      : colorScheme.onSurface,
                   textAlign: TextAlign.start,
                 ),
               ],
@@ -233,52 +265,82 @@ class _CompanyListItem extends StatelessWidget {
 
 class _InitialSearchWidget extends StatelessWidget {
   const _InitialSearchWidget();
+
   @override
   Widget build(BuildContext context) => Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Image.asset(AppAssets.searchCompany, height: 180),
-                const SizedBox(height: 20),
-                const CustomText('Search Your Society', fontSize: 18, fontWeight: FontWeight.bold, textAlign: TextAlign.center),
-                const SizedBox(height: 8),
-                const CustomText('Start typing your company name in the box above and select it to continue.', fontSize: 14, textAlign: TextAlign.center),
-              ],
+    child: Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(AppAssets.searchCompany, height: 180),
+            const SizedBox(height: 20),
+            const CustomText(
+              'Search Your Society',
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              textAlign: TextAlign.center,
             ),
-          ),
+            const SizedBox(height: 8),
+            const CustomText(
+              'Start typing your company name in the box above and select it to continue.',
+              fontSize: 14,
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 }
 
 class _NoCompanyFoundWidget extends StatelessWidget {
   const _NoCompanyFoundWidget();
+
   @override
   Widget build(BuildContext context) => Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(AppAssets.noCompany, height: 180),
-              const SizedBox(height: 20),
-              const CustomText('Your company is not listed?', fontSize: 18, fontWeight: FontWeight.bold, textAlign: TextAlign.center),
-              const SizedBox(height: 8),
-              const CustomText("If your company doesn't appear in the list, you can request to add it.", fontSize: 14, textAlign: TextAlign.center),
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () => showModalBottomSheet(context: context, isScrollControlled: true, builder: (_) => const SalesInquiryForm()),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.getColor(context).primary,
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                ),
-                child: const CustomText('Request Your Society', color: Colors.white, fontWeight: FontWeight.w600),
-              ),
-            ],
+    child: Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(AppAssets.noCompany, height: 180),
+          const SizedBox(height: 20),
+          const CustomText(
+            'Your company is not listed?',
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            textAlign: TextAlign.center,
           ),
-        ),
-      );
+          const SizedBox(height: 8),
+          const CustomText(
+            "If your company doesn't appear in the list, you can request to add it.",
+            fontSize: 14,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () => showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              builder: (_) => const SalesInquiryForm(),
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppTheme.getColor(context).primary,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: const CustomText(
+              'Request Your Society',
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

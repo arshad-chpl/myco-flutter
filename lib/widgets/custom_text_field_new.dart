@@ -83,21 +83,23 @@ class NewTextField extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsetsGeometry.only(
-                  top: 17.5 * Responsive.getResponsive(context),
+              if (prefixIconPath != null)
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 17.5 * Responsive.getResponsive(context),
+                  ),
+                  child: SvgPicture.asset(
+                    prefixIconPath!,
+                    height: 0.022 * Responsive.getHeight(context),
+                  ),
                 ),
-                child: SvgPicture.asset(
-                  prefixIconPath!,
-                  height: 0.022 * Responsive.getHeight(context),
-                ),
-              ),
               SizedBox(
                 // height:50,
                 width: 0.8 * Responsive.getWidth(context),
                 child: IgnorePointer(
                   ignoring: onTap != null,
                   child: TextFormField(
+                    controller: controller,
                     minLines: 1,
                     maxLines: maxLines ?? 1,
                     style: TextStyle(
