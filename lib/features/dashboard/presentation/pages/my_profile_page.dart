@@ -42,7 +42,7 @@ class MyProfilePage extends StatelessWidget {
               children: [
                 Container(
                   height: 0.04 * Responsive.getHeight(context),
-                  width: 0.3 * Responsive.getWidth(context),
+                  width: 0.32 * Responsive.getWidth(context),
                   decoration: BoxDecoration(
                     color: AppTheme.getColor(context).primary,
                     borderRadius: BorderRadius.circular(
@@ -76,7 +76,7 @@ class MyProfilePage extends StatelessWidget {
                         ),
                         CustomText(
                           "Admin View",
-                          fontSize: 14 * Responsive.getResponsiveText(context),
+                          fontSize: 12 * Responsive.getResponsiveText(context),
                           color: AppTheme.getColor(context).onPrimary,
                           fontWeight: FontWeight.bold,
                         ),

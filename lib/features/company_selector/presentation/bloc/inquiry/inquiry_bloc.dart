@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myco_flutter/features/company_selector/data/models/request_society_model.dart';
+import 'package:myco_flutter/features/company_selector/data/models/request/request_society_model.dart';
 import 'package:myco_flutter/features/company_selector/domain/repositories/inquiry_repository.dart';
 import 'package:myco_flutter/features/company_selector/domain/usecases/request_society.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/inquiry/inquiry_event.dart';
