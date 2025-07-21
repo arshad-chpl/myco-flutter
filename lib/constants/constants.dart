@@ -16,7 +16,7 @@ class SharedPreferenceConstants {
 }
 
 class VariableBag {
-  static const String dioWithAuth= 'dioWithAuth';
+  static const String dioWithAuth = 'dioWithAuth';
   static const String companyName = 'company_name';
   static const String companyId = 'company_id';
   static const String countryId = 'country_id';
