@@ -83,9 +83,6 @@ class AppointmentRemoteDataSourceImpl extends AppointmentRemoteDataSource {
     return CommonResponseModel.fromJson(
       json.decode(GzipUtil.decryptAES(response)),
     );
-    return CommonResponseModel.fromJson(
-      json.decode(GzipUtil.decryptAES(response)),
-    );
   }
 
   @override
