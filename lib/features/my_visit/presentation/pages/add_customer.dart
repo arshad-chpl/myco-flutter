@@ -5,14 +5,14 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/label_with_add_botton.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/row_widget.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_calendar_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
-import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class AddCustomer extends StatefulWidget {
   const AddCustomer({super.key});
@@ -22,19 +22,6 @@ class AddCustomer extends StatefulWidget {
 }
 
 class _AddCustomerState extends State<AddCustomer> {
-  /// Dropdown selected values
-  String? selectedCity;
-  String? selectedAreaList;
-
-  // Dropdown list options
-  final List<String> cityList = ['Ahmedabad', 'Surat', 'Rajkot', 'Vadodara'];
-  final List<String> areaList = [
-    'PrahaladNagar',
-    'RamdevNagar',
-    'KrishnaNagar',
-    'Thaltej',
-  ];
-
   /// Country code selections for phone number fields
   String selectedCountry1 = 'INA';
   String selectedCountry2 = 'INA';
@@ -65,24 +52,24 @@ class _AddCustomerState extends State<AddCustomer> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /// Customer Company Name
-          CommonTextField(
-            'Customer Company Name',
-            LanguageManager().get('type_here'),
-            AppAssets.building,
+          NewTextField(
+            label: 'Customer Company Name',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.building,
           ),
 
           /// Customer Category
-          CommonTextField(
-            'customer_category',
-            LanguageManager().get('select_category'),
-            AppAssets.element,
+          NewTextField(
+            label: 'customer_category',
+            hintText: LanguageManager().get('select_category'),
+            prefixIconPath: AppAssets.element,
           ),
 
           /// Contact Person Name
-          CommonTextField(
-            'contact_person_name',
-            LanguageManager().get('type_here'),
-            AppAssets.profileCircle,
+          NewTextField(
+            label: 'contact_person_name',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.profileCircle,
           ),
 
           /// Contact Person Mobile Number field with country code
@@ -92,7 +79,7 @@ class _AddCustomerState extends State<AddCustomer> {
               CustomText(
                 'contact_person_mobile',
                 fontWeight: FontWeight.w700,
-                fontSize: 12 * Responsive.getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurfaceVariant,
               ),
               SizedBox(height: 0.005 * Responsive.getHeight(context)),
@@ -102,18 +89,18 @@ class _AddCustomerState extends State<AddCustomer> {
                 onCountryChanged: (p0, p1) {},
                 phoneController: phoneController2,
                 countryDialCodes: countryMap,
-                textFieldHeight: 0.055 * Responsive.getHeight(context),
+                textFieldHeight: 0.065 * Responsive.getHeight(context),
                 hintTextStyle: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: AppTheme.getColor(context).outline,
-                  fontSize: 14 * Responsive.getResponsiveText(context),
+                  fontSize: 16 * Responsive.getResponsiveText(context),
                 ),
                 hintText: '000 00 000 00',
                 decoration: BoxDecoration(
                   color: AppTheme.getColor(context).onPrimary,
                   border: Border.all(color: AppTheme.getColor(context).outline),
                   borderRadius: BorderRadius.circular(
-                    5 * Responsive.getResponsive(context),
+                    12 * Responsive.getResponsive(context),
                   ),
                 ),
               ),
@@ -127,7 +114,7 @@ class _AddCustomerState extends State<AddCustomer> {
               CustomText(
                 'alternate_phone_number',
                 fontWeight: FontWeight.w700,
-                fontSize: 12 * Responsive.getResponsiveText(context),
+                fontSize: 14 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurfaceVariant,
               ),
               SizedBox(height: 0.005 * Responsive.getHeight(context)),
@@ -137,18 +124,18 @@ class _AddCustomerState extends State<AddCustomer> {
                 onCountryChanged: (p0, p1) {},
                 phoneController: phoneController2,
                 countryDialCodes: countryMap,
-                textFieldHeight: 0.055 * Responsive.getHeight(context),
+                textFieldHeight: 0.065 * Responsive.getHeight(context),
                 hintTextStyle: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: AppTheme.getColor(context).outline,
-                  fontSize: 14 * Responsive.getResponsiveText(context),
+                  fontSize: 16 * Responsive.getResponsiveText(context),
                 ),
                 hintText: '000 00 000 00',
                 decoration: BoxDecoration(
                   color: AppTheme.getColor(context).onPrimary,
                   border: Border.all(color: AppTheme.getColor(context).outline),
                   borderRadius: BorderRadius.circular(
-                    5 * Responsive.getResponsive(context),
+                    12 * Responsive.getResponsive(context),
                   ),
                 ),
               ),
@@ -156,75 +143,49 @@ class _AddCustomerState extends State<AddCustomer> {
           ),
 
           /// Date Of Birth
-          CommonTextField(
-            'anniversary_date',
-            'Enter Anniversary Date',
-            AppAssets.date,
+          NewTextField(
+            label: 'date_of_birth',
+            hintText: 'Enter Birth Date',
+            prefixIconPath: AppAssets.date,
             controller: birthDateController,
-            readOnly: true,
-            onTap: () async {
-              final result = await showModalBottomSheet<Map<String, int>>(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                builder: (_) => CustomCalendarBottomSheet(
-                  initialMonth: DateTime.now().month,
-                  initialYear: DateTime.now().year,
-                  previousYears: 5,
-                  nextYears: 5,
-                ),
-              );
-            },
+            enabled: false,
           ),
 
           /// Anniversary Date
-          CommonTextField(
-            'date_of_birth',
-            'Enter Birth Date',
-            AppAssets.date,
-            readOnly: true,
+          NewTextField(
+            label: 'anniversary_date',
+            hintText: 'Enter Anniversary Date',
+            prefixIconPath: AppAssets.date,
             controller: anniversaryController,
-            onTap: () async {
-              final result = await showModalBottomSheet<Map<String, int>>(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                builder: (_) => CustomCalendarBottomSheet(
-                  initialMonth: DateTime.now().month,
-                  initialYear: DateTime.now().year,
-                  previousYears: 5,
-                  nextYears: 5,
-                ),
-              );
-            },
+            enabled: false,
           ),
 
           /// Email ID
-          CommonTextField(
-            'email_id',
-            LanguageManager().get('email_contact_finca'),
-            AppAssets.sms,
+          NewTextField(
+            label: 'email_id',
+            hintText: LanguageManager().get('email_contact_finca'),
+            prefixIconPath: AppAssets.sms,
           ),
 
           /// Select Location
-          CommonTextField(
-            'select_location',
-            LanguageManager().get('select_location'),
-            AppAssets.locationVisit,
+          NewTextField(
+            label: 'select_location',
+            hintText: LanguageManager().get('select_location'),
+            prefixIconPath: AppAssets.locationVisit,
           ),
 
           /// Address
-          CommonTextField(
-            'address',
-            LanguageManager().get('type_here'),
-            AppAssets.home,
+          NewTextField(
+            label: 'address',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.home,
           ),
 
           /// Pincode
-          CommonTextField(
-            'pincode',
-            LanguageManager().get('type_here'),
-            AppAssets.lock,
+          NewTextField(
+            label: 'pincode',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.lock,
           ),
 
           /// City dropdown with Add button
@@ -233,27 +194,16 @@ class _AddCustomerState extends State<AddCustomer> {
               LabelWithAddButton(
                 label: 'city',
                 actionText: 'add_city',
+                labelFontSize: 14 * Responsive.getResponsiveText(context),
+                actionFontSize: 14 * Responsive.getResponsiveText(context),
                 onTap: () {},
                 iconPath: AppAssets.addButton,
               ),
               SizedBox(height: 0.005 * Responsive.getHeight(context)),
-              CustomPopupDropdownStyled<String>(
-                items: cityList,
-                selectedItem: selectedCity,
+              NewTextField(
+                prefixIconPath: AppAssets.building,
+                suffixIconPath: AppAssets.downArrow,
                 hintText: LanguageManager().get('state_not_assigned'),
-                height: 0.055 * Responsive.getHeight(context),
-                itemToString: (item) => item,
-                onChanged: (value, index) {},
-                borderRadius: 5 * Responsive.getResponsive(context),
-                popupElevation: 6 * Responsive.getResponsive(context),
-                spacing: 25 * Responsive.getResponsive(context),
-                hintTextStyle: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.getColor(context).outline,
-                  fontSize: 14 * Responsive.getResponsiveText(context),
-                ),
-                prefix: SvgPicture.asset(AppAssets.building),
-                border: Border.all(color: AppTheme.getColor(context).outline),
               ),
             ],
           ),
@@ -264,78 +214,67 @@ class _AddCustomerState extends State<AddCustomer> {
               LabelWithAddButton(
                 label: 'area',
                 actionText: 'add_area',
+                labelFontSize: 14 * Responsive.getResponsiveText(context),
+                actionFontSize: 14 * Responsive.getResponsiveText(context),
                 onTap: () {},
                 iconPath: AppAssets.addButton,
               ),
               SizedBox(height: 0.005 * Responsive.getHeight(context)),
-              CustomPopupDropdownStyled<String>(
-                items: areaList,
-                selectedItem: selectedAreaList,
-                hintText: LanguageManager().get('select_area'),
-                height: 0.055 * Responsive.getHeight(context),
-                itemToString: (item) => item,
-                onChanged: (value, index) {},
-                borderRadius: 5 * Responsive.getResponsive(context),
-                popupElevation: 6 * Responsive.getResponsive(context),
-                spacing: 25 * Responsive.getResponsive(context),
-                hintTextStyle: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.getColor(context).outline,
-                  fontSize: 14 * Responsive.getResponsiveText(context),
-                ),
-                prefix: SvgPicture.asset(AppAssets.areaMap),
-                border: Border.all(color: AppTheme.getColor(context).outline),
+              NewTextField(
+                prefixIconPath: AppAssets.areaMap,
+                suffixIconPath: AppAssets.downArrow,
+                hintText: LanguageManager().get('state_not_assigned'),
               ),
             ],
           ),
 
           /// Retailer Type
-          CommonTextField(
-            'retailer_type',
-            LanguageManager().get('select'),
-            AppAssets.businessAndTrade,
+          NewTextField(
+            label: 'retailer_type',
+            hintText: LanguageManager().get('select'),
+            prefixIconPath: AppAssets.businessAndTrade,
           ),
 
           /// Website
-          CommonTextField(
-            'website_contact_finca',
-            LanguageManager().get('type_here'),
-            AppAssets.global,
+          NewTextField(
+            label: 'website_contact_finca',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.global,
           ),
 
           /// GST Number
-          CommonTextField(
-            'tax_number',
-            LanguageManager().get('type_here'),
-            AppAssets.gst,
+          NewTextField(
+            label: 'tax_number',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.gst,
           ),
 
           /// Select Distributor
-          CommonTextField(
-            'select_distributor',
-            LanguageManager().get('select_distributor'),
-            AppAssets.cardCoin,
+          NewTextField(
+            label: 'select_distributor',
+            hintText: LanguageManager().get('select_distributor'),
+            prefixIconPath: AppAssets.cardCoin,
           ),
 
           /// Credit Limit
-          CommonTextField(
-            'credit_limit',
-            LanguageManager().get('type_here'),
-            AppAssets.bitCinCard,
+          NewTextField(
+            label: 'credit_limit',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.bitCinCard,
           ),
 
           /// Credit Days
-          CommonTextField(
-            'credit_days',
-            LanguageManager().get('type_here'),
-            AppAssets.emptyWalletTime,
+          NewTextField(
+            label: 'credit_days',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.emptyWalletTime,
           ),
 
           /// Shop Photo media picker
           CustomMediaPickerContainer(
             title: 'shop_photo',
             titleColor: AppTheme.getColor(context).onSurfaceVariant,
-            titleFontSize: 12 * Responsive.getResponsiveText(context),
+            titleFontSize: 14 * Responsive.getResponsiveText(context),
             imageTitle: 'select_media',
             containerHeight: 100,
             multipleImage: 5,
@@ -370,40 +309,6 @@ class _AddCustomerState extends State<AddCustomer> {
           const SizedBox(),
         ],
       ),
-    ),
-  );
-
-  /// Common text field widget
-  Widget CommonTextField(
-    String label,
-    String hint,
-    String iconPath, {
-    bool readOnly = false,
-    TextEditingController? controller,
-    VoidCallback? onTap,
-  }) => LabeledTextField(
-    label: label,
-    isKey: true,
-    hint: hint,
-    textColor: AppTheme.getColor(context).onSurfaceVariant,
-    textFontSize: 12 * Responsive.getResponsiveText(context),
-    controller: controller,
-    isReadOnly: readOnly,
-    heightFactor: 44,
-    onClick: onTap,
-    boarderRadius: 8 * Responsive.getResponsive(context),
-    contentPadding: EdgeInsets.all(12 * Responsive.getResponsive(context)),
-    textFieldHeight: 0.055 * Responsive.getHeight(context),
-    hintTextStyle: TextStyle(
-      fontWeight: FontWeight.w600,
-      color: AppTheme.getColor(context).outline,
-      fontSize: 14 * Responsive.getResponsiveText(context),
-    ),
-    textAlignment: TextAlign.start,
-    widthFactor: Responsive.getWidth(context),
-    prefix: SvgPicture.asset(iconPath, fit: BoxFit.scaleDown),
-    border: OutlineInputBorder(
-      borderSide: BorderSide(color: AppTheme.getColor(context).outline),
     ),
   );
 }

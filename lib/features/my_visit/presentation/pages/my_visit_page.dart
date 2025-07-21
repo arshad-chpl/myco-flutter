@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -329,7 +330,9 @@ class _VisitPageState extends State<MyVisitPage> {
                 ExpandableFabAction(
                   label: 'Add Expense',
                   icon: Icons.money,
-                  onTap: () {},
+                  onTap: () {
+                    context.pushNamed('addExpense');
+                  },
                 ),
               ],
               imageSize: 66 * Responsive.getResponsiveText(context),

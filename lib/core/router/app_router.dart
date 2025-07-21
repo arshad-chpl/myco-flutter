@@ -60,12 +60,10 @@ import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_det
 
 import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 
 import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
@@ -213,14 +211,6 @@ class AppRouter {
           child: const CompanyInfoPage(),
         ),
       ),
-      GoRoute(
-        path: RoutePaths.myVisit,
-        name: 'my-visit',
-        builder: (context, state) => BlocProvider(
-          create: (_) => GetIt.I<VisitBloc>(),
-          child: const MyVisitPage(),
-        ),
-      ),
 
       GoRoute(
         path: RoutePaths.myLeaveBalanceScreen,
@@ -363,11 +353,6 @@ class AppRouter {
         path: RoutePaths.qrScanner,
         name: 'qr-scanner',
         builder: (context, state) => const QRScannerPage(),
-      ),
-      GoRoute(
-        path: RoutePaths.addVisit,
-        name: 'add-visit',
-        builder: (context, state) => const AddNewVisit(),
       ),
       // GoRoute(
       //   path: RoutePaths.myProfile,

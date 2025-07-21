@@ -149,7 +149,7 @@ class _CardBottomContentState extends State<CardBottomContent> {
                             ),
                           ),
                         Padding(
-                          padding: EdgeInsets.only(left: 50 * responsive),
+                          padding: EdgeInsets.only(left: 30 * responsive),
                           child: Row(
                             children: [
                               SvgPicture.asset(

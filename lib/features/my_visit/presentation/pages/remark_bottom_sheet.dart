@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/test_new_visit1.dart';
@@ -11,6 +12,7 @@ import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class RemarkBottomSheet extends StatefulWidget {
   const RemarkBottomSheet({super.key});
@@ -57,74 +59,45 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
   ];
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: EdgeInsets.symmetric(
-      horizontal: 16.0 * Responsive.getResponsive(context),
-    ),
-    child: SingleChildScrollView(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-        left: 16.0 * Responsive.getResponsive(context),
-        right: 16.0 * Responsive.getResponsive(context),
-        top: 20 * Responsive.getResponsive(context),
+  Widget build(BuildContext context) => SingleChildScrollView(
+    child: Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 15 * Responsive.getResponsive(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
-        spacing: 12 * Responsive.getResponsive(context),
+        spacing: 16 * Responsive.getResponsive(context),
         children: [
           SizedBox(height: 0.03 * Responsive.getHeight(context)),
 
           // Remark text field
-          LabeledTextField(
-            textAlignment: TextAlign.start,
-            label: 'Remark',
-            hint: 'Type here',
-            isSuffixIconOn: false,
-            fontWeight: FontWeight.w700,
-            widthFactor: Responsive.getWidth(context),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
-              ),
-            ),
-            prefix: SvgPicture.asset(
-              AppAssets.assetMessageEdit,
-              fit: BoxFit.scaleDown,
-            ),
+          NewTextField(
+            label: 'remark',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.assetMessageEdit,
           ),
 
           //  widget Follow-up time and date selection
           Row(
             children: [
               Expanded(
-                child: LabeledDropdown<String>(
-                  label: 'Follow Up Visit Time',
-                  border: Border.all(color: AppTheme.getColor(context).outline),
-                  prefix: SvgPicture.asset(
-                    AppAssets.assetClock,
-                    fit: BoxFit.scaleDown,
-                  ),
-                  items: visitTimes,
-                  itemToString: (item) => item,
-                  selectedItem: selectedVisitTime,
-                  onChanged: (_, __) {},
+                child: NewTextField(
+                  label: 'follow_up_visit_time',
+                  hintText: LanguageManager().get('select'),
+                  prefixIconPath: AppAssets.assetClock,
+                  suffixIconPath: AppAssets.downArrow,
                 ),
               ),
+
               SizedBox(width: 12), // spacing between dropdowns
               Expanded(
-                child: LabeledDropdown<String>(
+                child: NewTextField(
                   label: 'Follow Up Visit Date',
-                  border: Border.all(color: AppTheme.getColor(context).outline),
-                  prefix: SvgPicture.asset(
-                    AppAssets.assetNoteFavorite,
-                    fit: BoxFit.scaleDown,
-                  ),
-                  items: visitDates,
-                  itemToString: (item) => item,
-                  selectedItem: selectedVisitDate,
-                  onChanged: (_, __) {},
+                  hintText: LanguageManager().get('select'),
+                  prefixIconPath: AppAssets.assetNoteFavorite,
+                  suffixIconPath: AppAssets.downArrow,
+
                 ),
               ),
             ],
@@ -133,68 +106,28 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
           CustomRadioButton(
             options: const ['Field Visit', 'Virtual Visit'],
             onChanged: (_) {},
-            height: 44,
-            width: 160,
+            height: 0.065 * Responsive.getHeight(context),
           ),
 
           // Textfield for Visit Area
-          LabeledTextField(
-            textAlignment: TextAlign.start,
-            label: 'Visit Area',
-            hint: 'Type here',
-            isSuffixIconOn: false,
-            fontWeight: FontWeight.w700,
-            widthFactor: Responsive.getWidth(context),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
-              ),
-            ),
-            prefix: SvgPicture.asset(
-              AppAssets.assetArrowSquare,
-              fit: BoxFit.scaleDown,
-            ),
+          NewTextField(
+            label: 'visit_area',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.assetArrowSquare,
           ),
 
           //TextField for Visit Catalogue
-          LabeledTextField(
-            textAlignment: TextAlign.start,
-            label: 'Visit Catalogue',
-            hint: 'Type here',
-            isSuffixIconOn: false,
-            fontWeight: FontWeight.w700,
-            widthFactor: Responsive.getWidth(context),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
-              ),
-            ),
-            prefix: SvgPicture.asset(
-              AppAssets.assetNoteFavorite,
-              fit: BoxFit.scaleDown,
-            ),
+          NewTextField(
+            label: 'visit_catalogue',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.assetNoteFavorite,
           ),
 
           //Textfield for Contact Person Name
-          LabeledTextField(
-            textAlignment: TextAlign.start,
+          NewTextField(
             label: 'Visit Contact Person Name',
-            hint: 'Type here',
-            isSuffixIconOn: false,
-            fontWeight: FontWeight.w700,
-            widthFactor: Responsive.getWidth(context),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
-              ),
-            ),
-            prefix: SvgPicture.asset(
-              AppAssets.assetProfileCircle,
-              fit: BoxFit.scaleDown,
-            ),
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.assetProfileCircle,
           ),
 
           // label for Attachment
@@ -247,11 +180,11 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
                 ),
                 backgroundColor: Colors.transparent,
                 boarderRadius: 30,
-                width: 0.40 * Responsive.getWidth(context),
+                width: 0.44 * Responsive.getWidth(context),
                 height: 0.06 * Responsive.getHeight(context),
                 borderColor: AppTheme.getColor(context).primary,
               ),
-              SizedBox(width: 0.045 * Responsive.getWidth(context),),
+             Spacer(),
               MyCoButton(
                 onTap: () {
                   showModalBottomSheet(
@@ -273,15 +206,15 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
                   fontWeight: FontWeight.bold,
                 ),
                 backgroundColor: AppTheme.getColor(context).primary,
-                boarderRadius: 30,
-                width: 0.40 * Responsive.getWidth(context),
+                boarderRadius: 30 * Responsive.getResponsive(context),
+                width: 0.44 * Responsive.getWidth(context),
                 height: 0.06 * Responsive.getHeight(context),
                 wantBorder: false,
                 isShadowBottomLeft: true,
               ),
             ],
           ),
-          SizedBox(height: 49,)
+          SizedBox(height: 49),
         ],
       ),
     ),

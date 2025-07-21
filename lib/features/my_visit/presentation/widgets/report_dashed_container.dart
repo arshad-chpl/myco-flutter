@@ -9,8 +9,7 @@ class ReportDashedContainer extends StatelessWidget {
   const ReportDashedContainer({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomText(
@@ -47,5 +46,4 @@ class ReportDashedContainer extends StatelessWidget {
         ),
       ],
     );
-  }
 }
