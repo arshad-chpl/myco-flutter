@@ -171,4 +171,5 @@ class AppAssets {
   static const String assetCalendar = '$appointmentSvgs/calendar.svg';
   static const String assetTrashIcon = '$appointmentSvgs/trash_icon.svg';
   static const String assetBellRinging = '$appointmentSvgs/bell_ringing.svg';
+  static const String assetMsgEdit = '$appointmentSvgs/message-edit.svg';
 }
