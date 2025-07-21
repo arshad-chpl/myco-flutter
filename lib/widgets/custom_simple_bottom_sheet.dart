@@ -6,6 +6,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
@@ -165,23 +166,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
         ),
 
         // Search field
-        MyCoTextfield(
-          prefix: SvgPicture.asset(AppAssets.searchIcon, fit: BoxFit.scaleDown),
-          hintText: LanguageManager().get(widget.searchHint ?? 'search'),
-          hintTextStyle: TextStyle(
-            fontSize: 14 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-          ),
-          textInputType: TextInputType.text,
-          textAlignment: TextAlign.left,
-          boarderRadius: 10,
-          contentPadding: EdgeInsets.all(
-            10 * Responsive.getResponsive(context),
-          ),
-          onChanged: _onSearch,
-        ),
-
+        CustomSearchField(hintText: 'search', onChanged: _onSearch),
         SizedBox(height: 12 * Responsive.getResponsive(context)),
 
         // "Select All" button
@@ -207,7 +192,8 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
               ),
               child: Center(
                 child: CustomText(
-                  isAllSelected ? 'Unselect All' : 'Select All',
+                  isAllSelected ? 'unselect_all' : 'select_all',
+                  isKey: true,
                   textAlign: TextAlign.center,
                   fontWeight: FontWeight.w700,
                   fontSize: 14 * Responsive.getResponsiveText(context),
@@ -219,76 +205,85 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
 
         // List of items
         Expanded(
-          child: ListView.builder(
-            itemCount: filteredList.length,
-            itemBuilder: (context, index) {
-              final item = filteredList[index];
-              final id = item['id'];
-              final name = item['name'] ?? '';
-              // final isSelected = id == selectedItemId;
-
-              if (id == null || name.isEmpty) return const SizedBox.shrink();
-
-              final isSelected = widget.isMultipleSelection
-                  ? selectedItemIds.contains(id)
-                  : id == selectedItemId;
-
-              return Container(
-                height: Responsive.isTablet
-                    ? 0.10 * Responsive.getHeight(context)
-                    : 0.040 * Responsive.getHeight(context),
-                margin: EdgeInsets.symmetric(
-                  vertical: 0.005 * Responsive.getHeight(context),
-                ),
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? AppTheme.getColor(context).surfaceContainer
-                      : Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: isSelected
-                        ? AppTheme.getColor(context).primary
-                        : AppTheme.getColor(
-                            context,
-                          ).primary.withValues(alpha: 0.3),
-                    width: isSelected ? 2 : 1,
-                  ),
-                ),
-                child: InkWell(
-                  // onTap: () {
-                  //   setState(() {
-                  //     selectedItemId = id;
-                  //   });
-                  // },
-                  onTap: () {
-                    if (widget.isMultipleSelection) {
-                      _toggleSelection(id);
-                    } else {
-                      setState(() {
-                        selectedItemId = id;
-                      });
-                    }
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 10 * Responsive.getResponsive(context),
-                      horizontal: 16 * Responsive.getResponsive(context),
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(11),
+          child: filteredList.isEmpty
+              ? Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(
+                      16.0 * Responsive.getResponsive(context),
                     ),
                     child: CustomText(
-                      name,
-                      textAlign: TextAlign.center,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14 * Responsive.getResponsiveText(context),
-                      color: AppColors.textPrimary,
+                      'No matching results found',
+                      fontSize: 16 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textSecondary,
                     ),
                   ),
+                )
+              : ListView.builder(
+                  itemCount: filteredList.length,
+                  itemBuilder: (context, index) {
+                    final item = filteredList[index];
+                    final id = item['id'];
+                    final name = item['name'] ?? '';
+                    if (id == null || name.isEmpty)
+                      return const SizedBox.shrink();
+
+                    final isSelected = widget.isMultipleSelection
+                        ? selectedItemIds.contains(id)
+                        : id == selectedItemId;
+
+                    return Container(
+                      height: Responsive.isTablet
+                          ? 0.10 * Responsive.getHeight(context)
+                          : 0.040 * Responsive.getHeight(context),
+                      margin: EdgeInsets.symmetric(
+                        vertical: 0.005 * Responsive.getHeight(context),
+                      ),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? AppTheme.getColor(context).surfaceContainer
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: isSelected
+                              ? AppTheme.getColor(context).primary
+                              : AppTheme.getColor(
+                                  context,
+                                ).primary.withValues(alpha: 0.3),
+                          width: isSelected ? 2 : 1,
+                        ),
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          if (widget.isMultipleSelection) {
+                            _toggleSelection(id);
+                          } else {
+                            setState(() {
+                              selectedItemId = id;
+                            });
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10 * Responsive.getResponsive(context),
+                            horizontal: 16 * Responsive.getResponsive(context),
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(11),
+                          ),
+                          child: CustomText(
+                            name,
+                            textAlign: TextAlign.center,
+                            fontWeight: FontWeight.w700,
+                            fontSize:
+                                14 * Responsive.getResponsiveText(context),
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
         ),
         // Submit button
         MyCoButton(
@@ -300,13 +295,6 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
           isShadowBottomLeft: true,
           fontFamily: 'Inter',
           fontWeight: FontWeight.w500,
-          // onTap: () {
-          //   if (selectedItemId != null) {
-          //     Navigator.pop(context, selectedItemId!);
-          //   } else {
-          //     Navigator.pop(context);
-          //   }
-          // },
           onTap: () {
             if (widget.isMultipleSelection) {
               Navigator.pop(context, selectedItemIds);

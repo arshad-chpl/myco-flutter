@@ -113,7 +113,7 @@ class EmployeeSelectionCard extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Colors.transparent, Colors.black38],
+                    colors: [Colors.black12, Colors.black26],
                   ),
                 ),
                 child: Column(
@@ -137,7 +137,7 @@ class EmployeeSelectionCard extends StatelessWidget {
                             highlightColor: Colors.grey.shade100,
                             child: Container(
                               height:
-                                  11 * Responsive.getResponsiveText(context),
+                                  12 * Responsive.getResponsiveText(context),
                               width: 40,
                               color: Colors.white,
                             ),
@@ -150,12 +150,15 @@ class EmployeeSelectionCard extends StatelessWidget {
                                 12 * Responsive.getResponsiveText(context),
                             fontWeight: FontWeight.w600,
                             color: AppTheme.getColor(context).onPrimary,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           CustomText(
                             department,
                             fontSize:
-                                11 * Responsive.getResponsiveText(context),
+                                12 * Responsive.getResponsiveText(context),
+                            fontWeight: FontWeight.w400,
                             color: AppTheme.getColor(context).onPrimary,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                 ),

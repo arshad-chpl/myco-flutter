@@ -282,9 +282,10 @@ class EmployeesScreen extends StatelessWidget {
   );
 
   Widget _buildDropdownBox(BuildContext context, String text) {
-    final isWide = Responsive.screenWidth() > 600;
-    final boxHeight = isWide ? 48.0 : 44 * Responsive.getResponsive(context);
-    final horizontalPadding = isWide ? 16.0 : 10.0;
+    final boxHeight = Responsive.isTablet
+        ? 48.0
+        : 44 * Responsive.getResponsive(context);
+    final horizontalPadding = Responsive.isTablet ? 16.0 : 10.0;
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
@@ -310,7 +311,9 @@ class EmployeesScreen extends StatelessWidget {
           ),
           Icon(
             Icons.keyboard_arrow_down_rounded,
-            size: isWide ? 16 : 14 * Responsive.getResponsiveText(context),
+            size: Responsive.isTablet
+                ? 0.060 * Responsive.getHeight(context)
+                : 0.020 * Responsive.getHeight(context),
             color: AppTheme.getColor(context).primary,
           ),
         ],

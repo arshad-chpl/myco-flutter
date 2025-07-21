@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
+import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/features/employees/data/datasources/employees_remote_data_source.dart';
 import 'package:myco_flutter/features/employees/data/models/branch_model/branch_model.dart';
 import 'package:myco_flutter/features/employees/data/models/department_model/department_model.dart';
@@ -7,6 +9,7 @@ import 'package:myco_flutter/features/employees/data/models/employee_model/emplo
 
 class EmployeeRemoteDataSourceImpl implements EmployeeRemoteDataSource {
   final ApiClient _apiClient;
+  final PreferenceManager _prefs = GetIt.I<PreferenceManager>();
 
   EmployeeRemoteDataSourceImpl(this._apiClient);
 
@@ -16,6 +19,16 @@ class EmployeeRemoteDataSourceImpl implements EmployeeRemoteDataSource {
     String? blockId,
     String? floorId,
   }) async {
+    // ✅ Step 1: Try to load from cache
+    final cachedJsonString = await _prefs.getCachedEmployeeResponse();
+    if (cachedJsonString != null && cachedJsonString.isNotEmpty) {
+      final cachedMap = json.decode(cachedJsonString);
+      print('🗂️ Loaded employee data from cache.');
+      _logJsonSize(cachedJsonString, from: '📂 Cache');
+      return cachedMap;
+    }
+
+    // ✅ Step 2: No cache, call API
     final requestMap = {
       'getEmployees': 'getEmployees',
       'language_id': '1',
@@ -31,14 +44,29 @@ class EmployeeRemoteDataSourceImpl implements EmployeeRemoteDataSource {
     );
 
     final decoded = response is String ? json.decode(response) : response;
+    final jsonString = jsonEncode(decoded);
 
-    // 🔍 Log to check what is coming from API
-    print('📦 API RAW RESPONSE: ${jsonEncode(decoded)}');
+    print('📦 API RAW RESPONSE: $jsonString');
 
-    // Optional: Print specific keys
-    print('✅ Keys in response: ${decoded.keys.join(', ')}');
+    // ✅ Step 3: Save to cache
+    await _prefs.setCachedEmployeeResponse(jsonString);
+
+    // ✅ Step 4: Log size
+    _logJsonSize(jsonString, from: '🛰️ API');
 
     return decoded;
+  }
+
+  // 🔎 Log JSON size in bytes, KB, and MB
+  void _logJsonSize(String jsonString, {String from = ''}) {
+    final bytes = utf8.encode(jsonString);
+    final sizeInBytes = bytes.length;
+    final sizeInKB = sizeInBytes / 1024;
+    final sizeInMB = sizeInKB / 1024;
+
+    print(
+      '$from 📏 JSON Size: $sizeInBytes bytes | ${sizeInKB.toStringAsFixed(2)} KB | ${sizeInMB.toStringAsFixed(4)} MB',
+    );
   }
 
   @override
@@ -76,5 +104,9 @@ class EmployeeRemoteDataSourceImpl implements EmployeeRemoteDataSource {
     );
     final list = data['employees'] as List<dynamic>? ?? [];
     return list.map((e) => EmployeeModel.fromJson(e)).toList();
+  }
+
+  Future<void> clearCachedEmployeeData() async {
+    await _prefs.clearCachedEmployeeResponse();
   }
 }

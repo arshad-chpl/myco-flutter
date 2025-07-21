@@ -105,14 +105,14 @@ class Responsive {
         : screenWidth > 500
         ? 160.0
         : 155.0;
-    final childAspectRatio = itemWidth / itemHeight;
+    // final childAspectRatio = itemWidth / itemHeight;
 
     return GridConfig(
       itemCount: itemCount,
       spacing: spacing,
       itemWidth: itemWidth,
       itemHeight: itemHeight,
-      childAspectRatio: childAspectRatio,
+      childAspectRatio: 2 / 2.5,
     );
   }
 }

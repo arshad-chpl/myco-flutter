@@ -13,21 +13,22 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
 
   final PreferenceManager preferenceManager = GetIt.I<PreferenceManager>();
 
-  EmployeeBloc({
-    required this.getUserData,
-    required this.getEmployees,
-  }) : super(EmployeeInitial()) {
+  bool _hasLoadedOnce = false;
+
+  EmployeeBloc({required this.getUserData, required this.getEmployees})
+    : super(EmployeeInitial()) {
     on<LoadUserData>(_onLoadUserData);
     on<ChangeBranch>(_onChangeBranch);
     on<ChangeDepartment>(_onChangeDepartment);
     on<SearchEmployees>(_onSearch);
     on<ToggleEmployeeSelection>(_onToggleEmployeeSelection);
+    on<RefreshEmployeeData>(_onRefreshEmployeeData);
   }
 
   Future<void> _onLoadUserData(
-      LoadUserData evt,
-      Emitter<EmployeeState> emit,
-      ) async {
+    LoadUserData evt,
+    Emitter<EmployeeState> emit,
+  ) async {
     emit(EmployeeLoading());
 
     final userId = await preferenceManager.getUserId();
@@ -36,32 +37,36 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     final result = await getUserData(userId: userId, societyId: societyId);
 
     result.fold(
-          (failure) => emit(EmployeeError(_mapFailureToMessage(failure))),
-          (data) {
+      (failure) => emit(EmployeeError(_mapFailureToMessage(failure))),
+      (data) {
+        _hasLoadedOnce = true;
+
         final branches = data.value1;
         final departments = data.value2;
         final allEmployees = data.value3;
 
         final currentUser = allEmployees.firstWhere(
-              (e) => e.userId == userId,
+          (e) => e.userId == userId,
           orElse: () => allEmployees.first,
         );
 
         final userDept = departments.firstWhere(
-              (d) => d.floorId == currentUser.floorId,
+          (d) => d.floorId == currentUser.floorId,
           orElse: () => departments.first,
         );
 
         final userBranch = branches.firstWhere(
-              (b) => b.blockId == userDept.blockId,
+          (b) => b.blockId == userDept.blockId,
           orElse: () => branches.first,
         );
 
-        final employeesFiltered = allEmployees.where(
+        final employeesFiltered = allEmployees
+            .where(
               (e) =>
-          e.blockId == userDept.blockId &&
-              e.floorId == userDept.floorId,
-        ).toList();
+                  e.blockId == userDept.blockId &&
+                  e.floorId == userDept.floorId,
+            )
+            .toList();
 
         emit(
           EmployeeLoaded(
@@ -71,7 +76,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
             selectedBranch: userBranch,
             selectedDepartment: userDept,
             selectedEmployeeIds: <String>{},
-            searchQuery: ''
+            searchQuery: '',
           ),
         );
       },
@@ -79,9 +84,9 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   }
 
   Future<void> _onChangeBranch(
-      ChangeBranch evt,
-      Emitter<EmployeeState> emit,
-      ) async {
+    ChangeBranch evt,
+    Emitter<EmployeeState> emit,
+  ) async {
     if (state is EmployeeLoaded) {
       final st = state as EmployeeLoaded;
       emit(EmployeeLoading());
@@ -106,8 +111,8 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       );
 
       result.fold(
-            (failure) => emit(EmployeeError(_mapFailureToMessage(failure))),
-            (employees) {
+        (failure) => emit(EmployeeError(_mapFailureToMessage(failure))),
+        (employees) {
           emit(
             EmployeeLoaded(
               branches: st.branches,
@@ -117,7 +122,6 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
               selectedDepartment: newDept,
               searchQuery: st.searchQuery,
               selectedEmployeeIds: <String>{},
-
             ),
           );
         },
@@ -126,9 +130,9 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   }
 
   Future<void> _onChangeDepartment(
-      ChangeDepartment evt,
-      Emitter<EmployeeState> emit,
-      ) async {
+    ChangeDepartment evt,
+    Emitter<EmployeeState> emit,
+  ) async {
     if (state is EmployeeLoaded) {
       final st = state as EmployeeLoaded;
       emit(EmployeeLoading());
@@ -148,8 +152,8 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       );
 
       result.fold(
-            (failure) => emit(EmployeeError(_mapFailureToMessage(failure))),
-            (employees) {
+        (failure) => emit(EmployeeError(_mapFailureToMessage(failure))),
+        (employees) {
           emit(
             EmployeeLoaded(
               branches: st.branches,
@@ -184,9 +188,9 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   }
 
   void _onToggleEmployeeSelection(
-      ToggleEmployeeSelection evt,
-      Emitter<EmployeeState> emit,
-      ) {
+    ToggleEmployeeSelection evt,
+    Emitter<EmployeeState> emit,
+  ) {
     if (state is EmployeeLoaded) {
       final st = state as EmployeeLoaded;
       final updatedSelection = Set<String>.from(st.selectedEmployeeIds);
@@ -211,6 +215,15 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     }
   }
 
+  Future<void> _onRefreshEmployeeData(
+    RefreshEmployeeData event,
+    Emitter<EmployeeState> emit,
+  ) async {
+    emit(EmployeeLoading());
+    await preferenceManager.delete('cached_employee_response');
+    _hasLoadedOnce = false;
+    add(LoadUserData());
+  }
 
   String _mapFailureToMessage(Failure failure) {
     if (failure is ServerFailure) return 'Server error: ${failure.message}';

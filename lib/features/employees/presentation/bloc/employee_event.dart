@@ -6,13 +6,13 @@ abstract class EmployeeEvent {}
 class LoadUserData extends EmployeeEvent {}
 
 class ChangeBranch extends EmployeeEvent {
-  final Branch branch;
+  final dynamic branch;
 
   ChangeBranch(this.branch);
 }
 
 class ChangeDepartment extends EmployeeEvent {
-  final Department department;
+  final dynamic department;
 
   ChangeDepartment(this.department);
 }
@@ -29,4 +29,5 @@ class ToggleEmployeeSelection extends EmployeeEvent {
   ToggleEmployeeSelection(this.employeeId);
 }
 
+class RefreshEmployeeData extends EmployeeEvent {}
 
