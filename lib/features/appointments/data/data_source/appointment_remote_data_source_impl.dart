@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/encryption/gzip_util.dart';
 import 'package:myco_flutter/core/models/data/common_response_model.dart';
-import 'package:myco_flutter/core/models/domain/common_response_entity.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/appointments/data/data_source/appointment_remote_data_source.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/delete_appointment_request_model.dart';
@@ -69,5 +68,17 @@ class AppointmentRemoteDataSourceImpl extends AppointmentRemoteDataSource {
     return CommonResponseModel.fromJson(
       json.decode(GzipUtil.decryptAES(response)),
     );
+  }
+}
+  Future<CommonResponseModel> sendAppointmentReminder(
+      SendAppointmentReminderRequestModel request
+      ) async {
+    final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.employeeMobileApi,
+    ).postDynamic('admin_view_controller.php', encryptedBody);
+   return CommonResponseModel.fromJson(
+     json.decode(GzipUtil.decryptAES(response))
+   );
   }
 }
