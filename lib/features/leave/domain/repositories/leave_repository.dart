@@ -61,4 +61,15 @@ abstract class LeaveRepository {
     String leaveId,
     String leavePercentage,
   );
+
+  Future<Either<Failure, CommonResponse>> changeSandwichLeave(
+    String userId,
+    String paid,
+    String leaveId,
+    String leaveName,
+    String sandwichId,
+    String unitId,
+    String userFullName,
+    String leavePercentage,
+  );
 }

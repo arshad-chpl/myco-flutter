@@ -160,5 +160,27 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
         emit(LeaveError('Failed to change auto leave: $e'));
       }
     });
+
+    on<ChangeSandwichLeave>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.changeSandwichLeave(
+          event.userId,
+          event.paid,
+          event.leaveId,
+          event.leaveName,
+          event.sandwichId,
+          event.unitId,
+          event.userFullName,
+          event.leavePercentage,
+        );
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(SandwichLeaveChanged(model)),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to change sandwich leave: $e'));
+      }
+    });
   }
 }

@@ -107,6 +107,31 @@ class _LeaveScreenState extends State<LeaveScreen> {
     );
   }
 
+  void _changeSandwichLeave(
+    String userId,
+    String paid,
+    String leaveId,
+    String leaveName,
+    String sandwichId,
+    String unitId,
+    String userFullName,
+    String leavePercentage,
+  ) {
+    setState(() => isLoading = true);
+    context.read<LeaveBloc>().add(
+      ChangeSandwichLeave(
+        userId,
+        paid,
+        leaveId,
+        leaveName,
+        sandwichId,
+        unitId,
+        userFullName,
+        leavePercentage,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
     // appBar: AppBar(
@@ -301,7 +326,18 @@ class _LeaveScreenState extends State<LeaveScreen> {
                                             leaveBloc: leaveBloc,
                                             leaveHistory: leave,
                                             onSubmit: (EditSandwichLeaveData) {
-                                              print(EditSandwichLeaveData.leaveId);
+                                              final String paid='0';
+                                              _changeSandwichLeave(
+                                                EditSandwichLeaveData.userId ?? '',
+                                                paid,
+                                                EditSandwichLeaveData.leaveId ?? '',
+                                                EditSandwichLeaveData.leaveName ?? '',
+                                                EditSandwichLeaveData.sandwichId,
+                                                EditSandwichLeaveData.unitId ?? '',
+                                                EditSandwichLeaveData.userFullName ?? '',
+                                                EditSandwichLeaveData.leavePercentage.toString(),
+
+                                              );
                                               Navigator.of(context).pop();
                                             },
                                             onClose: () {
