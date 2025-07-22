@@ -3,14 +3,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
+
 import 'package:myco_flutter/core/router/modules/assets_routes.dart';
+
 import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
 import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
+import 'package:myco_flutter/core/router/modules/work_allocation_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
+
+import 'package:myco_flutter/features/asset/bloc/assets_bloc.dart';
+import 'package:myco_flutter/features/asset/view/add_assets.dart';
+import 'package:myco_flutter/features/asset/view/assets_details_page.dart';
+import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
+import 'package:myco_flutter/features/asset/view/edit_assets_page.dart';
+import 'package:myco_flutter/features/asset/view/handover_assets.dart';
+import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
+import 'package:myco_flutter/features/asset/view/swap_assets.dart';
+import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
+
 // import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
@@ -59,8 +73,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths
-        .splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -225,16 +238,6 @@ class AppRouter {
         //   child: const FaceDetectionPage(),
         // ),
       ),
-      // Add all modular routes here
-      // Add all modular routes here
-      // GoRoute(
-      //   path: RoutePaths.takeOrder,
-      //   name: 'take-order',
-      //   builder: (context, state) => BlocProvider(
-      //     create: (_) => TakeOrderBloc(),
-      //     child: TakeOrderPage(),
-      //   ),
-      // ),
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',
@@ -342,6 +345,8 @@ class AppRouter {
       ...cahatRoutes,
 
       ...assetsRoutes,
+
+      ...WorkAllocationRoutes,
 
       GoRoute(
         path: RoutePaths.addVisit,
