@@ -24,10 +24,12 @@ class RoutePaths {
   static const String distributorVisitor = '/distributor-visitor';
   static const String noOrder = '/no-order';
   static const String faceDetection = '/face-detection';
+
   // static const String distributorVisitor = 'distributor-visitor';
   // static const String noOrder = 'no-order';
   static const String selectOtherCompany = '/select-other-company';
   static const String signUpForm = '/sign-up-form';
+
   //
   // static const String addVisit = '/add-visit';
 
@@ -124,11 +126,16 @@ class RoutePaths {
   static const String startNewChat = '/start-chat';
   static const String groupInfo = '/group-info';
 
-  //maulik
+  // --- Asset Routes ---
   static const String assetsDetails = '/assets-details';
   static const String addAssets = '/add-assets';
   static const String editAssets = '/edit-assets';
   static const String handoverAssets = '/handover-assets';
   static const String takeoverAssets = '/takeover-assets';
   static const String swapAssets = '/swap-assets';
+
+  //work-allocation
+  static const String workAllocation = '/work-allocation';
+  static const String detailPage = '/detail-page';
+  static const String assignWork = '/assign-work';
 }

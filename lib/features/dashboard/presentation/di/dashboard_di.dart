@@ -13,6 +13,7 @@ Future<void> DashboardDi(GetIt sl) async {
   sl.registerLazySingleton<DashboardRemoteDataSource>(
     () => DashboardRemoteDataSourceImpl(
       apiClient: sl<ApiClient>(instanceName: VariableBag.residentApiNew),
+      masterApiClient: sl<ApiClient>(instanceName: VariableBag.masterAPICall)
     ),
   );
   sl.registerLazySingleton<DashboardRepository>(
