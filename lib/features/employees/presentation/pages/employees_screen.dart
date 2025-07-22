@@ -26,47 +26,6 @@ class EmployeesScreen extends StatelessWidget {
 
   TextEditingController _searchController = TextEditingController();
 
-  @override
-  Widget build(BuildContext context) {
-    Responsive.init(context);
-
-    return BlocProvider<EmployeeBloc>(
-      create: (_) => bloc..add(LoadUserData()),
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: BlocBuilder<EmployeeBloc, EmployeeState>(
-            builder: (context, state) => CustomAppbar(
-              title: 'employees',
-              isKey: true,
-              titleFontSize: 18 * Responsive.getResponsiveText(context),
-              titleFontWeight: FontWeight.w700,
-              appBarBackgoundColor: AppTheme.getColor(context).surface,
-            ),
-          ),
-        ),
-        body: BlocBuilder<EmployeeBloc, EmployeeState>(
-          builder: (context, state) {
-            if (state is EmployeeLoading || state is EmployeeInitial) {
-              return _buildLoadedContent(context, bloc, null);
-            }
-
-            if (state is EmployeeError) {
-              return Center(child: Text('Error: ${state.message}'));
-            }
-
-            if (state is EmployeeLoaded) {
-              return _buildLoadedContent(context, bloc, state);
-            }
-
-            return const SizedBox();
-          },
-        ),
-      ),
-    );
-  }
-
   Widget _buildLoadedContent(
     BuildContext context,
     EmployeeBloc bloc,
@@ -236,6 +195,47 @@ class EmployeesScreen extends StatelessWidget {
     );
   }
 
+  @override
+  Widget build(BuildContext context) {
+    Responsive.init(context);
+
+    return BlocProvider<EmployeeBloc>(
+      create: (_) => bloc..add(LoadUserData()),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: BlocBuilder<EmployeeBloc, EmployeeState>(
+            builder: (context, state) => CustomAppbar(
+              title: 'employees',
+              isKey: true,
+              titleFontSize: 18 * Responsive.getResponsiveText(context),
+              titleFontWeight: FontWeight.w700,
+              appBarBackgoundColor: AppTheme.getColor(context).surface,
+            ),
+          ),
+        ),
+        body: BlocBuilder<EmployeeBloc, EmployeeState>(
+          builder: (context, state) {
+            if (state is EmployeeLoading || state is EmployeeInitial) {
+              return _buildLoadedContent(context, bloc, null);
+            }
+
+            if (state is EmployeeError) {
+              return Center(child: Text('Error: ${state.message}'));
+            }
+
+            if (state is EmployeeLoaded) {
+              return _buildLoadedContent(context, bloc, state);
+            }
+
+            return const SizedBox();
+          },
+        ),
+      ),
+    );
+  }
+
   Widget _dropdownBranch(BuildContext ctx, EmployeeLoaded? st) =>
       GestureDetector(
         onTap: () async {
@@ -252,6 +252,7 @@ class EmployeesScreen extends StatelessWidget {
 
           if (id == null || id == st.selectedBranch?.blockId) return;
           final branch = st.branches.firstWhere((b) => b.blockId == id);
+          _searchController.clear();
           ctx.read<EmployeeBloc>().add(ChangeBranch(branch));
         },
         child: _buildDropdownBox(
@@ -279,6 +280,7 @@ class EmployeesScreen extends StatelessWidget {
 
       if (id == null || id == st.selectedDepartment?.floorId) return;
       final dept = depts.firstWhere((d) => d.floorId == id);
+      _searchController.clear();
       ctx.read<EmployeeBloc>().add(ChangeDepartment(dept));
     },
     child: _buildDropdownBox(

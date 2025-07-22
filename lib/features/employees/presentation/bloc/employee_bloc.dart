@@ -120,7 +120,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
               employees: employees,
               selectedBranch: newBranch,
               selectedDepartment: newDept,
-              searchQuery: st.searchQuery,
+              searchQuery: '',
               selectedEmployeeIds: <String>{},
             ),
           );
@@ -161,7 +161,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
               employees: employees,
               selectedBranch: st.selectedBranch,
               selectedDepartment: newDept,
-              searchQuery: st.searchQuery,
+              searchQuery: '',
               selectedEmployeeIds: <String>{},
             ),
           );
@@ -224,6 +224,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     final st = state as EmployeeLoaded;
     final selectedDept = st.selectedDepartment;
     final selectedBranch = st.selectedBranch;
+    final existingQuery = st.searchQuery.trim();
 
     if (selectedDept == null || selectedBranch == null) {
       emit(EmployeeError('No selected branch or department to refresh.'));
@@ -247,20 +248,80 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     result.fold(
       (failure) => emit(EmployeeError(_mapFailureToMessage(failure))),
       (employees) {
+        // If searchQuery is not empty, filter employees
+        final filteredEmployees = existingQuery.isNotEmpty
+            ? employees
+                  .where(
+                    (e) =>
+                        e.userFullName?.toLowerCase().contains(
+                          existingQuery.toLowerCase(),
+                        ) ??
+                        false,
+                  )
+                  .toList()
+            : employees;
+
         emit(
           EmployeeLoaded(
             branches: st.branches,
             departments: st.departments,
-            employees: employees,
+            employees: filteredEmployees,
             selectedBranch: selectedBranch,
             selectedDepartment: selectedDept,
-            searchQuery: '',
+            searchQuery: existingQuery,
             selectedEmployeeIds: <String>{},
           ),
         );
       },
     );
   }
+
+  // Future<void> _onRefreshEmployeeData(
+  //   RefreshEmployeeData event,
+  //   Emitter<EmployeeState> emit,
+  // ) async {
+  //   if (state is! EmployeeLoaded) return;
+  //
+  //   final st = state as EmployeeLoaded;
+  //   final selectedDept = st.selectedDepartment;
+  //   final selectedBranch = st.selectedBranch;
+  //
+  //   if (selectedDept == null || selectedBranch == null) {
+  //     emit(EmployeeError('No selected branch or department to refresh.'));
+  //     return;
+  //   }
+  //
+  //   emit(EmployeeLoading());
+  //
+  //   final userId = await preferenceManager.getUserId();
+  //   final societyId = await preferenceManager.getCompanyId() ?? '';
+  //
+  //   final result = await getEmployees.call(
+  //     GetEmployeesParams(
+  //       userId: userId,
+  //       societyId: societyId,
+  //       blockId: selectedDept.blockId,
+  //       floorId: selectedDept.floorId,
+  //     ),
+  //   );
+  //
+  //   result.fold(
+  //     (failure) => emit(EmployeeError(_mapFailureToMessage(failure))),
+  //     (employees) {
+  //       emit(
+  //         EmployeeLoaded(
+  //           branches: st.branches,
+  //           departments: st.departments,
+  //           employees: employees,
+  //           selectedBranch: selectedBranch,
+  //           selectedDepartment: selectedDept,
+  //           searchQuery: '',
+  //           selectedEmployeeIds: <String>{},
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   String _mapFailureToMessage(Failure failure) {
     if (failure is ServerFailure) return 'Server error: ${failure.message}';
