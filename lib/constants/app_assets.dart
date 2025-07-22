@@ -12,7 +12,7 @@ class AppAssets {
   static const String svgsVisit = '$svgsPath/visit';
   static const String assetVisit = '$basePath/add_expense';
 
-  static const String assets = '$basePath/assets';
+  static const String assets = '$basePath/asset';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
   static const String workAllocation = '$basePath/work_allocation';
@@ -34,7 +34,7 @@ class AppAssets {
   static const String imageSearch = '$imagesPath/search.png';
   static const String imageLaptop = '$imagesPath/laptop.png';
   static const String imageCamera = '$imagesPath/camera.png';
-  static const String imageNoteFavorite = '$imagesPath/note-favorite.png';
+  static const String imageNoteFavorite = '$imagesPath/note-favorite.svg';
   static const String imageGalleryExport = '$imagesPath/gallery-export.png';
   static const String imageNoAssets = '$imagesPath/noAssets.png';
 
