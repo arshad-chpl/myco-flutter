@@ -24,6 +24,7 @@ class _AppointmentDetailsBottomSheetState
     extends State<AppointmentDetailsBottomSheet> {
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
+    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
     child: CommonCard(
       headerColor: AppTheme.getColor(context).primary,
       title: 'Manish Chandra',
@@ -131,11 +132,7 @@ class _AppointmentDetailsBottomSheetState
                           context: context,
                           isScrollControlled: true,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(
-                                16 * Responsive.getResponsive(context),
-                              ),
-                            ),
+                            borderRadius: BorderRadiusGeometry.circular(20),
                           ),
                           builder: (context) =>
                               const RejectRequestBottomSheet(),
