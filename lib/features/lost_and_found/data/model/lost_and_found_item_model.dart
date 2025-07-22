@@ -1,7 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:myco_flutter/features/lost_and_found/domain/entities/lost_and_found_entity.dart';
-
+import 'dart:convert';
 part 'lost_and_found_item_model.g.dart';
+
+LostAndFoundModel lostAndFoundModelFromJson(String str) =>
+    LostAndFoundModel.fromJson(json.decode(str));
 
 @JsonSerializable()
 class LostAndFoundModel {
@@ -15,6 +18,10 @@ class LostAndFoundModel {
   factory LostAndFoundModel.fromJson(Map<String, dynamic> json) =>
       _$LostAndFoundModelFromJson(json);
   Map<String, dynamic> toJson() => _$LostAndFoundModelToJson(this);
+
+  // LostFoundEntity toEntity() => LostFoundEntity(
+  //
+  // );
 }
 
 @JsonSerializable()
@@ -46,10 +53,9 @@ class Lostfound {
 
   factory Lostfound.fromJson(Map<String, dynamic> json) =>
       _$LostfoundFromJson(json);
-  Map<String, dynamic> toJson() => _$LostfoundToJson(this);
-}
 
-extension LostfoundX on Lostfound {
+  Map<String, dynamic> toJson() => _$LostfoundToJson(this);
+
   LostFoundEntity toEntity() => LostFoundEntity(
     lostFoundMasterId: lostFoundMasterId,
     userId: userId,

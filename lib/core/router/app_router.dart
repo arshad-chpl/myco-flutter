@@ -35,7 +35,7 @@ import 'package:myco_flutter/features/leave/presentation/pages/add_short_leave_s
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/my_team_leaves_screen.dart';
-import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/bloc/lost_and_found_bloc.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
@@ -63,7 +63,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths
+        .splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -265,31 +266,34 @@ class AppRouter {
         name: 'addExpense',
         builder: (context, state) => const AddExpensePage(),
       ),
+
       GoRoute(
         path: RoutePaths.lostAndFoundAddScreen,
         name: 'lost-and-found-add-screen',
         builder: (context, state) => const LostAndFoundAddScreen(),
       ),
 
-      GoRoute(
-        path: RoutePaths.lostAndFoundChatScreen,
-        name: 'lost-and-found-chat-screen',
-        builder: (context, state) => ChatScreen(),
-      ),
+      // GoRoute(
+      //   path: RoutePaths.lostAndFoundChatScreen,
+      //   name: 'lost-and-found-chat-screen',
+      //   builder: (context, state) => ChatScreen(),
+      // ),
       //TODO
-      GoRoute(
-        path: RoutePaths.lostAndFoundItemDetails,
-        name: 'lost-and-found-item-details',
-        builder: (context, state) {
-          LostAndFoundItemModel lostitem = state.extra as LostAndFoundItemModel;
-          return ItemDetailsScreen(item: lostitem);
-        },
-      ),
-
+      // GoRoute(
+      //   path: RoutePaths.lostAndFoundItemDetails,
+      //   name: 'lost-and-found-item-details',
+      //   builder: (context, state) {
+      //     LostAndFoundItemModel lostitem = state.extra as LostAndFoundItemModel;
+      //     return ItemDetailsScreen(item: lostitem);
+      //   },
+      // ),
       GoRoute(
         path: RoutePaths.lostAndFound,
         name: 'lost-and-found',
-        builder: (context, state) => const LostAndFound(),
+        builder: (context, state) => BlocProvider(
+          create: (_) => GetIt.I<LostAndFoundBloc>(),
+          child: const LostAndFound(),
+        ),
       ),
       GoRoute(
         path: RoutePaths.CustomerAddNewVisit,

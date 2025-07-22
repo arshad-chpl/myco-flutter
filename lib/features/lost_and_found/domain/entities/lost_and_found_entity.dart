@@ -1,4 +1,6 @@
-class LostFoundEntity {
+import 'package:equatable/equatable.dart';
+
+class LostFoundEntity extends Equatable {
   final String? lostFoundMasterId;
   final String? userId;
   final String? lostFoundTitle;
@@ -16,4 +18,15 @@ class LostFoundEntity {
     this.lostFoundType,
     this.lostFoundTypeInt,
   });
+
+  @override
+  List<Object?> get props => [
+    lostFoundMasterId,
+    userId,
+    lostFoundTitle,
+    lostFoundDate,
+    lostFoundImage,
+    lostFoundType,
+    lostFoundTypeInt,
+  ];
 }

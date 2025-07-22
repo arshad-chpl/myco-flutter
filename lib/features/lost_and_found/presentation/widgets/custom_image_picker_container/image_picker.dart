@@ -115,7 +115,7 @@ class _ImageFilePickerWidgetState extends State<_ImageFilePickerWidget> {
               SizedBox(width: .020 * Responsive.getWidth(context)),
               if (widget.isGallaryShow == true)
                 _pickerButton(
-                  icon: AppAssets.gallaryAdd,
+                  icon: AppAssets.gallary,
                   title: 'gallery',
                   onTap: () async {
                     final hasPermission =
@@ -131,7 +131,7 @@ class _ImageFilePickerWidgetState extends State<_ImageFilePickerWidget> {
               SizedBox(width: .020 * Responsive.getWidth(context)),
               if (widget.isDocumentShow == true)
                 _pickerButton(
-                  icon: AppAssets.documents,
+                  icon: AppAssets.document,
                   title: 'documents',
                   onTap: () async {
                     final hasPermission =

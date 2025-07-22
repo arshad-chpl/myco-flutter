@@ -8,10 +8,12 @@ abstract class LostAndFoundEvent extends Equatable {
 }
 
 class GetLostAndFoundItemsEvent extends LostAndFoundEvent {
-  final Map<String, dynamic> request;
+  // final Map<String, dynamic> request;
 
-  const GetLostAndFoundItemsEvent(this.request);
+  const GetLostAndFoundItemsEvent();
+  // const GetLostAndFoundItemsEvent(this.request);
 
   @override
-  List<Object?> get props => [request];
+  // List<Object?> get props => [request];
+  List<Object?> get props => [];
 }

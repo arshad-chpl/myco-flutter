@@ -265,10 +265,12 @@
 //     color: Colors.black54,
 //   );
 // }
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
@@ -282,8 +284,11 @@ import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_scre
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_inner_shadow.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_loader.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
+import 'package:shimmer/shimmer.dart';
 
 class LostAndFound extends StatefulWidget {
   const LostAndFound({super.key});
@@ -297,30 +302,18 @@ class _LostAndFoundState extends State<LostAndFound> {
   @override
   void initState() {
     super.initState();
-    context.read<LostAndFoundBloc>().add(
-      const GetLostAndFoundItemsEvent({
-        'getListNew': 'getListNew',
-        'society_id': '1',
-        'user_id': '10',
-        'language_id': '1',
-        'lost_found_master_id': '',
-        'is_details_view': 0,
-      }),
-    );
+    context.read<LostAndFoundBloc>().add(const GetLostAndFoundItemsEvent());
+    // log();
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(
-      automaticallyImplyLeading: false,
-      title: CustomText(
-        isKey: true,
-        'lost_found',
-        fontSize: 18 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w700,
-      ),
+    appBar: const CustomAppbar(
+      automaticallyImplyLeading: true,
+      title: 'lost_found',
       centerTitle: false,
       elevation: 0,
+      isKey: true,
     ),
     body: Padding(
       padding: EdgeInsets.symmetric(
@@ -328,47 +321,38 @@ class _LostAndFoundState extends State<LostAndFound> {
       ),
       child: Column(
         children: [
-          MyCoTextfield(
-            height: .044 * Responsive.getHeight(context),
-            isSuffixIconOn: false,
-            prefix: SvgPicture.asset(
-              AppAssets.searchNormal,
-              fit: BoxFit.scaleDown,
-            ),
-            contentPadding: EdgeInsets.all(
-              9 * Responsive.getResponsive(context),
-            ),
-            hintText: 'search',
-            fillColor: Colors.white,
-            color: Colors.white,
-            boarderRadius: 12,
-            hintTextStyle: _hintStyle(context),
-            typingtextStyle: _typingStyle(context),
-            onChanged: (val) {
-              setState(() {
-                _searchQuery = val;
-              });
-            },
-          ),
+          const CustomSearchField(hintText: 'search'),
+          // MyCoTextfield(
+          //   height: .044 * Responsive.getHeight(context),
+          //   isSuffixIconOn: false,
+          //   prefix: SvgPicture.asset(AppAssets.search, fit: BoxFit.scaleDown),
+          //   contentPadding: EdgeInsets.all(
+          //     9 * Responsive.getResponsive(context),
+          //   ),
+          //   hintText: 'search',
+          //   fillColor: Colors.white,
+          //   color: Colors.white,
+          //   boarderRadius: 12,
+          //   hintTextStyle: _hintStyle(context),
+          //   typingtextStyle: _typingStyle(context),
+          //   onChanged: (val) {
+          //     setState(() {
+          //       _searchQuery = val;
+          //     });
+          //   },
+          // ),
           SizedBox(height: .024 * Responsive.getHeight(context)),
           Expanded(
             child: RefreshIndicator(
               onRefresh: () async {
                 context.read<LostAndFoundBloc>().add(
-                  const GetLostAndFoundItemsEvent({
-                    'getListNew': 'getListNew',
-                    'society_id': '1',
-                    'user_id': '10',
-                    'language_id': '1',
-                    'lost_found_master_id': '',
-                    'is_details_view': 0,
-                  }),
+                  const GetLostAndFoundItemsEvent(),
                 );
               },
               child: BlocBuilder<LostAndFoundBloc, LostAndFoundState>(
                 builder: (context, state) {
                   if (state is LostAndFoundLoading) {
-                    return const CustomLoader(); // 🔄 Replaced loader
+                    return const CircularProgressIndicator(); // 🔄 Replaced loader
                   }
 
                   if (state is LostAndFoundError) {
@@ -628,11 +612,17 @@ class _LostAndFoundState extends State<LostAndFound> {
       ),
     ),
     floatingActionButton: GestureDetector(
+      onTap: () {
+        context.pushNamed('lost-and-found-add-screen');
+      },
       child: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: Colors.red,
+        ),
         height: .063 * Responsive.getHeight(context),
         width: .063 * Responsive.getHeight(context),
-        child: SvgPicture.asset(AppAssets.vector, fit: BoxFit.fill),
+        child: SvgPicture.asset(AppAssets.addButton, fit: BoxFit.fill),
       ),
     ),
   );

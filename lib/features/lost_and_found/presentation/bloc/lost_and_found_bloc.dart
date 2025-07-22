@@ -10,7 +10,7 @@ class LostAndFoundBloc extends Bloc<LostAndFoundEvent, LostAndFoundState> {
   LostAndFoundBloc(this.getItemsUseCase) : super(LostAndFoundInitial()) {
     on<GetLostAndFoundItemsEvent>((event, emit) async {
       emit(LostAndFoundLoading());
-      final result = await getItemsUseCase(event.request);
+      final result = await getItemsUseCase();
       result.fold(
         (failure) =>
             emit(LostAndFoundError(failure.message ?? 'Unknown error')),

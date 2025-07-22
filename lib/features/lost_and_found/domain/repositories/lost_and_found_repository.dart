@@ -6,6 +6,6 @@ import 'package:myco_flutter/features/lost_and_found/domain/entities/lost_and_fo
 abstract class LostAndFoundRepository {
   /// Fetches Lost & Found items
   Future<Either<Failure, List<LostFoundEntity>>> getLostAndFoundItems(
-    Map<String, dynamic> request,
+    // Map<String, dynamic> request,
   );
 }

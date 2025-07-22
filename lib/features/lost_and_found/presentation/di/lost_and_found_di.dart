@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:myco_flutter/constants/constants.dart';
+import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/lost_and_found/data/datasources/lost_and_found_data_source.dart';
 import 'package:myco_flutter/features/lost_and_found/data/datasources/lost_and_found_data_source_impl.dart';
 import 'package:myco_flutter/features/lost_and_found/data/repositories/lost_and_found_repository_impl.dart';
@@ -9,12 +11,16 @@ import 'package:myco_flutter/features/lost_and_found/presentation/bloc/lost_and_
 void registerLostAndFoundDI(GetIt getIt) {
   // DataSource
   getIt.registerLazySingleton<LostAndFoundDataSource>(
-    () => LostAndFoundDataSourceImpl(),
+    () => LostAndFoundDataSourceImpl(
+      apiClient: GetIt.I<ApiClient>(
+        instanceName: VariableBag.employeeMobileApi,
+      ),
+    ),
   );
 
   // Repository
   getIt.registerLazySingleton<LostAndFoundRepository>(
-    () => LostAndFoundRepositoryImpl(getIt()),
+    () => LostAndFoundRepositoryImpl(getIt(), getIt()),
   );
 
   // UseCase

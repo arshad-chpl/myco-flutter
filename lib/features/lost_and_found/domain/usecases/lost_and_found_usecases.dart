@@ -9,8 +9,9 @@ class GetLostAndFoundItemsUseCase {
   GetLostAndFoundItemsUseCase(this.repository);
 
   Future<Either<Failure, List<LostFoundEntity>>> call(
-    Map<String, dynamic> request,
+    // Map<String, dynamic> request,
   ) {
-    return repository.getLostAndFoundItems(request);
+    // return repository.getLostAndFoundItems(request);
+    return repository.getLostAndFoundItems();
   }
 }
