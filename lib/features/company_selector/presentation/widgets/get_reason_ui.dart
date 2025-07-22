@@ -43,7 +43,6 @@ class GetReasonUi extends StatelessWidget {
             backgroundColor: Colors.transparent,
             builder: (context) => Padding(
               padding: EdgeInsets.only(
-              padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
               child: CustomAlertDialog(
