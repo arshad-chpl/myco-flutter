@@ -1,11 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/leave/domain/entities'
+    '/leave_history_response_entity.dart';
 import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
@@ -32,6 +32,7 @@ class MyLeaveBalanceScreen extends StatefulWidget {
 class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
   late String selectedValue;
   late List<String> yearOptions;
+
   @override
   void initState() {
     super.initState();
@@ -125,7 +126,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
 
   // Helper method to map GetNewListTypeResponse to leaveTypes list
   List<Map<String, dynamic>> _mapResponseToLeaveTypes(
-    LeaveHistoryResponseModel response,
+    LeaveHistoryResponseEntity response,
   ) =>
       response.leaveTypes
           ?.map(
@@ -258,7 +259,8 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
       if (hasMonthlyLeaveBalance)
         LeaveRowData(
           label: 'Monthly Leave Balance',
-          value: '', // This would be handled by a separate widget
+          value: '',
+          // This would be handled by a separate widget
           isVisible: true,
           isMonthlyData: true,
           monthlyData: leave.userMonthlyLeaveBalanceData!,
@@ -323,8 +325,6 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
                 ),
               ),
             ),
-
-
           );
         },
       ),

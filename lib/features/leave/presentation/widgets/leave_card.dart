@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
+import 'package:myco_flutter/features/leave/domain/entities'
+    '/leave_history_response_entity.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -33,7 +34,7 @@ class LeaveEntry {
 
 class LeaveCard extends StatelessWidget {
   final LeaveEntry leave;
-  final Function()? onEdit;
+  final Function({required LeaveHistoryEntity leave})? onEdit;
   final Function({required String? leaveId})? onDelete;
 
   const LeaveCard({required this.leave, this.onEdit, this.onDelete, super.key});
@@ -71,17 +72,9 @@ class LeaveCard extends StatelessWidget {
               children: [
                 if (showEditIcon)
                   IconButton(
-                    onPressed:
-                        onEdit ??
-                        () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Edit functionality not implemented',
-                              ),
-                            ),
-                          );
-                        },
+                    onPressed: () {
+                      onEdit!(leave: leave.leaveEntity);
+                    },
                     icon: Icon(
                       Icons.edit_outlined,
                       size: 0.022 * Responsive.getHeight(context),
