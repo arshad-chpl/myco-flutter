@@ -6,25 +6,31 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 
 class CommonCard extends StatelessWidget {
   final String title;
-  final String? subTitle;
-  final String? secondTitle;
+  final String? subTitle, secondTitle;
   final bool isButton;
   final String buttonText;
   final Widget bottomWidget;
   final void Function()? onTap;
-  final double? headerHeight;
-  final double? borderRadius;
+  final VoidCallback? onHeaderTap;
+  final double? headerHeight,
+      borderRadius,
+      titleSecondTitleBetweenSpace,
+      secondTitleSubTitleBetweenSpace;
   final EdgeInsetsGeometry? headerPadding;
-  final Color? headerColor;
-  final Color? borderColor;
-  final bool? showHeaderPrefixIcon;
+  final Color? headerColor, borderColor, headerPrefixIconColor;
+  final bool? showHeaderPrefixIcon, showBlackShadowInChild;
   final String? headerPrefixIcon;
-  final Color? headerPrefixIconColor;
-  final Widget? suffixIcon;
-  final double? headerPrefixIconHeight;
-  final double? headerPrefixIconWidth;
-  final bool? showBlackShadowInChild;
-  final Widget? subTitleIcon;
+  final Widget? suffixIcon, titleSuffix, subTitleIcon, headerPrefix;
+  final double? headerPrefixIconHeight, headerPrefixIconWidth;
+  final FontWeight? titleFontWeight,
+      secondTitleFontWeight,
+      subTitleFontWeight,
+      buttonTextFontWeight;
+  final Color? titleColor, secondTitleColor, subTitleColor, buttonTextColor;
+  final double? titleFontSize,
+      secondTitleFontSize,
+      subTitleFontSize,
+      buttonTextFontSize;
   const CommonCard({
     required this.title,
     required this.bottomWidget,
@@ -47,6 +53,23 @@ class CommonCard extends StatelessWidget {
     this.headerPrefixIconWidth,
     this.showBlackShadowInChild,
     this.subTitleIcon,
+    this.titleSuffix,
+    this.titleFontWeight,
+    this.secondTitleFontWeight,
+    this.subTitleFontWeight,
+    this.titleColor,
+    this.secondTitleColor,
+    this.subTitleColor,
+    this.titleFontSize,
+    this.secondTitleFontSize,
+    this.subTitleFontSize,
+    this.titleSecondTitleBetweenSpace,
+    this.secondTitleSubTitleBetweenSpace,
+    this.buttonTextFontWeight,
+    this.buttonTextColor,
+    this.buttonTextFontSize,
+    this.onHeaderTap,
+    this.headerPrefix,
   });
 
   @override
@@ -63,116 +86,146 @@ class CommonCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Header
-        Container(
-          height: headerHeight, //?? 0.06 * Responsive.getHeight(context),
-          padding:
-              headerPadding ??
-              EdgeInsets.all(10 * Responsive.getResponsive(context)),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(
-                (borderRadius ?? 12) * Responsive.getResponsive(context) - 1.0,
+        GestureDetector(
+          onTap: onHeaderTap,
+          child: Container(
+            height: headerHeight, //?? 0.06 * Responsive.getHeight(context),
+            padding:
+                headerPadding ??
+                EdgeInsets.all(10 * Responsive.getResponsive(context)),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(
+                  (borderRadius ?? 12) * Responsive.getResponsive(context) -
+                      1.0,
+                ),
               ),
+              boxShadow: [
+                if (showBlackShadowInChild == true)
+                  const BoxShadow(
+                    color: Colors.black26,
+                    offset: Offset(0, 3),
+                    blurRadius: 6,
+                  ),
+                BoxShadow(
+                  color:
+                      headerColor?.withAlpha(180) ??
+                      AppTheme.getColor(context).secondary.withAlpha(180),
+                ),
+                BoxShadow(
+                  color: headerColor ?? AppTheme.getColor(context).secondary,
+                  offset: const Offset(1, 4),
+                  spreadRadius: -6.0,
+                  blurRadius: 6.0,
+                ),
+              ],
             ),
-            boxShadow: [
-              if (showBlackShadowInChild == true)
-                const BoxShadow(
-                  color: Colors.black26,
-                  offset: Offset(0, 2),
-                  blurRadius: 4,
-                ),
-              if (showBlackShadowInChild == true)
-                const BoxShadow(
-                  color: Colors.black26,
-                  offset: Offset(0, 2),
-                  blurRadius: 4,
-                ),
-              BoxShadow(
-                color:
-                    headerColor?.withAlpha(200) ??
-                    AppTheme.getColor(context).secondary.withAlpha(200),
-              ),
-              BoxShadow(
-                color: headerColor ?? AppTheme.getColor(context).secondary,
-                spreadRadius: -4.0,
-                blurRadius: 6.0,
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              if (showHeaderPrefixIcon == true)
-                Image.asset(
-                  headerPrefixIcon ?? 'assets/take_order/profile-circle.png',
-                  // height: headerPrefixIconHeight ?? 0.1 * Responsive.getHeight(context),
-                  width:
-                      headerPrefixIconWidth ??
-                      0.06 * Responsive.getWidth(context),
-                  color: headerPrefixIconColor,
-                ),
-              if (showHeaderPrefixIcon == true)
-                SizedBox(width: 0.02 * Responsive.getWidth(context)),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                      title,
-                      color: AppTheme.getColor(context).onPrimary,
-                      fontSize: 18 * Responsive.getResponsiveText(context),
-                      fontWeight: FontWeight.bold,
-                    ),
-                    if (secondTitle != null)
-                      CustomText(
-                        '$secondTitle',
-                        color: AppTheme.getColor(context).onPrimary,
-                        fontSize: 18 * Responsive.getResponsiveText(context),
-                        fontWeight: FontWeight.bold,
+            child: Row(
+              children: [
+                if (showHeaderPrefixIcon == true)
+                  headerPrefix ??
+                      Image.asset(
+                        headerPrefixIcon ??
+                            'assets/take_order/profile-circle.png',
+                        // height: headerPrefixIconHeight ?? 0.1 * Responsive.getHeight(context),
+                        width:
+                            headerPrefixIconWidth ??
+                            0.06 * Responsive.getWidth(context),
+                        color: headerPrefixIconColor,
                       ),
-                    if (subTitle != null)
+                if (showHeaderPrefixIcon == true)
+                  SizedBox(width: 0.02 * Responsive.getWidth(context)),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (subTitleIcon != null)
-                            subTitleIcon ?? const SizedBox.shrink(),
-                          if (subTitleIcon != null)
-                            SizedBox(
-                              width: 0.01 * Responsive.getWidth(context),
-                            ),
-
                           Expanded(
                             child: CustomText(
-                              '$subTitle',
-                              color: AppTheme.getColor(context).onPrimary,
+                              title,
+                              color:
+                                  titleColor ??
+                                  AppTheme.getColor(context).onPrimary,
                               fontSize:
-                                  15 * Responsive.getResponsiveText(context),
-                              fontWeight: FontWeight.bold,
+                                  titleFontSize ??
+                                  16 * Responsive.getResponsiveText(context),
+                              fontWeight: titleFontWeight ?? FontWeight.w700,
                             ),
                           ),
+                          if (titleSuffix != null)
+                            titleSuffix ?? const SizedBox.shrink(),
                         ],
                       ),
-                  ],
-                ),
-              ),
-              if (isButton == true)
-                SizedBox(width: 0.02 * Responsive.getWidth(context)),
 
-              if (isButton == true)
-                MyCoButton(
-                  onTap: onTap,
-                  title: buttonText,
-                  textStyle: TextStyle(
-                    fontSize: 13 * Responsive.getResponsiveText(context),
-                    color: AppTheme.getColor(context).onPrimary,
+                      SizedBox(height: titleSecondTitleBetweenSpace),
+                      if (secondTitle != null)
+                        CustomText(
+                          '$secondTitle',
+                          color:
+                              secondTitleColor ??
+                              AppTheme.getColor(context).onPrimary,
+                          fontSize:
+                              secondTitleFontSize ??
+                              16 * Responsive.getResponsiveText(context),
+                          fontWeight: secondTitleFontWeight ?? FontWeight.w700,
+                        ),
+                      SizedBox(height: secondTitleSubTitleBetweenSpace),
+                      if (subTitle != null)
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (subTitleIcon != null)
+                              subTitleIcon ?? const SizedBox.shrink(),
+                            if (subTitleIcon != null)
+                              SizedBox(
+                                width: 0.01 * Responsive.getWidth(context),
+                              ),
+
+                            Expanded(
+                              child: CustomText(
+                                '$subTitle',
+                                color:
+                                    subTitleColor ??
+                                    AppTheme.getColor(context).onPrimary,
+                                fontSize:
+                                    subTitleFontSize ??
+                                    12 * Responsive.getResponsiveText(context),
+                                fontWeight:
+                                    subTitleFontWeight ?? FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                    ],
                   ),
-                  width: 0.16 * Responsive.getWidth(context),
-                  boarderRadius: 30 * Responsive.getResponsive(context),
-                  height: 0.03 * Responsive.getHeight(context),
-                  isShadowBottomLeft: true,
                 ),
-              if (suffixIcon != null) suffixIcon ?? const SizedBox.shrink(),
-            ],
+                if (isButton == true)
+                  SizedBox(width: 0.02 * Responsive.getWidth(context)),
+
+                if (isButton == true)
+                  MyCoButton(
+                    onTap: onTap,
+                    title: buttonText,
+                    textStyle: TextStyle(
+                      fontFamily: 'Gilroy-semiBold',
+                      fontSize:
+                          buttonTextFontSize ??
+                          13 * Responsive.getResponsiveText(context),
+                      color:
+                          buttonTextColor ??
+                          AppTheme.getColor(context).onPrimary,
+                      fontWeight: buttonTextFontWeight,
+                    ),
+                    width: 0.16 * Responsive.getWidth(context),
+                    boarderRadius: 30 * Responsive.getResponsive(context),
+                    height: 0.03 * Responsive.getHeight(context),
+                    isShadowBottomLeft: true,
+                  ),
+                if (suffixIcon != null) suffixIcon ?? const SizedBox.shrink(),
+              ],
+            ),
           ),
         ),
         bottomWidget,

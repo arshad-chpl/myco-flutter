@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final double height;
-  @override
-  final Key? key;
   final Widget? leading;
   final bool automaticallyImplyLeading;
-  final Widget? title;
   final List<Widget>? actions;
   final Widget? flexibleSpace;
   final PreferredSizeWidget? bottom;
@@ -32,22 +33,24 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final double? toolbarHeight;
   final double? leadingWidth;
   final TextStyle? toolbarTextStyle;
-  final TextStyle? titleTextStyle;
   final SystemUiOverlayStyle? systemOverlayStyle;
   final bool forceMaterialTransparency;
   final Clip? clipBehavior;
   final Color? appBarBackgoundColor;
-  final String appBarText;
-  final FontWeight? fontWeight;
-  final double? size;
-  final Color? appbartxtcolor;
+  final String title;
+  final FontWeight? titleFontWeight;
+  final double? titleFontSize;
+  final Color? titileColor;
+  final EdgeInsetsGeometry? actionsPadding;
+  final bool? isKey;
+  final Widget? appBarTitleWidget;
+  final double? leadingPadding;
 
-  CustomAppbar({
-    this.key,
-    this.appbartxtcolor,
+  const CustomAppbar({
+    super.key,
+    this.titileColor,
     this.leading,
     this.automaticallyImplyLeading = true,
-    this.title,
     this.actions,
     this.flexibleSpace,
     this.bottom,
@@ -69,15 +72,18 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
     this.toolbarHeight,
     this.leadingWidth,
     this.toolbarTextStyle,
-    this.titleTextStyle,
     this.systemOverlayStyle,
     this.forceMaterialTransparency = false,
     this.clipBehavior,
     this.height = kToolbarHeight,
     this.appBarBackgoundColor,
-    this.appBarText = '',
-    this.fontWeight,
-    this.size,
+    this.title = '',
+    this.titleFontWeight,
+    this.titleFontSize,
+    this.actionsPadding,
+    this.isKey,
+    this.appBarTitleWidget,
+    this.leadingPadding,
   });
 
   @override
@@ -91,16 +97,39 @@ class _CustomAppbarState extends State<CustomAppbar> {
   @override
   Widget build(BuildContext context) => AppBar(
     title:
-        widget.title ??
+        widget.appBarTitleWidget ??
         CustomText(
-          widget.appBarText,
-          fontSize: widget.size ?? 19 * Responsive.getResponsiveText(context),
-          fontWeight: widget.fontWeight ?? FontWeight.w700,
-          color: widget.appbartxtcolor ?? AppTheme.getColor(context).onSurface,
+          widget.title,
+          fontSize:
+              widget.titleFontSize ??
+              24 * Responsive.getResponsiveText(context),
+          fontWeight: widget.titleFontWeight ?? FontWeight.w700,
+          color: widget.titileColor ?? AppTheme.getColor(context).onSurface,
+          isKey: widget.isKey ?? false,
         ),
     backgroundColor:
         widget.appBarBackgoundColor ?? AppTheme.getColor(context).surface,
-    leading: widget.leading ?? const BackButton(),
+    leading: widget.automaticallyImplyLeading
+        ? (widget.leading ??
+              InkWell(
+                onTap: () => context.pop(),
+                child: Padding(
+                  padding: EdgeInsets.all(
+                    12 * Responsive.getResponsive(context),
+                  ),
+                  child: SvgPicture.asset(
+                    // "assets/svgs/back_arrow.svg",
+                    AppAssets.arrowBack,
+                    height: 16,
+                    width: 16,
+                    colorFilter: ColorFilter.mode(
+                      AppTheme.getColor(context).onSurface,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+              ))
+        : null,
 
     ///remove padding if leading is null
     surfaceTintColor: widget.surfaceTintColor,
@@ -110,7 +139,6 @@ class _CustomAppbarState extends State<CustomAppbar> {
     toolbarHeight:
         widget.toolbarHeight ?? 0.045 * Responsive.getHeight(context),
     toolbarOpacity: widget.toolbarOpacity,
-    titleTextStyle: widget.titleTextStyle,
     centerTitle: widget.centerTitle ?? false,
     toolbarTextStyle: widget.toolbarTextStyle,
     foregroundColor: widget.foregroundColor,
@@ -120,7 +148,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
     bottomOpacity: widget.bottomOpacity,
     flexibleSpace: widget.flexibleSpace,
     excludeHeaderSemantics: widget.excludeHeaderSemantics,
-    titleSpacing: widget.titleSpacing ?? 0.04 * Responsive.getWidth(context),
+    titleSpacing: widget.titleSpacing ?? 0.011 * Responsive.getWidth(context),
     primary: widget.primary,
     systemOverlayStyle:
         widget.systemOverlayStyle ??
@@ -134,6 +162,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
     iconTheme: widget.iconTheme,
     leadingWidth: widget.leadingWidth,
     scrolledUnderElevation: widget.scrolledUnderElevation,
+    actionsPadding: widget.actionsPadding,
     // notificationPredicate: ,
   );
 }

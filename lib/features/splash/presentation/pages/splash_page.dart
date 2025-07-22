@@ -31,8 +31,9 @@ class _SplashPageState extends State<SplashPage>
   void initState() {
     super.initState();
     _init();
-    final sl = GetIt.instance;
-    refreshApiServiceCompany(sl);
+    // final sl = GetIt.instance;
+    // refreshApiServiceCompany(sl);
+
   }
 
   Future<void> _init() async {

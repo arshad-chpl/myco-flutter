@@ -3,11 +3,19 @@ import 'package:myco_flutter/core/router/app_router.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.dart';
+import 'package:myco_flutter/features/company_info/presentation/di/company_info_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
+import 'package:myco_flutter/features/company_selector/presentation/di/request_otp_di.dart';
+import 'package:myco_flutter/features/dashboard/presentation/di/dashboard_di.dart';
+import 'package:myco_flutter/features/holiday/presentation/di/holiday_di.dart';
 import 'package:myco_flutter/features/language_selector/presentation/di/language_di.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/di/lost_and_found_di.dart';
+import 'package:myco_flutter/features/leave/presentation/di/leave_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
+import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
+import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
+import 'package:myco_flutter/features/payslip/presentation/di/payslip_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/di/work_allocation_di.dart';
 
 final sl = GetIt.instance;
 
@@ -25,8 +33,14 @@ Future<void> init() async {
   //========Splash=========
   splashDi(sl);
 
+  //========Login=========
+  await setupLoginDi(sl);
+
   //========Company Selector=========
   companySelectorDi(sl);
+
+  //========Dashboard=========
+  DashboardDi(sl);
 
   //========Inquiry=========
   InquiryDi(sl);
@@ -37,5 +51,23 @@ Future<void> init() async {
   // ========Admin View=========
   await adminViewDi(sl);
 
-  registerLostAndFoundDI(sl);
+  //========VISIT WITH=========
+  visitWithDi(sl);
+
+  //========Company Info=========
+  setupCompanyInfoDI(sl);
+
+  //========Holiday=========
+  setupHolidayDI(sl);
+
+  // ========Admin View=========
+  adminViewDi(sl);
+  //Leave
+  setUpLeaveDI(sl);
+
+  //Work Allocation
+  setUpWorkAllocationDI(sl);
+
+  //========Payslip=========
+  initPayslipFeatureDI(sl);
 }

@@ -8,6 +8,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
+import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_entity.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/bottom_sheet.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_slider.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_timer.dart';
@@ -15,7 +16,7 @@ import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-Widget timerAndSlider(BuildContext context) =>
+Widget timerAndSlider(BuildContext context, List<SliderEntity> slider) =>
     // Responsive.getWidth(context) > 600
     //     ? Row(
     //         children: [
@@ -32,9 +33,13 @@ Widget timerAndSlider(BuildContext context) =>
         punchInAndTimeCard(context: context),
 
         // CustomSlider
-        const CustomSlider(
-          imagePaths: [AppAssets.mycobanner, AppAssets.mycobanner1],
-        ),
+        if (slider.isNotEmpty)
+          CustomSlider(
+            imagePaths: slider
+                .map((slider) => slider.sliderImageName ?? '')
+                .toList(),
+            isCarousel: true,
+          ),
       ],
     );
 
@@ -82,7 +87,9 @@ Widget punchInAndTimeCard({required BuildContext context}) =>
                   // CustomText('text'),
                   MyCoButton(
                     title: 'Punch Out',
-                    onTap: () {},
+                    onTap: () {
+                      // context.pushNamed('faceDetection');
+                    },
 
                     // height: 0.18 * Responsive.getWidth(context),
                     width: 160,
@@ -170,7 +177,10 @@ class _LiveClockState extends State<LiveClock> {
   void initState() {
     super.initState();
     _updateTime();
-    _timer = Timer.periodic(Duration(minutes: 1), (timer) => _updateTime());
+    _timer = Timer.periodic(
+      const Duration(minutes: 1),
+      (timer) => _updateTime(),
+    );
   }
 
   void _updateTime() {
@@ -190,11 +200,9 @@ class _LiveClockState extends State<LiveClock> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return CustomText(
-      _timeString,
-      fontSize: widget.fontSize ?? 13 * Responsive.getResponsiveText(context),
-      fontWeight: widget.fontWeight ?? FontWeight.w500,
-    );
-  }
+  Widget build(BuildContext context) => CustomText(
+    _timeString,
+    fontSize: widget.fontSize ?? 13 * Responsive.getResponsiveText(context),
+    fontWeight: widget.fontWeight ?? FontWeight.w500,
+  );
 }

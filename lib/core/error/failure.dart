@@ -16,8 +16,7 @@ class TimeoutFailure extends Failure {
 }
 
 class UnauthorizedFailure extends Failure {
-  const UnauthorizedFailure()
-    : super('Unauthorized request. Please login again.');
+  const UnauthorizedFailure() : super('Unauthorized request. Please login again.');
 }
 
 class ForbiddenFailure extends Failure {

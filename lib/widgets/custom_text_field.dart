@@ -3,9 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-
 import 'package:url_launcher/url_launcher.dart';
 
 class MyCoTextfield extends StatefulWidget {
@@ -21,6 +19,7 @@ class MyCoTextfield extends StatefulWidget {
   final Color? color;
   final Widget? prefix;
   final EdgeInsetsGeometry? contentPadding;
+  final EdgeInsetsGeometry? containerPadding;
   final double? height;
   final Color? fillColor;
   final void Function()? onTap1;
@@ -60,6 +59,8 @@ class MyCoTextfield extends StatefulWidget {
   final TextAlignVertical? textAlignVertical;
   final bool? alignLabelWithHint;
   final int? maxLines;
+  final BoxConstraints? suffixIconConstraints;
+  final BoxConstraints? prefixIconConstraints;
 
   const MyCoTextfield({
     super.key,
@@ -112,7 +113,7 @@ class MyCoTextfield extends StatefulWidget {
     this.maxLines,
     this.suFixImage,
     this.suFixImageHeight,
-    this.suFixImageWidth,
+    this.suFixImageWidth, this.containerPadding, this.suffixIconConstraints, this.prefixIconConstraints,
   });
 
   @override
@@ -129,6 +130,7 @@ class _MyCoTextfieldState extends State<MyCoTextfield> {
     image1: widget.image1,
     image2: widget.image2,
     contentPadding: widget.contentPadding,
+    containerPadding: widget.containerPadding,
     titleTextSize: widget.titleTextSize,
     fontWeight: widget.fontWeight,
     prefix: widget.prefix,
@@ -136,6 +138,7 @@ class _MyCoTextfieldState extends State<MyCoTextfield> {
     onClick: widget.onClick,
     onSaved: widget.onSaved,
     height: widget.height,
+    width: widget.width,
     key: widget.key,
     onTap1: widget.onTap1,
     onTap2: widget.onTap2,
@@ -160,7 +163,7 @@ class _MyCoTextfieldState extends State<MyCoTextfield> {
     prefixImageHeight: widget.prefixImageHeight,
     prefixImageWidth: widget.prefixImageWidth,
     maxLenght: widget.maxLenght,
-    textAlignment: widget.textAlignment ?? TextAlign.start,
+    textAlignment: widget.textAlignment??TextAlign.start,
     inputFormater: widget.inputFormater,
     border: widget.border,
     suffix: widget.suffix,
@@ -171,6 +174,8 @@ class _MyCoTextfieldState extends State<MyCoTextfield> {
     suFixImage: widget.suFixImage,
     suFixImageHeight: widget.suFixImageHeight,
     suFixImageWidth: widget.suFixImageWidth,
+    suffixIconConstraints: widget.suffixIconConstraints,
+    prefixIconConstraints: widget.prefixIconConstraints,
   );
 }
 
@@ -186,6 +191,7 @@ class TextFieldFormMobile extends StatelessWidget {
   final Color? color;
   final Widget? prefix;
   final EdgeInsetsGeometry? contentPadding;
+  final EdgeInsetsGeometry? containerPadding;
   final double? height;
   final double? width;
   final Color? fillColor;
@@ -227,6 +233,8 @@ class TextFieldFormMobile extends StatelessWidget {
   final String? suFixImage;
   final double? suFixImageHeight;
   final double? suFixImageWidth;
+  final BoxConstraints? suffixIconConstraints;
+  final BoxConstraints? prefixIconConstraints;
 
   const TextFieldFormMobile({
     super.key,
@@ -281,7 +289,7 @@ class TextFieldFormMobile extends StatelessWidget {
     this.maxLines,
     this.suFixImage,
     this.suFixImageWidth,
-    this.suFixImageHeight,
+    this.suFixImageHeight, this.containerPadding, this.suffixIconConstraints, this.prefixIconConstraints,
   });
 
   @override
@@ -300,7 +308,7 @@ class TextFieldFormMobile extends StatelessWidget {
         decoration:
             decoration ??
             BoxDecoration(
-              color: fillColor ?? Colors.white,
+              color: fillColor ?? AppTheme.getColor(context).surfaceBright,
               border: Border.all(color: AppTheme.getColor(context).primary),
               borderRadius: BorderRadius.circular(
                 boarderRadius ?? 7.0 * Responsive.getResponsiveText(context),
@@ -370,151 +378,159 @@ class TextFieldFormMobile extends StatelessWidget {
       );
     }
 
-    return TextFormField(
-      readOnly: isReadOnly ?? false,
-      onTap: onClick,
-      onSaved: onSaved,
-      controller: controller,
-      focusNode: focusNode,
-      maxLines: maxLines,
-      autofocus: autoFocus ?? false,
-      keyboardType: textInputType,
-      textAlignVertical: textAlignVertical,
-      maxLength: maxLenght,
-      textAlign: textAlignment ?? TextAlign.start,
-      inputFormatters: inputFormater,
-      decoration: InputDecoration(
-        counterText: '',
-        floatingLabelBehavior: floatingLabelBehavior,
-        filled: true,
-        alignLabelWithHint: alignLabelWithHint,
-        fillColor: fillColor ?? Colors.white,
-        border:
-            border ??
-            OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppTheme.getColor(context).outline,
-                width: 1.2 * Responsive.getResponsive(context),
+    return SizedBox(
+      // color: Colors.red,
+      height: height,
+      width: width,
+      // padding: containerPadding,
+      child: TextFormField(
+        readOnly: isReadOnly ?? false,
+        onTap: onClick,
+        onSaved: onSaved,
+        controller: controller,
+        focusNode: focusNode,
+        maxLines: maxLines,
+        autofocus: autoFocus ?? false,
+        keyboardType: textInputType,
+        textAlignVertical: textAlignVertical,
+        maxLength: maxLenght,
+        textAlign: textAlignment ?? TextAlign.start,
+        inputFormatters: inputFormater,
+        decoration: InputDecoration(
+          counterText: '',
+          floatingLabelBehavior: floatingLabelBehavior,
+          filled: true,
+          alignLabelWithHint: alignLabelWithHint,
+          fillColor: fillColor ?? AppTheme.getColor(context).surfaceBright,
+          border:
+              border ??
+              OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppTheme.getColor(context).outline,
+                  width: 1.2 * Responsive.getResponsive(context),
+                ),
+                borderRadius: BorderRadius.circular(
+                  boarderRadius ?? 7.0 * Responsive.getResponsiveText(context),
+                ),
               ),
-              borderRadius: BorderRadius.circular(
-                boarderRadius ?? 7.0 * Responsive.getResponsiveText(context),
+          focusedBorder:
+              border ??
+              OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppTheme.getColor(context).primary,
+                  width: 0.002 * Responsive.getWidth(context),
+                ),
+                borderRadius: BorderRadius.circular(
+                  boarderRadius ?? 7.0 * Responsive.getResponsive(context),
+                ),
               ),
-            ),
-        focusedBorder:
-            border ??
-            OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppTheme.getColor(context).primary,
-                width: 0.002 * Responsive.getWidth(context),
+          enabledBorder:
+              border ??
+              OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppTheme.getColor(context).outline,
+                  width: 0.002 * Responsive.getWidth(context),
+                ),
+                borderRadius: BorderRadius.circular(
+                  boarderRadius ?? 7.0 * Responsive.getResponsive(context),
+                ),
               ),
-              borderRadius: BorderRadius.circular(
-                boarderRadius ?? 7.0 * Responsive.getResponsive(context),
+          contentPadding:
+              contentPadding ??
+              EdgeInsets.only(
+                top: 25 * Responsive.getResponsive(context),
+                left: 12 * Responsive.getResponsive(context),
+                right: 12 * Responsive.getResponsive(context),
+                bottom: 16 * Responsive.getResponsive(context),
               ),
-            ),
-        enabledBorder:
-            border ??
-            OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppTheme.getColor(context).outline,
-                width: 0.002 * Responsive.getWidth(context),
-              ),
-              borderRadius: BorderRadius.circular(
-                boarderRadius ?? 7.0 * Responsive.getResponsive(context),
-              ),
-            ),
-        contentPadding:
-            contentPadding ??
-            EdgeInsets.only(
-              top: 25 * Responsive.getResponsive(context),
-              left: 12 * Responsive.getResponsive(context),
-              right: 12 * Responsive.getResponsive(context),
-              bottom: 16 * Responsive.getResponsive(context),
-            ),
-        labelText: isLabelOn == true ? labelText : null,
-        hintText: LanguageManager().get(hintText ?? ""),
-        hintStyle:
-            hintTextStyle ??
+          labelText: isLabelOn == true ? labelText : null,
+          hintText: hintText,
+          hintStyle:
+              hintTextStyle ??
+              AppTheme.getTextStyle(
+                context,
+              ).bodyLarge!.copyWith(color: AppTheme.getColor(context).outline),
+          labelStyle:
+              labelTextStyle ??
+              AppTheme.getTextStyle(
+                context,
+              ).bodySmall!.copyWith(color: AppTheme.getColor(context).primary),
+          prefixIcon: (prefix != null)
+              ? prefix
+              : (prefixImage != null && prefixImage!.isNotEmpty)
+              ? GestureDetector(
+                  onTap: onTap1,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: isTab
+                          ? 20 * Responsive.getResponsive(context)
+                          : 16 * Responsive.getResponsive(context),
+                      right: isTab
+                          ? 12 * Responsive.getResponsive(context)
+                          : 8 * Responsive.getResponsive(context),
+                    ),
+                    child: Image.asset(
+                      prefixImage!,
+                      fit: BoxFit.contain,
+                      width:
+                          prefixImageWidth ??
+                          (isTab
+                              ? 0.5 * Responsive.getWidth(context)
+                              : 0.03 * Responsive.getWidth(context)),
+                      height:
+                          prefixImageHeight ??
+                          (isTab
+                              ? 0.5 * Responsive.getHeight(context)
+                              : 0.03 * Responsive.getHeight(context)),
+                    ),
+                  ),
+                )
+              : null,
+          suffixIcon: (suffix != null)
+              ? suffix
+              : (suFixImage != null && suFixImage!.isNotEmpty)
+              ? GestureDetector(
+                  onTap: onTap1,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      right: isTab
+                          ? 20 * Responsive.getResponsive(context)
+                          : 16 * Responsive.getResponsive(context),
+                      left: isTab
+                          ? 12 * Responsive.getResponsive(context)
+                          : 8 * Responsive.getResponsive(context),
+                    ),
+                    child: Image.asset(
+                      fit: BoxFit.contain,
+                      suFixImage!,
+                      width:
+                          suFixImageWidth ??
+                          (isTab
+                              ? 0.5 * Responsive.getWidth(context)
+                              : 0.05 * Responsive.getWidth(context)),
+                      height:
+                          suFixImageHeight ??
+                          (isTab
+                              ? 0.5 * Responsive.getHeight(context)
+                              : 0.05 * Responsive.getHeight(context)),
+                    ),
+                  ),
+                )
+              : null,
+          suffixIconConstraints: suffixIconConstraints,
+          prefixIconConstraints: prefixIconConstraints
+        ),
+        style:
+            typingtextStyle ??
             AppTheme.getTextStyle(
               context,
-            ).bodyLarge!.copyWith(color: AppTheme.getColor(context).outline),
-        labelStyle:
-            labelTextStyle ??
-            AppTheme.getTextStyle(
-              context,
-            ).bodySmall!.copyWith(color: AppTheme.getColor(context).primary),
-        prefixIcon: (prefix != null)
-            ? prefix
-            : (prefixImage != null && prefixImage!.isNotEmpty)
-            ? GestureDetector(
-                onTap: onTap1,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: isTab
-                        ? 20 * Responsive.getResponsive(context)
-                        : 16 * Responsive.getResponsive(context),
-                    right: isTab
-                        ? 12 * Responsive.getResponsive(context)
-                        : 8 * Responsive.getResponsive(context),
-                  ),
-                  child: Image.asset(
-                    prefixImage!,
-                    fit: BoxFit.contain,
-                    width:
-                        prefixImageWidth ??
-                        (isTab
-                            ? 0.5 * Responsive.getWidth(context)
-                            : 0.03 * Responsive.getWidth(context)),
-                    height:
-                        prefixImageHeight ??
-                        (isTab
-                            ? 0.5 * Responsive.getHeight(context)
-                            : 0.03 * Responsive.getHeight(context)),
-                  ),
-                ),
-              )
-            : null,
-        suffixIcon: (suffix != null)
-            ? suffix
-            : (suFixImage != null && suFixImage!.isNotEmpty)
-            ? GestureDetector(
-                onTap: onTap1,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    right: isTab
-                        ? 20 * Responsive.getResponsive(context)
-                        : 16 * Responsive.getResponsive(context),
-                    left: isTab
-                        ? 12 * Responsive.getResponsive(context)
-                        : 8 * Responsive.getResponsive(context),
-                  ),
-                  child: Image.asset(
-                    fit: BoxFit.contain,
-                    suFixImage!,
-                    width:
-                        suFixImageWidth ??
-                        (isTab
-                            ? 0.5 * Responsive.getWidth(context)
-                            : 0.05 * Responsive.getWidth(context)),
-                    height:
-                        suFixImageHeight ??
-                        (isTab
-                            ? 0.5 * Responsive.getHeight(context)
-                            : 0.05 * Responsive.getHeight(context)),
-                  ),
-                ),
-              )
-            : null,
+            ).bodyLarge!.copyWith(color: AppTheme.getColor(context).primary),
+        cursorColor: AppTheme.getColor(context).primary,
+        validator: validator,
+        onChanged: onChanged,
+        obscureText: obscureText ?? false,
+        obscuringCharacter: obscuringCharacter ?? '●',
       ),
-      style:
-          typingtextStyle ??
-          AppTheme.getTextStyle(
-            context,
-          ).bodyLarge!.copyWith(color: AppTheme.getColor(context).primary),
-      cursorColor: AppTheme.getColor(context).primary,
-      validator: validator,
-      onChanged: onChanged,
-      obscureText: obscureText ?? false,
-      obscuringCharacter: obscuringCharacter ?? '●',
     );
   }
 }

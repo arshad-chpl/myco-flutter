@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -21,8 +23,9 @@ class OfferBox extends StatelessWidget {
       borderRadius: BorderRadius.circular(
         12 * Responsive.getResponsive(context),
       ),
+      side: BorderSide(color: AppTheme.getColor(context).outline),
     ),
-    color: AppTheme.getColor(context).onPrimary,
+    // color: AppTheme.getColor(context).onPrimary,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -38,8 +41,8 @@ class OfferBox extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Image.asset(
-                'assets/take_order/offer.png',
+              SvgPicture.asset(
+                AppAssets.offers,
                 height: 0.02 * Responsive.getHeight(context),
               ),
               SizedBox(width: 0.02 * Responsive.getWidth(context)),

@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/widgets/custom_calendar_bottom_sheet.dart';
-import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
+import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 class VisitTemplate extends StatefulWidget {
   const VisitTemplate({super.key});
@@ -19,21 +16,39 @@ class VisitTemplate extends StatefulWidget {
 }
 
 class _VisitTemplateState extends State<VisitTemplate> {
-  final List<String> leavetype = ['Paid leave', 'Unpaid leave', 'Casual leave'];
-  String? selectedleavetype;
+  final List<String> branchType = [
+    'Head Office',
+    'Mumbai Branch',
+    'Delhi Branch',
+    'Bangalore Warehouse',
+    'Pune Client Site',
+    'Hyderabad Branch',
+    'Chennai Regional Office',
+    'Kolkata Branch',
+    'Ahmedabad Branch',
+    'Remote Site',
+  ];
+
+  String? selectedBranchType;
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body: Container(
-      //padding: EdgeInsets.all(0.08*Responsive.getResponsive(context)),
-      padding: EdgeInsets.symmetric(
-        horizontal: 0.08 * Responsive.getWidth(context),
-        vertical: 0.02 * Responsive.getHeight(context),
+  Widget build(BuildContext context) => Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 16.0 * Responsive.getResponsive(context),
+    ),
+    child: SingleChildScrollView(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+        left: 16.0 * Responsive.getResponsive(context),
+        right: 16.0 * Responsive.getResponsive(context),
+        top: 20 * Responsive.getResponsive(context),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
-          SizedBox(height: 0.05 * Responsive.getHeight(context)),
+          SizedBox(height: 0.03 * Responsive.getHeight(context)),
+
+          // row with title and icon
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -42,18 +57,12 @@ class _VisitTemplateState extends State<VisitTemplate> {
                 fontWeight: FontWeight.w600,
                 fontSize: 16 * Responsive.getResponsiveText(context),
               ),
-              SizedBox(
-                height: 0.02 * Responsive.getHeight(context),
-                width: 0.05 * Responsive.getWidth(context),
-                child: SvgPicture.asset(
-                  AppAssets.assetVector,
-                  fit: BoxFit.scaleDown,
-                ),
-              ),
+              SvgPicture.asset(AppAssets.assetVector, fit: BoxFit.scaleDown),
             ],
           ),
           SizedBox(height: 0.03 * Responsive.getHeight(context)),
 
+          // Text field with label "Q1"
           LabeledTextField(
             label: 'Q1',
             hint: 'Type here',
@@ -71,53 +80,49 @@ class _VisitTemplateState extends State<VisitTemplate> {
             ),
           ),
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
-          CustomText(
-            'Branch',
-            fontSize: 16 * Responsive.getResponsiveText(context),
-            color: AppTheme.getColor(context).onSurfaceVariant,
-            fontWeight: FontWeight.w700,
-          ),
-          SizedBox(height: 0.01 * Responsive.getHeight(context)),
 
-          CustomPopupDropdownStyled<String>(
-            items: leavetype,
+          // Custom dropdown to select branch
+          LabeledDropdown(
+            label: 'Branch',
+            items: branchType,
+            width: Responsive.getWidth(context),
             hintText: 'Select',
-            spacing: 0.04 * Responsive.getWidth(context),
-            height: 0.07 * Responsive.getHeight(context),
+            border: BoxBorder.all(color: AppTheme.getColor(context).outline),
             prefix: SvgPicture.asset(
               AppAssets.assetData,
               fit: BoxFit.scaleDown,
             ),
-            hintTextStyle: TextStyle(
-              fontSize: 18 * Responsive.getResponsiveText(context),
-              color: AppTheme.getColor(context).outline,
-              fontWeight: FontWeight.w600,
-            ),
-            border: BoxBorder.all(color: AppTheme.getColor(context).outline),
-
-            // width: double.infinity,
-            selectedItem: selectedleavetype,
             itemToString: (item) => item,
-            onChanged: (value, index) {
-              setState(() {
-                selectedleavetype = value;
-              });
-            },
-            useRadioList: true,
+            selectedItem: selectedBranchType,
+            onChanged: (value, index) {},
           ),
 
           SizedBox(height: 0.10 * Responsive.getHeight(context)),
+
+          // Submit button
           MyCoButton(
             boarderRadius: 30 * Responsive.getResponsive(context),
             isShadowBottomLeft: true,
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //  MaterialPageRoute(builder: (context) => const TestNewVisit()),
+
+               //use below code to open bottom sheet
+              // showModalBottomSheet(
+              //   context: context,
+              //   isScrollControlled: true,
+              //   shape: RoundedRectangleBorder(
+              //     borderRadius: BorderRadius.vertical(
+              //       top: Radius.circular(
+              //         16 * Responsive.getResponsive(context),
+              //       ),
+              //     ),
+              //   ),
+              //   builder: (context) => const RemarkBottomSheet(),
               // );
             },
             title: 'SUBMIT',
           ),
+
+          SizedBox(height: 0.01 * Responsive.getHeight(context)),
         ],
       ),
     ),

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
+import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -17,12 +22,12 @@ class OrderSummaryPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
     appBar: CustomAppbar(
-      title: Column(
+      appBarTitleWidget: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Text('Order Summary'),
           CustomText(
-            'Order Summary',
+            'order_summary',
             fontSize: 20 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w700,
           ),
@@ -53,18 +58,18 @@ class OrderSummaryPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomText(
-                    'Item (1)',
+                    'item',
                     fontSize: 16 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.bold,
                   ),
                   CustomText(
-                    'Units (25)',
+                    'unit_quantity',
                     fontSize: 16 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.bold,
                   ),
                   SizedBox(width: 0.015 * Responsive.getWidth(context)),
                   CustomText(
-                    'Total: ₹20000',
+                    'total',
                     fontSize: 16 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.bold,
                   ),
@@ -102,7 +107,7 @@ class OrderSummaryPage extends StatelessWidget {
                         ),
                         SizedBox(height: 0.01 * Responsive.getHeight(context)),
                         CustomText(
-                          'Available Stocks : 9989',
+                          'available_stocks',
                           fontSize: 12 * Responsive.getResponsiveText(context),
                           color: AppTheme.getColor(context).secondary,
                           fontWeight: FontWeight.w600,
@@ -133,8 +138,9 @@ class OrderSummaryPage extends StatelessWidget {
                               ),
                               child: Row(
                                 children: [
-                                  Image.asset(
-                                    'assets/take_order/message-edit.png',
+                                  SvgPicture.asset(
+                                    // 'assets/take_order/message-edit.png',
+                                    AppAssets.messageEdit,
                                     fit: BoxFit.cover,
                                     height:
                                         0.015 * Responsive.getHeight(context),
@@ -143,11 +149,12 @@ class OrderSummaryPage extends StatelessWidget {
                                     width: 0.02 * Responsive.getWidth(context),
                                   ),
                                   CustomText(
-                                    '25 Units',
+                                    'unit_quantity',
                                     fontSize:
                                         12 *
                                         Responsive.getResponsiveText(context),
                                     fontWeight: FontWeight.w500,
+                                    color: AppColors.black,
                                   ),
                                 ],
                               ),
@@ -155,8 +162,9 @@ class OrderSummaryPage extends StatelessWidget {
                             SizedBox(
                               width: 0.01 * Responsive.getWidth(context),
                             ),
-                            Image.asset(
-                              'assets/take_order/xcircle.png',
+                            SvgPicture.asset(
+                              // 'assets/take_order/xcircle.png',
+                              AppAssets.xCircle,
                               width: 0.06 * Responsive.getWidth(context),
                               height: 0.025 * Responsive.getHeight(context),
                             ),
@@ -173,7 +181,7 @@ class OrderSummaryPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomText(
-                          'Piece Wise(25 * ₹80.0)',
+                          'piece_wise',
                           fontSize: 13 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w500,
                         ),
@@ -195,18 +203,18 @@ class OrderSummaryPage extends StatelessWidget {
             // Shipping Charges Card
             DistributorCard(
               headerHeight: 0.04 * Responsive.getHeight(context),
-              title: 'Shipping Charges',
+              title: LanguageManager().get('shipping_charges'),
               isButton: true,
               onTap: () {
                 print('shipping');
               },
-              buttonText: '₹Add',
+              buttonText: LanguageManager().get('add'),
               bottomWidget: Padding(
                 padding: EdgeInsets.all(
                   10.0 * Responsive.getResponsive(context),
                 ),
                 child: CustomText(
-                  'Amount cannot Exceed 1,00,000',
+                  'amount_cannot_exceed_one_lac',
                   fontSize: 13 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w600,
                   color: AppColors.error,
@@ -222,19 +230,19 @@ class OrderSummaryPage extends StatelessWidget {
                 children: [
                   getTotalAmountRow(
                     context,
-                    leftText: 'Total',
+                    leftText: 'total',
                     rightText: '₹2000.0',
                   ),
                   SizedBox(height: 0.005 * Responsive.getHeight(context)),
                   getTotalAmountRow(
                     context,
-                    leftText: 'Shipping Charges',
+                    leftText: 'shipping_charges',
                     rightText: '₹00.0',
                   ),
                   const Divider(),
                   getTotalAmountRow(
                     context,
-                    leftText: 'Grand Total',
+                    leftText: 'grand_total',
                     rightText: '₹2000.0',
                     textColor: AppTheme.getColor(context).primary,
                   ),
@@ -244,61 +252,36 @@ class OrderSummaryPage extends StatelessWidget {
             SizedBox(height: 0.015 * Responsive.getHeight(context)),
             // Remark Section
             CustomText(
-              'Remark',
+              'remark',
               fontWeight: FontWeight.w700,
               fontSize: 13 * Responsive.getResponsiveText(context),
             ),
             SizedBox(height: 0.005 * Responsive.getHeight(context)),
-            Container(
-              height: 0.115 * Responsive.getHeight(context),
+            BigMyCoTextField(
+              hintText: LanguageManager().get('type_here'),
+              prefixImage: SvgPicture.asset(
+                AppAssets.messageEdit,
+                colorFilter: ColorFilter.mode(
+                  AppTheme.getColor(context).primary,
+                  BlendMode.srcIn,
+                ),
+              ),
               decoration: BoxDecoration(
-                color: AppTheme.getColor(context).onPrimary,
                 border: Border.all(color: AppTheme.getColor(context).outline),
                 borderRadius: BorderRadius.circular(
                   12 * Responsive.getResponsive(context),
                 ),
               ),
-              padding: EdgeInsets.symmetric(
-                horizontal: 0.03 * Responsive.getWidth(context),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(
-                      top: 0.01 * Responsive.getHeight(context),
-                    ),
-                    child: Image.asset(
-                      'assets/take_order/message-edit.png',
-                      height: 0.022 * Responsive.getHeight(context),
-                    ),
-                  ),
-                  SizedBox(width: 0.03 * Responsive.getWidth(context)),
-                  Expanded(
-                    child: TextFormField(
-                      maxLines: 5,
-                      minLines: 3,
-                      decoration: InputDecoration(
-                        hintText: 'Type Here',
-                        hintStyle: TextStyle(
-                          color: AppTheme.getColor(context).outline,
-                          fontSize: 14 * Responsive.getResponsiveText(context),
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
             SizedBox(height: 0.015 * Responsive.getHeight(context)),
             // Distributor Card
             DistributorCard(
-              title: 'Distributor',
+              title: 'distributor',
               isButton: true,
-              buttonText: 'Change',
+              buttonText: LanguageManager().get('change'),
               onTap: () {
-                context.pushNamed('all-distributor');
+                // context.pushNamed('all-distributor');
+                context.pushNamed(RoutePaths.allDistributor);
               },
               bottomWidget: Padding(
                 padding: EdgeInsets.symmetric(
@@ -336,7 +319,7 @@ class OrderSummaryPage extends StatelessWidget {
                         horizontal: 6.0 * Responsive.getResponsive(context),
                       ),
                       child: CustomText(
-                        'Contact Person :  Manish ( +91 7980239236 )',
+                        'contact_person',
                         fontSize: 14 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w600,
                       ),
@@ -351,9 +334,10 @@ class OrderSummaryPage extends StatelessWidget {
             isRepeatOrder
                 ? MyCoButton(
                     onTap: () {
-                      context.pushNamed('order-history');
+                      // context.pushNamed('order-history');
+                      context.pushNamed(RoutePaths.orderHistory);
                     },
-                    title: 'Place Order',
+                    title: LanguageManager().get('place_order'),
                     // width: 0.4 * Responsive.getWidth(context),
                     height: 0.055 * Responsive.getHeight(context),
                     boarderRadius: 30 * Responsive.getResponsive(context),
@@ -361,11 +345,12 @@ class OrderSummaryPage extends StatelessWidget {
                         .copyWith(color: AppTheme.getColor(context).onPrimary),
                   )
                 : SideBySideButtons(
-                    button1Name: 'Add More',
-                    button2Name: 'Place Order',
+                    button1Name: LanguageManager().get('add_more'),
+                    button2Name: LanguageManager().get('place_order'),
                     onTap1: () {},
                     onTap2: () {
-                      context.pushNamed('order-history');
+                      // context.pushNamed('order-history');
+                      context.pushNamed(RoutePaths.orderHistory);
                     },
                   ),
             SizedBox(height: 0.02 * Responsive.getHeight(context)),
@@ -379,7 +364,7 @@ class OrderSummaryPage extends StatelessWidget {
     BuildContext context, {
     required String leftText,
     required String rightText,
-    Color textColor = AppColors.black,
+    Color? textColor,
   }) => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -387,13 +372,13 @@ class OrderSummaryPage extends StatelessWidget {
         leftText,
         fontSize: 15 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w600,
-        color: textColor,
+        color: textColor ?? AppTheme.getColor(context).onSurface,
       ),
       CustomText(
         rightText,
         fontSize: 15 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w500,
-        color: textColor,
+        color: textColor ?? AppTheme.getColor(context).onSurface,
       ),
     ],
   );
@@ -401,6 +386,6 @@ class OrderSummaryPage extends StatelessWidget {
   BoxDecoration getCommonDecoration(BuildContext context) => BoxDecoration(
     border: Border.all(color: AppTheme.getColor(context).outline),
     borderRadius: BorderRadius.circular(12 * Responsive.getResponsive(context)),
-    color: AppTheme.getColor(context).onPrimary,
+    // color: AppTheme.getColor(context).onPrimary,
   );
 }

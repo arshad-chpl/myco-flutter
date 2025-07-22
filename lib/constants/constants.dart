@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:myco_flutter/core/env/environment.dart';
 
 class AppConstants {
   // App Info
@@ -15,6 +16,7 @@ class SharedPreferenceConstants {
 }
 
 class VariableBag {
+  static const String dioWithAuth = 'dioWithAuth';
   static const String companyName = 'company_name';
   static const String companyId = 'company_id';
   static const String countryId = 'country_id';
@@ -82,6 +84,28 @@ class VariableBag {
   static const String ADMIN_VIEW_MENU_EDUCATION = '65';
   static const String ADMIN_VIEW_MENU_ACHIEVEMENTS = '66';
   static const String ADMIN_VIEW_MENU_EMPLOYEES_FACE = '69';
+
+
+  // const variables of pages
+  static const formContentSpacingVertical = 20 ;
+  static const screenHorizontalPadding = 26.0;
+  static const textFieldRowGap = 20;
+  static const buttonBorderRadius = 30.0;
+  static const bottomSheetBorderRadius = 30.0;
+  static const bottomSheetLeftPadding  = 26.0;
+  static const bottomSheetRightPadding = 26.0;
+  static const bottomSheetTopPadding = 20.0;
+  static const bottomSheetBottomPadding = 20.0;
+  static const buttonRowSpacing = 30; // width
+  static const buttonColumnSpacing = 20; // height
+  static const containerBorderRadius = 12.0; // responsive
+  static const shadowContainerVerticalPadding = 16.0;
+  static const commonCardVerticalPadding = 15.0;
+  static const commonCardHorizontalPadding = 20.0;
+  static const commonCardBorderRadius = 15.0;
+  static const tabBarAfterSpace = 30; // height
+  static const searchFiledAfterSpace = 30; // height
+  static const commonContainerPadding = 10.0; //all
 }
 
 class ApiUrl {

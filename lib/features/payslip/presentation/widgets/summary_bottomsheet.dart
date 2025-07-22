@@ -6,7 +6,29 @@ import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class SummaryBottomsheet extends StatelessWidget {
-  const SummaryBottomsheet({super.key});
+  const SummaryBottomsheet({
+    required this.basic,
+    required this.hra,
+    required this.conveyance,
+    required this.paidLeaveAllowance,
+    required this.leaveEncashment,
+    required this.totalEarnings,
+    required this.professionalTax,
+    required this.grossDeductions,
+    required this.totalEmplotersContributions,
+    super.key,
+  });
+  final String basic;
+  final String hra;
+  final String conveyance;
+  final String paidLeaveAllowance;
+  final String leaveEncashment;
+  final String totalEarnings;
+
+  final String professionalTax;
+  final String grossDeductions;
+
+  final String totalEmplotersContributions;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -15,17 +37,26 @@ class SummaryBottomsheet extends StatelessWidget {
     ),
     child: Column(
       children: [
-        AppBar(
-          leading: const BackButton(),
-          title: const CustomText('Summary', fontWeight: FontWeight.w700),
-          centerTitle: false,
+        Row(
+          children: [
+            const BackButton(),
+            CustomText(
+              'summary',
+              // 'Summary',
+              color: AppTheme.getColor(context).onSurface,
+              fontSize: 18 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.w700,
+            ),
+          ],
         ),
+
         Padding(
           padding: EdgeInsets.all(16.0 * Responsive.getResponsive(context)),
           child: Column(
             children: [
               CommonCard(
-                title: 'Earnings',
+                title: 'earnings',
+                //  'Earnings',
                 bottomWidget: Container(
                   child: Padding(
                     padding: EdgeInsets.all(
@@ -44,7 +75,8 @@ class SummaryBottomsheet extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                             ),
                             CustomText(
-                              '₹190,780.78',
+                              // '₹190,780.78',
+                              basic,
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
@@ -63,7 +95,8 @@ class SummaryBottomsheet extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                             ),
                             CustomText(
-                              '₹87,780.78',
+                              // '₹87,780.78',
+                              hra,
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
@@ -75,33 +108,16 @@ class SummaryBottomsheet extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              'Conveyance',
+                              'conveyance',
+                              // 'Conveyance',
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w500,
                             ),
                             CustomText(
-                              '₹103,930.29',
-                              color: AppTheme.getColor(context).onSurface,
-                              fontSize:
-                                  15 * Responsive.getResponsiveText(context),
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomText(
-                              'Paid Leave Allowance',
-                              color: AppTheme.getColor(context).onSurface,
-                              fontSize:
-                                  15 * Responsive.getResponsiveText(context),
-                              fontWeight: FontWeight.w500,
-                            ),
-                            CustomText(
-                              '₹13,525.08',
+                              // '₹103,930.29',
+                              conveyance,
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
@@ -113,14 +129,16 @@ class SummaryBottomsheet extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              'Leave Encashment',
+                              'paid_leave_allowance',
+                              // 'Paid Leave Allowance',
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w500,
                             ),
                             CustomText(
-                              '₹928.00',
+                              // '₹13,525.08',
+                              paidLeaveAllowance,
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
@@ -128,19 +146,44 @@ class SummaryBottomsheet extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const DottedLineWidget(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              'Total Earnings',
+                              'leave_inCaseMent',
+                              // 'Leave Encashment',
+                              color: AppTheme.getColor(context).onSurface,
+                              fontSize:
+                                  15 * Responsive.getResponsiveText(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            CustomText(
+                              // '₹928.00',
+                              leaveEncashment,
+                              color: AppTheme.getColor(context).onSurface,
+                              fontSize:
+                                  15 * Responsive.getResponsiveText(context),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                        DottedLineWidget(
+                          color: AppTheme.getColor(context).onSurface,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              'total_earnings',
+                              // 'Total Earnings',
                               color: AppTheme.getColor(context).onSurface,
                               fontWeight: FontWeight.w700,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
                             ),
                             CustomText(
-                              '₹395,086.90',
+                              // '₹395,086.90',
+                              totalEarnings,
                               color: AppTheme.getColor(context).onSurface,
                               fontWeight: FontWeight.w700,
                               fontSize:
@@ -155,7 +198,8 @@ class SummaryBottomsheet extends StatelessWidget {
               ),
               SizedBox(height: .025 * Responsive.getHeight(context)),
               CommonCard(
-                title: 'Deductions',
+                title: 'deductions',
+                // 'Deductions',
                 headerColor: AppTheme.getColor(context).error,
                 bottomWidget: Container(
                   padding: EdgeInsets.symmetric(
@@ -168,14 +212,16 @@ class SummaryBottomsheet extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            'Professional Tax',
+                            'professional_tex',
+                            // 'Professional Tax',
                             color: AppTheme.getColor(context).onSurface,
                             fontSize:
                                 16 * Responsive.getResponsiveText(context),
                             fontWeight: FontWeight.w500,
                           ),
                           CustomText(
-                            '₹2,222.00',
+                            // '₹2,222.00',
+                            professionalTax,
                             color: AppTheme.getColor(context).onSurface,
                             fontSize:
                                 16 * Responsive.getResponsiveText(context),
@@ -183,19 +229,23 @@ class SummaryBottomsheet extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const DottedLineWidget(),
+                      DottedLineWidget(
+                        color: AppTheme.getColor(context).onSurface,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            'Total Deduction',
+                            'gross_deduction',
+                            // 'Total Deduction',
                             color: AppTheme.getColor(context).onSurface,
                             fontWeight: FontWeight.w700,
                             fontSize:
                                 16 * Responsive.getResponsiveText(context),
                           ),
                           CustomText(
-                            '₹2,222.00',
+                            // '₹2,222.00',
+                            grossDeductions,
                             color: AppTheme.getColor(context).onSurface,
                             fontWeight: FontWeight.w700,
                             fontSize:
@@ -209,7 +259,8 @@ class SummaryBottomsheet extends StatelessWidget {
               ),
               SizedBox(height: .03 * Responsive.getHeight(context)),
               CommonCard(
-                title: 'Employee’s Contribution',
+                title: 'employer_contribution',
+                //  'Employee’s Contribution',
                 headerColor: AppTheme.getColor(context).primary,
                 bottomWidget: Container(
                   child: Padding(
@@ -222,14 +273,16 @@ class SummaryBottomsheet extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              'Total Employee’s Contribution',
+                              'total_employers_contribution',
+                              // 'Total Employee’s Contribution',
                               color: AppTheme.getColor(context).onSurface,
                               fontWeight: FontWeight.bold,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
                             ),
                             CustomText(
-                              '₹0.00',
+                              // '₹0.00',
+                              totalEmplotersContributions,
                               color: AppTheme.getColor(context).onSurface,
                               fontWeight: FontWeight.bold,
                               fontSize:

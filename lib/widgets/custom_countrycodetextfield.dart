@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_expression_function_bodies
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -16,6 +17,8 @@ class PhoneNumberField extends StatelessWidget {
   final Decoration? decoration;
   final String? hintText;
   final TextStyle? hintTextStyle;
+  final double? textFieldHeight;
+  final double? textFieldWidth;
 
   const PhoneNumberField({
     super.key,
@@ -27,6 +30,8 @@ class PhoneNumberField extends StatelessWidget {
     this.decoration,
     this.hintText,
     this.hintTextStyle,
+    this.textFieldHeight,
+    this.textFieldWidth,
   });
 
   @override
@@ -35,6 +40,8 @@ class PhoneNumberField extends StatelessWidget {
     // final textTheme = theme.textTheme;
 
     return Container(
+      height: textFieldHeight,
+      width: textFieldWidth,
       padding: const EdgeInsets.symmetric(horizontal: 7),
       decoration:
           decoration ??
@@ -47,7 +54,7 @@ class PhoneNumberField extends StatelessWidget {
         children: [
           SizedBox(
             width: 85,
-            height: 45,
+            height: 55,
             child: CustomPopupDropdownStyled<String>(
               // border: InputBorder.none,
               items: countries,
@@ -92,6 +99,7 @@ class PhoneNumberField extends StatelessWidget {
                         14.0 * Responsive.getResponsiveText(context),
                   ),
               textInputType: TextInputType.phone,
+              inputFormater: [FilteringTextInputFormatter.digitsOnly],
               border: InputBorder.none,
             ),
           ),
@@ -100,7 +108,6 @@ class PhoneNumberField extends StatelessWidget {
     );
   }
 }
-
 
 //below given code is the example of the usage of the above code in ui
 

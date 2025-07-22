@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -66,6 +67,11 @@ class LabeledTextField extends StatelessWidget {
   final TextAlign? textAlign;
   final int? textMaxLine;
   final TextOverflow? textOverflow;
+  final BoxConstraints? suffixIconConstraints;
+  final BoxConstraints? prefixIconConstraints;
+  final EdgeInsetsGeometry? containerPadding;
+  final FontStyle? titleFontStyle;
+  final bool? isKey;
 
   const LabeledTextField({
     Key? key,
@@ -128,6 +134,11 @@ class LabeledTextField extends StatelessWidget {
     this.textAlign,
     this.textMaxLine,
     this.textOverflow,
+    this.suffixIconConstraints,
+    this.prefixIconConstraints,
+    this.containerPadding,
+    this.titleFontStyle,
+    this.isKey,
   }) : super(key: key);
 
   @override
@@ -136,8 +147,7 @@ class LabeledTextField extends StatelessWidget {
     children: [
       CustomText(
         label,
-        isKey: true,
-        color: textColor ?? AppColors.textGray,
+        color: textColor ?? AppTheme.getColor(context).onSurfaceVariant,
         fontSize: textFontSize ?? 16 * Responsive.getResponsiveText(context),
         fontWeight: textFontweight ?? FontWeight.bold,
         decoration: textDecoration,
@@ -145,63 +155,63 @@ class LabeledTextField extends StatelessWidget {
         decorationColor: textDecorationColor,
         maxLines: textMaxLine,
         overflow: textOverflow,
+        isKey: isKey ?? false,
+        fontStyle: titleFontStyle,
       ),
       SizedBox(height: 0.005 * Responsive.getHeight(context)),
-      SizedBox(
-        height: heightFactor,
-        width: widthFactor,
-        child: MyCoTextfield(
-          controller: controller,
-          hintText: hint,
-          hintTextStyle:
-              hintTextStyle ??
-              TextStyle(
-                fontSize: 18 * Responsive.getResponsiveText(context),
-                color: AppColors.gray,
-                fontWeight: FontWeight.bold,
-              ),
-          labelText: null,
-          isLabelOn: false,
-          isReadOnly: isReadOnly,
-          obscureText: obscureText,
-          obscuringCharacter: obscuringCharacter,
-          textInputType: textInputType,
-          validator: validator,
-          onChanged: onChanged,
-          onSaved: onSaved,
-          prefix: prefix,
-          suffix: suffix,
-
-          maxLenght: maxLength,
-          textAlignment: textAlignment,
-          inputFormater: inputFormatters,
-          fillColor: fillColor,
-          width: textFieldwidth,
-          height: textFieldHeight,
-          border: border,
-          titleColor: titleColor,
-          prefixImageWidth: prefixImageWidth,
-          prefixImageHeight: prefixImageHeight,
-          color: color,
-          boarderRadius: boarderRadius,
-          contentPadding: contentPadding,
-          autoFocus: autoFocus,
-          floatingLabelBehavior: floatingLabelBehavior,
-          focusNode: focusNode,
-          fontWeight: fontWeight,
-          iconHeight: iconHeight,
-          iconWidth: iconWidth,
-          image1: image1,
-          image2: image2,
-          isSuffixIconOn: isSuffixIconOn ?? false,
-          labelTextStyle: labelTextStyle,
-          onClick: onClick,
-          onTap1: onTap1,
-          onTap2: onTap2,
-          preFixImage: preFixImage,
-          titleTextSize: titleTextSize,
-          typingtextStyle: typingtextStyle,
-        ),
+      MyCoTextfield(
+        controller: controller,
+        hintText: hint,
+        hintTextStyle:
+            hintTextStyle ??
+            TextStyle(
+              fontSize: 18 * Responsive.getResponsiveText(context),
+              color: AppColors.gray,
+              fontWeight: FontWeight.bold,
+            ),
+        labelText: null,
+        isLabelOn: false,
+        isReadOnly: isReadOnly,
+        obscureText: obscureText,
+        obscuringCharacter: obscuringCharacter,
+        textInputType: textInputType,
+        validator: validator,
+        onChanged: onChanged,
+        onSaved: onSaved,
+        prefix: prefix,
+        suffix: suffix,
+        maxLenght: maxLength,
+        textAlignment: textAlignment,
+        inputFormater: inputFormatters,
+        fillColor: fillColor,
+        width: textFieldwidth,
+        height: textFieldHeight,
+        border: border,
+        titleColor: titleColor,
+        prefixImageWidth: prefixImageWidth,
+        prefixImageHeight: prefixImageHeight,
+        color: color,
+        boarderRadius: boarderRadius,
+        contentPadding: contentPadding,
+        autoFocus: autoFocus,
+        floatingLabelBehavior: floatingLabelBehavior,
+        focusNode: focusNode,
+        fontWeight: fontWeight,
+        iconHeight: iconHeight,
+        iconWidth: iconWidth,
+        image1: image1,
+        image2: image2,
+        isSuffixIconOn: isSuffixIconOn ?? false,
+        labelTextStyle: labelTextStyle,
+        onClick: onClick,
+        onTap1: onTap1,
+        onTap2: onTap2,
+        preFixImage: preFixImage,
+        titleTextSize: titleTextSize,
+        typingtextStyle: typingtextStyle,
+        prefixIconConstraints: prefixIconConstraints,
+        suffixIconConstraints: suffixIconConstraints,
+        containerPadding: containerPadding,
       ),
     ],
   );

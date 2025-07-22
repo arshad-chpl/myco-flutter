@@ -5,12 +5,12 @@ import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart'
 class MyCustomTabBar extends StatelessWidget {
   final List<String> tabs;
   final List<Color> selectedBgColors;
-  final List<TextStyle>? selectedTextStyles;
+  final List<TextStyle>? unselectedTextStyles;
   final double? height;
   final double? width;
   final Color unselectedBorderAndTextColor;
   final Color tabBarBorderColor;
-  final TextStyle? unselectedTextStyle;
+  final TextStyle? selectedTextStyle;
   final double? borderRadius;
   final bool? isShadowTopLeft;
   final bool? isShadowTopRight;
@@ -29,8 +29,8 @@ class MyCustomTabBar extends StatelessWidget {
     required this.selectedIndex,
     this.height,
     this.width,
-    this.selectedTextStyles,
-    this.unselectedTextStyle,
+    this.unselectedTextStyles,
+    this.selectedTextStyle,
     this.borderRadius,
     this.isShadowTopLeft = false,
     this.isShadowTopRight = false,
@@ -60,7 +60,9 @@ class MyCustomTabBar extends StatelessWidget {
 
         return Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: EdgeInsets.symmetric(
+              horizontal: 4 * Responsive.getResponsive(context),
+            ),
             child: MyCoButton(
               isShadowBottomLeft: isSelected
                   ? isShadowBottomLeft ?? false
@@ -79,16 +81,23 @@ class MyCustomTabBar extends StatelessWidget {
                   ? selectedBgColors[index]
                   : Colors.transparent,
               borderWidth: isSelected ? null : 1.5,
-              boarderRadius: borderRadius ?? 50,
+              boarderRadius:
+                  borderRadius ?? 50 * Responsive.getResponsive(context),
               textStyle: isSelected
-                  ? TextStyle(
-                      fontSize: 13 * Responsive.getResponsiveText(context),
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    )
+                  ? selectedTextStyle ??
+                        TextStyle(
+                          fontSize: 13 * Responsive.getResponsiveText(context),
+                          color: Colors.white,
+                          fontFamily: 'Gilroy-Bold',
+                          fontWeight: FontWeight.w700,
+                        )
+                  : unselectedTextStyles != null
+                  ? unselectedTextStyles![index]
                   : TextStyle(
+                      fontFamily: 'Gilroy-Bold',
                       color: selectedBgColors[index],
                       fontSize: 13 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w700,
                     ),
             ),
           ),

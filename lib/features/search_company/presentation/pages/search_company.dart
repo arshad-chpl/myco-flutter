@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
@@ -61,7 +62,8 @@ class SearchCompanyScreen extends StatelessWidget {
               ),
               SizedBox(height: 0.055 * Responsive.getHeight(context)),
               CustomText(
-                'Select Your Company',
+                'select_your_company',
+                isKey: true,
                 fontSize: 30 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
                 color: AppTheme.getColor(context).onSurface,
@@ -69,7 +71,8 @@ class SearchCompanyScreen extends StatelessWidget {
               ),
               SizedBox(height: 0.014 * Responsive.getHeight(context)),
               CustomText(
-                'Your Journey Starts Here! Select your Company to register or sign in.',
+                'select_your_company_desc',
+                isKey: true,
                 fontSize: 15 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurfaceVariant,
                 textAlign: TextAlign.center,
@@ -78,7 +81,8 @@ class SearchCompanyScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: CustomText(
-                  'Company Name',
+                  'company_name',
+                  isKey: true,
                   fontSize: 15 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.w600,
                   color: AppTheme.getColor(context).onSurfaceVariant,
@@ -87,12 +91,12 @@ class SearchCompanyScreen extends StatelessWidget {
               ),
               SizedBox(height: 0.017 * Responsive.getHeight(context)),
               // --- START: Updated Widget ---
-              GestureDetector(
+              InkWell(
                 onTap: showCompanySearchSheet, // Trigger the bottom sheet
                 child: AbsorbPointer(
                   // Prevents the text field from gaining focus
                   child: MyCoTextfield(
-                    hintText: 'Search Your Company',
+                    hintText: LanguageManager().get('search_your_company'),
                     hintTextStyle: TextStyle(
                       fontSize: 18 * Responsive.getResponsiveText(context),
                       color: AppTheme.getColor(context).outline,
@@ -102,7 +106,7 @@ class SearchCompanyScreen extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                       borderSide: BorderSide(color: Color(0xFF98A2B3)),
                     ),
-                    height: 0.02 * Responsive.getHeight(context),
+                    height: 0.06 * Responsive.getHeight(context),
                     // These properties make it look like a button
                     isReadOnly: true,
                   ),
@@ -113,7 +117,7 @@ class SearchCompanyScreen extends StatelessWidget {
               MyCoButton(
                 onTap: showCompanySearchSheet,
                 // Use the same function
-                title: 'Search',
+                title: LanguageManager().get('search'),
                 width: Responsive.getWidth(context),
                 height: 0.065 * Responsive.getHeight(context),
                 boarderRadius: 30,
