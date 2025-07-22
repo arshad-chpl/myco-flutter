@@ -1,10 +1,33 @@
-abstract class WorkAllocationEvent {}
+import 'package:equatable/equatable.dart';
+import 'package:myco_flutter/features/work_allocation/data/models/request/add_work_allocation_requset.dart';
 
-class FetchWorkAllocations extends WorkAllocationEvent {}
+abstract class WorkAllocationEvent extends Equatable {
+  const WorkAllocationEvent();
 
-class AddWorkAllocation extends WorkAllocationEvent {
-  final String title;
-  final String description;
+  @override
+  List<Object?> get props => [];
+}
 
-  AddWorkAllocation({required this.title, required this.description});
+class FetchWorkCategoryList extends WorkAllocationEvent {
+  final String companyId;
+  final String getWorkCategory;
+  final String languageId;
+
+  const FetchWorkCategoryList({
+    required this.companyId,
+    required this.getWorkCategory,
+    required this.languageId,
+  });
+
+  @override
+  List<Object?> get props => [companyId, getWorkCategory, languageId];
+}
+
+class AddWorkAllocationEvent extends WorkAllocationEvent {
+  final AddWorkAllocationRequest request;
+
+  const AddWorkAllocationEvent(this.request);
+
+  @override
+  List<Object?> get props => [request];
 }

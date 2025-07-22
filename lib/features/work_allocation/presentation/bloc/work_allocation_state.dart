@@ -1,17 +1,40 @@
-abstract class WorkAllocationState {}
+import 'package:equatable/equatable.dart';
+import 'package:myco_flutter/features/work_allocation/domain/entities/get_work_category_entity.dart';
+
+abstract class WorkAllocationState extends Equatable {
+  const WorkAllocationState();
+
+  @override
+  List<Object?> get props => [];
+}
 
 class WorkAllocationInitial extends WorkAllocationState {}
 
 class WorkAllocationLoading extends WorkAllocationState {}
 
-class WorkAllocationLoaded extends WorkAllocationState {
-  final List<String> items; // simple for demo
+class WorkCategoryListLoaded extends WorkAllocationState {
+  final List<WorkCategoryListEntity> categories;
 
-  WorkAllocationLoaded(this.items);
+  const WorkCategoryListLoaded(this.categories);
+
+  @override
+  List<Object?> get props => [categories];
+}
+
+class WorkAllocationSuccess extends WorkAllocationState {
+  final String message;
+
+  const WorkAllocationSuccess(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }
 
 class WorkAllocationError extends WorkAllocationState {
-  final String message;
+  final String error;
 
-  WorkAllocationError(this.message);
+  const WorkAllocationError(this.error);
+
+  @override
+  List<Object?> get props => [error];
 }

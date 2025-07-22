@@ -40,9 +40,7 @@ class _WorkAllocationPageState extends State<WorkAllocationPage> {
       innericonsize: 30 * Responsive.getResponsive(context),
       imageSize: 50 * Responsive.getResponsive(context),
       onTap: () {
-        context.go('/assign-work');
-
-        context.go(RoutePaths.assignWork);
+        context.push(RoutePaths.assignWork);
       },
       openIcon: Icons.add,
       closeIcon: Icons.close,

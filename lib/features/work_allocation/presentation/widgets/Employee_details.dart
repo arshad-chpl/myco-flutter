@@ -3,7 +3,6 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/employee_card.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/widgets/label_with_star.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class Employee {
@@ -70,15 +69,41 @@ class _AssignEngineerFieldState extends State<AssignEngineerField> {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       //Assign Work Engineer
-      labelWithAsterisk(context, 'Assign Work Engineer'),
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomText(
+            'Assign Work Engineer',
+            fontSize: 14 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w700,
+            color: AppTheme.getColor(context).onSurfaceVariant,
+          ),
+          CustomText(
+            ' *',
+            fontSize: 14 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w700,
+            color: AppTheme.getColor(context).error,
+            isKey: false,
+          ),
+        ],
+      ),
       SizedBox(height: 0.003 * Responsive.getHeight(context)),
 
-      //Mention Here bottom border
+      //bottom border
       Container(
-        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
+        padding: EdgeInsets.only(
+          left: 10 * Responsive.getResponsive(context),
+          right: 10 * Responsive.getResponsive(context),
+          bottom: 15 * Responsive.getResponsive(context),
+        ),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade400),
-          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: AppTheme.getColor(context).outline,
+            width: 1.2,
+          ),
+          borderRadius: BorderRadius.circular(
+            12 * Responsive.getResponsive(context),
+          ),
           color: AppTheme.getColor(context).onPrimary,
         ),
 
@@ -86,7 +111,7 @@ class _AssignEngineerFieldState extends State<AssignEngineerField> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            Container(
               height: 0.060 * Responsive.getHeight(context),
               child: TextField(
                 controller: _controller,

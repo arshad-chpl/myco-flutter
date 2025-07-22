@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/Employee_details.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/widgets/label_with_star.dart';
-import 'package:myco_flutter/widgets/big_textfield.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widgets/category_dropdown_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
-import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class AssignWorkPage extends StatefulWidget {
   const AssignWorkPage({super.key});
@@ -20,10 +18,12 @@ class AssignWorkPage extends StatefulWidget {
 }
 
 class _AssignWorkPageState extends State<AssignWorkPage> {
+  final _formKey = GlobalKey<FormState>();
+
   final List<String> visitPurposes = ['Select', 'Testing', 'AI Tools'];
   String? selectedVisitPurpose;
+  String? categoryError;
 
-  // Controllers for text fields
   final TextEditingController srNoController = TextEditingController();
   final TextEditingController siteController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
@@ -32,239 +32,249 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
   final TextEditingController remarkController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: const CustomAppbar(title: 'Assign Work'),
+  void dispose() {
+    srNoController.dispose();
+    siteController.dispose();
+    locationController.dispose();
+    startDateController.dispose();
+    targetDateController.dispose();
+    remarkController.dispose();
+    super.dispose();
+  }
 
-    body: SingleChildScrollView(
-      padding: EdgeInsets.symmetric(
-        horizontal: 16 * Responsive.getResponsive(context),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          //Work Category
-          labelWithAsterisk(context, 'Category'),
-          SizedBox(height: 6 * Responsive.getResponsive(context)),
-          CustomPopupDropdownStyled<String>(
-            items: visitPurposes,
-            hintText: '  Work Category',
-            prefix: SvgPicture.asset(
-              AppAssets.element_1,
-              fit: BoxFit.scaleDown,
-            ),
-            selectedItem: selectedVisitPurpose,
-            onChanged: (v, i) => setState(() => selectedVisitPurpose = v),
-            itemToString: (item) => item,
-            hintTextStyle: TextStyle(
-              fontSize: 14 * Responsive.getResponsiveText(context),
-              color: AppTheme.getColor(context).outline,
-              fontWeight: FontWeight.w600,
-            ),
-            border: Border.all(color: AppTheme.getColor(context).outline),
+  void validation() {
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    setState(() {
+      categoryError = null;
+      if (selectedVisitPurpose == null || selectedVisitPurpose == 'Select') {
+        categoryError = 'Please select work category';
+      }
+    });
+
+    if (isValid && categoryError == null) {
+      debugPrint('Form is fully valid!');
+    }
+  }
+
+  Widget errorText(String? msg) => msg == null
+      ? const SizedBox()
+      : Padding(
+          padding: EdgeInsets.only(top: 4 * Responsive.getResponsive(context)),
+          child: CustomText(
+            msg,
+            color: AppColors.red,
+            fontSize: 12 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w500,
           ),
-          SizedBox(height: 12 * Responsive.getResponsive(context)),
+        );
 
-          //Project Sr No
-          buildLabeledField(
-            context,
-            label: 'Project Sr No *',
-            controller: srNoController,
-            icon: AppAssets.receiptEdittt,
-            validator: (v) => validateRequired(v, 'Project Sr No'),
-          ),
+  @override
+  Widget build(BuildContext context) {
+    final spacing = 12 * Responsive.getResponsive(context);
 
-          //Site
-          buildLabeledField(
-            context,
-            label: 'Site *',
-            controller: siteController,
-            icon: AppAssets.monitor,
-            validator: (v) => validateRequired(v, 'Site'),
-          ),
+    return Scaffold(
+      appBar: const CustomAppbar(title: 'Assign Work'),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(
+          horizontal: 16 * Responsive.getResponsive(context),
+        ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Category (Dropdown)
+              NewTextField(
+                label: 'Category',
+                isRequired: true,
+                hintText: selectedVisitPurpose ?? '  Work Category',
+                prefixIconPath: AppAssets.element_1,
+                suffixIconPath: AppAssets.downArrow,
+                onTap: () async {
+                  final selected = await showModalBottomSheet<String>(
+                    context: context,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20),
+                      ),
+                    ),
+                    builder: (context) => categoryDropdownBottomSheet(
+                      context,
+                      visitPurposes: visitPurposes,
+                      selectedVisitPurpose: selectedVisitPurpose,
+                    ),
+                  );
+                  if (selected != null) {
+                    setState(() {
+                      selectedVisitPurpose = selected;
+                      categoryError = null;
+                    });
+                  }
+                },
+              ),
+              errorText(categoryError),
+              SizedBox(height: spacing),
 
-          //Location
-          buildLabeledField(
-            context,
-            label: 'Location *',
-            controller: locationController,
-            icon: AppAssets.location1,
-            validator: (v) => validateRequired(v, 'Location'),
-          ),
+              // Project Sr No
+              NewTextField(
+                label: 'Project Sr No',
+                isRequired: true,
+                prefixIconPath: AppAssets.receiptEdittt,
+                controller: srNoController,
+                hintText: 'Type here',
+                validator: (val) {
+                  if (val == null || val.trim().isEmpty) {
+                    return 'Please enter Project Sr No';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: spacing),
 
-          //Start Date
-          buildLabeledField(
-            context,
-            label: 'Start Date (DD/MM/YYYY) *',
-            hint: 'Select',
-            controller: startDateController,
-            icon: AppAssets.assetNoteFavorite,
-            validator: (v) => validateRequired(v, 'Start Date'),
-          ),
+              // Site
+              NewTextField(
+                label: 'Site',
+                prefixIconPath: AppAssets.monitor,
+                controller: siteController,
+                isRequired: true,
+                hintText: 'Type here',
+                validator: (val) {
+                  if (val == null || val.trim().isEmpty) {
+                    return 'Please enter Site';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: spacing),
 
-          //Target Date of Completion
-          buildLabeledField(
-            context,
-            label: 'Target Date of Completion (DD/MM/YYYY) *',
-            hint: 'Select',
-            controller: targetDateController,
-            icon: AppAssets.assetNoteFavorite,
-            validator: (v) => validateRequired(v, 'Target Date of Completion'),
-          ),
+              // Location
+              NewTextField(
+                label: 'Location',
+                prefixIconPath: AppAssets.location1,
+                controller: locationController,
+                isRequired: true,
+                hintText: 'Type here',
+                validator: (val) {
+                  if (val == null || val.trim().isEmpty) {
+                    return 'Please enter Location';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: spacing),
 
-          //Assign Work Engineer
-          const AssignEngineerField(
-            allEmployees: [
-              Employee(
-                name: 'Rushda Baqui',
-                role: 'iOS developer',
-                imageUrl: 'https://example.com/avatar1.jpg',
+              // Start Date
+              NewTextField(
+                label: 'Start Date (DD/MM/YYYY)',
+                prefixIconPath: AppAssets.assetNoteFavorite,
+                controller: startDateController,
+                isRequired: true,
+                hintText: 'Select',
+                validator: (val) {
+                  if (val == null || val.trim().isEmpty) {
+                    return 'Please enter Start Date';
+                  }
+                  return null;
+                },
+                onTap: () {
+                  // TODO: Add date picker logic
+                },
               ),
-              Employee(
-                name: 'Shivangi Abhani',
-                role: 'QA',
-                imageUrl: 'https://example.com/avatar2.jpg',
+              SizedBox(height: spacing),
+
+              // Target Date
+              NewTextField(
+                label: 'Target Date of Completion (DD/MM/YYYY)',
+                prefixIconPath: AppAssets.assetNoteFavorite,
+                controller: targetDateController,
+                isRequired: true,
+                hintText: 'Select',
+                validator: (val) {
+                  if (val == null || val.trim().isEmpty) {
+                    return 'Please enter Target Date';
+                  }
+                  return null;
+                },
+                onTap: () {
+                  // TODO: Add date picker logic
+                },
               ),
-              Employee(
-                name: 'Bhakti Dalwadi',
-                role: 'Flutter',
-                imageUrl: 'https://example.com/avatar2.jpg',
+              SizedBox(height: spacing),
+
+              // Assign Engineers
+              const AssignEngineerField(
+                allEmployees: [
+                  Employee(
+                    name: 'Rushda Baqui',
+                    role: 'iOS developer',
+                    imageUrl: 'https://example.com/avatar1.jpg',
+                  ),
+                  Employee(
+                    name: 'Shivangi Abhani',
+                    role: 'QA',
+                    imageUrl: 'https://example.com/avatar2.jpg',
+                  ),
+                  Employee(
+                    name: 'Bhakti Dalwadi',
+                    role: 'Flutter',
+                    imageUrl: 'https://example.com/avatar2.jpg',
+                  ),
+                  Employee(
+                    name: 'Shantanu Limje',
+                    role: 'QA',
+                    imageUrl: 'https://example.com/avatar2.jpg',
+                  ),
+                  Employee(
+                    name: 'Demo',
+                    role: 'Flutter',
+                    imageUrl: 'https://example.com/avatar2.jpg',
+                  ),
+                ],
               ),
-              Employee(
-                name: 'Shantanu Limje',
-                role: 'QA',
-                imageUrl: 'https://example.com/avatar2.jpg',
+              SizedBox(height: spacing),
+
+              // Remark
+              NewTextField(
+                controller: remarkController,
+                label: 'Remark',
+                hintText: 'Type here',
+                prefixIconPath: AppAssets.msgedit,
+                maxLines: 10,
+                keyboardType: TextInputType.multiline,
+                isRequired: true,
+                validator: (val) {
+                  if (val == null || val.trim().isEmpty) {
+                    return 'Please enter Remark';
+                  }
+                  return null;
+                },
               ),
-              Employee(
-                name: 'Demo',
-                role: 'Flutter',
-                imageUrl: 'https://example.com/avatar2.jpg',
-              ),
-              Employee(
-                name: 'Rushda Baqui',
-                role: 'iOS developer',
-                imageUrl: 'https://example.com/avatar1.jpg',
-              ),
-              Employee(
-                name: 'Shivangi Abhani',
-                role: 'QA',
-                imageUrl: 'https://example.com/avatar2.jpg',
-              ),
-              Employee(
-                name: 'Bhakti Dalwadi',
-                role: 'Flutter',
-                imageUrl: 'https://example.com/avatar2.jpg',
-              ),
-              Employee(
-                name: 'Shantanu Limje',
-                role: 'QA',
-                imageUrl: 'https://example.com/avatar2.jpg',
-              ),
-              Employee(
-                name: 'Demo',
-                role: 'Flutter',
-                imageUrl: 'https://example.com/avatar2.jpg',
+              SizedBox(height: 0.05 * Responsive.getHeight(context)),
+
+              // Submit Button
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: 50 * Responsive.getResponsive(context),
+                ),
+                child: MyCoButton(
+                  title: 'Submit',
+                  onTap: validation,
+                  backgroundColor: AppTheme.getColor(context).primary,
+                  textStyle: TextStyle(
+                    fontSize: 16 * Responsive.getResponsiveText(context),
+                    color: AppTheme.getColor(context).onPrimary,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  width: double.infinity,
+                  isShadowBottomLeft: true,
+                  boarderRadius: 30,
+                ),
               ),
             ],
           ),
-
-          SizedBox(height: 12 * Responsive.getResponsive(context)),
-
-          //Remark
-          CustomText(
-            'Remark',
-            isKey: true,
-            color: AppTheme.getColor(context).onSurfaceVariant,
-            fontSize: 14 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.w700,
-          ),
-          SizedBox(height: 8 * Responsive.getResponsive(context)),
-          BigMyCoTextField(
-            controller: remarkController,
-            hintText: 'Type here',
-            prefixImage: SvgPicture.asset(AppAssets.msgedit),
-            maxLines: 5,
-            height: 120 * Responsive.getResponsive(context),
-            textInputType: TextInputType.multiline,
-            validator: (v) => validateRequired(v, 'Remark'),
-            hintStyle: TextStyle(
-              color: AppTheme.getColor(context).outline,
-              fontSize: 14 * Responsive.getResponsiveText(context),
-              fontWeight: FontWeight.w600,
-            ),
-            style: TextStyle(
-              fontSize: 16 * Responsive.getResponsiveText(context),
-              color: AppTheme.getColor(context).primary,
-            ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                12 * Responsive.getResponsive(context),
-              ),
-            ),
-          ),
-
-          SizedBox(height: 0.050 * Responsive.getHeight(context)),
-
-          //Submit Button
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: 50 * Responsive.getResponsive(context),
-            ),
-            child: MyCoButton(
-              title: 'Submit',
-              onTap: () {},
-              backgroundColor: AppTheme.getColor(context).primary,
-              textStyle: TextStyle(
-                fontSize: 16 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).onPrimary,
-                fontWeight: FontWeight.w500,
-              ),
-              width: double.infinity,
-              isShadowBottomLeft: true,
-              boarderRadius: 30,
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-
-  //for label text feild
-  Widget buildLabeledField(
-    BuildContext context, {
-    required String label,
-    String hint = 'Type here',
-    required TextEditingController controller,
-    String? icon,
-    String? Function(String?)? validator,
-  }) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      LabeledTextField(
-        label: label,
-        hint: hint,
-        hintTextStyle: TextStyle(
-          color: AppTheme.getColor(context).outline,
-          fontSize: 14 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.w600,
         ),
-        controller: controller,
-        widthFactor: Responsive.getWidth(context),
-        textInputType: TextInputType.text,
-        textAlignment: TextAlign.start,
-        prefix: icon != null
-            ? SvgPicture.asset(icon, fit: BoxFit.scaleDown)
-            : null,
-        validator: validator,
       ),
-      SizedBox(height: 12 * Responsive.getResponsive(context)),
-    ],
-  );
-
-  String? validateRequired(String? value, String field) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Please enter $field';
-    }
-    return null;
+    );
   }
 }

@@ -1,27 +1,51 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc/bloc.dart';
+import 'package:myco_flutter/features/work_allocation/data/models/request/get_work_category_request.dart';
 import 'package:myco_flutter/features/work_allocation/domain/usecases/work_allocation_use_case.dart';
-
-import 'work_allocation_event.dart';
-import 'work_allocation_state.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_event.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_state.dart';
 
 class WorkAllocationBloc
     extends Bloc<WorkAllocationEvent, WorkAllocationState> {
-  final WorkAllocationUseCase workAllocationUseCase;
-  List<String> _dummyData = [];
+  final WorkAllocationUseCase useCase;
 
-  WorkAllocationBloc({required this.workAllocationUseCase})
-    : super(WorkAllocationInitial()) {
-    on<FetchWorkAllocations>((event, emit) async {
-      emit(WorkAllocationLoading());
-      await Future.delayed(const Duration(seconds: 1)); // simulate loading
-      emit(WorkAllocationLoaded(_dummyData));
-    });
+  WorkAllocationBloc({required this.useCase}) : super(WorkAllocationInitial()) {
+    on<FetchWorkCategoryList>(_onFetchWorkCategoryList);
+    on<AddWorkAllocationEvent>(_onAddWorkAllocation);
+  }
 
-    on<AddWorkAllocation>((event, emit) async {
-      emit(WorkAllocationLoading());
-      await Future.delayed(const Duration(milliseconds: 500)); // simulate post
-      _dummyData.add("${event.title} - ${event.description}");
-      emit(WorkAllocationLoaded(_dummyData));
-    });
+  Future<void> _onFetchWorkCategoryList(
+    FetchWorkCategoryList event,
+    Emitter<WorkAllocationState> emit,
+  ) async {
+    emit(WorkAllocationLoading());
+
+    final request = GetWorkCategoryRequest(
+      companyId: event.companyId,
+      getWorkCategory: event.getWorkCategory,
+      languageId: event.languageId,
+    );
+
+    final result = await useCase.getWorkCategoryList(request);
+
+    result.fold(
+      (failure) => emit(WorkAllocationError(failure.message)),
+      (response) => emit(WorkCategoryListLoaded(response.workCategory ?? [])),
+    );
+  }
+
+  Future<void> _onAddWorkAllocation(
+    AddWorkAllocationEvent event,
+    Emitter<WorkAllocationState> emit,
+  ) async {
+    emit(WorkAllocationLoading());
+
+    final result = await useCase.addWorkAllocation(event.request);
+
+    result.fold(
+      (failure) => emit(WorkAllocationError(failure.message)),
+      (response) => emit(
+        WorkAllocationSuccess(response.message ?? 'Work Assigned Successfully'),
+      ),
+    );
   }
 }

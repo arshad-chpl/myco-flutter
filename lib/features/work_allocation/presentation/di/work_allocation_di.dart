@@ -7,7 +7,7 @@ import 'package:myco_flutter/features/work_allocation/domain/usecases/work_alloc
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_bloc.dart';
 
 Future<void> setUpWorkAllocationDI(GetIt sl) async {
-  sl.registerFactory(() => WorkAllocationBloc(workAllocationUseCase: sl()));
+  sl.registerFactory(() => WorkAllocationBloc(useCase: sl()));
 
   sl.registerLazySingleton(() => WorkAllocationUseCase(repository: sl()));
 
