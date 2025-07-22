@@ -46,21 +46,21 @@ class CompanyInfoPage extends StatelessWidget {
                       logoUrl != null && logoUrl.isNotEmpty
                           ? Image.network(
                               logoUrl,
-                              height: 0.25 * Responsive.getHeight(context),
+                              height: 0.24 * Responsive.getHeight(context),
                               width: double.infinity,
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) =>
                                   Image.asset(
                                     'assets/sign_in/myco_logo.png',
                                     height:
-                                        0.25 * Responsive.getHeight(context),
+                                        0.24 * Responsive.getHeight(context),
                                     width: double.infinity,
                                     fit: BoxFit.cover,
                                   ),
                             )
                           : Image.asset(
                               'assets/sign_in/myco_logo.png',
-                              height: 0.25 * Responsive.getHeight(context),
+                              height: 0.24 * Responsive.getHeight(context),
                               width: double.infinity,
                               fit: BoxFit.cover,
                             ),
@@ -90,7 +90,7 @@ class CompanyInfoPage extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
-                      vertical: 5,
+                      vertical: 10,
                     ),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -153,7 +153,7 @@ class CompanyInfoPage extends StatelessWidget {
                           company.companyAddress ?? 'No address available',
                           style: TextStyle(
                             fontSize:
-                                18 * Responsive.getResponsiveText(context),
+                                16 * Responsive.getResponsiveText(context),
                             fontWeight: FontWeight.normal,
                           ),
                         ),
@@ -169,8 +169,8 @@ class CompanyInfoPage extends StatelessWidget {
                       "Company's Authorities",
                       style: TextStyle(
                         color: AppTheme.getColor(context).primary,
-                        fontSize: 20 * Responsive.getResponsiveText(context),
-                        fontWeight: FontWeight.bold,
+                        fontSize: 22 * Responsive.getResponsiveText(context),
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
