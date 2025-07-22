@@ -18,7 +18,7 @@ List<RouteBase> WorkAllocationRoutes = [
     routes: [
       GoRoute(
         path: RoutePaths.workAllocation,
-        name: 'workAllocation',
+        name: 'work_allocation',
         builder: (context, state) => const WorkAllocationPage(),
       ),
       GoRoute(

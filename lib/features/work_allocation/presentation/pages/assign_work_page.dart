@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -38,7 +39,7 @@ class AssignWorkPage extends StatelessWidget {
     appBar: const CustomAppbar(title: 'Assign Work'),
     body: SingleChildScrollView(
       padding: EdgeInsets.symmetric(
-        horizontal: 16 * Responsive.getResponsive(context),
+        horizontal: VariableBag.screenHorizontalPadding * Responsive.getResponsive(context),
       ),
       child: Form(
         key: _formKey,
@@ -56,8 +57,8 @@ class AssignWorkPage extends StatelessWidget {
                       context.read<WorkAllocationBloc>().add(
                         FetchWorkCategoryList(
                           getWorkCategory: 'getWorkCategory',
-                          companyId: companyId ?? '0',
-                          languageId: languageId ?? '1',
+                          companyId: companyId!,
+                          languageId: languageId!,
                         ),
                       );
                     });
