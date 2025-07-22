@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/get_common_row.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/get_common_row.dart' hide getCommonRow;
 import 'package:myco_flutter/widgets/custom_table.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/get_common_row.dart';
 
 class ViewVisitDetailsPage extends StatelessWidget {
   const ViewVisitDetailsPage({super.key});
@@ -18,305 +20,372 @@ class ViewVisitDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      leading: IconButton(
-        onPressed: () {},
-        icon: SvgPicture.asset('assets/visit_svgs/arrow.svg'),
-      ),
-      title: 'Visit Details',
+      leading: BackButton(),
+      title: LanguageManager().get('visit_details'),
     ),
-    body: Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 0.055 * Responsive.getWidth(context),
-      ),
-      child: SingleChildScrollView(
-        child: CommonCard(
-          showBlackShadowInChild: true,
-          headerColor: AppTheme.getColor(context).primary,
-          title: 'Mahakali Tractor',
-          subTitleIcon: SvgPicture.asset('assets/visit_svgs/calendar.svg'),
-          subTitle: '01st April 2025 (09:45am) to 01st April 2025(12:48pm)',
+    body: SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: VariableBag.commonCardHorizontalPadding,
+              vertical: VariableBag.commonCardVerticalPadding,
+            ),
+            child: SingleChildScrollView(
+              child: CommonCard(
+                borderRadius: VariableBag.commonCardBorderRadius,
+                showBlackShadowInChild: true,
+                headerColor: AppTheme.getColor(context).primary,
+                title: 'Mahakali Tractor',
+                subTitleIcon: SvgPicture.asset(AppAssets.calendar),
+                subTitle:
+                '01st April 2025 (09:45am) to 01st April 2025(12:48pm)',
 
-          bottomWidget: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 0.01 * Responsive.getWidth(context),
-                    vertical: 0.001 * Responsive.getHeight(context),
+                bottomWidget: Padding(
+                  padding: EdgeInsets.all(
+                    12 * Responsive.getResponsive(context),
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      getCommonRow(
-                        context,
-                        title: 'Contact Person name',
-                        value: 'Jashvant Jatoliya',
-                        onTap: () {},
-                      ),
-                      getCommonRow(
-                        context,
-                        title: 'Contact Person number',
-                        valueWidget: RichText(
-                          text: TextSpan(
-                            text: '+91 ',
-                            style: TextStyle(
-                              color: AppTheme.getColor(context).primary,
-                              fontSize:
-                                  12 * Responsive.getResponsiveText(context),
-                            ),
-                            children: [
-                              TextSpan(
-                                text: '9356326355',
-                                style: TextStyle(
-                                  color: AppTheme.getColor(context).onSurface,
-                                  fontSize:
-                                      12 *
-                                      Responsive.getResponsiveText(context),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        onTap: () {},
-                        value: '',
-                      ),
-                      getCommonRow(
-                        context,
-                        title: 'Visit Status',
-                        value: 'Approved',
-                        textColor: AppTheme.getColor(context).secondary,
-                        onTap: () {},
-                      ),
-                      getCommonRow(
-                        context,
-                        title: 'Visit Type',
-                        value: 'Test visit',
-                        onTap: () {},
-                      ),
-                      getCommonRow(
-                        context,
-                        title: 'Visit Purpose',
-                        value: 'Feature check',
-                        onTap: () {},
-                      ),
-                      getCommonRow(
-                        context,
-                        title: 'Address',
-                        valueWidget: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CustomText(
-                              '101, Sarkhej-sanand cross road Makaraba, Ahmedabad, Sarkhej-Gandhinagar Gujarat, 385431, India',
-                              fontSize:
-                                  10 * Responsive.getResponsiveText(context),
-                              fontWeight: FontWeight.w500,
-                            ),
-                            CustomText(
-                              '(you are in range)',
-                              fontSize:
-                                  12 * Responsive.getResponsiveText(context),
-                              color: AppTheme.getColor(context).secondary,
-                            ),
-                          ],
-                        ),
-                        onTap: () {},
-                        value: '',
-                      ),
-                      SizedBox(height: 0.007 * Responsive.getHeight(context)),
-                      Divider(color: AppTheme.getColor(context).primary),
                       Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 0.006 * Responsive.getWidth(context),
-                          vertical: 0.0015 * Responsive.getHeight(context),
+                          horizontal: 0.01 * Responsive.getWidth(context),
+                          vertical: 0.001 * Responsive.getHeight(context),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Column(
                           children: [
-                            Expanded(
-                              child: Column(
+                            getCommonRow(
+                              context,
+                              title: LanguageManager().get(
+                                'contact_person_name',
+                              ),
+                              value: 'Jashvant Jatoliya',
+                              onTap: () {},
+                            ),
+                            getCommonRow(
+                              context,
+                              title: LanguageManager().get(
+                                'contact_person_mobile',
+                              ),
+                              valueWidget: RichText(
+                                text: TextSpan(
+                                  text: '+91 ',
+                                  style: TextStyle(
+                                    color: AppTheme.getColor(context).primary,
+                                    fontSize:
+                                    13 *
+                                        Responsive.getResponsiveText(context),
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: '9356326355',
+                                      style: TextStyle(
+                                        color: AppTheme.getColor(
+                                          context,
+                                        ).onSurface,
+                                        fontSize:
+                                        13 *
+                                            Responsive.getResponsiveText(
+                                              context,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              onTap: () {},
+                              value: '',
+                            ),
+                            getCommonRow(
+                              context,
+                              title: LanguageManager().get('visit_status'),
+                              value: 'Approved',
+                              textColor: AppTheme.getColor(context).secondary,
+                              onTap: () {},
+                            ),
+                            getCommonRow(
+                              context,
+                              title: LanguageManager().get('visit_type'),
+                              value: 'Test visit',
+                              onTap: () {},
+                            ),
+                            getCommonRow(
+                              context,
+                              title: LanguageManager().get('visit_purpose'),
+                              value: 'Feature check',
+                              onTap: () {},
+                            ),
+                            getCommonRow(
+                              context,
+                              title: LanguageManager().get('address'),
+                              valueWidget: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CustomText(
-                                    'Start Visit date & Time',
+                                    '101, Sarkhej-sanand cross road Makaraba, Ahmedabad, Sarkhej-Gandhinagar Gujarat, 385431, India',
                                     fontSize:
-                                        14 *
-                                        Responsive.getResponsiveText(context),
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                  SizedBox(height: 4),
-                                  CustomText(
-                                    '09:45AM, 21st May 2025',
-                                    fontSize:
-                                        14 *
+                                    13 *
                                         Responsive.getResponsiveText(context),
                                     fontWeight: FontWeight.w500,
                                   ),
+                                  CustomText(
+                                    '(you are in range)',
+                                    fontSize:
+                                    13 *
+                                        Responsive.getResponsiveText(context),
+                                    color: AppTheme.getColor(context).secondary,
+                                  ),
                                 ],
                               ),
+                              onTap: () {},
+                              value: '',
                             ),
                             SizedBox(
-                              width: 0.16 * Responsive.getWidth(context),
+                              height: 0.007 * Responsive.getHeight(context),
                             ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomText(
-                                    'End Visit date & Time',
-                                    fontSize:
+                            Divider(color: AppTheme.getColor(context).primary),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      CustomText(
+                                        'visit_start_date_time',
+                                        isKey: true,
+                                        fontSize:
+                                        15 *
+                                            Responsive.getResponsiveText(
+                                              context,
+                                            ),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      SizedBox(height: 4),
+                                      CustomText(
+                                        '09:45AM, 21st May 2025',
+                                        fontSize:
                                         14 *
-                                        Responsive.getResponsiveText(context),
-                                    fontWeight: FontWeight.w700,
+                                            Responsive.getResponsiveText(
+                                              context,
+                                            ),
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(height: 4),
-                                  CustomText(
-                                    '12:45PM, 21st May 2025',
-                                    fontSize:
+                                ),
+                                SizedBox(
+                                  width: 0.16 * Responsive.getWidth(context),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      CustomText(
+                                        'visit_end_date_time',
+                                        isKey: true,
+                                        fontSize:
+                                        15 *
+                                            Responsive.getResponsiveText(
+                                              context,
+                                            ),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      SizedBox(height: 4),
+                                      CustomText(
+                                        '12:45PM, 21st May 2025',
+                                        fontSize:
                                         14 *
-                                        Responsive.getResponsiveText(context),
-                                    fontWeight: FontWeight.w500,
+                                            Responsive.getResponsiveText(
+                                              context,
+                                            ),
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(
+                              height: 0.004 * Responsive.getHeight(context),
+                            ),
+                            Divider(color: AppTheme.getColor(context).primary),
+
+                            getCommonRow(
+                              context,
+                              title: LanguageManager().get('end_visit_remark'),
+                              value: 'sdfsdasgas',
+                              onTap: () {},
+                            ),
+                            getCommonRow(
+                              context,
+                              title: LanguageManager().get('end_visit_area'),
+                              value: 'sdfsdasgas',
+                              onTap: () {},
+                            ),
+                            getCommonRow(
+                              context,
+                              title: LanguageManager().get(
+                                'end_visit_catalogue',
                               ),
+                              value: 'sdfsdasgas',
+                              onTap: () {},
+                            ),
+                            getCommonRow(
+                              context,
+                              title: LanguageManager().get(
+                                'contact_person_number',
+                              ),
+                              valueWidget: RichText(
+                                text: TextSpan(
+                                  text: '+91 ',
+                                  style: TextStyle(
+                                    color: AppTheme.getColor(context).primary,
+                                    fontSize:
+                                    13 *
+                                        Responsive.getResponsiveText(context),
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: '9356326355',
+                                      style: TextStyle(
+                                        color: AppTheme.getColor(
+                                          context,
+                                        ).onSurface,
+                                        fontSize:
+                                        13 *
+                                            Responsive.getResponsiveText(
+                                              context,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              onTap: () {},
+                              value: '',
                             ),
                           ],
                         ),
                       ),
-
-                      SizedBox(height: 0.004 * Responsive.getHeight(context)),
-                      Divider(color: AppTheme.getColor(context).primary),
-
-                      getCommonRow(
-                        context,
-                        title: 'End Visit Remark',
-                        value: 'sdfsdasgas',
-                        onTap: () {},
-                      ),
-                      getCommonRow(
-                        context,
-                        title: 'End Visit Area',
-                        value: 'sdfsdasgas',
-                        onTap: () {},
-                      ),
-                      getCommonRow(
-                        context,
-                        title: 'End Visit Catalogue',
-                        value: 'sdfsdasgas',
-                        onTap: () {},
-                      ),
-                      getCommonRow(
-                        context,
-                        title: 'Contact Person number',
-                        valueWidget: RichText(
-                          text: TextSpan(
-                            text: '+91 ',
-                            style: TextStyle(
-                              color: AppTheme.getColor(context).primary,
-                              fontSize:
-                                  12 * Responsive.getResponsiveText(context),
-                            ),
-                            children: [
-                              TextSpan(
-                                text: '9356326355',
-                                style: TextStyle(
-                                  color: AppTheme.getColor(context).onSurface,
-                                  fontSize:
-                                      12 *
-                                      Responsive.getResponsiveText(context),
-                                ),
-                              ),
-                            ],
-                          ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 6 * Responsive.getResponsive(context),
                         ),
-                        onTap: () {},
-                        value: '',
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 0.018 * Responsive.getWidth(context),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CustomText(
-                        'Visit With',
-                        fontSize: 14 * Responsive.getResponsiveText(context),
-                        fontWeight: FontWeight.w600,
-                      ),
-                      SizedBox(width: 0.015 * Responsive.getWidth(context)),
-                      CustomText(':'),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 0.016 * Responsive.getWidth(context),
-                  ),
-                  child: Column(
-                    children: [
-                      CustomTableWidget(),
-                      SizedBox(height: 0.020 * Responsive.getHeight(context)),
-                      Row(
-                        children: [
-                          MyCoButton(
-                            onTap: () {},
-                            backgroundColor: AppTheme.getColor(
-                              context,
-                            ).onPrimary,
-                            title: 'Visit Complete',
-                            width: 0.28 * Responsive.getWidth(context),
-                            height: 0.030 * Responsive.getHeight(context),
-                            boarderRadius: 20,
-                            textStyle: TextStyle(
-                              color: AppTheme.getColor(context).secondary,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CustomText(
+                              LanguageManager().get('visit_with'),
+                              fontSize:
+                              17 * Responsive.getResponsiveText(context),
+                              fontWeight: FontWeight.w600,
                             ),
-                            borderColor: AppTheme.getColor(context).secondary,
-                          ),
-                          Spacer(),
-                          CustomText(
-                            'View Attachment',
-                            color: AppTheme.getColor(context).secondary,
-                            fontSize:
-                                12 * Responsive.getResponsiveText(context),
-                            fontWeight: FontWeight.w600,
-                            decoration: TextDecoration.underline,
-                            decorationColor: AppTheme.getColor(
-                              context,
-                            ).secondary,
-                          ),
-                        ],
+                            SizedBox(
+                              width: 0.015 * Responsive.getWidth(context),
+                            ),
+                            CustomText(':'),
+                          ],
+                        ),
                       ),
-                      SizedBox(height: 0.017 * Responsive.getHeight(context)),
-                      Row(
-                        children: [
-                          SvgPicture.asset('assets/visit_svgs/whats.svg'),
-                          SizedBox(width: 0.045 * Responsive.getWidth(context)),
-                          SvgPicture.asset('assets/visit_svgs/share.svg'),
-                          Spacer(),
-                          MyCoButton(
-                            onTap: () {
-                              context.push("/visit_report");
-                            },
-                            title: 'View Report',
-                            isShadowBottomLeft: true,
-                            width: 0.33 * Responsive.getWidth(context),
-                            height: 0.030 * Responsive.getHeight(context),
-                            boarderRadius: 20,
-                          ),
-                        ],
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 7 * Responsive.getResponsive(context),
+                        ),
+                        child: Column(
+                          children: [
+                            CustomTableWidget(
+                              name: 'Yash Soni',
+                              designation: '(UI UX)',
+                            ),
+                            SizedBox(
+                              height: 0.020 * Responsive.getHeight(context),
+                            ),
+                            Row(
+                              children: [
+                                MyCoButton(
+                                  onTap: () {},
+                                  backgroundColor: AppTheme.getColor(
+                                    context,
+                                  ).onPrimary,
+                                  title: LanguageManager().get(
+                                    'visit_complete',
+                                  ),
+                                  width: 0.30 * Responsive.getWidth(context),
+                                  height: 0.033 * Responsive.getHeight(context),
+                                  boarderRadius:
+                                  VariableBag.bottomSheetBorderRadius,
+                                  textStyle: TextStyle(
+                                    color: AppTheme.getColor(context).secondary,
+                                  ),
+                                  borderColor: AppTheme.getColor(
+                                    context,
+                                  ).secondary,
+                                ),
+                                SizedBox(
+                                  width: 0.11 * Responsive.getWidth(context),
+                                ),
+                                CustomText(
+                                  LanguageManager().get('view_attachment'),
+                                  color: AppTheme.getColor(context).secondary,
+                                  fontSize:
+                                  17 *
+                                      Responsive.getResponsiveText(context),
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: AppTheme.getColor(
+                                    context,
+                                  ).secondary,
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(
+                              height: 0.017 * Responsive.getHeight(context),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(AppAssets.whatsapp),
+                                SizedBox(
+                                  width: 0.045 * Responsive.getWidth(context),
+                                ),
+                                SvgPicture.asset(AppAssets.share),
+                                SizedBox(
+                                  width: 0.30 * Responsive.getWidth(context),
+                                ),
+                                MyCoButton(
+                                  onTap: () {
+                                    context.push("/visit_report");
+                                  },
+                                  title: LanguageManager().get('view_report'),
+                                  isShadowBottomLeft: true,
+                                  width: 0.33 * Responsive.getWidth(context),
+                                  height: 0.033 * Responsive.getHeight(context),
+                                  boarderRadius:
+                                  VariableBag.buttonBorderRadius *
+                                      Responsive.getResponsive(context),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 0.020 * Responsive.getHeight(context),
+                            ),
+                          ],
+                        ),
                       ),
-                      SizedBox(height: 0.020 * Responsive.getHeight(context)),
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+          SizedBox(height: 50),
+        ],
       ),
     ),
   );
