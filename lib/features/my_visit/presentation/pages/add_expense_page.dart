@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/remark_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -21,28 +21,6 @@ class AddExpensePage extends StatefulWidget {
 }
 
 class _AddExpensePageState extends State<AddExpensePage> {
-  final List<String> expenseTypes = [
-    'Travel',
-    'Food',
-    'Accommodation',
-    'Office Supplies',
-    'Entertainment',
-    'Miscellaneous',
-    'Fuel',
-    'Internet',
-    'Medical',
-    'Training',
-  ];
-
-  final List<String> siteList = [
-    'Head Office',
-    'Site A - Mumbai',
-    'Site B - Delhi',
-    'Warehouse - Bangalore',
-    'Client Location - Pune',
-    'Remote Site',
-  ];
-
   String? selectedExpenseType;
   String? selectedSiteType;
 
@@ -54,12 +32,16 @@ class _AddExpensePageState extends State<AddExpensePage> {
     appBar: CustomAppbar(title: 'add_expense', isKey: true),
     body: Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: 15.0 * Responsive.getResponsive(context),
+        horizontal:
+            VariableBag.screenHorizontalPadding *
+            Responsive.getResponsive(context),
       ),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 16 * Responsive.getResponsive(context),
+          spacing:
+              VariableBag.formContentSpacingVertical *
+              Responsive.getResponsive(context),
           children: [
             // Text field for entering expense title
             NewTextField(
@@ -144,7 +126,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
                 titleColor: AppTheme.getColor(context).onSurfaceVariant,
                 titleFontSize: 16 * Responsive.getResponsiveText(context),
                 imageTitle: 'select_attachment',
-                containerHeight: 90,
+                containerHeight: 0.115 * Responsive.getHeight(context),
                 multipleImage: 5,
                 imagePath: 'assets/media_picker/gallery-export.png',
                 backgroundColor: AppTheme.getColor(context).surfaceContainer,
@@ -160,23 +142,18 @@ class _AddExpensePageState extends State<AddExpensePage> {
             CustomRadioButton(
               options: const ['yes', 'no'],
               onChanged: (_) {},
-              height: 44,
-              width: 155,
+              height: 0.055 * Responsive.getHeight(context),
               title: 'Is GST Invoice',
             ),
 
             SizedBox(height: 0.09 * Responsive.getHeight(context)),
 
             //submit button
-            // MyCoButton(
-            //   onTap: () {},
-            //   title: 'SUBMIT',
-            //   boarderRadius: 30 * Responsive.getResponsive(context),
-            //   isShadowBottomLeft: true,
-            // ),
             MyCoButton(
               title: 'submit',
-              boarderRadius: 30 * Responsive.getResponsive(context),
+              boarderRadius:
+                  VariableBag.buttonBorderRadius *
+                  Responsive.getResponsive(context),
               isShadowBottomLeft: true,
               onTap: () {
                 showModalBottomSheet(

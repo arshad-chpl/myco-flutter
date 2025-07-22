@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -51,11 +52,11 @@ class _CustomerPageState extends State<CustomerPage> {
             fontSize: 12 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w500,
           ),
-          boarderRadius: 40 * Responsive.getResponsive(context),
+          boarderRadius: VariableBag.buttonBorderRadius * Responsive.getResponsive(context),
           borderColor: AppTheme.getColor(context).secondary,
           isShadowBottomLeft: true,
         ),
-        SizedBox(width: 0.030 * Responsive.getWidth(context)),
+        SizedBox(width:VariableBag.buttonRowSpacing * Responsive.getResponsive(context)),
         MyCoButton(
           title: 'Reset',
           onTap: () {},
@@ -67,7 +68,7 @@ class _CustomerPageState extends State<CustomerPage> {
             fontSize: 12 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w500,
           ),
-          boarderRadius: 40 * Responsive.getResponsive(context),
+          boarderRadius: VariableBag.buttonBorderRadius * Responsive.getResponsive(context),
           isShadowBottomLeft: true,
         ),
         SizedBox(width: 16 * Responsive.getResponsive(context)),
@@ -77,7 +78,7 @@ class _CustomerPageState extends State<CustomerPage> {
     body: SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: 16 * Responsive.getResponsive(context),
+          horizontal: VariableBag.commonCardHorizontalPadding * Responsive.getResponsive(context),
         ),
 
         child: Column(
@@ -86,10 +87,11 @@ class _CustomerPageState extends State<CustomerPage> {
           children: [
             CustomSearchField(controller: searchController, hintText: 'Search'),
 
-            SizedBox(height: 16 * Responsive.getResponsive(context)),
+            SizedBox(height: VariableBag.searchFiledAfterSpace * Responsive.getResponsive(context)),
 
             // Cards
             Column(
+              spacing: VariableBag.commonCardVerticalPadding * Responsive.getResponsive(context),
               children: customerCardList.map((cardType) {
                 Widget card;
 

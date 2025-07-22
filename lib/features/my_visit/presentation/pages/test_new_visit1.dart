@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/widgets/custom_label_textfield.dart';
-import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -19,24 +18,18 @@ class TestNewVisit1 extends StatefulWidget {
 }
 
 class _TestNewVisitState extends State<TestNewVisit1> {
-  final List<String> branchType = [
-    'Head Office',
-    'Mumbai Branch',
-    'Delhi Branch',
-    'Ahmedabad Branch',
-    'Remote Site',
-  ];
-
-  String? selectedBranchType;
-
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
     child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.0 * Responsive.getResponsive(context)),
+      padding: EdgeInsets.symmetric(
+        horizontal: 15.0 * Responsive.getResponsive(context),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
-        spacing: 16 * Responsive.getResponsive(context),
+        spacing:
+            VariableBag.formContentSpacingVertical *
+            Responsive.getResponsive(context),
         children: [
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
@@ -57,7 +50,7 @@ class _TestNewVisitState extends State<TestNewVisit1> {
           NewTextField(
             label: 'branch',
             hintText: LanguageManager().get('select'),
-            prefixIconPath:  AppAssets.assetData,
+            prefixIconPath: AppAssets.assetData,
             suffixIconPath: AppAssets.downArrow,
           ),
 
@@ -67,7 +60,7 @@ class _TestNewVisitState extends State<TestNewVisit1> {
             titleColor: AppTheme.getColor(context).onSurfaceVariant,
             titleFontSize: 16 * Responsive.getResponsiveText(context),
             imageTitle: 'Select Media',
-            containerHeight: 90,
+            containerHeight: 0.115 * Responsive.getHeight(context),
             multipleImage: 5,
             imagePath: 'assets/media_picker/gallery-export.png',
             backgroundColor: AppTheme.getColor(context).surfaceContainer,
@@ -78,7 +71,7 @@ class _TestNewVisitState extends State<TestNewVisit1> {
             imageTitleSize: 14 * Responsive.getResponsiveText(context),
             imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
           ),
-          
+
           // Text field for "Today's Work"
           NewTextField(
             label: 'Today Work',
@@ -88,7 +81,9 @@ class _TestNewVisitState extends State<TestNewVisit1> {
           SizedBox(height: 0.04 * Responsive.getHeight(context)),
           //submit button
           MyCoButton(
-            boarderRadius: 30 * Responsive.getResponsive(context),
+            boarderRadius:
+                VariableBag.buttonBorderRadius *
+                Responsive.getResponsive(context),
             isShadowBottomLeft: true,
             onTap: () {},
             title: 'SUBMIT',

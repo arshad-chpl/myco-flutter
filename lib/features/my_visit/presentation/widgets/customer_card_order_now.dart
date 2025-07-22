@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
@@ -12,6 +13,7 @@ class CustomerCardOrderNow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => CommonCard(
+    borderRadius: VariableBag.commonCardBorderRadius * Responsive.getResponsive(context),
       title: 'Ganesh Auto Garage (RT4982)',
       onTap: onTap,
     suffixIcon: Container(
@@ -19,7 +21,7 @@ class CustomerCardOrderNow extends StatelessWidget {
       width: 110 * Responsive.getResponsiveText(context),
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(VariableBag.buttonBorderRadius * Responsive.getResponsive(context)),
         border: Border.all(
           color: AppTheme.getColor(context).onPrimary,
           width:  0.003 * Responsive.getWidth(context),

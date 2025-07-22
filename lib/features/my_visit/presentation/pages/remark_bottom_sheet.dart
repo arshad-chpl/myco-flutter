@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -27,47 +28,20 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
   String? selectedVisitDate;
   bool autoStartVisit = false;
 
-  final List<String> visitTimes = [
-    '08:00 AM',
-    '09:00 AM',
-    '10:00 AM',
-    '11:00 AM',
-    '12:00 PM',
-    '01:00 PM',
-    '02:00 PM',
-    '03:00 PM',
-    '04:00 PM',
-    '05:00 PM',
-    '06:00 PM',
-  ];
-
-  final List<String> visitDates = [
-    '09 Jul 2025',
-    '10 Jul 2025',
-    '11 Jul 2025',
-    '12 Jul 2025',
-    '13 Jul 2025',
-    '14 Jul 2025',
-    '15 Jul 2025',
-    '16 Jul 2025',
-    '17 Jul 2025',
-    '18 Jul 2025',
-    '19 Jul 2025',
-    '20 Jul 2025',
-    '21 Jul 2025',
-    '22 Jul 2025',
-  ];
-
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
     child: Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: 15 * Responsive.getResponsive(context),
+        horizontal:
+            VariableBag.screenHorizontalPadding *
+            Responsive.getResponsive(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
-        spacing: 16 * Responsive.getResponsive(context),
+        spacing:
+            VariableBag.formContentSpacingVertical *
+            Responsive.getResponsive(context),
         children: [
           SizedBox(height: 0.03 * Responsive.getHeight(context)),
 
@@ -90,14 +64,17 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
                 ),
               ),
 
-              SizedBox(width: 12), // spacing between dropdowns
+              SizedBox(
+                width:
+                    VariableBag.textFieldRowGap *
+                    Responsive.getResponsive(context),
+              ), // spacing between dropdowns
               Expanded(
                 child: NewTextField(
                   label: 'Follow Up Visit Date',
                   hintText: LanguageManager().get('select'),
                   prefixIconPath: AppAssets.assetNoteFavorite,
                   suffixIconPath: AppAssets.downArrow,
-
                 ),
               ),
             ],
@@ -136,7 +113,7 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
             titleColor: AppTheme.getColor(context).onSurfaceVariant,
             titleFontSize: 16 * Responsive.getResponsiveText(context),
             imageTitle: 'select_attachment',
-            containerHeight: 90,
+            containerHeight: 0.115 * Responsive.getHeight(context),
             multipleImage: 5,
             imagePath: 'assets/media_picker/gallery-export.png',
             backgroundColor: AppTheme.getColor(context).surfaceContainer,
@@ -180,11 +157,15 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
                 ),
                 backgroundColor: Colors.transparent,
                 boarderRadius: 30,
-                width: 0.44 * Responsive.getWidth(context),
+                width: 0.41 * Responsive.getWidth(context),
                 height: 0.06 * Responsive.getHeight(context),
                 borderColor: AppTheme.getColor(context).primary,
               ),
-             Spacer(),
+              SizedBox(
+                width:
+                    VariableBag.buttonRowSpacing *
+                    Responsive.getResponsive(context),
+              ),
               MyCoButton(
                 onTap: () {
                   showModalBottomSheet(
@@ -207,14 +188,14 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
                 ),
                 backgroundColor: AppTheme.getColor(context).primary,
                 boarderRadius: 30 * Responsive.getResponsive(context),
-                width: 0.44 * Responsive.getWidth(context),
+                width: 0.41 * Responsive.getWidth(context),
                 height: 0.06 * Responsive.getHeight(context),
                 wantBorder: false,
                 isShadowBottomLeft: true,
               ),
             ],
           ),
-          SizedBox(height: 49),
+          SizedBox(height: 0.049 * Responsive.getHeight(context)),
         ],
       ),
     ),

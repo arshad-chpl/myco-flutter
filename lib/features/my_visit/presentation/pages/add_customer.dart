@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -44,11 +45,11 @@ class _AddCustomerState extends State<AddCustomer> {
     appBar: const CustomAppbar(title: 'add_customer', isKey: true),
     body: SingleChildScrollView(
       padding: EdgeInsets.symmetric(
-        horizontal: 15.0 * Responsive.getResponsive(context),
+        horizontal: VariableBag.screenHorizontalPadding * Responsive.getResponsive(context),
       ),
 
       child: Column(
-        spacing: 16 * Responsive.getResponsive(context),
+        spacing: VariableBag.formContentSpacingVertical * Responsive.getResponsive(context),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /// Customer Company Name
@@ -276,7 +277,7 @@ class _AddCustomerState extends State<AddCustomer> {
             titleColor: AppTheme.getColor(context).onSurfaceVariant,
             titleFontSize: 14 * Responsive.getResponsiveText(context),
             imageTitle: 'select_media',
-            containerHeight: 100,
+            containerHeight:  0.125 * Responsive.getHeight(context),
             multipleImage: 5,
             imagePath: 'assets/media_picker/gallery-export.png',
             backgroundColor: AppTheme.getColor(context).surfaceContainer,
@@ -296,7 +297,7 @@ class _AddCustomerState extends State<AddCustomer> {
             onTap: () {},
             title: LanguageManager().get('submit'),
             isShadowBottomLeft: true,
-            boarderRadius: 50 * Responsive.getResponsive(context),
+            boarderRadius: VariableBag.buttonBorderRadius  * Responsive.getResponsive(context),
             textStyle: TextStyle(
               fontSize: 20 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
