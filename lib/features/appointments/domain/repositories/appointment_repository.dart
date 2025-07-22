@@ -19,7 +19,7 @@ abstract class AppointmentRepository {
     RejectAppointmentRequestModel request,
   );
 
-  Future<Either<Failure, CommonResponseModelEntity>> getMyAppointment(
+  Future<Either<Failure, AppointmentEntityModel>> getMyAppointment(
     GetMyAppointmentsRequestModel request,
   );
 

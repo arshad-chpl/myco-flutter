@@ -17,7 +17,7 @@ abstract class AppointmentRemoteDataSource {
     RejectAppointmentRequestModel request,
   );
 
-  Future<CommonResponseModel> getMyAppointments(
+  Future<AppointmentResponseModel> getMyAppointments(
     GetMyAppointmentsRequestModel getMyAppointmentRequest,
   );
 
