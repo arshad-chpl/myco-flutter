@@ -126,7 +126,7 @@ class RoutePaths {
   static const String startNewChat = '/start-chat';
   static const String groupInfo = '/group-info';
 
-  //maulik
+  // --- Asset Routes ---
   static const String assetsDetails = '/assets-details';
   static const String addAssets = '/add-assets';
   static const String editAssets = '/edit-assets';
