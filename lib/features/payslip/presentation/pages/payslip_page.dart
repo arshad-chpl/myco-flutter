@@ -242,54 +242,54 @@ class PaySlip extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MyCoButton(
-                    onTap: () {
-                      showModalBottomSheet(
-                        constraints: BoxConstraints(
-                          maxHeight: 0.67 * Responsive.getHeight(context),
-                        ),
-                        useSafeArea: true,
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusGeometry.circular(
-                            8 * Responsive.getResponsive(context),
-                          ),
-                        ),
-                        clipBehavior: Clip.hardEdge,
-                        context: context,
-                        builder: (context) => SummaryBottomsheet(
-                          basic: salary.earningsTotal?[0].earningAmount ?? "",
-                          hra: salary.earningsTotal?[1].earningAmount ?? "",
-                          conveyance:
-                              salary.earningsTotal?[2].earningAmount ?? "",
-
-                          grossDeductions:
-                              salary.deductionsTotal?[0].deductionAmount ?? "",
-                          professionalTax:
-                              salary.deductionsTotal?[1].deductionAmount ?? "",
-
-                          totalEarnings: salary.totalEarning ?? "",
-                          leaveEncashment: "",
-                          paidLeaveAllowance: "",
-                          totalEmplotersContributions:
-                              salary
-                                  .employerContributionTotal?[0]
-                                  .employerContributionAmount ??
-                              "",
-                        ),
-                      );
-                    },
-                    title: 'View Summary',
-                    width: 0.4 * Responsive.getWidth(context),
-                    height: 0.04 * Responsive.getHeight(context),
-                    boarderRadius: 30 * Responsive.getResponsive(context),
-                    textStyle: TextStyle(
-                      fontSize: 14 * Responsive.getResponsiveText(context),
-                      fontWeight: FontWeight.w600,
-                      color: AppTheme.getColor(context).onPrimary,
-                    ),
-                    isShadowBottomLeft: true,
-                  ),
+                  // MyCoButton(
+                  //   onTap: () {
+                  //     showModalBottomSheet(
+                  //       constraints: BoxConstraints(
+                  //         maxHeight: 0.67 * Responsive.getHeight(context),
+                  //       ),
+                  //       useSafeArea: true,
+                  //       isScrollControlled: true,
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadiusGeometry.circular(
+                  //           8 * Responsive.getResponsive(context),
+                  //         ),
+                  //       ),
+                  //       clipBehavior: Clip.hardEdge,
+                  //       context: context,
+                  //       builder: (context) => SummaryBottomsheet(
+                  //         basic: salary.earningsTotal?[0].earningAmount ?? "",
+                  //         hra: salary.earningsTotal?[1].earningAmount ?? "",
+                  //         conveyance:
+                  //             salary.earningsTotal?[2].earningAmount ?? "",
+                  //
+                  //         grossDeductions:
+                  //             salary.deductionsTotal?[0].deductionAmount ?? "",
+                  //         professionalTax:
+                  //             salary.deductionsTotal?[1].deductionAmount ?? "",
+                  //
+                  //         totalEarnings: salary.totalEarning ?? "",
+                  //         leaveEncashment: "",
+                  //         paidLeaveAllowance: "",
+                  //         totalEmplotersContributions:
+                  //             salary
+                  //                 .employerContributionTotal?[0]
+                  //                 .employerContributionAmount ??
+                  //             "",
+                  //       ),
+                  //     );
+                  //   },
+                  //   title: 'View Summary',
+                  //   width: 0.4 * Responsive.getWidth(context),
+                  //   height: 0.04 * Responsive.getHeight(context),
+                  //   boarderRadius: 30 * Responsive.getResponsive(context),
+                  //   textStyle: TextStyle(
+                  //     fontSize: 14 * Responsive.getResponsiveText(context),
+                  //     fontWeight: FontWeight.w600,
+                  //     color: AppTheme.getColor(context).onPrimary,
+                  //   ),
+                  //   isShadowBottomLeft: true,
+                  // ),
                   InkWell(
                     onTap: () {
                       // Download with
