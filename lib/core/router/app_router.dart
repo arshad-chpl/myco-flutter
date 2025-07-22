@@ -62,7 +62,6 @@ import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc
 import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit.dart';
 
-
 import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
@@ -451,8 +450,7 @@ class AppRouter {
         builder: (context, state) => const SwapAssetsPage(),
       ),
 
-      ...AppointmentsRoutes
-
+      ...AppointmentsRoutes,
 
       // Add all modular routes here
       // ...authRoutes,
