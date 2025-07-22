@@ -300,17 +300,16 @@ class _VisitPageState extends State<MyVisitPage> {
                     buildAutoExpenseCard: buildAutoExpenseCard(context),
                   )
                 //other emp visit tab
-                :buildOtherEmployeeVisitTab(
-              context,
-              MediaQuery.of(context).size,
-              searchController: searchController,
-              searchFocus: searchFocus,
-              formattedDate: formattedDate,
-              goToPreviousDate: goToPreviousDate,
-              goToNextDate: goToNextDate,
-              selectDateFromPicker: selectDateFromPicker,
-            ),
-
+                : buildOtherEmployeeVisitTab(
+                    context,
+                    MediaQuery.of(context).size,
+                    searchController: searchController,
+                    searchFocus: searchFocus,
+                    formattedDate: formattedDate,
+                    goToPreviousDate: goToPreviousDate,
+                    goToNextDate: goToNextDate,
+                    selectDateFromPicker: selectDateFromPicker,
+                  ),
           ),
         ],
       ),

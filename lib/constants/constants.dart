@@ -85,14 +85,13 @@ class VariableBag {
   static const String ADMIN_VIEW_MENU_ACHIEVEMENTS = '66';
   static const String ADMIN_VIEW_MENU_EMPLOYEES_FACE = '69';
 
-
   // const variables of pages
-  static const formContentSpacingVertical = 20 ;
+  static const formContentSpacingVertical = 20;
   static const screenHorizontalPadding = 26.0;
   static const textFieldRowGap = 20;
   static const buttonBorderRadius = 30.0;
   static const bottomSheetBorderRadius = 30.0;
-  static const bottomSheetLeftPadding  = 26.0;
+  static const bottomSheetLeftPadding = 26.0;
   static const bottomSheetRightPadding = 26.0;
   static const bottomSheetTopPadding = 20.0;
   static const bottomSheetBottomPadding = 20.0;
