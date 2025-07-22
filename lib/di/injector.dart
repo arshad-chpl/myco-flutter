@@ -13,6 +13,8 @@ import 'package:myco_flutter/features/language_selector/presentation/di/language
 import 'package:myco_flutter/features/leave/presentation/di/leave_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
+import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
+import 'package:myco_flutter/features/payslip/presentation/di/payslip_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
 
 final sl = GetIt.instance;
@@ -30,9 +32,6 @@ Future<void> init() async {
 
   //========Splash=========
   splashDi(sl);
-
-  //========Language Selector=========
-  setupLanguageDI(sl);
 
   //========Login=========
   await setupLoginDi(sl);
@@ -58,9 +57,6 @@ Future<void> init() async {
   //========VISIT WITH=========
   visitWithDi(sl);
 
-  // ========Admin View=========
-  adminViewDi(sl);
-
   //========Company Info=========
   setupCompanyInfoDi(sl);
 
@@ -69,4 +65,7 @@ Future<void> init() async {
 
   //Leave
   setUpLeaveDI(sl);
+
+  //========Payslip=========
+  initPayslipFeatureDI(sl);
 }

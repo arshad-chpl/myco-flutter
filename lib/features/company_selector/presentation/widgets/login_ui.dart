@@ -91,7 +91,7 @@ class LoginUi extends StatelessWidget {
                     CustomText(
                       'Sign in',
                       fontSize: 30 * Responsive.getResponsiveText(context),
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w900,
                     ),
                     CustomText(
                       'Welcome to ${selectedCompany?.societyName ?? "Your Company"}',
