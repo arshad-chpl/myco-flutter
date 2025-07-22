@@ -130,7 +130,6 @@ class OtpVerificationUi extends StatelessWidget {
         ),
         width: Responsive.getWidth(context),
         decoration: BoxDecoration(
-          color: AppTheme.getColor(context).onPrimary,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(40 * Responsive.getResponsive(context)),
           ),

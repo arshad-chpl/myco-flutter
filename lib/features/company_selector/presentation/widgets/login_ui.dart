@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
@@ -50,7 +51,6 @@ class LoginUi extends StatelessWidget {
     return Container(
       width: Responsive.getWidth(context),
       decoration: BoxDecoration(
-        color: AppTheme.getColor(context).onPrimary,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(40 * Responsive.getResponsive(context)),
           topRight: Radius.circular(40 * Responsive.getResponsive(context)),
@@ -73,6 +73,7 @@ class LoginUi extends StatelessWidget {
                       'assets/sign_in/back_arrow.png',
                       height: 0.015 * Responsive.getHeight(context),
                       fit: BoxFit.cover,
+                      color: AppTheme.getColor(context).surfaceBright,
                     ),
                     SizedBox(width: 0.05 * Responsive.getWidth(context)),
                     CustomText(
@@ -122,16 +123,22 @@ class LoginUi extends StatelessWidget {
                     final String text = isEmailLogin
                         ? 'Please enter your Email Address'
                         : 'Please enter your Phone Number';
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(text)));
                     return;
                   }
 
                   // Email format validation
                   if (isEmailLogin) {
-                    final emailRegex = RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+                    final emailRegex = RegExp(
+                      r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",
+                    );
                     if (!emailRegex.hasMatch(contactInfo)) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please enter a valid Email Address')),
+                        const SnackBar(
+                          content: Text('Please enter a valid Email Address'),
+                        ),
                       );
                       return;
                     }
@@ -139,12 +146,9 @@ class LoginUi extends StatelessWidget {
 
                   // Terms and Conditions check
                   if (!isChecked) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
+                    Fluttertoast.showToast(
+                      msg:
                           'Please agree to the terms and conditions to continue.',
-                        ),
-                      ),
                     );
                     return;
                   }
@@ -233,7 +237,7 @@ class LoginUi extends StatelessWidget {
     spacing: 10 * Responsive.getResponsive(context),
     decoration: BoxDecoration(
       border: Border.all(color: AppTheme.getColor(context).primary),
-      color: AppColors.white,
+      color: AppTheme.getColor(context).surfaceBright,
       borderRadius: BorderRadius.circular(
         40 * Responsive.getResponsive(context),
       ),
@@ -315,22 +319,22 @@ class _EmailInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => NewTextField(
-      label: 'Email Id',
-      hintText: 'Please Enter Email Id',
-      controller: emailController,
-      keyboardType: TextInputType.emailAddress,
-      isRequired: true,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter your Email Address';
-        }
-        final emailRegex = RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
-        if (!emailRegex.hasMatch(value)) {
-          return 'Please enter a valid Email Address';
-        }
-        return null;
-      },
-    );
+    label: 'Email Id',
+    hintText: 'Please Enter Email Id',
+    controller: emailController,
+    keyboardType: TextInputType.emailAddress,
+    isRequired: true,
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return 'Please enter your Email Address';
+      }
+      final emailRegex = RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+      if (!emailRegex.hasMatch(value)) {
+        return 'Please enter a valid Email Address';
+      }
+      return null;
+    },
+  );
 }
 
 class _PhoneInput extends StatelessWidget {
