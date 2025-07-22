@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/leave/domain/entities/leave_history_response_entity.dart';
+import 'package:myco_flutter/features/leave/domain/entities'
+    '/leave_history_response_entity.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
+import 'package:myco_flutter/features/leave/presentation/widgets/assign_leave_months.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_encashment_form.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_expandable_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_filter_bottom_sheet.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_summary_collapsed_chips.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_summary_expanded_rows.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_summary_grid.dart';
-import 'package:myco_flutter/features/leave/presentation/widgets/show_comp_off_leave_item.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 import 'package:shimmer/shimmer.dart';
+
+// Assuming LeaveSummaryItem and LeaveRowData classes are defined
 
 class MyLeaveBalanceScreen extends StatefulWidget {
   const MyLeaveBalanceScreen({super.key});
@@ -30,28 +32,35 @@ class MyLeaveBalanceScreen extends StatefulWidget {
 class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
   late String selectedValue;
   late List<String> yearOptions;
+  List<MonthData> monthList = [
+    MonthData(name: 'January', value: 1),
+    MonthData(name: 'February', value: 2),
+    MonthData(name: 'March', value: 3),
+    MonthData(name: 'April', value: 4),
+    MonthData(name: 'May', value: 5),
+    MonthData(name: 'June', value: 6),
+    MonthData(name: 'July', value: 7),
+    MonthData(name: 'August', value: 8),
+    MonthData(name: 'September', value: 9),
+    MonthData(name: 'October', value: 10),
+    MonthData(name: 'November', value: 11),
+    MonthData(name: 'December', value: 12),
+  ];
 
   @override
   void initState() {
     super.initState();
     final currentYear = DateTime.now().year;
+    // Set the selectedValue to the current year
     selectedValue = currentYear.toString();
+    // Generate year options: current year - 1, current year, current year + 1
     yearOptions = [
       (currentYear - 1).toString(),
       currentYear.toString(),
       (currentYear + 1).toString(),
     ];
-    _fetchLeaveList(); // Initial API call
-  }
-
-  // Function to fetch leave list by year
-  void _fetchLeaveList() {
+    // Dispatch the event to fetch leave types when the screen is initialized
     context.read<LeaveBloc>().add(FetchNewLeaveListType(selectedValue));
-  }
-
-  // Function to fetch comp-off leaves
-  void _fetchCompOffLeaves(String startDate, String endDate) {
-    context.read<LeaveBloc>().add(FetchCompOffLeaves(startDate, endDate));
   }
 
   @override
@@ -76,7 +85,10 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
               showLeaveFilterBottomSheet(context, selectedValue, (p0) {
                 setState(() {
                   selectedValue = p0;
-                  _fetchLeaveList(); // API call on filter change
+                  // Dispatch event with selected year
+                  context.read<LeaveBloc>().add(
+                    FetchNewLeaveListType(selectedValue),
+                  );
                 });
               }, yearOptions);
             },
@@ -96,42 +108,13 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
         ),
       ],
     ),
-    body: BlocConsumer<LeaveBloc, LeaveState>(
-      listener: (context, state) {
-        if (state is LeaveError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
-        } else if (state is CompOffLeavesFetched) {
-          if (state.compOffLeaveResponseEntity.leaves?.isNotEmpty ?? false) {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-              ),
-              builder: (_) => CompOffLeavesScreen(
-                leaveResponse: state.compOffLeaveResponseEntity,
-              ),
-            );
-          } else {
-            // Show toast for no data and trigger leave list fetch
-            Fluttertoast.showToast(
-              msg: 'No leave data available',
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: Colors.black54,
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
-            _fetchLeaveList(); // Trigger leave list fetch when leaves are empty
-          }
-        }
-      },
+    body: BlocBuilder<LeaveBloc, LeaveState>(
       builder: (context, state) {
         if (state is LeaveLoading) {
           return _buildSkeletonLoader(context);
+          // return const Center(child: CircularProgressIndicator());
         } else if (state is LeaveListTypeFetched) {
+          // Map GetNewListTypeResponse to leaveTypes list
           final leaveTypes = _mapResponseToLeaveTypes(state.newLeaveListType);
           return _buildLeaveList(context, leaveTypes);
         } else if (state is LeaveError) {
@@ -141,56 +124,76 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
               children: [
                 Text(state.message),
                 ElevatedButton(
-                  onPressed: _fetchLeaveList,
+                  onPressed: () => context.read<LeaveBloc>().add(
+                    FetchNewLeaveListType(selectedValue),
+                  ),
                   child: const Text('Retry'),
                 ),
               ],
             ),
           );
-        } else if (state is CompOffLeavesFetched &&
-            (state.compOffLeaveResponseEntity.leaves?.isEmpty ?? true)) {
-          // Handle empty comp-off leaves by triggering fetch and showing a loading state
-          _fetchLeaveList();
-          return _buildSkeletonLoader(context); // Show loader while fetching
         }
         return const Center(child: Text('Please wait...'));
       },
     ),
   );
 
+  // Helper method to map GetNewListTypeResponse to leaveTypes list
   List<Map<String, dynamic>> _mapResponseToLeaveTypes(
-      LeaveHistoryResponseEntity response,
-      ) =>
+    LeaveHistoryResponseEntity response,
+  ) =>
       response.leaveTypes
           ?.map(
             (leave) => {
-          'title': leave.leaveTypeName ?? 'Unknown Leave',
-          'total': leave.userTotalLeave ?? '0',
-          'used': leave.userTotalUsedLeave ?? '0',
-          'remaining': leave.remainingLeave ?? '0',
-          'payout': leave.totalPayout ?? '0',
-          'carryForward': leave.totalCarryForward ?? '0',
-          'headerColor': AppColors.secondary,
-          'leaveData': leave,
-        },
-      )
+              'title': leave.leaveTypeName ?? 'Unknown Leave',
+              'total': leave.userTotalLeave ?? '0',
+              'used': leave.userTotalUsedLeave ?? '0',
+              'remaining': leave.remainingLeave ?? '0',
+              'payout': leave.totalPayout ?? '0',
+              'carryForward': leave.totalCarryForward ?? '0',
+              'headerColor': AppColors.secondary,
+              'leaveData': leave,
+              // Store the full LeaveType object for rows
+            },
+          )
           .toList() ??
-          [];
+      [];
 
+  // Helper method to generate rows for a specific leave type
   List<LeaveRowData> _generateRowsForLeaveType(LeaveTypeEntity leave) {
-    final bool isSpecialLeave = leave.specialLeave == '1';
+    final isSpecialLeave = leave.specialLeave == '1';
     final isLeaveRestricted = leave.leaveRestrictions == true;
     final isApplyLeaveEncashment =
-    (leave.leaveEncashmentOption != null &&
+        (leave.leaveEncashmentOption != null &&
         leave.leaveEncashmentOption == '1' &&
         leave.encashmentAllowed != null &&
         leave.encashmentAllowed != '0');
 
     final hasMonthlyLeaveBalance =
         leave.userMonthlyLeaveBalanceData != null &&
-            leave.userMonthlyLeaveBalanceData!.isNotEmpty;
+        leave.userMonthlyLeaveBalanceData!.isNotEmpty;
 
     return [
+      LeaveRowData(
+        label: 'Assign Leave',
+        value: 'View',
+        isMonthlyData: true,
+        monthlyData: monthList,
+        isVisible: isLeaveRestricted,
+        onTap: () {
+          // Handle view rules click
+        },
+      ),
+      // Available Till Days
+      if (leave.leaveExpireAfterDays != null &&
+          leave.leaveExpireAfterDays!.isNotEmpty)
+        LeaveRowData(
+          label: 'Available Till Days',
+          value: leave.leaveExpireAfterDays!,
+          isVisible: true,
+        ),
+
+      // Encashment Summary - Only shown if not special leave and has encashment data
       if (!isSpecialLeave && leave.encasementSummary != null) ...[
         if (leave.encasementSummary?.totalEncashment != null &&
             leave.encasementSummary!.totalEncashment!.isNotEmpty &&
@@ -217,6 +220,8 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
             isVisible: true,
           ),
       ],
+
+      // Leave Credit Last Date
       if (leave.leaveCreditLastDate != null &&
           leave.leaveCreditLastDate!.isNotEmpty)
         LeaveRowData(
@@ -224,12 +229,14 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
           value: leave.leaveCreditLastDate!,
           isVisible: true,
         ),
-      LeaveRowData(
-        label: 'Applicable Max Leaves In Month',
-        value: leave.applicableLeavesInMonth ?? '0',
-        isVisible: true,
-      ),
+
+      // Regular leave details (hidden for special leaves and when monthly data exists)
       if (!isSpecialLeave && !hasMonthlyLeaveBalance) ...[
+        LeaveRowData(
+          label: 'Applicable Max Leaves In Month',
+          value: leave.applicableLeavesInMonth ?? '0',
+          isVisible: true,
+        ),
         LeaveRowData(
           label: 'Leave Calculation',
           value: leave.leaveCalculation ?? 'N/A',
@@ -271,21 +278,19 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
           isVisible: true,
         ),
       ],
+
+      // Monthly leave balance data
       if (hasMonthlyLeaveBalance)
         LeaveRowData(
           label: 'Monthly Leave Balance',
           value: '',
+          // This would be handled by a separate widget
           isVisible: true,
           isMonthlyData: true,
-          monthlyData: leave.userMonthlyLeaveBalanceData,
+          // monthlyData: leave.userMonthlyLeaveBalanceData!,
         ),
-      if (leave.leaveExpireAfterDays != null &&
-          leave.leaveExpireAfterDays!.isNotEmpty)
-        LeaveRowData(
-          label: 'Available Till Days',
-          value: leave.leaveExpireAfterDays!,
-          isVisible: true,
-        ),
+
+      // Action buttons
       LeaveRowData(
         label: 'View Rules',
         value: 'View',
@@ -299,30 +304,13 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
         value: 'View',
         isVisible: isSpecialLeave,
         onTap: () {
-          if (leave.userTotalUsedLeave?.trim().isNotEmpty ?? false) {
-            final startDate = leave.startDate?.trim().isNotEmpty ?? false
-                ? leave.startDate!
-                : '';
-            final endDate = leave.endDate?.trim().isNotEmpty ?? false
-                ? leave.endDate!
-                : '';
-            _fetchCompOffLeaves(startDate, endDate); // API call for comp-off leaves
-          } else {
-            Fluttertoast.showToast(
-              msg: 'No leave data available',
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: Colors.black54,
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
-          }
+          // Handle view dates click
         },
       ),
       LeaveRowData(
         label: 'Apply for leave encashment',
         value: 'Apply',
-        isVisible: isApplyLeaveEncashment,
+        isVisible: false,
         onTap: () {
           showModalBottomSheet(
             context: context,
@@ -337,6 +325,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
               ),
               child: DraggableScrollableSheet(
                 expand: false,
+                initialChildSize: 0.5,
                 minChildSize: 0.5,
                 maxChildSize: 0.8,
                 builder: (context, scrollController) => SingleChildScrollView(
@@ -349,7 +338,8 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
                         'Comp Off',
                       ],
                       onSave: (selectedLeave, remark) {
-                        Navigator.pop(context);
+                        Navigator.pop(context); // close bottom sheet
+                        print('Selected: $selectedLeave, Remark: $remark');
                       },
                       onCancel: () {
                         Navigator.pop(context);
@@ -366,9 +356,9 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
   }
 
   Widget _buildLeaveList(
-      BuildContext context,
-      List<Map<String, dynamic>> leaveTypes,
-      ) => Padding(
+    BuildContext context,
+    List<Map<String, dynamic>> leaveTypes,
+  ) => Padding(
     padding: const EdgeInsets.all(16.0),
     child: ListView.separated(
       itemCount: leaveTypes.length,
@@ -396,7 +386,8 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
               ),
               LeaveSummaryItem(
                 title: 'Carry Forward',
-                value: leave['carryForward'].toString(),
+                value: leave['carryForward']
+                    .toString(), // Corrected property name
               ),
             ],
           ),
@@ -408,50 +399,60 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
     ),
   );
 
-  Widget _buildSkeletonLoader(BuildContext context) => ListView.separated(
-    padding: const EdgeInsets.all(16.0),
-    itemCount: 6,
-    separatorBuilder: (_, __) => const SizedBox(height: 16),
-    itemBuilder: (context, index) => Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 20,
-              width: 0.4 * Responsive.getWidth(context),
+  Widget _buildSkeletonLoader(BuildContext context) {
+    return ListView.separated(
+      padding: const EdgeInsets.all(16.0),
+      itemCount: 3, // number of skeleton cards
+      separatorBuilder: (_, __) => const SizedBox(height: 16),
+      itemBuilder: (context, index) {
+        return Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
               color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
             ),
-            const SizedBox(height: 12),
-            Row(
-              children: List.generate(
-                3,
-                    (_) => Container(
-                  margin: const EdgeInsets.only(right: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // title
+                Container(
                   height: 20,
-                  width: 80,
+                  width: 0.4 * Responsive.getWidth(context),
                   color: Colors.white,
                 ),
-              ),
+                const SizedBox(height: 12),
+                // chips row
+                Row(
+                  children: List.generate(3, (_) {
+                    return Container(
+                      margin: const EdgeInsets.only(right: 8),
+                      height: 20,
+                      width: 80,
+                      color: Colors.white,
+                    );
+                  }),
+                ),
+                const SizedBox(height: 12),
+                // a few more rows as placeholder
+                Container(
+                  height: 12,
+                  width: double.infinity,
+                  color: Colors.white,
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  height: 12,
+                  width: 0.8 * Responsive.getWidth(context),
+                  color: Colors.white,
+                ),
+              ],
             ),
-            const SizedBox(height: 12),
-            Container(height: 12, width: double.infinity, color: Colors.white),
-            const SizedBox(height: 8),
-            Container(
-              height: 12,
-              width: 0.8 * Responsive.getWidth(context),
-              color: Colors.white,
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
+          ),
+        );
+      },
+    );
+  }
 }

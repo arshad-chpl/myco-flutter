@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/features/leave/presentation/widgets/assign_leave_months.dart';
 
 class LeaveRowData {
   final String label;
@@ -7,7 +8,7 @@ class LeaveRowData {
   final bool isVisible;
   final VoidCallback? onTap;
   final bool isMonthlyData;
-  final Map<String, String>? monthlyData;
+  final List<MonthData>? monthlyData;
 
   LeaveRowData({
     required this.label,
@@ -62,6 +63,8 @@ class LeaveSummaryExpandedRows extends StatelessWidget {
                   ),
                 ),
               );
+            } else if (row.isMonthlyData) {
+              return AssignLeaveMonths(months: row.monthlyData ?? []);
             } else {
               return _dottedRow(row.label, row.value, onTap: row.onTap);
             }

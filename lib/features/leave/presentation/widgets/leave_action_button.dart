@@ -8,9 +8,9 @@ class LeaveActionButton extends StatelessWidget {
   final IconData icon;
 
   const LeaveActionButton({
-    super.key,
     required this.title,
     required this.onTap,
+    super.key,
     this.icon = Icons.work_outline,
   });
 
@@ -32,6 +32,7 @@ class LeaveActionButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset('assets/images/wallet.png', width: width * 0.05),
@@ -52,7 +53,6 @@ class LeaveActionButton extends StatelessWidget {
               size: width * 0.05,
             ),
           ],
-
         ),
       ),
     );

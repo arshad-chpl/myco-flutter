@@ -142,7 +142,7 @@ class _MyCoButtonMobile extends StatelessWidget {
           fontFamily: Util.getFontFamily(fontWeight ?? FontWeight.w500),
         );
 
-    final double radius = boarderRadius ?? MyCoButtonTheme.borderRadius??8;
+    final double radius = boarderRadius ?? MyCoButtonTheme.borderRadius ?? 8;
 
     return InkWell(
       onTap: onTap,
@@ -241,29 +241,52 @@ class _ButtonContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final imageWidget = image ?? const SizedBox();
-    final double gap = spacing ?? 1;
+    final double gap = spacing ?? 4;
 
     List<Widget> children;
 
     if (imagePosition == AxisDirection.left) {
-      children = [imageWidget, SizedBox(width: gap), Text(title, style: style,)];
+      children = [
+        imageWidget,
+        SizedBox(width: gap),
+        Flexible(
+          child: Text(
+            title,
+            style: style,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
+        ),
+      ];
     } else if (imagePosition == AxisDirection.right) {
-      children = [Text(title, style: style), SizedBox(width: gap), imageWidget];
+      children = [
+        Flexible(
+          child: Text(
+            title,
+            style: style,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
+        ),
+        SizedBox(width: gap),
+        imageWidget,
+      ];
     } else if (imagePosition == AxisDirection.up) {
       children = [
         imageWidget,
         SizedBox(height: gap),
-        Text(title, style: style),
+        Text(title, style: style, overflow: TextOverflow.ellipsis, maxLines: 1),
       ];
     } else {
       children = [
-        Text(title, style: style),
+        Text(title, style: style, overflow: TextOverflow.ellipsis, maxLines: 1),
         SizedBox(height: gap),
         imageWidget,
       ];
     }
 
-    return (imagePosition == AxisDirection.left ||
+    final content =
+        (imagePosition == AxisDirection.left ||
             imagePosition == AxisDirection.right)
         ? Row(
             mainAxisSize: MainAxisSize.min,
@@ -275,6 +298,8 @@ class _ButtonContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: children,
           );
+
+    return FittedBox(fit: BoxFit.scaleDown, child: content);
   }
 }
 
