@@ -23,6 +23,7 @@ class _AutoExpenseCardState extends State<AutoExpenseCard> {
 
   @override
   Widget build(BuildContext context) => CommonCard(
+    headerBottomBorderRadius: 12 * Responsive.getResponsive(context),
       title: 'Auto Expense Category',
       headerColor: AppTheme.getColor(context).tertiary,
       borderColor: AppTheme.getColor(context).outline,

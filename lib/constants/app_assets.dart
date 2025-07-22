@@ -135,6 +135,7 @@ class AppAssets {
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
   static const String Search = '$svgsVisit/search.svg';
   static const String Addicon = '$svgsVisit/addicon.svg';
+  static const String DoubleDown_Arrow = '$svgsVisit/dropdown_visit.svg';
 
   //face detection screen assets
   static const String assetCircle = '$visit/circle.png';

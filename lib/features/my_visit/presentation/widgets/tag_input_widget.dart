@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 
-class CustomTagInputField extends StatefulWidget {
+class CustomTagInputField extends StatelessWidget {
   final List<String> tags;
   final String hint;
   final Function(String) onAdd;
   final Function(String) onRemove;
   final Future<void> Function()? onArrowTap;
 
-  const CustomTagInputField({
+   CustomTagInputField({
     required this.tags,
     required this.hint,
     required this.onAdd,
@@ -20,12 +22,8 @@ class CustomTagInputField extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<CustomTagInputField> createState() => _CustomTagInputFieldState();
-}
-
-class _CustomTagInputFieldState extends State<CustomTagInputField> {
   final TextEditingController _controller = TextEditingController();
+
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -55,10 +53,10 @@ class _CustomTagInputFieldState extends State<CustomTagInputField> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ...widget.tags.map(
+                  ...tags.map(
                     (tag) => InkWell(
                       onTap: () {
-                        widget.onRemove(tag);
+                        onRemove(tag);
                       },
                       child: Container(
                         margin: EdgeInsets.only(right: responsive * 6),
@@ -105,8 +103,8 @@ class _CustomTagInputFieldState extends State<CustomTagInputField> {
                         contentPadding: EdgeInsets.symmetric(
                           horizontal: responsive * 6,
                         ),
-                        hintText: widget.tags.isEmpty
-                            ? LanguageManager().get(widget.hint)
+                        hintText: tags.isEmpty
+                            ? LanguageManager().get(hint)
                             : '',
                         hintStyle: TextStyle(
                           color: themeColor.outline,
@@ -114,14 +112,14 @@ class _CustomTagInputFieldState extends State<CustomTagInputField> {
                         ),
                       ),
                       onTap: () async {
-                        if (widget.onArrowTap != null) {
-                          await widget.onArrowTap!();
+                        if (onArrowTap != null) {
+                          await onArrowTap!();
                         }
                       },
-                      onSubmitted: widget.onAdd,
+                      onSubmitted: onAdd,
                       onChanged: (val) {
                         if (val.endsWith(',')) {
-                          widget.onAdd(val.trim().replaceAll(',', ''));
+                          onAdd(val.trim().replaceAll(',', ''));
                           _controller.clear();
                         }
                       },
@@ -135,17 +133,15 @@ class _CustomTagInputFieldState extends State<CustomTagInputField> {
           // Arrow button
           GestureDetector(
             onTap: () async {
-              if (widget.onArrowTap != null) {
-                await widget.onArrowTap!();
+              if (onArrowTap != null) {
+                await onArrowTap!();
               }
             },
             child: Padding(
               padding: EdgeInsets.only(left: responsive * 6),
-              child: Icon(
-                Icons.keyboard_arrow_down,
-                color: AppColors.primary,
-                size: responsiveText * 30,
-              ),
+              child: SvgPicture.asset(AppAssets.arrow_down , color: AppColors.primary,
+                width: 25 * Responsive.getResponsive(context),
+                height: 25 * Responsive.getResponsive(context))
             ),
           ),
         ],

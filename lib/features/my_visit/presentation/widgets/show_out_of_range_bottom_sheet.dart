@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/auto_closed_timer_widgets.dart';
@@ -11,9 +12,11 @@ import 'package:myco_flutter/features/my_visit/presentation/widgets/current_loca
 import 'package:myco_flutter/features/my_visit/presentation/widgets/gps_accuracy_status_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/out_of_range_image_message_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/prev_next_btn_widget.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/show_date_time_widget.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class ShowOutOfRangeBottomSheet extends StatefulWidget {
   final ScrollController? scrollController;
@@ -44,9 +47,9 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const OutOfRangeImageMessageWidget(
+           OutOfRangeImageMessageWidget(
             imagePath: AppAssets.outOfRange,
-            message: 'you_are_out_off_range',
+            message: LanguageManager().get('you_are_out_off_range'),
           ),
           SizedBox(height: 0.01 * Responsive.getHeight(context)),
 
@@ -58,8 +61,8 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
           ),
           SizedBox(height: 0.013 * Responsive.getHeight(context)),
 
-          const GpsAccuracyStatusWidget(
-            accuracyStatus: 'medium',
+           GpsAccuracyStatusWidget(
+            accuracyStatus: LanguageManager().get('medium'),
             accuracyStatusColor: AppColors.spanishYellow,
           ),
           SizedBox(height: 0.013 * Responsive.getHeight(context)),
@@ -73,39 +76,22 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
-          LabeledDropdown(
-            prefix: SvgPicture.asset(AppAssets.result),
-            label: 'Day Type',
-            items: dayType,
-            hintText: 'Select',
-            itemToString: (i) => i.toString(),
-            selectedItem: selectedDayType,
-            onChanged: (value, index) {
-              setState(() {
-                selectedDayType = value;
-              });
-            },
+          NewTextField(
+              prefixIconPath: AppAssets.result,
+              label: LanguageManager().get('day_type'),
+              hintText: LanguageManager().get('select'),
+            suffixIconPath: AppAssets.arrowDown,
+          ),
+
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
+           NewTextField(
+            label: LanguageManager().get('out_of_range_reason'),
+            hintText: LanguageManager().get('write_here'),
+            prefixIconPath: AppAssets.result,
           ),
           SizedBox(height: 0.013 * Responsive.getHeight(context)),
-
-          LabeledTextField(
-            textAlignment: TextAlign.start,
-            label: 'Out of range Reason',
-            hint: 'Write Here',
-            widthFactor: Responsive.getWidth(context),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
-              ),
-            ),
-            prefix: SvgPicture.asset(AppAssets.result, fit: BoxFit.scaleDown),
-          ),
-          SizedBox(height: 23 * Responsive.getResponsive(context)),
-
           const PrevNextBtnWidget(),
-          SizedBox(height: 0.013 * Responsive.getHeight(context)),
-
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
           BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
             builder: (context, state) {
               if (state is FaceDetectionLoaded) {

@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -46,7 +48,7 @@ Widget startVisitBottomSheet(BuildContext context) => Padding(
                 onTap: () {
                   Navigator.pop(context);
                 },
-                title: 'CLOSE',
+                title: LanguageManager().get('close'),
                 textStyle: TextStyle(
                   color: AppColors.primary,
                   fontSize: 14 * Responsive.getResponsiveText(context),
@@ -62,9 +64,9 @@ Widget startVisitBottomSheet(BuildContext context) => Padding(
             Expanded(
               child: MyCoButton(
                 onTap: () {
-                  Navigator.pop(context);
+                context.pushNamed('faceDetection');
                 },
-                title: 'CONTINUE',
+                title: LanguageManager().get('Continue'),
                 textStyle: TextStyle(
                   color: Colors.white,
                   fontSize: 14 * Responsive.getResponsiveText(context),

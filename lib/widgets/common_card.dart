@@ -20,17 +20,19 @@ class CommonCard extends StatelessWidget {
   final Color? headerColor, borderColor, headerPrefixIconColor;
   final bool? showHeaderPrefixIcon, showBlackShadowInChild;
   final String? headerPrefixIcon;
-  final Widget? suffixIcon, titleSuffix, subTitleIcon;
-  final double? headerPrefixIconHeight, headerPrefixIconWidth;
+  final Widget? suffixIcon, titleSuffix, subTitleIcon, headerPrefix;
+  final double? headerPrefixIconHeight,
+      headerPrefixIconWidth,
+      titleFontSize,
+      secondTitleFontSize,
+      subTitleFontSize,
+      buttonTextFontSize,
+      headerBottomBorderRadius;
   final FontWeight? titleFontWeight,
       secondTitleFontWeight,
       subTitleFontWeight,
       buttonTextFontWeight;
   final Color? titleColor, secondTitleColor, subTitleColor, buttonTextColor;
-  final double? titleFontSize,
-      secondTitleFontSize,
-      subTitleFontSize,
-      buttonTextFontSize;
   const CommonCard({
     required this.title,
     required this.bottomWidget,
@@ -69,6 +71,8 @@ class CommonCard extends StatelessWidget {
     this.buttonTextColor,
     this.buttonTextFontSize,
     this.onHeaderTap,
+    this.headerPrefix,
+    this.headerBottomBorderRadius,
   });
 
   @override
@@ -98,6 +102,11 @@ class CommonCard extends StatelessWidget {
                   (borderRadius ?? 12) * Responsive.getResponsive(context) -
                       1.0,
                 ),
+                bottom: Radius.circular(
+                  (headerBottomBorderRadius ?? 1) *
+                      Responsive.getResponsive(context) -
+                      1.0,
+                ),
               ),
               boxShadow: [
                 if (showBlackShadowInChild == true)
@@ -122,14 +131,16 @@ class CommonCard extends StatelessWidget {
             child: Row(
               children: [
                 if (showHeaderPrefixIcon == true)
-                  Image.asset(
-                    headerPrefixIcon ?? 'assets/take_order/profile-circle.png',
-                    // height: headerPrefixIconHeight ?? 0.1 * Responsive.getHeight(context),
-                    width:
-                    headerPrefixIconWidth ??
-                        0.06 * Responsive.getWidth(context),
-                    color: headerPrefixIconColor,
-                  ),
+                  headerPrefix ??
+                      Image.asset(
+                        headerPrefixIcon ??
+                            'assets/take_order/profile-circle.png',
+                        // height: headerPrefixIconHeight ?? 0.1 * Responsive.getHeight(context),
+                        width:
+                        headerPrefixIconWidth ??
+                            0.06 * Responsive.getWidth(context),
+                        color: headerPrefixIconColor,
+                      ),
                 if (showHeaderPrefixIcon == true)
                   SizedBox(width: 0.02 * Responsive.getWidth(context)),
                 Expanded(

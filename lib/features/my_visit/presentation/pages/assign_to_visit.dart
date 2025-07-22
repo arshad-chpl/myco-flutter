@@ -14,18 +14,15 @@ import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-class AssignToVisit extends StatefulWidget {
-  const AssignToVisit({super.key});
+class AssignToVisit extends StatelessWidget {
+   AssignToVisit({super.key});
 
-  @override
-  State<AssignToVisit> createState() => _AssignToVisitState();
-}
-
-class _AssignToVisitState extends State<AssignToVisit> {
   String selectedVisitType = 'Self Visit';
 
   final List<String> Customer = ['Customer 1', 'Customer 2', 'Customer 3'];
+
   final List<String> VisitSlot = ['Morning', 'Afternoon', 'Evening'];
+
   final List<String> VisitPurpose = ['Purpose 1', 'Purpose 2', 'Purpose 3'];
 
   String? selectedleavetype;

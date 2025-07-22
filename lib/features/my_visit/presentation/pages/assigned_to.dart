@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_event.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_state.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Input_Tag_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Input_Tag_event.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Input_Tag_state.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/row_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/tag_input_widget.dart';
 import 'package:myco_flutter/widgets/custom_employee_card.dart';
@@ -61,20 +62,20 @@ class _VisitWithState extends State<AssignedTo> {
     {'id': '19', 'name': 'Anand'},
     {'id': '20', 'name': 'Nadiad'},
   ];
-  Color blendedColor = Color.lerp(Color(0xFFF54444), Color(0xFFFFFFFF), 0.5)!;
+  Color blendedColor = Color.lerp(const Color(0xFFF54444), const Color(0xFFFFFFFF), 0.5)!;
 
 
   @override
   Widget build(BuildContext context) => SafeArea(
     child: Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 31 * Responsive.getResponsiveText(context),
-        vertical: 5 * Responsive.getResponsiveText(context),
+        horizontal: VariableBag.formContentSpacingVertical * Responsive.getResponsive(context),
+        vertical: 5 * Responsive.getResponsive(context),
       ),
       height: Responsive.getHeight(context) * 0.95,
       width: Responsive.getWidth(context),
       child: Column(
-        spacing: 16 * Responsive.getResponsive(context),
+        spacing: VariableBag.textFieldRowGap * Responsive.getResponsive(context),
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,7 +89,7 @@ class _VisitWithState extends State<AssignedTo> {
               ),
               IconButton(
                 onPressed: () => Navigator.pop(context),
-                icon: SvgPicture.asset('assets/visit/dropdown_visit.svg'),
+                icon: SvgPicture.asset(AppAssets.DoubleDown_Arrow),
               ),
             ],
           ),
@@ -303,7 +304,7 @@ class _VisitWithState extends State<AssignedTo> {
             alignment: Alignment.bottomCenter,
             child: MyCoButton(
               title: LanguageManager().get('add'),
-              boarderRadius: 50,
+              boarderRadius: VariableBag.buttonBorderRadius,
               height: 0.05 * Responsive.getHeight(context),
               isShadowBottomLeft: true,
               fontFamily: 'Inter',
