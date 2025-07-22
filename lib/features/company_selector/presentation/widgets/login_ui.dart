@@ -111,21 +111,37 @@ class LoginUi extends StatelessWidget {
               const SizedBox(height: 20),
               MyCoButton(
                 onTap: () {
-                  final contactInfo = isEmailLogin ? emailController.text : phoneController.text;
+                  final contactInfo = isEmailLogin
+                      ? emailController.text
+                      : phoneController.text;
 
                   if (contactInfo.isEmpty) {
-                    final String text = isEmailLogin ? 'Please enter your Email Address' : 'Please enter your Phone Number';
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
+                    final String text = isEmailLogin
+                        ? 'Please enter your Email Address'
+                        : 'Please enter your Phone Number';
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(text)));
                     return;
                   }
 
                   if (isEmailLogin && !_isValidEmail(contactInfo)) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter a valid Email Address')));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please enter a valid Email Address'),
+                      ),
+                    );
                     return;
                   }
 
                   if (!isChecked) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please agree to the terms and conditions to continue.')));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'Please agree to the terms and conditions to continue.',
+                        ),
+                      ),
+                    );
                     return;
                   }
 
@@ -157,45 +173,54 @@ class LoginUi extends StatelessWidget {
   }
 
   Widget _buildPolicyAgreement(BuildContext context) => Row(
-        children: [
-          CustomCheckbox(
-            value: isChecked,
-            onChanged: onCheckChanged,
-            borderColor: isChecked ? AppColors.primary : Colors.grey,
-            activeColor: AppTheme.getColor(context).primaryContainer,
-            checkColor: AppTheme.getColor(context).primary, height: 20, width: 20, unCheckedBackground: AppTheme.getColor(context).surface,
-          ),
-          SizedBox(width: 0.015 * Responsive.getWidth(context)),
-          Expanded(
-            child: RichText(
-              text: TextSpan(
-                style: TextStyle(color: AppTheme.getColor(context).onSurface, fontSize: 14 * Responsive.getResponsiveText(context)),
-                children: [
-                  const TextSpan(text: 'Please confirm that you agree to our ', style: TextStyle(fontWeight: FontWeight.w600)),
-                  _linkSpan(context, 'Privacy Policy'),
-                  const TextSpan(text: ', '),
-                  _linkSpan(context, 'Terms & Conditions'),
-                  const TextSpan(text: ' & '),
-                  _linkSpan(context, 'Cancellation & Refund Policy'),
-                  const TextSpan(text: '.'),
-                ],
-              ),
+    children: [
+      CustomCheckbox(
+        value: isChecked,
+        onChanged: onCheckChanged,
+        borderColor: isChecked ? AppColors.primary : Colors.grey,
+        activeColor: AppTheme.getColor(context).primaryContainer,
+        checkColor: AppTheme.getColor(context).primary,
+        height: 20,
+        width: 20,
+        unCheckedBackground: AppTheme.getColor(context).surface,
+      ),
+      SizedBox(width: 0.015 * Responsive.getWidth(context)),
+      Expanded(
+        child: RichText(
+          text: TextSpan(
+            style: TextStyle(
+              color: AppTheme.getColor(context).onSurface,
+              fontSize: 14 * Responsive.getResponsiveText(context),
             ),
+            children: [
+              const TextSpan(
+                text: 'Please confirm that you agree to our ',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
+              _linkSpan(context, 'Privacy Policy'),
+              const TextSpan(text: ', '),
+              _linkSpan(context, 'Terms & Conditions'),
+              const TextSpan(text: ' & '),
+              _linkSpan(context, 'Cancellation & Refund Policy'),
+              const TextSpan(text: '.'),
+            ],
           ),
-        ],
-      );
+        ),
+      ),
+    ],
+  );
 
   TextSpan _linkSpan(BuildContext context, String text) => TextSpan(
-        text: text,
-        style: TextStyle(color: AppTheme.getColor(context).primary),
-        recognizer: TapGestureRecognizer()
-          ..onTap = () => showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                builder: (_) => const BottomTermAndCondition(),
-              ),
-      );
+    text: text,
+    style: TextStyle(color: AppTheme.getColor(context).primary),
+    recognizer: TapGestureRecognizer()
+      ..onTap = () => showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (_) => const BottomTermAndCondition(),
+      ),
+  );
 
   bool _isValidEmail(String email) {
     final emailRegex = RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
@@ -205,6 +230,7 @@ class LoginUi extends StatelessWidget {
 
 class _EmailInput extends StatelessWidget {
   final TextEditingController emailController;
+
   const _EmailInput({required this.emailController});
 
   @override
@@ -216,12 +242,17 @@ class _EmailInput extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15 * Responsive.getResponsive(context)),
+            borderRadius: BorderRadius.circular(
+              15 * Responsive.getResponsive(context),
+            ),
             border: Border.all(color: AppColors.gray5),
           ),
           child: TextField(
             controller: emailController,
-            decoration: const InputDecoration(hintText: 'Please Enter Email Id', border: InputBorder.none),
+            decoration: const InputDecoration(
+              hintText: 'Please Enter Email Id',
+              border: InputBorder.none,
+            ),
           ),
         ),
       ],
@@ -255,7 +286,9 @@ class _PhoneInput extends StatelessWidget {
           countryDialCodes: countryMap,
           phoneController: phoneController,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15 * Responsive.getResponsive(context)),
+            borderRadius: BorderRadius.circular(
+              15 * Responsive.getResponsive(context),
+            ),
             border: Border.all(color: AppColors.gray5),
           ),
         ),

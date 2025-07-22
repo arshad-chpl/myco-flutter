@@ -25,7 +25,7 @@ class ProfileReportingCard extends StatelessWidget {
               crossAxisCount: Responsive.getGridConfig(context).itemCount,
               mainAxisSpacing: Responsive.getGridConfig(context).spacing,
               crossAxisSpacing: Responsive.getGridConfig(context).spacing,
-              childAspectRatio: 2 / 2.5,
+              childAspectRatio: 2 / 2.7,
             ),
             itemCount: 3, // example count
             itemBuilder: (context, index) {

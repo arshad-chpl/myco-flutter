@@ -58,6 +58,7 @@ dependencies:
   google_maps_flutter: ^2.12.3
   geolocator: ^14.0.2
   modal_bottom_sheet: ^3.0.0
+  bloc: ^9.0.0
 
   hive: ^2.2.3
   hive_flutter: ^1.1.0
@@ -100,7 +101,6 @@ flutter:
     - assets/ideabox/
     - assets/payslip/
     - assets/visit/
-    - assets/visit/svgs/
     - assets/media_picker/
     - assets/lost_and_found/
     - assets/visit_svgs/
@@ -108,10 +108,17 @@ flutter:
     - assets/add_expense/
     - assets/dashboard/svgs/
     - assets/face_detection/
+    - assets/svgs/visit/
     - assets/dashboard/svgs/
+
     - assets/dashboard/svgs/
     - assets/assets/
+    - assets/svgs/work_allocation/
+
+    - assets/asset/
+
     - assets/svgs/take_order/
+    - assets/work_allocation/
     - assets/animations/
     - assets/stepper/
   # An image asset can refer to one or more resolution-specific "variants", see

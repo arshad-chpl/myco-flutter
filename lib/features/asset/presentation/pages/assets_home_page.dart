@@ -1,0 +1,747 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
+import 'package:myco_flutter/core/encryption/gzip_util.dart';
+import 'package:myco_flutter/core/network/api_client.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/asset/domain/entities/asset_entity.dart';
+import 'package:myco_flutter/features/asset/presentation/bloc/assets_bloc.dart';
+import 'package:myco_flutter/features/asset/presentation/bloc/assets_event.dart';
+import 'package:myco_flutter/features/asset/presentation/bloc/assets_state.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/active_assets_card.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/all_assets_card.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/asset_simmer_widget.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/assets_bottom_sheet.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/past_assets_card.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field.dart';
+
+class AssetsHomePage extends StatefulWidget {
+  const AssetsHomePage({super.key});
+
+  @override
+  State<AssetsHomePage> createState() => _AssetsHomePageState();
+}
+
+class _AssetsHomePageState extends State<AssetsHomePage> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AssetsBloc>().add(const InitializeAssetsEvent());
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bloc = context.read<AssetsBloc>();
+
+    return Scaffold(
+      backgroundColor: AppTheme.getColor(context).surface,
+      appBar: CustomAppbar(
+        title: 'assets',
+        titleSpacing: 0,
+
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(
+              right: 0.04 * Responsive.getWidth(context),
+            ),
+            child: GestureDetector(
+              onTap: () => context.push('/add-assets'),
+              // onTap: () async {
+              //   final dataMap = {
+              //     "getAssetsNew": "getAssetsNew",
+              //     "society_id": "1",
+              //     "unit_id": "1718",
+              //     "user_id": "1679",
+              //     "language_id": "1",
+              //     "floor_id": "1",
+              //     "old_items": "1",
+              //   };
+
+              //   final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
+              //   final response =
+              //       await GetIt.I<ApiClient>(
+              //         instanceName: VariableBag.masterAPICall,
+              //       ).postDynamic(
+              //         'https://dev.my-company.app/india/employeeMobileApi/assets_controller.php',
+              //         encryptedBody,
+              //       );
+              //   // log(GzipUtil.decryptAES(response));
+              //   log(jsonEncode(json.decode(GzipUtil.decryptAES(response))));
+
+              //   // log(json.decode(GzipUtil.decryptAES(response)));
+              // },
+              // onTap: () async {
+              //   final dataMap = {
+              //     "getOtherAssets": "getOtherAssets",
+              //     "user_id": "1679",
+              //     "society_id": "1",
+              //     "language_id": "1",
+              //     "floor_id": "1",
+              //     "assets_category_id": "",
+              //     "brand_name": "",
+              //     "filter": "1",
+              //     "view_other_assets": "2",
+              //   };
+
+              //   final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
+              //   final response =
+              //       await GetIt.I<ApiClient>(
+              //         instanceName: VariableBag.masterAPICall,
+              //       ).postDynamic(
+              //         'https://dev.my-company.app/india/employeeMobileApi/assets_controller.php',
+              //         encryptedBody,
+              //       );
+              //   // log(GzipUtil.decryptAES(response));
+              //   log(jsonEncode(json.decode(GzipUtil.decryptAES(response))));
+
+              //   // log(json.decode(GzipUtil.decryptAES(response)));
+              // },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.add,
+                    size: 0.035 * Responsive.getWidth(context),
+                    color: AppTheme.getColor(context).onSurface,
+                  ),
+                  CustomText(
+                    'add_assets',
+                    fontSize: 16 * Responsive.getResponsiveText(context),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 70,
+            backgroundColor: AppTheme.getColor(context).surface,
+            floating: true,
+            snap: true,
+            automaticallyImplyLeading: false,
+            titleSpacing: 0,
+            title: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 0.04 * Responsive.getWidth(context),
+              ),
+              child:
+                  //  CustomSearchField(
+                  //   hintText: 'Search',
+                  //   isSuffixIconOn: true,
+                  //   suffixIcon: Image.asset(
+                  //     AppAssets.imageScanner,
+                  //     height: 0.03 * Responsive.getHeight(context),
+                  //   ),
+                  // ),
+                  MyCoTextfield(
+                    key: ValueKey(bloc.state.selectedIndex),
+                    hintText: 'Search',
+                    maxLines: 1,
+                    textAlignment: TextAlign.start,
+                    hintTextStyle: AppTheme.getTextStyle(
+                      context,
+                    ).labelLarge!.copyWith(color: AppColors.textSecondary),
+                    preFixImage: AppAssets.imageSearch,
+                    isSuffixIconOn: true,
+                    suFixImage: AppAssets.imageScanner,
+                    suFixImageWidth: 25,
+                    onTap1: () => context.push('/qr-scanner'),
+                    contentPadding: EdgeInsets.only(
+                      top: 0.012 * Responsive.getHeight(context),
+                    ),
+                    onChanged: (value) {
+                      context.read<AssetsBloc>().add(SearchAssetsEvent(value));
+                    },
+                    boarderRadius: 12 * Responsive.getResponsive(context),
+                  ),
+            ),
+          ),
+
+          // Pinned TabBar
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: _SliverTabBarDelegate(
+              height: 60,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 0.04 * Responsive.getWidth(context),
+                  right: 0.04 * Responsive.getWidth(context),
+                  bottom: 0.015 * Responsive.getHeight(context),
+                ),
+                child: BlocBuilder<AssetsBloc, AssetsState>(
+                  builder: (context, state) => MyCustomTabBar(
+                    isShadowBottomLeft: true,
+                    tabBarBorderColor: AppTheme.getColor(context).outline,
+                    selectedBgColors: [
+                      AppTheme.getColor(context).secondary,
+                      AppTheme.getColor(context).primary,
+                      const Color(0xFF08A4BB),
+                    ],
+                    selectedIndex: state.selectedIndex,
+                    tabs: [
+                      'Active Assets (${state is AssetsLoaded ? state.activeAssets.length : 0})',
+                      'Past Assets (${state is AssetsLoaded ? state.pastAssets.length : 0})',
+                      'All Assets (${state is AssetsLoaded ? state.allAssets.length : 0})',
+                    ],
+                    onTabChange: (int index) {
+                      bloc.add(TabChanged(index));
+                    },
+                    unselectedTextStyles: [
+                      TextStyle(
+                        fontSize: 10 * Responsive.getResponsiveText(context),
+                        color: AppTheme.getColor(context).secondary,
+                        fontFamily: 'Gilroy-Bold',
+                        fontWeight: FontWeight.w700,
+                      ),
+                      TextStyle(
+                        fontSize: 10 * Responsive.getResponsiveText(context),
+                        color: AppTheme.getColor(context).primary,
+                        fontFamily: 'Gilroy-Bold',
+                        fontWeight: FontWeight.w700,
+                      ),
+                      TextStyle(
+                        fontSize: 10 * Responsive.getResponsiveText(context),
+                        color: const Color(0xFF08A4BB),
+                        fontFamily: 'Gilroy-Bold',
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ],
+                    selectedTextStyle: TextStyle(
+                      fontSize: 10 * Responsive.getResponsiveText(context),
+                      color: Colors.white,
+                      fontFamily: 'Gilroy-Bold',
+                      fontWeight: FontWeight.w700,
+                    ),
+                    unselectedBorderAndTextColor: AppTheme.getColor(
+                      context,
+                    ).outline,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          // Asset List
+          ..._buildAssetListByTab(context),
+
+          // Extra spacing at the bottom
+          SliverToBoxAdapter(
+            child: SizedBox(height: 0.02 * Responsive.getHeight(context)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _buildAssetListByTab(BuildContext context) {
+    final state = context.watch<AssetsBloc>().state;
+
+    switch (state.selectedIndex) {
+      case 0:
+        return [AssetsListPage(oldItems: state.selectedIndex.toString())];
+      case 1:
+        return [AssetsListPage(oldItems: state.selectedIndex.toString())];
+      case 2:
+        return _buildAllAssetsTab(context);
+    }
+
+    return [const SizedBox.shrink()];
+  }
+
+  // ignore: prefer_expression_function_bodies
+  List<Widget> _buildAllAssetsTab(BuildContext context) {
+    return [
+      SliverPadding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 0.04 * Responsive.getWidth(context),
+        ),
+        sliver: SliverPersistentHeader(
+          pinned: true,
+          delegate: _SliverTabBarDelegate(
+            height: 60,
+            child: Row(
+              children: [
+                Expanded(
+                  child: BlocBuilder<AssetsFilterBloc, AssetsFilterState>(
+                    builder: (context, state) => DropDownTextField(
+                      context,
+                      title: state.category,
+                      onTap: () async {
+                        final data = await showAssetsBottomSheet(
+                          context: context,
+                          heading: 'Select Category',
+                          dataList: const [
+                            'All Category',
+                            'Desktop',
+                            'Laptop',
+                            'Mobile',
+                            'Tab',
+                            'Test Assets',
+                          ],
+                        );
+                        if (data != null) {
+                          context.read<AssetsFilterBloc>().add(
+                            AssetsFilters(category: data),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(width: 0.06 * Responsive.getWidth(context)),
+                Expanded(
+                  child: BlocBuilder<AssetsFilterBloc, AssetsFilterState>(
+                    builder: (context, state) => DropDownTextField(
+                      context,
+                      title: state.brand,
+                      onTap: () async {
+                        final data = await showAssetsBottomSheet(
+                          context: context,
+                          heading: 'Select Brand',
+                          dataList: const [
+                            'All Brand',
+                            'Apple',
+                            'Asus',
+                            'Samsung',
+                            'Acer',
+                            'HP',
+                          ],
+                        );
+                        if (data != null) {
+                          context.read<AssetsFilterBloc>().add(
+                            AssetsFilters(brand: data),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      const SliverToBoxAdapter(child: SizedBox(height: 10)),
+      const AllAssetsListPage(),
+    ];
+  }
+
+  Widget DropDownTextField(
+    BuildContext context, {
+    required String title,
+    required VoidCallback onTap,
+  }) => GestureDetector(
+    onTap: onTap,
+    child: Container(
+      padding: EdgeInsets.symmetric(
+        vertical: 8 * Responsive.getResponsive(context),
+        horizontal: 6 * Responsive.getResponsive(context),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(
+          10 * Responsive.getResponsive(context),
+        ),
+        border: Border.all(color: AppTheme.getColor(context).secondary),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: CustomText(
+              title,
+              fontWeight: FontWeight.w600,
+              color: AppTheme.getColor(context).secondary,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Icon(
+            Icons.keyboard_arrow_down,
+            color: AppTheme.getColor(context).secondary,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
+  final Widget child;
+  final double height;
+
+  _SliverTabBarDelegate({required this.child, required this.height});
+
+  @override
+  double get minExtent => height; // or exact height of your tab bar
+  @override
+  double get maxExtent => height;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) => Material(
+    color: AppTheme.getColor(context).surface,
+    elevation: overlapsContent ? 1 : 0,
+    child: SizedBox(height: height, child: child),
+  );
+
+  @override
+  bool shouldRebuild(covariant _SliverTabBarDelegate oldDelegate) =>
+      child != oldDelegate.child || height != oldDelegate.height;
+}
+
+class AssetsListPage extends StatelessWidget {
+  final String oldItems;
+
+  const AssetsListPage({required this.oldItems, super.key});
+
+  @override
+  Widget build(BuildContext context) => SliverPadding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 0.04 * Responsive.getWidth(context),
+    ),
+    sliver: BlocBuilder<AssetsBloc, AssetsState>(
+      builder: (context, state) {
+        if (state is AssetsLoading) {
+          return SliverToBoxAdapter(
+            child: Column(
+              children: List.generate(
+                4,
+                (index) => Padding(
+                  padding: EdgeInsets.only(
+                    bottom: 0.020 * Responsive.getHeight(context),
+                  ),
+                  child: const ActiveAssetsCardShimmer(),
+                ),
+              ),
+            ),
+          );
+        } else if (state is AssetsLoaded) {
+          final assets = state.currentAssets;
+          return SliverList.separated(
+            itemCount: assets.length,
+            separatorBuilder: (_, __) =>
+                SizedBox(height: 0.02 * Responsive.getHeight(context)),
+            itemBuilder: (_, index) {
+              final item = assets[index];
+
+              if (oldItems == '1') {
+                return PastAssetsCard(
+                  mainImageKey: Key('main_image_${item.assetsIdView ?? index}'),
+                  handoverImageKey: Key(
+                    'asset_${item.assetsIdView ?? index}_handover',
+                  ),
+                  takeoverImageKey: Key(
+                    'asset_${item.assetsIdView ?? index}_takeover',
+                  ),
+                  title: item.assetsName ?? '',
+                  subTitle: '(${item.assetsIdView ?? ''})',
+                  image: item.assetsFile ?? AppAssets.imageLaptop,
+                  brand: item.assetsBrandName ?? '',
+                  srNo: item.srNo ?? '',
+                  handover: item.handoverDate ?? '',
+                  takeover: item.takeoverDate ?? '',
+                  handoverImageList:
+                      item.assetsFiles?.map((e) => e.document ?? '').toList() ??
+                      [],
+                  takeoverImageList:
+                      item.assetsFilesTakeover
+                          ?.map((e) => e['file']?.toString())
+                          .whereType<String>()
+                          .toList() ??
+                      [],
+                );
+              }
+
+              return ActiveAssetsCard(
+                imageKey: Key('handover_image_${item.assetsIdView ?? index}'),
+                mainImageKey: Key('main_image_${item.assetsIdView ?? index}'),
+                title: item.assetsName ?? '',
+                subTitle: '(${item.assetsIdView ?? ''})',
+                image: item.assetsFile ?? AppAssets.imageLaptop,
+                brand: item.assetsBrandName ?? '',
+                srNo: item.srNo ?? '--',
+                handOverDate: item.handoverDate ?? '',
+                handoverImageList:
+                    item.assetsFiles?.map((e) => e.document ?? '').toList() ??
+                    [],
+              );
+            },
+          );
+        } else if (state is AssetsError) {
+          return SliverToBoxAdapter(child: Center(child: Text(state.message)));
+        }
+
+        return const SliverToBoxAdapter(child: SizedBox());
+      },
+    ),
+  );
+}
+
+
+
+
+
+
+
+
+
+  // List<Widget> _buildAssetListByTab(BuildContext context) {
+  //   final index = context.watch<AssetsTabBloc>().state.selectedIndex;
+
+  //   final tabBuilders = <int, List<Widget> Function()>{
+  //     0: _buildActiveAssetsTab,
+  //     1: _buildPastAssetsTab,
+  //     2: () => _buildAllAssetsTab(context),
+  //   };
+
+  //   return tabBuilders[index]?.call() ?? [];
+  // }
+
+  // List<Widget> _buildActiveAssetsTab() => [const AssetsListPage()];
+
+  // List<Widget> _buildPastAssetsTab() => [const PastAssetsListPage()];
+
+
+
+
+// List<Widget> _buildAssetListByTab(BuildContext context) {
+//   switch (context.watch<AssetsTabBloc>().state.selectedIndex) {
+//     case 0: // Active Assets
+//       return [const AssetsListPage()];
+
+//     case 1: // Past Assets
+//       return [const PastAssetsListPage()];
+
+//     case 2: // All Assets
+//       return [
+//         SliverPadding(
+//           padding: EdgeInsets.symmetric(
+//             horizontal: 0.04 * Responsive.getWidth(context),
+//           ),
+//           sliver: SliverPersistentHeader(
+//             pinned: true,
+//             delegate: _SliverTabBarDelegate(
+//               height: 60,
+//               child: Row(
+//                 children: [
+//                   Expanded(
+//                     child: BlocBuilder<AssetsFilterBloc, AssetsFilterState>(
+//                       builder: (context, state) => DropDownButton(
+//                         context,
+//                         title: state.category, //'All Category',
+//                         onTap: () async {
+//                           final data = await showAssetsBottomSheet(
+//                             context: context,
+//                             heading: 'Select Category',
+//                             dataList: const [
+//                               'All Category',
+//                               'Desktop',
+//                               'Laptop',
+//                               'Mobile',
+//                               'Tab',
+//                               'Test Assets',
+//                             ],
+//                           );
+//                           // log('Selected category: $data');
+//                           if (data != null) {
+//                             context.read<AssetsFilterBloc>().add(
+//                               AssetsFilters(category: data),
+//                             );
+//                           }
+//                         },
+//                       ),
+//                     ),
+//                   ),
+//                   SizedBox(width: 0.06 * Responsive.getWidth(context)),
+//                   Expanded(
+//                     child: BlocBuilder<AssetsFilterBloc, AssetsFilterState>(
+//                       builder: (context, state) => DropDownButton(
+//                         context,
+//                         title: state.brand, // 'All Brand',
+//                         onTap: () async {
+//                           final data = await showAssetsBottomSheet(
+//                             context: context,
+//                             heading: 'Select Brand',
+//                             dataList: const [
+//                               'All Brand',
+//                               'Apple',
+//                               'Asus',
+//                               'Samsung',
+//                               'Acer',
+//                               'HP',
+//                             ],
+//                           );
+//                           // log('Selected category: $data');
+//                           if (data != null) {
+//                             context.read<AssetsFilterBloc>().add(
+//                               AssetsFilters(brand: data),
+//                             );
+//                           }
+//                         },
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ),
+//         const SliverToBoxAdapter(child: SizedBox(height: 10)),
+//         const AllAssetsListPage(),
+//       ];
+//     default:
+//       return [];
+//   }
+// }
+
+///
+
+// class AssetsListPage extends StatelessWidget {
+//   const AssetsListPage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     context.read<AssetsBloc>().add(FetchAssetsEvent(oldItems: '0'));
+
+//     return SliverPadding(
+//       padding: EdgeInsets.symmetric(
+//         horizontal: 0.04 * Responsive.getWidth(context),
+//       ),
+//       sliver: BlocBuilder<AssetsBloc, AssetsState>(
+//         builder: (context, state) {
+//           if (state is AssetsLoading) {
+//             return SliverToBoxAdapter(
+//               child: Column(
+//                 children: List.generate(
+//                   4,
+//                   (index) => Padding(
+//                     padding: EdgeInsets.only(
+//                       bottom: 0.020 * Responsive.getHeight(context),
+//                     ),
+//                     child: const ActiveAssetsCardShimmer(),
+//                   ),
+//                 ),
+//               ),
+//             );
+//           } else if (state is AssetsLoaded) {
+//             final assets = state.assets.assets ?? [];
+
+//             return SliverList.separated(
+//               itemCount: assets.length,
+//               separatorBuilder: (_, __) =>
+//                   SizedBox(height: 0.02 * Responsive.getHeight(context)),
+//               itemBuilder: (_, index) {
+//                 final item = assets[index];
+//                 return ActiveAssetsCard(
+//                   title: item.assetsName ?? '',
+//                   subTitle: '(${item.assetsIdView ?? ''})',
+//                   image: item.assetsFile ?? AppAssets.imageLaptop,
+//                   brand: item.assetsBrandName ?? '',
+//                   srNo: item.srNo ?? '--',
+//                   handOverDate: item.handoverDate ?? '',
+//                   handoverImageList:
+//                       item.assetsFiles?.map((e) => e.document ?? '').toList() ??
+//                       [],
+//                 );
+//               },
+//             );
+//           } else if (state is AssetsError) {
+//             return SliverToBoxAdapter(
+//               child: Center(child: Text(state.message)),
+//             );
+//           }
+//           return const SliverToBoxAdapter(child: SizedBox());
+//         },
+//       ),
+//     );
+//   }
+// }
+
+// class PastAssetsListPage extends StatelessWidget {
+//   const PastAssetsListPage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     context.read<AssetsBloc>().add(FetchAssetsEvent(oldItems: '1'));
+
+//     return SliverPadding(
+//       padding: EdgeInsets.symmetric(
+//         horizontal: 0.04 * Responsive.getWidth(context),
+//       ),
+//       sliver: BlocBuilder<AssetsBloc, AssetsState>(
+//         builder: (context, state) {
+//           if (state is AssetsLoading) {
+//             return SliverToBoxAdapter(
+//               child: Column(
+//                 children: List.generate(
+//                   4, // or 3, however many you want
+//                   (index) => Padding(
+//                     padding: EdgeInsets.only(
+//                       bottom: 0.020 * Responsive.getHeight(context),
+//                     ),
+//                     child: const ActiveAssetsCardShimmer(),
+//                   ),
+//                 ),
+//               ),
+//             );
+//           } else if (state is AssetsLoaded) {
+//             final assets = state.assets.assets ?? [];
+
+//             return SliverList.separated(
+//               itemCount: assets.length,
+//               separatorBuilder: (_, __) =>
+//                   SizedBox(height: 0.02 * Responsive.getHeight(context)),
+//               itemBuilder: (_, index) {
+//                 final item = assets[index];
+//                 return PastAssetsCard(
+//                   title: item.assetsName ?? '',
+//                   subTitle: '(${item.assetsIdView ?? ''})',
+//                   image: item.assetsFile ?? AppAssets.imageLaptop,
+//                   brand: item.assetsBrandName ?? '',
+//                   srNo: item.srNo ?? '',
+//                   handover: item.handoverDate ?? '',
+//                   takeover: item.takeoverDate ?? '',
+//                   handoverImageList:
+//                       item.assetsFiles?.map((e) => e.document ?? '').toList() ??
+//                       [],
+//                   takeoverImageList:
+//                       (item.assetsFilesTakeover)
+//                           ?.map((e) => e['file']?.toString())
+//                           .whereType<String>()
+//                           .toList() ??
+//                       [],
+//                 );
+//               },
+//             );
+//           } else if (state is AssetsError) {
+//             return SliverToBoxAdapter(
+//               child: Center(child: Text(state.message)),
+//             );
+//           }
+//           return const SliverToBoxAdapter(child: SizedBox());
+//         },
+//       ),
+//     );
+//   }
+// }

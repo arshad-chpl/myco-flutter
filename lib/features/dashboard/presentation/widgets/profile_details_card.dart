@@ -49,24 +49,24 @@ class ProfileDetailsCard extends StatelessWidget {
                 children: [
                   CustomText(
                     "Manish Chandra",
-                    fontSize: 22 * Responsive.getResponsiveText(context),
+                    fontSize: 18 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w700,
                   ),
                   CustomText(
                     "Emplolyee ID : CHPL-QA-085",
-                    fontSize: 18 * Responsive.getResponsiveText(context),
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w500,
                   ),
                   CustomText(
                     "Tester",
-                    fontSize: 16 * Responsive.getResponsiveText(context),
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w700,
                     color: AppTheme.getColor(context).outline,
                   ),
                   CustomText(
                     "Junagadh - Technical - QA",
                     color: AppTheme.getColor(context).outline,
-                    fontSize: 16 * Responsive.getResponsiveText(context),
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w700,
                   ),
                 ],
