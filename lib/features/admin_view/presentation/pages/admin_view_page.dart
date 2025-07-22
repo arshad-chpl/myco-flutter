@@ -96,7 +96,7 @@ class _AdminViewPageState extends State<AdminViewPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: AppTheme.getColor(context).surface,
-    appBar: CustomAppbar(title: 'admin_view', isKey: true),
+    appBar: const CustomAppbar(title: 'admin_view', isKey: true),
     body: RefreshIndicator(
       onRefresh: _refreshData,
       color: AppColors.primary,
@@ -113,21 +113,8 @@ class _AdminViewPageState extends State<AdminViewPage> {
     child: CustomSearchField(
       controller: _searchController,
       hintText: LanguageManager().get('search'),
-      
-
-      // preFixImage: AppAssets.imageSearch,
-
-      // suFixImage: _searchController.text.isNotEmpty
-      //     ? AppAssets.imageScanner
-      //     : null,
-      // on: _clearSearch,
       borderRadius: 12.0,
       height: 0.06 * Responsive.getHeight(context),
-      
-      // padding: EdgeInsets.symmetric(
-      //   vertical: 8 * Responsive.getResponsive(context),
-      // ),
-      // prefixImageHeight: 0. * Responsive.getHeight(context),
     ),
   );
 
@@ -145,7 +132,7 @@ class _AdminViewPageState extends State<AdminViewPage> {
                 margin: const EdgeInsets.only(bottom: 16),
                 height: 120,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppTheme.getColor(context).onPrimary,
                   borderRadius: BorderRadius.circular(16.0),
                 ),
               ),

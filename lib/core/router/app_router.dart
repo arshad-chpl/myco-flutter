@@ -365,15 +365,7 @@ class AppRouter {
         name: 'my-profile',
         builder: (context, state) => const MyProfilePage(),
       ),
-      GoRoute(
-        path: RoutePaths.adminView,
-        name: RoutePaths.adminView,
-        builder: (context, state) => BlocProvider(
-          create: (_) => GetIt.I<AdminViewBloc>(),
-          child: const AdminViewPage(),
-        ),
-        routes: adminViewRoutes,
-      ),
+      ...adminViewRoutes,
       GoRoute(
         path: RoutePaths.leaveBalance,
         name: RoutePaths.leaveBalance,

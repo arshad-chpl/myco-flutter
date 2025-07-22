@@ -9,8 +9,7 @@ import 'package:myco_flutter/features/admin_view/data/data_source/admin_view_rem
 import 'package:myco_flutter/features/admin_view/data/data_source/admin_view_remote_data_source_impl.dart';
 import 'package:myco_flutter/features/admin_view/data/repositories/admin_view_repository_impl.dart';
 import 'package:myco_flutter/features/admin_view/domain/repositories/admin_view_repository.dart';
-import 'package:myco_flutter/features/admin_view/domain/usecases/get_admin_view.dart';
-import 'package:myco_flutter/features/admin_view/domain/usecases/get_cached_admin_view.dart';
+import 'package:myco_flutter/features/admin_view/domain/usecases/admin_view_use_case.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 
 Future<void> adminViewDi(GetIt sl) async {
@@ -34,14 +33,12 @@ Future<void> adminViewDi(GetIt sl) async {
   );
 
   // Use Cases
-  sl.registerLazySingleton(() => GetAdminViewUseCase(repository: sl()));
-  sl.registerLazySingleton(() => GetCachedAdminViewUseCase(repository: sl()));
+  sl.registerLazySingleton(() => AdminViewUseCase(repository: sl()));
 
   // BLoC
   sl.registerFactory(
     () => AdminViewBloc(
-      getAdminViewUseCase: sl(),
-      getCachedAdminViewUseCase: sl(),
+      adminViewUseCase: sl(),
     ),
   );
 }
