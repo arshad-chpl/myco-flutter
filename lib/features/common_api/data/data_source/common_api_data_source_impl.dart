@@ -48,7 +48,7 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
       controller,
       'uploadImageToTemp',
       '1',
-      '1355',
+      '0',
       loginType ? '1' : '0',
       'User25 S_2025-07-22_1355',
       files,

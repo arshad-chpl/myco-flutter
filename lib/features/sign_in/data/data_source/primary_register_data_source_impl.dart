@@ -33,7 +33,7 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
   Future<ViewPendingProfileResponse> getViewPendingProfile() async {
     final dataMap = {
       'ViewPendingProfile': 'ViewPendingProfile',
-      'user_id': '1992', /*preferenceManager.getKeyValueString(VariableBag.registrationRequestPendingUserId),*/
+      'user_id': '10', /*preferenceManager.getKeyValueString(VariableBag.registrationRequestPendingUserId),*/
       'society_id': '1'
     };
 

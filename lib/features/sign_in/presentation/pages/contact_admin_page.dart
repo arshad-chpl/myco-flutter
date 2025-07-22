@@ -15,6 +15,7 @@ import 'package:myco_flutter/features/sign_in/models/view_pending_profile_respon
 import 'package:myco_flutter/features/sign_in/presentation/bloc/primary_register_bloc.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_shimmer.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/custom_request_bottom_sheet.dart';
+import 'package:myco_flutter/widgets/custom_loader_dialog.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
 class ContactAdminPage extends StatefulWidget {
@@ -71,6 +72,16 @@ class _ContactAdminPageState extends State<ContactAdminPage> {
 
         body: BlocConsumer<PrimaryRegisterBloc, PrimaryRegisterState>(
           listener: (context, state) {
+
+            if (state is PrimaryRegisterLoading) {
+              CustomLoaderDialog.show(context);
+            }
+
+            if (state is PendingAccountSuccess || state is ReminderPendingProfileSuccess || state is CancelPendingProfileSuccess ||
+                state is PrimaryRegisterError) {
+              Navigator.of(context, rootNavigator: true).pop();
+            }
+
             if (state is PendingAccountSuccess) {
 
               final response = state.response;
@@ -122,9 +133,6 @@ class _ContactAdminPageState extends State<ContactAdminPage> {
 
           },
           builder: (context, state) {
-            if (state is PrimaryRegisterLoading) {
-              return const ContactAdminShimmer();
-            }
             if (state is PrimaryRegisterError) {
               return Center(child: Text('Error: ${state.message}'));
             }

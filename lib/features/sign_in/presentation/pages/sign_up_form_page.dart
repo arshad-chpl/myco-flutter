@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
@@ -34,6 +35,7 @@ import 'package:myco_flutter/widgets/custom_media_picker_container/media_picker.
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 import 'package:myco_flutter/widgets/custom_text_radio_button.dart';
 
 class SignupFormPage extends StatefulWidget {
@@ -203,6 +205,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                         : '';
                     profileImage = image.toString();
                     selectedImage = '${state.imgPdfList.baseUrl}$image';
+                    print('imagedata: $selectedImage');
                   }
                 },
 
@@ -307,7 +310,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
         buildCustomSelector(
           context: context,
-          label: 'Branch *',
+          label: 'Branch',
           selectedId: selectedBranchId,
           selectedName: selectedBranchName,
           optionIds: branchOptionIds,
@@ -333,7 +336,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
         buildCustomSelector(
           context: context,
-          label: 'Department *',
+          label: 'Department',
           selectedId: selectedDepartmentId,
           selectedName: selectedDepartmentName,
           optionIds: departmentOptionIds,
@@ -355,7 +358,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
         if (subDepartmentOptionIds.isNotEmpty) ...[
           buildCustomSelector(
             context: context,
-            label: 'Sub Department *',
+            label: 'Sub Department',
             selectedId: selectedSubDepartmentId,
             selectedName: selectedSubDepartmentName,
             optionIds: subDepartmentOptionIds,
@@ -392,7 +395,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
         buildCustomSelector(
           context: context,
-          label: 'Designation *',
+          label: 'Designation',
           selectedId: selectedDesignationId,
           selectedName: selectedDesignationName,
           optionIds: floorUnitOptionIds,
@@ -410,28 +413,19 @@ class _SignupFormPageState extends State<SignupFormPage> {
         CustomText(
           'Joining Date *',
           color: AppTheme.getColor(context).onSurfaceVariant,
-          fontSize: 14 * Responsive.getResponsiveText(context),
+          fontSize: 13 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.bold,
         ),
         SizedBox(height: 0.005 * Responsive.getHeight(context)),
 
-        MyCoTextfield(
+        NewTextField(
           controller: joiningDateController,
-          textAlignment: TextAlign.start,
           hintText: 'Select here',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(
-              10 * Responsive.getResponsive(context),
-            ),
-            borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-          ),
-          preFixImage: 'assets/sign_in/joining_date_icon.png',
-          prefixIconConstraints: BoxConstraints(
-            minHeight: 0.02 * Responsive.getHeight(context),
-            minWidth: 0.10 * Responsive.getWidth(context),
-          ),
+          prefixIconPath: AppAssets.joiningDate,
+          suffixIconPath: AppAssets.downArrow,
+          enabled: false,
 
-          onClick: () {
+          onTap: () async {
             showModalBottomSheet(
               backgroundColor: AppColors.white,
               context: context,
@@ -443,9 +437,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                 child: DialDatePickerWidget(
                   initialDate: DateTime.now(),
                   onSubmit: (selectedDate) {
-                    final String date = DateFormat(
-                      'dd-MM-yy',
-                    ).format(selectedDate);
+                    final String date = DateFormat('dd-MM-yy',).format(selectedDate);
                     joiningDateController.text = date;
                     Navigator.pop(context);
                   },
@@ -457,65 +449,38 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
         SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
-        //TODO: ISSUE OF RENDERING
-        // Row(
-        //   children: [
-        //     LabeledTextField(
-        //       label: 'First Name *',
-        //       hint: 'First Name',
-        //       textAlignment: TextAlign.start,
-        //       controller: _firstNameController,
-        //       validator: (val) =>
-        //           val == null || val.isEmpty ? 'Required' : null,
-        //       textInputType: TextInputType.name,
-        //       widthFactor: 0.43 * Responsive.getWidth(context),
-        //       border: OutlineInputBorder(
-        //         borderSide: BorderSide(
-        //           color: AppTheme.getColor(context).outline,
-        //         ),
-        //         borderRadius: BorderRadius.circular(
-        //           10 * Responsive.getResponsive(context),
-        //         ),
-        //       ),
-        //       textFieldHeight: 0.063 * Responsive.getHeight(context),
-        //       typingtextStyle: TextStyle(
-        //         color: AppTheme.getColor(context).onSurface,
-        //         fontWeight: FontWeight.w600,
-        //       ),
-        //     ),
-        //     const Spacer(),
-        //     LabeledTextField(
-        //       typingtextStyle: TextStyle(
-        //         color: AppTheme.getColor(context).onSurface,
-        //         fontWeight: FontWeight.w600,
-        //       ),
-        //       label: 'Last Name *',
-        //       hint: 'Last Name',
-        //       textAlignment: TextAlign.start,
-        //       controller: _lastNameController,
-        //       validator: (val) =>
-        //           val == null || val.isEmpty ? 'Required' : null,
-        //       textInputType: TextInputType.name,
-        //       widthFactor: 0.43 * Responsive.getWidth(context),
-        //       textFieldHeight: 0.063 * Responsive.getHeight(context),
-        //       border: OutlineInputBorder(
-        //         borderSide: BorderSide(
-        //           color: AppTheme.getColor(context).outline,
-        //         ),
-        //         borderRadius: BorderRadius.circular(
-        //           10 * Responsive.getResponsive(context),
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
+        // First Name and Last Name
+        Row(
+          children: [
+            Expanded(
+              child: NewTextField(
+                label: 'First Name',
+                hintText: 'First Name',
+                controller: _firstNameController,
+                // Add validation if needed
+                isRequired: true,
+              ),
+            ),
+            SizedBox(width: 0.02 * Responsive.getWidth(context)),
+            Expanded(
+              child: NewTextField(
+                label: 'Last Name',
+                hintText: 'Last Name',
+                controller: _lastNameController,
+                // Add validation if needed
+                isRequired: true,
+              ),
+            ),
+          ],
+        ),
 
         SizedBox(height: 0.020 * Responsive.getHeight(context)),
+
 
         CustomText(
           'Gender',
           color: AppTheme.getColor(context).onSurfaceVariant,
-          fontSize: 14 * Responsive.getResponsiveText(context),
+          fontSize: 13 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.bold,
         ),
 
@@ -525,6 +490,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
             CustomTextRadioButton(
               gender: 'MALE',
               selectedGender: selectedGender,
+              textStyle: TextStyle(
+                fontFamily: 'Gilroy-semiBold',
+                fontSize: 14 * Responsive.getResponsiveText(context),
+                fontWeight: FontWeight.w600,
+                color: AppTheme.getColor(context).onSurfaceVariant,
+              ),
               onSelect: (val) {
                 setState(() {
                   selectedGender = val;
@@ -537,6 +508,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
             CustomTextRadioButton(
               gender: 'FEMALE',
               selectedGender: selectedGender,
+              textStyle: TextStyle(
+              fontFamily: 'Gilroy-semiBold',
+              fontSize: 14 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.w600,
+              color: AppTheme.getColor(context).onSurfaceVariant,
+            ),
               onSelect: (val) {
                 setState(() {
                   selectedGender = val;
@@ -547,13 +524,14 @@ class _SignupFormPageState extends State<SignupFormPage> {
             ),
           ],
         ),
+
         SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
         if ('240' == preferenceManager.getCountryId()) ...[
           CustomText(
             'Number of Dependent *',
             color: AppTheme.getColor(context).onSurfaceVariant,
-            fontSize: 14 * Responsive.getResponsiveText(context),
+            fontSize: 13 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.bold,
           ),
           SizedBox(height: 0.005 * Responsive.getHeight(context)),
@@ -581,7 +559,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
         CustomText(
           'Phone Number *',
           color: AppTheme.getColor(context).onSurfaceVariant,
-          fontSize: 14 * Responsive.getResponsiveText(context),
+          fontSize: 13 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.bold,
         ),
         SizedBox(height: 0.005 * Responsive.getHeight(context)),
@@ -611,7 +589,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
         CustomText(
           'Email Address',
           color: AppTheme.getColor(context).onSurfaceVariant,
-          fontSize: 14 * Responsive.getResponsiveText(context),
+          fontSize: 13 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.bold,
         ),
         SizedBox(height: 0.005 * Responsive.getHeight(context)),
@@ -666,7 +644,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       text: 'Please confirm that you agree to our ',
                       style: TextStyle(
                         color: AppTheme.getColor(context).onSurface,
-                        fontSize: 14 * Responsive.getResponsiveText(context),
+                        fontSize: 12 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -674,7 +652,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       text: 'Privacy Policy',
                       style: TextStyle(
                         color: AppTheme.getColor(context).primary,
-                        fontSize: 14 * Responsive.getResponsiveText(context),
+                        fontSize: 12 * Responsive.getResponsiveText(context),
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
@@ -691,6 +669,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       text: 'Terms & Conditions',
                       style: TextStyle(
                         color: AppTheme.getColor(context).primary,
+                        fontSize: 12 * Responsive.getResponsiveText(context),
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
@@ -714,6 +693,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       text: 'Cancellation & Refund Policy',
                       style: TextStyle(
                         color: AppTheme.getColor(context).primary,
+                        fontSize: 12 * Responsive.getResponsiveText(context),
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
@@ -747,6 +727,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
             fontWeight: FontWeight.bold,
           ),
           onTap: () {
+
+            context.go(RoutePaths.contactAdmin);
 
             final bool isValid = FormValidator.validateAll(
               selectedBranchId: selectedBranchId,
@@ -800,9 +782,9 @@ class _SignupFormPageState extends State<SignupFormPage> {
               print('data add primary: $value');
             });
 
-            // PrimaryRegisterBloc(
-            //   registerUseCase: GetIt.I<PrimaryRegisterUseCase>(),
-            // ).add(LoadAddPrimaryUser(dataMap));
+            PrimaryRegisterBloc(
+              registerUseCase: GetIt.I<PrimaryRegisterUseCase>(),
+            ).add(LoadAddPrimaryUser(dataMap));
 
             // showCustomEmailVerificationSheet(
             //   imageUrl: 'assets/sign_in/email.png',
@@ -853,14 +835,14 @@ class _SignupFormPageState extends State<SignupFormPage> {
               children: [
                 CustomText(
                   'Already have an account?',
-                  fontSize: 15 * Responsive.getResponsiveText(context),
+                  fontSize: 13 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.getColor(context).onSurface,
                 ),
                 const SizedBox(width: 5),
                 CustomText(
                   'Sign in here',
-                  fontSize: 15 * Responsive.getResponsiveText(context),
+                  fontSize: 13 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                   color: AppTheme.getColor(context).primary,
                 ),
