@@ -1,11 +1,21 @@
 import 'package:equatable/equatable.dart';
 import 'package:myco_flutter/features/work_allocation/data/models/request/add_work_allocation_requset.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widgets/Employee_details.dart';
 
 abstract class WorkAllocationEvent extends Equatable {
   const WorkAllocationEvent();
 
   @override
   List<Object?> get props => [];
+}
+
+class SelectWorkCategoryEvent extends WorkAllocationEvent {
+  final String selectedCategory;
+
+  const SelectWorkCategoryEvent(this.selectedCategory);
+
+  @override
+  List<Object?> get props => [selectedCategory];
 }
 
 class FetchWorkCategoryList extends WorkAllocationEvent {
@@ -31,3 +41,21 @@ class AddWorkAllocationEvent extends WorkAllocationEvent {
   @override
   List<Object?> get props => [request];
 }
+
+class FilterEmployeesEvent extends WorkAllocationEvent {
+  final String query;
+  final List<Employee> allEmployees;
+
+  FilterEmployeesEvent(this.query, this.allEmployees);
+  
+  @override
+  List<Object?> get props => [query, allEmployees];
+}
+
+class SelectEmployeeEvent extends WorkAllocationEvent {
+  final Employee employee;
+
+  SelectEmployeeEvent(this.employee);
+}
+
+class RemoveSelectedEmployeeEvent extends WorkAllocationEvent {}
