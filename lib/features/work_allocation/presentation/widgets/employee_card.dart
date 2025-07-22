@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -77,16 +78,20 @@ class EmployeeSelectionCard extends StatelessWidget {
               boxPadding ??
               const EdgeInsets.only(top: 12, left: 16, right: 24, bottom: 2),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xffEEF7FD) : Colors.white,
+            color: isSelected
+                ? AppTheme.getColor(context).surfaceContainer
+                : AppTheme.getColor(context).onPrimary,
             borderRadius: BorderRadius.circular(borderRadius ?? 20),
             border: Border.all(
               color: isSelected
                   ? Colors.transparent
-                  : borderColor ?? AppColors.primary,
+                  : borderColor ?? AppTheme.getColor(context).primary,
             ),
             boxShadow: [
               BoxShadow(
-                color: isSelected ? Colors.grey.shade300 : Colors.transparent,
+                color: isSelected
+                    ? AppTheme.getColor(context).onSurfaceVariant
+                    : Colors.transparent,
                 spreadRadius: 3,
                 blurRadius: 5,
               ),
@@ -112,15 +117,19 @@ class EmployeeSelectionCard extends StatelessWidget {
                             gradient: LinearGradient(
                               colors: isSelected
                                   ? [
-                                      selectedColor ?? AppColors.primary,
-                                      (selectedColor ?? AppColors.primary)
+                                      selectedColor ??
+                                          AppTheme.getColor(context).primary,
+                                      (selectedColor ??
+                                              AppTheme.getColor(
+                                                context,
+                                              ).primary)
                                           .withAlpha(150),
                                       Colors.white,
                                     ]
                                   : [
                                       Colors.grey.shade400,
                                       Colors.grey.shade300,
-                                      Colors.white,
+                                      AppTheme.getColor(context).onPrimary,
                                     ],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
@@ -128,8 +137,8 @@ class EmployeeSelectionCard extends StatelessWidget {
                           ),
                           child: Container(
                             padding: const EdgeInsets.all(12.0),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
+                            decoration: BoxDecoration(
+                              color: AppTheme.getColor(context).onPrimary,
                               shape: BoxShape.circle,
                             ),
                             child: Container(
@@ -163,9 +172,11 @@ class EmployeeSelectionCard extends StatelessWidget {
                               gradient: LinearGradient(
                                 colors: isSelected
                                     ? [
-                                        AppColors.primary,
-                                        AppColors.primary.withAlpha(150),
-                                        Colors.white,
+                                        AppTheme.getColor(context).primary,
+                                        AppTheme.getColor(
+                                          context,
+                                        ).primary.withAlpha(150),
+                                        AppTheme.getColor(context).onPrimary,
                                       ]
                                     : [
                                         Colors.grey.shade400,
@@ -180,7 +191,7 @@ class EmployeeSelectionCard extends StatelessWidget {
                             child: Container(
                               decoration: BoxDecoration(
                                 color: isSelected
-                                    ? AppColors.primary
+                                    ? AppTheme.getColor(context).primary
                                     : Colors.grey.shade400,
                                 shape: BoxShape.circle,
                               ),

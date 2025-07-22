@@ -34,17 +34,50 @@ class AssignWorkPage extends StatelessWidget {
     Employee(name: 'Demo', role: 'Flutter', imageUrl: ''),
   ];
 
+  int? _currentFieldErrorIndex;
+
+  /*void _validateFieldByField() {
+    final controllers = [
+      categoryController,
+      srNoController,
+      siteController,
+      locationController,
+      startDateController,
+      targetDateController,
+      remarkController,
+    ];
+
+    for (int i = 0; i < controllers.length; i++) {
+      if (controllers[i].text.trim().isEmpty) {
+        setState(() {
+          _currentFieldErrorIndex = i;
+        });
+        _formKey.currentState!.validate(); // trigger rebuild
+        return;
+      }
+    }
+
+    setState(() {
+      _currentFieldErrorIndex = null;
+    });
+
+    log('All fields are valid. Proceed to submit.');
+  }*/
+
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: const CustomAppbar(title: 'Assign Work'),
     body: SingleChildScrollView(
       padding: EdgeInsets.symmetric(
-        horizontal: VariableBag.screenHorizontalPadding * Responsive.getResponsive(context),
+        horizontal:
+            VariableBag.screenHorizontalPadding *
+            Responsive.getResponsive(context),
       ),
       child: Form(
         key: _formKey,
         child: Column(
-          spacing: 12 * Responsive.getResponsive(context),
+          spacing:
+              VariableBag.textFieldRowGap * Responsive.getResponsive(context),
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BlocBuilder<WorkAllocationBloc, WorkAllocationState>(
@@ -213,29 +246,25 @@ class AssignWorkPage extends StatelessWidget {
               maxLines: 10,
               keyboardType: TextInputType.multiline,
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: 20 * Responsive.getResponsive(context),
-                bottom: 50 * Responsive.getResponsive(context),
+            SizedBox(height: 0.010 * Responsive.getHeight(context)),
+            MyCoButton(
+              title: 'Submit',
+              onTap: () {
+                if (_formKey.currentState!.validate()) {
+                  print('Form Validated');
+                }
+              },
+              backgroundColor: AppTheme.getColor(context).primary,
+              textStyle: TextStyle(
+                fontSize: 16 * Responsive.getResponsiveText(context),
+                color: AppTheme.getColor(context).onPrimary,
+                fontWeight: FontWeight.w500,
               ),
-              child: MyCoButton(
-                title: 'Submit',
-                onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    print('Form Validated');
-                  }
-                },
-                backgroundColor: AppTheme.getColor(context).primary,
-                textStyle: TextStyle(
-                  fontSize: 16 * Responsive.getResponsiveText(context),
-                  color: AppTheme.getColor(context).onPrimary,
-                  fontWeight: FontWeight.w500,
-                ),
-                width: double.infinity,
-                isShadowBottomLeft: true,
-                boarderRadius: 30,
-              ),
+              width: double.infinity,
+              isShadowBottomLeft: true,
+              boarderRadius: 30,
             ),
+            SizedBox(height: 0.020 * Responsive.getHeight(context)),
           ],
         ),
       ),
