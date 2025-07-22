@@ -11,7 +11,6 @@ class AssetsFilterState {
 abstract class AssetsState extends Equatable {
   final int selectedIndex;
   const AssetsState({required this.selectedIndex});
-
   @override
   List<Object?> get props => [selectedIndex];
 }
@@ -24,28 +23,42 @@ class AssetsLoading extends AssetsState {
   const AssetsLoading({required super.selectedIndex});
 }
 
-// class AssetsLoaded extends AssetsState {
-//   final AssetsEntity assets;
-
-//   const AssetsLoaded({required this.assets, required super.selectedIndex});
-
-//   @override
-//   List<Object?> get props => [assets, selectedIndex];
-// }
-
 class AssetsLoaded extends AssetsState {
-  final List<AssetEntity> assets;
-  final List<AssetEntity> originalAssets;
-  final int selectedIndex;
+  final List<AssetEntity> activeAssets;
+  final List<AssetEntity> pastAssets;
+  final List<AssetEntity> allAssets;
+  final List<AssetEntity> currentAssets;
 
   const AssetsLoaded({
-    required this.assets,
-    required this.originalAssets,
-    required this.selectedIndex,
-  }) : super(selectedIndex: 0);
+    required super.selectedIndex,
+    required this.activeAssets,
+    required this.pastAssets,
+    required this.allAssets,
+    required this.currentAssets,
+  });
 
   @override
-  List<Object?> get props => [assets, originalAssets, selectedIndex];
+  List<Object?> get props => [
+    activeAssets,
+    pastAssets,
+    allAssets,
+    currentAssets,
+    selectedIndex,
+  ];
+
+  AssetsLoaded copyWith({
+    List<AssetEntity>? activeAssets,
+    List<AssetEntity>? pastAssets,
+    List<AssetEntity>? allAssets,
+    List<AssetEntity>? currentAssets,
+    int? selectedIndex,
+  }) => AssetsLoaded(
+    activeAssets: activeAssets ?? this.activeAssets,
+    pastAssets: pastAssets ?? this.pastAssets,
+    allAssets: allAssets ?? this.allAssets,
+    currentAssets: currentAssets ?? this.currentAssets,
+    selectedIndex: selectedIndex ?? this.selectedIndex,
+  );
 }
 
 class AssetsError extends AssetsState {

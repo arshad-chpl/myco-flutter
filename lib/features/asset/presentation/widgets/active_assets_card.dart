@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/custom_dash_line.dart';
@@ -50,6 +49,7 @@ class ActiveAssetsCard extends StatelessWidget {
   final double? spaceBetweenData;
   final Color? titleColor;
   final Color? dashLineColor;
+  final Key? mainImageKey, imageKey;
   const ActiveAssetsCard({
     required this.title,
     required this.subTitle,
@@ -62,7 +62,7 @@ class ActiveAssetsCard extends StatelessWidget {
     this.spaceBetweenData,
     this.dashLineColor,
     this.titleColor,
-    required this.handoverImageList,
+    required this.handoverImageList, this.mainImageKey, this.imageKey,
   });
 
   @override
@@ -91,6 +91,7 @@ class ActiveAssetsCard extends StatelessWidget {
               children: [
                 if (image.startsWith('http') || image.startsWith('https'))
                   CachedImage(
+                    key: mainImageKey,
                     imageUrl: image,
                     width: 0.3 * Responsive.getWidth(context),
                     height: 0.3 * Responsive.getWidth(context),
@@ -150,6 +151,7 @@ class ActiveAssetsCard extends StatelessWidget {
                 ),
                 Expanded(
                   child: ImageGridPreviewWidget(
+                    key: imageKey,
                     boxHeight: 0.14 * Responsive.getWidth(context),
                     boxWidth: 0.14 * Responsive.getWidth(context),
                     borderRadius: 10,

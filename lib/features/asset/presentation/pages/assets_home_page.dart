@@ -13,6 +13,7 @@ import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/asset/domain/entities/asset_entity.dart';
 import 'package:myco_flutter/features/asset/presentation/bloc/assets_bloc.dart';
 import 'package:myco_flutter/features/asset/presentation/bloc/assets_event.dart';
 import 'package:myco_flutter/features/asset/presentation/bloc/assets_state.dart';
@@ -27,8 +28,21 @@ import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
-class AssetsHomePage extends StatelessWidget {
+class AssetsHomePage extends StatefulWidget {
   const AssetsHomePage({super.key});
+
+  @override
+  State<AssetsHomePage> createState() => _AssetsHomePageState();
+}
+
+class _AssetsHomePageState extends State<AssetsHomePage> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AssetsBloc>().add(const InitializeAssetsEvent());
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,36 +143,36 @@ class AssetsHomePage extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                 horizontal: 0.04 * Responsive.getWidth(context),
               ),
-              child: CustomSearchField(
-                hintText: 'Search',
-                isSuffixIconOn: true,
-                suffixIcon: Image.asset(
-                  AppAssets.imageScanner,
-                  height: 0.03 * Responsive.getHeight(context),
-                  // fit: BoxFit.cover,
-                ),
-              ),
-              //  MyCoTextfield(
-              //   key: ValueKey(bloc.state.selectedIndex),
-              //   hintText: 'Search',
-              //   maxLines: 1,
-              //   textAlignment: TextAlign.start,
-              //   hintTextStyle: AppTheme.getTextStyle(
-              //     context,
-              //   ).labelLarge!.copyWith(color: AppColors.textSecondary),
-              //   preFixImage: AppAssets.imageSearch,
-              //   isSuffixIconOn: true,
-              //   suFixImage: AppAssets.imageScanner,
-              //   suFixImageWidth: 25,
-              //   onTap1: () => context.push('/qr-scanner'),
-              //   contentPadding: EdgeInsets.only(
-              //     top: 0.012 * Responsive.getHeight(context),
-              //   ),
-              //   onChanged: (value) {
-              //     context.read<AssetsBloc>().add(SearchAssetsEvent(value));
-              //   },
-              //   boarderRadius: 12 * Responsive.getResponsive(context),
-              // ),
+              child:
+                  //  CustomSearchField(
+                  //   hintText: 'Search',
+                  //   isSuffixIconOn: true,
+                  //   suffixIcon: Image.asset(
+                  //     AppAssets.imageScanner,
+                  //     height: 0.03 * Responsive.getHeight(context),
+                  //   ),
+                  // ),
+                  MyCoTextfield(
+                    key: ValueKey(bloc.state.selectedIndex),
+                    hintText: 'Search',
+                    maxLines: 1,
+                    textAlignment: TextAlign.start,
+                    hintTextStyle: AppTheme.getTextStyle(
+                      context,
+                    ).labelLarge!.copyWith(color: AppColors.textSecondary),
+                    preFixImage: AppAssets.imageSearch,
+                    isSuffixIconOn: true,
+                    suFixImage: AppAssets.imageScanner,
+                    suFixImageWidth: 25,
+                    onTap1: () => context.push('/qr-scanner'),
+                    contentPadding: EdgeInsets.only(
+                      top: 0.012 * Responsive.getHeight(context),
+                    ),
+                    onChanged: (value) {
+                      context.read<AssetsBloc>().add(SearchAssetsEvent(value));
+                    },
+                    boarderRadius: 12 * Responsive.getResponsive(context),
+                  ),
             ),
           ),
 
@@ -183,10 +197,40 @@ class AssetsHomePage extends StatelessWidget {
                       const Color(0xFF08A4BB),
                     ],
                     selectedIndex: state.selectedIndex,
-                    tabs: const ['Active Assets', 'Past Assets', 'All Assets'],
+                    tabs: [
+                      'Active Assets (${state is AssetsLoaded ? state.activeAssets.length : 0})',
+                      'Past Assets (${state is AssetsLoaded ? state.pastAssets.length : 0})',
+                      'All Assets (${state is AssetsLoaded ? state.allAssets.length : 0})',
+                    ],
                     onTabChange: (int index) {
                       bloc.add(TabChanged(index));
                     },
+                    unselectedTextStyles: [
+                      TextStyle(
+                        fontSize: 10 * Responsive.getResponsiveText(context),
+                        color: AppTheme.getColor(context).secondary,
+                        fontFamily: 'Gilroy-Bold',
+                        fontWeight: FontWeight.w700,
+                      ),
+                      TextStyle(
+                        fontSize: 10 * Responsive.getResponsiveText(context),
+                        color: AppTheme.getColor(context).primary,
+                        fontFamily: 'Gilroy-Bold',
+                        fontWeight: FontWeight.w700,
+                      ),
+                      TextStyle(
+                        fontSize: 10 * Responsive.getResponsiveText(context),
+                        color: const Color(0xFF08A4BB),
+                        fontFamily: 'Gilroy-Bold',
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ],
+                    selectedTextStyle: TextStyle(
+                      fontSize: 10 * Responsive.getResponsiveText(context),
+                      color: Colors.white,
+                      fontFamily: 'Gilroy-Bold',
+                      fontWeight: FontWeight.w700,
+                    ),
                     unselectedBorderAndTextColor: AppTheme.getColor(
                       context,
                     ).outline,
@@ -393,8 +437,7 @@ class AssetsListPage extends StatelessWidget {
             ),
           );
         } else if (state is AssetsLoaded) {
-          final assets = state.assets;
-
+          final assets = state.currentAssets;
           return SliverList.separated(
             itemCount: assets.length,
             separatorBuilder: (_, __) =>
@@ -404,6 +447,13 @@ class AssetsListPage extends StatelessWidget {
 
               if (oldItems == '1') {
                 return PastAssetsCard(
+                  mainImageKey: Key('main_image_${item.assetsIdView ?? index}'),
+                  handoverImageKey: Key(
+                    'asset_${item.assetsIdView ?? index}_handover',
+                  ),
+                  takeoverImageKey: Key(
+                    'asset_${item.assetsIdView ?? index}_takeover',
+                  ),
                   title: item.assetsName ?? '',
                   subTitle: '(${item.assetsIdView ?? ''})',
                   image: item.assetsFile ?? AppAssets.imageLaptop,
@@ -424,6 +474,8 @@ class AssetsListPage extends StatelessWidget {
               }
 
               return ActiveAssetsCard(
+                imageKey: Key('handover_image_${item.assetsIdView ?? index}'),
+                mainImageKey: Key('main_image_${item.assetsIdView ?? index}'),
                 title: item.assetsName ?? '',
                 subTitle: '(${item.assetsIdView ?? ''})',
                 image: item.assetsFile ?? AppAssets.imageLaptop,

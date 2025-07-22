@@ -60,6 +60,7 @@ class PastAssetsCard extends StatelessWidget {
   final Color? titleColor;
   final Color? dashLineColor;
   final double? dashLinewidth;
+  final Key? mainImageKey, handoverImageKey, takeoverImageKey;
   const PastAssetsCard({
     required this.title,
     required this.subTitle,
@@ -75,7 +76,7 @@ class PastAssetsCard extends StatelessWidget {
     this.spaceBetweenData,
     this.dashLineColor,
     this.dashLinewidth,
-    this.titleColor,
+    this.titleColor, this.mainImageKey, this.handoverImageKey, this.takeoverImageKey,
   });
 
   @override
@@ -105,12 +106,14 @@ class PastAssetsCard extends StatelessWidget {
                 children: [
                   if (image.startsWith('http') || image.startsWith('https'))
                     CachedImage(
+                      key: mainImageKey,
                       imageUrl: image,
                       width: 0.3 * Responsive.getWidth(context),
                       height: 0.3 * Responsive.getWidth(context),
                     )
                   else
                     Image.asset(
+                      key: mainImageKey,
                       image,
                       height: 0.3 * Responsive.getWidth(context),
                       width: 0.3 * Responsive.getWidth(context),
@@ -186,6 +189,7 @@ class PastAssetsCard extends StatelessWidget {
                   ),
                   Expanded(
                     child: ImageGridPreviewWidget(
+                      key: handoverImageKey,
                       boxHeight: 0.14 * Responsive.getWidth(context),
                       boxWidth: 0.14 * Responsive.getWidth(context),
                       borderRadius: 10,
@@ -211,6 +215,7 @@ class PastAssetsCard extends StatelessWidget {
                   ),
                   Expanded(
                     child: ImageGridPreviewWidget(
+                      key: takeoverImageKey,
                       boxHeight: 0.14 * Responsive.getWidth(context),
                       boxWidth: 0.14 * Responsive.getWidth(context),
                       borderRadius: 10,

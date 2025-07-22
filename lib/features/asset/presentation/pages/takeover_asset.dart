@@ -109,16 +109,16 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                         isGalleryShow: true,
                         titleColor: AppTheme.getColor(context).onSurfaceVariant,
                         titleFontSize:
-                            16 * Responsive.getResponsiveText(context),
+                            14 * Responsive.getResponsiveText(context),
                         imageTitleSize:
-                            18 * Responsive.getResponsiveText(context),
+                            16 * Responsive.getResponsiveText(context),
                         imageTitleColor: AppTheme.getColor(
                           context,
                         ).onSurfaceVariant,
                         backgroundColor: const Color(0xFFEEF7FD),
                         containerHeight: 0.1 * Responsive.getHeight(context),
                         pickerBoxBorderRadius: 10,
-                        titleFontWeight: FontWeight.w600,
+                        titleFontWeight: FontWeight.w700,
                         titleWidgetBetweenSpace:
                             0.006 * Responsive.getHeight(context),
                         onSelectMedia: (List<File> selectedFiles) {
@@ -132,8 +132,8 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
 
                       CustomText(
                         'handover_asset_to_other_employee',
-                        fontSize: 16 * Responsive.getResponsiveText(context),
-                        fontWeight: FontWeight.w600,
+                        fontSize: 14 * Responsive.getResponsiveText(context),
+                        fontWeight: FontWeight.w700,
                         color: AppTheme.getColor(context).onSurfaceVariant,
                       ),
 
@@ -154,7 +154,7 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                               textStyle: TextStyle(
                                 fontFamily: 'Gilroy-semiBold',
                                 fontSize:
-                                    16 * Responsive.getResponsiveText(context),
+                                    14 * Responsive.getResponsiveText(context),
                                 fontWeight: FontWeight.w600,
                                 color: AppTheme.getColor(
                                   context,
@@ -186,7 +186,7 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                               textStyle: TextStyle(
                                 fontFamily: 'Gilroy-semiBold',
                                 fontSize:
-                                    16 * Responsive.getResponsiveText(context),
+                                    14 * Responsive.getResponsiveText(context),
                                 fontWeight: FontWeight.w600,
                                 color: AppTheme.getColor(
                                   context,
@@ -290,7 +290,6 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                                 SvgPicture.asset(
                                   AppAssets.assetsElementEqual,
                                   height: 0.06 * Responsive.getWidth(context),
-                                  fit: BoxFit.contain,
                                 ),
 
                                 SizedBox(
@@ -343,16 +342,16 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                             context,
                           ).onSurfaceVariant,
                           titleFontSize:
-                              16 * Responsive.getResponsiveText(context),
+                              14 * Responsive.getResponsiveText(context),
                           imageTitleSize:
-                              18 * Responsive.getResponsiveText(context),
+                              16 * Responsive.getResponsiveText(context),
                           imageTitleColor: AppTheme.getColor(
                             context,
                           ).onSurfaceVariant,
                           backgroundColor: const Color(0xFFEEF7FD),
                           containerHeight: 0.1 * Responsive.getHeight(context),
                           pickerBoxBorderRadius: 10,
-                          titleFontWeight: FontWeight.w600,
+                          titleFontWeight: FontWeight.w700,
                           titleWidgetBetweenSpace:
                               0.006 * Responsive.getHeight(context),
                         ),

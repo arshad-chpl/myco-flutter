@@ -11,6 +11,7 @@ class CommonCard extends StatelessWidget {
   final String buttonText;
   final Widget bottomWidget;
   final void Function()? onTap;
+  final VoidCallback? onHeaderTap;
   final double? headerHeight,
       borderRadius,
       titleSecondTitleBetweenSpace,
@@ -19,7 +20,7 @@ class CommonCard extends StatelessWidget {
   final Color? headerColor, borderColor, headerPrefixIconColor;
   final bool? showHeaderPrefixIcon, showBlackShadowInChild;
   final String? headerPrefixIcon;
-  final Widget? suffixIcon, titleSuffix, subTitleIcon;
+  final Widget? suffixIcon, titleSuffix, subTitleIcon, headerPrefix;
   final double? headerPrefixIconHeight, headerPrefixIconWidth;
   final FontWeight? titleFontWeight,
       secondTitleFontWeight,
@@ -67,6 +68,8 @@ class CommonCard extends StatelessWidget {
     this.buttonTextFontWeight,
     this.buttonTextColor,
     this.buttonTextFontSize,
+    this.onHeaderTap,
+    this.headerPrefix,
   });
 
   @override
@@ -83,138 +86,146 @@ class CommonCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Header
-        Container(
-          height: headerHeight, //?? 0.06 * Responsive.getHeight(context),
-          padding:
-              headerPadding ??
-              EdgeInsets.all(10 * Responsive.getResponsive(context)),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(
-                (borderRadius ?? 12) * Responsive.getResponsive(context) - 1.0,
+        GestureDetector(
+          onTap: onHeaderTap,
+          child: Container(
+            height: headerHeight, //?? 0.06 * Responsive.getHeight(context),
+            padding:
+                headerPadding ??
+                EdgeInsets.all(10 * Responsive.getResponsive(context)),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(
+                  (borderRadius ?? 12) * Responsive.getResponsive(context) -
+                      1.0,
+                ),
               ),
+              boxShadow: [
+                if (showBlackShadowInChild == true)
+                  const BoxShadow(
+                    color: Colors.black26,
+                    offset: Offset(0, 3),
+                    blurRadius: 6,
+                  ),
+                BoxShadow(
+                  color:
+                      headerColor?.withAlpha(180) ??
+                      AppTheme.getColor(context).secondary.withAlpha(180),
+                ),
+                BoxShadow(
+                  color: headerColor ?? AppTheme.getColor(context).secondary,
+                  offset: const Offset(1, 4),
+                  spreadRadius: -6.0,
+                  blurRadius: 6.0,
+                ),
+              ],
             ),
-            boxShadow: [
-              if (showBlackShadowInChild == true)
-                const BoxShadow(
-                  color: Colors.black26,
-                  offset: Offset(0, 3),
-                  blurRadius: 6,
-                ),
-              BoxShadow(
-                color:
-                    headerColor?.withAlpha(180) ??
-                    AppTheme.getColor(context).secondary.withAlpha(180),
-              ),
-              BoxShadow(
-                color: headerColor ?? AppTheme.getColor(context).secondary,
-                offset: const Offset(1, 4),
-                spreadRadius: -6.0,
-                blurRadius: 6.0,
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              if (showHeaderPrefixIcon == true)
-                Image.asset(
-                  headerPrefixIcon ?? 'assets/take_order/profile-circle.png',
-                  // height: headerPrefixIconHeight ?? 0.1 * Responsive.getHeight(context),
-                  width:
-                      headerPrefixIconWidth ??
-                      0.06 * Responsive.getWidth(context),
-                  color: headerPrefixIconColor,
-                ),
-              if (showHeaderPrefixIcon == true)
-                SizedBox(width: 0.02 * Responsive.getWidth(context)),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CustomText(
-                            title,
-                            color:
-                                titleColor ??
-                                AppTheme.getColor(context).onPrimary,
-                            fontSize:
-                                titleFontSize ??
-                                16 * Responsive.getResponsiveText(context),
-                            fontWeight: titleFontWeight ?? FontWeight.w700,
-                          ),
-                        ),
-                        if (titleSuffix != null)
-                          titleSuffix ?? const SizedBox.shrink(),
-                      ],
-                    ),
-
-                    SizedBox(height: titleSecondTitleBetweenSpace),
-                    if (secondTitle != null)
-                      CustomText(
-                        '$secondTitle',
-                        color:
-                            secondTitleColor ??
-                            AppTheme.getColor(context).onPrimary,
-                        fontSize:
-                            secondTitleFontSize ??
-                            16 * Responsive.getResponsiveText(context),
-                        fontWeight: secondTitleFontWeight ?? FontWeight.w700,
+            child: Row(
+              children: [
+                if (showHeaderPrefixIcon == true)
+                  headerPrefix ??
+                      Image.asset(
+                        headerPrefixIcon ??
+                            'assets/take_order/profile-circle.png',
+                        // height: headerPrefixIconHeight ?? 0.1 * Responsive.getHeight(context),
+                        width:
+                            headerPrefixIconWidth ??
+                            0.06 * Responsive.getWidth(context),
+                        color: headerPrefixIconColor,
                       ),
-                    SizedBox(height: secondTitleSubTitleBetweenSpace),
-                    if (subTitle != null)
+                if (showHeaderPrefixIcon == true)
+                  SizedBox(width: 0.02 * Responsive.getWidth(context)),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (subTitleIcon != null)
-                            subTitleIcon ?? const SizedBox.shrink(),
-                          if (subTitleIcon != null)
-                            SizedBox(
-                              width: 0.01 * Responsive.getWidth(context),
-                            ),
-
                           Expanded(
                             child: CustomText(
-                              '$subTitle',
+                              title,
                               color:
-                                  subTitleColor ??
+                                  titleColor ??
                                   AppTheme.getColor(context).onPrimary,
                               fontSize:
-                                  subTitleFontSize ??
-                                  12 * Responsive.getResponsiveText(context),
-                              fontWeight: subTitleFontWeight ?? FontWeight.w600,
+                                  titleFontSize ??
+                                  16 * Responsive.getResponsiveText(context),
+                              fontWeight: titleFontWeight ?? FontWeight.w700,
                             ),
                           ),
+                          if (titleSuffix != null)
+                            titleSuffix ?? const SizedBox.shrink(),
                         ],
                       ),
-                  ],
-                ),
-              ),
-              if (isButton == true)
-                SizedBox(width: 0.02 * Responsive.getWidth(context)),
 
-              if (isButton == true)
-                MyCoButton(
-                  onTap: onTap,
-                  title: buttonText,
-                  textStyle: TextStyle(
-                    fontFamily: 'Gilroy-semiBold',
-                    fontSize:
-                        buttonTextFontSize ??
-                        13 * Responsive.getResponsiveText(context),
-                    color:
-                        buttonTextColor ?? AppTheme.getColor(context).onPrimary,
-                    fontWeight: buttonTextFontWeight,
+                      SizedBox(height: titleSecondTitleBetweenSpace),
+                      if (secondTitle != null)
+                        CustomText(
+                          '$secondTitle',
+                          color:
+                              secondTitleColor ??
+                              AppTheme.getColor(context).onPrimary,
+                          fontSize:
+                              secondTitleFontSize ??
+                              16 * Responsive.getResponsiveText(context),
+                          fontWeight: secondTitleFontWeight ?? FontWeight.w700,
+                        ),
+                      SizedBox(height: secondTitleSubTitleBetweenSpace),
+                      if (subTitle != null)
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (subTitleIcon != null)
+                              subTitleIcon ?? const SizedBox.shrink(),
+                            if (subTitleIcon != null)
+                              SizedBox(
+                                width: 0.01 * Responsive.getWidth(context),
+                              ),
+
+                            Expanded(
+                              child: CustomText(
+                                '$subTitle',
+                                color:
+                                    subTitleColor ??
+                                    AppTheme.getColor(context).onPrimary,
+                                fontSize:
+                                    subTitleFontSize ??
+                                    12 * Responsive.getResponsiveText(context),
+                                fontWeight:
+                                    subTitleFontWeight ?? FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                    ],
                   ),
-                  width: 0.16 * Responsive.getWidth(context),
-                  boarderRadius: 30 * Responsive.getResponsive(context),
-                  height: 0.03 * Responsive.getHeight(context),
-                  isShadowBottomLeft: true,
                 ),
-              if (suffixIcon != null) suffixIcon ?? const SizedBox.shrink(),
-            ],
+                if (isButton == true)
+                  SizedBox(width: 0.02 * Responsive.getWidth(context)),
+
+                if (isButton == true)
+                  MyCoButton(
+                    onTap: onTap,
+                    title: buttonText,
+                    textStyle: TextStyle(
+                      fontFamily: 'Gilroy-semiBold',
+                      fontSize:
+                          buttonTextFontSize ??
+                          13 * Responsive.getResponsiveText(context),
+                      color:
+                          buttonTextColor ??
+                          AppTheme.getColor(context).onPrimary,
+                      fontWeight: buttonTextFontWeight,
+                    ),
+                    width: 0.16 * Responsive.getWidth(context),
+                    boarderRadius: 30 * Responsive.getResponsive(context),
+                    height: 0.03 * Responsive.getHeight(context),
+                    isShadowBottomLeft: true,
+                  ),
+                if (suffixIcon != null) suffixIcon ?? const SizedBox.shrink(),
+              ],
+            ),
           ),
         ),
         bottomWidget,

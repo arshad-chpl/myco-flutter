@@ -234,13 +234,13 @@ class _AddAssets extends State<AddAssets> {
                   isCameraShow: true,
                   isGalleryShow: true,
                   titleColor: AppTheme.getColor(context).onSurfaceVariant,
-                  titleFontSize: 16 * Responsive.getResponsiveText(context),
-                  imageTitleSize: 18 * Responsive.getResponsiveText(context),
+                  titleFontSize: 14 * Responsive.getResponsiveText(context),
+                  imageTitleSize: 16 * Responsive.getResponsiveText(context),
                   imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
                   backgroundColor: const Color(0xFFEEF7FD),
                   containerHeight: 0.1 * Responsive.getHeight(context),
                   pickerBoxBorderRadius: 10,
-                  titleFontWeight: FontWeight.w600,
+                  titleFontWeight: FontWeight.w700,
                   titleWidgetBetweenSpace:
                       0.006 * Responsive.getHeight(context),
                 ),
@@ -255,13 +255,13 @@ class _AddAssets extends State<AddAssets> {
                   isCameraShow: true,
                   isGalleryShow: true,
                   titleColor: AppTheme.getColor(context).onSurfaceVariant,
-                  titleFontSize: 16 * Responsive.getResponsiveText(context),
-                  imageTitleSize: 18 * Responsive.getResponsiveText(context),
+                  titleFontSize: 14 * Responsive.getResponsiveText(context),
+                  imageTitleSize: 16 * Responsive.getResponsiveText(context),
                   imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
                   backgroundColor: const Color(0xFFEEF7FD),
                   containerHeight: 0.1 * Responsive.getHeight(context),
                   pickerBoxBorderRadius: 10,
-                  titleFontWeight: FontWeight.w600,
+                  titleFontWeight: FontWeight.w700,
                   titleWidgetBetweenSpace:
                       0.006 * Responsive.getHeight(context),
                 ),
@@ -272,9 +272,21 @@ class _AddAssets extends State<AddAssets> {
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       // All fields are valid
-                      log("Form is valid. Proceed with submission.");
-                    } else {
-                      log("Form is invalid. Show errors.");
+                      log('Form is valid. Proceed with submission.');
+                      // } else
+                      if (addAssetsControllers
+                          .categoryController
+                          .text
+                          .isNotEmpty) {
+                        log('category empty');
+                      } else if (addAssetsControllers
+                          .branchController
+                          .text
+                          .isNotEmpty) {
+                        log('brand empty');
+                      } else {
+                        log('Form is invalid. Show errors.');
+                      }
                     }
                   },
                   title: 'Submit',

@@ -20,93 +20,103 @@ class AssetsFilterBloc extends Bloc<AssetsFilterEvent, AssetsFilterState> {
   }
 }
 
-// class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
-//   final AssetsUseCases useCases;
-
-//   AssetsBloc(this.useCases) : super(const AssetsInitial()) {
-//     on<TabChanged>(_onTabChanged);
-
-//     // Optionally trigger tab 0 on init
-//     add(TabChanged(0));
-//   }
-
-//   Future<void> _onTabChanged(
-//     TabChanged event,
-//     Emitter<AssetsState> emit,
-//   ) async {
-//     emit(AssetsLoading(selectedIndex: event.index));
-
-//     final oldItems = _mapIndexToOldItems(event.index);
-
-//     if (oldItems == '2') {
-//       // Don't call API for "All" tab — skip if needed
-//       return;
-//     }
-
-//     final dataMap = {
-//       'getAssetsNew': 'getAssetsNew',
-//       'society_id': '1',
-//       'unit_id': '1718',
-//       'user_id': '1679',
-//       'language_id': '1',
-//       'floor_id': '1',
-//       'old_items': oldItems,
-//     };
-
-//     final result = await useCases.getAssets(dataMap);
-
-//     result.fold(
-//       (failure) => emit(
-//         AssetsError(message: failure.message, selectedIndex: event.index),
-//       ),
-//       (entity) =>
-//           emit(AssetsLoaded(assets: entity, selectedIndex: event.index)),
-//     );
-//   }
-
-//   String? _mapIndexToOldItems(int index) {
-//     switch (index) {
-//       case 0:
-//         return '0'; // Active
-//       case 1:
-//         return '1'; // Past
-//       default:
-//         return '2'; // All tab — may not need API
-//     }
-//   }
-// }
-
 class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
   final AssetsUseCases useCases;
-
-  AssetsEntity? _allAssetsEntity;
+  AssetsEntity? _activeAssetsEntity, _pastAssetsEntity, _allAssetsEntity;
 
   AssetsBloc(this.useCases) : super(const AssetsInitial()) {
+    on<InitializeAssetsEvent>(_onInitialize);
     on<TabChanged>(_onTabChanged);
     on<SearchAssetsEvent>(_onSearch);
-    add(const TabChanged(0)); // Default tab
+  }
+
+  Future<void> _onInitialize(
+    InitializeAssetsEvent event,
+    Emitter<AssetsState> emit,
+  ) async {
+    emit(const AssetsLoading(selectedIndex: 0));
+    final results = await Future.wait([
+      _fetchAssetsData(0),
+      _fetchAssetsData(1),
+    ]);
+    _activeAssetsEntity = results[0];
+    _pastAssetsEntity = results[1];
+
+    emit(
+      AssetsLoaded(
+        selectedIndex: 0,
+        activeAssets: _activeAssetsEntity?.assets ?? [],
+        pastAssets: _pastAssetsEntity?.assets ?? [],
+        allAssets: _allAssetsEntity?.assets ?? [],
+        currentAssets: _activeAssetsEntity?.assets ?? [],
+      ),
+    );
   }
 
   Future<void> _onTabChanged(
     TabChanged event,
     Emitter<AssetsState> emit,
   ) async {
-    emit(AssetsLoading(selectedIndex: event.index));
+    final currentState = state;
+    if (currentState is! AssetsLoaded) return;
 
-    final oldItems = _mapIndexToOldItems(event.index);
-
-    if (oldItems == '2') {
-      // All tab — no API call, show cached or empty
-      emit(
-        AssetsLoaded(
-          assets: _allAssetsEntity?.assets ?? [],
-          originalAssets: _allAssetsEntity?.assets ?? [],
-          selectedIndex: event.index,
-        ),
-      );
-      return;
+    List<AssetEntity> newCurrentAssets;
+    switch (event.index) {
+      case 0:
+        newCurrentAssets = currentState.activeAssets;
+        break;
+      case 1:
+        newCurrentAssets = currentState.pastAssets;
+        break;
+      case 2:
+        newCurrentAssets = currentState.allAssets;
+        break;
+      default:
+        newCurrentAssets = [];
     }
+    emit(
+      currentState.copyWith(
+        selectedIndex: event.index,
+        currentAssets: newCurrentAssets,
+      ),
+    );
 
+    // Optional: trigger fetch if empty
+    // ...
+  }
+
+  void _onSearch(SearchAssetsEvent event, Emitter<AssetsState> emit) {
+    final currentState = state;
+    if (currentState is! AssetsLoaded) return;
+
+    List<AssetEntity> baseList;
+    switch (currentState.selectedIndex) {
+      case 0:
+        baseList = currentState.activeAssets;
+        break;
+      case 1:
+        baseList = currentState.pastAssets;
+        break;
+      case 2:
+        baseList = currentState.allAssets;
+        break;
+      default:
+        baseList = [];
+    }
+    if (event.query.trim().isEmpty) {
+      emit(currentState.copyWith(currentAssets: baseList));
+    } else {
+      final filtered = baseList.where((e) {
+        final name = (e.assetsName ?? '').toLowerCase();
+        final id = (e.assetsIdView ?? '').toLowerCase();
+        final query = event.query.toLowerCase();
+        return name.contains(query) || id.contains(query);
+      }).toList();
+      emit(currentState.copyWith(currentAssets: filtered));
+    }
+  }
+
+  Future<AssetsEntity?> _fetchAssetsData(int index) async {
     final dataMap = {
       'getAssetsNew': 'getAssetsNew',
       'society_id': '1',
@@ -114,50 +124,11 @@ class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
       'user_id': '1679',
       'language_id': '1',
       'floor_id': '1',
-      'old_items': oldItems,
+      'old_items': _mapIndexToOldItems(index),
     };
 
     final result = await useCases.getAssets(dataMap);
-
-    result.fold(
-      (failure) => emit(
-        AssetsError(message: failure.message, selectedIndex: event.index),
-      ),
-      (entity) {
-        _allAssetsEntity = entity;
-        emit(
-          AssetsLoaded(
-            assets: entity.assets ?? [],
-            originalAssets: entity.assets ?? [],
-            selectedIndex: event.index,
-          ),
-        );
-      },
-    );
-  }
-
-  void _onSearch(SearchAssetsEvent event, Emitter<AssetsState> emit) {
-    final currentState = state;
-    if (currentState is AssetsLoaded) {
-      final query = event.query.toLowerCase().trim();
-
-      final filtered = currentState.originalAssets.where((asset) {
-        final name = asset.assetsName?.toLowerCase() ?? '';
-        final brand = asset.assetsBrandName?.toLowerCase() ?? '';
-        final category = asset.assetsCategory?.toLowerCase() ?? '';
-        return name.contains(query) ||
-            brand.contains(query) ||
-            category.contains(query);
-      }).toList();
-
-      emit(
-        AssetsLoaded(
-          assets: filtered,
-          originalAssets: currentState.originalAssets,
-          selectedIndex: currentState.selectedIndex,
-        ),
-      );
-    }
+    return result.fold((failure) => null, (entity) => entity);
   }
 
   String _mapIndexToOldItems(int index) {
@@ -167,7 +138,7 @@ class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
       case 1:
         return '1'; // Past
       default:
-        return '2'; // All
+        return '0'; // All
     }
   }
 }
