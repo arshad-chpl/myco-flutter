@@ -109,8 +109,15 @@ flutter:
     - assets/face_detection/
     - assets/svgs/visit/
     - assets/dashboard/svgs/
+
+    - assets/dashboard/svgs/
     - assets/assets/
+    - assets/svgs/work_allocation/
+
+    - assets/asset/
+
     - assets/svgs/take_order/
+    - assets/work_allocation/
     - assets/animations/
     - assets/stepper/
   # An image asset can refer to one or more resolution-specific "variants", see
