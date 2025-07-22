@@ -17,7 +17,6 @@ class AssetsRemoteDataSourceImpl extends AssetsRemoteDataSource {
       'https://dev.my-company.app/india/employeeMobileApi/assets_controller.php',
       encryptedBody,
     );
-
     return AssetModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 }

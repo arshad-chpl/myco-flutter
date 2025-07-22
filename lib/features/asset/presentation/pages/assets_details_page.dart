@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -44,24 +45,35 @@ class AssetsDetailsPage extends StatelessWidget {
           ),
         ],
         actionsPadding: EdgeInsets.only(
-          right: 0.04 * Responsive.getWidth(context),
+          right:
+              VariableBag.screenHorizontalPadding *
+              Responsive.getResponsive(context),
         ),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: 0.04 * Responsive.getWidth(context),
+          horizontal:
+              VariableBag.screenHorizontalPadding *
+              Responsive.getResponsive(context),
         ),
         child: SingleChildScrollView(
           child: Column(
             children: [
               //
               detailsCard(context),
-              SizedBox(height: 0.03 * Responsive.getHeight(context)),
+              SizedBox(
+                height:
+                    VariableBag.formContentSpacingVertical *
+                    Responsive.getResponsive(context),
+              ),
 
               // -- Assets History --
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(16 * Responsive.getResponsive(context)),
+                padding: EdgeInsets.all(
+                  VariableBag.commonContainerPadding *
+                      Responsive.getResponsive(context),
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
                     12 * Responsive.getResponsive(context),
@@ -86,11 +98,15 @@ class AssetsDetailsPage extends StatelessWidget {
                 child: CustomText(
                   'assets_history',
                   color: AppTheme.getColor(context).onPrimary,
-                  fontSize: 20 * Responsive.getResponsiveText(context),
+                  fontSize: 18 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 0.03 * Responsive.getHeight(context)),
+              SizedBox(
+                height:
+                    VariableBag.formContentSpacingVertical *
+                    Responsive.getResponsive(context),
+              ),
 
               // -- First Box --
               Container(
@@ -104,9 +120,9 @@ class AssetsDetailsPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16 * Responsive.getResponsive(context),
-                        vertical: 16 * Responsive.getResponsive(context),
+                      padding: EdgeInsets.all(
+                        VariableBag.commonContainerPadding *
+                            Responsive.getResponsive(context),
                       ),
                       child: profileRowData(
                         context: context,
@@ -122,9 +138,9 @@ class AssetsDetailsPage extends StatelessWidget {
                       height: 0,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16 * Responsive.getResponsive(context),
-                        vertical: 16 * Responsive.getResponsive(context),
+                      padding: EdgeInsets.all(
+                        VariableBag.commonContainerPadding *
+                            Responsive.getResponsive(context),
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -132,25 +148,23 @@ class AssetsDetailsPage extends StatelessWidget {
                           Row(
                             children: [
                               SizedBox(
-                                width: 0.36 * Responsive.getWidth(context),
+                                width: 0.34 * Responsive.getWidth(context),
                                 child: const AssetsVerticalData(
                                   title: 'handover',
                                   data: '02-05-2025',
                                 ),
                               ),
-                              Expanded(
-                                child: ImageGridPreviewWidget(
-                                  boxHeight:
-                                      0.14 * Responsive.getWidth(context),
-                                  boxWidth: 0.14 * Responsive.getWidth(context),
-                                  borderRadius: 10,
-                                  imageList: const [
-                                    'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
-                                    'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                                    AppAssets.imageLaptop,
-                                    AppAssets.imageLaptop,
-                                  ],
-                                ),
+                              const Spacer(),
+                              ImageGridPreviewWidget(
+                                boxHeight: 0.14 * Responsive.getWidth(context),
+                                boxWidth: 0.14 * Responsive.getWidth(context),
+                                borderRadius: 10,
+                                imageList: const [
+                                  'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+                                  'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+                                  AppAssets.imageLaptop,
+                                  AppAssets.imageLaptop,
+                                ],
                               ),
                             ],
                           ),
@@ -205,7 +219,11 @@ class AssetsDetailsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 0.02 * Responsive.getHeight(context)),
+              SizedBox(
+                height:
+                    VariableBag.formContentSpacingVertical *
+                    Responsive.getResponsive(context),
+              ),
 
               // -- Second Box --
               Container(
@@ -219,9 +237,9 @@ class AssetsDetailsPage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16 * Responsive.getResponsive(context),
-                        vertical: 16 * Responsive.getResponsive(context),
+                      padding: EdgeInsets.all(
+                        VariableBag.commonContainerPadding *
+                            Responsive.getResponsive(context),
                       ),
                       child: profileRowData(
                         context: context,
@@ -237,9 +255,9 @@ class AssetsDetailsPage extends StatelessWidget {
                       height: 0,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16 * Responsive.getResponsive(context),
-                        vertical: 16 * Responsive.getResponsive(context),
+                      padding: EdgeInsets.all(
+                        VariableBag.commonContainerPadding *
+                            Responsive.getResponsive(context),
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
@@ -248,25 +266,23 @@ class AssetsDetailsPage extends StatelessWidget {
                           Row(
                             children: [
                               SizedBox(
-                                width: 0.36 * Responsive.getWidth(context),
+                                width: 0.34 * Responsive.getWidth(context),
                                 child: const AssetsVerticalData(
                                   title: 'handover',
                                   data: '02-05-2025',
                                 ),
                               ),
-                              Expanded(
-                                child: ImageGridPreviewWidget(
-                                  boxHeight:
-                                      0.14 * Responsive.getWidth(context),
-                                  boxWidth: 0.14 * Responsive.getWidth(context),
-                                  borderRadius: 10,
-                                  imageList: const [
-                                    'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
-                                    'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                                    AppAssets.imageLaptop,
-                                    AppAssets.imageLaptop,
-                                  ],
-                                ),
+                              const Spacer(),
+                              ImageGridPreviewWidget(
+                                boxHeight: 0.14 * Responsive.getWidth(context),
+                                boxWidth: 0.14 * Responsive.getWidth(context),
+                                borderRadius: 10,
+                                imageList: const [
+                                  'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+                                  'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+                                  AppAssets.imageLaptop,
+                                  AppAssets.imageLaptop,
+                                ],
                               ),
                             ],
                           ),
@@ -277,25 +293,23 @@ class AssetsDetailsPage extends StatelessWidget {
                           Row(
                             children: [
                               SizedBox(
-                                width: 0.36 * Responsive.getWidth(context),
+                                width: 0.34 * Responsive.getWidth(context),
                                 child: const AssetsVerticalData(
                                   title: 'takeover',
                                   data: '02-05-2025',
                                 ),
                               ),
-                              Expanded(
-                                child: ImageGridPreviewWidget(
-                                  boxHeight:
-                                      0.14 * Responsive.getWidth(context),
-                                  boxWidth: 0.14 * Responsive.getWidth(context),
-                                  borderRadius: 10,
-                                  imageList: const [
-                                    'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
-                                    'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                                    AppAssets.imageLaptop,
-                                    AppAssets.imageLaptop,
-                                  ],
-                                ),
+                              const Spacer(),
+                              ImageGridPreviewWidget(
+                                boxHeight: 0.14 * Responsive.getWidth(context),
+                                boxWidth: 0.14 * Responsive.getWidth(context),
+                                borderRadius: 10,
+                                imageList: const [
+                                  'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+                                  'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+                                  AppAssets.imageLaptop,
+                                  AppAssets.imageLaptop,
+                                ],
                               ),
                             ],
                           ),
@@ -313,7 +327,11 @@ class AssetsDetailsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 0.06 * Responsive.getHeight(context)),
+              SizedBox(
+                height:
+                    VariableBag.formContentSpacingVertical *
+                    Responsive.getResponsive(context),
+              ),
             ],
           ),
         ),
@@ -379,14 +397,14 @@ class AssetsDetailsPage extends StatelessWidget {
         ),
       ],
     ),
-    headerPadding: EdgeInsets.symmetric(
-      horizontal: 16 * Responsive.getResponsive(context),
-      vertical: 16 * Responsive.getResponsive(context),
-    ),
     bottomWidget: Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: 16 * Responsive.getResponsive(context),
-        vertical: 12 * Responsive.getResponsive(context),
+        horizontal:
+            VariableBag.commonCardHorizontalPadding *
+            Responsive.getResponsive(context),
+        vertical:
+            VariableBag.commonCardVerticalPadding *
+            Responsive.getResponsive(context),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -415,7 +433,7 @@ class AssetsDetailsPage extends StatelessWidget {
                   titleFontStyle: FontStyle.italic,
                 ),
               ),
-              const SizedBox(width: 10),
+              // const SizedBox(width: 4),
               const Expanded(
                 child: AssetsVerticalData(
                   crossAxisAlignment: CrossAxisAlignment.end,

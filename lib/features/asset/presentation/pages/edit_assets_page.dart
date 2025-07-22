@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/text_controllers/add_assets_controllers.dart';
@@ -49,7 +50,9 @@ class _EditAssetsPage extends State<EditAssetsPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: 0.04 * Responsive.getWidth(context),
+            horizontal:
+                VariableBag.screenHorizontalPadding *
+                Responsive.getResponsive(context),
           ),
           child: Form(
             key: _formKey,
@@ -244,7 +247,11 @@ class _EditAssetsPage extends State<EditAssetsPage> {
                   titleWidgetBetweenSpace:
                       0.006 * Responsive.getHeight(context),
                 ),
-                SizedBox(height: 0.024 * Responsive.getHeight(context)),
+                SizedBox(
+                  height:
+                      VariableBag.formContentSpacingVertical *
+                      Responsive.getResponsive(context),
+                ),
 
                 // -- Invoice --
                 CustomMediaPickerContainer(
@@ -265,7 +272,11 @@ class _EditAssetsPage extends State<EditAssetsPage> {
                   titleWidgetBetweenSpace:
                       0.006 * Responsive.getHeight(context),
                 ),
-                SizedBox(height: 0.035 * Responsive.getHeight(context)),
+                SizedBox(
+                  height:
+                      VariableBag.formContentSpacingVertical *
+                      Responsive.getResponsive(context),
+                ),
 
                 //Submit button
                 MyCoButton(
@@ -284,7 +295,11 @@ class _EditAssetsPage extends State<EditAssetsPage> {
                   fontFamily: 'Gilroy-Bold',
                   fontWeight: FontWeight.w500,
                 ),
-                SizedBox(height: 0.024 * Responsive.getHeight(context)),
+                SizedBox(
+                  height:
+                      VariableBag.formContentSpacingVertical *
+                      Responsive.getResponsive(context),
+                ),
               ],
             ),
           ),

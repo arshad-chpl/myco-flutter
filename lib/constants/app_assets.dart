@@ -11,7 +11,7 @@ class AppAssets {
   static const String svgsVisit = '$svgsPath/visit';
   static const String assetVisit = '$basePath/add_expense';
 
-  static const String assets = '$basePath/asset';
+  static const String assets = '$basePath/svgs/asset';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
   static const String stepper = '$basePath/stepper';

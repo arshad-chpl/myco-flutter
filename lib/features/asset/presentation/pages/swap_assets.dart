@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/assets_label_text_field.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
@@ -27,7 +28,9 @@ class _SwapAssetsPageState extends State<SwapAssetsPage> {
       appBar: const CustomAppbar(title: 'swap_asset', titleSpacing: 0),
       body: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: 0.04 * Responsive.getWidth(context),
+          horizontal:
+              VariableBag.screenHorizontalPadding *
+              Responsive.getResponsive(context),
         ),
         child: Form(
           key: _formKey,
@@ -74,7 +77,11 @@ class _SwapAssetsPageState extends State<SwapAssetsPage> {
                 fontFamily: 'Gilroy-semiBold',
                 fontWeight: FontWeight.w600,
               ),
-              SizedBox(height: 0.024 * Responsive.getHeight(context)),
+              SizedBox(
+                height:
+                    VariableBag.formContentSpacingVertical *
+                    Responsive.getResponsive(context),
+              ),
             ],
           ),
         ),

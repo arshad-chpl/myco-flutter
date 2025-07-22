@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/custom_dash_line.dart';
@@ -62,7 +63,9 @@ class ActiveAssetsCard extends StatelessWidget {
     this.spaceBetweenData,
     this.dashLineColor,
     this.titleColor,
-    required this.handoverImageList, this.mainImageKey, this.imageKey,
+    required this.handoverImageList,
+    this.mainImageKey,
+    this.imageKey,
   });
 
   @override
@@ -72,14 +75,17 @@ class ActiveAssetsCard extends StatelessWidget {
     subTitle: subTitle,
     headerColor: titleColor,
     borderColor: AppTheme.lightTheme(context).dividerColor,
-    headerPadding: EdgeInsets.symmetric(
-      horizontal: 16 * Responsive.getResponsive(context),
-      vertical: 8 * Responsive.getResponsive(context),
-    ),
     bottomWidget: Padding(
       padding:
           childPadding ??
-          EdgeInsets.all(16 * Responsive.getResponsive(context)),
+          EdgeInsets.symmetric(
+            horizontal:
+                VariableBag.commonCardHorizontalPadding *
+                Responsive.getResponsive(context),
+            vertical:
+                VariableBag.commonCardVerticalPadding *
+                Responsive.getResponsive(context),
+          ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,20 +149,19 @@ class ActiveAssetsCard extends StatelessWidget {
             Row(
               children: [
                 SizedBox(
-                  width: 0.36 * Responsive.getWidth(context),
+                  width: 0.3 * Responsive.getWidth(context),
                   child: AssetsVerticalData(
                     title: 'handover',
                     data: handOverDate,
                   ),
                 ),
-                Expanded(
-                  child: ImageGridPreviewWidget(
-                    key: imageKey,
-                    boxHeight: 0.14 * Responsive.getWidth(context),
-                    boxWidth: 0.14 * Responsive.getWidth(context),
-                    borderRadius: 10,
-                    imageList: handoverImageList,
-                  ),
+                const Spacer(),
+                ImageGridPreviewWidget(
+                  key: imageKey,
+                  boxHeight: 0.14 * Responsive.getWidth(context),
+                  boxWidth: 0.14 * Responsive.getWidth(context),
+                  borderRadius: 10 * Responsive.getResponsive(context),
+                  imageList: handoverImageList,
                 ),
               ],
             ),

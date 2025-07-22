@@ -7,6 +7,7 @@ class AssetsFilters extends AssetsFilterEvent {
   final String? brand;
   AssetsFilters({this.category, this.brand});
 }
+
 abstract class AssetsEvent extends Equatable {
   const AssetsEvent();
   @override
@@ -36,4 +37,18 @@ class SearchAssetsEvent extends AssetsEvent {
 
   @override
   List<Object?> get props => [query];
+}
+
+/// Fired when the user selects a category / brand in the filter UI.
+class ApplyFilterEvent extends AssetsEvent {
+  final String? category;
+  final String? brand;
+  const ApplyFilterEvent({this.category, this.brand});
+  @override
+  List<Object?> get props => [category, brand];
+}
+
+/// Optional pull-to-refresh.
+class RefreshAssetsEvent extends AssetsEvent {
+  const RefreshAssetsEvent();
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/active_assets_card.dart';
@@ -76,7 +77,10 @@ class PastAssetsCard extends StatelessWidget {
     this.spaceBetweenData,
     this.dashLineColor,
     this.dashLinewidth,
-    this.titleColor, this.mainImageKey, this.handoverImageKey, this.takeoverImageKey,
+    this.titleColor,
+    this.mainImageKey,
+    this.handoverImageKey,
+    this.takeoverImageKey,
   });
 
   @override
@@ -88,14 +92,17 @@ class PastAssetsCard extends StatelessWidget {
       showBlackShadowInChild: true,
       headerColor: AppTheme.getColor(context).primary,
       borderColor: AppTheme.lightTheme(context).dividerColor,
-      headerPadding: EdgeInsets.symmetric(
-        horizontal: 16 * Responsive.getResponsive(context),
-        vertical: 8 * Responsive.getResponsive(context),
-      ),
       bottomWidget: Padding(
         padding:
             childPadding ??
-            EdgeInsets.all(16.0 * Responsive.getResponsive(context)),
+            EdgeInsets.symmetric(
+              horizontal:
+                  VariableBag.commonCardHorizontalPadding *
+                  Responsive.getResponsive(context),
+              vertical:
+                  VariableBag.commonCardVerticalPadding *
+                  Responsive.getResponsive(context),
+            ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,20 +188,19 @@ class PastAssetsCard extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(
-                    width: 0.36 * Responsive.getWidth(context),
+                    width: 0.3 * Responsive.getWidth(context),
                     child: AssetsVerticalData(
                       title: 'handover',
                       data: handover,
                     ),
                   ),
-                  Expanded(
-                    child: ImageGridPreviewWidget(
-                      key: handoverImageKey,
-                      boxHeight: 0.14 * Responsive.getWidth(context),
-                      boxWidth: 0.14 * Responsive.getWidth(context),
-                      borderRadius: 10,
-                      imageList: handoverImageList,
-                    ),
+                  const Spacer(),
+                  ImageGridPreviewWidget(
+                    key: handoverImageKey,
+                    boxHeight: 0.14 * Responsive.getWidth(context),
+                    boxWidth: 0.14 * Responsive.getWidth(context),
+                    borderRadius: 10 * Responsive.getResponsive(context),
+                    imageList: handoverImageList,
                   ),
                 ],
               ),
@@ -207,20 +213,19 @@ class PastAssetsCard extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(
-                    width: 0.36 * Responsive.getWidth(context),
+                    width: 0.3 * Responsive.getWidth(context),
                     child: AssetsVerticalData(
                       title: 'takeover',
                       data: takeover,
                     ),
                   ),
-                  Expanded(
-                    child: ImageGridPreviewWidget(
-                      key: takeoverImageKey,
-                      boxHeight: 0.14 * Responsive.getWidth(context),
-                      boxWidth: 0.14 * Responsive.getWidth(context),
-                      borderRadius: 10,
-                      imageList: takeoverImageList,
-                    ),
+                  const Spacer(),
+                  ImageGridPreviewWidget(
+                    key: takeoverImageKey,
+                    boxHeight: 0.14 * Responsive.getWidth(context),
+                    boxWidth: 0.14 * Responsive.getWidth(context),
+                    borderRadius: 10 * Responsive.getResponsive(context),
+                    imageList: takeoverImageList,
                   ),
                 ],
               ),

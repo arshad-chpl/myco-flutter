@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/text_controllers/add_assets_controllers.dart';
@@ -49,7 +50,9 @@ class _AddAssets extends State<AddAssets> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: 0.04 * Responsive.getWidth(context),
+            horizontal:
+                VariableBag.screenHorizontalPadding *
+                Responsive.getResponsive(context),
           ),
           child: Form(
             key: _formKey,
@@ -62,7 +65,8 @@ class _AddAssets extends State<AddAssets> {
                   image: AppAssets.assetsElement,
                   controller: addAssetsControllers.categoryController,
                   validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
+                    if (_currentFieldErrorIndex == 0 &&
+                        (value == null || value.trim().isEmpty)) {
                       return 'Assets category is required';
                     }
                     return null;
@@ -74,7 +78,8 @@ class _AddAssets extends State<AddAssets> {
                   image: AppAssets.assetsShoppingBag,
                   controller: addAssetsControllers.itemNameController,
                   validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
+                    if (_currentFieldErrorIndex == 1 &&
+                        (value == null || value.trim().isEmpty)) {
                       return 'Item name is required';
                     }
                     return null;
@@ -86,7 +91,8 @@ class _AddAssets extends State<AddAssets> {
                   image: AppAssets.assetsGroup,
                   controller: addAssetsControllers.brandNameController,
                   validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
+                    if (_currentFieldErrorIndex == 2 &&
+                        (value == null || value.trim().isEmpty)) {
                       return 'Branch name is required';
                     }
                     return null;
@@ -98,7 +104,8 @@ class _AddAssets extends State<AddAssets> {
                   image: AppAssets.location,
                   controller: addAssetsControllers.locationController,
                   validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
+                    if (_currentFieldErrorIndex == 3 &&
+                        (value == null || value.trim().isEmpty)) {
                       return 'Location is required';
                     }
                     return null;
@@ -110,7 +117,8 @@ class _AddAssets extends State<AddAssets> {
                   image: AppAssets.assetsPasswordCheck,
                   controller: addAssetsControllers.itemCodeController,
                   validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
+                    if (_currentFieldErrorIndex == 4 &&
+                        (value == null || value.trim().isEmpty)) {
                       return 'Item code is required';
                     }
                     return null;
@@ -134,7 +142,8 @@ class _AddAssets extends State<AddAssets> {
                   image: AppAssets.imageNoteFavorite,
                   controller: addAssetsControllers.purchaseDateController,
                   validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
+                    if (_currentFieldErrorIndex == 5 &&
+                        (value == null || value.trim().isEmpty)) {
                       return 'Purchase date is required';
                     }
                     return null;
@@ -244,7 +253,11 @@ class _AddAssets extends State<AddAssets> {
                   titleWidgetBetweenSpace:
                       0.006 * Responsive.getHeight(context),
                 ),
-                SizedBox(height: 0.024 * Responsive.getHeight(context)),
+                SizedBox(
+                  height:
+                      VariableBag.formContentSpacingVertical *
+                      Responsive.getResponsive(context),
+                ),
 
                 // -- Invoice --
                 CustomMediaPickerContainer(
@@ -265,29 +278,22 @@ class _AddAssets extends State<AddAssets> {
                   titleWidgetBetweenSpace:
                       0.006 * Responsive.getHeight(context),
                 ),
-                SizedBox(height: 0.035 * Responsive.getHeight(context)),
+                SizedBox(
+                  height:
+                      VariableBag.formContentSpacingVertical *
+                      Responsive.getResponsive(context),
+                ),
 
                 //Submit button
                 MyCoButton(
                   onTap: () {
-                    if (_formKey.currentState!.validate()) {
-                      // All fields are valid
-                      log('Form is valid. Proceed with submission.');
-                      // } else
-                      if (addAssetsControllers
-                          .categoryController
-                          .text
-                          .isNotEmpty) {
-                        log('category empty');
-                      } else if (addAssetsControllers
-                          .branchController
-                          .text
-                          .isNotEmpty) {
-                        log('brand empty');
-                      } else {
-                        log('Form is invalid. Show errors.');
-                      }
-                    }
+                    // if (_formKey.currentState!.validate()) {
+                    //   // All fields are valid
+                    //   log('Form is valid. Proceed with submission.');
+                    // } else {
+                    //   log('Form is invalid. Show errors.');
+                    // }
+                    _validateFieldByField();
                   },
                   title: 'Submit',
                   isShadowBottomLeft: true,
@@ -295,12 +301,53 @@ class _AddAssets extends State<AddAssets> {
                   fontFamily: 'Gilroy-Bold',
                   fontWeight: FontWeight.w500,
                 ),
-                SizedBox(height: 0.024 * Responsive.getHeight(context)),
+                SizedBox(
+                  height:
+                      VariableBag.formContentSpacingVertical *
+                      Responsive.getResponsive(context),
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  int? _currentFieldErrorIndex;
+
+  void _validateFieldByField() {
+    final controllers = [
+      addAssetsControllers.categoryController,
+      addAssetsControllers.itemNameController,
+      addAssetsControllers.brandNameController,
+      addAssetsControllers.locationController,
+      addAssetsControllers.itemCodeController,
+      addAssetsControllers.descriptionController,
+      addAssetsControllers.purchaseDateController,
+      addAssetsControllers.simController,
+      addAssetsControllers.priceController,
+      addAssetsControllers.credentialController,
+      addAssetsControllers.branchController,
+      addAssetsControllers.departmentController,
+      addAssetsControllers.custodianController,
+      addAssetsControllers.handoverDateController,
+    ];
+
+    for (int i = 0; i < controllers.length; i++) {
+      if (controllers[i].text.trim().isEmpty) {
+        setState(() {
+          _currentFieldErrorIndex = i;
+        });
+        _formKey.currentState!.validate(); // trigger rebuild
+        return;
+      }
+    }
+
+    setState(() {
+      _currentFieldErrorIndex = null;
+    });
+
+    log('All fields are valid. Proceed to submit.');
   }
 }

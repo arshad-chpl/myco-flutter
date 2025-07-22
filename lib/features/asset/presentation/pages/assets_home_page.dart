@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,6 +22,7 @@ import 'package:myco_flutter/features/asset/presentation/widgets/active_assets_c
 import 'package:myco_flutter/features/asset/presentation/widgets/all_assets_card.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/asset_simmer_widget.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/assets_bottom_sheet.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/assets_holder_bottom_sheet.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/past_assets_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
@@ -57,7 +59,9 @@ class _AssetsHomePageState extends State<AssetsHomePage> {
         actions: [
           Padding(
             padding: EdgeInsets.only(
-              right: 0.04 * Responsive.getWidth(context),
+              right:
+                  VariableBag.screenHorizontalPadding *
+                  Responsive.getResponsive(context),
             ),
             child: GestureDetector(
               onTap: () => context.push('/add-assets'),
@@ -87,15 +91,15 @@ class _AssetsHomePageState extends State<AssetsHomePage> {
               // },
               // onTap: () async {
               //   final dataMap = {
-              //     "getOtherAssets": "getOtherAssets",
-              //     "user_id": "1679",
-              //     "society_id": "1",
-              //     "language_id": "1",
-              //     "floor_id": "1",
-              //     "assets_category_id": "",
-              //     "brand_name": "",
-              //     "filter": "1",
-              //     "view_other_assets": "2",
+              //     'getOtherAssets': 'getOtherAssets',
+              //     'user_id': '1679',
+              //     'society_id': '1',
+              //     'language_id': '1',
+              //     'floor_id': '1',
+              //     'assets_category_id': '',
+              //     'brand_name': '',
+              //     'filter': '1',
+              //     'view_other_assets': '2',
               //   };
 
               //   final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
@@ -141,7 +145,9 @@ class _AssetsHomePageState extends State<AssetsHomePage> {
             titleSpacing: 0,
             title: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: 0.04 * Responsive.getWidth(context),
+                horizontal:
+                    VariableBag.screenHorizontalPadding *
+                    Responsive.getResponsive(context),
               ),
               child:
                   //  CustomSearchField(
@@ -183,8 +189,12 @@ class _AssetsHomePageState extends State<AssetsHomePage> {
               height: 60,
               child: Padding(
                 padding: EdgeInsets.only(
-                  left: 0.04 * Responsive.getWidth(context),
-                  right: 0.04 * Responsive.getWidth(context),
+                  left:
+                      VariableBag.screenHorizontalPadding *
+                      Responsive.getResponsive(context),
+                  right:
+                      VariableBag.screenHorizontalPadding *
+                      Responsive.getResponsive(context),
                   bottom: 0.015 * Responsive.getHeight(context),
                 ),
                 child: BlocBuilder<AssetsBloc, AssetsState>(
@@ -272,7 +282,9 @@ class _AssetsHomePageState extends State<AssetsHomePage> {
     return [
       SliverPadding(
         padding: EdgeInsets.symmetric(
-          horizontal: 0.04 * Responsive.getWidth(context),
+          horizontal:
+              VariableBag.screenHorizontalPadding *
+              Responsive.getResponsive(context),
         ),
         sliver: SliverPersistentHeader(
           pinned: true,
@@ -307,7 +319,11 @@ class _AssetsHomePageState extends State<AssetsHomePage> {
                     ),
                   ),
                 ),
-                SizedBox(width: 0.06 * Responsive.getWidth(context)),
+                SizedBox(
+                  width:
+                      VariableBag.buttonRowSpacing *
+                      Responsive.getResponsive(context),
+                ),
                 Expanded(
                   child: BlocBuilder<AssetsFilterBloc, AssetsFilterState>(
                     builder: (context, state) => DropDownTextField(
@@ -340,7 +356,9 @@ class _AssetsHomePageState extends State<AssetsHomePage> {
           ),
         ),
       ),
-      const SliverToBoxAdapter(child: SizedBox(height: 10)),
+      SliverToBoxAdapter(
+        child: SizedBox(height: 10 * Responsive.getResponsive(context)),
+      ),
       const AllAssetsListPage(),
     ];
   }
@@ -418,7 +436,9 @@ class AssetsListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SliverPadding(
     padding: EdgeInsets.symmetric(
-      horizontal: 0.04 * Responsive.getWidth(context),
+      horizontal:
+          VariableBag.screenHorizontalPadding *
+          Responsive.getResponsive(context),
     ),
     sliver: BlocBuilder<AssetsBloc, AssetsState>(
       builder: (context, state) {
@@ -437,11 +457,17 @@ class AssetsListPage extends StatelessWidget {
             ),
           );
         } else if (state is AssetsLoaded) {
-          final assets = state.currentAssets;
+          // final assets = state.currentAssets;
+
+          final assets = state.currentAssets as List<AssetEntity>;
+
           return SliverList.separated(
             itemCount: assets.length,
-            separatorBuilder: (_, __) =>
-                SizedBox(height: 0.02 * Responsive.getHeight(context)),
+            separatorBuilder: (_, __) => SizedBox(
+              height:
+                  VariableBag.formContentSpacingVertical *
+                  Responsive.getResponsive(context),
+            ),
             itemBuilder: (_, index) {
               final item = assets[index];
 
@@ -498,7 +524,97 @@ class AssetsListPage extends StatelessWidget {
   );
 }
 
+class AllAssetsListPage extends StatelessWidget {
+  const AllAssetsListPage({super.key});
 
+  @override
+  // ignore: prefer_expression_function_bodies
+  Widget build(BuildContext context) {
+    // Using SliverPadding wrapped inside a BlocBuilder to react to AssetsState
+    return BlocBuilder<AssetsBloc, AssetsState>(
+      builder: (context, state) {
+        // Show loading state
+        if (state is AssetsLoading) {
+          return SliverPadding(
+            padding: EdgeInsets.symmetric(
+              horizontal:
+                  VariableBag.screenHorizontalPadding *
+                  Responsive.getResponsive(context),
+            ),
+            sliver: SliverList.separated(
+              itemCount: 6, // shimmer placeholders count
+              separatorBuilder: (_, __) => SizedBox(
+                height:
+                    VariableBag.formContentSpacingVertical *
+                    Responsive.getResponsive(context),
+              ),
+
+              itemBuilder: (_, __) => const ActiveAssetsCardShimmer(),
+            ),
+          );
+        }
+
+        // Show error state
+        if (state is AssetsError) {
+          return SliverToBoxAdapter(child: Center(child: Text(state.message)));
+        }
+
+        // When data is loaded
+        if (state is AssetsLoaded) {
+          final allAssets = state.allAssets;
+
+          if (allAssets.isEmpty) {
+            return const SliverToBoxAdapter(
+              child: Center(child: Text('No assets found')),
+            );
+          }
+
+          return SliverPadding(
+            padding: EdgeInsets.symmetric(
+              horizontal:
+                  VariableBag.screenHorizontalPadding *
+                  Responsive.getResponsive(context),
+            ),
+            sliver: SliverList.separated(
+              itemCount: allAssets.length,
+              separatorBuilder: (_, __) =>
+                  SizedBox(height: 0.02 * Responsive.getHeight(context)),
+              itemBuilder: (_, index) {
+                final asset = allAssets[index];
+                return AllAssetsCard(
+                  key: Key(index.toString()),
+                  title: asset.assetsName ?? 'No Name',
+                  subTitle: '(${asset.assetsIdView ?? ''})',
+                  image: asset.assetsFile ?? '',
+                  brand: asset.assetsBrandName ?? '',
+                  srNo: asset.srNo ?? '',
+                  category: asset.assetsCategory ?? '',
+                  createdBy: asset.createdByName ?? 'Unknown',
+                  custodian: asset.custodian,
+                  onViewDetailsTap: () =>
+                      context.push('/assets-details', extra: asset),
+                  onEditTap: () => context.push('/edit-assets', extra: asset),
+                  onScannerTap: () => showAssetsHoldersBottomSheet(
+                    context: context,
+                    handoverImageList:
+                        asset.assetsFiles
+                            ?.map((e) => e.document ?? '')
+                            .toList() ??
+                        [],
+                    image: asset.assetsFile ?? AppAssets.imageLaptop,
+                  ),
+                );
+              },
+            ),
+          );
+        }
+
+        // Default to empty to avoid build error
+        return const SliverToBoxAdapter(child: SizedBox.shrink());
+      },
+    );
+  }
+}
 
 
 
