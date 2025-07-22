@@ -9,6 +9,7 @@ part of 'verify_otp_response_model.dart';
 VerifyOtpResponseModel _$VerifyOtpResponseModelFromJson(
         Map<String, dynamic> json) =>
     VerifyOtpResponseModel(
+      error: json['error'] as String?,
       userId: json['user_id'] as String?,
       shiftTimeId: json['shift_time_id'] as String?,
       societyId: json['society_id'] as String?,
@@ -95,6 +96,7 @@ VerifyOtpResponseModel _$VerifyOtpResponseModelFromJson(
 Map<String, dynamic> _$VerifyOtpResponseModelToJson(
         VerifyOtpResponseModel instance) =>
     <String, dynamic>{
+      'error': instance.error,
       'user_id': instance.userId,
       'shift_time_id': instance.shiftTimeId,
       'society_id': instance.societyId,

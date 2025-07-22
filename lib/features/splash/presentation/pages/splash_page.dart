@@ -7,6 +7,7 @@ import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -32,6 +33,7 @@ class _SplashPageState extends State<SplashPage>
     _init();
     // final sl = GetIt.instance;
     // refreshApiServiceCompany(sl);
+
   }
 
   Future<void> _init() async {
@@ -51,8 +53,7 @@ class _SplashPageState extends State<SplashPage>
   Future<void> _navigateNext() async {
     final isLoggedIn = await _preference.getLoginSession();
     if (!mounted) return;
-    // context.go('/assets-home');
-    context.go(isLoggedIn ?? false ? '/dashboard' : '/dashboard');
+    context.go(isLoggedIn ?? false ? '/dashboard' : '/get-started');
   }
 
   @override

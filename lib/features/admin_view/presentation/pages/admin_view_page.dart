@@ -110,15 +110,15 @@ class AdminViewPage extends StatelessWidget {
   Future<void> _refreshData(BuildContext context) async {
     final preferenceManager = GetIt.I<PreferenceManager>();
     final companyId = await preferenceManager.getCompanyId();
-    final userId = preferenceManager.getUserId();
+    final userId =await preferenceManager.getUserId();
     final languageId = await preferenceManager.getLanguageId();
 
     if (context.mounted) {
       context.read<AdminViewBloc>().add(
         FetchAdminView(
-          companyId: companyId!,
-          userId: userId,
-          languageId: languageId!,
+          companyId: companyId??'',
+          userId: userId??'',
+          languageId: languageId??'',
         ),
       );
     }
@@ -235,15 +235,15 @@ class _AdminViewBodyState extends State<AdminViewBody> {
   Future<void> _refreshData() async {
     final preferenceManager = GetIt.I<PreferenceManager>();
     final companyId = await preferenceManager.getCompanyId();
-    final userId = preferenceManager.getUserId();
+    final userId =await  preferenceManager.getUserId();
     final languageId = await preferenceManager.getLanguageId();
 
     if (mounted) {
       context.read<AdminViewBloc>().add(
         FetchAdminView(
-          companyId: companyId!,
-          userId: userId,
-          languageId: languageId!,
+          companyId: companyId??'',
+          userId: userId??'',
+          languageId: languageId??'',
         ),
       );
     }
