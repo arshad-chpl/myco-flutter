@@ -6,10 +6,10 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/leave/domain/entities'
     '/leave_history_response_entity.dart';
-import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
+import 'package:myco_flutter/features/leave/presentation/widgets/assign_leave_months.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_encashment_form.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_expandable_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_filter_bottom_sheet.dart';
@@ -32,6 +32,20 @@ class MyLeaveBalanceScreen extends StatefulWidget {
 class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
   late String selectedValue;
   late List<String> yearOptions;
+  List<MonthData> monthList = [
+    MonthData(name: 'January', value: 1),
+    MonthData(name: 'February', value: 2),
+    MonthData(name: 'March', value: 3),
+    MonthData(name: 'April', value: 4),
+    MonthData(name: 'May', value: 5),
+    MonthData(name: 'June', value: 6),
+    MonthData(name: 'July', value: 7),
+    MonthData(name: 'August', value: 8),
+    MonthData(name: 'September', value: 9),
+    MonthData(name: 'October', value: 10),
+    MonthData(name: 'November', value: 11),
+    MonthData(name: 'December', value: 12),
+  ];
 
   @override
   void initState() {
@@ -146,7 +160,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
       [];
 
   // Helper method to generate rows for a specific leave type
-  List<LeaveRowData> _generateRowsForLeaveType(LeaveTypeModel leave) {
+  List<LeaveRowData> _generateRowsForLeaveType(LeaveTypeEntity leave) {
     final isSpecialLeave = leave.specialLeave == '1';
     final isLeaveRestricted = leave.leaveRestrictions == true;
     final isApplyLeaveEncashment =
@@ -160,6 +174,16 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
         leave.userMonthlyLeaveBalanceData!.isNotEmpty;
 
     return [
+      LeaveRowData(
+        label: 'Assign Leave',
+        value: 'View',
+        isMonthlyData: true,
+        monthlyData: monthList,
+        isVisible: isLeaveRestricted,
+        onTap: () {
+          // Handle view rules click
+        },
+      ),
       // Available Till Days
       if (leave.leaveExpireAfterDays != null &&
           leave.leaveExpireAfterDays!.isNotEmpty)
@@ -263,7 +287,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
           // This would be handled by a separate widget
           isVisible: true,
           isMonthlyData: true,
-          monthlyData: leave.userMonthlyLeaveBalanceData!,
+          // monthlyData: leave.userMonthlyLeaveBalanceData!,
         ),
 
       // Action buttons
@@ -341,7 +365,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
       separatorBuilder: (context, index) => const SizedBox(height: 16),
       itemBuilder: (context, index) {
         final leave = leaveTypes[index];
-        final leaveData = leave['leaveData'] as LeaveTypeModel;
+        final leaveData = leave['leaveData'] as LeaveTypeEntity;
         return LeaveExpandableCard(
           headerHeight: 0.08 * Responsive.getHeight(context),
           headerColor: leave['headerColor'],

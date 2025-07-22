@@ -15,6 +15,7 @@ class LeaveSummarySection extends StatelessWidget {
   final int maxLeavesInMonth;
   final VoidCallback onViewDates;
   final bool isOtherContainer;
+
   const LeaveSummarySection({
     required this.summaryItems,
     required this.maxLeavesInMonth,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/leave/domain/entities'
@@ -11,7 +13,6 @@ import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_skeloton/short_leave_card_skeleton.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/auto_leave_change.dart';
-import 'package:myco_flutter/features/leave/presentation/widgets/custom_fab_menu.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_action_button.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_detail_bottom_sheet.dart';
@@ -133,6 +134,8 @@ class _LeaveScreenState extends State<LeaveScreen> {
     );
   }
 
+  final _key = GlobalKey<ExpandableFabState>();
+
   @override
   Widget build(BuildContext context) => Scaffold(
     // appBar: AppBar(
@@ -208,16 +211,28 @@ class _LeaveScreenState extends State<LeaveScreen> {
                   ),
                   const SizedBox(height: 16),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      LeaveActionButton(
-                        title: 'My Leave Balance',
-                        onTap: () => context.go(RoutePaths.leaveBalance),
+                      Expanded(
+                        flex: 5,
+                        child: LeaveActionButton(
+                          title: 'My Leave Balance',
+                          onTap: () => context.push(RoutePaths.leaveBalance),
+                        ),
                       ),
                       if (isTeamLeave)
-                        LeaveActionButton(
-                          title: 'My Team Leaves',
-                          onTap: () => context.go(RoutePaths.teamLeaveBalance),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 0.01 * Responsive.getWidth(context),
+                            ),
+                            LeaveActionButton(
+                              title: 'My Team Leaves',
+                              onTap: () =>
+                                  context.push(RoutePaths.teamLeaveBalance),
+                            ),
+                          ],
                         ),
                     ],
                   ),
@@ -505,17 +520,112 @@ class _LeaveScreenState extends State<LeaveScreen> {
         );
       },
     ),
+    floatingActionButtonLocation: ExpandableFab.location,
+    floatingActionButton: ExpandableFab(
+      openCloseStackAlignment: Alignment.bottomRight,
+      key: _key,
+      type: ExpandableFabType.up,
+      childrenAnimation: ExpandableFabAnimation.none,
+      distance: 70,
+      duration: const Duration(milliseconds: 300),
+      overlayStyle: ExpandableFabOverlayStyle(
+        color: AppColors.black.withValues(alpha: 0.5),
+      ),
+      closeButtonBuilder: FloatingActionButtonBuilder(
+        size: 0,
+        builder: (context, onPressed, progress) {
+          // Create a curve for a more natural feel
+          final curvedAnimation = CurvedAnimation(
+            parent: progress,
+            curve: Curves.easeInOutCubic,
+          );
+          return IgnorePointer(
+            ignoring: progress.value == 0,
+            child: AnimatedBuilder(
+              animation: curvedAnimation,
+              builder: (context, child) => MyCoButton(
+                isShadowBottomLeft: true,
+                boarderRadius: 50,
+                width:
+                    (0.11 + (0.3 - 0.11) * curvedAnimation.value) *
+                    Responsive.getWidth(context),
+                height: 0.1 * Responsive.getWidth(context),
+                onTap: onPressed,
+                imagePosition: AxisDirection.left,
+                image: Hero(
+                  tag: 'add_leave',
+                  child: Icon(
+                    Icons.close,
+                    color: AppTheme.getColor(context).surface,
+                  ),
+                ),
+                title: 'Close',
+              ),
+            ),
+          );
+        },
+      ),
 
-    floatingActionButton: CustomFabMenu(
-      buttons: [
-        FabButtonModel(
-          label: 'Apply Leave',
-          icon: Icons.event_available_outlined,
+      openButtonBuilder: FloatingActionButtonBuilder(
+        size: 0,
+        builder: (context, onPressed, progress) {
+          final curvedAnimation = CurvedAnimation(
+            parent: progress,
+            curve: Curves.easeInOutCubic,
+          );
+
+          return IgnorePointer(
+            ignoring: progress.value == 1,
+            child: AnimatedBuilder(
+              animation: curvedAnimation,
+              builder: (context, child) => MyCoButton(
+                isShadowBottomLeft: true,
+                boarderRadius: 50,
+                width:
+                    (0.11 + (0.3 - 0.11) * curvedAnimation.value) *
+                    Responsive.getWidth(context),
+                height: 0.11 * Responsive.getWidth(context),
+                onTap: onPressed,
+                title: '',
+                image: Icon(
+                  Icons.add,
+                  color: AppTheme.getColor(context).surface,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+      children: [
+        InkWell(
           onTap: () => context.push(RoutePaths.addLeaveScreen),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  color: AppTheme.getColor(context).surface,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Text('Apply Leave'),
+              ),
+              SizedBox(width: 0.02 * Responsive.getWidth(context)),
+              FloatingActionButton.small(
+                heroTag: null,
+                onPressed: null,
+                child: Icon(
+                  Icons.event_available_outlined,
+                  color: AppTheme.getColor(context).primary,
+                  size: 0.02 * Responsive.getHeight(context),
+                ),
+              ),
+            ],
+          ),
         ),
-        FabButtonModel(
-          label: 'Apply Short Leave',
-          imagePath: 'assets/images/short_apply_leave.png',
+        InkWell(
           onTap: () async {
             final result = await context.push(RoutePaths.addShortLeaveScreen);
             if (result == true) {
@@ -528,9 +638,60 @@ class _LeaveScreenState extends State<LeaveScreen> {
               );
             }
           },
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  color: AppTheme.getColor(context).surface,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Text('Apply Short Leave'),
+              ),
+              SizedBox(width: 0.02 * Responsive.getWidth(context)),
+              FloatingActionButton.small(
+                heroTag: null,
+                onPressed: null,
+                child: Image.asset(
+                  "assets/images/short_apply_leave.png",
+                  width: 0.04 * Responsive.getWidth(context),
+                  height: 0.04 * Responsive.getHeight(context),
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     ),
+    // floatingActionButton: CustomFabMenu(
+    //   buttons: [
+    //     FabButtonModel(
+    //       label: 'Apply Leave',
+    //       icon: Icons.event_available_outlined,
+    //       onTap: () => context.push(RoutePaths.addLeaveScreen),
+    //     ),
+    //     FabButtonModel(
+    //       label: 'Apply Short Leave',
+    //       imagePath: 'assets/images/short_apply_leave.png',
+    //       onTap: () async {
+    //         final result = await context.push(RoutePaths.addShortLeaveScreen);
+    //         if (result == true) {
+    //           // refresh your main screen's API
+    //           context.read<LeaveBloc>().add(
+    //             FetchLeaveHistoryNew(
+    //               selectedMonth.toString().padLeft(2, '0'),
+    //               selectedYear.toString(),
+    //             ),
+    //           );
+    //         }
+    //       },
+    //     ),
+    //   ],
+    // ),
   );
 
   List<LeaveHistoryEntity> _filterLeaves(List<LeaveHistoryEntity> leaves) {
