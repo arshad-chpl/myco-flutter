@@ -129,7 +129,7 @@ class NewTextField extends StatelessWidget {
                           enabled: enabled,
                           focusNode: focusNode,
                           keyboardType: keyboardType,
-                          controller: con1troller,
+                          controller: controller,
                           decoration: InputDecoration(
                             hintText: hintText,
                             suffixIcon: suffixIconPath != null
