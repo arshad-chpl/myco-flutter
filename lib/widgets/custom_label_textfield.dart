@@ -171,6 +171,7 @@ class LabeledTextField extends StatelessWidget {
           onSaved: onSaved,
           prefix: prefix,
           suffix: suffix,
+
           maxLenght: maxLength,
           textAlignment: textAlignment,
           inputFormater: inputFormatters,

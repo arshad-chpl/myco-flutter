@@ -8,15 +8,16 @@ class ServerFailure extends Failure {
 }
 
 class NetworkFailure extends Failure {
-  const NetworkFailure() : super("No internet connection");
+  const NetworkFailure(super.message);
 }
 
 class TimeoutFailure extends Failure {
-  const TimeoutFailure() : super("Request timed out. Try again.");
+  const TimeoutFailure() : super('Request timed out. Try again.');
 }
 
 class UnauthorizedFailure extends Failure {
-  const UnauthorizedFailure() : super("Unauthorized request. Please login again.");
+  const UnauthorizedFailure()
+    : super('Unauthorized request. Please login again.');
 }
 
 class ForbiddenFailure extends Failure {
@@ -24,23 +25,23 @@ class ForbiddenFailure extends Failure {
 }
 
 class NotFoundFailure extends Failure {
-  const NotFoundFailure() : super("Requested resource not found.");
+  const NotFoundFailure() : super('Requested resource not found.');
 }
 
 class ConflictFailure extends Failure {
-  const ConflictFailure() : super("Request conflict occurred.");
+  const ConflictFailure() : super('Request conflict occurred.');
 }
 
 class CancelledFailure extends Failure {
-  const CancelledFailure() : super("Request was cancelled.");
+  const CancelledFailure() : super('Request was cancelled.');
 }
 
 class UnknownFailure extends Failure {
-  const UnknownFailure([String message = "Unknown error occurred"]) : super(message);
+  const UnknownFailure([super.message = 'Unknown error occurred']);
 }
 
 class ValidationFailure extends Failure {
-  const ValidationFailure(String message) : super(message);
+  const ValidationFailure(super.message);
 }
 
 class CacheFailure extends Failure {

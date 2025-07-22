@@ -5,6 +5,7 @@ import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
 import 'package:myco_flutter/features/language_selector/presentation/di/language_di.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/di/lost_and_found_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
 
@@ -20,10 +21,9 @@ Future<void> init() async {
   // Initialize feature modules
   //========Language Selector=========
   setupLanguageDI(sl);
-  
+
   //========Splash=========
   splashDi(sl);
-
 
   //========Company Selector=========
   companySelectorDi(sl);
@@ -36,4 +36,6 @@ Future<void> init() async {
 
   // ========Admin View=========
   await adminViewDi(sl);
+
+  registerLostAndFoundDI(sl);
 }

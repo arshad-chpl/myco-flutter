@@ -11,6 +11,7 @@ Row getCommonRow(
   required VoidCallback onTap,
   Widget? valueWidget,
   Color textColor = AppColors.black,
+  FontWeight? fontWeight,
   TextDecoration? decoration,
 }) => Row(
   crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -36,7 +37,7 @@ Row getCommonRow(
               value,
               decoration: decoration,
               color: textColor,
-              fontWeight: FontWeight.w500,
+              fontWeight: fontWeight ?? FontWeight.w500,
               fontSize: 13 * Responsive.getResponsiveText(context),
             ),
       ),
