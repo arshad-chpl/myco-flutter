@@ -8,6 +8,7 @@ import 'package:myco_flutter/features/chat/presentation/widgets/message_card.dar
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class UserChatScreen extends StatelessWidget {
   UserChatScreen({super.key});
@@ -88,52 +89,24 @@ class UserChatScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(
                 horizontal: 0.06 * Responsive.getWidth(context),
               ),
-              child: MyCoTextfield(
+              child: NewTextField(
                 hintText: 'Type Message',
-                hintTextStyle: AppTheme.getTextStyle(
-                  context,
-                ).labelLarge!.copyWith(color: AppColors.textSecondary),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    12 * Responsive.getResponsive(context),
-                  ),
-                  borderSide: BorderSide(
-                    color: AppTheme.getColor(context).outline,
-                    width: 1.2,
-                  ),
-                ),
-                contentPadding: EdgeInsets.only(
-                  top: 0.012 * Responsive.getHeight(context),
-                  left: 0.03 * Responsive.getWidth(context),
-                  right: 0.03 * Responsive.getWidth(context),
-                  bottom: 0.012 * Responsive.getHeight(context),
-                ),
-                onClick: () {
-                  // _scrollController.animateTo(
-                  //   _scrollController.position.maxScrollExtent,
-                  //   duration: const Duration(milliseconds: 300),
-                  //   curve: Curves.easeOut,
-                  // );
-                },
-                boarderRadius: 12 * Responsive.getResponsive(context),
-                suffix: Row(
-                  mainAxisSize: MainAxisSize.min,
-
-                  children: [
-                    Image.asset(
-                      'assets/chat/attachment.png',
-                      scale: 30 * Responsive.getResponsive(context),
-                    ),
-                    SizedBox(width: 0.05 * Responsive.getWidth(context)),
-                    Image.asset(
-                      'assets/chat/send.png',
-                      scale: 30 * Responsive.getResponsive(context),
-                    ),
-                    SizedBox(width: 0.05 * Responsive.getWidth(context)),
-                  ],
-                ),
-                isSuffixIconOn: true,
-                onChanged: (value) => {},
+                maxLines: 5,
+                prefixIconPath: 'assets/add_expense/add-circle.svg',
+                // prefix: Row(
+                //   children: [
+                //     Image.asset(
+                //       'assets/chat/attachment.png',
+                //       scale: 35 * Responsive.getResponsive(context),
+                //     ),
+                //     SizedBox(width: 0.05 * Responsive.getWidth(context)),
+                //     Image.asset(
+                //       'assets/chat/send.png',
+                //       scale: 35 * Responsive.getResponsive(context),
+                //     ),
+                //     SizedBox(width: 0.05 * Responsive.getWidth(context)),
+                //   ],
+                // ),
               ),
             ),
           ],

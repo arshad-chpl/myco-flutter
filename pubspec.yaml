@@ -60,7 +60,6 @@ dependencies:
   modal_bottom_sheet: ^3.0.0
   bloc: ^9.0.0
 
-
 dependency_overrides:
   source_gen: 2.0.0
 dev_dependencies:
@@ -79,7 +78,6 @@ dev_dependencies:
   json_serializable: ^6.9.5
 
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -105,13 +103,13 @@ flutter:
     - assets/svgs/visit/
     - assets/add_expense/
     - assets/dashboard/svgs/
-    - assets/face_detection/
     - assets/svgs/visit/
     - assets/dashboard/svgs/
     - assets/assets/
     - assets/svgs/take_order/
     - assets/animations/
     - assets/stepper/
+    - assets/chat/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
