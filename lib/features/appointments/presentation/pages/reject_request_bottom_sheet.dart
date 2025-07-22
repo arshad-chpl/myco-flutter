@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -34,14 +35,19 @@ class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
           hintText: 'Type Here',
           label: 'Reject Request',
         ),
-        SizedBox(height: 0.02 * Responsive.getHeight(context)),
+        SizedBox(
+          height:
+              VariableBag.textFieldRowGap * Responsive.getResponsive(context),
+        ),
 
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             //MyCoButton CLOSE button
             MyCoButton(
-              boarderRadius: 30 * Responsive.getResponsive(context),
+              boarderRadius:
+                  VariableBag.buttonBorderRadius *
+                  Responsive.getResponsive(context),
               width: 0.44 * Responsive.getWidth(context),
               height: 0.06 * Responsive.getHeight(context),
               onTap: () {
@@ -57,7 +63,9 @@ class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
 
             // MyCoButton SUBMIT button to confirm rejection
             MyCoButton(
-              boarderRadius: 30 * Responsive.getResponsive(context),
+              boarderRadius:
+                  VariableBag.buttonBorderRadius *
+                  Responsive.getResponsive(context),
               width: 0.44 * Responsive.getWidth(context),
               height: 0.06 * Responsive.getHeight(context),
               onTap: () {},
@@ -67,7 +75,10 @@ class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
             ),
           ],
         ),
-        SizedBox(height: 0.03 * Responsive.getHeight(context)),
+        SizedBox(
+          height:
+              VariableBag.textFieldRowGap * Responsive.getResponsive(context),
+        ),
       ],
     ),
   );
