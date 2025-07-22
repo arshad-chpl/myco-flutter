@@ -26,3 +26,22 @@ class RemoveAvatar extends ChatEvent {
   List<Object> get props => [avtarList , index];
   
 }
+
+class SelectDepEvent extends ChatEvent {
+  final Map<String, String> department;
+  const SelectDepEvent(this.department);
+  @override
+  List<Object> get props => [department];
+}
+
+class RemoveDepEvent extends ChatEvent {
+  final String departmentId;
+  const RemoveDepEvent(this.departmentId);
+  @override
+  List<Object> get props => [departmentId];
+}
+
+class GetChatListEvent extends ChatEvent {
+  @override
+  List<Object> get props => [];
+}

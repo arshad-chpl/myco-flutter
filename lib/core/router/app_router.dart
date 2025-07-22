@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
+import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
 import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
-import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
@@ -24,9 +24,9 @@ import 'package:myco_flutter/features/company_info/presentation/pages/company_in
 import 'package:myco_flutter/features/asset/view/swap_assets.dart';
 import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
 import 'package:myco_flutter/features/chat/presentation/bloc/chat_bloc.dart';
-import 'package:myco_flutter/features/chat/presentation/page/chat_list.dart';
-import 'package:myco_flutter/features/chat/presentation/page/chat_screen.dart';
-import 'package:myco_flutter/features/chat/presentation/page/groupe_detail.dart';
+import 'package:myco_flutter/features/chat/presentation/pages/chat_list.dart';
+import 'package:myco_flutter/features/chat/presentation/pages/chat_screen.dart';
+import 'package:myco_flutter/features/chat/presentation/pages/groupe_detail.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
@@ -254,6 +254,7 @@ class AppRouter {
       // ),
       ...takeOrderRoutes,
       ...payslipRoutes,
+      ...chatRoutes,
 
       GoRoute(
         path: RoutePaths.faceDetection,
@@ -386,7 +387,6 @@ class AppRouter {
           child: const MyTeamLeavesScreen(),
         ),
       ),
-      ...cahatRoutes,
 
       GoRoute(
         path: RoutePaths.assetsHome,
