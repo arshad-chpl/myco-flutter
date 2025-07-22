@@ -6,7 +6,7 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/asset/widgets/custom_dash_line.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/custom_dash_line.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/widgets/calender/horizontal_progress_bar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
