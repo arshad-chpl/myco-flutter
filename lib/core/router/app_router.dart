@@ -8,6 +8,7 @@ import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
 import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
+import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
 import 'package:myco_flutter/features/asset/bloc/assets_bloc.dart';
@@ -281,8 +282,7 @@ class AppRouter {
         builder: (context, state) => MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (context) => CommonApiBloc(registerUseCase: GetIt.I<CommonApiUserCase>(),
-              )..add(LoadBranch()),
+              create: (context) => CommonApiBloc(registerUseCase: GetIt.I<CommonApiUserCase>()),
             ),
             BlocProvider(
               create: (context) => PrimaryRegisterBloc(registerUseCase: GetIt.I<PrimaryRegisterUseCase>(),

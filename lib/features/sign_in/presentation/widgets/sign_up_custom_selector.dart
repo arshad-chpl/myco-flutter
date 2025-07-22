@@ -47,8 +47,7 @@ Widget buildCustomSelector({
             optionId: optionIds,
             optionName: optionNames,
             selectedValue: selectedId,
-            title:
-                defaultLabelKey[0].toUpperCase() + defaultLabelKey.substring(1),
+            title: defaultLabelKey[0].toUpperCase() + defaultLabelKey.substring(1),
             onSelected: (selectedId, selectedName) {
               onSelected(selectedId, selectedName);
             },
@@ -56,17 +55,17 @@ Widget buildCustomSelector({
         },
         child: AbsorbPointer(
           child: SizedBox(
-            height: 75,
+            height: 50,
             child: TextFormField(
               readOnly: true,
               controller: TextEditingController(text: selectedName),
               style: TextStyle(
                 color: isDefault ? Colors.black45 : Colors.black,
-                fontSize: 16,
+                fontSize: 15,
               ),
               decoration: InputDecoration(
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Image.asset(
                     prefixIcon,
                     width: 20,

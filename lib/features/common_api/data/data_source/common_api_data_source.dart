@@ -6,7 +6,7 @@ import 'package:myco_flutter/features/common_api/models/uploaded_file_response.d
 abstract class CommonApiDataSource {
   Future<UploadFileResponseModel> uploadedTemp(bool loginType, List<String> filePath);
 
-  Future<BranchResponseModel> getBranchList();
-  Future<FloorAndUnitResponseModel> getFloorAndUnit(String branchId);
-  Future<ShiftResponseModel> getShiftList(String floorId);
+  Future<BranchResponseModel> getBranchList(String societyId, String userId);
+  Future<FloorAndUnitResponseModel> getFloorAndUnit(String societyId, String blockId);
+  Future<ShiftResponseModel> getShiftList(String societyId, String floorId);
 }

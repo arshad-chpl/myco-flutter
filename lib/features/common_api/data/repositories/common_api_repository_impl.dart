@@ -24,25 +24,25 @@ class CommonApiRepositoryImpl implements CommonApiRepository {
 
 
   @override
-  Future<Either<Failure, BranchResponseEntity>> getBranchList() async =>
+  Future<Either<Failure, BranchResponseEntity>> getBranchList(String societyId, String userId) async =>
       safeApiCall.execute(() async {
-        final responseModel = await remoteDataSource.getBranchList();
+        final responseModel = await remoteDataSource.getBranchList(societyId,userId);
         return responseModel.toEntity();
       });
 
 
   @override
-  Future<Either<Failure, FloorAndUnitResponseEntity>> getFloorAndUnit(String branchId) async =>
+  Future<Either<Failure, FloorAndUnitResponseEntity>> getFloorAndUnit(String societyId, String blockId) async =>
       safeApiCall.execute(() async {
-        final responseModel = await remoteDataSource.getFloorAndUnit(branchId);
+        final responseModel = await remoteDataSource.getFloorAndUnit(societyId,blockId);
         return responseModel.toEntity();
       });
 
 
   @override
-  Future<Either<Failure, ShiftResponseEntity>> getShiftList(String floorId) async =>
+  Future<Either<Failure, ShiftResponseEntity>> getShiftList(String societyId, String floorId) async =>
       safeApiCall.execute(() async {
-        final responseModel = await remoteDataSource.getShiftList(floorId);
+        final responseModel = await remoteDataSource.getShiftList(societyId,floorId);
         return responseModel.toEntity();
       });
 

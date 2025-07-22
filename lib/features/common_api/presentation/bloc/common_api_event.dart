@@ -23,24 +23,34 @@ class LoadUploaded extends CommonApiEvent {
 }
 
 
-class LoadBranch extends CommonApiEvent {}
+class LoadBranch extends CommonApiEvent {
+  final String societyId;
+  final String userId;
 
-class LoadFloorUnit extends CommonApiEvent {
-  final String branchId;
-
-  const LoadFloorUnit(this.branchId);
+  const LoadBranch(this.societyId,this.userId);
 
   @override
-  List<Object> get props => [branchId];
+  List<Object> get props => [societyId,userId];
+}
+
+class LoadFloorUnit extends CommonApiEvent {
+  final String societyId;
+  final String branchId;
+
+  const LoadFloorUnit(this.societyId,this.branchId);
+
+  @override
+  List<Object> get props => [societyId,branchId];
 }
 
 class LoadShift extends CommonApiEvent {
+  final String societyId;
   final String floorId;
 
-  const LoadShift(this.floorId);
+  const LoadShift(this.societyId,this.floorId);
 
   @override
-  List<Object> get props => [floorId];
+  List<Object> get props => [societyId,floorId];
 }
 
 

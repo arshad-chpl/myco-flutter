@@ -21,6 +21,7 @@ import 'package:myco_flutter/features/common_api/presentation/bloc/common_api_bl
 import 'package:myco_flutter/features/leave/presentation/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/features/sign_in/domain/usecases/primary_register_usecase.dart';
 import 'package:myco_flutter/features/sign_in/presentation/bloc/primary_register_bloc.dart';
+import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_term_and_condition.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/framed_profile_image.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/sign_up_custom_selector.dart';
@@ -43,67 +44,49 @@ class SignupFormPage extends StatefulWidget {
 }
 
 class _SignupFormPageState extends State<SignupFormPage> {
-  // ✅ CLASS-LEVEL VARIABLES!
-  late String blockNo;
-  late String blockId;
-  late String floorId;
-  late String unitId;
-  late bool isFamily;
-  late String societyId;
-  late String type;
-  late String from;
-  late String baseUrl;
-  late String apiKey;
-  late bool isAddMore;
-  late bool isAddByAdmin;
-  late bool isAddMoreUnit;
-  late bool isSociety;
-  String? loginVia; // nullable
-  String? societyAddress; // nullable
+
+  String? blockNo;
+  String? blockId;
+  String? floorId;
+  String? unitId;
+  bool? isFamily;
+  String? societyId;
+  String? type;
+  String? from;
+  String? baseUrl;
+  String? apiKey;
+  bool? isAddMore;
+  bool? isAddByAdmin;
+  bool? isAddMoreUnit;
+  bool? isSociety;
+  String? loginVia;
+  String? societyAddress;
 
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
 
     final args = GoRouterState.of(context).extra as Map<String, dynamic>?;
-    log(args.toString(), name: "Kevin");
-    // ✅ Always null-check your `args`
+
     if (args != null) {
-      log(args.toString(), name: "Kevin");
-      blockNo = args['BlockNo'] ?? '';
-      blockId = args['blockId'] ?? '';
-      floorId = args['floorId'] ?? '0';
-      unitId = args['unitId'] ?? '0';
-      isFamily = args['isFamily'] ?? false;
       societyId = args['societyId'] ?? '';
-      type = args['type'] ?? '0';
-      from = args['from'] ?? '0';
-      baseUrl = args['baseUrl'] ?? '';
-      apiKey = args['apiKey'] ?? '';
-      isAddMore = args['isAddMore'] ?? false;
-      isAddByAdmin = args['isAddByAdmin'] ?? false;
-      isAddMoreUnit = args['isAddMoreUnit'] ?? false;
       isSociety = args['isSociety'] ?? false;
-      loginVia = args['loginVia'];
       societyAddress = args['societyAddress'];
+      isAddByAdmin = args['isAddByAdmin'] ?? false;
+
+      from = args['from'] ?? '0';
+      isAddMore = args['isAddMore'] ?? false;
+      isAddMoreUnit = args['isAddMoreUnit'] ?? false;
+
     } else {
       // fallback if args is null
-      blockNo = '';
-      blockId = '';
-      floorId = '0';
-      unitId = '0';
-      isFamily = false;
       societyId = '';
-      type = '0';
       from = '0';
-      baseUrl = '';
-      apiKey = '';
       isAddMore = false;
       isAddByAdmin = false;
       isAddMoreUnit = false;
       isSociety = false;
-      loginVia = null;
-      societyAddress = null;
+      societyAddress = '';
     }
   }
 
@@ -112,7 +95,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
   bool gender = false;
   String selectedCountry = 'IND';
   bool isChecked = false;
-  final TextEditingController phoneController = TextEditingController();
   final Map<String, String> countryMap = {
     'IND': '+91',
     'USA': '+1',
@@ -124,12 +106,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
   //
 
   String profileImage = '';
+  String? selectedImage = '';
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController departmentNumberController =
-      TextEditingController();
+  final TextEditingController departmentNumberController = TextEditingController();
   final TextEditingController joiningDateController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
 
@@ -143,7 +125,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
   String selectedShiftName = '';
   String selectedDesignationId = '';
   String selectedDesignationName = '';
-  File? selectedImage;
   late List<String> branchOptionIds = [];
   late List<String> branchOptionNames = [];
   late List<String> floorUnitOptionIds = [];
@@ -155,6 +136,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
   late List<String> shiftOptionIds = [];
   late List<String> shiftOptionNames = [];
 
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<CommonApiBloc>().add(LoadBranch(societyId ?? '1', '0'));
+  }
   @override
   Widget build(BuildContext context) {
     Responsive.init(context);
@@ -171,65 +158,93 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     CustomLoaderDialog.show(context);
                   }
 
-                  if (state is BlockApiSuccess ||
-                      state is FloorUnitApiSuccess ||
-                      state is ShiftApiSuccess ||
-                      state is UploadImagePdfApiSuccess ||
-                      state is CommonApiError ) {
-                    // This is safe even if the loader is not open: pop will do nothing if no dialog
+                  if (state is BlockApiSuccess || state is FloorUnitApiSuccess || state is ShiftApiSuccess || state is UploadImagePdfApiSuccess ||
+                      state is CommonApiError) {
                     Navigator.of(context, rootNavigator: true).pop();
                   }
+
                   if (state is BlockApiSuccess) {
+                    branchOptionIds = [];
+                    branchOptionNames = [];
                     branchOptionIds = state.blockList.blocks!.map((block) => block.blockId ?? '').toList();
                     branchOptionNames = state.blockList.blocks!.map((block) => block.blockName ?? '').toList();
                   }
 
                   if (state is FloorUnitApiSuccess) {
+                    floorUnitOptionIds = [];
+                    floorUnitOptionNames = [];
                     floorUnitOptionIds = state.floorUnitList.designation!.map((d) => d.designationId ?? '').toList();
                     floorUnitOptionNames = state.floorUnitList.designation!.map((d) => d.designationName ?? '').toList();
 
+
+                    departmentOptionIds = [];
+                    departmentOptionNames = [];
                     departmentOptionIds = state.floorUnitList.floors!.map((f) => f.floorId ?? '').toList();
                     departmentOptionNames = state.floorUnitList.floors!.map((f) => f.floorName ?? '').toList();
 
+
+                    subDepartmentOptionIds = [];
+                    subDepartmentOptionNames = [];
                     subDepartmentOptionIds = state.floorUnitList.subDepartmentList!.map((sd) => sd.subDepartmentId ?? '').toList();
                     subDepartmentOptionNames = state.floorUnitList.subDepartmentList!.map((sd) => sd.subDepartmentName ?? '').toList();
                   }
 
                   if (state is ShiftApiSuccess) {
+                    shiftOptionIds = [];
+                    shiftOptionNames = [];
                     shiftOptionIds = state.shiftList.shift!.map((s) => s.shiftTimeId ?? '').toList();
                     shiftOptionNames = state.shiftList.shift!.map((s) => s.shiftTimeView ?? '').toList();
                   }
 
                   if (state is UploadImagePdfApiSuccess) {
-                    String? baseUrl = state.imgPdfList.baseUrl;
-                    List<String>? dataList = state.imgPdfList.imgNameArr;
-
-                    String image = (dataList != null && dataList.isNotEmpty)
+                    final List<String>? dataList = state.imgPdfList.imgNameArr;
+                    final String image = (dataList != null && dataList.isNotEmpty)
                         ? dataList.join(',')
                         : '';
                     profileImage = image.toString();
-
-                    selectedImage = File('$baseUrl$image');
-
-                    print('Selected image URL: $selectedImage');
+                    selectedImage = '${state.imgPdfList.baseUrl}$image';
                   }
-
                 },
+
+
               ),
               BlocListener<PrimaryRegisterBloc, PrimaryRegisterState>(
                 listener: (context, state) {
+
                   if (state is AddPrimaryUserApiSuccess) {
-                    Fluttertoast.showToast(msg: state.response.message!, backgroundColor: Colors.green, textColor: Colors.white,);
-                    preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, state.response.trxId ?? '',);
+                    Fluttertoast.showToast(msg: state.response.message ?? '', backgroundColor: Colors.green, textColor: Colors.white,);
+                    if (isAddMore != true) {
+                      if (from == '1') {
+                        preferenceManager.setKeyValueBoolean(VariableBag.REQUEST_EMPLOYEE, true);
+                        Navigator.of(context).pop(); // Equivalent to finish()
+                      } else {
+                        if (state.response.isApprove == true) {
+                          preferenceManager.setKeyValueBoolean(VariableBag.REGISTRATION_REQUEST_IS_APPROVE, true,);
+                          Navigator.of(context).pop();
+                        } else {
+                          preferenceManager.setKeyValueBoolean(VariableBag.REGISTRATION_REQUEST_IS_APPROVE, false,);
+                          preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, state.response.userId ?? '',);
+
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (_) => const ContactAdminPage()),
+                          );
+
+                          // To clear entire stack like finishAffinity()
+                          Navigator.of(context).popUntil((route) => route.isFirst);
+                        }
+                      }
+                    } else {
+                      Navigator.of(context).pop();
+                    }
                   }
+
                 },
               ),
             ],
             child: BlocBuilder<CommonApiBloc, CommonApiState>(
               builder: (context, state) {
                 if (state is CommonApiError) {
-                //  Navigator.of(context, rootNavigator: true).pop();
-                  Fluttertoast.showToast(msg: state.message, backgroundColor: Colors.green, textColor: Colors.white,);
+                  Fluttertoast.showToast(msg: state.message, backgroundColor: Colors.redAccent, textColor: Colors.white,);
                 }
                 return Padding(
                   padding: EdgeInsets.all(20 * Responsive.getResponsive(context)),
@@ -242,6 +257,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
       ),
     );
   }
+
 
   Widget setUi() => SingleChildScrollView(
     child: Column(
@@ -265,12 +281,13 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   isDocumentShow: false,
                   context: context,
                 );
-                if (files == null) return;
-                final List<String> imgList = [selectedImage!.path.toString()];
-                context.read<CommonApiBloc>().add(LoadUploaded(true, imgList));
+
+                if (files == null || files.isEmpty) return;
+                final List<String> imgList = [files.first.path];
+                context.read<CommonApiBloc>().add(LoadUploaded(false, imgList));
                 setState(() {});
-                log('files: $files', name: "Click");
               },
+
               child: Image.asset(
                 'assets/sign_in/camera_icon.png',
                 fit: BoxFit.contain,
@@ -278,10 +295,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
               ),
             ),
             child: FramedProfileImage(
-              selectedImage: selectedImage,
+              imagePath: selectedImage,
               borderColor: AppTheme.getColor(context).primary,
               borderWidth: 1,
-              size: 100,
+              size: 80,
             ),
           ),
         ),
@@ -308,11 +325,11 @@ class _SignupFormPageState extends State<SignupFormPage> {
             selectedShiftName = '';
             selectedDesignationId = '';
             selectedDesignationName = '';
-            context.read<CommonApiBloc>().add(LoadFloorUnit(selectedBranchId));
+            context.read<CommonApiBloc>().add(LoadFloorUnit(societyId ?? '1',selectedBranchId));
             setState(() {});
           },
         ),
-        SizedBox(height: 0.005 * Responsive.getHeight(context)),
+        SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
         buildCustomSelector(
           context: context,
@@ -329,11 +346,11 @@ class _SignupFormPageState extends State<SignupFormPage> {
             selectedSubDepartmentId = '';
             selectedSubDepartmentName = '';
 
-            context.read<CommonApiBloc>().add(LoadShift(selectedDepartmentId));
+            context.read<CommonApiBloc>().add(LoadShift(societyId ?? '1',selectedDepartmentId));
             setState(() {});
           },
         ),
-        SizedBox(height: 0.005 * Responsive.getHeight(context)),
+        SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
         if (subDepartmentOptionIds.isNotEmpty) ...[
           buildCustomSelector(
@@ -352,7 +369,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
               setState(() {});
             },
           ),
-          SizedBox(height: 0.005 * Responsive.getHeight(context)),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
         ],
 
         buildCustomSelector(
@@ -371,7 +388,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
             setState(() {});
           },
         ),
-        SizedBox(height: 0.005 * Responsive.getHeight(context)),
+        SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
         buildCustomSelector(
           context: context,
@@ -388,7 +405,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
             setState(() {});
           },
         ),
-        SizedBox(height: 0.005 * Responsive.getHeight(context)),
+        SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
         CustomText(
           'Joining Date *',
@@ -578,7 +595,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
             }
           },
           countryDialCodes: countryMap,
-          phoneController: phoneController,
+          phoneController: phoneNumberController,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(
               15 * Responsive.getResponsive(context),
@@ -729,7 +746,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
             fontWeight: FontWeight.bold,
           ),
           onTap: () {
-            context.go(RoutePaths.contactAdmin);
 
             final bool isValid = FormValidator.validateAll(
               selectedBranchId: selectedBranchId,
@@ -748,10 +764,11 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
             final String platform = Platform.isAndroid ? 'android' : 'ios';
 
+
             final dataMap = {
               'addPrimaryUser': 'addPrimaryUser',
-              'society_id': '',
-              'society_address': '',
+              'society_id': societyId,
+              'society_address': societyAddress,
               'block_id': selectedBranchId,
               'floor_id': selectedDepartmentId,
               'unit_id': '0',
@@ -759,28 +776,32 @@ class _SignupFormPageState extends State<SignupFormPage> {
               'designation': selectedDesignationName,
               'user_first_name': _firstNameController.text,
               'user_last_name': _lastNameController.text,
-              'user_full_name':
-                  '${_firstNameController.text} ${_lastNameController.text}',
-              'user_mobile': phoneNumberController, //
+              'user_full_name': '${_firstNameController.text} ${_lastNameController.text}',
+              'user_mobile': phoneNumberController.text,
               'user_email': _emailController.text,
-              'user_profile_pic': profileImage, //
+              'user_profile_pic': profileImage,
               'user_type': '0',
               'user_token': '',
               'device': platform,
               'gender': selectedGender,
-              'country_code': selectedCountry, //
+              'country_code': '+91'/*selectedCountry*/, //
               'unit_name': '',
-              'newUserByAdmin': '',
+              'newUserByAdmin': isAddByAdmin! ? '1' : '0',
               'joining_date': joiningDateController.text,
-              'language_id': preferenceManager.getLanguageId(),
+              'language_id': preferenceManager.getLanguageId(), //
               'sub_department_id': selectedSubDepartmentId,
               'vi_dependants': departmentNumberController.text,
               'designation_id': selectedDesignationId,
             };
 
-            PrimaryRegisterBloc(
-              registerUseCase: GetIt.I<PrimaryRegisterUseCase>(),
-            ).add(LoadAddPrimaryUser(dataMap));
+            // Pretty print:
+            dataMap.forEach((key, value) {
+              print('data add primary: $value');
+            });
+
+            // PrimaryRegisterBloc(
+            //   registerUseCase: GetIt.I<PrimaryRegisterUseCase>(),
+            // ).add(LoadAddPrimaryUser(dataMap));
 
             // showCustomEmailVerificationSheet(
             //   imageUrl: 'assets/sign_in/email.png',
@@ -873,78 +894,37 @@ mixin FormValidator {
     required TextEditingController departmentNumberController,
     required PreferenceManager preferenceManager,
   }) {
-    if (profileImage.isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'Please select profile picture',
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-      );
+
+    if (/*!isAddByAdmin && !isAddMoreUnit && */profileImage.isEmpty) {
+      Fluttertoast.showToast(msg: 'Please select profile picture', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
     }
     if (selectedBranchId.isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'Please select your Branch',
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-      );
+      Fluttertoast.showToast(msg: 'Please select your Branch', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
     } else if (selectedDepartmentId.isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'Please select your Department',
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-      );
+      Fluttertoast.showToast(msg: 'Please select your Department', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
     } else if (selectedDesignationId.isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'Please select your Designation',
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-      );
+      Fluttertoast.showToast(msg: 'Please select your Designation', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
     } else if (joiningDate.isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'Please select Joining Date',
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-      );
+      Fluttertoast.showToast(msg: 'Please select Joining Date', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
     } else if (firstNameController.text.isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'Please enter first name',
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-      );
+      Fluttertoast.showToast(msg: 'Please enter first name', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
     } else if (lastNameController.text.isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'Please enter last name',
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-      );
+      Fluttertoast.showToast(msg: 'Please enter last name', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
-    } else if ('240' == preferenceManager.getCountryId() &&
-        departmentNumberController.text.isEmpty) {
-      Fluttertoast.showToast(
-        msg: 'Please enter number of department',
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-      );
+    } else if ('240' == preferenceManager.getCountryId() && departmentNumberController.text.isEmpty) {
+      Fluttertoast.showToast(msg: 'Please enter number of department', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
-    } else if (emailController.text.toString().isNotEmpty &&
-        isValidEmail(emailController.text)) {
-      Fluttertoast.showToast(
-        msg: 'Please enter valid email address',
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-      );
+    } else if (emailController.text.toString().isNotEmpty && !isValidEmail(emailController.text)) {
+      Fluttertoast.showToast(msg: 'Please enter valid email address', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
     } else if (phoneNumber.text.length < 7 || phoneNumber.text.length > 15) {
-      Fluttertoast.showToast(
-        msg: 'Please enter Mobile Number',
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-      );
+      Fluttertoast.showToast(msg: 'Please enter Mobile Number', backgroundColor: Colors.redAccent, textColor: Colors.white,);
       return false;
     }
 
@@ -954,6 +934,6 @@ mixin FormValidator {
 
 bool isValidEmail(String email) {
   // Simple email validation regex
-  final RegExp emailRegex = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
+  final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
   return emailRegex.hasMatch(email);
 }

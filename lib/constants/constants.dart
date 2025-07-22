@@ -29,6 +29,8 @@ class VariableBag {
       'registration_request_pending_user_id';
   static const String REGISTRATION_REQUEST_IS_APPROVE =
       'registration_request_is_approved';
+  static const String REQUEST_EMPLOYEE =
+      'request_employee';
   static const String SOCIETY_ID = 'societyId';
   static const String subEnd = 'employeeMobileApi/';
   static const String residentApiEnd = 'residentApiNew/';

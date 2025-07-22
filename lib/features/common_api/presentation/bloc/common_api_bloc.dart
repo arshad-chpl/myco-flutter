@@ -44,7 +44,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
   void _onFetchBranch(
       LoadBranch event, Emitter<CommonApiState> emit) async {
     emit(CommonApiLoading());
-    final Either<Failure, BranchResponseEntity> result = await registerUseCase.callBranch();
+    final Either<Failure, BranchResponseEntity> result = await registerUseCase.callBranch(event.societyId,event.userId);
 
     result.fold(
           (failure) => emit(CommonApiError(failure.message)),
@@ -55,7 +55,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
 
   void _onFetchFloorUnit(LoadFloorUnit event, Emitter<CommonApiState> emit) async {
     emit(CommonApiLoading());
-    final Either<Failure, FloorAndUnitResponseEntity> result = await registerUseCase.floorList(event.branchId);
+    final Either<Failure, FloorAndUnitResponseEntity> result = await registerUseCase.floorList(event.societyId,event.branchId);
 
     result.fold(
           (failure) => emit(CommonApiError(failure.message)),
@@ -66,7 +66,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
 
   void _onFetchShift(LoadShift event, Emitter<CommonApiState> emit) async {
     emit(CommonApiLoading());
-    final Either<Failure, ShiftResponseEntity> result = await registerUseCase.callShift(event.floorId);
+    final Either<Failure, ShiftResponseEntity> result = await registerUseCase.callShift(event.societyId,event.floorId);
 
     result.fold(
           (failure) => emit(CommonApiError(failure.message)),

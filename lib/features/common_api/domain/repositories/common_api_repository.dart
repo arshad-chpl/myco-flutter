@@ -8,7 +8,7 @@ import 'package:myco_flutter/features/common_api/domain/entities/uploaded_file_r
 abstract class CommonApiRepository {
   Future<Either<Failure, UploadFileResponseEntity>> uploadedTemp(bool loginType, List<String> filePath);
 
-  Future<Either<Failure, BranchResponseEntity>> getBranchList();
-  Future<Either<Failure, FloorAndUnitResponseEntity>> getFloorAndUnit(String branchId);
-  Future<Either<Failure, ShiftResponseEntity>> getShiftList(String floorId);
+  Future<Either<Failure, BranchResponseEntity>> getBranchList(String societyId, String userId);
+  Future<Either<Failure, FloorAndUnitResponseEntity>> getFloorAndUnit(String societyId, String blockId);
+  Future<Either<Failure, ShiftResponseEntity>> getShiftList(String societyId, String floorId);
 }

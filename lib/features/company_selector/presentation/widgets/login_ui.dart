@@ -189,6 +189,8 @@ class LoginUi extends StatelessWidget {
                     const CustomText('Don’t have an account? '),
                     InkWell(
                       onTap: () {
+
+
                         context.push(
                           RoutePaths.signUpForm,
                           extra: {

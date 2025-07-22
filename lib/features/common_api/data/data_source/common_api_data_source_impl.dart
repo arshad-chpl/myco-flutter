@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -33,31 +34,25 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
         String mimeType = 'image/jpeg';
         if (extension == 'png') mimeType = 'image/png';
 
-        files.add(
-          await MultipartFile.fromFile(
-            path,
-            filename: 'img[$i]_$basename',
-            contentType: MediaType.parse(mimeType),
+        files.add(await MultipartFile.fromFile(
+          path,
+          filename: 'img[$i]_$basename',
+          contentType: MediaType.parse(mimeType),
           ),
         );
       }
     }
-
     final controller = 'imageUploadController.php';
 
-    final response = await GetIt.I<ApiClient>(
-      instanceName: VariableBag.employeeMobileApi,
-    ).postMultipartImage(
+    final response = await GetIt.I<ApiClient>(instanceName: VariableBag.employeeMobileApi,).postMultipartImage(
       controller,
       'uploadImageToTemp',
       '1',
-      '0',
+      '1355',
       loginType ? '1' : '0',
-      'Rohit Malviya_2025-07-21_10',
+      'User25 S_2025-07-22_1355',
       files,
     );
-
-    print('✅ Raw response: $response');
 
     // Direct parse, NO decrypt:
     return UploadFileResponseModel.fromJson(json.decode(response));
@@ -67,11 +62,11 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
 
 
   @override
-  Future<BranchResponseModel> getBranchList() async {
+  Future<BranchResponseModel> getBranchList(String societyId, String userId) async {
     final dataMap = {
       'getBlocks': 'getBlocks',
-      'society_id': '1',
-      'user_id': '0',
+      'society_id': societyId,
+      'user_id': userId,
       'language_id': '1' /*preferenceManager.getLanguageId()*/
     };
 
@@ -83,11 +78,11 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
   }
 
   @override
-  Future<FloorAndUnitResponseModel> getFloorAndUnit(String branchId) async {
+  Future<FloorAndUnitResponseModel> getFloorAndUnit(String societyId, String blockId) async {
     final dataMap = {
       'getFloorandUnitNew': 'getFloorandUnitNew',
-      'society_id': '1',
-      'block_id': branchId,
+      'society_id': societyId,
+      'block_id': blockId,
       'language_id': '1' /*preferenceManager.getLanguageId()*/
     };
 
@@ -101,10 +96,10 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
   }
 
   @override
-  Future<ShiftResponseModel> getShiftList(String floorId) async {
+  Future<ShiftResponseModel> getShiftList(String societyId, String floorId) async {
     final dataMap = {
       'getShiftsRegister': 'getShiftsRegister',
-      'society_id': '1',
+      'society_id': societyId,
       'floor_id': floorId,
       'language_id': '1' /*preferenceManager.getLanguageId()*/
     };
