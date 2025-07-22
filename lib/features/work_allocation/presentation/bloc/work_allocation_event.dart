@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:myco_flutter/features/work_allocation/data/models/request/add_work_allocation_requset.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/widgets/Employee_details.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widgets/employee_details.dart';
 
 abstract class WorkAllocationEvent extends Equatable {
   const WorkAllocationEvent();

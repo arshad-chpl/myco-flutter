@@ -4,11 +4,11 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/chat/presentation/widgets/select_department.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_bloc.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_event.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_state.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/widgets/Employee_details.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/widgets/category_dropdown_bottom_sheet.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widgets/employee_details.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
@@ -109,19 +109,29 @@ class AssignWorkPage extends StatelessWidget {
                         : null,
                     onTap: () async {
                       if (state is WorkCategoryListLoaded) {
-                        final selected = await showModalBottomSheet<String>(
+                        final categoriesName = state.categories
+                            .map(
+                              (e) => {
+                                'id': e.workCategoryId ?? '',
+                                'name': e.workCategoryName ?? '',
+                              },
+                            )
+                            .toList();
+
+                        final selectedName = await showCustomSimpleBottomSheet(
                           context: context,
-                          builder: (_) => categoryDropdownBottomSheet(
-                            context,
-                            visitPurposes: state.categories
-                                .map((e) => e.workCategoryName ?? '')
-                                .toList(),
-                            selectedVisitPurpose: selectedCategory,
-                          ),
+                          heading: 'Work Category',
+                          dataList: categoriesName,
+                          selectedId: context
+                              .read<WorkAllocationBloc>()
+                              .selectedCategory,
+                          searchHint: 'Search Category',
+                          btnTitle: 'Select',
                         );
-                        if (selected != null) {
+
+                        if (selectedName != null) {
                           context.read<WorkAllocationBloc>().add(
-                            SelectWorkCategoryEvent(selected),
+                            SelectWorkCategoryEvent(selectedName),
                           );
                         }
                       } else if (state is WorkAllocationLoading) {
@@ -138,6 +148,31 @@ class AssignWorkPage extends StatelessWidget {
                         );
                       }
                     },
+
+                    /*onTap: () async {
+                      final categoriesName = [
+                        {'id': 'Select', 'name': 'Select'},
+                        {'id': 'Testing', 'name': 'Testing'},
+                        {'id': 'AI Tools', 'name': 'AI Tools'},
+                      ];
+
+                      final selectedName = await showCustomSimpleBottomSheet(
+                        context: context,
+                        heading: 'Work Category',
+                        dataList: categoriesName,
+                        selectedId: context
+                            .read<WorkAllocationBloc>()
+                            .selectedCategory,
+                        searchHint: 'Search Category',
+                        btnTitle: 'Select',
+                      );
+
+                      if (selectedName != null) {
+                        context.read<WorkAllocationBloc>().add(
+                          SelectWorkCategoryEvent(selectedName),
+                        );
+                      }
+                    },*/
                   );
                 },
               ),

@@ -3,7 +3,7 @@ import 'package:myco_flutter/features/work_allocation/data/models/request/get_wo
 import 'package:myco_flutter/features/work_allocation/domain/usecases/work_allocation_use_case.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_event.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_state.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/widgets/Employee_details.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widgets/employee_details.dart';
 
 class WorkAllocationBloc
     extends Bloc<WorkAllocationEvent, WorkAllocationState> {
@@ -39,7 +39,7 @@ class WorkAllocationBloc
 
     final request = GetWorkCategoryRequest(
       companyId: event.companyId,
-      getWorkCategory: event.getWorkCategory,
+      getWorkCategory: 'getWorkCategory',
       languageId: event.languageId,
     );
 
