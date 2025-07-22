@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/appointments/presentation/pages/reject_request_bottom_sheet.dart';
@@ -23,7 +24,6 @@ class _AppointmentDetailsBottomSheetState
     extends State<AppointmentDetailsBottomSheet> {
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
-    padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
     child: CommonCard(
       headerColor: AppTheme.getColor(context).primary,
       title: 'Manish Chandra',
@@ -47,7 +47,10 @@ class _AppointmentDetailsBottomSheetState
 
           // NewTextField for time, place, and reason
           Padding(
-            padding: EdgeInsets.all(24.0 * Responsive.getResponsive(context)),
+            padding: EdgeInsets.all(
+              VariableBag.bottomSheetLeftPadding *
+                  Responsive.getResponsive(context),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 10 * Responsive.getResponsive(context),
@@ -88,7 +91,11 @@ class _AppointmentDetailsBottomSheetState
                   prefixIconPath: AppAssets.assetStickyNote.toString(),
                 ),
 
-                SizedBox(height: 0.01 * Responsive.getHeight(context)),
+                SizedBox(
+                  height:
+                      VariableBag.textFieldRowGap *
+                      Responsive.getResponsive(context),
+                ),
 
                 // Buttons: Cancel & Send Request
                 Row(
@@ -96,7 +103,9 @@ class _AppointmentDetailsBottomSheetState
                   children: [
                     //MyCoButton CANCEL Button
                     MyCoButton(
-                      boarderRadius: 30 * Responsive.getResponsive(context),
+                      boarderRadius:
+                          VariableBag.buttonBorderRadius *
+                          Responsive.getResponsive(context),
                       width: 0.42 * Responsive.getWidth(context),
                       height: 0.06 * Responsive.getHeight(context),
                       onTap: () {
@@ -112,7 +121,9 @@ class _AppointmentDetailsBottomSheetState
 
                     //MyCoButton SEND REQUEST Button
                     MyCoButton(
-                      boarderRadius: 30 * Responsive.getResponsive(context),
+                      boarderRadius:
+                          VariableBag.buttonBorderRadius *
+                          Responsive.getResponsive(context),
                       width: 0.42 * Responsive.getWidth(context),
                       height: 0.06 * Responsive.getHeight(context),
                       onTap: () {
