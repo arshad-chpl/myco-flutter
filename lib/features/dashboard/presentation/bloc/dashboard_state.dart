@@ -25,3 +25,13 @@ final class IdCardDetailLoaded extends DashboardState {
   @override
   List<Object> get props => [message];
 }
+final class AppMenuGridLoaded extends DashboardState {
+
+  final HomeMenuResponseEntity res;
+
+
+  const AppMenuGridLoaded(this.res);
+
+  @override
+  List<Object> get props => [res];
+}
