@@ -51,6 +51,7 @@ class RoutePaths {
   static const String addLeaveScreen = '/add_leave_screen';
   static const String holiday = '/holiday';
 
+
   static const String employees = '/employees';
 
   static const String lostAndFound = '/lost-and-found';
@@ -121,7 +122,7 @@ class RoutePaths {
   static const String chatList = '/chat-list';
   static const String userChatScreen = '/user-chat';
   static const String startNewChat = '/start-chat';
-  static  const String groupInfo = '/group-info';
+  static const String groupInfo = '/group-info';
 
   // --- Asset Routes ---
   static const String assetsDetails = '/assets-details';

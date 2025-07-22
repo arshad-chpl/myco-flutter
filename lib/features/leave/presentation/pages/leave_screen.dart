@@ -4,20 +4,22 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
+import 'package:myco_flutter/features/leave/domain/entities/leave_history_response_entity.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/leave_skeloton/short_leave_card_skeleton.dart';
+import 'package:myco_flutter/features/leave/presentation/widgets/auto_leave_change.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/custom_fab_menu.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_action_button.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_detail_bottom_sheet.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_filter_bottom_sheet.dart';
-import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_month_year_picker_header/month_year_header.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/sandwich_leave_card.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/short_leave_card.dart';
 import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_month_year_picker_header/month_year_header.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 
@@ -71,6 +73,65 @@ class _LeaveScreenState extends State<LeaveScreen> {
     );
   }
 
+  void _deleteLeaveRequest(String leaveId) {
+    setState(() => isLoading = true);
+    context.read<LeaveBloc>().add(DeleteLeaveRequest(leaveId));
+  }
+
+  void _changeAutoLeave(
+    String userId,
+    String paid,
+    String leaveTypeId,
+    String leaveDate,
+    String leaveDay,
+    String extraDay,
+    String isSpecialDay,
+    String attendanceId,
+    String leaveId,
+    String leavePercentage,
+  ) {
+    setState(() => isLoading = true);
+    context.read<LeaveBloc>().add(
+      ChangeAutoLeave(
+        userId,
+        paid,
+        leaveTypeId,
+        leaveDate,
+        leaveDay,
+        extraDay,
+        isSpecialDay,
+        attendanceId,
+        leaveId,
+        leavePercentage,
+      ),
+    );
+  }
+
+  void _changeSandwichLeave(
+    String userId,
+    String paid,
+    String leaveId,
+    String leaveName,
+    String sandwichId,
+    String unitId,
+    String userFullName,
+    String leavePercentage,
+  ) {
+    setState(() => isLoading = true);
+    context.read<LeaveBloc>().add(
+      ChangeSandwichLeave(
+        userId,
+        paid,
+        leaveId,
+        leaveName,
+        sandwichId,
+        unitId,
+        userFullName,
+        leavePercentage,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
     // appBar: AppBar(
@@ -86,6 +147,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
       isKey: true,
       title: 'leave_balance',
       centerTitle: true,
+
       actions: [
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -123,114 +185,326 @@ class _LeaveScreenState extends State<LeaveScreen> {
         }
       },
       builder: (context, state) {
-        // if (isLoading) {
-        //   return const Center();
-        // }
-
         final filteredLeaves = _filterLeaves(leaveHistoryList);
 
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Column(
-              children: [
-                MonthYearHeader(
-                  startYear: 2025,
-                  endYear: 2026,
-                  iconSize: 0.02 * Responsive.getHeight(context),
-                  onChanged: (month, year) {
-                    setState(() {
-                      selectedMonth = month;
-                      selectedYear = year;
-                    });
-                    _fetchLeaveHistory();
-                  },
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    LeaveActionButton(
-                      title: 'My Leave Balance',
-                      onTap: () => context.go(RoutePaths.leaveBalance),
-                    ),
-                    if (isTeamLeave)
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 16),
+              child: Column(
+                children: [
+                  MonthYearHeader(
+                    startYear: 2025,
+                    endYear: 2026,
+                    iconSize: 0.02 * Responsive.getHeight(context),
+                    onChanged: (month, year) {
+                      setState(() {
+                        selectedMonth = month;
+                        selectedYear = year;
+                      });
+                      _fetchLeaveHistory();
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       LeaveActionButton(
-                        title: 'My Team Leaves',
-                        onTap: () => context.go(RoutePaths.teamLeaveBalance),
+                        title: 'My Leave Balance',
+                        onTap: () => context.go(RoutePaths.leaveBalance),
                       ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-
-                if (filteredLeaves.isEmpty)
-                  const Center(child: Text('No leaves found')),
-                if (isLoading) const Center(child: CircularProgressIndicator()),
-                ...filteredLeaves.map((leave) {
-                  if (leave.sandwichLeave == false &&
-                      leave.shortLeave == true) {
-                    return ShortLeaveCard(
-                      leave: _convertToShortLeaveEntry(leave),
-                      onDelete:
-                          ({
-                            required fullName,
-                            required sandwichLeaveId,
-                            required userId,
-                            required leaveDate,
-                          }) {
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              builder: (context) => Padding(
-                                padding: EdgeInsets.only(
-                                  bottom: MediaQuery.of(
-                                    context,
-                                  ).viewInsets.bottom,
-                                ),
-                                // to avoid keyboard overlap if needed
-                                child: CustomAlertDialog(
-                                  alertType: AlertType.delete,
-                                  content: 'do you want delete',
-                                  confirmText: 'Ok',
-                                  cancelText: 'Cancel',
-                                  onCancel: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  onConfirm: () {
-                                    _deleteShortLeave(
-                                      sandwichLeaveId ?? '',
-                                      leaveDate ?? '',
-                                      userId ?? '',
-                                      fullName ?? '',
-                                    );
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                    );
-                  } else if (leave.sandwichLeave == true &&
-                      leave.shortLeave == false) {
-                    return SandwichLeaveCard(
-                      leave: _convertToSandwichLeaveEntry(leave),
-                    );
-                  } else {
-                    return LeaveCard(
-                      leave: _convertToLeaveEntry(leave),
-                      onDelete: ({leaveId}) {
-                        // Call delete api
-                      },
-                    );
-                  }
-                }),
-              ],
+                      if (isTeamLeave)
+                        LeaveActionButton(
+                          title: 'My Team Leaves',
+                          onTap: () => context.go(RoutePaths.teamLeaveBalance),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
+            Expanded(
+              child: isLoading
+                  ? ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      itemCount: 3,
+                      itemBuilder: (_, __) => const ShortLeaveCardSkeleton(),
+                    )
+                  : filteredLeaves.isEmpty
+                  ? const Center(child: Text('No leaves found'))
+                  : ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      itemCount: filteredLeaves.length,
+                      itemBuilder: (context, index) {
+                        final leave = filteredLeaves[index];
+
+                        if (leave.sandwichLeave == false &&
+                            leave.shortLeave == true) {
+                          return ShortLeaveCard(
+                            leave: _convertToShortLeaveEntry(leave),
+                            onDelete:
+                                ({
+                                  required fullName,
+                                  required sandwichLeaveId,
+                                  required userId,
+                                  required leaveDate,
+                                }) {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    builder: (context) => Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom: MediaQuery.of(
+                                          context,
+                                        ).viewInsets.bottom,
+                                      ),
+                                      child: CustomAlertDialog(
+                                        alertType: AlertType.delete,
+                                        content: 'Do you want to delete?',
+                                        confirmText: 'Ok',
+                                        cancelText: 'Cancel',
+                                        onCancel: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        onConfirm: () {
+                                          _deleteShortLeave(
+                                            sandwichLeaveId ?? '',
+                                            leaveDate ?? '',
+                                            userId ?? '',
+                                            fullName ?? '',
+                                          );
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                },
+                          );
+                        } else if (leave.sandwichLeave == true &&
+                            leave.shortLeave == false) {
+                          return SandwichLeaveCard(
+                            leave: _convertToSandwichLeaveEntry(leave),
+                            onEdit: ({required leave}) {
+                              final leaveBloc = BlocProvider.of<LeaveBloc>(
+                                context,
+                              );
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(24),
+                                  ),
+                                ),
+                                builder: (bottomSheetContext) => Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 16,
+                                    bottom: MediaQuery.of(
+                                      bottomSheetContext,
+                                    ).viewInsets.bottom,
+                                  ),
+                                  child: DraggableScrollableSheet(
+                                    expand: false,
+                                    initialChildSize: 0.5,
+                                    minChildSize: 0.5,
+                                    maxChildSize: 0.8,
+                                    builder:
+                                        (
+                                          bottomSheetContext,
+                                          scrollController,
+                                        ) => BlocProvider.value(
+                                          value: leaveBloc,
+                                          // Use the stored bloc instance
+                                          child: SingleChildScrollView(
+                                            controller: scrollController,
+                                            child: SafeArea(
+                                              child: DialogChangeAutoLeave(
+                                                isUser: false,
+                                                isUserSandwichLeaveUpdate: true,
+                                                updateStatus: true,
+                                                leaveBloc: leaveBloc,
+                                                leaveHistory: leave,
+                                                onSubmit:
+                                                    (EditSandwichLeaveData) {
+                                                      final String paid = '0';
+                                                      _changeSandwichLeave(
+                                                        EditSandwichLeaveData
+                                                                .userId ??
+                                                            '',
+                                                        paid,
+                                                        EditSandwichLeaveData
+                                                                .leaveId ??
+                                                            '',
+                                                        EditSandwichLeaveData
+                                                                .leaveName ??
+                                                            '',
+                                                        EditSandwichLeaveData
+                                                            .sandwichId,
+                                                        EditSandwichLeaveData
+                                                                .unitId ??
+                                                            '',
+                                                        EditSandwichLeaveData
+                                                                .userFullName ??
+                                                            '',
+                                                        EditSandwichLeaveData
+                                                            .leavePercentage
+                                                            .toString(),
+                                                      );
+                                                      Navigator.of(
+                                                        context,
+                                                      ).pop();
+                                                    },
+                                                onClose: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        } else {
+                          return LeaveCard(
+                            leave: _convertToLeaveEntry(leave),
+                            onDelete: ({leaveId}) {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) => Padding(
+                                  padding: EdgeInsets.only(
+                                    bottom: MediaQuery.of(
+                                      context,
+                                    ).viewInsets.bottom,
+                                  ),
+                                  child: CustomAlertDialog(
+                                    alertType: AlertType.delete,
+                                    content: 'Do you want to delete?',
+                                    confirmText: 'Ok',
+                                    cancelText: 'Cancel',
+                                    onCancel: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    onConfirm: () {
+                                      _deleteLeaveRequest(leaveId ?? '');
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                            onEdit: ({required leave}) {
+                              final isAutoChangeable =
+                                  (leave.autoLeave ?? false) &&
+                                  !(leave.isSalaryGenerated ?? false);
+                              if (isAutoChangeable) {
+                                final leaveBloc = BlocProvider.of<LeaveBloc>(
+                                  context,
+                                ); // Store the bloc here
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(24),
+                                    ),
+                                  ),
+                                  builder: (bottomSheetContext) => Padding(
+                                    padding: EdgeInsets.only(
+                                      top: 16,
+                                      bottom: MediaQuery.of(
+                                        bottomSheetContext,
+                                      ).viewInsets.bottom,
+                                    ),
+                                    child: DraggableScrollableSheet(
+                                      expand: false,
+                                      initialChildSize: 0.5,
+                                      minChildSize: 0.5,
+                                      maxChildSize: 0.8,
+                                      builder:
+                                          (
+                                            bottomSheetContext,
+                                            scrollController,
+                                          ) => BlocProvider.value(
+                                            value: leaveBloc,
+                                            // Use the stored bloc instance
+                                            child: SingleChildScrollView(
+                                              controller: scrollController,
+                                              child: SafeArea(
+                                                child: DialogChangeAutoLeave(
+                                                  isUser:
+                                                      (leave.autoLeave == true),
+                                                  isUserSandwichLeaveUpdate:
+                                                      (leave.autoLeave != true),
+                                                  updateStatus:
+                                                      (leave.autoLeave != true),
+                                                  leaveBloc: leaveBloc,
+                                                  leaveHistory: leave,
+                                                  onSubmit: (LeaveSubmitData) {
+                                                    String paid;
+                                                    if (LeaveSubmitData
+                                                        .isPaidLeave) {
+                                                      paid = '0';
+                                                    } else {
+                                                      paid = '1';
+                                                    }
+
+                                                    final String attendanceId =
+                                                        leave.attendanceId ??
+                                                        '';
+                                                    final String extraDay;
+                                                    if (leave.isExtraDay ==
+                                                        true) {
+                                                      extraDay = '1';
+                                                    } else {
+                                                      extraDay = '0';
+                                                    }
+
+                                                    _changeAutoLeave(
+                                                      leave.userId ?? '',
+                                                      paid,
+                                                      LeaveSubmitData
+                                                          .leaveTypeId,
+                                                      leave.leaveDate ?? '',
+                                                      LeaveSubmitData
+                                                          .leaveDayTypeStatus,
+                                                      extraDay,
+                                                      LeaveSubmitData
+                                                          .isSpecialLeave,
+                                                      attendanceId,
+                                                      leave.leaveId ?? '',
+                                                      LeaveSubmitData
+                                                          .leavePercentage
+                                                          .toString(),
+                                                    );
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  onClose: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          );
+                        }
+                      },
+                    ),
+            ),
+          ],
         );
       },
     ),
+
     floatingActionButton: CustomFabMenu(
       buttons: [
         FabButtonModel(
@@ -362,5 +636,6 @@ class _LeaveScreenState extends State<LeaveScreen> {
         reason: '${leave.prevLeaveDate}-${leave.nextLeaveDate}',
         status: 'Approved',
         isSalaryGenerated: leave.isSalaryGenerated ?? false,
+        leaveEntity: leave,
       );
 }
