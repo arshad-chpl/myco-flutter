@@ -21,7 +21,7 @@ class RejectAppointmentRequestModel {
 
   Map<String, dynamic> toJson() => {
     'rejectAppointment': rejectAppointment,
-    'society_id': companyId,
+    'company_id': companyId,
     'user_id': userId,
     'language_id': languageId,
     'appointment_id': appointmentId,
