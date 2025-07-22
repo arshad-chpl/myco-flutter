@@ -114,7 +114,6 @@ class _AdminViewPageState extends State<AdminViewPage> {
       controller: _searchController,
       hintText: LanguageManager().get('search'),
       borderRadius: 12.0,
-      height: 0.06 * Responsive.getHeight(context),
     ),
   );
 
