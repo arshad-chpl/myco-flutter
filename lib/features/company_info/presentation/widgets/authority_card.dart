@@ -50,9 +50,9 @@ class AuthorityCard extends StatelessWidget {
                   Text(
                     authority.adminName ?? '',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                       fontFamily: 'Gilroy-SemiBold',
-                      fontSize: 16 * Responsive.getResponsiveText(context),
+                      fontSize: 19 * Responsive.getResponsiveText(context),
                     ),
                   ),
                   Text(
@@ -61,6 +61,7 @@ class AuthorityCard extends StatelessWidget {
                       fontFamily: 'Gilroy-Medium',
                       fontSize: 14 * Responsive.getResponsiveText(context),
                       color: theme.primary,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   InkWell(
@@ -76,6 +77,7 @@ class AuthorityCard extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'Gilroy-Medium',
                         fontSize: 14 * Responsive.getResponsiveText(context),
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
@@ -96,7 +98,7 @@ class AuthorityCard extends StatelessWidget {
                       authority.adminEmail ?? '',
                       style: TextStyle(
                         fontFamily: 'Gilroy-SemiBold',
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                         fontSize: 14 * Responsive.getResponsiveText(context),
                       ),
                     ),

@@ -43,6 +43,7 @@ class GetReasonUi extends StatelessWidget {
             backgroundColor: Colors.transparent,
             builder: (context) => Padding(
               padding: EdgeInsets.only(
+              padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
               child: CustomAlertDialog(
@@ -126,7 +127,8 @@ class GetReasonUi extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 10), // Buttons
+              const SizedBox(height: 10),
+              // Buttons
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
@@ -161,7 +163,7 @@ class GetReasonUi extends StatelessWidget {
                         isShadowBottomLeft: true,
                         boarderRadius: 30,
                         width: Responsive.getWidth(context) * .450,
-                        onTap: () {
+                        onTap: () async {
                           final reason = reasonController.text.trim();
                           if (reason.isEmpty) {
                             Fluttertoast.showToast(
@@ -171,7 +173,8 @@ class GetReasonUi extends StatelessWidget {
                             final preferenceManager =
                                 GetIt.I<PreferenceManager>();
                             final model = RequestDeviceChangeModel(
-                              user_id: preferenceManager.getUserId(),
+                              user_id:
+                                  await preferenceManager.getUserId() ?? '',
                               mac_address_change_reason: reason,
                               user_mac_address: '',
                               // Todo
