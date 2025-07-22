@@ -85,6 +85,7 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
                 Expanded(
                     child: PageView(
                       controller: pageController,
+                      physics: const NeverScrollableScrollPhysics(),
                       onPageChanged: (index) {
                         context.read<AppointmentBloc>().add(AppointmentTabChange(tabIndex: index));
                       },
@@ -105,7 +106,7 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
             },
             openIcon: Icons.add,
             closeIcon: Icons.close,
-            actions: [],
+            actions: const [],
           ),
         );
       },

@@ -44,7 +44,7 @@ class AppointmentRepositoryImpl extends AppointmentRepository {
   });
 
   @override
-  Future<Either<Failure, CommonResponseModelEntity>> getMyAppointment(
+  Future<Either<Failure, AppointmentEntityModel>> getMyAppointment(
     GetMyAppointmentsRequestModel request,
   ) async => safeApiCall.execute(() async {
     final responseModel = await remoteDataSource.getMyAppointments(request);
