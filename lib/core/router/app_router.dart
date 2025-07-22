@@ -16,10 +16,20 @@ import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bl
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
 
 // import 'package:myco_flutter/features/asset/view/testing.dart';
+import 'package:myco_flutter/features/asset/bloc/assets_bloc.dart';
+import 'package:myco_flutter/features/asset/view/add_assets.dart';
+import 'package:myco_flutter/features/asset/view/assets_details_page.dart';
+import 'package:myco_flutter/features/asset/view/assets_home_page.dart';
+import 'package:myco_flutter/features/asset/view/edit_assets_page.dart';
+import 'package:myco_flutter/features/asset/view/handover_assets.dart';
+import 'package:myco_flutter/features/asset/view/qr_scanner_page.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
+import 'package:myco_flutter/features/asset/view/swap_assets.dart';
+import 'package:myco_flutter/features/asset/view/takeover_asset.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
+import 'package:myco_flutter/features/holiday/presentation/pages/holiday_list_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/holiday/presentation/pages/holiday_list_page.dart';
@@ -32,19 +42,30 @@ import 'package:myco_flutter/features/language_selector/presentation/pages/langu
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/add_leave_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/add_short_leave_screen.dart';
+
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/my_team_leaves_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/bloc/lost_and_found_bloc.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/bloc/lost_and_found_bloc.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
+
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
+
+import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
+
+import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
+
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';

@@ -13,6 +13,9 @@ class AppAssets {
   static const String assetVisit = '$basePath/add_expense';
 
   static const String assets = '$basePath/asset';
+  static const String lostAndFound = '$basePath/lost_and_found';
+
+  static const String assets = '$basePath/assets';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
   static const String workAllocation = '$basePath/work_allocation';
@@ -180,6 +183,19 @@ class AppAssets {
   static const String assetProfileCircle = '$svgsVisit/profile-circle.svg';
   static const String assetClock = '$svgsVisit/clock.svg';
   static const String assetSearchNormal = '$svgsVisit/search-normal.svg';
+
+  // Lost And Found
+
+  static const String camera = '$lostAndFound/camera.svg';
+  static const String clipboard = '$lostAndFound/clipboard.svg';
+  static const String data = '$lostAndFound/data.svg';
+  static const String documents = '$lostAndFound/documents.svg';
+  static const String gallaryAdd = '$lostAndFound/gallery-add.svg';
+  static const String gallaryExport = '$lostAndFound/gallery-export.svg';
+  static const String link = '$lostAndFound/link.svg';
+  static const String searchNormal = '$lostAndFound/search-normal.svg';
+  static const String send = '$lostAndFound/send.svg';
+  static const String vector = '$lostAndFound/Vector.svg';
 
   //images stepper
   static const String stepperCheckIcon = '$stepper/check.svg';
