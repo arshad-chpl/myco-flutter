@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -37,7 +38,7 @@ class _CommonRowState extends State<CommonRow> {
               widget.title,
               fontWeight: FontWeight.w600,
               fontSize: 17 * Responsive.getResponsiveText(context),
-              color: AppColors.black,
+              color: AppTheme.getColor(context).onSurface,
             ),
           ),
 
@@ -46,7 +47,7 @@ class _CommonRowState extends State<CommonRow> {
             ':',
             fontWeight: FontWeight.w500,
             fontSize: 17 * Responsive.getResponsiveText(context),
-            color: AppColors.black,
+            color: AppTheme.getColor(context).onSurface,
           ),
           SizedBox(width: 0.020 * Responsive.getWidth(context)),
 

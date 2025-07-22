@@ -317,23 +317,6 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // line gap
 
 //
@@ -505,29 +488,6 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -558,7 +518,7 @@ class StatusTimeline extends StatelessWidget {
     required this.steps,
     this.circleSize = 19,
     this.linewidth = 72,
-    this.textSlotWidthMultiplier=2,
+    this.textSlotWidthMultiplier = 2,
   });
 
   @override
@@ -570,7 +530,8 @@ class StatusTimeline extends StatelessWidget {
 
     // Determine the effective width of the circle display area.
     // This width will be consistently applied to both circle containers and text containers.
-    final double effectiveCircleAreaWidth = circleSize * 1.4; // This is the total width slot for each step
+    final double effectiveCircleAreaWidth =
+        circleSize * 1.4; // This is the total width slot for each step
 
     return SizedBox(
       width: double.infinity,
@@ -591,23 +552,30 @@ class StatusTimeline extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Container(
                       height: 0.003 * Responsive.getHeight(context),
-                      color: isLineActive(index, lastActiveIndex) ? activeColor : AppTheme.getColor(context).outline,
+                      color: isLineActive(index, lastActiveIndex)
+                          ? activeColor
+                          : AppTheme.getColor(context).outline,
                     ),
                   );
                 } else {
                   // This represents a circle's position
                   final stepIndex = index ~/ 2;
                   final isStepActive = steps[stepIndex].isActive;
-                  final displayColor = isStepActive ? activeColor : AppTheme.getColor(context).outline;
+                  final displayColor = isStepActive
+                      ? activeColor
+                      : AppTheme.getColor(context).outline;
 
-                  return SizedBox( // Use SizedBox to allocate the horizontal space for this circle
+                  return SizedBox(
+                    // Use SizedBox to allocate the horizontal space for this circle
                     width: effectiveCircleAreaWidth,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center, // Center the circle element within its allocated SizedBox
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      // Center the circle element within its allocated SizedBox
                       children: [
                         Container(
                           width: effectiveCircleAreaWidth,
-                          height: effectiveCircleAreaWidth, // Keep height consistent for a square bounding box
+                          height: effectiveCircleAreaWidth,
+                          // Keep height consistent for a square bounding box
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             boxShadow: [
@@ -631,11 +599,11 @@ class StatusTimeline extends StatelessWidget {
                             child: Center(
                               child: steps[stepIndex].imagePath != null
                                   ? Image.asset(
-                                steps[stepIndex].imagePath!,
-                                width: circleSize * 0.5,
-                                height: circleSize * 0.4,
-                                fit: BoxFit.contain,
-                              )
+                                      steps[stepIndex].imagePath!,
+                                      width: circleSize * 0.5,
+                                      height: circleSize * 0.4,
+                                      fit: BoxFit.contain,
+                                    )
                                   : const SizedBox(),
                             ),
                           ),
@@ -660,17 +628,23 @@ class StatusTimeline extends StatelessWidget {
                   // This creates the text container matching the circle's width
                   final stepIndex = index ~/ 2;
                   final isLabelActive = stepIndex <= lastActiveIndex;
-                  final displayColor = isLabelActive ? activeColor : const Color(0xff929292);
+                  final displayColor = isLabelActive
+                      ? activeColor
+                      : const Color(0xff929292);
 
                   return SizedBox(
-                    width: effectiveCircleAreaWidth, // The fixed width for the text slot
-                    child: FittedBox( // Allows its child (CustomText) to be scaled
+                    width: effectiveCircleAreaWidth,
+                    // The fixed width for the text slot
+                    child: FittedBox(
+                      // Allows its child (CustomText) to be scaled
                       fit: BoxFit.scaleDown, // Shrink the text if it's too big
                       alignment: Alignment.center, // Center the scaled text
                       child: CustomText(
                         steps[stepIndex].label,
-                        textAlign: TextAlign.center, // Center the text within FittedBox's scaled area
-                        fontSize: 11 * Responsive.getResponsiveText(context), // Starting font size
+                        textAlign: TextAlign.center,
+                        // Center the text within FittedBox's scaled area
+                        fontSize: 11 * Responsive.getResponsiveText(context),
+                        // Starting font size
                         color: displayColor,
                         fontWeight: FontWeight.w600,
                         maxLines: 1, // Crucial: Force text to a single line
