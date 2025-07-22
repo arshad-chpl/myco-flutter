@@ -108,8 +108,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths
-        .appointments, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -236,14 +235,14 @@ class AppRouter {
         name: '/my_team_leaves_screen',
         builder: (context, state) => const MyTeamLeavesScreen(),
       ),
-      // GoRoute(
-      //   path: RoutePaths.addShortLeaveScreen,
-      //   name: RoutePaths.addShortLeaveScreen,
-      //   builder: (context, state) => BlocProvider<LeaveBloc>(
-      //     create: (_) => GetIt.I<LeaveBloc>(),
-      //     child: const AddShortLeaveScreen(),
-      //   ),
-      // ),
+      GoRoute(
+        path: RoutePaths.addShortLeaveScreen,
+        name: RoutePaths.addShortLeaveScreen,
+        builder: (context, state) => BlocProvider<LeaveBloc>(
+          create: (_) => GetIt.I<LeaveBloc>(),
+          child: const AddShortLeaveScreen(),
+        ),
+      ),
       GoRoute(
         path: RoutePaths.addLeaveScreen,
         name: '/add_leave_screen',
@@ -337,8 +336,7 @@ class AppRouter {
         path: RoutePaths.lostAndFoundItemDetails,
         name: 'lost-and-found-item-details',
         builder: (context, state) {
-          final LostAndFoundItemModel lostitem =
-              state.extra as LostAndFoundItemModel;
+          LostAndFoundItemModel lostitem = state.extra as LostAndFoundItemModel;
           return ItemDetailsScreen(item: lostitem);
         },
       ),
@@ -403,6 +401,8 @@ class AppRouter {
         ),
       ),
 
+
+
       GoRoute(
         path: RoutePaths.qrScanner,
         name: 'qr-scanner',
@@ -413,12 +413,12 @@ class AppRouter {
         name: 'add-visit',
         builder: (context, state) => const AddNewVisit(),
       ),
-
       // GoRoute(
       //   path: RoutePaths.myProfile,
       //   name: 'my-profile',
       //   builder: (context, state) => const MyProfilePage(),
       // ),
+
       GoRoute(
         path: RoutePaths.assetsDetails,
         name: 'assets-details',

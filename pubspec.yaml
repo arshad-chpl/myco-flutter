@@ -105,7 +105,8 @@ flutter:
     - assets/svgs/visit/
     - assets/add_expense/
     - assets/dashboard/svgs/
-    - assets/face_detection/
+    - assets/dashboard/svgs/
+    - assets/svgs/visit/
     - assets/svgs/visit/
     - assets/dashboard/svgs/
     - assets/assets/
