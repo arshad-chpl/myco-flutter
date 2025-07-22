@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
-import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
@@ -67,13 +66,10 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
 
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
-          horizontal:
-              VariableBag.screenHorizontalPadding *
-              Responsive.getResponsive(context),
+          horizontal: 31 * Responsive.getResponsive(context),
+          // vertical: 12 * Responsive.getResponsive(context),
         ),
         child: Column(
-          spacing:
-              VariableBag.textFieldRowGap * Responsive.getResponsive(context),
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Visit Type Radio Group
@@ -86,15 +82,27 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
               borderColor: AppTheme.getColor(context).primary,
               textStyle: TextStyle(color: AppTheme.getColor(context).onSurface),
             ),
+            SizedBox(height: 12 * Responsive.getResponsive(context)),
 
             //Select Customer *
             NewTextField(
-              label: "customer_to_visit",
-              isKey: true,
+              label: 'Customer',
               prefixIconPath: AppAssets.personalcard,
               suffixIconPath: AppAssets.arrow_down,
-              hintText: 'Select',
+              hintText: selectedCustomer ?? 'Select Customer *',
+              controller: TextEditingController(
+                text: selectedCustomer ?? '',
+              ),
+              onTap: () async {
+                final selected = await context.pushNamed<String>('customerPage');
+                if (selected != null) {
+                  setState(() => selectedCustomer = selected);
+                }
+              },
             ),
+
+            SizedBox(height: 12 * Responsive.getResponsive(context)),
+
             // Visit Date
             NewTextField(
               label: 'Visit Date',
@@ -103,47 +111,55 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
               controller: amountController,
               keyboardType: TextInputType.datetime,
               validator: (v) =>
-                  v == null || v.isEmpty ? 'Please enter a date' : null,
+              v == null || v.isEmpty ? 'Please enter a date' : null,
               onTap: () async {
                 // Example: show date picker
               },
             ),
 
+            SizedBox(height: 12 * Responsive.getResponsive(context)),
+
             //Select Slot
             NewTextField(
               label: 'visit_slots',
-              isKey: true,
               prefixIconPath: AppAssets.clock,
               suffixIconPath: AppAssets.arrow_down,
               hintText: selectedTimeSlot ?? 'Select Slot',
-              controller: TextEditingController(text: selectedTimeSlot ?? ''),
-              onTap: () {
+              controller: TextEditingController(
+                text: selectedTimeSlot ?? '',
+              ),
+              onTap: ()  {
                 // handle tap function
               },
             ),
+
+            SizedBox(height: 12 * Responsive.getResponsive(context)),
 
             // Field / Virtual Visit
             FieldVirtualVisitToggle(
               selectedValue: selectedFieldVisit,
               onChanged: (v) => setState(() => selectedFieldVisit = v),
             ),
+            SizedBox(height: 12 * Responsive.getResponsive(context)),
             //Select Purpose
             NewTextField(
               label: 'visit_type',
-              isKey: true,
               prefixIconPath: AppAssets.gps,
               suffixIconPath: AppAssets.arrow_down,
-              hintText: selectedTimeSlot ?? 'Select Purpose',
-              onTap: () {
+              hintText: selectedVisitPurpose ?? 'Select Purpose',
+              controller: TextEditingController(
+                text: selectedVisitPurpose ?? '',
+              ),
+              onTap: ()  {
                 // handle tap function
               },
             ),
 
+            SizedBox(height: 12 * Responsive.getResponsive(context)),
 
             // Visit Purpose dropdown
             NewTextField(
               label: 'visit_purpose',
-              isKey: true,
               prefixIconPath: AppAssets.gps,
               suffixIconPath: AppAssets.arrow_down,
               hintText: selectedRescheduleReason ?? 'Select Reason',
@@ -155,13 +171,14 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
               },
             ),
 
+            SizedBox(height: 12 * Responsive.getResponsive(context)),
             NewTextField(
-              label: 'purpose_of_visiting',
-              isKey: true,
+              label: LanguageManager().get('purpose_of_visit'),
               prefixIconPath: AppAssets.sticky_note,
               hintText: LanguageManager().get('write_here'),
               maxLines: 10,
             ),
+            SizedBox(height: 12 * Responsive.getResponsive(context)),
 
             const CustomMediaPickerContainer(
               title: 'Attachment *',
@@ -171,6 +188,8 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
               isDocumentShow: true,
             ),
 
+            SizedBox(height: 0.10 * Responsive.getHeight(context)),
+
             // Agreement + Submit
             AutoStartCheckboxRow(
               isChecked: isChecked,
@@ -178,6 +197,7 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
                 // handle checkbox change
               },
             ),
+            SizedBox(height: 16 * Responsive.getResponsive(context)),
 
             //Submit
             MyCoButton(
@@ -193,9 +213,7 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
               ),
               width: 1.2 * Responsive.getWidth(context),
               isShadowBottomLeft: true,
-              boarderRadius:
-                  VariableBag.buttonBorderRadius *
-                  Responsive.getResponsive(context),
+              boarderRadius: 30 * Responsive.getResponsive(context),
             ),
             SizedBox(height: 0.01 * Responsive.getHeight(context)),
           ],

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
-import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -27,50 +26,37 @@ class _TravelModeState extends State<TravelMode> {
       bottom: false, // remove extra bottom safe area
       child: Padding(
         padding: EdgeInsets.only(
-          left:
-              VariableBag.bottomSheetLeftPadding *
-              Responsive.getResponsive(context),
-          right:
-              VariableBag.bottomSheetRightPadding *
-              Responsive.getResponsive(context),
-          top:
-              VariableBag.bottomSheetTopPadding *
-              Responsive.getResponsive(context),
-          bottom:
-              VariableBag.bottomSheetBottomPadding *
-              Responsive.getResponsive(context),
+          left: 31.0 * Responsive.getResponsive(context),
+          right: 31.0 * Responsive.getResponsive(context),
+          top: 20 * Responsive.getResponsive(context),
+          bottom: 10 * Responsive.getResponsive(context), // reduced
         ),
         child: Column(
-          spacing:
-              VariableBag.textFieldRowGap * Responsive.getResponsive(context),
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.min, // makes it wrap content
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /// Travel Mode field
             NewTextField(
-              label: 'please_select_travel_mode',
-              isKey: true,
+              label: LanguageManager().get('please_select_travel_mode'),
               prefixIconPath: AppAssets.smart_car,
               suffixIconPath: AppAssets.arrow_down,
               controller: travelModeController,
               hintText: LanguageManager().get('select'),
             ),
+            SizedBox(height: 20 * Responsive.getResponsive(context)),
 
             /// Site field
             NewTextField(
-              label: 'site',
-              isKey: true,
+              label: LanguageManager().get('site'),
               prefixIconPath: AppAssets.global,
               suffixIconPath: AppAssets.arrow_down,
               controller: siteController,
               hintText: LanguageManager().get('select'),
             ),
+            SizedBox(height: 30 * Responsive.getResponsive(context)),
 
             /// Buttons row
             Row(
-              spacing:
-                  VariableBag.buttonRowSpacing *
-                  Responsive.getResponsive(context),
               children: [
                 Expanded(
                   child: MyCoButton(
@@ -85,11 +71,10 @@ class _TravelModeState extends State<TravelMode> {
                     ),
                     backgroundColor: Colors.white,
                     borderColor: theme.primary,
-                    boarderRadius:
-                        VariableBag.buttonBorderRadius *
-                        Responsive.getResponsive(context),
+                    boarderRadius: 30 * Responsive.getResponsive(context),
                   ),
                 ),
+                SizedBox(width: 10 * Responsive.getResponsive(context)),
                 Expanded(
                   child: MyCoButton(
                     onTap: () {},
@@ -100,9 +85,7 @@ class _TravelModeState extends State<TravelMode> {
                       fontWeight: FontWeight.w400,
                     ),
                     backgroundColor: theme.primary,
-                    boarderRadius:
-                        VariableBag.buttonBorderRadius *
-                        Responsive.getResponsive(context),
+                    boarderRadius: 30 * Responsive.getResponsive(context),
                     isShadowBottomLeft: true,
                   ),
                 ),

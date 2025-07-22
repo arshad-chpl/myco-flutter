@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text_radio_button.dart';
@@ -19,7 +18,6 @@ class FieldVirtualVisitToggle extends StatelessWidget {
     final double responsive = Responsive.getResponsive(context);
 
     return Row(
-      spacing: VariableBag.buttonRowSpacing * Responsive.getResponsive(context),
       children: [
         Expanded(
           child: CustomTextRadioButton(
@@ -37,6 +35,7 @@ class FieldVirtualVisitToggle extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(width: 12 * responsive),
         Expanded(
           child: CustomTextRadioButton(
             gender: 'Virtual Visit',

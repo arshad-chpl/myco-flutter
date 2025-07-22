@@ -35,8 +35,7 @@ class AutoStartCheckboxRow extends StatelessWidget {
         SizedBox(width: 10 * responsive),
         Expanded(
           child: CustomText(
-            'auto_start_visit',
-            isKey: true,
+            'Please agree to automatically start the visit',
             fontSize: 14 * textSize,
             color: AppColors.textSecondary,
           ),

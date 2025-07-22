@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
-import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/AutoStartVisitCheckboxRow.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/AutoStartVisitCheckboxRow.dart';
@@ -56,12 +54,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
     ),
     body: Padding(
       padding: EdgeInsets.symmetric(
-        horizontal:
-            VariableBag.screenHorizontalPadding *
-            Responsive.getResponsive(context),
-        vertical:
-            VariableBag.formContentSpacingVertical *
-            Responsive.getResponsive(context),
+        horizontal: 31.0 * Responsive.getResponsive(context),
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -86,21 +79,19 @@ class _AddNewVisitState extends State<AddNewVisit> {
 
             /// Customer to Visit dropdown
             NewTextField(
-              label: 'customer_to_visit',
-              isKey: true,
+              label: LanguageManager().get('customer_to_visit'),
               prefixIconPath: AppAssets.personalcard,
               suffixIconPath: AppAssets.arrow_down,
               controller: customerController,
               hintText: LanguageManager().get('select'),
-              onTap: () {
+              onTap: ()  {
                 // handle op tap
               },
             ),
 
             /// Visit Date text field
             NewTextField(
-              label: 'visit_date',
-              isKey: true,
+              label: LanguageManager().get('visit_date'),
               prefixIconPath: AppAssets.note_favorite,
               hintText: LanguageManager().get('select_date'),
               controller: visitDateController,
@@ -111,26 +102,21 @@ class _AddNewVisitState extends State<AddNewVisit> {
 
             /// Visit Slot dropdown
             NewTextField(
-              label: 'visit_slots',
-              isKey: true,
+              label: LanguageManager().get('visit_slots'),
               prefixIconPath: AppAssets.clock,
               suffixIconPath: AppAssets.arrow_down,
-              hintText: 'select_slot',
+              hintText: LanguageManager().get('select_slot'),
               onTap: () async {
                 // show modal, bottom sheet, or page
               },
             ),
 
             /// Visit Type label
-            Column(
-              children: [
-                CustomText(
-                  LanguageManager().get('visit_type'),
-                  fontSize: 12 * Responsive.getResponsiveText(context),
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.getColor(context).onSurface,
-                ),
-              ],
+            CustomText(
+              LanguageManager().get('visit_type'),
+              fontSize: 12 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.w600,
+              color: AppTheme.getColor(context).onSurface,
             ),
 
             /// Visit mode radio buttons
@@ -147,8 +133,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
 
             /// Purpose of Visit (big text field)
             NewTextField(
-              label: 'purpose_of_visiting',
-              isKey: true,
+              label: LanguageManager().get('purpose_of_visit'),
               prefixIconPath: AppAssets.sticky_note,
               hintText: LanguageManager().get('write_here'),
               maxLines: 10,
@@ -164,14 +149,16 @@ class _AddNewVisitState extends State<AddNewVisit> {
 
             /// Submit button
             Padding(
-              padding:  EdgeInsets.symmetric(vertical: 50 * Responsive.getResponsive(context)),
+              padding: EdgeInsets.only(
+                top: 0.05 * Responsive.getHeight(context),
+              ),
               child: MyCoButton(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (_) =>
-                          CustomerAddNewVisit(), // replace with your target page widget
+                          AssignToVisit(), // replace with your target page widget
                     ),
                   );
                 },
@@ -182,9 +169,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
                   fontSize: 18 * Responsive.getResponsiveText(context),
                 ),
                 isShadowBottomLeft: true,
-                boarderRadius:
-                    VariableBag.buttonBorderRadius *
-                    Responsive.getResponsive(context),
+                boarderRadius: 50 * Responsive.getResponsive(context),
               ),
             ),
             const SizedBox(),
