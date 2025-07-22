@@ -457,57 +457,58 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
         SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
-        Row(
-          children: [
-            LabeledTextField(
-              label: 'First Name *',
-              hint: 'First Name',
-              textAlignment: TextAlign.start,
-              controller: _firstNameController,
-              validator: (val) =>
-                  val == null || val.isEmpty ? 'Required' : null,
-              textInputType: TextInputType.name,
-              widthFactor: 0.43 * Responsive.getWidth(context),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: AppTheme.getColor(context).outline,
-                ),
-                borderRadius: BorderRadius.circular(
-                  10 * Responsive.getResponsive(context),
-                ),
-              ),
-              textFieldHeight: 0.063 * Responsive.getHeight(context),
-              typingtextStyle: TextStyle(
-                color: AppTheme.getColor(context).onSurface,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const Spacer(),
-            LabeledTextField(
-              typingtextStyle: TextStyle(
-                color: AppTheme.getColor(context).onSurface,
-                fontWeight: FontWeight.w600,
-              ),
-              label: 'Last Name *',
-              hint: 'Last Name',
-              textAlignment: TextAlign.start,
-              controller: _lastNameController,
-              validator: (val) =>
-                  val == null || val.isEmpty ? 'Required' : null,
-              textInputType: TextInputType.name,
-              widthFactor: 0.43 * Responsive.getWidth(context),
-              textFieldHeight: 0.063 * Responsive.getHeight(context),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: AppTheme.getColor(context).outline,
-                ),
-                borderRadius: BorderRadius.circular(
-                  10 * Responsive.getResponsive(context),
-                ),
-              ),
-            ),
-          ],
-        ),
+        //TODO: ISSUE OF RENDERING
+        // Row(
+        //   children: [
+        //     LabeledTextField(
+        //       label: 'First Name *',
+        //       hint: 'First Name',
+        //       textAlignment: TextAlign.start,
+        //       controller: _firstNameController,
+        //       validator: (val) =>
+        //           val == null || val.isEmpty ? 'Required' : null,
+        //       textInputType: TextInputType.name,
+        //       widthFactor: 0.43 * Responsive.getWidth(context),
+        //       border: OutlineInputBorder(
+        //         borderSide: BorderSide(
+        //           color: AppTheme.getColor(context).outline,
+        //         ),
+        //         borderRadius: BorderRadius.circular(
+        //           10 * Responsive.getResponsive(context),
+        //         ),
+        //       ),
+        //       textFieldHeight: 0.063 * Responsive.getHeight(context),
+        //       typingtextStyle: TextStyle(
+        //         color: AppTheme.getColor(context).onSurface,
+        //         fontWeight: FontWeight.w600,
+        //       ),
+        //     ),
+        //     const Spacer(),
+        //     LabeledTextField(
+        //       typingtextStyle: TextStyle(
+        //         color: AppTheme.getColor(context).onSurface,
+        //         fontWeight: FontWeight.w600,
+        //       ),
+        //       label: 'Last Name *',
+        //       hint: 'Last Name',
+        //       textAlignment: TextAlign.start,
+        //       controller: _lastNameController,
+        //       validator: (val) =>
+        //           val == null || val.isEmpty ? 'Required' : null,
+        //       textInputType: TextInputType.name,
+        //       widthFactor: 0.43 * Responsive.getWidth(context),
+        //       textFieldHeight: 0.063 * Responsive.getHeight(context),
+        //       border: OutlineInputBorder(
+        //         borderSide: BorderSide(
+        //           color: AppTheme.getColor(context).outline,
+        //         ),
+        //         borderRadius: BorderRadius.circular(
+        //           10 * Responsive.getResponsive(context),
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
 
         SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
