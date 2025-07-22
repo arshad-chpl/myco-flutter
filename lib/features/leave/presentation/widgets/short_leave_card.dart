@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/leave/domain/intities/leave_history_response_entity.dart';
+import 'package:myco_flutter/features/leave/domain/entities'
+    '/leave_history_response_entity.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -47,8 +48,9 @@ class ShortLeaveCard extends StatelessWidget {
     final textResponsive = Responsive.getResponsiveText(context);
 
     // Determine if delete icon should be visible based on Java conditions
-// Determine if delete icon should be visible to match Java logic
-    final showDeleteIcon = leave.status == 'Pending' &&
+    // Determine if delete icon should be visible to match Java logic
+    final showDeleteIcon =
+        leave.status == 'Pending' &&
         (!(leave.leaveEntity.isSalaryGenerated ?? false) ||
             !(leave.leaveEntity.isDateGone ?? false));
 

@@ -42,6 +42,7 @@ class _BouncingImageState extends State<BouncingImage>
       child: Image.asset(
         'assets/search_society/get-started.png',
         width: Responsive.getWidth(context) * 0.85,
+        height: Responsive.getHeight(context) * 0.4,
       ),
     ),
   );

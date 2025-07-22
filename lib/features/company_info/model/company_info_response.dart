@@ -1,55 +1,60 @@
+import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:myco_flutter/features/company_info/domain/entities/company_info_entity.dart';
 
 part 'company_info_response.g.dart';
 
-@JsonSerializable(explicitToJson: true)
-class CompanyInfoResponse {
-  @JsonKey(name: "society_name")
-  String? companyName;
-  @JsonKey(name: "society_based")
-  String? companyBased;
-  @JsonKey(name: "society_address")
-  String? companyAddress;
-  @JsonKey(name: "socieaty_logo")
-  String? companyLogo;
-  @JsonKey(name: "builder_name")
-  String? builderName;
-  @JsonKey(name: "builder_address")
-  String? builderAddress;
-  @JsonKey(name: "society_latitude")
-  String? companyLatitude;
-  @JsonKey(name: "society_longitude")
-  String? companyLongitude;
-  @JsonKey(name: "builder_mobile")
-  String? builderMobile;
-  @JsonKey(name: "secretary_email")
-  String? secretaryEmail;
-  @JsonKey(name: "secretary_mobile")
-  String? secretaryMobile;
-  @JsonKey(name: "no_of_units")
-  String? noOfUnits;
-  @JsonKey(name: "unit_name")
-  String? unitName;
-  @JsonKey(name: "no_of_blocks")
-  String? noOfBlocks;
-  @JsonKey(name: "block_name")
-  String? blockName;
-  @JsonKey(name: "no_of_population")
-  String? noOfPopulation;
-  @JsonKey(name: "population_view")
-  String? populationView;
-  List<Commitie>? commitie;
-  @JsonKey(name: "builder_view")
-  String? builderView;
-  @JsonKey(name: "authorities_view")
-  String? authoritiesView;
-  @JsonKey(name: "statistical_view")
-  String? statisticalView;
-  @JsonKey(name: "trial_days")
-  String? trialDays;
-  String? message;
+CompanyInfoResponseModel companyInfoResponseModelFromJson(String str) =>
+    CompanyInfoResponseModel.fromJson(json.decode(str));
 
-  CompanyInfoResponse({
+@JsonSerializable(explicitToJson: true)
+class CompanyInfoResponseModel {
+  @JsonKey(name: "society_name")
+  final String? companyName;
+  @JsonKey(name: "society_based")
+  final String? companyBased;
+  @JsonKey(name: "society_address")
+  final String? companyAddress;
+  @JsonKey(name: "socieaty_logo")
+  final String? companyLogo;
+  @JsonKey(name: "builder_name")
+  final String? builderName;
+  @JsonKey(name: "builder_address")
+  final String? builderAddress;
+  @JsonKey(name: "society_latitude")
+  final String? companyLatitude;
+  @JsonKey(name: "society_longitude")
+  final String? companyLongitude;
+  @JsonKey(name: "builder_mobile")
+  final String? builderMobile;
+  @JsonKey(name: "secretary_email")
+  final String? secretaryEmail;
+  @JsonKey(name: "secretary_mobile")
+  final String? secretaryMobile;
+  @JsonKey(name: "no_of_units")
+  final String? noOfUnits;
+  @JsonKey(name: "unit_name")
+  final String? unitName;
+  @JsonKey(name: "no_of_blocks")
+  final String? noOfBlocks;
+  @JsonKey(name: "block_name")
+  final String? blockName;
+  @JsonKey(name: "no_of_population")
+  final String? noOfPopulation;
+  @JsonKey(name: "population_view")
+  final String? populationView;
+  final List<CommitieModel>? commitie;
+  @JsonKey(name: "builder_view")
+  final String? builderView;
+  @JsonKey(name: "authorities_view")
+  final String? authoritiesView;
+  @JsonKey(name: "statistical_view")
+  final String? statisticalView;
+  @JsonKey(name: "trial_days")
+  final String? trialDays;
+  final String? message;
+
+  CompanyInfoResponseModel({
     this.companyName,
     this.companyBased,
     this.companyAddress,
@@ -75,36 +80,65 @@ class CompanyInfoResponse {
     this.message,
   });
 
-  factory CompanyInfoResponse.fromJson(Map<String, dynamic> json) => _$CompanyInfoResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$CompanyInfoResponseToJson(this);
+  factory CompanyInfoResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$CompanyInfoResponseModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CompanyInfoResponseModelToJson(this);
+
+  /// Converts to domain entity
+  CompanyInfoEntity toEntity() => CompanyInfoEntity(
+    companyName: companyName,
+    companyBased: companyBased,
+    companyAddress: companyAddress,
+    companyLogo: companyLogo,
+    builderName: builderName,
+    builderAddress: builderAddress,
+    companyLatitude: companyLatitude,
+    companyLongitude: companyLongitude,
+    builderMobile: builderMobile,
+    secretaryEmail: secretaryEmail,
+    secretaryMobile: secretaryMobile,
+    noOfUnits: noOfUnits,
+    unitName: unitName,
+    noOfBlocks: noOfBlocks,
+    blockName: blockName,
+    noOfPopulation: noOfPopulation,
+    populationView: populationView,
+    commitie: commitie?.map((e) => e.toEntity()).toList(),
+    builderView: builderView,
+    authoritiesView: authoritiesView,
+    statisticalView: statisticalView,
+    trialDays: trialDays,
+    message: message,
+  );
 }
 
 @JsonSerializable()
-class Commitie {
+class CommitieModel {
   @JsonKey(name: "admin_id")
-  String? adminId;
+  final String? adminId;
   @JsonKey(name: "role_id")
-  String? roleId;
+  final String? roleId;
   @JsonKey(name: "society_id")
-  String? companyId;
+  final String? companyId;
   @JsonKey(name: "admin_name")
-  String? adminName;
+  final String? adminName;
   @JsonKey(name: "admin_email")
-  String? adminEmail;
+  final String? adminEmail;
   @JsonKey(name: "short_name")
-  String? shortName;
+  final String? shortName;
   @JsonKey(name: "admin_mobile")
-  String? adminMobile;
+  final String? adminMobile;
   @JsonKey(name: "mobile_private")
-  String? mobilePrivate;
+  final String? mobilePrivate;
   @JsonKey(name: "admin_address")
-  String? adminAddress;
+  final String? adminAddress;
   @JsonKey(name: "role_name")
-  String? roleName;
+  final String? roleName;
   @JsonKey(name: "admin_profile")
-  String? adminProfile;
+  final String? adminProfile;
 
-  Commitie({
+  CommitieModel({
     this.adminId,
     this.roleId,
     this.companyId,
@@ -118,6 +152,23 @@ class Commitie {
     this.adminProfile,
   });
 
-  factory Commitie.fromJson(Map<String, dynamic> json) => _$CommitieFromJson(json);
-  Map<String, dynamic> toJson() => _$CommitieToJson(this);
+  factory CommitieModel.fromJson(Map<String, dynamic> json) =>
+      _$CommitieModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CommitieModelToJson(this);
+
+  /// Converts to domain entity
+  CommitieEntity toEntity() => CommitieEntity(
+    adminId: adminId,
+    roleId: roleId,
+    companyId: companyId,
+    adminName: adminName,
+    adminEmail: adminEmail,
+    shortName: shortName,
+    adminMobile: adminMobile,
+    mobilePrivate: mobilePrivate,
+    adminAddress: adminAddress,
+    roleName: roleName,
+    adminProfile: adminProfile,
+  );
 }

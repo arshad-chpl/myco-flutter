@@ -1,10 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
-import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -17,6 +15,7 @@ import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class LoginUi extends StatelessWidget {
   final VoidCallback previousStep;
@@ -48,10 +47,7 @@ class LoginUi extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isEmailLogin = selectedCompany?.loginVia == '1';
 
-    final preferenceManager = GetIt.I<PreferenceManager>();
-
     return Container(
-      height: 0.7 * Responsive.getHeight(context),
       width: Responsive.getWidth(context),
       decoration: BoxDecoration(
         color: AppTheme.getColor(context).onPrimary,
@@ -82,8 +78,8 @@ class LoginUi extends StatelessWidget {
                     CustomText(
                       'Select Other Company',
                       color: AppTheme.getColor(context).onSurface,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 18 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15 * Responsive.getResponsiveText(context),
                     ),
                   ],
                 ),
@@ -99,8 +95,8 @@ class LoginUi extends StatelessWidget {
                     ),
                     CustomText(
                       'Welcome to ${selectedCompany?.societyName ?? "Your Company"}',
-                      fontSize: 20 * Responsive.getResponsiveText(context),
-                      fontWeight: FontWeight.w800,
+                      fontSize: 16 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w600,
                     ),
                   ],
                 ),
@@ -118,28 +114,30 @@ class LoginUi extends StatelessWidget {
               MyCoButton(
                 onTap: () {
                   final contactInfo = isEmailLogin
-                      ? emailController.text
-                      : phoneController.text;
+                      ? emailController.text.trim()
+                      : phoneController.text.trim();
 
+                  // Empty check
                   if (contactInfo.isEmpty) {
                     final String text = isEmailLogin
                         ? 'Please enter your Email Address'
                         : 'Please enter your Phone Number';
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(text)));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
                     return;
                   }
 
-                  if (isEmailLogin && !_isValidEmail(contactInfo)) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Please enter a valid Email Address'),
-                      ),
-                    );
-                    return;
+                  // Email format validation
+                  if (isEmailLogin) {
+                    final emailRegex = RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+                    if (!emailRegex.hasMatch(contactInfo)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Please enter a valid Email Address')),
+                      );
+                      return;
+                    }
                   }
 
+                  // Terms and Conditions check
                   if (!isChecked) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -151,6 +149,7 @@ class LoginUi extends StatelessWidget {
                     return;
                   }
 
+                  // Build request model
                   final model = RequestOtpRequestModel(
                     societyId: selectedCompany?.societyId.toString() ?? '',
                     countryCode: countryMap[selectedCountry] ?? '',
@@ -161,7 +160,8 @@ class LoginUi extends StatelessWidget {
                     loginVia: selectedCompany?.loginVia ?? '1',
                     languageId: '1',
                   );
-                  // Dispatch event to the LoginBloc to send the OTP
+
+                  // Send OTP event to Bloc
                   context.read<LoginBloc>().add(SendOtpEvent(model: model));
                 },
                 title: 'Sign in',
@@ -183,45 +183,26 @@ class LoginUi extends StatelessWidget {
                 'assets/sign_in/apple_logo.png',
               ),
               SizedBox(height: 0.025 * Responsive.getHeight(context)),
-              Center(
-                child: Row(
-                  children: [
-                    const CustomText('Don’t have an account? '),
-                    InkWell(
-                      onTap: () {
-
-
-                        context.push(
-                          RoutePaths.signUpForm,
-                          extra: {
-                            'BlockNo': preferenceManager.getBlockId(),
-                            'blockId': preferenceManager.getBlockId(),
-                            'floorId': '0',
-                            'unitId': '0',
-                            'isFamily': false,
-                            'societyId': preferenceManager.getCompanyId(),
-                            'type': '0',
-                            'from': '0',
-                            'baseUrl': preferenceManager.getBaseUrl(),
-                            'apiKey': preferenceManager.getApiKey(),
-                            'isAddMore': false,
-                            'isAddByAdmin': false,
-                            'isAddMoreUnit': false,
-                            'isSociety': false,
-                            'loginVia': selectedCompany?.loginVia,
-                            'societyAddress': selectedCompany?.societyAddress,
-                          },
-                        );
-
-                      },
-                      child: CustomText(
-                        'Sign Up Here',
-                        fontSize: 20 * Responsive.getResponsiveText(context),
-                        color: AppTheme.getColor(context).primary,
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CustomText(
+                    'Don’t have an account? ',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      context.go(RoutePaths.signUpForm);
+                    },
+                    child: CustomText(
+                      'Sign Up Here',
+                      fontSize: 12 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.getColor(context).primary,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               SizedBox(height: 0.025 * Responsive.getHeight(context)),
               _buildPolicyAgreement(context),
@@ -282,7 +263,7 @@ class LoginUi extends StatelessWidget {
             children: [
               const TextSpan(
                 text: 'Please confirm that you agree to our ',
-                style: TextStyle(fontWeight: FontWeight.w600),
+                style: TextStyle(fontWeight: FontWeight.w400),
               ),
               _linkSpan(context, 'Privacy Policy'),
               const TextSpan(text: ', '),
@@ -308,11 +289,6 @@ class LoginUi extends StatelessWidget {
         builder: (_) => const BottomTermAndCondition(),
       ),
   );
-
-  bool _isValidEmail(String email) {
-    final emailRegex = RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
-    return emailRegex.hasMatch(email);
-  }
 }
 
 class DividerWithText extends StatelessWidget {
@@ -338,30 +314,23 @@ class _EmailInput extends StatelessWidget {
   const _EmailInput({required this.emailController});
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const CustomText('Email Id', fontWeight: FontWeight.w600),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              15 * Responsive.getResponsive(context),
-            ),
-            border: Border.all(color: AppColors.gray5),
-          ),
-          child: TextField(
-            controller: emailController,
-            decoration: const InputDecoration(
-              hintText: 'Please Enter Email Id',
-              border: InputBorder.none,
-            ),
-          ),
-        ),
-      ],
+  Widget build(BuildContext context) => NewTextField(
+      label: 'Email Id',
+      hintText: 'Please Enter Email Id',
+      controller: emailController,
+      keyboardType: TextInputType.emailAddress,
+      isRequired: true,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your Email Address';
+        }
+        final emailRegex = RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+        if (!emailRegex.hasMatch(value)) {
+          return 'Please enter a valid Email Address';
+        }
+        return null;
+      },
     );
-  }
 }
 
 class _PhoneInput extends StatelessWidget {
@@ -378,25 +347,23 @@ class _PhoneInput extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const CustomText('Phone number', fontWeight: FontWeight.w600),
-        PhoneNumberField(
-          selectedCountry: selectedCountry!,
-          countries: countryMap.keys.toList(),
-          onCountryChanged: onCountryChanged,
-          countryDialCodes: countryMap,
-          phoneController: phoneController,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              15 * Responsive.getResponsive(context),
-            ),
-            border: Border.all(color: AppColors.gray5),
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const CustomText('Phone number', fontWeight: FontWeight.w600),
+      PhoneNumberField(
+        selectedCountry: selectedCountry!,
+        countries: countryMap.keys.toList(),
+        onCountryChanged: onCountryChanged,
+        countryDialCodes: countryMap,
+        phoneController: phoneController,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(
+            15 * Responsive.getResponsive(context),
           ),
+          border: Border.all(color: AppColors.gray5),
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
 }

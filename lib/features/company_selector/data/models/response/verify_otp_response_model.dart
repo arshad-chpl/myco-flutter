@@ -165,8 +165,10 @@ class VerifyOtpResponseModel {
   final String? facultyToken;
   @JsonKey(name: 'faculty_token_data')
   final String? facultyTokenData;
-  @JsonKey(name: 'view_dialog_api_call', defaultValue: false)
-  final bool viewDialogApiCall;
+  @JsonKey(name: 'view_dialog_api_call')
+  final bool? viewDialogApiCall;
+  @JsonKey(name: 'view_dialog')
+  final bool? viewDialog;
 
   VerifyOtpResponseModel({
     this.error,
@@ -246,7 +248,8 @@ class VerifyOtpResponseModel {
     this.facultyPassword,
     this.facultyToken,
     this.facultyTokenData,
-    required this.viewDialogApiCall,
+    this.viewDialogApiCall,
+    this.viewDialog,
   });
 
   factory VerifyOtpResponseModel.fromJson(Map<String, dynamic> json) =>
@@ -334,6 +337,7 @@ class VerifyOtpResponseModel {
     facultyToken: facultyToken,
     facultyTokenData: facultyTokenData,
     viewDialogApiCall: viewDialogApiCall,
+    viewDialog: viewDialog,
   );
 }
 

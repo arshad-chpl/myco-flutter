@@ -131,6 +131,8 @@ class CommonResponseModelEntity extends Equatable {
     outOfRangeReason,
     status,
     error,
+    viewDialogApiCall,
+    viewDialog,
     reminingDocumentCount,
     message,
     viewMessage,

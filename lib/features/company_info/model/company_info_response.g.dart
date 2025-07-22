@@ -6,8 +6,9 @@ part of 'company_info_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CompanyInfoResponse _$CompanyInfoResponseFromJson(Map<String, dynamic> json) =>
-    CompanyInfoResponse(
+CompanyInfoResponseModel _$CompanyInfoResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    CompanyInfoResponseModel(
       companyName: json['society_name'] as String?,
       companyBased: json['society_based'] as String?,
       companyAddress: json['society_address'] as String?,
@@ -26,7 +27,7 @@ CompanyInfoResponse _$CompanyInfoResponseFromJson(Map<String, dynamic> json) =>
       noOfPopulation: json['no_of_population'] as String?,
       populationView: json['population_view'] as String?,
       commitie: (json['commitie'] as List<dynamic>?)
-          ?.map((e) => Commitie.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => CommitieModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       builderView: json['builder_view'] as String?,
       authoritiesView: json['authorities_view'] as String?,
@@ -35,8 +36,8 @@ CompanyInfoResponse _$CompanyInfoResponseFromJson(Map<String, dynamic> json) =>
       message: json['message'] as String?,
     );
 
-Map<String, dynamic> _$CompanyInfoResponseToJson(
-        CompanyInfoResponse instance) =>
+Map<String, dynamic> _$CompanyInfoResponseModelToJson(
+        CompanyInfoResponseModel instance) =>
     <String, dynamic>{
       'society_name': instance.companyName,
       'society_based': instance.companyBased,
@@ -63,7 +64,8 @@ Map<String, dynamic> _$CompanyInfoResponseToJson(
       'message': instance.message,
     };
 
-Commitie _$CommitieFromJson(Map<String, dynamic> json) => Commitie(
+CommitieModel _$CommitieModelFromJson(Map<String, dynamic> json) =>
+    CommitieModel(
       adminId: json['admin_id'] as String?,
       roleId: json['role_id'] as String?,
       companyId: json['society_id'] as String?,
@@ -77,7 +79,8 @@ Commitie _$CommitieFromJson(Map<String, dynamic> json) => Commitie(
       adminProfile: json['admin_profile'] as String?,
     );
 
-Map<String, dynamic> _$CommitieToJson(Commitie instance) => <String, dynamic>{
+Map<String, dynamic> _$CommitieModelToJson(CommitieModel instance) =>
+    <String, dynamic>{
       'admin_id': instance.adminId,
       'role_id': instance.roleId,
       'society_id': instance.companyId,

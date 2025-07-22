@@ -45,8 +45,13 @@ class OtpVerificationUi extends StatelessWidget {
     final String message = isEmail
         ? 'Sign in code has been sent to $contactValue, check your inbox to continue.'
         : 'Sign in code has been sent to $countryCode $contactValue, check your messages to continue.';
-    final String imagePath = isEmail ? 'assets/sign_in/email.png' : 'assets/sign_in/phone.png';
+    final String imagePath = isEmail
+        ? 'assets/sign_in/email.png'
+        : 'assets/sign_in/phone.png';
     String currentOtp = '';
+
+    final bool isEmailOtp = otpResponse?.isEmailOtp ?? false;
+    final bool isVoiceOtp = otpResponse?.isVoiceOtp ?? false;
 
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
@@ -61,7 +66,6 @@ class OtpVerificationUi extends StatelessWidget {
 
           context.go(RoutePaths.dashboard);
         } else if (state is OtpVerificationFailedState) {
-          // You can add more complex dialog logic here if needed based on the response
           if (state.response.viewDialogApiCall == true) {
             showModalBottomSheet(
               context: context,
@@ -124,7 +128,6 @@ class OtpVerificationUi extends StatelessWidget {
           horizontal: 24 * Responsive.getResponsive(context),
           vertical: 36,
         ),
-        height: 0.7 * Responsive.getHeight(context),
         width: Responsive.getWidth(context),
         decoration: BoxDecoration(
           color: AppTheme.getColor(context).onPrimary,
@@ -146,12 +149,24 @@ class OtpVerificationUi extends StatelessWidget {
                       height: 0.088 * Responsive.getHeight(context),
                       width: 0.21 * Responsive.getWidth(context),
                       isShadowBottomLeft: true,
-                      image: Image.asset(imagePath, height: 0.035 * Responsive.getHeight(context)),
+                      image: Image.asset(
+                        imagePath,
+                        height: 0.035 * Responsive.getHeight(context),
+                      ),
                     ),
                     const SizedBox(height: 20),
-                    CustomText(title, fontSize: 24 * Responsive.getResponsiveText(context), fontWeight: FontWeight.w900),
+                    CustomText(
+                      title,
+                      fontSize: 22 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w700,
+                    ),
                     const SizedBox(height: 8),
-                    CustomText(message, textAlign: TextAlign.center, fontSize: 16 * Responsive.getResponsiveText(context)),
+                    CustomText(
+                      message,
+                      textAlign: TextAlign.center,
+                      fontSize: 16 * Responsive.getResponsiveText(context),
+                      color: AppTheme.getColor(context).onSurface,
+                    ),
                   ],
                 ),
               ),
@@ -167,7 +182,61 @@ class OtpVerificationUi extends StatelessWidget {
                 },
               ),
               SizedBox(height: 30 * Responsive.getResponsiveText(context)),
-              // ... Resend code logic can be added here, dispatching a SendOtpEvent again
+              Row(
+                children: [
+                  CustomText(
+                    "Haven't received the code? ",
+                    fontSize: 16 * Responsive.getResponsiveText(context),
+                    fontWeight: FontWeight.w500,
+                    color: AppTheme.getColor(context).onSurface,
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: CustomText(
+                      'Resend it.',
+                      fontSize: 16 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w500,
+                      color: AppTheme.getColor(context).primary,
+                    ),
+                  ),
+                ],
+              ),
+              if (isEmailOtp || isVoiceOtp)
+                SizedBox(height: 30 * Responsive.getResponsiveText(context)),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (isEmailOtp)
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          'Email for OTP',
+                          style: TextStyle(
+                            color: AppTheme.getColor(context).primary,
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    if (isEmailOtp && isVoiceOtp) const Text(' or '),
+                    if (isVoiceOtp)
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          'Call for OTP',
+                          style: TextStyle(
+                            color: AppTheme.getColor(context).primary,
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
               SizedBox(height: 30 * Responsive.getResponsiveText(context)),
               MyCoButton(
                 height: .05 * Responsive.getHeight(context),
@@ -192,7 +261,11 @@ class OtpVerificationUi extends StatelessWidget {
                     );
                     context.read<LoginBloc>().add(VerifyOtpEvent(model: model));
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter a valid 6-digit OTP.')));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please enter a valid 6-digit OTP.'),
+                      ),
+                    );
                   }
                 },
                 title: 'Submit',
@@ -203,9 +276,14 @@ class OtpVerificationUi extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomText('Sign in with different method ', fontSize: 16 * Responsive.getResponsiveText(context)),
+                  CustomText(
+                    'Sign in with different method ',
+                    fontSize: 16 * Responsive.getResponsiveText(context),
+                  ),
                   InkWell(
-                    onTap: () => context.read<SelectCompanyStepBloc>().add(GoToPreviousStep()),
+                    onTap: () => context.read<SelectCompanyStepBloc>().add(
+                      GoToPreviousStep(),
+                    ),
                     child: CustomText(
                       'Here.',
                       fontSize: 16 * Responsive.getResponsiveText(context),
