@@ -15,7 +15,7 @@ Dio createDio(credentials) {
     ),
   );
 
-  dio.options.headers['Authorization'] = 'Basic $credentials';
+  dio.options.headers['Authorization'] = 'Basic MjE6MjFAMDc4QDE=';
   dio.options.headers['Accept'] = 'application/json';
   dio.options.headers['key'] = VariableBag.mainKey;
   dio.options.headers['countryid'] = '101';

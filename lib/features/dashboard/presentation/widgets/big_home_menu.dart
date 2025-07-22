@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_entity.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
@@ -19,10 +21,15 @@ class BigHomeMenu extends StatelessWidget {
       spacing: 16,
       children: [
         Expanded(
-          child: BigHomeMenuIcon(
-            appMenuBig.first.menuIcon ?? '',
-            appMenuBig.first.menuTitle ?? '',
-            Responsive.getResponsive(context) * 70,
+          child: InkWell(
+            onTap: () {
+              context.push(RoutePaths.leave);
+            },
+            child: BigHomeMenuIcon(
+              appMenuBig.first.menuIcon ?? '',
+              appMenuBig.first.menuTitle ?? '',
+              Responsive.getResponsive(context) * 70,
+            ),
           ),
         ),
         Expanded(

@@ -190,6 +190,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
   List<LeaveRowData> _generateRowsForLeaveType(LeaveTypeEntity leave) {
     final isSpecialLeave = leave.specialLeave == '1';
     final isLeaveRestricted = leave.leaveRestrictions == true;
+
     final isApplyLeaveEncashment =
         (leave.leaveEncashmentOption != null &&
         leave.leaveEncashmentOption == '1' &&
@@ -204,6 +205,14 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
       leave.userMonthlyLeaveBalanceData,
     );
 
+    final isAvailableTillDate =
+        leave.leaveExpireAfterDays != null &&
+        leave.leaveExpireAfterDays!.isNotEmpty;
+
+    final totalEncashment = leave.encasementSummary?.totalEncashment;
+    final totalPaid = leave.encasementSummary?.totalPaid;
+    final totalUnpaid = leave.encasementSummary?.totalUnpaid;
+
     return [
       LeaveRowData(
         label: 'Assign Leave',
@@ -216,35 +225,85 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
         },
       ),
 
-      // Encashment Summary - Only shown if not special leave and has encashment data
-      if (!isSpecialLeave && leave.encasementSummary != null) ...[
-        if (leave.encasementSummary?.totalEncashment != null &&
-            leave.encasementSummary!.totalEncashment!.isNotEmpty &&
-            leave.encasementSummary!.totalEncashment != '0')
-          LeaveRowData(
-            label: 'Total Encashment Leave',
-            value: leave.encasementSummary?.totalEncashment ?? '0',
-            isVisible: true,
-          ),
-        if (leave.encasementSummary?.totalPaid != null &&
-            leave.encasementSummary!.totalPaid!.isNotEmpty &&
-            leave.encasementSummary!.totalPaid != '0')
-          LeaveRowData(
-            label: 'Paid Encashment Leave',
-            value: leave.encasementSummary?.totalPaid ?? '0',
-            isVisible: true,
-          ),
-        if (leave.encasementSummary?.totalUnpaid != null &&
-            leave.encasementSummary!.totalUnpaid!.isNotEmpty &&
-            leave.encasementSummary!.totalUnpaid != '0')
-          LeaveRowData(
-            label: 'Unpaid Encashment Leave',
-            value: leave.encasementSummary?.totalUnpaid ?? '0',
-            isVisible: true,
-          ),
+      if (!hasMonthlyLeaveBalance)
+        LeaveRowData(
+          label: 'Applicable Max Leaves In Month',
+          value: leave.applicableLeavesInMonth ?? '0',
+          isVisible: true,
+        ),
+
+      if (!isSpecialLeave && !hasMonthlyLeaveBalance)
+        LeaveRowData(
+          label: 'Leave Calculation',
+          value: leave.leaveCalculation ?? 'N/A',
+          isVisible: true,
+        ),
+
+      if (!isSpecialLeave && !hasMonthlyLeaveBalance)
+        LeaveRowData(
+          label: 'View Leave Count',
+          value: leave.assignLeaveFrequency ?? 'N/A',
+          isVisible: true,
+        ),
+
+      if (!isSpecialLeave && !hasMonthlyLeaveBalance)
+        LeaveRowData(
+          label: 'Leaves According To Payroll Cycle',
+          value: leave.leavesAccordingToPayrollCycle ?? 'No',
+          isVisible: true,
+        ),
+
+      if (!isSpecialLeave) ...[
+        LeaveRowData(
+          label: 'Leave Restrictions',
+          value: leave.leaveRestrictions == true ? 'Yes' : 'No',
+          isVisible: true,
+        ),
+
+        LeaveRowData(
+          label: '',
+          value: 'View',
+          isVisible: isLeaveRestricted,
+          onTap: () {
+            // Handle view rules click
+          },
+        ),
       ],
 
-      // Leave Credit Last Date
+      if (!isSpecialLeave)
+        LeaveRowData(
+          label: 'Take Leave During Notice Period',
+          value: leave.takeLeaveDuringNoticePeriod ?? 'No',
+          isVisible: true,
+        ),
+
+      if (!isSpecialLeave)
+        LeaveRowData(
+          label: 'Max Leave During Notice Period',
+          value: leave.maxLeaveDuringNoticePeriod ?? '0',
+          isVisible: true,
+        ),
+
+      if (!isSpecialLeave)
+        LeaveRowData(
+          label: 'Take Leave During Probation Period',
+          value: leave.takeLeaveDuringProbationPeriod ?? 'No',
+          isVisible: true,
+        ),
+      if (!isSpecialLeave)
+        LeaveRowData(
+          label: 'Max Leave Per Month During Probation Period',
+          value: leave.maxLeavePerMonthDuringProbationPeriod ?? '0',
+          isVisible: true,
+        ),
+
+      if (isAvailableTillDate)
+        LeaveRowData(
+          label: 'Available Till Days',
+          value: leave.leaveExpireAfterDays!,
+          isVisible: true,
+        ),
+
       if (leave.leaveCreditLastDate != null &&
           leave.leaveCreditLastDate!.isNotEmpty)
         LeaveRowData(
@@ -253,77 +312,31 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
           isVisible: true,
         ),
 
-      // Regular leave details (hidden for special leaves and when monthly data exists)
-      if (!isSpecialLeave && !hasMonthlyLeaveBalance) ...[
-        LeaveRowData(
-          label: 'Applicable Max Leaves In Month',
-          value: leave.applicableLeavesInMonth ?? '0',
-          isVisible: true,
-        ),
-        LeaveRowData(
-          label: 'Leave Calculation',
-          value: leave.leaveCalculation ?? 'N/A',
-          isVisible: true,
-        ),
-        LeaveRowData(
-          label: 'View Leave Count',
-          value: leave.assignLeaveFrequency ?? 'N/A',
-          isVisible: true,
-        ),
-        LeaveRowData(
-          label: 'Leaves According To Payroll Cycle',
-          value: leave.leavesAccordingToPayrollCycle ?? 'No',
-          isVisible: true,
-        ),
-        LeaveRowData(
-          label: 'Leave Restrictions',
-          value: leave.leaveRestrictions == true ? 'Yes' : 'No',
-          isVisible: true,
-        ),
+      if (leave.encasementSummary != null) ...[
+        if (totalEncashment != null &&
+            totalEncashment != '0' &&
+            totalEncashment.isNotEmpty)
+          LeaveRowData(
+            label: 'Total Encashment Leave',
+            value: leave.encasementSummary?.totalEncashment ?? '0',
+            isVisible: true,
+          ),
 
+        if (totalPaid != null && totalPaid != '0' && totalPaid.isNotEmpty)
+          LeaveRowData(
+            label: 'Paid Encashment Leave',
+            value: leave.encasementSummary?.totalPaid ?? '0',
+            isVisible: true,
+          ),
+
+        if (totalUnpaid != null && totalUnpaid != '0' && totalUnpaid.isNotEmpty)
+          LeaveRowData(
+            label: 'Unpaid Encashment Leave',
+            value: leave.encasementSummary?.totalUnpaid ?? '0',
+            isVisible: true,
+          ),
       ],
 
-      LeaveRowData(
-        label: 'Max Leave During Notice Period',
-        value: leave.maxLeaveDuringNoticePeriod ?? '0',
-        isVisible: true,
-      ),
-
-      LeaveRowData(
-        label: 'Take Leave During Notice Period',
-        value: leave.takeLeaveDuringNoticePeriod ?? 'No',
-        isVisible: true,
-      ),
-
-      LeaveRowData(
-        label: 'Take Leave During Probation Period',
-        value: leave.takeLeaveDuringProbationPeriod ?? 'No',
-        isVisible: true,
-      ),
-      LeaveRowData(
-        label: 'Max Leave Per Month During Probation Period',
-        value: leave.maxLeavePerMonthDuringProbationPeriod ?? '0',
-        isVisible: true,
-      ),
-
-      // Available Till Days
-      if (leave.leaveExpireAfterDays != null &&
-          leave.leaveExpireAfterDays!.isNotEmpty)
-        LeaveRowData(
-          label: 'Available Till Days',
-          value: leave.leaveExpireAfterDays!,
-          isVisible: true,
-        ),
-
-      // Action buttons
-      LeaveRowData(
-        label: 'View Rules',
-        value: 'View',
-        isVisible: isLeaveRestricted,
-        onTap: () {
-          // Handle view rules click
-        },
-      ),
       LeaveRowData(
         label: 'View Dates',
         value: 'View',
@@ -352,51 +365,52 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
           }
         },
       ),
-      LeaveRowData(
-        label: 'Apply for leave encashment',
-        value: 'Apply',
-        isVisible: false,
-        onTap: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-            ),
-            builder: (context) => Padding(
-              padding: EdgeInsets.only(
-                top: 16,
-                bottom: MediaQuery.of(context).viewInsets.bottom,
+
+      if (isSpecialLeave)
+        LeaveRowData(
+          label: 'Apply for leave encashment',
+          value: 'Apply',
+          // isVisible: isApplyLeaveEncashment,
+          isVisible: false,
+          onTap: () {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
-              child: DraggableScrollableSheet(
-                expand: false,
-                initialChildSize: 0.5,
-                minChildSize: 0.5,
-                maxChildSize: 0.8,
-                builder: (context, scrollController) => SingleChildScrollView(
-                  controller: scrollController,
-                  child: SafeArea(
-                    child: LeaveEncashmentForm(
-                      leaveOptions: const [
-                        'Earned Leave',
-                        'Casual Leave',
-                        'Comp Off',
-                      ],
-                      onSave: (selectedLeave, remark) {
-                        Navigator.pop(context); // close bottom sheet
-                        print('Selected: $selectedLeave, Remark: $remark');
-                      },
-                      onCancel: () {
-                        Navigator.pop(context);
-                      },
+              builder: (context) => Padding(
+                padding: EdgeInsets.only(
+                  top: 16,
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: DraggableScrollableSheet(
+                  expand: false,
+                  minChildSize: 0.5,
+                  maxChildSize: 0.8,
+                  builder: (context, scrollController) => SingleChildScrollView(
+                    controller: scrollController,
+                    child: SafeArea(
+                      child: LeaveEncashmentForm(
+                        leaveOptions: const [
+                          'Earned Leave',
+                          'Casual Leave',
+                          'Comp Off',
+                        ],
+                        onSave: (selectedLeave, remark) {
+                          Navigator.pop(context); // close bottom sheet
+                        },
+                        onCancel: () {
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
-      ),
+            );
+          },
+        ),
     ];
   }
 
@@ -411,6 +425,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
       itemBuilder: (context, index) {
         final leave = leaveTypes[index];
         final leaveData = leave['leaveData'] as LeaveTypeEntity;
+        final specialLeave = leaveData.specialLeave == '1';
         return LeaveExpandableCard(
           headerHeight: 0.08 * Responsive.getHeight(context),
           headerColor: leave['headerColor'],
@@ -425,15 +440,17 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
                 title: 'Remaining Leaves',
                 value: leave['remaining'].toString(),
               ),
-              LeaveSummaryItem(
-                title: 'Leave Payout',
-                value: leave['payout'].toString(),
-              ),
-              LeaveSummaryItem(
-                title: 'Carry Forward',
-                value: leave['carryForward']
-                    .toString(), // Corrected property name
-              ),
+              if (!specialLeave) ...[
+                LeaveSummaryItem(
+                  title: 'Leave Payout',
+                  value: leave['payout'].toString(),
+                ),
+                LeaveSummaryItem(
+                  title: 'Carry Forward',
+                  value: leave['carryForward']
+                      .toString(), // Corrected property name
+                ),
+              ],
             ],
           ),
           expandedChild: LeaveSummaryExpandedRows(

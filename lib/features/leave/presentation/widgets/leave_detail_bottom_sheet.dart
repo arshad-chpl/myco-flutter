@@ -2,6 +2,7 @@
   import 'package:fluttertoast/fluttertoast.dart';
   import 'package:myco_flutter/core/theme/colors.dart';
   import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/leave/domain/entities/leave_history_response_entity.dart';
   import 'package:myco_flutter/widgets/common_card.dart';
   import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
@@ -23,6 +24,8 @@
     final List<String> attachments;
     final bool autoLeave;
     final String paidUnpaid;
+    final bool isMultiLevelApproval;
+    final List<ApprovalUserEntity> approvalUsers;
 
     const LeaveDetailBottomSheet({
       required this.leaveDateView,
@@ -42,6 +45,8 @@
       required this.detailColor,
       required this.autoLeave,
       required this.paidUnpaid,
+      required this.isMultiLevelApproval,
+      required this.approvalUsers,
       super.key,
     });
 
@@ -107,6 +112,35 @@
                         'Dependency Handle:',
                         dependencyHandle,
                       ),
+                      if(isMultiLevelApproval)...[
+                        const Divider(),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: Responsive.scaleHeight(12)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Approval Users:',
+                                style: TextStyle(
+                                  fontSize: 12 * textScale,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: Responsive.scaleHeight(8)),
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                                children: approvalUsers.map((user) =>
+                                    ApprovalChip(
+                                      name: user.name??'',
+                                      status: user.status??'',
+                                    ),
+                                ).toList(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -375,6 +409,63 @@
             fontSize: (fontSize ?? 12) * scale,
             fontWeight: FontWeight.bold,
           ),
+        ),
+      );
+    }
+  }
+
+
+  // Add these new classes for handling approval users and chips
+  class ApprovalUser {
+    final String name;
+    final String status; // "1" for approved, "2" for rejected, others for pending
+
+    ApprovalUser({required this.name, required this.status});
+  }
+
+  class ApprovalChip extends StatelessWidget {
+    final String name;
+    final String status;
+
+    const ApprovalChip({
+      required this.name,
+      required this.status,
+      super.key,
+    });
+
+    @override
+    Widget build(BuildContext context) {
+      Color backgroundColor;
+      Color textColor;
+      String statusText;
+
+      switch (status) {
+        case '1': // Approved
+          backgroundColor = Colors.green.withOpacity(0.2);
+          textColor = Colors.green;
+          statusText = '✓ $name';
+          break;
+        case '2': // Rejected
+          backgroundColor = Colors.red.withOpacity(0.2);
+          textColor = Colors.red;
+          statusText = '✗ $name';
+          break;
+        default: // Pending
+          backgroundColor = Colors.orange.withOpacity(0.2);
+          textColor = Colors.orange;
+          statusText = '⏳ $name';
+          break;
+      }
+
+      return Chip(
+        label: Text(
+          statusText,
+          style: TextStyle(color: textColor),
+        ),
+        backgroundColor: backgroundColor,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: textColor.withOpacity(0.5)),
+          borderRadius: BorderRadius.circular(20),
         ),
       );
     }
