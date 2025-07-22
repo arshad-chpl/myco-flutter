@@ -40,3 +40,8 @@ class RemoveDepEvent extends ChatEvent {
   @override
   List<Object> get props => [departmentId];
 }
+
+class GetChatListEvent extends ChatEvent {
+  @override
+  List<Object> get props => [];
+}

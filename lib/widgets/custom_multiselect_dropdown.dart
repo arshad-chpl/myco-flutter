@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -42,7 +43,7 @@ class _CustomMultiSelectChipWidgetState extends State<CustomMultiSelectChipWidge
   final List<String>? selectedIds = await showMultiSelectBottomSheet(
     context: context,
     heading: widget.bottomSheetHeading ?? widget.addButtonText,
-    icon: const AssetImage('assets/chat/down_arrow.png'),
+    icon: 'assets/chat/Frame.svg',
     dataList: widget.items,
   );
 
@@ -215,11 +216,11 @@ class _CustomMultiSelectChipWidgetState extends State<CustomMultiSelectChipWidge
 
                 /// Dropdown Icon
                 Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 8.0 * Responsive.getResponsive(context), vertical: 6 * Responsive.getResponsive(context)),
-                  child: Image.asset(
+                  padding:  EdgeInsets.symmetric(horizontal: 8.0 * Responsive.getResponsive(context), vertical: 10 * Responsive.getResponsive(context)),
+                  child: SvgPicture.asset(
                     widget.prefixIcon ??
-                    'assets/chat/arrow_down_sigle.png',
-                    height: 22 * Responsive.getResponsive(context),
+                    'assets/chat/chevron-down.svg',
+                    height: 15 * Responsive.getResponsive(context),
                   ),
                 ),
               ],

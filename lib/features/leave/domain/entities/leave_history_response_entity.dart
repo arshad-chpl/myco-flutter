@@ -315,6 +315,11 @@ class LeaveHistoryEntity extends Equatable {
     shortLeaveStatusChangeDate,
     convertedFromAutoLeave,
   ];
+
+  copyWith({required String leaveDayTypeStatus, required String leavePercentage}) {
+    this.leaveDayTypeStatus;
+    this.leavePercentage;
+  }
 }
 
 class LeaveTypeEntity extends Equatable {
@@ -492,4 +497,5 @@ class EncasementSummaryEntity extends Equatable {
 
   @override
   List<Object?> get props => [totalPaid, totalEncashment, totalUnpaid];
+
 }

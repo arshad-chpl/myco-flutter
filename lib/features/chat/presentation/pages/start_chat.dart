@@ -76,15 +76,12 @@ class _StartNewChatState extends State<StartNewChat> {
           ),
            SizedBox(height: 30 * Responsive.getResponsive(context)),
           NewTextField(
-            // prefixIconPath: " ",
             enabled: true,
-            // isReadOnly: true,
             hintText: selectedDepartments.isEmpty
                 ? LanguageManager().get('select_block')
                 : selectedDepartments['name'] ?? '',
             suffixIconPath: 'assets/chat/chevron-down.svg',
             onTap: () => _openDepartmentPicker(),
-            
           ),
 
            SizedBox(height: 16 * Responsive.getResponsive(context)),

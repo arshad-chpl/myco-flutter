@@ -47,7 +47,7 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
         );
         results.fold(
           (failure) => emit(LeaveError(failure.message)),
-          (model) => emit(LeaveHistoryNewFetched(model.toEntity())),
+          (model) => emit(LeaveHistoryNewFetched(model)),
         );
       } catch (e) {
         emit(LeaveError('Failed to load leave history: $e'));
@@ -86,6 +86,100 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
         );
       } catch (e) {
         emit(LeaveError('Failed to delete short leave: $e'));
+      }
+    });
+
+    on<LeaveTypesWithData>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.getLeaveTypesWithData(
+          event.unitId,
+          event.useId,
+          event.userName,
+          event.currentYear,
+          event.appliedLeaveDate,
+        );
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(LeaveTypeWithDataFetched(model)),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to fetch leave types: $e'));
+      }
+    });
+    on<CheckAutoLeaveBalance>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.getLeaveBalanceForAutoLeave(
+          event.userId,
+          event.leaveDate,
+          event.leaveId,
+        );
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(CheckAutoLeaveBalanceFetched(model)),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to fetch leave balance: $e'));
+      }
+    });
+
+    on<DeleteLeaveRequest>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.deleteLeaveRequest(event.leaveId);
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(LeaveRequestDeleted(model)),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to delete leave request: $e'));
+      }
+    });
+
+    on<ChangeAutoLeave>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.changeAutoLeave(
+          event.userId,
+          event.paid,
+          event.leaveTypeId,
+          event.leaveDate,
+          event.leaveDay,
+          event.extraDay,
+          event.isSpecialDay,
+          event.attendanceId,
+          event.leaveId,
+          event.leavePercentage,
+        );
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(AutoLeaveChanged(model)),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to change auto leave: $e'));
+      }
+    });
+
+    on<ChangeSandwichLeave>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.changeSandwichLeave(
+          event.userId,
+          event.paid,
+          event.leaveId,
+          event.leaveName,
+          event.sandwichId,
+          event.unitId,
+          event.userFullName,
+          event.leavePercentage,
+        );
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(SandwichLeaveChanged(model)),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to change sandwich leave: $e'));
       }
     });
   }

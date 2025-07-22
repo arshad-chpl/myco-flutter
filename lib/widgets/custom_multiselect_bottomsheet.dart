@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
@@ -15,7 +16,7 @@ Future<List<String>?> showMultiSelectBottomSheet({
   required List<Map<String, String>> dataList,
   required String heading,
   final List<String>? selectedIds,
-  ImageProvider? icon,
+  String? icon,
   String? searchHint,
   String? btnTitle,
 }) => showModalBottomSheet<List<String>>(
@@ -38,7 +39,7 @@ class _MultiSelectBottomSheet extends StatefulWidget {
   final List<String>? selectedIds;
   final String? searchHint;
   final String? btnTitle;
-  final ImageProvider? icon;
+  final String? icon;
 
   const _MultiSelectBottomSheet({
     required this.dataList,
@@ -110,8 +111,8 @@ class _MultiSelectBottomSheetState extends State<_MultiSelectBottomSheet> {
                 onTap: () => Navigator.pop(context),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image(
-                    image: widget.icon!,
+                  child: SvgPicture.asset(
+                    widget.icon!,
                     width: 0.04 * Responsive.getWidth(context),
                     fit: BoxFit.cover,
                   ),

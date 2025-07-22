@@ -19,6 +19,10 @@ class NewTextField extends StatelessWidget {
   final Function(String)? onChange;
   final Function()? onTap;
   final TextEditingController? controller;
+  final GlobalKey<FormFieldState>? formFieldKey;
+  final bool? isKey;
+  final Widget? suffix;
+  final Widget? prefix;
 
   const NewTextField({
     super.key,
@@ -35,6 +39,8 @@ class NewTextField extends StatelessWidget {
     this.onChange,
     this.onTap,
     this.controller,
+    this.formFieldKey,
+    this.isKey, this.suffix, this.prefix,
   });
 
   @override
@@ -50,7 +56,7 @@ class NewTextField extends StatelessWidget {
               color: AppTheme.getColor(context).onSurfaceVariant,
               fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w700,
-              isKey: false,
+              isKey: isKey??false,
             ),
             if (isRequired) ...[
               CustomText(

@@ -110,7 +110,7 @@ class ChatListCard extends StatelessWidget {
         leading: CircleAvatar(
           backgroundColor: AppTheme.getColor(context).secondary,
           radius: 35 * Responsive.getResponsive(context),
-          backgroundImage: AssetImage(profileImagePath),
+          backgroundImage: NetworkImage(profileImagePath),
           // Use NetworkImage(profileImageUrl) if needed
         ),
         title: CustomText(

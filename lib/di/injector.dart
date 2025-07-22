@@ -3,6 +3,7 @@ import 'package:myco_flutter/core/router/app_router.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.dart';
+import 'package:myco_flutter/features/chat/presentation/di/chat_list_di.dart';
 import 'package:myco_flutter/features/company_info/presentation/di/company_info_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/request_otp_di.dart';
@@ -13,6 +14,7 @@ import 'package:myco_flutter/features/leave/presentation/di/leave_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
+import 'package:myco_flutter/features/payslip/presentation/di/payslip_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
 
 final sl = GetIt.instance;
@@ -55,6 +57,17 @@ Future<void> init() async {
   //========Company Info=========
   setupCompanyInfoDI(sl);
 
+  //========Holiday=========
+  setupHolidayDI(sl);
+
+  // ========Admin View=========
+  adminViewDi(sl);
   //Leave
   setUpLeaveDI(sl);
+
+  //========Payslip=========
+  initPayslipFeatureDI(sl);
+
+  //========Chat=========
+  initChatFeatureDI(sl);
 }

@@ -21,6 +21,7 @@ import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class ChatListScreen extends StatelessWidget {
   ChatListScreen({super.key});
@@ -43,8 +44,7 @@ class ChatListScreen extends StatelessWidget {
       ),
     ),
     appBar: CustomAppbar(
-      title:
-        'chat',
+      title: 'chat',
       titleSpacing: 10,
       actions: [
         MyCoButton(
@@ -54,7 +54,7 @@ class ChatListScreen extends StatelessWidget {
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
               builder: (_) => BlocBuilder<ChatBloc, ChatState>(
-                builder: (context, state) =>  SelectGroupEmp(),
+                builder: (context, state) => SelectGroupEmp(),
               ),
             );
           },
@@ -64,7 +64,7 @@ class ChatListScreen extends StatelessWidget {
             fontSize: 14 * Responsive.getResponsiveText(context),
           ),
           image: Padding(
-            padding:  EdgeInsets.only(left:  8.0),
+            padding: EdgeInsets.only(left: 8.0),
             child: SvgPicture.asset('assets/chat/plus.svg'),
           ),
           imagePosition: AxisDirection.right,
@@ -90,7 +90,10 @@ class ChatListScreen extends StatelessWidget {
                   ? state.selectedIndex
                   : 0;
               return MyCustomTabBar(
-                tabs:  [LanguageManager().get('resident'), LanguageManager().get('group_colon')],
+                tabs: [
+                  LanguageManager().get('resident'),
+                  LanguageManager().get('group_colon'),
+                ],
                 selectedBgColors: [
                   AppTheme.getColor(context).secondary,
                   AppTheme.getColor(context).primary,
@@ -129,65 +132,95 @@ class ChatListScreen extends StatelessWidget {
   );
 }
 
-class EmployeesChat extends StatelessWidget {
+class EmployeesChat extends StatefulWidget {
   EmployeesChat({super.key});
-  final List<Map<String, String>> groupMembers = [
-    {
-      'name': 'Vedant',
-      'message': 'Let’s start the meeting',
-      'time': '5 mins ago',
-      'image': 'assets/chat/profile.jpg',
-    },
-    {
-      'name': 'Anjali',
-      'message': 'Shared the document',
-      'time': '10 mins ago',
-      'image': 'assets/chat/profile.jpg',
-    },
-    {
-      'name': 'Mukund',
-      'message': 'Got it',
-      'time': '15 mins ago',
-      'image': 'assets/chat/profile.jpg',
-    },
-  ];
+
   @override
-  Widget build(BuildContext context) => BlocBuilder<ChatBloc, ChatState>(
-    builder: (context, state) => Column(
+  State<EmployeesChat> createState() => _EmployeesChatState();
+}
+
+class _EmployeesChatState extends State<EmployeesChat> {
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<ChatBloc>().add(GetChatListEvent());
+  }
+  // final List<Map<String, String>> groupMembers = [
+  //   {
+  //     'name': 'Vedant',
+  //     'message': 'Let’s start the meeting',
+  //     'time': '5 mins ago',
+  //     'image': 'assets/chat/profile.jpg',
+  //   },
+  //   {
+  //     'name': 'Anjali',
+  //     'message': 'Shared the document',
+  //     'time': '10 mins ago',
+  //     'image': 'assets/chat/profile.jpg',
+  //   },
+  //   {
+  //     'name': 'Mukund',
+  //     'message': 'Got it',
+  //     'time': '15 mins ago',
+  //     'image': 'assets/chat/profile.jpg',
+  //   },
+  // ];
+
+  @override
+  Widget build(BuildContext context) =>Column(
       children: [
-        CustomSearchField(
-          hintText: 'search_member',
-          onChanged: (value) => {
-            context.read<ChatBloc>().add(SearchEvent(value, groupMembers)),
-            log(state.toString(), name: "state"),
-          },
+        BlocBuilder<ChatBloc, ChatState>(
+          builder: (context, state) => CustomSearchField(
+                  hintText: 'search_member',
+                  onChanged: (value) => {
+                    // context.read<ChatBloc>().add(SearchEvent(value, groupMembers)),
+                    log(state.toString(), name: "state"),
+                  },
+                ),
         ),
         SizedBox(height: 0.025 * Responsive.getHeight(context)),
+        BlocBuilder<ChatBloc, ChatState>(
+          builder: (context, state) {
+            if (state is GetChatListLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-        Expanded(
-          child: ListView.separated(
-            itemCount: state is SearchQueryState
-                ? state.filteredList.length
-                : groupMembers.length,
-            itemBuilder: (context, index) {
-              final member = state is SearchQueryState
-                  ? state.filteredList[index]
-                  : groupMembers[index];
-              return ChatListCard(
-                name: member['name']!,
-                lastMessage: member['message']!,
-                timeAgo: member['time']!,
-                profileImagePath: member['image']!,
-              );
-            },
-            separatorBuilder: (context, index) =>
-                SizedBox(height: 0.015 * Responsive.getHeight(context)),
-          ),
+            if (state is GetChatListErrorState) {
+              return Center(child: Text(state.message));
+            }
+
+            if (state is GetChatListSuccessState || state is SearchQueryState) {
+
+              final chatList = state is GetChatListSuccessState ? state.chatList : null;
+
+              return Expanded(
+                  child: ListView.separated(
+                    itemCount: state is SearchQueryState
+                        ? state.filteredList.length
+                        : chatList?.member?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final member = state is SearchQueryState
+                          ? state.filteredList[index]
+                          : chatList?.member?[index];
+                      return ChatListCard(
+                        name: chatList?.member?[index].userFirstName ?? "",
+                        lastMessage: chatList?.member?[index].userLastName ?? "",
+                        timeAgo: chatList?.member?[index].memberDateOfBirth ?? "",
+                        profileImagePath: chatList?.member?[index].userProfilePic ?? "",
+                      );
+                    },
+                    separatorBuilder: (context, index) =>
+                        SizedBox(height: 30 * Responsive.getResponsive(context)),
+                  ),
+                );
+            }
+            return Center(child: Text('No Data Found'),);
+          },
         ),
         SizedBox(height: 0.02 * Responsive.getHeight(context)),
       ],
-    ),
-  );
+    );
 }
 
 class GroupChat extends StatelessWidget {
@@ -239,9 +272,7 @@ class GroupChat extends StatelessWidget {
                 lastMessage: member['message']!,
                 timeAgo: member['time']!,
                 profileImagePath: member['image']!,
-                onTap: () => {
-                  context.pushNamed('group-info'),
-                },
+                onTap: () => {context.pushNamed('group-info')},
               );
             },
             separatorBuilder: (context, index) =>
@@ -249,7 +280,6 @@ class GroupChat extends StatelessWidget {
           ),
         ),
         SizedBox(height: 0.02 * Responsive.getHeight(context)),
-        
       ],
     ),
   );
