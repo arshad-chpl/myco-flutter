@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/get_common_row.dart';
+import 'package:myco_flutter/widgets/get_common_row.dart' hide getCommonRow;
 
 class LastVisitExpandedInfo extends StatelessWidget {
   const LastVisitExpandedInfo({super.key});
@@ -13,11 +14,7 @@ class LastVisitExpandedInfo extends StatelessWidget {
 
     return Column(
       children: [
-        Container(
-          width: double.infinity,
-          height: 1,
-          color: primaryColor,
-        ),
+        Container(width: double.infinity, height: 1, color: primaryColor),
         Container(
           width: double.infinity,
           color: const Color(0xFFEEF7FD),

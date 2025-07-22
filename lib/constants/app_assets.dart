@@ -1,5 +1,5 @@
 class AppAssets {
-  // commmon paths for visit in the application
+  // commmmon paths for visit in the application
   static const String basePath = 'assets';
   // static const String fontsPath = '$basePath/fonts';
   static const String imagesPath = '$basePath/images';
@@ -9,9 +9,7 @@ class AppAssets {
   static const String splash = '$basePath/splash';
   static const String visit = '$basePath/visit';
   static const String svgsVisit = '$svgsPath/visit';
-
   static const String assetVisit = '$basePath/add_expense';
-
 
   static const String assets = '$basePath/assets';
   static const String lostFound = '$basePath/lost_and_found';
@@ -56,6 +54,8 @@ class AppAssets {
   static const String personalcard = '$svgsVisit/personalcard.svg';
   static const String profileCircle = '$svgsVisit/profile-circle.svg';
   static const String share = '$svgsVisit/share.svg';
+  static const String arrowRight = '$svgsVisit/arrow-right.svg';
+  static const String arrowDoubleDown = '$svgsVisit/arrow_double_down.svg';
   static const String stickynote = '$svgsVisit/stickynote.svg';
   static const String whatsapp = '$svgsVisit/whatsapp.svg';
   static const String ref = '$svgsVisit/refresh_new.svg';
@@ -78,11 +78,12 @@ class AppAssets {
   static const String start = '$svgsTakeOrder/start.svg';
   static const String stop = '$svgsTakeOrder/stop.svg';
   static const String calling = '$svgsTakeOrder/calling.svg';
+  static const String arrowBack = '$svgsPath/back_arrow.svg';
+  static const String cancelOrder = '$svgsTakeOrder/cancel_order.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
   static const String loaderGif = '$basePath/gifs/mycoLoading.gif';
-
 
   // dashboard Screen
   static const String search = '$dashboard/search.png';
@@ -101,7 +102,6 @@ class AppAssets {
   static const String smart_car = '$svgsVisit/smart-car.svg';
   static const String global = '$svgsVisit/global.svg';
 
-
   // Visit Assets
   static const String emptyWalletTime = '$svgsVisit/empty-wallet-time.svg';
   static const String bitCinCard = '$svgsVisit/bitcoin-card.svg';
@@ -119,7 +119,7 @@ class AppAssets {
   static const String downArrow = '$svgsVisit/arrow-down.svg';
   static const String galleryExport = '$svgsVisit/gallery-export.svg';
   static const String arrow_down = '$svgsVisit/arrow-down.svg';
-
+  static const String areaMap = '$svgsVisit/area_map.svg';
 
   //images visit
   static const String assetBookmark = '$assetVisit/bookmark.svg';
