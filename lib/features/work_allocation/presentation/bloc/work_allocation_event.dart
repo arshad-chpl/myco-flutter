@@ -47,7 +47,7 @@ class FilterEmployeesEvent extends WorkAllocationEvent {
   final List<Employee> allEmployees;
 
   FilterEmployeesEvent(this.query, this.allEmployees);
-  
+
   @override
   List<Object?> get props => [query, allEmployees];
 }
