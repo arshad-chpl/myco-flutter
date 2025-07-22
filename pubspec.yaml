@@ -58,6 +58,7 @@ dependencies:
   google_maps_flutter: ^2.12.3
   geolocator: ^14.0.2
   modal_bottom_sheet: ^3.0.0
+  bloc: ^9.0.0
 
 
 dependency_overrides:
@@ -98,14 +99,14 @@ flutter:
     - assets/ideabox/
     - assets/payslip/
     - assets/visit/
-    - assets/visit/svgs/
     - assets/media_picker/
     - assets/lost_and_found/
     - assets/visit_svgs/
     - assets/svgs/visit/
     - assets/add_expense/
     - assets/dashboard/svgs/
-    - assets/dashboard/svgs/
+    - assets/face_detection/
+    - assets/svgs/visit/
     - assets/dashboard/svgs/
     - assets/assets/
     - assets/svgs/take_order/
