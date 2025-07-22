@@ -39,7 +39,7 @@ class WorkAllocationBloc
 
     final request = GetWorkCategoryRequest(
       companyId: event.companyId,
-      getWorkCategory: 'getWorkCategory',
+      getWorkCategory: event.getWorkCategory,
       languageId: event.languageId,
     );
 
