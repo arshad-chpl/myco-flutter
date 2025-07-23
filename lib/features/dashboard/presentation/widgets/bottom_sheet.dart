@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_entity.dart';
+import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_response_entity.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_shadow_container.dart';

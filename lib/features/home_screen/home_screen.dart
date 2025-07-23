@@ -3,21 +3,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/bottom_navigation_bar/bloc/bottom_navigation_bar_bloc.dart';
-import 'package:myco_flutter/features/bottom_navigation_bar/rps_custom_painter.dart';
+import 'package:myco_flutter/features/home_screen/bloc/bottom_navigation_bar_bloc.dart';
+import 'package:myco_flutter/features/home_screen/rps_custom_painter.dart';
 import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<BottomNavBar> createState() => _BottomNavBarState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _BottomNavBarState extends State<BottomNavBar> {
+class _HomeScreenState extends State<HomeScreen> {
   // BLoCs for each screen
   // final HomeBloc _homeBloc = HomeBloc();
   // final CommunityBloc _communityBloc = CommunityBloc();

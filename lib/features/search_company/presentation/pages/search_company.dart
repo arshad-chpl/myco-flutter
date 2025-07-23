@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -36,6 +37,7 @@ class SearchCompanyScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -58,7 +60,7 @@ class SearchCompanyScreen extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/search_society/search-company.png',
-                width: 60 * Responsive.getResponsiveOnWidth(context),
+                width: 250 * Responsive.getResponsive(context),
               ),
               SizedBox(height: 0.055 * Responsive.getHeight(context)),
               CustomText(
@@ -98,7 +100,7 @@ class SearchCompanyScreen extends StatelessWidget {
                   child: NewTextField(
                     hintText: LanguageManager().get('search_your_company'),
 
-                    prefixIconPath: 'assets/search_society/company_icon.png',
+                    prefixIconPath: AppAssets.search_company_icon,
                     // border: const OutlineInputBorder(
                     //   borderRadius: BorderRadius.all(Radius.circular(10)),
                     //   borderSide: BorderSide(color: Color(0xFF98A2B3)),
