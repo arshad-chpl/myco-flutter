@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -8,7 +9,7 @@ import 'package:myco_flutter/features/company_selector/presentation/bloc/company
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class SearchCompanyScreen extends StatelessWidget {
   const SearchCompanyScreen({super.key});
@@ -36,6 +37,7 @@ class SearchCompanyScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -58,7 +60,7 @@ class SearchCompanyScreen extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/search_society/search-company.png',
-                width: 0.8 * Responsive.getWidth(context),
+                width: 250 * Responsive.getResponsive(context),
               ),
               SizedBox(height: 0.055 * Responsive.getHeight(context)),
               CustomText(
@@ -95,20 +97,17 @@ class SearchCompanyScreen extends StatelessWidget {
                 onTap: showCompanySearchSheet, // Trigger the bottom sheet
                 child: AbsorbPointer(
                   // Prevents the text field from gaining focus
-                  child: MyCoTextfield(
+                  child: NewTextField(
                     hintText: LanguageManager().get('search_your_company'),
-                    hintTextStyle: TextStyle(
-                      fontSize: 18 * Responsive.getResponsiveText(context),
-                      color: AppTheme.getColor(context).outline,
-                    ),
-                    preFixImage: 'assets/search_society/company_icon.png',
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      borderSide: BorderSide(color: Color(0xFF98A2B3)),
-                    ),
-                    height: 0.06 * Responsive.getHeight(context),
+
+                    prefixIconPath: AppAssets.search_company_icon,
+                    // border: const OutlineInputBorder(
+                    //   borderRadius: BorderRadius.all(Radius.circular(10)),
+                    //   borderSide: BorderSide(color: Color(0xFF98A2B3)),
+                    // ),
+                    // height: 0.06 * Responsive.getHeight(context),
                     // These properties make it look like a button
-                    isReadOnly: true,
+                    // isReadOnly: true,
                   ),
                 ),
               ),

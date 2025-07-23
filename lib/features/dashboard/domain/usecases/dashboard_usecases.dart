@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/error/failure.dart';
-import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_entity.dart';
+import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_response_entity.dart';
 import 'package:myco_flutter/features/dashboard/domain/entites/id_card_entity.dart';
 import 'package:myco_flutter/features/dashboard/domain/repositories/dashboard_repository.dart';
 

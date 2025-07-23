@@ -3,20 +3,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/bottom_navigation_bar/bloc/bottom_navigation_bar_bloc.dart';
-import 'package:myco_flutter/features/bottom_navigation_bar/rps_custom_painter.dart';
+import 'package:myco_flutter/features/home_screen/bloc/bottom_navigation_bar_bloc.dart';
+import 'package:myco_flutter/features/home_screen/rps_custom_painter.dart';
 import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/dashboard_page.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<BottomNavBar> createState() => _BottomNavBarState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _BottomNavBarState extends State<BottomNavBar> {
+class _HomeScreenState extends State<HomeScreen> {
   // BLoCs for each screen
   // final HomeBloc _homeBloc = HomeBloc();
   // final CommunityBloc _communityBloc = CommunityBloc();
@@ -66,6 +67,26 @@ class _BottomNavBarState extends State<BottomNavBar> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.read<BottomNavigationBarBloc>().add(ToggleIconEvent());
+
+          // Get the BLoC instance from GetIt to access the current state
+          final dashboardBloc = GetIt.I<DashboardBloc>();
+          final dashboardState = dashboardBloc.state;
+
+          // Check if the dashboard has loaded the menu data
+          if (dashboardState is AppMenuGridLoaded) {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true, // Crucial for custom height
+              backgroundColor: Colors.transparent, // To see rounded corners
+              builder: (context) =>
+                  AnimatedBottomSheet(homeData: dashboardState.res),
+            );
+          } else {
+            // Optionally, handle the case where data is not yet available
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(const SnackBar(content: Text('Menu is loading...')));
+          }
         },
         backgroundColor: AppTheme.getColor(context).primary,
         shape: const CircleBorder(),
@@ -73,7 +94,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           state.isMenuSelected
               ? 'assets/images/menu-selected.png'
               : 'assets/images/menu.png',
-          height: 0.04 * Responsive.getHeight(context),
+          height: 0.03 * Responsive.getHeight(context),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -91,15 +112,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 ),
                 painter: BNBCustomPainter(),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: CustomText(
-                  'Menu',
-                  color: AppTheme.getColor(context).onSurfaceVariant,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14 * Responsive.getResponsiveText(context),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.bottomCenter,
+              //   child: CustomText(
+              //     'Menu',
+              //     color: AppTheme.getColor(context).onSurfaceVariant,
+              //     fontWeight: FontWeight.w700,
+              //     fontSize: 14 * Responsive.getResponsiveText(context),
+              //   ),
+              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -119,7 +140,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     imagePath: 'assets/images/blog.png',
                     selectedImagePath: 'assets/images/blog-selected.png',
                   ),
-                  SizedBox(),
+                  const SizedBox(),
                   // Padding(
                   //   padding: EdgeInsets.only(
                   //     top: 0.04 * Responsive.getHeight(context),
@@ -174,27 +195,24 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ChangeNavigationIndexEvent(index),
       );
     },
-    child: Container(
-      // margin: EdgeInsets.only(left: 0.06 * Responsive.getWidth(context)),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(
-            isSelected ? selectedImagePath : imagePath,
-            height: 0.03 * Responsive.getHeight(context),
-            width: 0.1 * Responsive.getWidth(context),
-          ),
-          SizedBox(height: 0.005 * Responsive.getHeight(context)),
-          CustomText(
-            text,
-            fontWeight: FontWeight.w700,
-            fontSize: 14 * Responsive.getResponsiveText(context),
-            color: isSelected
-                ? AppTheme.getColor(context).primary
-                : AppTheme.getColor(context).onSurfaceVariant,
-          ),
-        ],
-      ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image.asset(
+          isSelected ? selectedImagePath : imagePath,
+          height: 0.03 * Responsive.getHeight(context),
+          width: 0.08 * Responsive.getWidth(context),
+        ),
+        SizedBox(height: 0.005 * Responsive.getHeight(context)),
+        CustomText(
+          text,
+          fontWeight: FontWeight.w700,
+          fontSize: 14 * Responsive.getResponsiveText(context),
+          color: isSelected
+              ? AppTheme.getColor(context).primary
+              : AppTheme.getColor(context).onSurfaceVariant,
+        ),
+      ],
     ),
   );
 }

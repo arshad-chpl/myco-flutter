@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -40,7 +41,9 @@ class NewTextField extends StatelessWidget {
     this.onTap,
     this.controller,
     this.formFieldKey,
-    this.isKey, this.suffix, this.prefix,
+    this.isKey,
+    this.suffix,
+    this.prefix,
   });
 
   @override
@@ -56,7 +59,7 @@ class NewTextField extends StatelessWidget {
               color: AppTheme.getColor(context).onSurfaceVariant,
               fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w700,
-              isKey: isKey??false,
+              isKey: isKey ?? false,
             ),
             if (isRequired) ...[
               CustomText(
@@ -70,104 +73,185 @@ class NewTextField extends StatelessWidget {
         ),
         SizedBox(height: 0.005 * Responsive.getHeight(context)),
       ],
-      InkWell(
-        onTap: onTap,
-        child: Container(
-          padding: EdgeInsets.only(
-            left: 10 * Responsive.getResponsive(context),
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              12 * Responsive.getResponsive(context),
-            ),
-            color: AppTheme.getColor(context).surfaceBright,
-            border: Border.all(
-              color: AppTheme.getColor(context).outline,
-              width: 1.2,
-            ),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsetsGeometry.only(
-                  top: 17.5 * Responsive.getResponsive(context),
+      FormField<String>(
+        key: formFieldKey,
+        validator:
+        validator ??
+            (isRequired
+                ? (value) {
+              if (value == null || value.isEmpty) {
+                return 'This field is required';
+              }
+              return null;
+            }
+                : null),
+        builder: (FormFieldState<String> field) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InkWell(
+              onTap: onTap,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10 * Responsive.getResponsive(context),
                 ),
-                child: SvgPicture.asset(
-                  prefixIconPath!,
-                  height: 0.022 * Responsive.getHeight(context),
-                ),
-              ),
-              SizedBox(
-                // height:50,
-                width: 0.8 * Responsive.getWidth(context),
-                child: IgnorePointer(
-                  ignoring: onTap != null,
-                  child: TextFormField(
-                    minLines: 1,
-                    maxLines: maxLines ?? 1,
-                    style: TextStyle(
-                      fontSize: 16 * Responsive.getResponsiveText(context),
-                      fontWeight: FontWeight.w600,
-                      color: AppTheme.getColor(context).onSurface,
-                    ),
-                    enabled: enabled,
-                    focusNode: focusNode,
-                    keyboardType: keyboardType,
-                    decoration: InputDecoration(
-                      hintText: hintText,
-                      suffixIcon: suffixIconPath != null
-                          ? Padding(
-                              padding: EdgeInsets.only(
-                                left: 8 * Responsive.getResponsive(context),
-                                right: 12 * Responsive.getResponsive(context),
-                              ),
-                              child: SvgPicture.asset(
-                                suffixIconPath!,
-                                height: 0.022 * Responsive.getHeight(context),
-                              ),
-                            )
-                          : null,
-                      suffixIconConstraints: suffixIconPath != null
-                          ? BoxConstraints(
-                              minHeight: 0.022 * Responsive.getHeight(context),
-                              minWidth:
-                                  (12 + 8) * Responsive.getResponsive(context) +
-                                  0.022 * Responsive.getHeight(context),
-                            )
-                          : null,
-                      filled: true,
-                      hintStyle: TextStyle(
-                        fontSize: 16 * Responsive.getResponsiveText(context),
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.getColor(context).outline,
-                      ),
-                      fillColor: AppTheme.getColor(context).surfaceBright,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                        top: 14 * Responsive.getResponsive(context),
-                        left: 12 * Responsive.getResponsive(context),
-                        bottom: 13 * Responsive.getResponsive(context),
-                      ),
-                    ),
-                    onChanged: onChange,
-                    validator:
-                        validator ??
-                        (isRequired
-                            ? (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'This field is required';
-                                }
-                                return null;
-                              }
-                            : null),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    12 * Responsive.getResponsive(context),
+                  ),
+                  color: AppTheme.getColor(context).surfaceBright,
+                  border: Border.all(
+                    color: AppTheme.getColor(context).outline,
+                    width: 1.2,
                   ),
                 ),
+                child: Row(
+                  children: [
+                    if (prefix != null)
+                      Center(child: prefix)
+                    else if (prefixIconPath != null)
+                      Padding(
+                        padding: EdgeInsets.only(
+                          right: 8 * Responsive.getResponsive(context),
+                        ),
+                        child: SvgPicture.asset(
+                          prefixIconPath!,
+                          height: 0.022 * Responsive.getHeight(context),
+                        ),
+                      ),
+                    Expanded(
+                      child: SizedBox(
+                        width: 0.8 * Responsive.getWidth(context),
+                        child: IgnorePointer(
+                          ignoring: onTap != null,
+                          child: TextFormField(
+                            minLines: 1,
+                            maxLines: maxLines ?? 1,
+                            style: TextStyle(
+                              fontSize:
+                              16 * Responsive.getResponsiveText(context),
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.getColor(context).onSurface,
+                            ),
+                            enabled: enabled,
+                            focusNode: focusNode,
+                            keyboardType: keyboardType,
+                            controller: controller,
+                            decoration: InputDecoration(
+                              hintText: LanguageManager().get(hintText.toString()),
+                              suffixIcon: suffixIconPath == null
+                                  ? suffix
+                                  : suffixIconPath != null
+                                  ? Padding(
+                                padding: EdgeInsets.only(
+                                  left:
+                                  8 *
+                                      Responsive.getResponsive(context),
+                                  right:
+                                  12 *
+                                      Responsive.getResponsive(context),
+                                ),
+                                child: SvgPicture.asset(
+                                  suffixIconPath!,
+                                  height:
+                                  0.022 *
+                                      Responsive.getHeight(context),
+                                ),
+                              )
+                                  : null,
+                              suffixIconConstraints: suffixIconPath != null
+                                  ? BoxConstraints(
+                                minHeight:
+                                0.022 * Responsive.getHeight(context),
+                                minWidth:
+                                (12 + 8) *
+                                    Responsive.getResponsive(
+                                      context,
+                                    ) +
+                                    0.022 * Responsive.getHeight(context),
+                              )
+                                  : null,
+                              filled: true,
+                              hintStyle: TextStyle(
+                                fontSize:
+                                16 * Responsive.getResponsiveText(context),
+                                fontWeight: FontWeight.w600,
+                                color: AppTheme.getColor(context).outline,
+                              ),
+                              fillColor: AppTheme.getColor(
+                                context,
+                              ).surfaceBright,
+                              contentPadding: EdgeInsets.only(
+                                top: 14 * Responsive.getResponsive(context),
+                                left: 12 * Responsive.getResponsive(context),
+                                bottom: 13 * Responsive.getResponsive(context),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                                borderRadius: BorderRadius.circular(
+                                  12 * Responsive.getResponsive(context),
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                                borderRadius: BorderRadius.circular(
+                                  12 * Responsive.getResponsive(context),
+                                ),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                                borderRadius: BorderRadius.circular(
+                                  12 * Responsive.getResponsive(context),
+                                ),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                                borderRadius: BorderRadius.circular(
+                                  12 * Responsive.getResponsive(context),
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                ),
+                                borderRadius: BorderRadius.circular(
+                                  12 * Responsive.getResponsive(context),
+                                ),
+                              ),
+                            ),
+                            onChanged: (value) {
+                              onChange?.call(value);
+                              field.didChange(value);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+            if (field.hasError && controller!.text.isNotEmpty)
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 4 * Responsive.getResponsive(context),
+                  left: 10 * Responsive.getResponsive(context),
+                ),
+                child: CustomText(
+                  field.errorText ?? 'Validation error',
+                  color: AppColors.red,
+                  fontSize: 12 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+          ],
         ),
       ),
     ],

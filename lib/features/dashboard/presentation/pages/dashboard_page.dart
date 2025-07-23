@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_entity.dart';
+import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_response_entity.dart';
 import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/big_home_menu.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/dashboard_app_bar.dart';
@@ -121,7 +121,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
             spacing: 16,
             children: [
               // timer and slider section
-              timerAndSlider(context, homeData.slider ?? []),
+              timerAndSlider(context, homeData.slider ?? [], homeData),
 
               // Circulars and discussion section
               BigHomeMenu(appMenuBig: homeData.appmenuBig ?? []),
@@ -156,7 +156,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
           spacing: 16,
           children: [
             // timer and slider section
-            timerAndSlider(context, homeData.slider ?? []),
+            timerAndSlider(context, homeData.slider ?? [], homeData),
 
             // Circulars and discussion section
             BigHomeMenu(appMenuBig: homeData.appmenuBig ?? []),
