@@ -508,6 +508,8 @@ class _LeaveScreenState extends State<LeaveScreen> {
                                     ),
                                   ),
                                 );
+                              }else{
+                                context.push(RoutePaths.editLeaveScreen);
                               }
                             },
                           );
