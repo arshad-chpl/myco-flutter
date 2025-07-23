@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/leave/domain/entities'
@@ -12,12 +10,10 @@ import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/assign_leave_months.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_encashment_form.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_expandable_card.dart';
-import 'package:myco_flutter/features/leave/presentation/widgets/leave_filter_bottom_sheet.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_summary_collapsed_chips.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_summary_expanded_rows.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_summary_grid.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:shimmer/shimmer.dart';
 
 // Assuming LeaveSummaryItem and LeaveRowData classes are defined
@@ -65,49 +61,50 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      leading: IconButton(
-        onPressed: () {
-          context.go(RoutePaths.leave);
-        },
-        icon: const Icon(Icons.arrow_back_outlined),
-      ),
-      title: const Text('Your Paid Leaves'),
-      centerTitle: true,
-      elevation: 0,
-      actions: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: MyCoButton(
-            backgroundColor: AppColors.secondary,
-            borderColor: AppColors.secondary,
-            onTap: () {
-              showLeaveFilterBottomSheet(context, selectedValue, (p0) {
-                setState(() {
-                  selectedValue = p0;
-                  // Dispatch event with selected year
-                  context.read<LeaveBloc>().add(
-                    FetchNewLeaveListType(selectedValue),
-                  );
-                });
-              }, yearOptions);
-            },
-            textStyle: TextStyle(
-              fontSize: 12 * Responsive.getResponsiveText(context),
-              color: MyCoButtonTheme.whitemobileBackgroundColor,
-            ),
-            title: selectedValue,
-            height: 0.035 * Responsive.getHeight(context),
-            width: 0.2 * Responsive.getWidth(context),
-            imagePosition: AxisDirection.right,
-            image: const Icon(
-              Icons.keyboard_arrow_down,
-              color: MyCoButtonTheme.whitemobileBackgroundColor,
-            ),
-          ),
-        ),
-      ],
-    ),
+    // appBar: AppBar(
+    //   leading: IconButton(
+    //     onPressed: () {
+    //       context.go(RoutePaths.leave);
+    //     },
+    //     icon: const Icon(Icons.arrow_back_outlined),
+    //   ),
+    //   title: const Text('Your Paid Leaves'),
+    //   centerTitle: true,
+    //   elevation: 0,
+    //   actions: [
+    //     Padding(
+    //       padding: const EdgeInsets.all(8.0),
+    //       child: MyCoButton(
+    //         backgroundColor: AppColors.secondary,
+    //         borderColor: AppColors.secondary,
+    //         onTap: () {
+    //           showLeaveFilterBottomSheet(context, selectedValue, (p0) {
+    //             setState(() {
+    //               selectedValue = p0;
+    //               // Dispatch event with selected year
+    //               context.read<LeaveBloc>().add(
+    //                 FetchNewLeaveListType(selectedValue),
+    //               );
+    //             });
+    //           }, yearOptions);
+    //         },
+    //         textStyle: TextStyle(
+    //           fontSize: 12 * Responsive.getResponsiveText(context),
+    //           color: MyCoButtonTheme.whitemobileBackgroundColor,
+    //         ),
+    //         title: selectedValue,
+    //         height: 0.035 * Responsive.getHeight(context),
+    //         width: 0.2 * Responsive.getWidth(context),
+    //         imagePosition: AxisDirection.right,
+    //         image: const Icon(
+    //           Icons.keyboard_arrow_down,
+    //           color: MyCoButtonTheme.whitemobileBackgroundColor,
+    //         ),
+    //       ),
+    //     ),
+    //   ],
+    // ),
+    appBar: const CustomAppbar(title: 'your_leaves'),
     body: BlocBuilder<LeaveBloc, LeaveState>(
       builder: (context, state) {
         if (state is LeaveLoading) {

@@ -63,7 +63,7 @@ class RoutePaths {
   static const String myProfile = '/my-profile';
 
   // ======== Leave Routes ========
-  static const String leave = '/leave';
+  static const String leave = '/LeaveTrackVC';
   static const String leaveBalance = '/my-leave-balance';
   static const String teamLeaveBalance = '/my-team-leave-balance';
   static const String addShortLeaveScreen = '/add_short_leave_screen';
