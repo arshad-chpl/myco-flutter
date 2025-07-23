@@ -16,8 +16,7 @@ class VisitReport extends StatelessWidget {
   const VisitReport({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       //Custom app bar
       appBar: CustomAppbar(
         leading: BackButton(),
@@ -53,7 +52,7 @@ class VisitReport extends StatelessWidget {
                     builder: (context) => TestNewVisit(),
                   );
                 },
-                child: SvgPicture.asset(AppAssets.arrowRight),
+                child: SvgPicture.asset(AppAssets.arrow_down),
               ),
 
               bottomWidget: Padding(
@@ -113,5 +112,4 @@ class VisitReport extends StatelessWidget {
         },
       ),
     );
-  }
 }

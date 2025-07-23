@@ -311,6 +311,7 @@ class _VisitWithState extends State<AssignedTo> {
               fontWeight: FontWeight.w500,
               onTap: () {
                 Navigator.pop(context);
+
               },
             ),
           ),

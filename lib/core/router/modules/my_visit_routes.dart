@@ -6,6 +6,7 @@ import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc/visi
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_card_type.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
@@ -67,6 +68,11 @@ List<RouteBase> myVisitRoutes = [
         path: RoutePaths.addVisit,
         name: 'add-visit',
         builder: (context, state) => const AddNewVisit(),
+      ),
+      GoRoute(
+        path: RoutePaths.AssignToVisit,
+        name: 'assign-to-visit',
+        builder: (context, state) => const AssignToVisit(),
       ),
     ],
   ),

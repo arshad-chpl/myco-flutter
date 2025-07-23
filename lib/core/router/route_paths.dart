@@ -133,4 +133,5 @@ class RoutePaths {
   static const String viewVisitDetails = '/view-visit-details';
   static const String visitReport = '/visit_report';
   static const String addVisit = '/add-visit';
+  static const String AssignToVisit = '/assign-to-visit';
 }
