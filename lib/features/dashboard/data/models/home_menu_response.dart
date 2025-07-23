@@ -5,7 +5,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 
-import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_entity.dart';
+import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_response_entity.dart';
 
 part 'home_menu_response.g.dart';
 

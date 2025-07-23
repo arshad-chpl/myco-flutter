@@ -1,8 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/router/app_router.dart';
+import 'package:myco_flutter/core/services/cache_service.dart';
+import 'package:myco_flutter/core/services/hive_cache_service.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.dart';
+import 'package:myco_flutter/features/chat/presentation/di/chat_list_di.dart';
 import 'package:myco_flutter/features/company_info/presentation/di/company_info_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/device_change_di.dart';
@@ -13,15 +16,18 @@ import 'package:myco_flutter/features/language_selector/presentation/di/language
 import 'package:myco_flutter/features/leave/presentation/di/leave_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
-import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/payslip/presentation/di/payslip_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/di/work_allocation_di.dart';
 
 final sl = GetIt.instance;
 
-Future<void> init() async {
+Future<void> initDi() async {
   sl.registerSingleton<AppRouter>(AppRouter());
+
+  // Register our Hive-based CacheService as a singleton
+  sl.registerSingleton<CacheService>(HiveCacheService());
+
   sl.registerSingleton<PreferenceManager>(PreferenceManager());
   // await initFirebaseModule(sl);
 
@@ -72,4 +78,7 @@ Future<void> init() async {
 
   //========Payslip=========
   initPayslipFeatureDI(sl);
+
+  //========Chat=========
+  initChatFeatureDI(sl);
 }

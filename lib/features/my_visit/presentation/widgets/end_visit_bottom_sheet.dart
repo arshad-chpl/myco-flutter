@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
-import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/test_new_visit1.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/visit_template.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class EndVisitBottomSheet extends StatefulWidget {
   const EndVisitBottomSheet({super.key});
@@ -20,21 +22,26 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
   @override
   Widget build(BuildContext context) {
     Responsive.init(context);
-    String? selectedExpenseType;
-
-    final List<String> expenseTypes = [
-      'Travel', 'Food', 'Accommodation', 'Office Supplies', 'Entertainment',
-      'Miscellaneous', 'Fuel', 'Internet', 'Medical', 'Training',
-    ];
 
     return Padding(
       padding: EdgeInsets.only(
-        left: Responsive.responsivePadding(),
-        right: Responsive.responsivePadding(),
-        bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-        top: 24,
+        left:
+        VariableBag.bottomSheetLeftPadding *
+            Responsive.getResponsive(context),
+        right:
+        VariableBag.bottomSheetRightPadding *
+            Responsive.getResponsive(context),
+        bottom:
+        VariableBag.bottomSheetBottomPadding *
+            Responsive.getResponsive(context),
+        top:
+        VariableBag.bottomSheetTopPadding *
+            Responsive.getResponsive(context),
       ),
       child: Column(
+        spacing:
+        VariableBag.formContentSpacingVertical *
+            Responsive.getResponsive(context),
         mainAxisSize: MainAxisSize.min,
         children: [
           /// Title
@@ -47,95 +54,67 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: 20),
 
           /// Image
           Center(
-            child: Image.asset(
-              AppAssets.visitReport,
-              fit: BoxFit.contain,
-            ),
+            child: Image.asset(AppAssets.visitReport, fit: BoxFit.contain),
           ),
-          const SizedBox(height: 24),
 
           /// Dropdown 1
-          CustomPopupDropdownStyled<String>(
-            items: expenseTypes,
+          NewTextField(
             hintText: 'Visit Template',
-            prefix: SvgPicture.asset(
-              AppAssets.message_edit,
-              fit: BoxFit.scaleDown,
-            ),
-            hintTextStyle: TextStyle(
-              fontSize: 18 * Responsive.getResponsiveText(context),
-              color: AppTheme.getColor(context).primary,
-              fontWeight: FontWeight.w600,
-            ),
-            spacing: 0.02 * Responsive.getWidth(context),
-            selectedItem: selectedExpenseType,
-            itemToString: (item) => item,
-            onChanged: (value, index) {
-              setState(() {
-                selectedExpenseType = value;
-              });
+            prefixIconPath: AppAssets.message_edit,
+            suffixIconPath: AppAssets.arrow_down,
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => VisitTemplate(),
+              );
             },
-            border: BoxBorder.all(
-              color: AppTheme.getColor(context).outline,
-            ),
           ),
-          const SizedBox(height: 24),
 
           /// Dropdown 2
-          CustomPopupDropdownStyled<String>(
-            items: expenseTypes,
-            hintText: 'Test New Visit *',
-            prefix: SvgPicture.asset(
-              AppAssets.message_edit,
-              fit: BoxFit.scaleDown,
-            ),
-            hintTextStyle: TextStyle(
-              fontSize: 18 * Responsive.getResponsiveText(context),
-              color: AppTheme.getColor(context).primary,
-              fontWeight: FontWeight.w600,
-            ),
-            spacing: 0.02 * Responsive.getWidth(context),
-            selectedItem: selectedExpenseType,
-            itemToString: (item) => item,
-            onChanged: (value, index) {
-              setState(() {
-                selectedExpenseType = value;
-              });
+          NewTextField(
+            prefixIconPath: AppAssets.message_edit,
+
+            hintText: 'Test New Visit',
+            suffixIconPath: AppAssets.arrow_down,
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => TestNewVisit1(),
+              );
             },
-            border: BoxBorder.all(
-              color: AppTheme.getColor(context).outline,
-            ),
           ),
-          const SizedBox(height: 24),
 
           /// Button Row
           Row(
+            spacing:
+            VariableBag.buttonRowSpacing *
+                Responsive.getResponsive(context),
             children: [
               Expanded(
                 child: MyCoButton(
                   onTap: () => Navigator.pop(context),
-                  title: 'CLOSE',
+                  title: LanguageManager().get('close'),
                   textStyle: TextStyle(
                     color: AppColors.primary,
                     fontSize: 14 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.bold,
                   ),
                   backgroundColor: Colors.transparent,
-                  boarderRadius: 30,
+                  boarderRadius:
+                  VariableBag.buttonBorderRadius *
+                      Responsive.getResponsive(context),
                   borderColor: AppColors.primary,
                 ),
               ),
-              SizedBox(width: 0.04 * Responsive.getWidth(context)),
               Expanded(
                 child: MyCoButton(
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  title: 'CONTINUE',
+                  title: LanguageManager().get('end_visit'),
                   textStyle: TextStyle(
                     color: Colors.white,
                     fontSize: 14 * Responsive.getResponsiveText(context),
@@ -153,5 +132,4 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
       ),
     );
   }
-
 }

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_entity.dart';
+import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_response_entity.dart';
 import 'package:myco_flutter/features/dashboard/domain/usecases/dashboard_usecases.dart';
 
 part 'dashboard_event.dart';
