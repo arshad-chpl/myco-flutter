@@ -5,10 +5,8 @@ import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/bottom_sheet/approve_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class CompletionRemarkBottomSheet extends StatefulWidget {
