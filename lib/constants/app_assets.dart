@@ -38,6 +38,7 @@ class AppAssets {
   static const String imageNoAssets = '$imagesPath/noAssets.png';
 
   //Svgs
+  static const String downArrowBottomSheet = '$svgsPath/down_arrow_bottomsheet.svg';
   static const String search_company_icon = '$svgsPath/company_icon.svg';
   static const String timeCardBtn = '$svgsPath/timeCardBtn.svg';
   static const String punchIn = '$svgsPath/punchIn.svg';
