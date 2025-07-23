@@ -106,6 +106,7 @@ flutter:
     - assets/add_expense/
     - assets/dashboard/svgs/
     - assets/assets/
+    - assets/chat/
     - assets/svgs/work_allocation/
     - assets/asset/
     - assets/svgs/take_order/
