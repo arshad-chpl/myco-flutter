@@ -14,70 +14,86 @@ class AssignLeaveMonths extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-    height: 0.08 * Responsive.getHeight(context),
-    child: ListView.separated(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      itemCount: months.length,
-      separatorBuilder: (_, __) => const SizedBox(width: 8),
-      itemBuilder: (context, index) {
-        final month = months[index];
-        final isSelected = month == selectedMonth;
+  Widget build(BuildContext context) {
+    final responsive = Responsive.getResponsive(context);
 
-        return GestureDetector(
-          onTap: () => onTap?.call(month),
-          child: Container(
-            width: 0.20 * Responsive.getWidth(context),
-            decoration: BoxDecoration(
-              color: isSelected
-                  ? (month.selectedBackgroundColor ?? Colors.blue.shade100)
-                  : (month.backgroundColor ?? Colors.white),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  offset: const Offset(2, 2),
-                  blurRadius: 4,
+    return Container(
+      height: 0.1 * Responsive.getHeight(context),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(12 * responsive),
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: ShaderMask(
+        shaderCallback: (bounds) => const LinearGradient(
+          colors: [
+            Colors.transparent,
+            Colors.black,
+            Colors.black,
+            Colors.transparent,
+          ],
+          stops: [0.0, 0.05, 0.95, 1.0],
+        ).createShader(bounds),
+        blendMode: BlendMode.dstIn,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          itemCount: months.length,
+          separatorBuilder: (_, __) => const SizedBox(width: 8),
+          itemBuilder: (context, index) {
+            final month = months[index];
+            final isSelected = month == selectedMonth;
+
+            return GestureDetector(
+              onTap: () => onTap?.call(month),
+              child: Container(
+                width: 0.20 * Responsive.getWidth(context),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12 * responsive),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.05),
+                      blurRadius: 4,
+                      offset: const Offset(2, 2),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  month.name,
-                  softWrap: true,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: isSelected
-                        ? (month.selectedTextColor ?? Colors.black)
-                        : (month.textColor ?? Colors.black),
-                  ),
-                  textAlign: TextAlign.center,
+                padding: EdgeInsets.symmetric(
+                  vertical: 10 * responsive,
+                  horizontal: 6 * responsive,
                 ),
-                const SizedBox(height: 6),
-                Text(
-                  month.value.toString(),
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: isSelected
-                        ? (month.selectedValueColor ?? Colors.blue)
-                        : (month.valueColor ?? Colors.blue),
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      month.name,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 13 * responsive,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 6 * responsive),
+                    Text(
+                      month.value.toString(),
+                      style: TextStyle(
+                        fontSize: 15 * responsive,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue.shade800,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        );
-      },
-    ),
-  );
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
 }
 
 class MonthData {

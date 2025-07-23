@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
-import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -66,7 +65,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
     appBar: AppBar(
       leading: IconButton(
         onPressed: () {
-          context.go(RoutePaths.leave);
+          context.pop();
         },
         icon: const Icon(Icons.arrow_back_outlined),
       ),

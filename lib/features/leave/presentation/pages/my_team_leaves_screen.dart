@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/features/leave/model/my_team_response_model.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
@@ -29,9 +28,9 @@ class _MyTeamLeavesScreenState extends State<MyTeamLeavesScreen> {
     appBar: AppBar(
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
-        onPressed: (){
-          context.go(RoutePaths.leave);
-        }
+        onPressed: () {
+          context.pop();
+        },
       ),
       title: const Text('My Team Leaves'),
       centerTitle: true,
