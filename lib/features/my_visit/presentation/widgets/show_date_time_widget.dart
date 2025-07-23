@@ -5,7 +5,7 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-class ShowDateTimeWidget extends StatefulWidget {
+class ShowDateTimeWidget extends StatelessWidget {
   final Color color;
   final FontWeight weight;
 
@@ -16,20 +16,15 @@ class ShowDateTimeWidget extends StatefulWidget {
   });
 
   @override
-  State<ShowDateTimeWidget> createState() => _ShowDateTimeWidgetState();
-}
-
-class _ShowDateTimeWidgetState extends State<ShowDateTimeWidget> {
-  @override
   Widget build(BuildContext context) =>
       BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
         builder: (context, state) {
           if (state is FaceDetectionLoaded) {
             return CustomText(
               state.dateTime.trim().isEmpty ? 'EMPTY' : state.dateTime,
-              color: widget.color,
-              fontSize: 17 * Responsive.getResponsiveText(context),
-              fontWeight: widget.weight,
+              color: color,
+              fontSize: 12 * Responsive.getResponsiveText(context),
+              fontWeight: weight,
             );
           }
           return const CustomText(

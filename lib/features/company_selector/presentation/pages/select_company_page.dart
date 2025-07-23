@@ -1,12 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:myco_flutter/core/models/data/common_response_model.dart';
-import 'package:myco_flutter/core/services/preference_manager.dart';
-import 'package:myco_flutter/features/company_selector/domain/entites/company_response_entity.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_state.dart';
@@ -34,6 +28,7 @@ class SelectCompanyPage extends StatelessWidget {
     );
   }
 }
+
 class _CompanySearchBody extends StatefulWidget {
   const _CompanySearchBody();
 
@@ -45,7 +40,11 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
   // Local UI state is now managed here in the stateful widget.
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final Map<String, String> countryMap = {'IND': '+91', 'USA': '+1', 'INA': '+62'};
+  final Map<String, String> countryMap = {
+    'IND': '+91',
+    'USA': '+1',
+    'INA': '+62',
+  };
   String selectedCountry = 'IND';
   bool isChecked = false;
 
@@ -70,8 +69,9 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
           if (stepState is SelectCompanyStepLogin) {
             final isEmail = stepState.selectedCompany.loginVia == '1';
             // The contact value is now accessed from the local state controllers.
-            final contactValue =
-                isEmail ? emailController.text : phoneController.text;
+            final contactValue = isEmail
+                ? emailController.text
+                : phoneController.text;
             final countryCode = countryMap[selectedCountry] ?? '';
 
             // Dispatch event to move to the OTP step.
@@ -86,7 +86,11 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
           }
         } else if (loginState is OtpNotSentState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(loginState.response.message ?? 'Failed to send OTP')),
+            SnackBar(
+              content: Text(
+                loginState.response.message ?? 'Failed to send OTP',
+              ),
+            ),
           );
         }
       },
@@ -116,8 +120,11 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
               },
               // The previousStep and nextStep callbacks are now handled by BLoC events
               // within the LoginUi widget itself.
-              previousStep: () => context.read<SelectCompanyStepBloc>().add(GoToPreviousStep()),
-              nextStep: () { /* This is handled by the LoginBloc listener */ },
+              previousStep: () =>
+                  context.read<SelectCompanyStepBloc>().add(GoToPreviousStep()),
+              nextStep: () {
+                /* This is handled by the LoginBloc listener */
+              },
             );
           }
           if (stepState is SelectCompanyStepOtp) {
@@ -130,18 +137,23 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
             );
           }
           // The default and initial state is to show the company selection UI.
-          return const SelectCompanyUi();
+          return SelectCompanyUi();
         },
       ),
     );
   }
 }
+
 // A simple helper class to hold state for LoginUi, managed with Provider.
 // This is a pragmatic choice to avoid passing many controllers.
 class LoginUiState extends ChangeNotifier {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final Map<String, String> countryMap = {'IND': '+91', 'USA': '+1', 'INA': '+62'};
+  final Map<String, String> countryMap = {
+    'IND': '+91',
+    'USA': '+1',
+    'INA': '+62',
+  };
   String _selectedCountry = 'IND';
   bool _isChecked = false;
 
