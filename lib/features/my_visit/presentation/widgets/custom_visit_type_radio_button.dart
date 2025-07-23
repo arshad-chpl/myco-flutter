@@ -37,7 +37,7 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
     final theme = AppTheme.getColor(context);
     final screenWidth = Responsive.getWidth(context);
     final isTablet = screenWidth > 600;
-    final responsiveWidth = width ?? screenWidth * (isTablet ? 0.8 : 1);
+    final responsiveWidth = width ?? screenWidth * (isTablet ? 1 : 1);
 
     return Container(
       width: responsiveWidth,

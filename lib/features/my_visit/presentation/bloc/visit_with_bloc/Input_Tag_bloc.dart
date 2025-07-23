@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_event.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_state.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Input_Tag_event.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Input_Tag_state.dart';
 
 
 class InputTagBloc extends Bloc<InputTagEvent, InputTagState> {

@@ -31,22 +31,27 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
     child: Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal:
-            VariableBag.screenHorizontalPadding *
+      padding: EdgeInsets.only(
+        left:
+        VariableBag.bottomSheetLeftPadding * Responsive.getResponsive(context),
+        right:
+        VariableBag.bottomSheetRightPadding * Responsive.getResponsive(context),
+        top: VariableBag.bottomSheetTopPadding * Responsive.getResponsive(context),
+        bottom:
+        VariableBag.bottomSheetBottomPadding *
             Responsive.getResponsive(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         spacing:
-            VariableBag.formContentSpacingVertical *
+        VariableBag.formContentSpacingVertical *
             Responsive.getResponsive(context),
         children: [
-          SizedBox(height: 0.03 * Responsive.getHeight(context)),
 
           // Remark text field
           NewTextField(
+            isKey: true,
             label: 'remark',
             hintText: LanguageManager().get('type_here'),
             prefixIconPath: AppAssets.assetMessageEdit,
@@ -57,6 +62,7 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
             children: [
               Expanded(
                 child: NewTextField(
+                  isKey: true,
                   label: 'follow_up_visit_time',
                   hintText: LanguageManager().get('select'),
                   prefixIconPath: AppAssets.assetClock,
@@ -66,11 +72,12 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
 
               SizedBox(
                 width:
-                    VariableBag.textFieldRowGap *
+                VariableBag.textFieldRowGap *
                     Responsive.getResponsive(context),
               ), // spacing between dropdowns
               Expanded(
                 child: NewTextField(
+                  isKey: true,
                   label: 'Follow Up Visit Date',
                   hintText: LanguageManager().get('select'),
                   prefixIconPath: AppAssets.assetNoteFavorite,
@@ -88,6 +95,7 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
 
           // Textfield for Visit Area
           NewTextField(
+            isKey: true,
             label: 'visit_area',
             hintText: LanguageManager().get('type_here'),
             prefixIconPath: AppAssets.assetArrowSquare,
@@ -95,6 +103,7 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
 
           //TextField for Visit Catalogue
           NewTextField(
+            isKey: true,
             label: 'visit_catalogue',
             hintText: LanguageManager().get('type_here'),
             prefixIconPath: AppAssets.assetNoteFavorite,
@@ -102,6 +111,7 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
 
           //Textfield for Contact Person Name
           NewTextField(
+            isKey: true,
             label: 'Visit Contact Person Name',
             hintText: LanguageManager().get('type_here'),
             prefixIconPath: AppAssets.assetProfileCircle,
@@ -163,7 +173,7 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
               ),
               SizedBox(
                 width:
-                    VariableBag.buttonRowSpacing *
+                VariableBag.buttonRowSpacing *
                     Responsive.getResponsive(context),
               ),
               MyCoButton(
@@ -195,7 +205,6 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
               ),
             ],
           ),
-          SizedBox(height: 0.049 * Responsive.getHeight(context)),
         ],
       ),
     ),

@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_table.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/get_common_row.dart';
-import 'package:myco_flutter/widgets/custom_table.dart';
 
 class ViewVisitDetailsPage extends StatelessWidget {
   const ViewVisitDetailsPage({super.key});
@@ -26,19 +28,23 @@ class ViewVisitDetailsPage extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: 0.055 * Responsive.getWidth(context),
+              horizontal: VariableBag.commonCardHorizontalPadding,
+              vertical: VariableBag.commonCardVerticalPadding,
             ),
             child: SingleChildScrollView(
               child: CommonCard(
+                borderRadius: VariableBag.commonCardBorderRadius,
                 showBlackShadowInChild: true,
                 headerColor: AppTheme.getColor(context).primary,
                 title: 'Mahakali Tractor',
                 subTitleIcon: SvgPicture.asset(AppAssets.calendar),
                 subTitle:
-                    '01st April 2025 (09:45am) to 01st April 2025(12:48pm)',
+                '01st April 2025 (09:45am) to 01st April 2025(12:48pm)',
 
                 bottomWidget: Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: EdgeInsets.all(
+                    12 * Responsive.getResponsive(context),
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -68,7 +74,7 @@ class ViewVisitDetailsPage extends StatelessWidget {
                                   style: TextStyle(
                                     color: AppTheme.getColor(context).primary,
                                     fontSize:
-                                        13 *
+                                    13 *
                                         Responsive.getResponsiveText(context),
                                   ),
                                   children: [
@@ -79,7 +85,7 @@ class ViewVisitDetailsPage extends StatelessWidget {
                                           context,
                                         ).onSurface,
                                         fontSize:
-                                            13 *
+                                        13 *
                                             Responsive.getResponsiveText(
                                               context,
                                             ),
@@ -119,14 +125,14 @@ class ViewVisitDetailsPage extends StatelessWidget {
                                   CustomText(
                                     '101, Sarkhej-sanand cross road Makaraba, Ahmedabad, Sarkhej-Gandhinagar Gujarat, 385431, India',
                                     fontSize:
-                                        13 *
+                                    13 *
                                         Responsive.getResponsiveText(context),
                                     fontWeight: FontWeight.w500,
                                   ),
                                   CustomText(
                                     '(you are in range)',
                                     fontSize:
-                                        13 *
+                                    13 *
                                         Responsive.getResponsiveText(context),
                                     color: AppTheme.getColor(context).secondary,
                                   ),
@@ -145,13 +151,13 @@ class ViewVisitDetailsPage extends StatelessWidget {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       CustomText(
                                         'visit_start_date_time',
                                         isKey: true,
                                         fontSize:
-                                            15 *
+                                        15 *
                                             Responsive.getResponsiveText(
                                               context,
                                             ),
@@ -161,7 +167,7 @@ class ViewVisitDetailsPage extends StatelessWidget {
                                       CustomText(
                                         '09:45AM, 21st May 2025',
                                         fontSize:
-                                            14 *
+                                        14 *
                                             Responsive.getResponsiveText(
                                               context,
                                             ),
@@ -176,13 +182,13 @@ class ViewVisitDetailsPage extends StatelessWidget {
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       CustomText(
                                         'visit_end_date_time',
                                         isKey: true,
                                         fontSize:
-                                            15 *
+                                        15 *
                                             Responsive.getResponsiveText(
                                               context,
                                             ),
@@ -192,7 +198,7 @@ class ViewVisitDetailsPage extends StatelessWidget {
                                       CustomText(
                                         '12:45PM, 21st May 2025',
                                         fontSize:
-                                            14 *
+                                        14 *
                                             Responsive.getResponsiveText(
                                               context,
                                             ),
@@ -240,7 +246,7 @@ class ViewVisitDetailsPage extends StatelessWidget {
                                   style: TextStyle(
                                     color: AppTheme.getColor(context).primary,
                                     fontSize:
-                                        13 *
+                                    13 *
                                         Responsive.getResponsiveText(context),
                                   ),
                                   children: [
@@ -251,7 +257,7 @@ class ViewVisitDetailsPage extends StatelessWidget {
                                           context,
                                         ).onSurface,
                                         fontSize:
-                                            13 *
+                                        13 *
                                             Responsive.getResponsiveText(
                                               context,
                                             ),
@@ -276,7 +282,7 @@ class ViewVisitDetailsPage extends StatelessWidget {
                             CustomText(
                               LanguageManager().get('visit_with'),
                               fontSize:
-                                  17 * Responsive.getResponsiveText(context),
+                              17 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w600,
                             ),
                             SizedBox(
@@ -309,9 +315,10 @@ class ViewVisitDetailsPage extends StatelessWidget {
                                   title: LanguageManager().get(
                                     'visit_complete',
                                   ),
-                                  width: 0.33 * Responsive.getWidth(context),
+                                  width: 0.30 * Responsive.getWidth(context),
                                   height: 0.033 * Responsive.getHeight(context),
-                                  boarderRadius: 20,
+                                  boarderRadius:
+                                  VariableBag.bottomSheetBorderRadius,
                                   textStyle: TextStyle(
                                     color: AppTheme.getColor(context).secondary,
                                   ),
@@ -320,13 +327,13 @@ class ViewVisitDetailsPage extends StatelessWidget {
                                   ).secondary,
                                 ),
                                 SizedBox(
-                                  width: 0.14 * Responsive.getWidth(context),
+                                  width: 0.11 * Responsive.getWidth(context),
                                 ),
                                 CustomText(
                                   LanguageManager().get('view_attachment'),
                                   color: AppTheme.getColor(context).secondary,
                                   fontSize:
-                                      17 *
+                                  17 *
                                       Responsive.getResponsiveText(context),
                                   fontWeight: FontWeight.w600,
                                   decoration: TextDecoration.underline,
@@ -359,7 +366,9 @@ class ViewVisitDetailsPage extends StatelessWidget {
                                   isShadowBottomLeft: true,
                                   width: 0.33 * Responsive.getWidth(context),
                                   height: 0.033 * Responsive.getHeight(context),
-                                  boarderRadius: 20,
+                                  boarderRadius:
+                                  VariableBag.buttonBorderRadius *
+                                      Responsive.getResponsive(context),
                                 ),
                               ],
                             ),
@@ -375,7 +384,7 @@ class ViewVisitDetailsPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 100),
+          SizedBox(height: 50),
         ],
       ),
     ),

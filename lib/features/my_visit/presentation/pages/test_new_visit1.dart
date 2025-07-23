@@ -21,18 +21,27 @@ class _TestNewVisitState extends State<TestNewVisit1> {
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
     child: Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 15.0 * Responsive.getResponsive(context),
+      padding: EdgeInsets.only(
+        left:
+        VariableBag.bottomSheetLeftPadding *
+            Responsive.getResponsive(context),
+        right:
+        VariableBag.bottomSheetRightPadding *
+            Responsive.getResponsive(context),
+        top:
+        VariableBag.bottomSheetTopPadding *
+            Responsive.getResponsive(context),
+        bottom:
+        VariableBag.bottomSheetBottomPadding *
+            Responsive.getResponsive(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         spacing:
-            VariableBag.formContentSpacingVertical *
+        VariableBag.formContentSpacingVertical *
             Responsive.getResponsive(context),
         children: [
-          SizedBox(height: 0.02 * Responsive.getHeight(context)),
-
           //label for Test New Visit
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,6 +57,7 @@ class _TestNewVisitState extends State<TestNewVisit1> {
 
           //dropdown for branch selection
           NewTextField(
+            isKey: true,
             label: 'branch',
             hintText: LanguageManager().get('select'),
             prefixIconPath: AppAssets.assetData,
@@ -59,7 +69,7 @@ class _TestNewVisitState extends State<TestNewVisit1> {
             title: 'Media',
             titleColor: AppTheme.getColor(context).onSurfaceVariant,
             titleFontSize: 16 * Responsive.getResponsiveText(context),
-            imageTitle: 'Select Media',
+            imageTitle: 'select_media',
             containerHeight: 0.115 * Responsive.getHeight(context),
             multipleImage: 5,
             imagePath: 'assets/media_picker/gallery-export.png',
@@ -74,6 +84,7 @@ class _TestNewVisitState extends State<TestNewVisit1> {
 
           // Text field for "Today's Work"
           NewTextField(
+            isKey: true,
             label: 'Today Work',
             hintText: LanguageManager().get('type_here'),
             prefixIconPath: AppAssets.assetDocumentText,
@@ -82,13 +93,12 @@ class _TestNewVisitState extends State<TestNewVisit1> {
           //submit button
           MyCoButton(
             boarderRadius:
-                VariableBag.buttonBorderRadius *
+            VariableBag.buttonBorderRadius *
                 Responsive.getResponsive(context),
             isShadowBottomLeft: true,
             onTap: () {},
-            title: 'SUBMIT',
+            title: 'submit',
           ),
-          SizedBox(height: 0.02 * Responsive.getHeight(context)),
         ],
       ),
     ),

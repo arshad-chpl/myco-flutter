@@ -221,8 +221,8 @@ class _CardBottomContentState extends State<CardBottomContent> {
                   SvgPicture.asset(
                     isNoOrder
                         ? isExpanded
-                              ? AppAssets.CaretCircleDown
-                              : AppAssets.CaretCircleUp
+                        ? AppAssets.CaretCircleDown
+                        : AppAssets.CaretCircleUp
                         : AppAssets.CaretCircleDown,
                     height: 0.016 * responsiveHeight,
                     width: 0.016 * responsiveWidth,

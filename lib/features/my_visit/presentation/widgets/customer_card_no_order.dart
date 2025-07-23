@@ -23,7 +23,7 @@ class CustomerCardNoOrder extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(VariableBag.buttonBorderRadius * Responsive.getResponsive(context)),
         border: Border.all(
-          color: AppTheme.getColor(context).onPrimary, // White border
+          color: AppTheme.getColor(context).onPrimary,
           width: 0.003 * Responsive.getWidth(context),
         ),
         color: AppTheme.getColor(context).primary,

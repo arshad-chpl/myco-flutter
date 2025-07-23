@@ -50,16 +50,41 @@ class CustomTableWidget extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Table(
-      border: TableBorder(
-        top: BorderSide(width: 1, color: Colors.grey.shade300),
-        horizontalInside: BorderSide(width: 1, color: Colors.grey.shade300),
-        verticalInside: BorderSide(width: 1, color: Colors.grey.shade300),
-      ),
-      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-      columnWidths: const {0: FlexColumnWidth(), 1: FlexColumnWidth()},
-      children: List.generate(8, (_) => _buildRow(context)),
-    );
-  }
+  Widget build(BuildContext context) => Column(
+    children: List.generate(8, (index) {
+      bool isLastRow = index == 7;
+
+      return Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(width: 1, color: Colors.grey.shade300),
+            bottom: index == 7
+                ? BorderSide.none
+                : BorderSide(width: 1, color: Colors.grey.shade300),
+          ),
+        ),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: _styledFullName(context),
+                ),
+              ),
+              if (!isLastRow) Container(width: 1, color: Colors.grey.shade300),
+              if (!isLastRow)
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: _styledFullName(context),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
+    }),
+  );
 }

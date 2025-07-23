@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/label_with_add_botton.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/row_widget.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
-import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -54,6 +51,7 @@ class _AddCustomerState extends State<AddCustomer> {
         children: [
           /// Customer Company Name
           NewTextField(
+            isKey: true,
             label: 'Customer Company Name',
             hintText: LanguageManager().get('type_here'),
             prefixIconPath: AppAssets.building,
@@ -61,6 +59,7 @@ class _AddCustomerState extends State<AddCustomer> {
 
           /// Customer Category
           NewTextField(
+            isKey: true,
             label: 'customer_category',
             hintText: LanguageManager().get('select_category'),
             prefixIconPath: AppAssets.element,
@@ -68,6 +67,7 @@ class _AddCustomerState extends State<AddCustomer> {
 
           /// Contact Person Name
           NewTextField(
+            isKey: true,
             label: 'contact_person_name',
             hintText: LanguageManager().get('type_here'),
             prefixIconPath: AppAssets.profileCircle,
@@ -145,6 +145,7 @@ class _AddCustomerState extends State<AddCustomer> {
 
           /// Date Of Birth
           NewTextField(
+            isKey: true,
             label: 'date_of_birth',
             hintText: 'Enter Birth Date',
             prefixIconPath: AppAssets.date,
@@ -154,6 +155,7 @@ class _AddCustomerState extends State<AddCustomer> {
 
           /// Anniversary Date
           NewTextField(
+            isKey: true,
             label: 'anniversary_date',
             hintText: 'Enter Anniversary Date',
             prefixIconPath: AppAssets.date,
@@ -163,6 +165,7 @@ class _AddCustomerState extends State<AddCustomer> {
 
           /// Email ID
           NewTextField(
+            isKey: true,
             label: 'email_id',
             hintText: LanguageManager().get('email_contact_finca'),
             prefixIconPath: AppAssets.sms,
@@ -170,6 +173,7 @@ class _AddCustomerState extends State<AddCustomer> {
 
           /// Select Location
           NewTextField(
+            isKey: true,
             label: 'select_location',
             hintText: LanguageManager().get('select_location'),
             prefixIconPath: AppAssets.locationVisit,
@@ -177,6 +181,7 @@ class _AddCustomerState extends State<AddCustomer> {
 
           /// Address
           NewTextField(
+            isKey: true,
             label: 'address',
             hintText: LanguageManager().get('type_here'),
             prefixIconPath: AppAssets.home,
@@ -184,6 +189,7 @@ class _AddCustomerState extends State<AddCustomer> {
 
           /// Pincode
           NewTextField(
+            isKey: true,
             label: 'pincode',
             hintText: LanguageManager().get('type_here'),
             prefixIconPath: AppAssets.lock,
@@ -202,6 +208,7 @@ class _AddCustomerState extends State<AddCustomer> {
               ),
               SizedBox(height: 0.005 * Responsive.getHeight(context)),
               NewTextField(
+                isKey: true,
                 prefixIconPath: AppAssets.building,
                 suffixIconPath: AppAssets.downArrow,
                 hintText: LanguageManager().get('state_not_assigned'),
@@ -222,6 +229,7 @@ class _AddCustomerState extends State<AddCustomer> {
               ),
               SizedBox(height: 0.005 * Responsive.getHeight(context)),
               NewTextField(
+                isKey: true,
                 prefixIconPath: AppAssets.areaMap,
                 suffixIconPath: AppAssets.downArrow,
                 hintText: LanguageManager().get('state_not_assigned'),
@@ -231,13 +239,16 @@ class _AddCustomerState extends State<AddCustomer> {
 
           /// Retailer Type
           NewTextField(
+            isKey: true,
             label: 'retailer_type',
             hintText: LanguageManager().get('select'),
             prefixIconPath: AppAssets.businessAndTrade,
+
           ),
 
           /// Website
           NewTextField(
+            isKey: true,
             label: 'website_contact_finca',
             hintText: LanguageManager().get('type_here'),
             prefixIconPath: AppAssets.global,
@@ -245,6 +256,7 @@ class _AddCustomerState extends State<AddCustomer> {
 
           /// GST Number
           NewTextField(
+            isKey: true,
             label: 'tax_number',
             hintText: LanguageManager().get('type_here'),
             prefixIconPath: AppAssets.gst,
@@ -252,6 +264,7 @@ class _AddCustomerState extends State<AddCustomer> {
 
           /// Select Distributor
           NewTextField(
+            isKey: true,
             label: 'select_distributor',
             hintText: LanguageManager().get('select_distributor'),
             prefixIconPath: AppAssets.cardCoin,
@@ -259,6 +272,7 @@ class _AddCustomerState extends State<AddCustomer> {
 
           /// Credit Limit
           NewTextField(
+            isKey: true,
             label: 'credit_limit',
             hintText: LanguageManager().get('type_here'),
             prefixIconPath: AppAssets.bitCinCard,
@@ -266,6 +280,7 @@ class _AddCustomerState extends State<AddCustomer> {
 
           /// Credit Days
           NewTextField(
+            isKey: true,
             label: 'credit_days',
             hintText: LanguageManager().get('type_here'),
             prefixIconPath: AppAssets.emptyWalletTime,

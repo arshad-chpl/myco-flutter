@@ -15,7 +15,7 @@ class CustomerCardOnlyVisit extends StatelessWidget {
   @override
   Widget build(BuildContext context) => CommonCard(
     borderRadius:
-        VariableBag.commonCardBorderRadius * Responsive.getResponsive(context),
+    VariableBag.commonCardBorderRadius * Responsive.getResponsive(context),
     title: 'Ganesh Auto Garage (RT4982)',
     suffixIcon: Container(
       height: 32 * Responsive.getResponsiveText(context),
@@ -26,7 +26,7 @@ class CustomerCardOnlyVisit extends StatelessWidget {
           VariableBag.buttonBorderRadius * Responsive.getResponsive(context),
         ),
         border: Border.all(
-          color: AppTheme.getColor(context).onPrimary, // White border
+          color: AppTheme.getColor(context).onPrimary,
           width: 0.003 * Responsive.getWidth(context),
         ),
         color: AppColors.spanishYellow,

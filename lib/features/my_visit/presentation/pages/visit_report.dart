@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report_bottom_sheet.dart';
-
+import 'package:myco_flutter/features/my_visit/presentation/widgets/bottom_sheet_test_new_visit.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/horizontal_border.dart';
@@ -28,14 +28,14 @@ class VisitReport extends StatelessWidget {
         itemCount: 2,
         itemBuilder: (context, index) {
           return Padding(
-            padding: EdgeInsets.only(
-              left: 32 * Responsive.getResponsive(context),
-              right: 32 * Responsive.getResponsive(context),
-              bottom: 16 * Responsive.getResponsive(context),
+            padding: EdgeInsets.symmetric(
+              horizontal: VariableBag.commonCardHorizontalPadding,
+              vertical: VariableBag.commonCardVerticalPadding,
             ),
 
             //Common card
             child: CommonCard(
+              borderRadius: VariableBag.commonCardBorderRadius,
               showBlackShadowInChild: true,
               title: '05 June 2025',
               suffixIcon: InkWell(
@@ -45,7 +45,8 @@ class VisitReport extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(
-                          25 * Responsive.getResponsive(context),
+                          VariableBag.bottomSheetBorderRadius *
+                              Responsive.getResponsive(context),
                         ),
                       ),
                     ),
@@ -70,7 +71,7 @@ class VisitReport extends StatelessWidget {
                           fontSize: 16 * Responsive.getResponsiveText(context),
                           fontWeight: FontWeight.w700,
                         ),
-                        SizedBox(height: 0.001 * Responsive.getHeight(context)),
+                        // SizedBox(height: 0.001 * Responsive.getHeight(context)),
                         CustomText(
                           'Submitted on:05 Jun 2025 10:20 AM',
                           fontSize: 14 * Responsive.getResponsiveText(context),
@@ -93,7 +94,7 @@ class VisitReport extends StatelessWidget {
                           child: CustomText(
                             LanguageManager().get('download_report'),
                             fontSize:
-                                12 * Responsive.getResponsiveText(context),
+                            12 * Responsive.getResponsiveText(context),
                             color: AppTheme.getColor(context).secondary,
                             decoration: TextDecoration.underline,
                             fontWeight: FontWeight.w700,

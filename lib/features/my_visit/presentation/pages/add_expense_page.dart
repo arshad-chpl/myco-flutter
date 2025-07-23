@@ -33,18 +33,19 @@ class _AddExpensePageState extends State<AddExpensePage> {
     body: Padding(
       padding: EdgeInsets.symmetric(
         horizontal:
-            VariableBag.screenHorizontalPadding *
+        VariableBag.screenHorizontalPadding *
             Responsive.getResponsive(context),
       ),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing:
-              VariableBag.formContentSpacingVertical *
+          VariableBag.formContentSpacingVertical *
               Responsive.getResponsive(context),
           children: [
             // Text field for entering expense title
             NewTextField(
+              isKey: true,
               label: 'title',
               hintText: LanguageManager().get('type_here'),
               prefixIconPath: AppAssets.assetBookmark,
@@ -52,6 +53,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
 
             // Date picker for selecting Date of Birth
             NewTextField(
+              isKey: true,
               label: 'date_of_birth',
               hintText: LanguageManager().get('select_date'),
               prefixIconPath: AppAssets.assetNoteFavorite,
@@ -61,6 +63,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
 
             // Dropdown for selecting expense type
             NewTextField(
+              isKey: true,
               label: 'select_expense',
               prefixIconPath: AppAssets.assetCard_Edit,
               suffixIconPath: AppAssets.downArrow,
@@ -69,6 +72,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
 
             // Dropdown for selecting site
             NewTextField(
+              isKey: true,
               label: 'site',
               hintText: LanguageManager().get('select'),
               prefixIconPath: AppAssets.assetGlobal,
@@ -77,6 +81,7 @@ class _AddExpensePageState extends State<AddExpensePage> {
 
             // Text area for entering a detailed description
             NewTextField(
+              isKey: true,
               label: 'description',
               hintText: LanguageManager().get('enter_description'),
               prefixIconPath: AppAssets.assetStickyNote,
@@ -140,25 +145,25 @@ class _AddExpensePageState extends State<AddExpensePage> {
             ),
             //Radio buttons to select if the invoice includes GST
             CustomRadioButton(
-              options: const ['yes', 'no'],
+              options: const ['Yes', 'No'],
               onChanged: (_) {},
               height: 0.055 * Responsive.getHeight(context),
               title: 'Is GST Invoice',
             ),
 
-            SizedBox(height: 0.09 * Responsive.getHeight(context)),
+            SizedBox(height: 0.05 * Responsive.getHeight(context)),
 
             //submit button
             MyCoButton(
               title: 'submit',
               boarderRadius:
-                  VariableBag.buttonBorderRadius *
+              VariableBag.buttonBorderRadius *
                   Responsive.getResponsive(context),
               isShadowBottomLeft: true,
               onTap: () {
                 showModalBottomSheet(
                   context: context,
-                  isScrollControlled: true,
+                  isScrollControlled: false,
                   builder: (context) => const RemarkBottomSheet(),
                 );
               },

@@ -14,20 +14,20 @@ class CustomerCardOrderNow extends StatelessWidget {
   @override
   Widget build(BuildContext context) => CommonCard(
     borderRadius: VariableBag.commonCardBorderRadius * Responsive.getResponsive(context),
-      title: 'Ganesh Auto Garage (RT4982)',
-      onTap: onTap,
+    title: 'Ganesh Auto Garage (RT4982)',
+    onTap: onTap,
     suffixIcon: Container(
-      height: 32 * Responsive.getResponsiveText(context),
-      width: 110 * Responsive.getResponsiveText(context),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(VariableBag.buttonBorderRadius * Responsive.getResponsive(context)),
-        border: Border.all(
-          color: AppTheme.getColor(context).onPrimary,
-          width:  0.003 * Responsive.getWidth(context),
+        height: 32 * Responsive.getResponsiveText(context),
+        width: 110 * Responsive.getResponsiveText(context),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(VariableBag.buttonBorderRadius * Responsive.getResponsive(context)),
+          border: Border.all(
+            color: AppTheme.getColor(context).onPrimary,
+            width:  0.003 * Responsive.getWidth(context),
+          ),
+          color: AppTheme.getColor(context).secondary,
         ),
-        color: AppTheme.getColor(context).secondary, // Transparent background
-      ),
         child: CustomText(
           'order_taken',
           isKey: true,
@@ -36,10 +36,10 @@ class CustomerCardOrderNow extends StatelessWidget {
           fontWeight: FontWeight.w600,
         )
     ),
-      headerColor: AppTheme.getColor(context).secondary,
-      borderColor: AppTheme.getColor(context).outline,
-      bottomWidget:  CardBottomContent(
-        isOrderNow: true,
-      ),
-    );
+    headerColor: AppTheme.getColor(context).secondary,
+    borderColor: AppTheme.getColor(context).outline,
+    bottomWidget:  CardBottomContent(
+      isOrderNow: true,
+    ),
+  );
 }
