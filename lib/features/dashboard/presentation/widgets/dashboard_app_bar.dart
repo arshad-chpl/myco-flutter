@@ -73,7 +73,7 @@ class DashboardAppBar extends StatelessWidget {
         onPressed: () {
           context.pushNamed('employees');
         },
-        child: Icon(Icons.person, color: Colors.blue),
+        child: const Icon(Icons.person, color: Colors.blue),
       ),
       Container(
         decoration: BoxDecoration(
