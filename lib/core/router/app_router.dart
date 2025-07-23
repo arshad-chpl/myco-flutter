@@ -14,6 +14,7 @@ import 'package:myco_flutter/core/router/modules/work_allocation_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
+import 'package:myco_flutter/features/circuler/presentation/pages/circular_page.dart';
 import 'package:myco_flutter/features/common_api/domain/usecase/common_api_usercase.dart';
 import 'package:myco_flutter/features/common_api/presentation/bloc/common_api_bloc.dart';
 
@@ -256,6 +257,11 @@ class AppRouter {
       ),
 
 
+      GoRoute(
+        path: RoutePaths.circular,
+        name: 'NoticeVC',
+        builder: (context, state) => const CircularPage(),
+      ),
       GoRoute(
         path: RoutePaths.getStarted,
         name: 'get-started',

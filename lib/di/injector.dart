@@ -3,6 +3,7 @@ import 'package:myco_flutter/core/router/app_router.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.dart';
+import 'package:myco_flutter/features/circuler/presentation/di/circular_di.dart';
 import 'package:myco_flutter/features/common_api/presentation/di/common_api_di.dart';
 import 'package:myco_flutter/features/company_info/presentation/di/company_info_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
@@ -64,6 +65,9 @@ Future<void> init() async {
 
   // ========Sign up=========
   setupPrimaryRegisterDi(sl);
+
+  // ========Circular=========
+  CircularDi(sl);
 
   // ========common api=========
   CommonApiDi(sl);

@@ -16,8 +16,8 @@ Future<void> CommonApiDi(GetIt sl) async {
   sl.registerLazySingleton(() => CommonApiUserCase(repository: sl()));
 
   // Repository
-  sl.registerLazySingleton<CommonApiRepository>(() => CommonApiRepositoryImpl(sl(), sl()),);
+  sl.registerLazySingleton<CommonApiRepository>(() => CommonApiRepositoryImpl(sl(), sl()));
 
   // Data sources
-  sl.registerLazySingleton<CommonApiDataSource>(() => CommonApiDataSourceImpl(dio: sl<Dio>(instanceName: VariableBag.dioWithAuth),));
+  sl.registerLazySingleton<CommonApiDataSource>(() => CommonApiDataSourceImpl(dio: sl<Dio>(instanceName: VariableBag.dioWithAuth)));
 }
