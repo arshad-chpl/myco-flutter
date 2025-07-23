@@ -188,10 +188,14 @@ class LoginUi extends StatelessWidget {
                 'assets/sign_in/apple_logo.png',
               ),
               SizedBox(height: 0.025 * Responsive.getHeight(context)),
-              Center(
-                child: Row(
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const CustomText('Don’t have an account? '),
+                    const CustomText(
+                      'Don’t have an account?',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,),
                     InkWell(
                       onTap: () {
 
@@ -220,13 +224,13 @@ class LoginUi extends StatelessWidget {
                       },
                       child: CustomText(
                         'Sign Up Here',
-                        fontSize: 20 * Responsive.getResponsiveText(context),
+                        fontSize: 14 * Responsive.getResponsiveText(context),
                         color: AppTheme.getColor(context).primary,
                       ),
                     ),
                   ],
                 ),
-              ),
+
               SizedBox(height: 0.025 * Responsive.getHeight(context)),
               _buildPolicyAgreement(context),
             ],

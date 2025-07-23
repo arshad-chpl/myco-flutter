@@ -1,11 +1,9 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -17,19 +15,14 @@ import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/common_api/domain/usecase/common_api_usercase.dart';
 import 'package:myco_flutter/features/common_api/presentation/bloc/common_api_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/ios_calendar_time_picker.dart';
-import 'package:myco_flutter/features/sign_in/domain/usecases/primary_register_usecase.dart';
 import 'package:myco_flutter/features/sign_in/presentation/bloc/primary_register_bloc.dart';
-import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_term_and_condition.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/framed_profile_image.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/sign_up_custom_selector.dart';
-import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
-import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_loader_dialog.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/media_picker.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -141,7 +134,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
   @override
   void initState() {
     super.initState();
-
     context.read<CommonApiBloc>().add(LoadBranch(societyId ?? '1', '0'));
   }
   @override
@@ -178,7 +170,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     floorUnitOptionIds = state.floorUnitList.designation!.map((d) => d.designationId ?? '').toList();
                     floorUnitOptionNames = state.floorUnitList.designation!.map((d) => d.designationName ?? '').toList();
 
-
                     departmentOptionIds = [];
                     departmentOptionNames = [];
                     departmentOptionIds = state.floorUnitList.floors!.map((f) => f.floorId ?? '').toList();
@@ -205,35 +196,37 @@ class _SignupFormPageState extends State<SignupFormPage> {
                         : '';
                     profileImage = image.toString();
                     selectedImage = '${state.imgPdfList.baseUrl}$image';
-                    print('imagedata: $selectedImage');
                   }
                 },
 
 
               ),
               BlocListener<PrimaryRegisterBloc, PrimaryRegisterState>(
-                listener: (context, state) {
+                listener: (context, state) async {
+
+                  if (state is PrimaryRegisterLoading) {
+                    CustomLoaderDialog.show(context);
+                  }
+
+                  if (state is AddPrimaryUserApiSuccess || state is PrimaryRegisterError) {
+                    Navigator.of(context, rootNavigator: true).pop();
+                  }
 
                   if (state is AddPrimaryUserApiSuccess) {
                     Fluttertoast.showToast(msg: state.response.message ?? '', backgroundColor: Colors.green, textColor: Colors.white,);
                     if (isAddMore != true) {
                       if (from == '1') {
                         preferenceManager.setKeyValueBoolean(VariableBag.REQUEST_EMPLOYEE, true);
-                        Navigator.of(context).pop(); // Equivalent to finish()
+                        Navigator.of(context).pop();
                       } else {
                         if (state.response.isApprove == true) {
                           preferenceManager.setKeyValueBoolean(VariableBag.REGISTRATION_REQUEST_IS_APPROVE, true,);
                           Navigator.of(context).pop();
                         } else {
                           preferenceManager.setKeyValueBoolean(VariableBag.REGISTRATION_REQUEST_IS_APPROVE, false,);
-                          preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, state.response.userId ?? '',);
+                          await preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, state.response.userId ?? '',);
 
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (_) => const ContactAdminPage()),
-                          );
-
-                          // To clear entire stack like finishAffinity()
-                          Navigator.of(context).popUntil((route) => route.isFirst);
+                          context.go(RoutePaths.contactAdmin);
                         }
                       }
                     } else {
@@ -287,7 +280,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
                 if (files == null || files.isEmpty) return;
                 final List<String> imgList = [files.first.path];
-                context.read<CommonApiBloc>().add(LoadUploaded(false, imgList));
+                context.read<CommonApiBloc>().add(LoadUploaded(true, imgList));
                 setState(() {});
               },
 
@@ -586,29 +579,11 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
         SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
-        CustomText(
-          'Email Address',
-          color: AppTheme.getColor(context).onSurfaceVariant,
-          fontSize: 13 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.bold,
-        ),
-        SizedBox(height: 0.005 * Responsive.getHeight(context)),
-
-        MyCoTextfield(
+         NewTextField(
+          label: 'Email Address',
+          hintText: 'Enter here',
           controller: _emailController,
-          textAlignment: TextAlign.start,
-          hintText: 'abc@gmail.com',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(
-              10 * Responsive.getResponsive(context),
-            ),
-            borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-          ),
-          preFixImage: 'assets/sign_in/email_icon.png',
-          prefixIconConstraints: BoxConstraints(
-            minHeight: 0.02 * Responsive.getHeight(context),
-            minWidth: 0.10 * Responsive.getWidth(context),
-          ),
+           prefixIconPath: 'assets/sign_in/email_icon.png',
         ),
 
         SizedBox(height: 0.015 * Responsive.getHeight(context)),
@@ -728,8 +703,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
           ),
           onTap: () {
 
-            context.go(RoutePaths.contactAdmin);
-
             final bool isValid = FormValidator.validateAll(
               selectedBranchId: selectedBranchId,
               selectedDepartmentId: selectedDepartmentId,
@@ -764,14 +737,14 @@ class _SignupFormPageState extends State<SignupFormPage> {
               'user_email': _emailController.text,
               'user_profile_pic': profileImage,
               'user_type': '0',
-              'user_token': '',
+              'user_token': 'cIkYCvpYR9yMnlfHzsDZYi:APA91bH-uXuHf2w4xvrhn4KrTAG8BGG8ai8FhR7IgS3et5J3UQtLMuL9j2UCYxOyMC3BQJJTHPgg5LX1JVeehELDfa4aUX278e7FJ6zsyDe8iPvnDwjM8CU',
               'device': platform,
               'gender': selectedGender,
               'country_code': '+91'/*selectedCountry*/, //
               'unit_name': '',
               'newUserByAdmin': isAddByAdmin! ? '1' : '0',
               'joining_date': joiningDateController.text,
-              'language_id': preferenceManager.getLanguageId(), //
+              'language_id': '1', //
               'sub_department_id': selectedSubDepartmentId,
               'vi_dependants': departmentNumberController.text,
               'designation_id': selectedDesignationId,
@@ -782,9 +755,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
               print('data add primary: $value');
             });
 
-            PrimaryRegisterBloc(
-              registerUseCase: GetIt.I<PrimaryRegisterUseCase>(),
-            ).add(LoadAddPrimaryUser(dataMap));
+
+            context.read<PrimaryRegisterBloc>().add(LoadAddPrimaryUser(dataMap));
+
+            // PrimaryRegisterBloc(
+            //   registerUseCase: GetIt.I<PrimaryRegisterUseCase>(),
+            // ).add(LoadAddPrimaryUser(dataMap));
 
             // showCustomEmailVerificationSheet(
             //   imageUrl: 'assets/sign_in/email.png',

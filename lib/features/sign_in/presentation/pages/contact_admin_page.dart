@@ -162,7 +162,7 @@ class _ContactAdminPageState extends State<ContactAdminPage> {
             child: Column(
               children: [
                 CircleAvatar(
-                  radius: 54 * Responsive.getResponsive(context),
+                  radius: 50 * Responsive.getResponsive(context),
                   backgroundImage:
                   (profilePicture.isNotEmpty &&
                       profilePicture.startsWith('http'))
@@ -192,35 +192,35 @@ class _ContactAdminPageState extends State<ContactAdminPage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 0.005 * Responsive.getHeight(context)),
+                SizedBox(height: 0.002 * Responsive.getHeight(context)),
                 Text(department,
                   style: TextStyle(
                     fontSize: 13 * Responsive.getResponsiveText(context),
                     color: AppColors.black,
                   ),
                 ),
-                SizedBox(height: 0.005 * Responsive.getHeight(context)),
+                SizedBox(height: 0.002 * Responsive.getHeight(context)),
                 Text(mobileNumber,
                   style: TextStyle(
                     fontSize: 13 * Responsive.getResponsiveText(context),
                     color: AppColors.black,
                   ),
                 ),
-                SizedBox(height: 0.005 * Responsive.getHeight(context)),
+                SizedBox(height: 0.002 * Responsive.getHeight(context)),
                 Text(emailAddress,
                   style: TextStyle(
                     fontSize: 13 * Responsive.getResponsiveText(context),
                     color: AppColors.black,
                   ),
                 ),
-                SizedBox(height: 0.012 * Responsive.getHeight(context)),
+                SizedBox(height: 0.007 * Responsive.getHeight(context)),
                 Text(messageStatus,
                   style: TextStyle(
                     fontSize: 14 * Responsive.getResponsiveText(context),
                     color: AppColors.red,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -235,7 +235,7 @@ class _ContactAdminPageState extends State<ContactAdminPage> {
                       30 * Responsive.getResponsive(context),
                       textStyle: TextStyle(
                         fontSize:
-                        17 * Responsive.getResponsiveText(context),
+                        14 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w600,
                         color: AppColors.primary,
                       ),
@@ -267,7 +267,7 @@ class _ContactAdminPageState extends State<ContactAdminPage> {
                       30 * Responsive.getResponsive(context),
                       textStyle: TextStyle(
                         fontSize:
-                        17 * Responsive.getResponsiveText(context),
+                        14 * Responsive.getResponsiveText(context),
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                       ),
@@ -276,7 +276,7 @@ class _ContactAdminPageState extends State<ContactAdminPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 05),
               ],
             ),
           ),
