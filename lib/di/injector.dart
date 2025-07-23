@@ -8,6 +8,7 @@ import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.d
 import 'package:myco_flutter/features/chat/presentation/di/chat_list_di.dart';
 import 'package:myco_flutter/features/company_info/presentation/di/company_info_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
+import 'package:myco_flutter/features/company_selector/presentation/di/device_change_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/request_otp_di.dart';
 import 'package:myco_flutter/features/dashboard/presentation/di/dashboard_di.dart';
 import 'package:myco_flutter/features/holiday/presentation/di/holiday_di.dart';
@@ -42,6 +43,9 @@ Future<void> initDi() async {
   //========Login=========
   await setupLoginDi(sl);
 
+  //========Device Change=========
+  setupDeviceChangeDi(sl);
+
   //========Company Selector=========
   companySelectorDi(sl);
 
@@ -61,13 +65,11 @@ Future<void> initDi() async {
   visitWithDi(sl);
 
   //========Company Info=========
-  setupCompanyInfoDI(sl);
+  setupCompanyInfoDi(sl);
 
   //========Holiday=========
-  setupHolidayDI(sl);
+  setupHolidayDi(sl);
 
-  // ========Admin View=========
-  adminViewDi(sl);
   //Leave
   setUpLeaveDI(sl);
 

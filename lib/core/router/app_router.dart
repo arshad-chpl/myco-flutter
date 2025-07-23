@@ -70,16 +70,8 @@ class AppRouter {
         ),
       ),
       GoRoute(
-        path: RoutePaths.companyInfo,
-        name: 'company-info',
-        builder: (context, state) => BlocProvider<CompanyInfoBloc>(
-          create: (_) => GetIt.I<CompanyInfoBloc>(),
-          child: const CompanyInfoPage(),
-        ),
-      ),
-      GoRoute(
         path: RoutePaths.holiday,
-        name: RoutePaths.holiday,
+        name: 'HolidayVC',
         builder: (context, state) {
           final controller = TextEditingController();
           return HolidayListPage(controller: controller);
