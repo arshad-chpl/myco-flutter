@@ -320,7 +320,6 @@ class _LeaveScreenState extends State<LeaveScreen> {
                                   ),
                                   child: DraggableScrollableSheet(
                                     expand: false,
-                                    initialChildSize: 0.5,
                                     minChildSize: 0.5,
                                     maxChildSize: 0.8,
                                     builder:
@@ -438,7 +437,6 @@ class _LeaveScreenState extends State<LeaveScreen> {
                                     ),
                                     child: DraggableScrollableSheet(
                                       expand: false,
-                                      initialChildSize: 0.5,
                                       minChildSize: 0.5,
                                       maxChildSize: 0.8,
                                       builder:
