@@ -9,15 +9,6 @@ abstract class WorkAllocationEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class SelectWorkCategoryEvent extends WorkAllocationEvent {
-  final String selectedCategory;
-
-  const SelectWorkCategoryEvent(this.selectedCategory);
-
-  @override
-  List<Object?> get props => [selectedCategory];
-}
-
 class FetchWorkCategoryList extends WorkAllocationEvent {
   final String companyId;
   final String getWorkCategory;
@@ -31,6 +22,15 @@ class FetchWorkCategoryList extends WorkAllocationEvent {
 
   @override
   List<Object?> get props => [companyId, getWorkCategory, languageId];
+}
+
+class SelectDynamicWorkCategoryEvent extends WorkAllocationEvent {
+  final String selectedCategory;
+
+  const SelectDynamicWorkCategoryEvent(this.selectedCategory);
+
+  @override
+  List<Object?> get props => [selectedCategory];
 }
 
 class AddWorkAllocationEvent extends WorkAllocationEvent {

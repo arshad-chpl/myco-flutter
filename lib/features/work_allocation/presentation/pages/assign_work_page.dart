@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
@@ -5,18 +7,23 @@ import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/chat/presentation/widgets/select_department.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_bloc.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_event.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_state.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/employee_details.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
-class AssignWorkPage extends StatelessWidget {
+class AssignWorkPage extends StatefulWidget {
   AssignWorkPage({super.key});
 
+  @override
+  State<AssignWorkPage> createState() => _AssignWorkPageState();
+}
+
+class _AssignWorkPageState extends State<AssignWorkPage> {
   final _formKey = GlobalKey<FormState>();
   final categoryController = TextEditingController();
   final srNoController = TextEditingController();
@@ -25,6 +32,8 @@ class AssignWorkPage extends StatelessWidget {
   final startDateController = TextEditingController();
   final targetDateController = TextEditingController();
   final remarkController = TextEditingController();
+  final engineerController = TextEditingController();
+  final engineerFocusNode = FocusNode();
 
   final allEmployees = const [
     Employee(name: 'Rushda Baqui', role: 'iOS developer', imageUrl: ''),
@@ -34,41 +43,58 @@ class AssignWorkPage extends StatelessWidget {
     Employee(name: 'Demo', role: 'Flutter', imageUrl: ''),
   ];
 
+  int? _currentFieldErrorIndex;
+
+  void _validateFieldByField() {
+    final controllers = [
+      srNoController,
+      siteController,
+      locationController,
+      startDateController,
+      targetDateController,
+      remarkController,
+    ];
+
+    for (int i = 0; i < controllers.length; i++) {
+      if (controllers[i].text.trim().isEmpty) {
+        setState(() {
+          _currentFieldErrorIndex = i;
+        });
+        _formKey.currentState!.validate(); // trigger rebuild
+        return;
+      }
+    }
+
+    setState(() {
+      _currentFieldErrorIndex = null;
+    });
+
+    log('All fields are valid. Proceed to submit.');
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: const CustomAppbar(title: 'Assign Work'),
+    appBar: const CustomAppbar(title: 'assign_work', isKey: true),
     body: SingleChildScrollView(
       padding: EdgeInsets.symmetric(
-        horizontal: VariableBag.screenHorizontalPadding * Responsive.getResponsive(context),
+        horizontal:
+            VariableBag.screenHorizontalPadding *
+            Responsive.getResponsive(context),
       ),
       child: Form(
         key: _formKey,
         child: Column(
-          spacing: 12 * Responsive.getResponsive(context),
+          spacing:
+              VariableBag.textFieldRowGap * Responsive.getResponsive(context),
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BlocBuilder<WorkAllocationBloc, WorkAllocationState>(
               builder: (context, state) {
-                //api call
-                if (state is WorkAllocationInitial) {
-                  final pref = PreferenceManager();
-                  pref.getCompanyId().then((companyId) {
-                    pref.getLanguageId().then((languageId) {
-                      context.read<WorkAllocationBloc>().add(
-                        FetchWorkCategoryList(
-                          getWorkCategory: 'getWorkCategory',
-                          companyId: companyId!,
-                          languageId: languageId!,
-                        ),
-                      );
-                    });
-                  });
-                }
+                final bloc = context.read<WorkAllocationBloc>();
+                final selectedCategory = bloc.selectedCategory;
 
-                final selectedCategory = context
-                    .read<WorkAllocationBloc>()
-                    .selectedCategory;
-                if (selectedCategory != null) {
+                if (selectedCategory != null &&
+                    categoryController.text != selectedCategory) {
                   categoryController.text = selectedCategory;
                 }
 
@@ -79,9 +105,28 @@ class AssignWorkPage extends StatelessWidget {
                   hintText: 'Work Category',
                   prefixIconPath: AppAssets.element_1,
                   suffixIconPath: AppAssets.downArrow,
-                  validator: (value) =>
-                      value == null || value.isEmpty ? 'Select category' : null,
+                  validator: (value) {
+                    if (_currentFieldErrorIndex == 0 &&
+                        (value == null || value.trim().isEmpty)) {
+                      return 'Select category';
+                    }
+                    return null;
+                  },
                   onTap: () async {
+                    final String companyId =
+                        await PreferenceManager().getCompanyId() ?? "100";
+                    final String languageId =
+                        await PreferenceManager().getLanguageId() ?? "100";
+                    // final companyId = await PreferenceManager().getCompanyId();
+                    print(companyId);
+                    print(languageId);
+                    context.read<WorkAllocationBloc>().add(
+                      FetchWorkCategoryList(
+                        companyId: companyId,
+                        getWorkCategory: 'getWorkCategory',
+                        languageId: languageId,
+                      ),
+                    );
                     if (state is WorkCategoryListLoaded) {
                       final categoriesName = state.categories
                           .map(
@@ -96,17 +141,14 @@ class AssignWorkPage extends StatelessWidget {
                         context: context,
                         heading: 'Work Category',
                         dataList: categoriesName,
-                        selectedId: context
-                            .read<WorkAllocationBloc>()
-                            .selectedCategory,
+                        selectedId: selectedCategory,
                         searchHint: 'Search Category',
                         btnTitle: 'Select',
                       );
 
-                      if (selectedName != null) {
-                        context.read<WorkAllocationBloc>().add(
-                          SelectWorkCategoryEvent(selectedName),
-                        );
+                      if (selectedName != null &&
+                          selectedName != selectedCategory) {
+                        bloc.add(SelectDynamicWorkCategoryEvent(selectedName));
                       }
                     } else if (state is WorkAllocationLoading) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -115,7 +157,7 @@ class AssignWorkPage extends StatelessWidget {
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('Failed to load categories'),
+                          content: Text('Categories not available'),
                         ),
                       );
                     }
@@ -131,8 +173,9 @@ class AssignWorkPage extends StatelessWidget {
               prefixIconPath: AppAssets.receiptEdittt,
               controller: srNoController,
               hintText: 'Type here',
-              validator: (val) {
-                if (val == null || val.isEmpty) {
+              validator: (value) {
+                if (_currentFieldErrorIndex == 0 &&
+                    (value == null || value.trim().isEmpty)) {
                   return 'Please enter Project Sr No';
                 }
                 return null;
@@ -146,8 +189,9 @@ class AssignWorkPage extends StatelessWidget {
               controller: siteController,
               isRequired: true,
               hintText: 'Type here',
-              validator: (val) {
-                if (val == null || val.isEmpty) {
+              validator: (value) {
+                if (_currentFieldErrorIndex == 1 &&
+                    (value == null || value.trim().isEmpty)) {
                   return 'Please enter Site';
                 }
                 return null;
@@ -161,8 +205,9 @@ class AssignWorkPage extends StatelessWidget {
               controller: locationController,
               isRequired: true,
               hintText: 'Type here',
-              validator: (val) {
-                if (val == null || val.isEmpty) {
+              validator: (value) {
+                if (_currentFieldErrorIndex == 2 &&
+                    (value == null || value.trim().isEmpty)) {
                   return 'Please enter Location';
                 }
                 return null;
@@ -176,8 +221,9 @@ class AssignWorkPage extends StatelessWidget {
               controller: startDateController,
               isRequired: true,
               hintText: 'Select',
-              validator: (val) {
-                if (val == null || val.isEmpty) {
+              validator: (value) {
+                if (_currentFieldErrorIndex == 3 &&
+                    (value == null || value.trim().isEmpty)) {
                   return 'Please enter Start Date';
                 }
                 return null;
@@ -192,8 +238,9 @@ class AssignWorkPage extends StatelessWidget {
               controller: targetDateController,
               isRequired: true,
               hintText: 'Select',
-              validator: (val) {
-                if (val == null || val.isEmpty) {
+              validator: (value) {
+                if (_currentFieldErrorIndex == 3 &&
+                    (value == null || value.trim().isEmpty)) {
                   return 'Please enter Target Date';
                 }
                 return null;
@@ -202,7 +249,11 @@ class AssignWorkPage extends StatelessWidget {
             ),
 
             // Assign Engineer
-            AssignEngineerField(allEmployees: allEmployees),
+            AssignEngineerField(
+              allEmployees: allEmployees,
+              controller: engineerController,
+              focusNode: engineerFocusNode,
+            ),
 
             // Remark
             NewTextField(
@@ -213,29 +264,26 @@ class AssignWorkPage extends StatelessWidget {
               maxLines: 10,
               keyboardType: TextInputType.multiline,
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: 20 * Responsive.getResponsive(context),
-                bottom: 50 * Responsive.getResponsive(context),
+            SizedBox(height: 0.010 * Responsive.getHeight(context)),
+            MyCoButton(
+              title: 'Submit',
+              onTap: () {
+                // if (_formKey.currentState!.validate()) {
+                //   print('Form Validated');
+                // }
+                _validateFieldByField();
+              },
+              backgroundColor: AppTheme.getColor(context).primary,
+              textStyle: TextStyle(
+                fontSize: 16 * Responsive.getResponsiveText(context),
+                color: AppTheme.getColor(context).onPrimary,
+                fontWeight: FontWeight.w500,
               ),
-              child: MyCoButton(
-                title: 'Submit',
-                onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    print('Form Validated');
-                  }
-                },
-                backgroundColor: AppTheme.getColor(context).primary,
-                textStyle: TextStyle(
-                  fontSize: 16 * Responsive.getResponsiveText(context),
-                  color: AppTheme.getColor(context).onPrimary,
-                  fontWeight: FontWeight.w500,
-                ),
-                width: double.infinity,
-                isShadowBottomLeft: true,
-                boarderRadius: 30,
-              ),
+              width: double.infinity,
+              isShadowBottomLeft: true,
+              boarderRadius: 30,
             ),
+            SizedBox(height: 0.020 * Responsive.getHeight(context)),
           ],
         ),
       ),
