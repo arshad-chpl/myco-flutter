@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/customer_card_no_order.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/customer_card_only_visit.dart';
@@ -43,7 +42,7 @@ class _CustomerPageState extends State<CustomerPage> {
       isKey: true,
       actions: [
         MyCoButton(
-          title: 'refresh',
+          title: 'Refresh',
           onTap: () {},
           width: 0.20 * Responsive.getWidth(context),
           height: 0.038 * Responsive.getHeight(context),
@@ -59,7 +58,7 @@ class _CustomerPageState extends State<CustomerPage> {
         ),
         SizedBox(width:VariableBag.buttonRowSpacing * Responsive.getResponsive(context)),
         MyCoButton(
-          title: 'reset',
+          title: 'Reset',
           onTap: () {},
           width: 0.20 * Responsive.getWidth(context),
           height: 0.038 * Responsive.getHeight(context),
@@ -86,7 +85,7 @@ class _CustomerPageState extends State<CustomerPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
-            CustomSearchField(controller: searchController, hintText: LanguageManager().get('search')),
+            CustomSearchField(controller: searchController, hintText: 'Search'),
 
             SizedBox(height: VariableBag.searchFiledAfterSpace * Responsive.getResponsive(context)),
 

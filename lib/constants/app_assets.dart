@@ -60,6 +60,8 @@ class AppAssets {
   static const String personalcard = '$svgsVisit/personalcard.svg';
   static const String profileCircle = '$svgsVisit/profile-circle.svg';
   static const String share = '$svgsVisit/share.svg';
+  static const String arrowRight = '$svgsVisit/arrow-right.svg';
+  static const String arrowDoubleDown = '$svgsVisit/arrow_double_down.svg';
   static const String stickynote = '$svgsVisit/stickynote.svg';
   static const String whatsapp = '$svgsVisit/whatsapp.svg';
   static const String ref = '$svgsVisit/refresh_new.svg';
@@ -130,6 +132,7 @@ class AppAssets {
   static const String downArrow = '$svgsVisit/arrow-down.svg';
   static const String galleryExport = '$svgsVisit/gallery-export.svg';
   static const String arrow_down = '$svgsVisit/arrow-down.svg';
+  static const String areaMap = '$svgsVisit/area_map.svg';
 
   //images visit
   static const String assetBookmark = '$assetVisit/bookmark.svg';
@@ -144,6 +147,8 @@ class AppAssets {
   static const String assetDocumentText = '$assetVisit/document-text.svg';
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
   static const String Search = '$svgsVisit/search.svg';
+  static const String Addicon = '$svgsVisit/addicon.svg';
+  static const String DoubleDown_Arrow = '$svgsVisit/dropdown_visit.svg';
 
   //face detection screen assets
   static const String assetCircle = '$visit/circle.png';

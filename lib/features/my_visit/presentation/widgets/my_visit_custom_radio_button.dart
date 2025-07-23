@@ -4,8 +4,9 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
 import 'package:myco_flutter/widgets/custom_text.dart'; // make sure to import
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Department_tag_bloc/Input_Tag_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Input_Tag_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_with.dart';
 
 class CustomVisitTypeRadioButton extends StatelessWidget {
@@ -48,8 +49,23 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
       ),
       builder: (context) => BlocProvider(
   create: (context) => InputTagBloc(),
-  child: VisitWith(chilcontext: context),
+  child: VisitWith(),
 ),
+    );
+  }
+
+  void _openAssignedToBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context:  context,
+      isScrollControlled: true,
+      backgroundColor: AppTheme.getColor(context).surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) => BlocProvider(
+        create: (context) => InputTagBloc(),
+        child: AssignedTo(),
+      ),
     );
   }
 
@@ -96,6 +112,9 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
               onChanged(value!);
               if (index == options.length - 1) {
                 _openVisitWithBottomSheet(context);
+              }
+              if (index == options.length - 2) {
+                _openAssignedToBottomSheet(context);
               }
             },
           );

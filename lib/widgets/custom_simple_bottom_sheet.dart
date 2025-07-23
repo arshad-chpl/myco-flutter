@@ -7,7 +7,7 @@ import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart'
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
-Future<String?> showCustomSimpleBottomSheet({
+Future<dynamic> showCustomSimpleBottomSheet({
   required BuildContext context,
   required List<Map<String, String>> dataList,
   required String heading,
@@ -15,28 +15,31 @@ Future<String?> showCustomSimpleBottomSheet({
   ImageProvider? icon,
   String? searchHint,
   String? btnTitle,
-}) => showModalBottomSheet<String>(
-  context: context,
-  isScrollControlled: true,
-  backgroundColor: Colors.transparent,
-  builder: (_) => _CustomSimpleBottomSheet(
-    heading: heading,
-    dataList: dataList,
-    selectedId: selectedId,
-    icon: icon,
-    searchHint: searchHint,
-    btnTitle: btnTitle,
-  ),
-);
+  bool isMultipleSelection = false,
+}) =>
+    showModalBottomSheet<dynamic>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => _CustomSimpleBottomSheet(
+        heading: heading,
+        dataList: dataList,
+        selectedId: selectedId,
+        icon: icon,
+        searchHint: searchHint,
+        btnTitle: btnTitle,
+        isMultipleSelection: isMultipleSelection,
+      ),
+    );
 
 class _CustomSimpleBottomSheet extends StatefulWidget {
   final List<Map<String, String>> dataList;
   final String heading;
-  final bool isKey;
   final String? selectedId;
   final String? searchHint;
   final String? btnTitle;
   final ImageProvider? icon;
+  final bool isMultipleSelection;
 
   const _CustomSimpleBottomSheet({
     required this.dataList,
@@ -45,7 +48,7 @@ class _CustomSimpleBottomSheet extends StatefulWidget {
     this.searchHint,
     this.btnTitle,
     this.icon,
-    this.isKey = false,
+    this.isMultipleSelection = false,
   });
 
   @override
@@ -56,26 +59,58 @@ class _CustomSimpleBottomSheet extends StatefulWidget {
 class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
   String searchQuery = '';
   String? selectedItemId;
+  List<String> selectedItemIds = [];
   late List<Map<String, String>> filteredList;
+  bool isAllSelected = false;
 
   @override
   void initState() {
     super.initState();
     selectedItemId = widget.selectedId;
     filteredList = List.from(widget.dataList);
+
+    if (widget.selectedId != null) {
+      selectedItemIds = [widget.selectedId!];
+    }
   }
 
   void _onSearch(String query) {
     setState(() {
       searchQuery = query;
       filteredList = widget.dataList
-          .where(
-            (item) => (item['name'] ?? '').toLowerCase().contains(
-          query.toLowerCase(),
-        ),
-      )
+          .where((item) =>
+          (item['name'] ?? '').toLowerCase().contains(query.toLowerCase()))
           .toList();
     });
+  }
+
+  void _toggleSelection(String id) {
+    setState(() {
+      if (selectedItemIds.contains(id)) {
+        selectedItemIds.remove(id);
+        isAllSelected = false;
+      } else {
+        selectedItemIds.add(id);
+        if (selectedItemIds.length == filteredList.length) {
+          isAllSelected = true;
+        }
+      }
+    });
+  }
+
+  void _selectAll() {
+    if (isAllSelected) {
+      setState(() {
+        selectedItemIds.clear();
+        isAllSelected = false;
+      });
+    } else {
+      final allIds = filteredList.map((e) => e['id']!).toList();
+      setState(() {
+        selectedItemIds = allIds;
+        isAllSelected = true;
+      });
+    }
   }
 
   @override
@@ -90,7 +125,8 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Title + Optional Icon
+
+        // Title and close icon
         Row(
           children: [
             if (widget.heading.isNotEmpty)
@@ -121,7 +157,8 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
 
         // Search field
         MyCoTextfield(
-          prefix: Image.asset('assets/take_order/search-normal.png', scale: 20),
+          prefix:
+          Image.asset('assets/take_order/search-normal.png', scale: 20),
           hintText: widget.searchHint ?? 'Search',
           hintTextStyle: TextStyle(
             fontSize: 14 * Responsive.getResponsiveText(context),
@@ -139,6 +176,40 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
 
         SizedBox(height: 12 * Responsive.getResponsive(context)),
 
+        // "Select All" button
+        if (widget.isMultipleSelection && filteredList.length > 1)
+          InkWell(
+            onTap: _selectAll,
+            child: Container(
+              margin: EdgeInsets.symmetric(
+                vertical: 6 * Responsive.getResponsive(context),
+              ),
+              padding: EdgeInsets.symmetric(
+                vertical: 10 * Responsive.getResponsive(context),
+                horizontal: 16 * Responsive.getResponsive(context),
+              ),
+              decoration: BoxDecoration(
+                color: isAllSelected
+                    ? AppTheme.getColor(context).surfaceContainer
+                    : Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color:
+                  AppTheme.getColor(context).primary.withOpacity(0.3),
+                ),
+              ),
+              child: Center(
+                child: CustomText(
+                  isAllSelected ? 'Unselect All' : 'Select All',
+                  textAlign: TextAlign.center,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14 * Responsive.getResponsiveText(context),
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ),
+          ),
+
         // List of items
         Expanded(
           child: ListView.builder(
@@ -147,9 +218,12 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
               final item = filteredList[index];
               final id = item['id'];
               final name = item['name'] ?? '';
-              final isSelected = id == selectedItemId;
 
               if (id == null || name.isEmpty) return const SizedBox.shrink();
+
+              final isSelected = widget.isMultipleSelection
+                  ? selectedItemIds.contains(id)
+                  : id == selectedItemId;
 
               return Container(
                 margin: EdgeInsets.symmetric(
@@ -161,14 +235,20 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                       : Colors.white,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: AppTheme.getColor(context).primary.withOpacity(0.3),
+                    color: AppTheme.getColor(context)
+                        .primary
+                        .withOpacity(0.3),
                   ),
                 ),
                 child: InkWell(
                   onTap: () {
-                    setState(() {
-                      selectedItemId = id;
-                    });
+                    if (widget.isMultipleSelection) {
+                      _toggleSelection(id);
+                    } else {
+                      setState(() {
+                        selectedItemId = id;
+                      });
+                    }
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(
@@ -199,16 +279,16 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
 
         // Submit button
         MyCoButton(
-
           title: LanguageManager().get(widget.btnTitle ?? 'Submit'),
-          // title: widget.btnTitle ?? 'Select',
           boarderRadius: 50,
           height: 0.05 * Responsive.getHeight(context),
           isShadowBottomLeft: true,
           fontFamily: 'Inter',
           fontWeight: FontWeight.w500,
           onTap: () {
-            if (selectedItemId != null) {
+            if (widget.isMultipleSelection) {
+              Navigator.pop(context, selectedItemIds);
+            } else if (selectedItemId != null) {
               Navigator.pop(context, selectedItemId!);
             } else {
               Navigator.pop(context);
