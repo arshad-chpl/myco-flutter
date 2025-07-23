@@ -34,13 +34,18 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
 
   Future<void> loadAppointmentData() async {
     final preferenceManager = GetIt.I<PreferenceManager>();
+
+    final userId = await preferenceManager.getUserId();
+    final companyId = await preferenceManager.getCompanyId();
+    final languageId = await preferenceManager.getLanguageId();
+
     context.read<AppointmentBloc>().add(
-      const GetAppointmentEvent(
+      GetAppointmentEvent(
         GetAppointmentRequestModel(
           getAppointments: 'getAppointments',
-          userId: '1978',
-          companyId: '1',
-          languageId: '1',
+          userId: userId,
+          companyId: companyId,
+          languageId: languageId,
         ),
       ),
     );

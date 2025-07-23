@@ -8,7 +8,6 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
 
 
   AppointmentBloc(this.useCase) : super(const AppointmentInitial()) {
-
     on<AppointmentTabChange>((event, emit) {
       emit(AppointmentInitial(tabIndex: event.tabIndex));
     });
@@ -16,13 +15,27 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
     on<GetAppointmentEvent>((event, emit) async {
       emit(const AppointmentLoading());
       try {
-        final results = await useCase.getAppointment(event.params);
-        results.fold(
-          (failure) => emit(AppointmentError(failure.message)),
-          (leaveType) => emit(AppointmentLoaded(leaveType)),
+        final result = await useCase.getAppointment(event.params);
+        result.fold(
+              (failure) => emit(AppointmentError(failure.message)),
+              (getAppointment) => emit(AppointmentLoaded(getAppointment)),
         );
       } catch (e) {
-        emit(const AppointmentError('Failed to load getMyTeamLeaves'));
+        emit(const AppointmentError('Failed to load getAppointment'));
+      }
+    });
+
+
+    on<GetMyAppointmentEvent>((event, emit) async {
+      emit(const AppointmentLoading());
+      try {
+        final result = await useCase.getMyAppointment(event.params);
+        result.fold(
+            (failure) => emit(AppointmentError(failure.message)),
+            (getMyAppointment) => emit(AppointmentLoaded(getMyAppointment)),
+        );
+      } catch (e) {
+        emit(const AppointmentError('Failed to load getMyAppointment'));
       }
     });
   }

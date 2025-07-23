@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/get_appointment_request_model.dart';
+import 'package:myco_flutter/features/appointments/data/models/request/get_my_appointments_request_model.dart';
 
 abstract class AppointmentEvent extends Equatable{
   const AppointmentEvent();
@@ -18,4 +19,10 @@ class GetAppointmentEvent extends AppointmentEvent {
   final GetAppointmentRequestModel params;
 
   const GetAppointmentEvent( this.params);
+}
+
+class GetMyAppointmentEvent extends AppointmentEvent {
+  final GetMyAppointmentsRequestModel params;
+
+  const GetMyAppointmentEvent(this.params);
 }
