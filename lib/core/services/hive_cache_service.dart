@@ -1,4 +1,5 @@
-import 'package:hive_flutter/hive_flutter.dart';
+
+import 'package:hive/hive.dart';
 import 'package:myco_flutter/core/services/cache_service.dart';
 
 /// A caching service implementation that uses Hive for local storage.
