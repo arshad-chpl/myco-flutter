@@ -6,7 +6,7 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_multiselect_bottomsheet.dart';
 
-class CustomMultiSelectChipWidget extends StatefulWidget {
+class CustomMultiSelectChipField extends StatefulWidget {
   /// List of items to select from
   final List<Map<String, String>> items;
   
@@ -21,7 +21,7 @@ class CustomMultiSelectChipWidget extends StatefulWidget {
   final void Function(List<String> selectedIds) onSelectionChanged;
 
 
-  const CustomMultiSelectChipWidget({
+  const CustomMultiSelectChipField({
     Key? key,
     required this.items,
     required this.labelText,
@@ -33,10 +33,10 @@ class CustomMultiSelectChipWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CustomMultiSelectChipWidget> createState() => _CustomMultiSelectChipWidgetState();
+  State<CustomMultiSelectChipField> createState() => _CustomMultiSelectChipFieldState();
 }
 
-class _CustomMultiSelectChipWidgetState extends State<CustomMultiSelectChipWidget> {
+class _CustomMultiSelectChipFieldState extends State<CustomMultiSelectChipField> {
   List<Map<String, String>> selectedItems = [];
 
   void _openSelectionPicker() async {

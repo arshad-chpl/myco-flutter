@@ -10,7 +10,7 @@ sealed class ChatState extends Equatable {
 final class ChatInitial extends ChatState {}
 
 final class SearchQueryState extends ChatState {
-  final List filteredList;
+  final List<MemberEntity> filteredList;
   const SearchQueryState({required this.filteredList});
   @override
   List<Object> get props => [filteredList];

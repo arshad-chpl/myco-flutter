@@ -69,7 +69,7 @@ class SelectGroupEmp extends StatelessWidget {
           ),
           // SizedBox(height: 0.001 * Responsive.getHeight(context)),
           //  MultiDepartmentSelector(departments: departments),
-          CustomMultiSelectChipWidget(
+          CustomMultiSelectChipField(
             items: departments,
             labelText: "floors",
             hintText: "select_department",

@@ -76,6 +76,10 @@ class _StartNewChatState extends State<StartNewChat> {
           ),
            SizedBox(height: 30 * Responsive.getResponsive(context)),
           NewTextField(
+            controller: branchController,
+            label: 'Branch',
+            maxLines: 1,
+            prefixIconPath: "",
             enabled: true,
             hintText: selectedDepartments.isEmpty
                 ? LanguageManager().get('select_block')
