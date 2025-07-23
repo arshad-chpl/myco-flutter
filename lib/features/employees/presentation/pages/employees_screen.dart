@@ -11,12 +11,12 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
-import 'package:myco_flutter/features/asset/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/features/employees/domain/entites/department.dart';
 import 'package:myco_flutter/features/employees/presentation/bloc/employee_bloc.dart';
 import 'package:myco_flutter/features/employees/presentation/bloc/employee_event.dart';
 import 'package:myco_flutter/features/employees/presentation/bloc/employee_state.dart';
 import 'package:myco_flutter/features/employees/presentation/widgets/employee_card.dart';
+import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
@@ -35,63 +35,66 @@ class EmployeesScreen extends StatelessWidget {
 
     return BlocProvider<EmployeeBloc>(
       create: (_) => bloc..add(LoadUserData()),
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: BlocBuilder<EmployeeBloc, EmployeeState>(
-            builder: (context, state) => CustomAppbar(
-              title: 'employees',
-              isKey: true,
-              titleFontSize: 18 * Responsive.getResponsiveText(context),
-              titleFontWeight: FontWeight.w700,
-              appBarBackgoundColor: AppTheme.getColor(context).surface,
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: BlocBuilder<EmployeeBloc, EmployeeState>(
+              builder: (context, state) => CustomAppbar(
+                title: 'employees',
+                isKey: true,
+                titleFontSize: 18 * Responsive.getResponsiveText(context),
+                titleFontWeight: FontWeight.w700,
+                appBarBackgoundColor: AppTheme.getColor(context).surface,
+              ),
             ),
           ),
-        ),
 
-        // body: Padding(
-        //   padding: const EdgeInsets.symmetric(
-        //     horizontal: VariableBag.screenHorizontalPadding,
-        //   ),
-        //   child: Column(
-        //     children: [
-        //       //      /Media picker container
-        //       Padding(
-        //         padding: const EdgeInsets.all(8.0),
-        //         child: CustomMediaPickerContainer(
-        //           title: 'Assets Image',
-        //           titleFontSize: 14 * Responsive.getResponsiveText(context),
-        //           imageTitle: 'Capture Image',
-        //           // imageTitleSize: 10,
-        //           // containerHeight: 0.100 * Responsive.getHeight(context),
-        //           multipleImage: 5,
-        //           imagePath: AppAssets.assetGalleryExport,
-        //           isCameraShow: true,
-        //           isGalleryShow: true,
-        //           isDocumentShow: true,
-        //           isCropImage: true,
-        //           onSelectedMedia: (files) {
-        //             final paths = files.map((file) => file.path).toList();
-        //             log('Selected file paths: $paths');
-        //           },
-        //         ),
-        //       ),
-        body: BlocBuilder<EmployeeBloc, EmployeeState>(
-          builder: (context, state) {
-            if (state is EmployeeLoading || state is EmployeeInitial) {
-              return _buildLoadedContent(context, bloc, null);
-            } else if (state is EmployeeError) {
-              return Center(child: Text('Error: ${state.message}'));
-            } else if (state is EmployeeLoaded) {
-              return _buildLoadedContent(context, bloc, state);
-            }
-            return const SizedBox();
-          },
+          // body: Padding(
+          //   padding: const EdgeInsets.symmetric(
+          //     horizontal: VariableBag.screenHorizontalPadding,
+          //   ),
+          //   child: Column(
+          //     children: [
+          //       //      /Media picker container
+          //       Padding(
+          //         padding: const EdgeInsets.all(8.0),
+          //         child: CustomMediaPickerContainer(
+          //           title: 'Assets Image',
+          //           titleFontSize: 14 * Responsive.getResponsiveText(context),
+          //           imageTitle: 'Capture Image',
+          //           // imageTitleSize: 10,
+          //           // containerHeight: 0.100 * Responsive.getHeight(context),
+          //           multipleImage: 5,
+          //           imagePath: AppAssets.assetGalleryExport,
+          //           isCameraShow: true,
+          //           isGalleryShow: true,
+          //           isDocumentShow: true,
+          //           isCropImage: true,
+          //           onSelectedMedia: (files) {
+          //             final paths = files.map((file) => file.path).toList();
+          //             log('Selected file paths: $paths');
+          //           },
+          //         ),
+          //       ),
+          body: BlocBuilder<EmployeeBloc, EmployeeState>(
+            builder: (context, state) {
+              if (state is EmployeeLoading || state is EmployeeInitial) {
+                return _buildLoadedContent(context, bloc, null);
+              } else if (state is EmployeeError) {
+                return Center(child: Text('Error: ${state.message}'));
+              } else if (state is EmployeeLoaded) {
+                return _buildLoadedContent(context, bloc, state);
+              }
+              return const SizedBox();
+            },
+          ),
+          // ],
+          // ),
+          // ),
         ),
-        // ],
-        // ),
-        // ),
       ),
     );
   }
@@ -133,10 +136,14 @@ class EmployeesScreen extends StatelessWidget {
           CustomSearchField(
             hintText: 'search',
             controller: _searchController,
+
             onChanged: (q) {
               if (!isShimmer) bloc.add(SearchEmployees(q));
             },
-            onSubmitted: (value) => debugPrint('value------------>$value'),
+            onSubmitted: (value) {
+              FocusScope.of(context).unfocus();
+              debugPrint('value------------>$value');
+            },
           ),
           SizedBox(height: 0.012 * Responsive.getHeight(context)),
           Row(
@@ -164,7 +171,7 @@ class EmployeesScreen extends StatelessWidget {
                         children: [
                           SvgPicture.asset(
                             AppAssets.noEmployeeFound,
-                            height: Responsive.isTablet
+                            height: Responsive.isTablet(context)
                                 ? 0.200 * Responsive.getHeight(context)
                                 : 0.100 * Responsive.getHeight(context),
                           ),
@@ -275,6 +282,7 @@ class EmployeesScreen extends StatelessWidget {
           if (id == null || id == st.selectedBranch?.blockId) return;
           final branch = st.branches.firstWhere((b) => b.blockId == id);
           _searchController.clear();
+          FocusScope.of(ctx).unfocus();
           ctx.read<EmployeeBloc>().add(ChangeBranch(branch));
         },
         child: _buildDropdownBox(
@@ -301,6 +309,7 @@ class EmployeesScreen extends StatelessWidget {
       if (id == null || id == st.selectedDepartment?.floorId) return;
       final dept = depts.firstWhere((d) => d.floorId == id);
       _searchController.clear();
+      FocusScope.of(ctx).unfocus();
       ctx.read<EmployeeBloc>().add(ChangeDepartment(dept));
     },
     child: _buildDropdownBox(
@@ -310,10 +319,10 @@ class EmployeesScreen extends StatelessWidget {
   );
 
   Widget _buildDropdownBox(BuildContext context, String text) {
-    final boxHeight = Responsive.isTablet
+    final boxHeight = Responsive.isTablet(context)
         ? 48.0
         : 44 * Responsive.getResponsive(context);
-    final horizontalPadding = Responsive.isTablet ? 16.0 : 10.0;
+    final horizontalPadding = Responsive.isTablet(context) ? 16.0 : 10.0;
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
@@ -339,7 +348,7 @@ class EmployeesScreen extends StatelessWidget {
           ),
           Icon(
             Icons.keyboard_arrow_down_rounded,
-            size: Responsive.isTablet
+            size: Responsive.isTablet(context)
                 ? 0.060 * Responsive.getHeight(context)
                 : 0.020 * Responsive.getHeight(context),
             color: AppTheme.getColor(context).primary,

@@ -12,6 +12,7 @@ class EmployeeLoaded extends EmployeeState {
   final List<Branch> branches;
   final List<Department> departments;
   final List<Employee> employees;
+  final List<Employee> allEmployees;
   final Branch? selectedBranch;
   final Department? selectedDepartment;
   final String searchQuery;
@@ -21,6 +22,7 @@ class EmployeeLoaded extends EmployeeState {
     required this.branches,
     required this.departments,
     required this.employees,
+    required this.allEmployees,
     this.selectedBranch,
     this.selectedDepartment,
     this.searchQuery = '',

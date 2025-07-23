@@ -22,13 +22,11 @@ class GridConfig {
 class Responsive {
   static late double _screenWidth;
   static late double _screenHeight;
-  static late bool isTablet;
 
   static void init(BuildContext context) {
     final size = MediaQuery.of(context).size;
     _screenWidth = size.width;
     _screenHeight = size.height;
-    isTablet = _screenWidth >= 600;
   }
 
   static double screenWidth() => _screenWidth;
@@ -45,7 +43,9 @@ class Responsive {
     return size * factor;
   }
 
-  static double responsivePadding() => isTablet ? 24 : 16;
+  static bool isTablet(BuildContext context) => getWidth(context) >= 600;
+
+  static double responsivePadding(context) => isTablet(context) ? 24 : 16;
 
   static double getHeight(context) => MediaQuery.of(context).size.height;
 
@@ -83,7 +83,6 @@ class Responsive {
     if (Platform.isAndroid) return getWidth(context) > 600 ? 1.5 : 1.0;
     return getWidth(context) > 600 ? 1.5 : 0.9;
   }
-
 
   static double getDashboardResponsiveText(BuildContext context) =>
       getWidth(context) > 600 ? 1.2 : 1;

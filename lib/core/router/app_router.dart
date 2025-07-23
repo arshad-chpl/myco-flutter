@@ -6,6 +6,7 @@ import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/assets_routes.dart';
 import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
+import 'package:myco_flutter/core/router/modules/employee_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/my_visit_routes.dart';
 import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
@@ -13,11 +14,10 @@ import 'package:myco_flutter/core/router/modules/work_allocation_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
+
 // import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
-
-
 
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
@@ -59,7 +59,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths.splash,
+    // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -75,7 +76,7 @@ class AppRouter {
             ),
             BlocProvider(
               create: (_) =>
-              GetIt.I<LanguageBloc>()..add(LoadLanguageToPreferences()),
+                  GetIt.I<LanguageBloc>()..add(LoadLanguageToPreferences()),
               lazy: false,
             ),
           ],
@@ -93,12 +94,12 @@ class AppRouter {
         name: RoutePaths.login,
         builder: (context, state) => const OtpVerifyDialog(),
       ),
+
       // GoRoute(
       //   path: RoutePaths.details,
       //   name: 'details',
       //   builder: (context, state) => const DetailsPage(),
       // ),
-
       GoRoute(
         path: RoutePaths.selectCompany,
         name: 'selectCompany',
@@ -201,7 +202,7 @@ class AppRouter {
         pageBuilder: (context, state) => MaterialPage(
           child: BlocProvider(
             create: (context) =>
-            GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+                GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
             child: const FaceDetectionPage(),
           ),
         ),
@@ -227,12 +228,7 @@ class AppRouter {
         name: 'companySearch',
         builder: (context, state) => const SearchCompanyScreen(),
       ),
-
-      GoRoute(
-        path: RoutePaths.employees,
-        name: 'employees',
-        builder: (context, state) => const EmployeesScreen(),
-      ),
+      ...employeeRoute,
       GoRoute(
         path: RoutePaths.contactAdmin,
         name: 'contact-admin',
@@ -294,7 +290,6 @@ class AppRouter {
       ...assetsRoutes,
 
       ...WorkAllocationRoutes,
-
 
       // Add all modular routes here
       // ...authRoutes,

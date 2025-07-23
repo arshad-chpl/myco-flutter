@@ -35,7 +35,7 @@ class EmployeeRepositoryImpl extends EmployeeRepository {
         return Left(ServerFailure(e.toString()));
       }
     } else {
-      return const Left(NetworkFailure());
+      return const Left(NetworkFailure('No internet connection'));
     }
   }
 
@@ -58,7 +58,7 @@ class EmployeeRepositoryImpl extends EmployeeRepository {
         return Left(ServerFailure(e.toString()));
       }
     } else {
-      return const Left(NetworkFailure());
+      return const Left(NetworkFailure('No internet connection'));
     }
   }
 
@@ -85,7 +85,7 @@ class EmployeeRepositoryImpl extends EmployeeRepository {
         return Left(ServerFailure(e.toString()));
       }
     } else {
-      return const Left(NetworkFailure());
+      return const Left(NetworkFailure('No internet connection'));
     }
   }
 }

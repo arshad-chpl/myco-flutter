@@ -315,7 +315,7 @@ class _MediaPickerContent extends StatelessWidget {
         width: double.infinity,
         height:
             containerHeight ??
-            (Responsive.isTablet
+            (Responsive.isTablet(context)
                 ? 0.3 * Responsive.getHeight(context)
                 : 0.1  * Responsive.getHeight(context)),
         child: Column(
@@ -325,7 +325,7 @@ class _MediaPickerContent extends StatelessWidget {
               imagePath.isNotEmpty ? imagePath : AppAssets.assetGalleryExport,
               height:
                   imageHeight ??
-                  (Responsive.isTablet
+                  (Responsive.isTablet(context)
                       ? 0.10 * Responsive.getHeight(context)
                       : 0.03 * Responsive.getHeight(context)),
             ),

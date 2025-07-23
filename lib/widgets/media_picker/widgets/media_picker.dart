@@ -78,7 +78,7 @@ Future<List<File>?> showMediaFilePicker({
                       Responsive.getResponsive(context),
                 ),
                 constraints: BoxConstraints(
-                  maxHeight: Responsive.isTablet
+                  maxHeight: Responsive.isTablet(context)
                       ? 0.6 * Responsive.getHeight(context)
                       : 0.4 * Responsive.getHeight(context),
                 ),
@@ -144,7 +144,7 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
       Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 0.030 * Responsive.getWidth(context),
-          vertical: Responsive.isTablet
+          vertical: Responsive.isTablet(context)
               ? 0.010 * 2 * Responsive.getHeight(context)
               : 0.010 * Responsive.getHeight(context),
         ),
@@ -195,7 +195,7 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
         onTap: () => Navigator.pop(context),
         boarderRadius: 50 * Responsive.getResponsive(context),
         title: 'cancel',
-        height: Responsive.isTablet
+        height: Responsive.isTablet(context)
             ? 0.048 * 2 * Responsive.getHeight(context)
             : 0.048 * Responsive.getHeight(context),
       ),

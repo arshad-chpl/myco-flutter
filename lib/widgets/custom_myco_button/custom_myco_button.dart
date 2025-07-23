@@ -150,7 +150,7 @@ class _MyCoButtonMobile extends StatelessWidget {
           Container(
             height:
                 height ??
-                (Responsive.isTablet
+                (Responsive.isTablet(context)
                     ? 0.98 * Responsive.getHeight(context)
                     : 0.48 * Responsive.getHeight(context)),
             width: width ?? 0.94 * Responsive.getWidth(context),

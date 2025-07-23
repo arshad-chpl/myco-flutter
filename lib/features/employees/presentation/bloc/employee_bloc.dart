@@ -31,7 +31,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   ) async {
     emit(EmployeeLoading());
 
-    final userId = await preferenceManager.getUserId();
+    final userId = await preferenceManager.getUserId() ?? '';
     final societyId = await preferenceManager.getCompanyId() ?? '';
 
     final result = await getUserData(userId: userId, societyId: societyId);
@@ -73,6 +73,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
             branches: branches,
             departments: departments,
             employees: employeesFiltered,
+            allEmployees: employeesFiltered,
             selectedBranch: userBranch,
             selectedDepartment: userDept,
             selectedEmployeeIds: <String>{},
@@ -91,7 +92,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       final st = state as EmployeeLoaded;
       emit(EmployeeLoading());
 
-      final userId = await preferenceManager.getUserId();
+      final userId = await preferenceManager.getUserId() ?? '';
       final societyId = await preferenceManager.getCompanyId() ?? '';
 
       final newBranch = evt.branch;
@@ -118,6 +119,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
               branches: st.branches,
               departments: st.departments,
               employees: employees,
+              allEmployees: employees,
               selectedBranch: newBranch,
               selectedDepartment: newDept,
               searchQuery: '',
@@ -137,7 +139,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       final st = state as EmployeeLoaded;
       emit(EmployeeLoading());
 
-      final userId = await preferenceManager.getUserId();
+      final userId = await preferenceManager.getUserId() ?? '';
       final societyId = await preferenceManager.getCompanyId() ?? '';
 
       final newDept = evt.department;
@@ -159,6 +161,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
               branches: st.branches,
               departments: st.departments,
               employees: employees,
+              allEmployees: employees,
               selectedBranch: st.selectedBranch,
               selectedDepartment: newDept,
               searchQuery: '',
@@ -173,11 +176,22 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   void _onSearch(SearchEmployees evt, Emitter<EmployeeState> emit) {
     if (state is EmployeeLoaded) {
       final st = state as EmployeeLoaded;
+      final query = evt.query.trim().toLowerCase();
+
+      final filteredEmployees = query.isNotEmpty
+          ? st.allEmployees.where((e) {
+              final name = e.userFullName?.toLowerCase() ?? '';
+              final dept = e.designation?.toLowerCase() ?? '';
+              return name.contains(query) || dept.contains(query);
+            }).toList()
+          : st.allEmployees;
+
       emit(
         EmployeeLoaded(
           branches: st.branches,
           departments: st.departments,
-          employees: st.employees,
+          employees: filteredEmployees,
+          allEmployees: st.allEmployees,
           selectedBranch: st.selectedBranch,
           selectedDepartment: st.selectedDepartment,
           searchQuery: evt.query,
@@ -206,6 +220,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
           branches: st.branches,
           departments: st.departments,
           employees: st.employees,
+          allEmployees: st.allEmployees,
           selectedBranch: st.selectedBranch,
           selectedDepartment: st.selectedDepartment,
           searchQuery: st.searchQuery,
@@ -233,7 +248,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
 
     emit(EmployeeLoading());
 
-    final userId = await preferenceManager.getUserId();
+    final userId = await preferenceManager.getUserId() ?? '';
     final societyId = await preferenceManager.getCompanyId() ?? '';
 
     final result = await getEmployees.call(
@@ -248,17 +263,13 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     result.fold(
       (failure) => emit(EmployeeError(_mapFailureToMessage(failure))),
       (employees) {
-        // If searchQuery is not empty, filter employees
         final filteredEmployees = existingQuery.isNotEmpty
-            ? employees
-                  .where(
-                    (e) =>
-                        e.userFullName?.toLowerCase().contains(
-                          existingQuery.toLowerCase(),
-                        ) ??
-                        false,
-                  )
-                  .toList()
+            ? employees.where((e) {
+                final name = e.userFullName?.toLowerCase() ?? '';
+                final dept = e.designation?.toLowerCase() ?? '';
+                return name.contains(existingQuery) ||
+                    dept.contains(existingQuery);
+              }).toList()
             : employees;
 
         emit(
@@ -266,6 +277,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
             branches: st.branches,
             departments: st.departments,
             employees: filteredEmployees,
+            allEmployees: employees,
             selectedBranch: selectedBranch,
             selectedDepartment: selectedDept,
             searchQuery: existingQuery,
