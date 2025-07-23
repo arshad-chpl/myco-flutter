@@ -11,7 +11,7 @@
 // import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
 // import 'package:myco_flutter/features/employees/presentation/widgets/employee_card.dart';
 // import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
-// import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
+// import 'package:myco_flutter/widgets/media_picker_container/custom_media_picker_container.dart';
 // import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 // import 'package:myco_flutter/widgets/custom_text.dart';
 // import 'package:myco_flutter/widgets/custom_text_field.dart';

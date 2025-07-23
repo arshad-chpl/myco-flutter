@@ -60,7 +60,6 @@ dependencies:
   modal_bottom_sheet: ^3.0.0
   bloc: ^9.0.0
 
-
 dependency_overrides:
   source_gen: 2.0.0
 dev_dependencies:
@@ -107,11 +106,11 @@ flutter:
     - assets/svgs/visit/
     - assets/add_expense/
     - assets/dashboard/svgs/
-#    - assets/face_detection/
+    #    - assets/face_detection/
     - assets/svgs/visit/
     - assets/dashboard/svgs/
-#    - assets/face_detection/
-#    - assets/dashboard/svgs/
+    #    - assets/face_detection/
+    #    - assets/dashboard/svgs/
     - assets/assets/
     - assets/svgs/take_order/
     - assets/animations/

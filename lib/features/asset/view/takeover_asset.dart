@@ -11,7 +11,7 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/controllers/takeover_controllers.dart';
 import 'package:myco_flutter/features/asset/widgets/assets_bottom_sheet.dart';
 import 'package:myco_flutter/features/asset/widgets/label_text_field.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_radio_button.dart';

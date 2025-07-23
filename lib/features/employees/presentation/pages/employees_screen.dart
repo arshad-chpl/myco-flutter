@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/constants/constants.dart';
@@ -18,13 +21,80 @@ import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/custom_media_picker_container.dart';
 
 class EmployeesScreen extends StatelessWidget {
   EmployeesScreen({super.key});
 
   final EmployeeBloc bloc = GetIt.I<EmployeeBloc>();
+  final TextEditingController _searchController = TextEditingController();
 
-  TextEditingController _searchController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    Responsive.init(context);
+
+    return BlocProvider<EmployeeBloc>(
+      create: (_) => bloc..add(LoadUserData()),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: BlocBuilder<EmployeeBloc, EmployeeState>(
+            builder: (context, state) => CustomAppbar(
+              title: 'employees',
+              isKey: true,
+              titleFontSize: 18 * Responsive.getResponsiveText(context),
+              titleFontWeight: FontWeight.w700,
+              appBarBackgoundColor: AppTheme.getColor(context).surface,
+            ),
+          ),
+        ),
+
+        // body: Padding(
+        //   padding: const EdgeInsets.symmetric(
+        //     horizontal: VariableBag.screenHorizontalPadding,
+        //   ),
+        //   child: Column(
+        //     children: [
+        //       //      /Media picker container
+        //       Padding(
+        //         padding: const EdgeInsets.all(8.0),
+        //         child: CustomMediaPickerContainer(
+        //           title: 'Assets Image',
+        //           titleFontSize: 14 * Responsive.getResponsiveText(context),
+        //           imageTitle: 'Capture Image',
+        //           // imageTitleSize: 10,
+        //           // containerHeight: 0.100 * Responsive.getHeight(context),
+        //           multipleImage: 5,
+        //           imagePath: AppAssets.assetGalleryExport,
+        //           isCameraShow: true,
+        //           isGalleryShow: true,
+        //           isDocumentShow: true,
+        //           isCropImage: true,
+        //           onSelectedMedia: (files) {
+        //             final paths = files.map((file) => file.path).toList();
+        //             log('Selected file paths: $paths');
+        //           },
+        //         ),
+        //       ),
+        body: BlocBuilder<EmployeeBloc, EmployeeState>(
+          builder: (context, state) {
+            if (state is EmployeeLoading || state is EmployeeInitial) {
+              return _buildLoadedContent(context, bloc, null);
+            } else if (state is EmployeeError) {
+              return Center(child: Text('Error: ${state.message}'));
+            } else if (state is EmployeeLoaded) {
+              return _buildLoadedContent(context, bloc, state);
+            }
+            return const SizedBox();
+          },
+        ),
+        // ],
+        // ),
+        // ),
+      ),
+    );
+  }
 
   Widget _buildLoadedContent(
     BuildContext context,
@@ -32,6 +102,7 @@ class EmployeesScreen extends StatelessWidget {
     EmployeeLoaded? st,
   ) {
     final bool isShimmer = st == null;
+
     final filteredEmployees = isShimmer
         ? List.generate(8, (_) => null)
         : st.employees.where((e) {
@@ -65,18 +136,13 @@ class EmployeesScreen extends StatelessWidget {
             onChanged: (q) {
               if (!isShimmer) bloc.add(SearchEmployees(q));
             },
-            onSubmitted: (value) {
-              debugPrint('value------------>$value');
-            },
+            onSubmitted: (value) => debugPrint('value------------>$value'),
           ),
           SizedBox(height: 0.012 * Responsive.getHeight(context)),
           Row(
             children: [
               Expanded(child: _dropdownBranch(context, st)),
-              SizedBox(
-                height: 0.016 * Responsive.getHeight(context),
-                width: 0.013 * Responsive.getWidth(context),
-              ),
+              SizedBox(width: 0.013 * Responsive.getWidth(context)),
               Expanded(
                 child: _dropdownDepartment(
                   context,
@@ -89,42 +155,30 @@ class EmployeesScreen extends StatelessWidget {
           SizedBox(height: 0.024 * Responsive.getHeight(context)),
           Expanded(
             child: RefreshIndicator(
-              onRefresh: () async {
-                context.read<EmployeeBloc>().add(RefreshEmployeeData());
-              },
-
-              child: isShimmer
-                  ? GridView.builder(
-                      padding: EdgeInsets.only(
-                        top: gridPadding,
-                        left: gridPadding,
-                        right: gridPadding,
-                        bottom: 20 * Responsive.getResponsive(context),
-                      ),
-                      itemCount: filteredEmployees.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: Responsive.getGridConfig(
-                          context,
-                        ).itemCount,
-                        mainAxisSpacing: Responsive.getGridConfig(
-                          context,
-                        ).spacing,
-                        crossAxisSpacing: Responsive.getGridConfig(
-                          context,
-                        ).spacing,
-                        childAspectRatio: Responsive.getGridConfig(
-                          context,
-                        ).childAspectRatio,
-                      ),
-                      itemBuilder: (_, __) => const EmployeeSelectionCard(
-                        name: '',
-                        department: '',
-                        image: SizedBox(),
-                        isSelected: false,
+              onRefresh: () async =>
+                  context.read<EmployeeBloc>().add(RefreshEmployeeData()),
+              child: filteredEmployees.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            AppAssets.noEmployeeFound,
+                            height: Responsive.isTablet
+                                ? 0.200 * Responsive.getHeight(context)
+                                : 0.100 * Responsive.getHeight(context),
+                          ),
+                          const SizedBox(height: 12),
+                          CustomText(
+                            'No employees found',
+                            fontSize:
+                                16 * Responsive.getResponsiveText(context),
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.getColor(context).onSurface,
+                          ),
+                        ],
                       ),
                     )
-                  : filteredEmployees.isEmpty
-                  ? const Center(child: Text('No employees found'))
                   : GridView.builder(
                       padding: EdgeInsets.only(
                         top: gridPadding,
@@ -148,7 +202,15 @@ class EmployeesScreen extends StatelessWidget {
                         ).childAspectRatio,
                       ),
                       itemBuilder: (_, index) {
-                        final emp = filteredEmployees[index]!;
+                        final emp = filteredEmployees[index];
+                        if (emp == null) {
+                          return const EmployeeSelectionCard(
+                            name: '',
+                            department: '',
+                            image: SizedBox(),
+                            isSelected: false,
+                          );
+                        }
                         return EmployeeSelectionCard(
                           name: emp.userFullName ?? '',
                           department: emp.designation ?? '',
@@ -171,19 +233,22 @@ class EmployeesScreen extends StatelessWidget {
                               emp.userProfilePic ?? '',
                             ),
                           ),
-                          isSelected: st.selectedEmployeeIds.contains(
-                            emp.userId,
-                          ),
+                          isSelected:
+                              st?.selectedEmployeeIds.contains(emp.userId) ??
+                              false,
+
                           onSelected: (_) {
                             bloc.add(ToggleEmployeeSelection(emp.userId ?? ''));
-                            debugPrint('🧾 Selected Employee Details:');
-                            debugPrint('ID: ${emp.userId}');
-                            debugPrint('Name: ${emp.userFullName}');
-                            debugPrint('Designation: ${emp.designation}');
-                            debugPrint('Floor ID: ${emp.floorId}');
-                            debugPrint('Block ID: ${emp.blockId}');
-                            debugPrint('Phone: ${emp.userMobile}');
-                            debugPrint('Profile Pic: ${emp.userProfilePic}');
+                            debugPrint(
+                              '🧾 Selected Employee Details:\n'
+                              'ID: ${emp.userId}\n'
+                              'Name: ${emp.userFullName}\n'
+                              'Designation: ${emp.designation}\n'
+                              'Floor ID: ${emp.floorId}\n'
+                              'Block ID: ${emp.blockId}\n'
+                              'Phone: ${emp.userMobile}\n'
+                              'Profile Pic: ${emp.userProfilePic}',
+                            );
                           },
                         );
                       },
@@ -195,47 +260,6 @@ class EmployeesScreen extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    Responsive.init(context);
-
-    return BlocProvider<EmployeeBloc>(
-      create: (_) => bloc..add(LoadUserData()),
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: BlocBuilder<EmployeeBloc, EmployeeState>(
-            builder: (context, state) => CustomAppbar(
-              title: 'employees',
-              isKey: true,
-              titleFontSize: 18 * Responsive.getResponsiveText(context),
-              titleFontWeight: FontWeight.w700,
-              appBarBackgoundColor: AppTheme.getColor(context).surface,
-            ),
-          ),
-        ),
-        body: BlocBuilder<EmployeeBloc, EmployeeState>(
-          builder: (context, state) {
-            if (state is EmployeeLoading || state is EmployeeInitial) {
-              return _buildLoadedContent(context, bloc, null);
-            }
-
-            if (state is EmployeeError) {
-              return Center(child: Text('Error: ${state.message}'));
-            }
-
-            if (state is EmployeeLoaded) {
-              return _buildLoadedContent(context, bloc, state);
-            }
-
-            return const SizedBox();
-          },
-        ),
-      ),
-    );
-  }
-
   Widget _dropdownBranch(BuildContext ctx, EmployeeLoaded? st) =>
       GestureDetector(
         onTap: () async {
@@ -243,13 +267,11 @@ class EmployeesScreen extends StatelessWidget {
           final id = await showCustomSimpleBottomSheet(
             context: ctx,
             heading: 'branch',
-            icon: AppAssets.downArrowBottomSheet,
             dataList: st.branches
                 .map((b) => {'id': b.blockId ?? '', 'name': b.blockName ?? ''})
                 .toList(),
             selectedId: st.selectedBranch?.blockId,
           );
-
           if (id == null || id == st.selectedBranch?.blockId) return;
           final branch = st.branches.firstWhere((b) => b.blockId == id);
           _searchController.clear();
@@ -271,13 +293,11 @@ class EmployeesScreen extends StatelessWidget {
       final id = await showCustomSimpleBottomSheet(
         context: ctx,
         heading: 'departement',
-        icon: AppAssets.downArrowBottomSheet,
         dataList: depts
             .map((d) => {'id': d.floorId ?? '', 'name': d.departmentName ?? ''})
             .toList(),
         selectedId: st.selectedDepartment?.floorId,
       );
-
       if (id == null || id == st.selectedDepartment?.floorId) return;
       final dept = depts.firstWhere((d) => d.floorId == id);
       _searchController.clear();

@@ -131,7 +131,7 @@ class PermissionUtil {
               'Permission Needed',
               fontSize: 16 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
-              color: AppTheme.getColor(context).onSurface,
+              color: AppTheme.getColor(context).surface,
             ),
           ],
         ),

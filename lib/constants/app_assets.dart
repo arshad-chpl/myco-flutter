@@ -172,6 +172,7 @@ class AppAssets {
   ///employee-screen
   static const String downArrowBottomSheet =
       '$employees/down_arrow_bottomsheet.svg';
+  static const String noEmployeeFound = '$employees/no_emp_found.svg';
 
   //media picker
   static const String mediaPickerCamera = '$mediaPicker/camera.svg';

@@ -14,7 +14,7 @@ class CustomShadowContainer extends StatelessWidget {
   final double? containerHeight;
   final double? borderRadius;
 
-  CustomShadowContainer({
+  const CustomShadowContainer({
     required this.image,
     required this.title,
     super.key,
@@ -32,12 +32,22 @@ class CustomShadowContainer extends StatelessWidget {
       Stack(
         children: [
           Container(
-            width: width ?? 70,
-            height: containerHeight ?? 70,
-            padding: const EdgeInsets.all(15),
+            width:
+                width ??
+                (Responsive.isTablet
+                    ? 140 * Responsive.getResponsive(context)
+                    : 70 * Responsive.getResponsive(context)),
+            height:
+                containerHeight ??
+                (Responsive.isTablet
+                    ? 140 * Responsive.getResponsive(context)
+                    : 70 * Responsive.getResponsive(context)),
+            padding: EdgeInsets.all(15 * Responsive.getResponsive(context)),
             decoration: BoxDecoration(
               color: AppTheme.getColor(context).onPrimary,
-              borderRadius: BorderRadius.circular(borderRadius ?? 20),
+              borderRadius: BorderRadius.circular(
+                borderRadius ?? 20 * Responsive.getResponsive(context),
+              ),
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,
@@ -46,17 +56,26 @@ class CustomShadowContainer extends StatelessWidget {
                 ),
               ],
             ),
-            child: Center(child: image),
+            child: Padding(
+              padding: EdgeInsets.all(
+                Responsive.isTablet
+                    ? 8.0 * Responsive.getResponsive(context)
+                    : 0.0,
+              ),
+              child: Center(child: image),
+            ),
           ),
           Positioned.fill(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(borderRadius ?? 20),
+              borderRadius: BorderRadius.circular(
+                borderRadius ?? 20 * Responsive.getResponsive(context),
+              ),
               child: CustomPaint(
                 painter: InnerShadowPainter(
                   shadowColor: const Color.fromARGB(50, 0, 0, 0),
                   blur: 4,
                   offset: const Offset(3, -3.5),
-                  borderRadius: 20,
+                  borderRadius: 20 * Responsive.getResponsive(context),
                   isShadowBottomRight: true,
                 ),
               ),
@@ -64,13 +83,15 @@ class CustomShadowContainer extends StatelessWidget {
           ),
           Positioned.fill(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(borderRadius ?? 20),
+              borderRadius: BorderRadius.circular(
+                borderRadius ?? 20 * Responsive.getResponsive(context),
+              ),
               child: CustomPaint(
                 painter: InnerShadowPainter(
                   shadowColor: const Color.fromARGB(50, 0, 0, 0),
                   blur: 4,
                   offset: const Offset(3, -3.5),
-                  borderRadius: 20,
+                  borderRadius: 20 * Responsive.getResponsive(context),
                   isShadowBottomLeft: true,
                 ),
               ),
@@ -78,11 +99,11 @@ class CustomShadowContainer extends StatelessWidget {
           ),
         ],
       ),
-      const SizedBox(height: 6),
+      SizedBox(height: 0.006 * Responsive.getHeight(context)),
       CustomText(
         title,
-        color: AppColors.black,
-        fontSize: 11 * Responsive.getResponsiveText(context),
+        color: AppTheme.getColor(context).onSurfaceVariant,
+        fontSize: 14 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w600,
       ),
     ],

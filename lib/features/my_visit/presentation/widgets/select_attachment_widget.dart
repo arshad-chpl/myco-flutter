@@ -4,7 +4,7 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/dashed_border_container.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/media_picker.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/media_picker.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class SelectAttachmentWidget extends StatelessWidget {
