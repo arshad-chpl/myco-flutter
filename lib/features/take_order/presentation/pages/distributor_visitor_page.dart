@@ -252,14 +252,14 @@ class DistributorVisitorPage extends StatelessWidget {
                     context.pushNamed(RoutePaths.takeOrder);
                   },
                 ),
-                getCommonColumn(
-                  context,
-                  imagePath: AppAssets.orderHistory,
-                  name: 'order_history',
-                  onTap: () {
-                    context.pushNamed(RoutePaths.orderHistory);
-                  },
-                ),
+                // getCommonColumn(
+                //   context,
+                //   imagePath: AppAssets.orderHistory,
+                //   name: 'order_history',
+                //   onTap: () {
+                //     context.pushNamed(RoutePaths.orderHistory);
+                //   },
+                // ),  //show error in assets
                 getCommonColumn(
                   context,
                   imagePath: AppAssets.noOrder,

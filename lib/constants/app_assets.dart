@@ -1,6 +1,7 @@
 class AppAssets {
   // commmmon paths for visit in the application
   static const String basePath = 'assets';
+
   // static const String fontsPath = '$basePath/fonts';
   static const String imagesPath = '$basePath/images';
   static const String svgsPath = '$basePath/svgs';
@@ -11,10 +12,15 @@ class AppAssets {
   static const String svgsVisit = '$svgsPath/visit';
   static const String assetVisit = '$basePath/add_expense';
 
-  static const String assets = '$basePath/assets';
+  static const String assets = '$basePath/asset';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
+  static const String workAllocation = '$basePath/work_allocation';
+
   static const String stepper = '$basePath/stepper';
+  static const String workAllocationSvgs = '$svgsPath/work_allocation';
+
+
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
   static const String chplLogo = '$imagesPath/chpl_logo.png';
@@ -28,7 +34,7 @@ class AppAssets {
   static const String imageSearch = '$imagesPath/search.png';
   static const String imageLaptop = '$imagesPath/laptop.png';
   static const String imageCamera = '$imagesPath/camera.png';
-  static const String imageNoteFavorite = '$imagesPath/note-favorite.png';
+  static const String imageNoteFavorite = '$imagesPath/note-favorite.svg';
   static const String imageGalleryExport = '$imagesPath/gallery-export.png';
   static const String imageNoAssets = '$imagesPath/noAssets.png';
 
@@ -73,13 +79,20 @@ class AppAssets {
   static const String xCircle = '$svgsTakeOrder/XCircle.svg';
   static const String messageEdit = '$svgsTakeOrder/message-edit.svg';
   static const String placeOrder = '$svgsTakeOrder/place-order.svg';
-  static const String orderHistory = '$svgsTakeOrder/order-history.svg';
+  static const String
+  y = '$svgsTakeOrder/order-history.svg';
   static const String noOrder = '$svgsTakeOrder/no-order.svg';
   static const String start = '$svgsTakeOrder/start.svg';
   static const String stop = '$svgsTakeOrder/stop.svg';
   static const String calling = '$svgsTakeOrder/calling.svg';
   static const String arrowBack = '$svgsPath/back_arrow.svg';
   static const String cancelOrder = '$svgsTakeOrder/cancel_order.svg';
+
+  static const String element_1 = '$workAllocationSvgs/element-1.svg';
+  static const String receiptEdittt = '$workAllocationSvgs/receiptedittt.svg';
+  static const String monitor = '$workAllocationSvgs/monitor.svg';
+  static const String location1 = '$workAllocationSvgs/location.svg';
+  static const String msgedit = '$workAllocationSvgs/msgedit.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
@@ -159,6 +172,17 @@ class AppAssets {
 
   static const String lostFoundData = '$lostFound/data.png';
   static const String lostFoundMessageEdit = '$lostFound/message-edit.png';
+/*
+  static const String location = '$basePath/take_order/location.png';
+*/
+
+
+  //work allocation
+  static const String plus = '$workAllocation/plus.png';
+  static const String calendarIcon = '$workAllocation/calendar.png';
+  static const String personProfileImage = '$workAllocation/person_image.png';
+  static const String checkMark = '$workAllocation/check_mark.png';
+  static const String cancelCross = '$workAllocation/cancel_cross.png';
   // static const String location = '$basePath/take_order/location.png';
   static const String assetMessageEdit = '$svgsVisit/message-edit.svg';
   static const String assetArrowSquare = '$svgsVisit/arrow-square.svg';
