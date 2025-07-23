@@ -46,6 +46,7 @@ class _EditLeave extends State<EditLeave> {
               title: 'invoice',
               isCameraShow: true,
               isGalleryShow: true,
+              isDocumentShow: true,
               titleColor: AppTheme.getColor(context).onSurfaceVariant,
               titleFontSize: 16 * Responsive.getResponsiveText(context),
               imageTitleSize: 18 * Responsive.getResponsiveText(context),
