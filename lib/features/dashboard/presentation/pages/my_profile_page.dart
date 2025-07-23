@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_myteam.dart';
@@ -74,11 +76,14 @@ class MyProfilePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        CustomText(
-                          "Admin View",
-                          fontSize: 12 * Responsive.getResponsiveText(context),
-                          color: AppTheme.getColor(context).onPrimary,
-                          fontWeight: FontWeight.bold,
+                        InkWell(
+                          onTap: ()=>context.push(RoutePaths.adminView),
+                          child: CustomText(
+                            "Admin View",
+                            fontSize: 12 * Responsive.getResponsiveText(context),
+                            color: AppTheme.getColor(context).onPrimary,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),

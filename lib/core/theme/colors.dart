@@ -85,6 +85,7 @@ class AppColors {
 
   static const Color deleteIcon = Color(0xFFD01515);
   static const Color greenDark = Color(0xFF4FC44B);
+  static const Color containerHighDark = Color(0xFF1A2A3C);
   static const Color transparent = Colors.transparent;
 
 

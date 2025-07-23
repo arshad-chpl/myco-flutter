@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_entity.dart';
+import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_response_entity.dart';
 import 'package:myco_flutter/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/big_home_menu.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/dashboard_app_bar.dart';
@@ -68,48 +68,46 @@ class _DashBoardPageState extends State<DashBoardPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       backgroundColor: AppTheme.getColor(context).surface,
 
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 16,
-            children: [
-              // AppBar
-              const DashboardAppBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16,
+          children: [
+            // AppBar
+            const DashboardAppBar(),
 
-              // Body content
-              Expanded(
-                child: BlocBuilder<DashboardBloc, DashboardState>(
-                  builder: (context, state) {
-                    // Loading State
-                    if (state is DashboardInitial) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
+            // Body content
+            Expanded(
+              child: BlocBuilder<DashboardBloc, DashboardState>(
+                builder: (context, state) {
+                  // Loading State
+                  if (state is DashboardInitial) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-                    // Error State
-                    if (state is DashboardError) {
-                      return Center(
-                        child: Text('Failed to load data: ${state.message}'),
-                      );
-                    }
+                  // Error State
+                  if (state is DashboardError) {
+                    return Center(
+                      child: Text('Failed to load data: ${state.message}'),
+                    );
+                  }
 
-                    // Loaded State
-                    if (state is AppMenuGridLoaded) {
-                      final responseData = state.res;
-                      // Based on screen size, build the appropriate layout
-                      return Responsive.getWidth(context) > 600
-                          ? _tabview(context, responseData)
-                          : _mobileView(context, responseData);
-                    }
+                  // Loaded State
+                  if (state is AppMenuGridLoaded) {
+                    final responseData = state.res;
+                    // Based on screen size, build the appropriate layout
+                    return Responsive.getWidth(context) > 600
+                        ? _tabview(context, responseData)
+                        : _mobileView(context, responseData);
+                  }
 
-                    // Fallback for any other state
-                    return const Center(child: Text('Something went wrong.'));
-                  },
-                ),
+                  // Fallback for any other state
+                  return const Center(child: Text('Something went wrong.'));
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -123,7 +121,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
             spacing: 16,
             children: [
               // timer and slider section
-              timerAndSlider(context, homeData.slider ?? []),
+              timerAndSlider(context, homeData.slider ?? [], homeData),
 
               // Circulars and discussion section
               BigHomeMenu(appMenuBig: homeData.appmenuBig ?? []),
@@ -158,7 +156,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
           spacing: 16,
           children: [
             // timer and slider section
-            timerAndSlider(context, homeData.slider ?? []),
+            timerAndSlider(context, homeData.slider ?? [], homeData),
 
             // Circulars and discussion section
             BigHomeMenu(appMenuBig: homeData.appmenuBig ?? []),

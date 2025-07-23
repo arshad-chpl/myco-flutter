@@ -18,18 +18,19 @@ import 'package:myco_flutter/features/company_selector/presentation/bloc/select_
 import 'package:myco_flutter/features/company_selector/presentation/pages/sales_inquiry_dialog_page.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class SelectCompanyUi extends StatelessWidget {
-  const SelectCompanyUi({super.key});
+  SelectCompanyUi({super.key});
+
+  final TextEditingController controller = TextEditingController();
+  final FocusNode focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     // The controller is managed locally within this stateless widget.
     // It doesn't need to be part of a State object as its lifecycle
     // is contained within this build method.
-    final TextEditingController controller = TextEditingController();
-    final FocusNode focusNode = FocusNode();
 
     // Schedule focus request after build
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -53,27 +54,18 @@ class SelectCompanyUi extends StatelessWidget {
             color: AppTheme.getColor(context).onSurfaceVariant,
           ),
           SizedBox(height: 0.01 * Responsive.getHeight(context)),
-          MyCoTextfield(
+          NewTextField(
             controller: controller,
             focusNode: focusNode,
-            onChanged: (value) {
+            onChange: (value) {
               if (value.length >= 3) {
                 context.read<CompanyBloc>().add(SearchCompany(value));
               } else {
                 context.read<CompanyBloc>().add(InitialView());
               }
             },
-            isSuffixIconOn: true,
-            hintText: "Enter Company Name",
-            hintTextStyle: TextStyle(
-              fontSize: 14 * Responsive.getResponsiveText(context),
-              color: AppTheme.getColor(context).outline,
-            ),
-            height: 50 * Responsive.getResponsiveText(context),
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              borderSide: BorderSide(color: Color(0xFF98A2B3)),
-            ),
+            hintText: "enter_company_name",
+            prefixIconPath: AppAssets.search_company_icon,
           ),
           SizedBox(height: 0.025 * Responsive.getHeight(context)),
           Expanded(

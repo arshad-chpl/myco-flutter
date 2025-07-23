@@ -59,6 +59,7 @@ class OtpVerificationUi extends StatelessWidget {
           final PreferenceManager preference = GetIt.I<PreferenceManager>();
           preference.setLoginSession(true);
           preference.setUserId(state.response.userId ?? '');
+          preference.setUserMobileNo(state.response.userMobile ?? '');
           preference.setCountryId(state.response.countryId ?? '');
           preference.setCompanyId(state.response.societyId ?? '');
           preference.setCompanyAddress(state.response.societyAddress ?? '');
@@ -130,7 +131,6 @@ class OtpVerificationUi extends StatelessWidget {
         ),
         width: Responsive.getWidth(context),
         decoration: BoxDecoration(
-          color: AppTheme.getColor(context).onPrimary,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(40 * Responsive.getResponsive(context)),
           ),
