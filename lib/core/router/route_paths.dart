@@ -138,4 +138,7 @@ class RoutePaths {
   static const String workAllocation = '/work-allocation';
   static const String detailPage = '/detail-page';
   static const String assignWork = '/assign-work';
+  // gallery
+  static const String gallery = '/gallery';
+  static const String albumView = '/album-view';
 }
