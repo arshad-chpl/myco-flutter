@@ -12,7 +12,6 @@ import 'package:myco_flutter/core/router/modules/work_allocation_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
-
 // import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
@@ -64,7 +63,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths
+        .splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
