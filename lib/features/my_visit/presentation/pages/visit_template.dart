@@ -38,22 +38,22 @@ class _VisitTemplateState extends State<VisitTemplate> {
   Widget build(BuildContext context) => SingleChildScrollView(
     padding: EdgeInsets.only(
       bottom:
-      VariableBag.bottomSheetBottomPadding *
+          VariableBag.bottomSheetBottomPadding *
           Responsive.getResponsive(context),
       left:
-      VariableBag.bottomSheetLeftPadding *
+          VariableBag.bottomSheetLeftPadding *
           Responsive.getResponsive(context),
       right:
-      VariableBag.bottomSheetRightPadding *
+          VariableBag.bottomSheetRightPadding *
           Responsive.getResponsive(context),
       top:
-      VariableBag.bottomSheetTopPadding * Responsive.getResponsive(context),
+          VariableBag.bottomSheetTopPadding * Responsive.getResponsive(context),
     ),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       spacing:
-      VariableBag.formContentSpacingVertical *
+          VariableBag.formContentSpacingVertical *
           Responsive.getResponsive(context),
       children: [
         // row with title and icon
@@ -96,7 +96,7 @@ class _VisitTemplateState extends State<VisitTemplate> {
         // Submit button
         MyCoButton(
           boarderRadius:
-          VariableBag.buttonBorderRadius *
+              VariableBag.buttonBorderRadius *
               Responsive.getResponsive(context),
           isShadowBottomLeft: true,
           onTap: () {
@@ -113,6 +113,7 @@ class _VisitTemplateState extends State<VisitTemplate> {
             //   ),
             //   builder: (context) => const RemarkBottomSheet(),
             // );
+            context.pop();
           },
           title: LanguageManager().get('submit'),
         ),

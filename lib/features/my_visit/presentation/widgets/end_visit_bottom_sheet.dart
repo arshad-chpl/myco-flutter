@@ -5,6 +5,7 @@ import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/remark_bottom_sheet.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/test_new_visit1.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_template.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -26,21 +27,21 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
     return Padding(
       padding: EdgeInsets.only(
         left:
-        VariableBag.bottomSheetLeftPadding *
+            VariableBag.bottomSheetLeftPadding *
             Responsive.getResponsive(context),
         right:
-        VariableBag.bottomSheetRightPadding *
+            VariableBag.bottomSheetRightPadding *
             Responsive.getResponsive(context),
         bottom:
-        VariableBag.bottomSheetBottomPadding *
+            VariableBag.bottomSheetBottomPadding *
             Responsive.getResponsive(context),
         top:
-        VariableBag.bottomSheetTopPadding *
+            VariableBag.bottomSheetTopPadding *
             Responsive.getResponsive(context),
       ),
       child: Column(
         spacing:
-        VariableBag.formContentSpacingVertical *
+            VariableBag.formContentSpacingVertical *
             Responsive.getResponsive(context),
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -81,6 +82,7 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
             suffixIconPath: AppAssets.arrow_down,
             onTap: () {
               showModalBottomSheet(
+                isScrollControlled: true,
                 context: context,
                 builder: (context) => TestNewVisit1(),
               );
@@ -90,7 +92,7 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
           /// Button Row
           Row(
             spacing:
-            VariableBag.buttonRowSpacing *
+                VariableBag.buttonRowSpacing *
                 Responsive.getResponsive(context),
             children: [
               Expanded(
@@ -104,7 +106,7 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
                   ),
                   backgroundColor: Colors.transparent,
                   boarderRadius:
-                  VariableBag.buttonBorderRadius *
+                      VariableBag.buttonBorderRadius *
                       Responsive.getResponsive(context),
                   borderColor: AppColors.primary,
                 ),
@@ -112,7 +114,11 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
               Expanded(
                 child: MyCoButton(
                   onTap: () {
-                    Navigator.pop(context);
+                    showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (context) => RemarkBottomSheet(),
+                    );
                   },
                   title: LanguageManager().get('end_visit'),
                   textStyle: TextStyle(

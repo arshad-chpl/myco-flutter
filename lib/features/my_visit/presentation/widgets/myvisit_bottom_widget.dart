@@ -16,10 +16,10 @@ import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart'
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 Widget MyVisitBottomWidget(
-    BuildContext context,
-    Map<String, dynamic> visit,
-    int index,
-    ) {
+  BuildContext context,
+  Map<String, dynamic> visit,
+  int index,
+) {
   final bool showExtraButtons = visit['showExtraButtons'] == true;
   final bool showStartedVisit = visit['showStartedVisit'] == true;
   final bool isSixthContainer = visit['isSixthContainer'] == true;
@@ -97,16 +97,14 @@ Widget MyVisitBottomWidget(
             ),
             Row(
               children: [
-                if (visit['showWhatsapp'] == true)
-                  ...[
-                    SvgPicture.asset(AppAssets.whatsapp),
-                    SizedBox(width: Responsive.getWidth(context) * 0.03),
-                  ],
-                if (visit['showShare'] == true)
-                  ...[
-                    SvgPicture.asset(AppAssets.share),
-                    SizedBox(width: Responsive.getWidth(context) * 0.03),
-                  ],
+                if (visit['showWhatsapp'] == true) ...[
+                  SvgPicture.asset(AppAssets.whatsapp),
+                  SizedBox(width: Responsive.getWidth(context) * 0.03),
+                ],
+                if (visit['showShare'] == true) ...[
+                  SvgPicture.asset(AppAssets.share),
+                  SizedBox(width: Responsive.getWidth(context) * 0.03),
+                ],
                 if (visit['showDelete'] == true)
                   SvgPicture.asset(AppAssets.delete),
               ],
@@ -124,12 +122,16 @@ Widget MyVisitBottomWidget(
                   context: context,
                   isScrollControlled: true,
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(16),
+                    ),
                   ),
                   builder: (_) => const EndVisitBottomSheet(),
                 ),
                 title: 'END VISIT',
-                boarderRadius: VariableBag.buttonBorderRadius,
+                boarderRadius:
+                    VariableBag.buttonBorderRadius *
+                    Responsive.getResponsive(context),
                 backgroundColor: Util.applyOpacity(AppColors.red, 0.1),
                 textStyle: TextStyle(
                   color: AppColors.red,
@@ -140,7 +142,12 @@ Widget MyVisitBottomWidget(
                 height: 0.050 * Responsive.getHeight(context),
                 width: 0.38 * Responsive.getWidth(context),
               ),
-              SizedBox(width: VariableBag.buttonRowSpacing * Responsive.getResponsive(context),),
+              SizedBox(
+                width:
+                    VariableBag.buttonRowSpacing *
+                    Responsive.getResponsive(context),
+              ),
+
               MyCoButton(
                 onTap: () {},
                 title: 'TAKE ORDER',
@@ -203,7 +210,9 @@ Widget MyVisitBottomWidget(
                   isScrollControlled: true,
                   backgroundColor: AppTheme.getColor(context).onPrimary,
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(16),
+                    ),
                   ),
                   builder: (_) => startVisitBottomSheet(context),
                 );

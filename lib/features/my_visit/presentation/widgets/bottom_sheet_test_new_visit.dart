@@ -26,21 +26,22 @@ class _TestNewVisitState extends State<TestNewVisit> {
   Widget build(BuildContext context) => Container(
     padding: EdgeInsets.only(
       left:
-      VariableBag.bottomSheetLeftPadding *
+          VariableBag.bottomSheetLeftPadding *
           Responsive.getResponsive(context),
       right:
-      VariableBag.bottomSheetRightPadding *
+          VariableBag.bottomSheetRightPadding *
           Responsive.getResponsive(context),
       top:
-      VariableBag.bottomSheetTopPadding * Responsive.getResponsive(context),
+          VariableBag.bottomSheetTopPadding * Responsive.getResponsive(context),
       bottom:
-      VariableBag.bottomSheetRightPadding *
+          VariableBag.bottomSheetRightPadding *
           Responsive.getResponsive(context),
     ),
 
     child: SingleChildScrollView(
       child: Column(
-        spacing: double.parse('${VariableBag.textFieldRowGap}'),
+        spacing:
+            VariableBag.textFieldRowGap * Responsive.getResponsive(context),
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //Test heading
@@ -72,39 +73,44 @@ class _TestNewVisitState extends State<TestNewVisit> {
             hintText: 'Salse',
             prefixIconPath: AppAssets.assetData,
           ),
-
           //image_Dashed Container
-          CustomText(
-            'Media',
-            fontSize: 16 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.w700,
-            color: AppColors.textGray,
-          ),
-          SizedBox(height: 4),
-          DesignBorderContainer(
-            borderRadius: 12,
-            height: 78,
-            width: 87,
-            borderColor: AppTheme.getColor(context).primary,
-            backgroundColor: AppTheme.getColor(context).surfaceContainer,
-            padding: EdgeInsets.all(8),
-            child: Column(
-              children: [
-                Container(
-                  height: 43,
-                  width: 71,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      08 * Responsive.getResponsive(context),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomText(
+                'Media',
+                fontSize: 14 * Responsive.getResponsiveText(context),
+                fontWeight: FontWeight.w700,
+                color: AppTheme.getColor(context).onSurfaceVariant,
+              ),
+              SizedBox(height: 6 * Responsive.getResponsive(context)),
+              DesignBorderContainer(
+                borderRadius: 12 * Responsive.getResponsive(context),
+                height: 0.088 * Responsive.getHeight(context),
+                width: 0.21 * Responsive.getWidth(context),
+                borderColor: AppTheme.getColor(context).primary,
+                backgroundColor: AppTheme.getColor(context).surfaceContainer,
+                padding: EdgeInsets.all(6),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 0.047 * Responsive.getHeight(context),
+                      width: 0.17 * Responsive.getWidth(context),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          08 * Responsive.getResponsive(context),
+                        ),
+                        color: AppColors.gray10,
+                      ),
                     ),
-                    color: AppColors.gray10,
-                  ),
+                    SizedBox(height: 0.005 * Responsive.getHeight(context)),
+                    CustomText("yash.jpg", fontSize: 10),
+                    //SizedBox(height: 0.001 * Responsive.getHeight(context)),
+                  ],
                 ),
-                SizedBox(height: 5),
-                CustomText("yash.jpg", fontSize: 10),
-                //SizedBox(height: 0.001 * Responsive.getHeight(context)),
-              ],
-            ),
+              ),
+            ],
           ),
 
           //Today work LabelTextField

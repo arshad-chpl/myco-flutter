@@ -21,7 +21,7 @@ Row getCommonRow(
       child: CustomText(
         title,
         fontWeight: FontWeight.w700,
-        fontSize: 17 * Responsive.getResponsiveText(context),
+        fontSize: 15 * Responsive.getResponsiveText(context),
       ),
     ),
     const CustomText(':'),

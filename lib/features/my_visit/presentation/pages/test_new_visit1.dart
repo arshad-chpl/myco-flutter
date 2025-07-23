@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
@@ -19,87 +20,106 @@ class TestNewVisit1 extends StatefulWidget {
 
 class _TestNewVisitState extends State<TestNewVisit1> {
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
+  Widget build(BuildContext context) => SafeArea(
     child: Padding(
       padding: EdgeInsets.only(
         left:
-        VariableBag.bottomSheetLeftPadding *
+            VariableBag.bottomSheetLeftPadding *
             Responsive.getResponsive(context),
         right:
-        VariableBag.bottomSheetRightPadding *
+            VariableBag.bottomSheetRightPadding *
             Responsive.getResponsive(context),
         top:
-        VariableBag.bottomSheetTopPadding *
+            VariableBag.bottomSheetTopPadding *
             Responsive.getResponsive(context),
         bottom:
-        VariableBag.bottomSheetBottomPadding *
+            VariableBag.bottomSheetBottomPadding *
             Responsive.getResponsive(context),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        spacing:
-        VariableBag.formContentSpacingVertical *
-            Responsive.getResponsive(context),
-        children: [
-          //label for Test New Visit
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CustomText(
-                'Test New Visit',
-                fontWeight: FontWeight.w600,
-                fontSize: 16 * Responsive.getResponsiveText(context),
-              ),
-              SvgPicture.asset(AppAssets.assetVector, fit: BoxFit.scaleDown),
-            ],
-          ),
+      child: Container(
+        height: 0.60 * Responsive.getHeight(context),
+        width: Responsive.getWidth(context),
 
-          //dropdown for branch selection
-          NewTextField(
-            isKey: true,
-            label: 'branch',
-            hintText: LanguageManager().get('select'),
-            prefixIconPath: AppAssets.assetData,
-            suffixIconPath: AppAssets.downArrow,
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Title and Close Icon
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomText(
+                  'Test New Visit',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16 * Responsive.getResponsiveText(context),
+                ),
+                InkWell(
+                  onTap: () {
+                    context.pop();
+                  },
+                  child: SvgPicture.asset(
+                    AppAssets.assetVector,
+                    fit: BoxFit.scaleDown,
+                  ),
+                ),
+              ],
+            ),
 
-          // Media Picker container
-          CustomMediaPickerContainer(
-            title: 'Media',
-            titleColor: AppTheme.getColor(context).onSurfaceVariant,
-            titleFontSize: 16 * Responsive.getResponsiveText(context),
-            imageTitle: 'select_media',
-            containerHeight: 0.115 * Responsive.getHeight(context),
-            multipleImage: 5,
-            imagePath: 'assets/media_picker/gallery-export.png',
-            backgroundColor: AppTheme.getColor(context).surfaceContainer,
-            isCameraShow: true,
-            isGalleryShow: true,
-            isDocumentShow: true,
-            isCropImage: true,
-            imageTitleSize: 14 * Responsive.getResponsiveText(context),
-            imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
-          ),
+            SizedBox(height: 0.017 * Responsive.getHeight(context)),
 
-          // Text field for "Today's Work"
-          NewTextField(
-            isKey: true,
-            label: 'Today Work',
-            hintText: LanguageManager().get('type_here'),
-            prefixIconPath: AppAssets.assetDocumentText,
-          ),
-          SizedBox(height: 0.04 * Responsive.getHeight(context)),
-          //submit button
-          MyCoButton(
-            boarderRadius:
-            VariableBag.buttonBorderRadius *
-                Responsive.getResponsive(context),
-            isShadowBottomLeft: true,
-            onTap: () {},
-            title: 'submit',
-          ),
-        ],
+            // Dropdown for branch selection
+            NewTextField(
+              isKey: true,
+              label: 'branch',
+              hintText: LanguageManager().get('select'),
+              prefixIconPath: AppAssets.assetData,
+              suffixIconPath: AppAssets.downArrow,
+            ),
+
+            SizedBox(height: 0.017 * Responsive.getHeight(context)),
+
+            // Media Picker container
+            CustomMediaPickerContainer(
+              title: 'Media',
+              titleColor: AppTheme.getColor(context).onSurfaceVariant,
+              titleFontSize: 15 * Responsive.getResponsiveText(context),
+              imageTitle: 'select_media',
+              containerHeight: 0.115 * Responsive.getHeight(context),
+              multipleImage: 5,
+              imagePath: 'assets/media_picker/gallery-export.png',
+              backgroundColor: AppTheme.getColor(context).surfaceContainer,
+              isCameraShow: true,
+              isGalleryShow: true,
+              isDocumentShow: true,
+              isCropImage: true,
+              imageTitleSize: 14 * Responsive.getResponsiveText(context),
+              imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
+            ),
+
+            SizedBox(height: 0.017 * Responsive.getHeight(context)),
+
+            // Text field for "Today's Work"
+            NewTextField(
+              isKey: true,
+              label: 'Today Work',
+              hintText: LanguageManager().get('type_here'),
+              prefixIconPath: AppAssets.assetDocumentText,
+            ),
+
+            SizedBox(height: 0.11 * Responsive.getHeight(context)),
+
+            // Submit button
+            MyCoButton(
+              boarderRadius:
+                  VariableBag.buttonBorderRadius *
+                  Responsive.getResponsive(context),
+              isShadowBottomLeft: true,
+              onTap: () {
+                context.pop();
+              },
+              title: 'submit',
+            ),
+          ],
+        ),
       ),
     ),
   );
