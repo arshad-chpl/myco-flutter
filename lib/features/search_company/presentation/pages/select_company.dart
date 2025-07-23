@@ -20,7 +20,7 @@ class TermsAndConditions extends StatelessWidget {
             context: context,
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
-            builder: (_) => BottomTermAndCondition(),
+            builder: (_) => BottomTermAndCondition(url : 'url'),
           );
         },
         child: const Text('Open Full Bottom Sheet'),
