@@ -41,7 +41,7 @@ class NewTextField extends StatelessWidget {
     this.onTap,
     this.controller,
     this.formFieldKey,
-    this.isKey,
+    this.isKey=true,
     this.suffix,
     this.prefix,
   });

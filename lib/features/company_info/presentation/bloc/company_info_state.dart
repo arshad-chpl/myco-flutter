@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:myco_flutter/features/company_info/model/company_info_response.dart';
+import 'package:myco_flutter/features/company_info/domain/entities/company_info_entity.dart';
 
 abstract class CompanyInfoState extends Equatable {
   const CompanyInfoState();
@@ -13,7 +13,7 @@ class CompanyInfoInitial extends CompanyInfoState {}
 class CompanyInfoLoading extends CompanyInfoState {}
 
 class CompanyInfoLoaded extends CompanyInfoState {
-  final CompanyInfoResponse companyInfo;
+  final CompanyInfoEntity companyInfo;
 
   const CompanyInfoLoaded(this.companyInfo);
 
