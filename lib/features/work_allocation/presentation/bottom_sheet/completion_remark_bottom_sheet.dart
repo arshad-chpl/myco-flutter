@@ -5,10 +5,8 @@ import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/bottom_sheet/approve_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class CompletionRemarkBottomSheet extends StatefulWidget {
@@ -95,22 +93,21 @@ class _CompletionRemarkBottomSheetState
               width: 0.42 * Responsive.getWidth(context),
               height: 0.06 * Responsive.getHeight(context),
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => const Center(
-                    child: Material(
-                      child: CustomAlertDialog(
-                        alertType: AlertType.custom,
-                        icon: AppAssets.assetApproveWork,
-                        cancelText: 'DENY',
-                        confirmText: 'APPROVE',
-
-                        title:
-                            'Are you sure you want to approve this request ?',
-                      ),
-                    ),
-                  ),
-                );
+                // //below alert dialog for approving the request - only for test
+                // showDialog(
+                //   context: context,
+                //   builder: (context) => const Center(
+                //     child: Material(
+                //       child: CustomAlertDialog(
+                //         alertType: AlertType.custom,
+                //         icon: AppAssets.assetApproveWork,
+                //         cancelText: 'DENY',
+                //         confirmText: 'APPROVE',
+                //         title: 'Are you sure you want to approve this work?',
+                //       ),
+                //     ),
+                //   ),
+                // );
               },
               title: 'Authorize',
               fontWeight: FontWeight.w600,
