@@ -7,10 +7,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 class BottomTermAndCondition extends StatefulWidget {
   final String url;
 
-  const BottomTermAndCondition({
-    super.key,
-    required this.url,
-  });
+  const BottomTermAndCondition({super.key, required this.url});
 
   @override
   State<BottomTermAndCondition> createState() =>
@@ -40,54 +37,56 @@ class _BottomSheetTermsAndConditionsNewUiState
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height * 0.95;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Container(
-      height: height,
+      height: screenHeight * 0.9,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      child: Column(
-        children: [
-          if (_isLoading)
-            const LinearProgressIndicator(minHeight: 3),
-          Expanded(
-            child: WebViewWidget(controller: _controller),
-          ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          children: [
+            if (_isLoading) const LinearProgressIndicator(minHeight: 3),
+            Expanded(child: WebViewWidget(controller: _controller)),
 
-          Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: 10.0 * Responsive.getResponsive(context),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: MyCoButton(
-                    title: 'Close',
-                    height: 0.05 * Responsive.getHeight(context),
-                    onTap: () => Navigator.pop(context),
-                    backgroundColor: Colors.white,
-                    boarderRadius: 30 * Responsive.getResponsive(context),
-                    border: Border.all(color: AppTheme.getColor(context).primary),
-                    textStyle: TextStyle(color: AppTheme.getColor(context).primary),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 10.0 * Responsive.getResponsive(context),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: MyCoButton(
+                      title: 'Close',
+                      height: 0.05 * Responsive.getHeight(context),
+                      onTap: () => Navigator.pop(context),
+                      backgroundColor: Colors.white,
+                      boarderRadius: 30 * Responsive.getResponsive(context),
+                      border: Border.all(
+                        color: AppTheme.getColor(context).primary,
+                      ),
+                      textStyle: TextStyle(
+                        color: AppTheme.getColor(context).primary,
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: MyCoButton(
-                    title: 'Submit',
-                    isShadowBottomLeft: true,
-                    boarderRadius: 30 * Responsive.getResponsive(context),
-                    onTap: () {
-                      // Handle Submit tap here
-                    },
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: MyCoButton(
+                      title: 'Submit',
+                      isShadowBottomLeft: true,
+                      boarderRadius: 30 * Responsive.getResponsive(context),
+                      onTap: () {},
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
