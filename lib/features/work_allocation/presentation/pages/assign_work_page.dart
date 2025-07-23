@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
@@ -47,12 +45,12 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
 
   void _validateFieldByField() {
     final controllers = [
+      categoryController,
       srNoController,
       siteController,
       locationController,
       startDateController,
       targetDateController,
-      remarkController,
     ];
 
     for (int i = 0; i < controllers.length; i++) {
@@ -60,7 +58,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
         setState(() {
           _currentFieldErrorIndex = i;
         });
-        _formKey.currentState!.validate(); // trigger rebuild
+        _formKey.currentState!.validate();
         return;
       }
     }
@@ -68,223 +66,266 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
     setState(() {
       _currentFieldErrorIndex = null;
     });
+  }
 
-    log('All fields are valid. Proceed to submit.');
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() async {
+      final companyId = await PreferenceManager().getCompanyId() ?? "100";
+      final languageId = await PreferenceManager().getLanguageId() ?? "100";
+
+      context.read<WorkAllocationBloc>().add(
+        FetchWorkCategoryList(
+          companyId: companyId,
+          getWorkCategory: 'getWorkCategory',
+          languageId: languageId,
+        ),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: const CustomAppbar(title: 'assign_work', isKey: true),
-    body: SingleChildScrollView(
-      padding: EdgeInsets.symmetric(
-        horizontal:
-            VariableBag.screenHorizontalPadding *
-            Responsive.getResponsive(context),
-      ),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          spacing:
-              VariableBag.textFieldRowGap * Responsive.getResponsive(context),
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            BlocBuilder<WorkAllocationBloc, WorkAllocationState>(
-              builder: (context, state) {
-                final bloc = context.read<WorkAllocationBloc>();
-                final selectedCategory = bloc.selectedCategory;
+    appBar: const CustomAppbar(title: 'Assign Work'),
+    body: BlocListener<WorkAllocationBloc, WorkAllocationState>(
+      listenWhen: (previous, current) => current is WorkCategoryListLoaded,
+      listener: (context, state) {},
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(
+          horizontal:
+              VariableBag.screenHorizontalPadding *
+              Responsive.getResponsive(context),
+        ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            spacing:
+                VariableBag.textFieldRowGap * Responsive.getResponsive(context),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// CATEGORY FIELD
+              BlocBuilder<WorkAllocationBloc, WorkAllocationState>(
+                builder: (context, state) {
+                  final bloc = context.read<WorkAllocationBloc>();
+                  final selectedCategory = bloc.selectedCategory;
 
-                if (selectedCategory != null &&
-                    categoryController.text != selectedCategory) {
-                  categoryController.text = selectedCategory;
-                }
+                  if (selectedCategory != null &&
+                      categoryController.text != selectedCategory) {
+                    categoryController.text = selectedCategory;
+                  }
 
-                return NewTextField(
-                  label: 'Category',
-                  isRequired: true,
-                  controller: categoryController,
-                  hintText: 'Work Category',
-                  prefixIconPath: AppAssets.element_1,
-                  suffixIconPath: AppAssets.downArrow,
-                  validator: (value) {
-                    if (_currentFieldErrorIndex == 0 &&
-                        (value == null || value.trim().isEmpty)) {
-                      return 'Select category';
-                    }
-                    return null;
-                  },
-                  onTap: () async {
-                    final String companyId =
-                        await PreferenceManager().getCompanyId() ?? "100";
-                    final String languageId =
-                        await PreferenceManager().getLanguageId() ?? "100";
-                    // final companyId = await PreferenceManager().getCompanyId();
-                    print(companyId);
-                    print(languageId);
-                    context.read<WorkAllocationBloc>().add(
-                      FetchWorkCategoryList(
-                        companyId: companyId,
-                        getWorkCategory: 'getWorkCategory',
-                        languageId: languageId,
-                      ),
-                    );
-                    if (state is WorkCategoryListLoaded) {
-                      final categoriesName = state.categories
-                          .map(
-                            (e) => {
-                              'id': e.workCategoryId ?? '',
-                              'name': e.workCategoryName ?? '',
-                            },
-                          )
-                          .toList();
-
-                      final selectedName = await showCustomSimpleBottomSheet(
-                        context: context,
-                        heading: 'Work Category',
-                        dataList: categoriesName,
-                        selectedId: selectedCategory,
-                        searchHint: 'Search Category',
-                        btnTitle: 'Select',
-                      );
-
-                      if (selectedName != null &&
-                          selectedName != selectedCategory) {
-                        bloc.add(SelectDynamicWorkCategoryEvent(selectedName));
+                  return NewTextField(
+                    label: 'Category',
+                    isRequired: true,
+                    controller: categoryController,
+                    hintText: 'Work Category',
+                    prefixIconPath: AppAssets.element_1,
+                    suffixIconPath: AppAssets.downArrow,
+                    validator: (value) {
+                      if (_currentFieldErrorIndex == 0 &&
+                          (value == null || value.trim().isEmpty)) {
+                        return 'Select category';
                       }
-                    } else if (state is WorkAllocationLoading) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Loading categories...')),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Categories not available'),
-                        ),
-                      );
-                    }
-                  },
-                );
-              },
-            ),
+                      return null;
+                    },
+                    onTap: () async {
+                      final companyId = await PreferenceManager()
+                          .getCompanyId();
+                      final languageId = await PreferenceManager()
+                          .getLanguageId();
 
-            //Project Sr No
-            NewTextField(
-              label: 'Project Sr No',
-              isRequired: true,
-              prefixIconPath: AppAssets.receiptEdittt,
-              controller: srNoController,
-              hintText: 'Type here',
-              validator: (value) {
-                if (_currentFieldErrorIndex == 0 &&
-                    (value == null || value.trim().isEmpty)) {
-                  return 'Please enter Project Sr No';
-                }
-                return null;
-              },
-            ),
+                      final currentState = context
+                          .read<WorkAllocationBloc>()
+                          .state;
 
-            // Site
-            NewTextField(
-              label: 'Site',
-              prefixIconPath: AppAssets.monitor,
-              controller: siteController,
-              isRequired: true,
-              hintText: 'Type here',
-              validator: (value) {
-                if (_currentFieldErrorIndex == 1 &&
-                    (value == null || value.trim().isEmpty)) {
-                  return 'Please enter Site';
-                }
-                return null;
-              },
-            ),
+                      if (currentState is WorkCategoryListLoaded &&
+                          currentState.categories.isNotEmpty) {
+                        final categoriesName = currentState.categories
+                            .map(
+                              (e) => {
+                                'id': e.workCategoryId ?? '',
+                                'name': e.workCategoryName ?? '',
+                              },
+                            )
+                            .toList();
 
-            // Location
-            NewTextField(
-              label: 'Location',
-              prefixIconPath: AppAssets.location1,
-              controller: locationController,
-              isRequired: true,
-              hintText: 'Type here',
-              validator: (value) {
-                if (_currentFieldErrorIndex == 2 &&
-                    (value == null || value.trim().isEmpty)) {
-                  return 'Please enter Location';
-                }
-                return null;
-              },
-            ),
+                        final selectedName = await showCustomSimpleBottomSheet(
+                          context: context,
+                          heading: 'Work Category',
+                          dataList: categoriesName,
+                          selectedId: selectedCategory,
+                          searchHint: 'Search Category',
+                          btnTitle: 'Select',
+                        );
 
-            // Start Date (DD/MM/YYYY)
-            NewTextField(
-              label: 'Start Date (DD/MM/YYYY)',
-              prefixIconPath: AppAssets.assetNoteFavorite,
-              controller: startDateController,
-              isRequired: true,
-              hintText: 'Select',
-              validator: (value) {
-                if (_currentFieldErrorIndex == 3 &&
-                    (value == null || value.trim().isEmpty)) {
-                  return 'Please enter Start Date';
-                }
-                return null;
-              },
-              onTap: () {},
-            ),
+                        if (selectedName != null &&
+                            selectedName != selectedCategory) {
+                          bloc.add(
+                            SelectDynamicWorkCategoryEvent(selectedName),
+                          );
+                        }
+                      } else {
+                        bloc.add(
+                          FetchWorkCategoryList(
+                            getWorkCategory: 'getWorkCategory',
+                            companyId: companyId!,
+                            languageId: languageId!,
+                          ),
+                        );
 
-            // Target Date of Completion (DD/MM/YYYY)
-            NewTextField(
-              label: 'Target Date of Completion (DD/MM/YYYY)',
-              prefixIconPath: AppAssets.assetNoteFavorite,
-              controller: targetDateController,
-              isRequired: true,
-              hintText: 'Select',
-              validator: (value) {
-                if (_currentFieldErrorIndex == 3 &&
-                    (value == null || value.trim().isEmpty)) {
-                  return 'Please enter Target Date';
-                }
-                return null;
-              },
-              onTap: () {},
-            ),
+                        await Future.delayed(const Duration(milliseconds: 500));
 
-            // Assign Engineer
-            AssignEngineerField(
-              allEmployees: allEmployees,
-              controller: engineerController,
-              focusNode: engineerFocusNode,
-            ),
+                        final newState = bloc.state;
+                        if (newState is WorkCategoryListLoaded &&
+                            newState.categories.isNotEmpty) {
+                          final categoriesName = newState.categories
+                              .map(
+                                (e) => {
+                                  'id': e.workCategoryId ?? '',
+                                  'name': e.workCategoryName ?? '',
+                                },
+                              )
+                              .toList();
 
-            // Remark
-            NewTextField(
-              controller: remarkController,
-              label: 'Remark',
-              hintText: 'Type here',
-              prefixIconPath: AppAssets.msgedit,
-              maxLines: 10,
-              keyboardType: TextInputType.multiline,
-            ),
-            SizedBox(height: 0.010 * Responsive.getHeight(context)),
-            MyCoButton(
-              title: 'Submit',
-              onTap: () {
-                // if (_formKey.currentState!.validate()) {
-                //   print('Form Validated');
-                // }
-                _validateFieldByField();
-              },
-              backgroundColor: AppTheme.getColor(context).primary,
-              textStyle: TextStyle(
-                fontSize: 16 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).onPrimary,
-                fontWeight: FontWeight.w500,
+                          final selectedName =
+                              await showCustomSimpleBottomSheet(
+                                context: context,
+                                heading: 'Work Category',
+                                dataList: categoriesName,
+                                selectedId: selectedCategory,
+                                searchHint: 'Search Category',
+                                btnTitle: 'Select',
+                              );
+
+                          if (selectedName != null &&
+                              selectedName != selectedCategory) {
+                            bloc.add(
+                              SelectDynamicWorkCategoryEvent(selectedName),
+                            );
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Categories not available'),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                  );
+                },
               ),
-              width: double.infinity,
-              isShadowBottomLeft: true,
-              boarderRadius: 30,
-            ),
-            SizedBox(height: 0.020 * Responsive.getHeight(context)),
-          ],
+
+              /// OTHER FIELDS
+              NewTextField(
+                label: 'Project Sr No',
+                isRequired: true,
+                prefixIconPath: AppAssets.receiptEdittt,
+                controller: srNoController,
+                hintText: 'Type here',
+                validator: (value) {
+                  if (_currentFieldErrorIndex == 1 &&
+                      (value == null || value.trim().isEmpty)) {
+                    return 'Please enter Project Sr No';
+                  }
+                  return null;
+                },
+              ),
+              NewTextField(
+                label: 'Site',
+                prefixIconPath: AppAssets.monitor,
+                controller: siteController,
+                isRequired: true,
+                hintText: 'Type here',
+                validator: (value) {
+                  if (_currentFieldErrorIndex == 2 &&
+                      (value == null || value.trim().isEmpty)) {
+                    return 'Please enter Site';
+                  }
+                  return null;
+                },
+              ),
+              NewTextField(
+                label: 'Location',
+                prefixIconPath: AppAssets.location1,
+                controller: locationController,
+                isRequired: true,
+                hintText: 'Type here',
+                validator: (value) {
+                  if (_currentFieldErrorIndex == 3 &&
+                      (value == null || value.trim().isEmpty)) {
+                    return 'Please enter Location';
+                  }
+                  return null;
+                },
+              ),
+              NewTextField(
+                label: 'Start Date (DD/MM/YYYY)',
+                prefixIconPath: AppAssets.assetNoteFavorite,
+                controller: startDateController,
+                isRequired: true,
+                hintText: 'Select',
+                validator: (value) {
+                  if (_currentFieldErrorIndex == 4 &&
+                      (value == null || value.trim().isEmpty)) {
+                    return 'Please enter Start Date';
+                  }
+                  return null;
+                },
+                onTap: () {},
+              ),
+              NewTextField(
+                label: 'Target Date of Completion (DD/MM/YYYY)',
+                prefixIconPath: AppAssets.assetNoteFavorite,
+                controller: targetDateController,
+                isRequired: true,
+                hintText: 'Select',
+                validator: (value) {
+                  if (_currentFieldErrorIndex == 5 &&
+                      (value == null || value.trim().isEmpty)) {
+                    return 'Please enter Target Date';
+                  }
+                  return null;
+                },
+                onTap: () {},
+              ),
+
+              /// ASSIGN ENGINEER
+              AssignEngineerField(
+                allEmployees: allEmployees,
+                controller: engineerController,
+                focusNode: engineerFocusNode,
+              ),
+
+              /// REMARK
+              NewTextField(
+                controller: remarkController,
+                label: 'Remark',
+                hintText: 'Type here',
+                prefixIconPath: AppAssets.msgedit,
+                maxLines: 10,
+                keyboardType: TextInputType.multiline,
+              ),
+
+              SizedBox(height: 0.010 * Responsive.getHeight(context)),
+
+              MyCoButton(
+                title: 'Submit',
+                onTap: _validateFieldByField,
+                backgroundColor: AppTheme.getColor(context).primary,
+                textStyle: TextStyle(
+                  fontSize: 16 * Responsive.getResponsiveText(context),
+                  color: AppTheme.getColor(context).onPrimary,
+                  fontWeight: FontWeight.w500,
+                ),
+                width: double.infinity,
+                isShadowBottomLeft: true,
+                boarderRadius: 30,
+              ),
+              SizedBox(height: 0.020 * Responsive.getHeight(context)),
+            ],
+          ),
         ),
       ),
     ),

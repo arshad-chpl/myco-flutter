@@ -22,18 +22,18 @@ class GridConfig {
 class Responsive {
   static late double _screenWidth;
   static late double _screenHeight;
-  static late bool isTablet;
 
   static void init(BuildContext context) {
     final size = MediaQuery.of(context).size;
     _screenWidth = size.width;
     _screenHeight = size.height;
-    isTablet = _screenWidth >= 600;
   }
 
   static double screenWidth() => _screenWidth;
 
   static double screenHeight() => _screenHeight;
+
+  static bool isTablet(BuildContext context) => getWidth(context) >= 600;
 
   static double scaleHeight(double height) => (_screenHeight / 812) * height;
 
@@ -45,7 +45,7 @@ class Responsive {
     return size * factor;
   }
 
-  static double responsivePadding() => isTablet ? 24 : 16;
+  static double responsivePadding(context) => isTablet(context) ? 24 : 16;
 
   static double getHeight(context) => MediaQuery.of(context).size.height;
 
@@ -57,8 +57,7 @@ class Responsive {
   static double getResponsiveOnWidth(context) =>
       MediaQuery.of(context).size.width * 0.001;
 
-
-/*double getResponsiveText(context) {
+  /*double getResponsiveText(context) {
   if (Platform.isAndroid) {
     return getWidth(context) > 600 ? 1.5 : 0.8;
   } else {
@@ -66,17 +65,17 @@ class Responsive {
   }
 }*/
 
-// double getResponsiveText(BuildContext context) {
-//   double width = MediaQuery.of(context).size.width;
-//
-//   if (kIsWeb) {
-//     // Web-specific logic
-//     return width > 600 ? 1.5 : 1.0;
-//   } else {
-//     // Mobile or Desktop
-//     return width > 600 ? 1.5 : 0.9;
-//   }
-// }
+  // double getResponsiveText(BuildContext context) {
+  //   double width = MediaQuery.of(context).size.width;
+  //
+  //   if (kIsWeb) {
+  //     // Web-specific logic
+  //     return width > 600 ? 1.5 : 1.0;
+  //   } else {
+  //     // Mobile or Desktop
+  //     return width > 600 ? 1.5 : 0.9;
+  //   }
+  // }
 
   static double getResponsiveText(context) {
     double width = MediaQuery.of(context).size.width;
