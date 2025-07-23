@@ -329,7 +329,9 @@ class _VisitPageState extends State<MyVisitPage> {
                 ExpandableFabAction(
                   label: 'Add Expense',
                   icon: Icons.money,
-                  onTap: () {},
+                  onTap: () {
+                    context.pushNamed('addExpense');
+                  },
                 ),
               ],
               imageSize: 66 * Responsive.getResponsiveText(context),

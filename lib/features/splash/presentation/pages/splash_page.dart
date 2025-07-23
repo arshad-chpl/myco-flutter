@@ -53,8 +53,7 @@ class _SplashPageState extends State<SplashPage>
   Future<void> _navigateNext() async {
     final isLoggedIn = await _preference.getLoginSession();
     if (!mounted) return;
-    // context.go('/assets-home');
-    context.go(isLoggedIn ?? false ? '/dashboard' : '/get-started');
+    context.go(isLoggedIn ?? false ? '/home' : '/get-started');
   }
 
   @override
