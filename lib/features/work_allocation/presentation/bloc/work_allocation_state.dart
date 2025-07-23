@@ -17,11 +17,12 @@ class WorkAllocationLoading extends WorkAllocationState {}
 // Category list loaded
 class WorkCategoryListLoaded extends WorkAllocationState {
   final List<WorkCategoryListEntity> categories;
+  final String? selectedCategory;
 
-  const WorkCategoryListLoaded(this.categories);
+  const WorkCategoryListLoaded(this.categories, {this.selectedCategory});
 
   @override
-  List<Object?> get props => [categories];
+  List<Object?> get props => [categories, selectedCategory];
 }
 
 // Work allocation form submitted successfully

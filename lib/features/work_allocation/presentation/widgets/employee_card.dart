@@ -87,7 +87,7 @@ class EmployeeSelectionCard extends StatelessWidget {
                   ? Colors.transparent
                   : borderColor ?? AppTheme.getColor(context).primary,
             ),
-            boxShadow: [
+            /*boxShadow: [
               BoxShadow(
                 color: isSelected
                     ? AppTheme.getColor(context).onSurfaceVariant
@@ -95,7 +95,7 @@ class EmployeeSelectionCard extends StatelessWidget {
                 spreadRadius: 3,
                 blurRadius: 5,
               ),
-            ],
+            ],*/
           ),
           child: Column(
             children: [

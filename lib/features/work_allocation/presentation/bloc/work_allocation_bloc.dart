@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:myco_flutter/features/work_allocation/data/models/request/get_work_category_request.dart';
 import 'package:myco_flutter/features/work_allocation/domain/usecases/work_allocation_use_case.dart';
@@ -23,8 +25,8 @@ class WorkAllocationBloc
   bool get showEmployeeList => _showEmployeeList;
 
   WorkAllocationBloc({required this.useCase}) : super(WorkAllocationInitial()) {
-    on<SelectWorkCategoryEvent>(_onSelectWorkCategory);
     on<FetchWorkCategoryList>(_onFetchWorkCategoryList);
+    on<SelectDynamicWorkCategoryEvent>(_onSelectDynamicCategory);
     on<AddWorkAllocationEvent>(_onAddWorkAllocation);
     on<FilterEmployeesEvent>(_onFilterEmployees);
     on<SelectEmployeeEvent>(_onSelectEmployee);
@@ -38,17 +40,44 @@ class WorkAllocationBloc
     emit(WorkAllocationLoading());
 
     final request = GetWorkCategoryRequest(
+      getWorkCategory: 'getWorkCategory',
       companyId: event.companyId,
-      getWorkCategory: event.getWorkCategory,
       languageId: event.languageId,
     );
 
+    log(name: 'data', '$request');
     final result = await useCase.getWorkCategoryList(request);
 
-    result.fold(
-      (failure) => emit(WorkAllocationError(failure.message)),
-      (response) => emit(WorkCategoryListLoaded(response.workCategory ?? [])),
-    );
+    log(result.toString(), name: 'BLOC_RESULT');
+
+    result.fold((failure) => emit(WorkAllocationError(failure.message)), (
+      response,
+    ) {
+      final categories = response.workCategory ?? [];
+      emit(
+        WorkCategoryListLoaded(categories, selectedCategory: _selectedCategory),
+      );
+    });
+  }
+
+  void _onSelectDynamicCategory(
+    SelectDynamicWorkCategoryEvent event,
+    Emitter<WorkAllocationState> emit,
+  ) {
+    _selectedCategory = event.selectedCategory;
+
+    // Re-emit the previous category list with updated selection
+    final currentState = state;
+    if (currentState is WorkCategoryListLoaded) {
+      emit(
+        WorkCategoryListLoaded(
+          currentState.categories,
+          selectedCategory: _selectedCategory,
+        ),
+      );
+    } else {
+      emit(WorkCategorySelected(event.selectedCategory));
+    }
   }
 
   Future<void> _onAddWorkAllocation(
@@ -65,14 +94,6 @@ class WorkAllocationBloc
         WorkAllocationSuccess(response.message ?? 'Work Assigned Successfully'),
       ),
     );
-  }
-
-  void _onSelectWorkCategory(
-    SelectWorkCategoryEvent event,
-    Emitter<WorkAllocationState> emit,
-  ) {
-    _selectedCategory = event.selectedCategory;
-    emit(WorkCategorySelected(event.selectedCategory));
   }
 
   void _onFilterEmployees(
