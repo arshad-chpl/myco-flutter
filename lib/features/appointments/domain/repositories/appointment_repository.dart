@@ -32,10 +32,10 @@ abstract class AppointmentRepository {
   );
 
   Future<Either<Failure, CommonResponseModelEntity>> addAppointment(
-      AddAppointmentRequestModel request,
-      );
+    AddAppointmentRequestModel request,
+  );
 
-  Future<Either<Failure, CommonResponseModelEntity>> ApproveAppointment(
+  Future<Either<Failure, CommonResponseModelEntity>> approveAppointment(
     ApproveAppointmentRequestModel request,
   );
 }

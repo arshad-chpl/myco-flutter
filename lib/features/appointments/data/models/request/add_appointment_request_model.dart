@@ -25,7 +25,7 @@ class AddAppointmentRequestModel {
 
   Map<String, dynamic> toJson() => {
     'addAppointment': addAppointment,
-    'society_id': companyId,
+    'company_id': companyId,
     'language_id': languageId,
     'appointment_by_user_id': appointmentByUserId,
     'appointment_for_user_id': appointmentForUserId,

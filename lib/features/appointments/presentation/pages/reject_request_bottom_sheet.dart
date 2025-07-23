@@ -20,9 +20,14 @@ class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
   Widget build(BuildContext context) => SingleChildScrollView(
     padding: EdgeInsets.only(
       bottom: MediaQuery.of(context).viewInsets.bottom,
-      left: 16 * Responsive.getResponsive(context),
-      right: 16 * Responsive.getResponsive(context),
-      top: 25 * Responsive.getResponsive(context),
+      left:
+          VariableBag.bottomSheetLeftPadding *
+          Responsive.getResponsive(context),
+      right:
+          VariableBag.bottomSheetRightPadding *
+          Responsive.getResponsive(context),
+      top:
+          VariableBag.bottomSheetTopPadding * Responsive.getResponsive(context),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +53,7 @@ class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
               boarderRadius:
                   VariableBag.buttonBorderRadius *
                   Responsive.getResponsive(context),
-              width: 0.44 * Responsive.getWidth(context),
+              width: 0.42 * Responsive.getWidth(context),
               height: 0.06 * Responsive.getHeight(context),
               onTap: () {
                 context.pop();
@@ -66,7 +71,7 @@ class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
               boarderRadius:
                   VariableBag.buttonBorderRadius *
                   Responsive.getResponsive(context),
-              width: 0.44 * Responsive.getWidth(context),
+              width: 0.42 * Responsive.getWidth(context),
               height: 0.06 * Responsive.getHeight(context),
               onTap: () {},
               title: 'SUBMIT',
