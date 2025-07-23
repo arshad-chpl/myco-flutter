@@ -86,9 +86,9 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
       filteredList = widget.dataList
           .where(
             (item) => (item['name'] ?? '').toLowerCase().contains(
-              query.toLowerCase(),
-            ),
-          )
+          query.toLowerCase(),
+        ),
+      )
           .toList();
     });
   }
@@ -197,8 +197,8 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                   fontSize: 14 * Responsive.getResponsiveText(context),
                   color: isAllSelected
                       ? Theme.of(context).brightness == Brightness.dark
-                            ? AppColors.textPrimary
-                            : AppColors.textPrimary
+                      ? AppColors.textPrimary
+                      : AppColors.textPrimary
                       : AppTheme.getColor(context).onSurface,
                 ),
               ),
@@ -207,27 +207,27 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
         Expanded(
           child: filteredList.isEmpty
               ? Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(
-                      16.0 * Responsive.getResponsive(context),
-                    ),
-                    child: CustomText(
-                      'No matching results found',
-                      fontSize: 16 * Responsive.getResponsiveText(context),
-                      fontWeight: FontWeight.w600,
-                      color: AppTheme.getColor(context).onSurface,
-                    ),
-                  ),
-                )
+            child: Padding(
+              padding: EdgeInsets.all(
+                16.0 * Responsive.getResponsive(context),
+              ),
+              child: CustomText(
+                'No matching results found',
+                fontSize: 16 * Responsive.getResponsiveText(context),
+                fontWeight: FontWeight.w600,
+                color: AppTheme.getColor(context).onSurface,
+              ),
+            ),
+          )
               : ListView.builder(
-                  itemCount: filteredList.length,
-                  itemBuilder: (context, index) {
-                    final item = filteredList[index];
-                    final id = item['id'];
-                    final name = item['name'] ?? '';
-                    if (id == null || name.isEmpty) {
-                      return const SizedBox.shrink();
-                    }
+            itemCount: filteredList.length,
+            itemBuilder: (context, index) {
+              final item = filteredList[index];
+              final id = item['id'];
+              final name = item['name'] ?? '';
+              if (id == null || name.isEmpty) {
+                return const SizedBox.shrink();
+              }
 
                     final isSelected = widget.isMultipleSelection
                         ? selectedItemIds.contains(id)

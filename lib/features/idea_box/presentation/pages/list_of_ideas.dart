@@ -74,9 +74,9 @@ class ListOfIdeas extends StatelessWidget {
                       ? AppTheme.getColor(context).secondary
                       : AppTheme.getColor(context).primary,
                 ],
-                unselectedTextStyle: TextStyle(
-                  color: AppTheme.getColor(context).primary,
-                ),
+                // selectedTextStyle: TextStyle(
+                //   color: AppTheme.getColor(context).primary,
+                // ),
                 unselectedBorderAndTextColor: AppTheme.getColor(
                   context,
                 ).primary,
