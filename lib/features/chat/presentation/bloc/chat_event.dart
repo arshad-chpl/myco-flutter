@@ -9,12 +9,16 @@ sealed class ChatEvent extends Equatable {
 
 class SearchEvent extends ChatEvent {
   final String query;
-  final List chatList;
+  // final List chatList;
 
-  const SearchEvent(this.query, this.chatList);
+  const SearchEvent(this.query,
+  //  this.chatList
+   );
 
   @override
-  List<Object> get props => [query,chatList];
+  List<Object> get props => [query,
+  // chatList
+  ];
 }
 
 class RemoveAvatar extends ChatEvent {
@@ -25,4 +29,23 @@ class RemoveAvatar extends ChatEvent {
   @override
   List<Object> get props => [avtarList , index];
   
+}
+
+class SelectDepEvent extends ChatEvent {
+  final Map<String, String> department;
+  const SelectDepEvent(this.department);
+  @override
+  List<Object> get props => [department];
+}
+
+class RemoveDepEvent extends ChatEvent {
+  final String departmentId;
+  const RemoveDepEvent(this.departmentId);
+  @override
+  List<Object> get props => [departmentId];
+}
+
+class GetChatListEvent extends ChatEvent {
+  @override
+  List<Object> get props => [];
 }

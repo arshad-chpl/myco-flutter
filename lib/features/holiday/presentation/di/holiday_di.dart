@@ -10,14 +10,17 @@ import 'package:myco_flutter/features/holiday/domain/use_cases/delete_holiday.da
 import 'package:myco_flutter/features/holiday/domain/use_cases/get_holiday_list.dart';
 import 'package:myco_flutter/features/holiday/presentation/bloc/holiday_bloc.dart';
 
-Future<void> setupHolidayDI(GetIt sl) async {
-  // Bloc
-  sl.registerFactory(
-    () => HolidayBloc(
-      getHolidayList: sl(),
-      applyHoliday: sl(),
-      deleteHoliday: sl(),
+Future<void> setupHolidayDi(GetIt sl) async {
+  // Data Source
+  sl.registerLazySingleton<HolidayRemoteDataSource>(
+    () => HolidayRemoteDataSourceImpl(
+      dio: sl<Dio>(instanceName: VariableBag.dioWithAuth),
     ),
+  );
+
+  // Repository
+  sl.registerLazySingleton<HolidayRepository>(
+    () => HolidayRepositoryImpl(sl(), sl()),
   );
 
   // Use Cases
@@ -25,15 +28,12 @@ Future<void> setupHolidayDI(GetIt sl) async {
   sl.registerLazySingleton(() => ApplyHoliday(repository: sl()));
   sl.registerLazySingleton(() => DeleteHoliday(repository: sl()));
 
-  // Repository
-  sl.registerLazySingleton<HolidayRepository>(
-    () => HolidayRepositoryImpl(sl(), sl()),
-  );
-
-  // Data Source
-  sl.registerLazySingleton<HolidayRemoteDataSource>(
-    () => HolidayRemoteDataSourceImpl(
-      dio: sl<Dio>(instanceName: VariableBag.dioWithAuth),
+  // Bloc
+  sl.registerFactory(
+    () => HolidayBloc(
+      getHolidayList: sl(),
+      applyHoliday: sl(),
+      deleteHoliday: sl(),
     ),
   );
 }
