@@ -121,7 +121,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
             spacing: 16,
             children: [
               // timer and slider section
-              timerAndSlider(context, homeData.slider ?? []),
+              timerAndSlider(context, homeData.slider ?? [], homeData),
 
               // Circulars and discussion section
               BigHomeMenu(appMenuBig: homeData.appmenuBig ?? []),
@@ -156,7 +156,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
           spacing: 16,
           children: [
             // timer and slider section
-            timerAndSlider(context, homeData.slider ?? []),
+            timerAndSlider(context, homeData.slider ?? [], homeData),
 
             // Circulars and discussion section
             BigHomeMenu(appMenuBig: homeData.appmenuBig ?? []),

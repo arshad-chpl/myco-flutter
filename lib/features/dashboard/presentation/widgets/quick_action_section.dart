@@ -59,6 +59,7 @@ class QuickActionSection extends StatelessWidget {
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.zero,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: Responsive.getGridConfig(
             context,
@@ -72,10 +73,10 @@ class QuickActionSection extends StatelessWidget {
         itemCount: appMenuHome?.length ?? 0,
         itemBuilder: (context, index) => InkWell(
           onTap: () {
-            context.pushNamed(
-              appMenuHome?[index].iosMenuClick ?? '',
-            );
-
+            context.pushNamed(appMenuHome?[index].iosMenuClick ?? '');
+            // if (quickAccessOptionsNavigation[index].toString().isNotEmpty) {
+            //   context.push(quickAccessOptionsNavigation[index]);
+            // }
           },
           child: BorderContainerWraper(
             padding: EdgeInsets.zero,

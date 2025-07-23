@@ -5,13 +5,13 @@ import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/chat/presentation/widgets/select_department.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_bloc.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_event.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_state.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/employee_details.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class AssignWorkPage extends StatelessWidget {
