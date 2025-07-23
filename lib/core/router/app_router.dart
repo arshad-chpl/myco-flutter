@@ -60,11 +60,11 @@ import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart'
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-
+    
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.chatList, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
