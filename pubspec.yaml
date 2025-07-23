@@ -62,7 +62,7 @@ dependencies:
 
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  webview_flutter : ^4.13.0
+  webview_flutter: ^4.13.0
 
 dependency_overrides:
   source_gen: 2.0.0

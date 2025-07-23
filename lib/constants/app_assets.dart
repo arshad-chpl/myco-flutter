@@ -22,7 +22,6 @@ class AppAssets {
   static const String stepper = '$basePath/stepper';
   static const String workAllocationSvgs = '$svgsPath/work_allocation';
 
-
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
   static const String chplLogo = '$imagesPath/chpl_logo.png';
@@ -41,7 +40,8 @@ class AppAssets {
   static const String imageNoAssets = '$imagesPath/noAssets.png';
 
   //Svgs
-  static const String downArrowBottomSheet = '$svgsPath/down_arrow_bottomsheet.svg';
+  static const String downArrowBottomSheet =
+      '$svgsPath/down_arrow_bottomsheet.svg';
   static const String search_company_icon = '$svgsPath/company_icon.svg';
   static const String timeCardBtn = '$svgsPath/timeCardBtn.svg';
   static const String punchIn = '$svgsPath/punchIn.svg';
@@ -83,8 +83,7 @@ class AppAssets {
   static const String xCircle = '$svgsTakeOrder/XCircle.svg';
   static const String messageEdit = '$svgsTakeOrder/message-edit.svg';
   static const String placeOrder = '$svgsTakeOrder/place-order.svg';
-  static const String
-  y = '$svgsTakeOrder/order-history.svg';
+  static const String y = '$svgsTakeOrder/order-history.svg';
   static const String noOrder = '$svgsTakeOrder/no-order.svg';
   static const String start = '$svgsTakeOrder/start.svg';
   static const String stop = '$svgsTakeOrder/stop.svg';
@@ -176,10 +175,10 @@ class AppAssets {
 
   static const String lostFoundData = '$lostFound/data.png';
   static const String lostFoundMessageEdit = '$lostFound/message-edit.png';
-/*
+
+  /*
   static const String location = '$basePath/take_order/location.png';
 */
-
 
   //work allocation
   static const String plus = '$workAllocation/plus.png';
@@ -198,9 +197,7 @@ class AppAssets {
   //images stepper
   static const String stepperCheckIcon = '$stepper/check.svg';
 
-  ///employee-screen
-  static const String downArrowBottomSheet =
-      '$employees/down_arrow_bottomsheet.svg';
+  //employee-screen
   static const String noEmployeeFound = '$employees/no_emp_found.svg';
 
   //media picker
