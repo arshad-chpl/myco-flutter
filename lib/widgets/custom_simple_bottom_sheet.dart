@@ -131,8 +131,18 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
   Widget build(BuildContext context) => Container(
     height: Responsive.getHeight(context) * 0.75,
     width: Responsive.getWidth(context),
-    padding: EdgeInsets.all(
-      VariableBag.screenHorizontalPadding * Responsive.getResponsive(context),
+    padding: EdgeInsets.only(
+      top:
+          VariableBag.bottomSheetTopPadding * Responsive.getResponsive(context),
+      bottom:
+          VariableBag.bottomSheetBottomPadding *
+          Responsive.getResponsive(context),
+      left:
+          VariableBag.bottomSheetLeftPadding *
+          Responsive.getResponsive(context),
+      right:
+          VariableBag.bottomSheetRightPadding *
+          Responsive.getResponsive(context),
     ),
     decoration: BoxDecoration(
       color: AppTheme.getColor(context).surface,
@@ -305,6 +315,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                   },
                 ),
         ),
+        SizedBox(height: 0.01 * Responsive.getHeight(context)),
         // Submit button
         widget.isCloseButton == true
             ? Row(
