@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -61,7 +62,7 @@ class _EditLeave extends State<EditLeave> {
               //Submit button
               MyCoButton(
                 onTap: () {},
-                title: 'Update',
+                title: LanguageManager().get('update'),
                 isShadowBottomLeft: true,
                 boarderRadius: 50,
                 fontFamily: 'Gilroy-Bold',

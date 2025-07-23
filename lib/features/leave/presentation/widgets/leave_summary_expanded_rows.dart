@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/assign_leave_months.dart';
 
 class LeaveRowData {
@@ -9,6 +10,7 @@ class LeaveRowData {
   final VoidCallback? onTap;
   final bool isMonthlyData;
   final List<MonthData>? monthlyData;
+  final bool isKey;
 
   LeaveRowData({
     required this.label,
@@ -17,6 +19,7 @@ class LeaveRowData {
     this.onTap,
     this.isMonthlyData = false,
     this.monthlyData,
+    this.isKey = true, // default true
   });
 }
 
@@ -66,7 +69,12 @@ class LeaveSummaryExpandedRows extends StatelessWidget {
             } else if (row.isMonthlyData) {
               return AssignLeaveMonths(months: row.monthlyData ?? []);
             } else {
-              return _dottedRow(row.label, row.value, onTap: row.onTap);
+              return _dottedRow(
+                row.label,
+                row.value,
+                onTap: row.onTap,
+                isKey: row.isKey,
+              );
             }
           }),
         ],
@@ -80,12 +88,15 @@ class LeaveSummaryExpandedRows extends StatelessWidget {
     TextStyle? labelStyle,
     TextStyle? valueStyle,
     VoidCallback? onTap,
+    bool isKey = true,
   }) {
     final defaultLabelStyle = const TextStyle(fontSize: 14);
     final defaultValueStyle = const TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
+
+    final displayLabel = isKey ? LanguageManager().get(label) : label;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -94,7 +105,7 @@ class LeaveSummaryExpandedRows extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: Row(
           children: [
-            Text(label, style: labelStyle ?? defaultLabelStyle),
+            Text(displayLabel, style: labelStyle ?? defaultLabelStyle),
             const SizedBox(width: 4),
             Expanded(
               child: LayoutBuilder(

@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/leave/domain/entities'
     '/leave_history_response_entity.dart';
@@ -20,6 +19,7 @@ import 'package:myco_flutter/features/leave/presentation/widgets/leave_summary_c
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_summary_expanded_rows.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_summary_grid.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/show_comp_off_leave_item.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 import 'package:shimmer/shimmer.dart';
@@ -62,14 +62,15 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
+    appBar: CustomAppbar(
       leading: IconButton(
         onPressed: () {
           context.pop();
         },
         icon: const Icon(Icons.arrow_back_outlined),
       ),
-      title: const Text('Your Paid Leaves'),
+      isKey: true,
+      title: 'your_leaves',
       centerTitle: true,
       elevation: 0,
       actions: [
@@ -151,7 +152,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
                 Text(state.message),
                 ElevatedButton(
                   onPressed: _fetchLeaveList,
-                  child: const Text('Retry'),
+                  child: Text(LanguageManager().get('retry')),
                 ),
               ],
             ),
@@ -162,7 +163,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
           _fetchLeaveList();
           return _buildSkeletonLoader(context); // Show loader while fetching
         }
-        return const Center(child: Text('Please wait...'));
+        return Center(child: Text(LanguageManager().get('wait_please')));
       },
     ),
   );
@@ -229,45 +230,44 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
 
       if (!hasMonthlyLeaveBalance)
         LeaveRowData(
-          label: 'Applicable Max Leaves In Month',
+          label: 'applicable_max_leaves_in_month',
           value: leave.applicableLeavesInMonth ?? '0',
           isVisible: true,
         ),
 
       if (!isSpecialLeave && !hasMonthlyLeaveBalance)
         LeaveRowData(
-          label: 'Leave Calculation',
+          label: 'leave_calculation',
           value: leave.leaveCalculation ?? 'N/A',
           isVisible: true,
         ),
 
       if (!isSpecialLeave && !hasMonthlyLeaveBalance)
         LeaveRowData(
-          label: 'View Leave Count',
+          label: 'view_leave_count',
           value: leave.assignLeaveFrequency ?? 'N/A',
           isVisible: true,
         ),
 
       if (!isSpecialLeave && !hasMonthlyLeaveBalance)
         LeaveRowData(
-          label: 'Leaves According To Payroll Cycle',
+          label: 'leaves_according_to_payroll_cycle',
           value: leave.leavesAccordingToPayrollCycle ?? 'No',
           isVisible: true,
         ),
 
       if (!isSpecialLeave) ...[
         LeaveRowData(
-          label: 'Leave Restrictions',
+          label: 'leave_restrictions',
           value: leave.leaveRestrictions == true ? 'Yes' : 'No',
           isVisible: true,
         ),
 
         LeaveRowData(
           label: '',
-          value: 'View',
+          value: 'view',
           isVisible: isLeaveRestricted,
           onTap: () {
-            log(leave.leaveRestrictionsRules.toString());
             showModalBottomSheet(
               context: context,
               isScrollControlled: true,
@@ -343,21 +343,21 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
 
       if (!isSpecialLeave)
         LeaveRowData(
-          label: 'Take Leave During Notice Period',
+          label: 'take_leave_during_notice_period',
           value: leave.takeLeaveDuringNoticePeriod ?? 'No',
           isVisible: true,
         ),
 
       if (!isSpecialLeave)
         LeaveRowData(
-          label: 'Max Leave During Notice Period',
+          label: 'max_leave_during_notice_period',
           value: leave.maxLeaveDuringNoticePeriod ?? '0',
           isVisible: true,
         ),
 
       if (!isSpecialLeave)
         LeaveRowData(
-          label: 'Take Leave During Probation Period',
+          label: 'take_leave_during_probation_period',
           value: leave.takeLeaveDuringProbationPeriod ?? 'No',
           isVisible: true,
         ),
@@ -370,7 +370,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
 
       if (isAvailableTillDate)
         LeaveRowData(
-          label: 'Available Till Days',
+          label: 'available_till_days',
           value: leave.leaveExpireAfterDays!,
           isVisible: true,
         ),
@@ -378,7 +378,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
       if (leave.leaveCreditLastDate != null &&
           leave.leaveCreditLastDate!.isNotEmpty)
         LeaveRowData(
-          label: 'Leave Credit Last Date',
+          label: 'leave_credit_last_date',
           value: leave.leaveCreditLastDate!,
           isVisible: true,
         ),
@@ -388,28 +388,28 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
             totalEncashment != '0' &&
             totalEncashment.isNotEmpty)
           LeaveRowData(
-            label: 'Total Encashment Leave',
+            label: 'total_encashment_leave',
             value: leave.encasementSummary?.totalEncashment ?? '0',
             isVisible: true,
           ),
 
         if (totalPaid != null && totalPaid != '0' && totalPaid.isNotEmpty)
           LeaveRowData(
-            label: 'Paid Encashment Leave',
+            label: 'paid_encashment_leave',
             value: leave.encasementSummary?.totalPaid ?? '0',
             isVisible: true,
           ),
 
         if (totalUnpaid != null && totalUnpaid != '0' && totalUnpaid.isNotEmpty)
           LeaveRowData(
-            label: 'Unpaid Encashment Leave',
+            label: 'unpaid_encashment_leave',
             value: leave.encasementSummary?.totalUnpaid ?? '0',
             isVisible: true,
           ),
       ],
 
       LeaveRowData(
-        label: 'View Dates',
+        label: 'view_dates',
         value: 'View',
         isVisible: isSpecialLeave,
         onTap: () {
@@ -439,7 +439,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
 
       if (isSpecialLeave)
         LeaveRowData(
-          label: 'Apply for leave encashment',
+          label: 'apply_for_leave_encashment',
           value: 'Apply',
           // isVisible: isApplyLeaveEncashment,
           isVisible: false,
@@ -504,20 +504,20 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
           collapsedChild: LeaveSummaryCollapsedChips(
             chips: [
               LeaveSummaryItem(
-                title: 'Used Leaves',
+                title: 'used_leaves',
                 value: leave['used'].toString(),
               ),
               LeaveSummaryItem(
-                title: 'Remaining Leaves',
+                title: 'remaining_leaves',
                 value: leave['remaining'].toString(),
               ),
               if (!specialLeave) ...[
                 LeaveSummaryItem(
-                  title: 'Leave Payout',
+                  title: 'leave_payout',
                   value: leave['payout'].toString(),
                 ),
                 LeaveSummaryItem(
-                  title: 'Carry Forward',
+                  title: 'carry_forward',
                   value: leave['carryForward']
                       .toString(), // Corrected property name
                 ),

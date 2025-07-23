@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/leave/domain/entities/leave_history_response_entity.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
@@ -137,15 +138,6 @@ class _LeaveScreenState extends State<LeaveScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    // appBar: AppBar(
-    //   leading: IconButton(
-    //     onPressed: () => context.pop(),
-    //     icon: const Icon(Icons.arrow_back_outlined),
-    //   ),
-    //   title: const Text('Leave balance'),
-    //   centerTitle: true,
-    //   elevation: 0,
-    // ),
     appBar: CustomAppbar(
       isKey: true,
       title: 'leave_balance',
@@ -216,7 +208,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
                       Expanded(
                         flex: 5,
                         child: LeaveActionButton(
-                          title: 'My Leave Balance',
+                          title: LanguageManager().get('leave_balance'),
                           onTap: () => context.push(RoutePaths.leaveBalance),
                         ),
                       ),
@@ -227,7 +219,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
                               width: 0.01 * Responsive.getWidth(context),
                             ),
                             LeaveActionButton(
-                              title: 'My Team Leaves',
+                              title: LanguageManager().get('my_team_leaves'),
                               onTap: () =>
                                   context.push(RoutePaths.teamLeaveBalance),
                             ),
@@ -276,9 +268,15 @@ class _LeaveScreenState extends State<LeaveScreen> {
                                       ),
                                       child: CustomAlertDialog(
                                         alertType: AlertType.delete,
-                                        content: 'Do you want to delete?',
-                                        confirmText: 'Ok',
-                                        cancelText: 'Cancel',
+                                        content: LanguageManager().get(
+                                          'delete_leave',
+                                        ),
+                                        confirmText: LanguageManager().get(
+                                          'ok',
+                                        ),
+                                        cancelText: LanguageManager().get(
+                                          'cancel',
+                                        ),
                                         onCancel: () {
                                           Navigator.of(context).pop();
                                         },
@@ -398,9 +396,11 @@ class _LeaveScreenState extends State<LeaveScreen> {
                                   ),
                                   child: CustomAlertDialog(
                                     alertType: AlertType.delete,
-                                    content: 'Do you want to delete?',
-                                    confirmText: 'Ok',
-                                    cancelText: 'Cancel',
+                                    content: LanguageManager().get(
+                                      'delete_leave',
+                                    ),
+                                    confirmText: LanguageManager().get('ok'),
+                                    cancelText: LanguageManager().get('cancel'),
                                     onCancel: () {
                                       Navigator.of(context).pop();
                                     },
@@ -508,7 +508,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
                                     ),
                                   ),
                                 );
-                              }else{
+                              } else {
                                 context.push(RoutePaths.editLeaveScreen);
                               }
                             },
@@ -560,7 +560,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
                     color: AppTheme.getColor(context).surface,
                   ),
                 ),
-                title: 'Close',
+                title: LanguageManager().get('close'),
               ),
             ),
           );
@@ -611,7 +611,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
                   color: AppTheme.getColor(context).surface,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Text('Apply Leave'),
+                child: Text(LanguageManager().get('apply_leave')),
               ),
               SizedBox(width: 0.02 * Responsive.getWidth(context)),
               FloatingActionButton.small(
@@ -650,7 +650,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
                   color: AppTheme.getColor(context).surface,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Text('Apply Short Leave'),
+                child: Text(LanguageManager().get('apply_short_leave')),
               ),
               SizedBox(width: 0.02 * Responsive.getWidth(context)),
               FloatingActionButton.small(
@@ -748,11 +748,13 @@ class _LeaveScreenState extends State<LeaveScreen> {
 
       detailColor: _getStatusColor(leave.leaveStatus, leave.autoLeave),
       autoLeave: leave.autoLeave ?? false,
-      paidUnpaid: leave.paidUnpaid ?? '', isMultiLevelApproval: leave.isMultiLevelApproval??false, approvalUsers:leave.approvalUsers?? [],
+      paidUnpaid: leave.paidUnpaid ?? '',
+      isMultiLevelApproval: leave.isMultiLevelApproval ?? false,
+      approvalUsers: leave.approvalUsers ?? [],
     ),
-    leaveEntity: leave, headerColor: leave.leaveStatus??'', isAutoLeave: leave.autoLeave??false,
-    
-    
+    leaveEntity: leave,
+    headerColor: leave.leaveStatus ?? '',
+    isAutoLeave: leave.autoLeave ?? false,
   );
 
   Color _getStatusColor(String? status, bool? autoLeave) {
@@ -784,7 +786,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
   ShortLeaveEntry _convertToShortLeaveEntry(LeaveHistoryEntity leave) =>
       ShortLeaveEntry(
         date: leave.shortLeaveDateView ?? '',
-        subType: 'Short Leave',
+        subType: LanguageManager().get('short_leave'),
         leaveTime: leave.shortLeaveTime ?? '',
         reason: leave.shortLeaveApplyReason ?? '',
         approvedBy: leave.shortLeaveStatusChangeName ?? '',
@@ -797,7 +799,7 @@ class _LeaveScreenState extends State<LeaveScreen> {
   SandwichLeaveEntry _convertToSandwichLeaveEntry(LeaveHistoryEntity leave) =>
       SandwichLeaveEntry(
         date: leave.sandwichLeaveDateView ?? '',
-        subType: 'Sandwich Leave',
+        subType: LanguageManager().get('sandwich_leave'),
         reason: '${leave.prevLeaveDate}-${leave.nextLeaveDate}',
         status: 'Approved',
         isSalaryGenerated: leave.isSalaryGenerated ?? false,
