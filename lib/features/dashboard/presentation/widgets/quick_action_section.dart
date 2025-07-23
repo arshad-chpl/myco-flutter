@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_entity.dart';
+import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_response_entity.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_section.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/custom_shadow_container.dart';
@@ -56,58 +56,71 @@ class QuickActionSection extends StatelessWidget {
       ),
       count: '04',
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.zero,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: Responsive.getGridConfig(
-            context,
-          ).itemCount, // 2 columns
-          crossAxisSpacing: Responsive.getGridConfig(context).spacing,
-          mainAxisSpacing: Responsive.getGridConfig(context).spacing,
-          childAspectRatio: Responsive.getGridConfig(
-            context,
-          ).childAspectRatio, // Adjust for container shape
-        ),
-        itemCount: appMenuHome?.length ?? 0,
-        itemBuilder: (context, index) => InkWell(
-          onTap: () {
-            context.pushNamed(appMenuHome?[index].iosMenuClick ?? '');
-            // if (quickAccessOptionsNavigation[index].toString().isNotEmpty) {
-            //   context.push(quickAccessOptionsNavigation[index]);
-            // }
-          },
-          child: BorderContainerWraper(
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             padding: EdgeInsets.zero,
-            child: CustomShadowContainer(
-              height: Responsive.getResponsive(context) * 0,
-              width: Responsive.getResponsive(context) * 0,
-              title: appMenuHome?[index].menuLanguageKey ?? '',
-              boxPadding: 14 * Responsive.getResponsive(context),
-              imagePadding: 20 * Responsive.getResponsive(context),
-              image: CachedNetworkImage(
-                imageUrl: appMenuHome?[index].menuIcon ?? '',
-
-                // height: height,
-                placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor: Colors.grey.shade300,
-                  highlightColor: Colors.grey.shade100,
-                  child: Container(
-                    width: 28,
-                    height: 28,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                  ),
-                ),
-                errorWidget: (context, url, error) =>
-                    Image.asset('assets/images/logo.png'),
-              ), // Replace with actual image if needed
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: Responsive.getGridConfig(
+                context,
+                screenWide: constraints.maxWidth,
+              ).itemCount, // 2 columns
+              crossAxisSpacing: Responsive.getGridConfig(
+                context,
+                screenWide: constraints.maxWidth,
+              ).spacing,
+              mainAxisSpacing: Responsive.getGridConfig(
+                context,
+                screenWide: constraints.maxWidth,
+              ).spacing,
+              childAspectRatio: Responsive.getGridConfig(
+                context,
+                screenWide: constraints.maxWidth,
+              ).childAspectRatio, // Adjust for container shape
             ),
-          ),
-        ),
+            itemCount: appMenuHome?.length ?? 0,
+            itemBuilder: (context, index) => InkWell(
+              onTap: () {
+                context.pushNamed(appMenuHome?[index].iosMenuClick ?? '');
+                // if (quickAccessOptionsNavigation[index].toString().isNotEmpty) {
+                //   context.push(quickAccessOptionsNavigation[index]);
+                // }
+              },
+              child: BorderContainerWraper(
+                padding: EdgeInsets.zero,
+                child: CustomShadowContainer(
+                  height: Responsive.getResponsive(context) * 0,
+                  width: Responsive.getResponsive(context) * 0,
+                  title: appMenuHome?[index].menuLanguageKey ?? '',
+                  boxPadding: 14 * Responsive.getResponsive(context),
+                  imagePadding: 20 * Responsive.getResponsive(context),
+                  image: CachedNetworkImage(
+                    imageUrl: appMenuHome?[index].menuIcon ?? '',
+
+                    // height: height,
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                      child: Container(
+                        width: 28,
+                        height: 28,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        Image.asset('assets/images/logo.png'),
+                  ), // Replace with actual image if needed
+                ),
+              ),
+            ),
+          );
+        },
+        // child: ,
       ),
     );
   }
