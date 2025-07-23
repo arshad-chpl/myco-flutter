@@ -83,4 +83,10 @@ class ChangeSandwichLeave extends LeaveEvent{
   const ChangeSandwichLeave(this.userId, this.paid, this.leaveId, this.leaveName, this.sandwichId, this.unitId, this.userFullName, this.leavePercentage);
 }
 
+class FetchCompOffLeaves extends LeaveEvent{
+  final String starDate;
+  final String endDate;
+  const FetchCompOffLeaves(this.starDate, this.endDate);
+}
+
 class InitialView extends LeaveEvent {}

@@ -5,6 +5,7 @@ import 'package:myco_flutter/features/leave/domain/entities/leave_history_respon
 import 'package:myco_flutter/features/leave/domain/entities/leave_type_response_entity.dart';
 import 'package:myco_flutter/features/leave/domain/repositories/leave_repository.dart';
 import 'package:myco_flutter/features/leave/model/check_leave_balance_response.dart';
+import 'package:myco_flutter/features/leave/model/comp_off_leave_response_model.dart';
 import 'package:myco_flutter/features/leave/model/my_team_response_model.dart';
 
 class LeaveUseCase {
@@ -110,4 +111,9 @@ class LeaveUseCase {
     userFullName,
     leavePercentage,
   );
+
+  Future<Either<Failure, CompOffLeaveResponseEntity>> getCompOffLeaves(
+    String starDate,
+    String endDate,
+  ) => repository.getCompOffLeaves(starDate, endDate);
 }

@@ -746,9 +746,11 @@ class _LeaveScreenState extends State<LeaveScreen> {
 
       detailColor: _getStatusColor(leave.leaveStatus, leave.autoLeave),
       autoLeave: leave.autoLeave ?? false,
-      paidUnpaid: leave.paidUnpaid ?? '',
+      paidUnpaid: leave.paidUnpaid ?? '', isMultiLevelApproval: leave.isMultiLevelApproval??false, approvalUsers:leave.approvalUsers?? [],
     ),
-    leaveEntity: leave,
+    leaveEntity: leave, headerColor: leave.leaveStatus??'', isAutoLeave: leave.autoLeave??false,
+    
+    
   );
 
   Color _getStatusColor(String? status, bool? autoLeave) {

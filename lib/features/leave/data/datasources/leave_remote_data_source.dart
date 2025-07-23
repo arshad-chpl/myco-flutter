@@ -1,5 +1,6 @@
 import 'package:myco_flutter/core/models/data/common_response_model.dart';
 import 'package:myco_flutter/features/leave/model/check_leave_balance_response.dart';
+import 'package:myco_flutter/features/leave/model/comp_off_leave_response_model.dart';
 import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
 import 'package:myco_flutter/features/leave/model/leave_type_response.dart';
 import 'package:myco_flutter/features/leave/model/my_team_response_model.dart';
@@ -65,5 +66,10 @@ abstract class LeaveRemoteDataSource {
     String unitId,
     String userFullName,
     String leavePercentage,
+  );
+
+  Future<CompOffLeaveResponseModel> getCompOffLeaves(
+    String startDate,
+    String endDate,
   );
 }

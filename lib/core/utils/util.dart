@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Util {
   // // Private constructor
@@ -85,4 +86,20 @@ class Util {
     12 => 'December',
     _ => 'Unknown', // Return a non-null String
   };
+
+  /// Formats a date string from "yyyy-MM-dd" to "EEE, dd MMM yyyy".
+  /// Returns an empty string if the input is null or parsing fails.
+  static String getFormattedDateLeave(String? strDate) {
+    if (strDate != null) {
+      try {
+        final inputFormat = DateFormat('yyyy-MM-dd', 'en_US');
+        final outputFormat = DateFormat('EEE, dd MMM yyyy', 'en_US');
+        final date = inputFormat.parse(strDate);
+        return outputFormat.format(date);
+      } catch (e) {
+        debugPrint('Error formatting date: $e');
+      }
+    }
+    return '';
+  }
 }

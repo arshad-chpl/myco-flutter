@@ -182,5 +182,20 @@ class LeaveBloc extends Bloc<LeaveEvent, LeaveState> {
         emit(LeaveError('Failed to change sandwich leave: $e'));
       }
     });
+    on<FetchCompOffLeaves>((event, emit) async {
+      emit(LeaveLoading());
+      try {
+        final results = await leaveUseCase.getCompOffLeaves(
+          event.starDate,
+          event.endDate,
+        );
+        results.fold(
+          (failure) => emit(LeaveError(failure.message)),
+          (model) => emit(CompOffLeavesFetched(model)),
+        );
+      } catch (e) {
+        emit(LeaveError('Failed to fetch comp off leaves: $e'));
+      }
+    });
   }
 }

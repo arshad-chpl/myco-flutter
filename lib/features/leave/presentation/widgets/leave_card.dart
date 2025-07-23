@@ -17,6 +17,8 @@ class LeaveEntry {
   final String payStatus;
   final Widget onViewDetailWidget;
   final LeaveHistoryEntity leaveEntity;
+  final String headerColor;
+  final bool isAutoLeave;
 
   LeaveEntry({
     required this.date,
@@ -29,6 +31,8 @@ class LeaveEntry {
     required this.payStatus,
     required this.onViewDetailWidget,
     required this.leaveEntity,
+    required this.headerColor,
+    required this.isAutoLeave,
   });
 }
 
@@ -95,11 +99,11 @@ class LeaveCard extends StatelessWidget {
               ],
             ),
             title: leave.date,
-            headerColor: leave.status == 'Pending'
-                ? AppColors.spanishYellow
-                : leave.status == 'Reject'
+            headerColor: leave.headerColor == '1'
+                ? AppColors.secondary
+                : leave.headerColor == '2'
                 ? AppColors.red
-                : AppColors.secondary,
+                : AppColors.spanishYellow,
             bottomWidget: Padding(
               padding: EdgeInsets.all(10 * responsive),
               child: Column(
@@ -109,8 +113,10 @@ class LeaveCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildBadge(leave.subType, Colors.blue),
-                      CustomText(
+                      _buildBadge(
+                        leave.isAutoLeave ? leave.subType : leave.leaveType,
+                        Colors.blue,
+                      ),                      CustomText(
                         leave.leaveTime,
                         fontSize: 12 * textResponsive,
                         color: Colors.grey.shade600,
