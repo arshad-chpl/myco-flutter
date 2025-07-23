@@ -5,6 +5,7 @@ import 'package:myco_flutter/core/services/hive_cache_service.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.dart';
+import 'package:myco_flutter/features/chat/presentation/di/chat_list_di.dart';
 import 'package:myco_flutter/features/company_info/presentation/di/company_info_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/request_otp_di.dart';
@@ -76,4 +77,7 @@ Future<void> init() async {
 
   //========Payslip=========
   initPayslipFeatureDI(sl);
+
+  //========Chat=========
+  initChatFeatureDI(sl);
 }
