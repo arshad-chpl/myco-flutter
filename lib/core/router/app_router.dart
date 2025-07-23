@@ -7,16 +7,19 @@ import 'package:myco_flutter/core/router/modules/assets_routes.dart';
 import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
 import 'package:myco_flutter/core/router/modules/leave_routes.dart';
+import 'package:myco_flutter/core/router/modules/my_visit_routes.dart';
 import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
 import 'package:myco_flutter/core/router/modules/work_allocation_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
-
 // import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
+
+
+
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
@@ -27,22 +30,20 @@ import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.d
 import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_bloc.dart';
 import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/add_leave_screen.dart';
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_model.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc/visit_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
+
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc/visit_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/my_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/visit_report.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
@@ -56,8 +57,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash,
-    // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -73,7 +73,7 @@ class AppRouter {
             ),
             BlocProvider(
               create: (_) =>
-                  GetIt.I<LanguageBloc>()..add(LoadLanguageToPreferences()),
+              GetIt.I<LanguageBloc>()..add(LoadLanguageToPreferences()),
               lazy: false,
             ),
           ],
@@ -96,11 +96,6 @@ class AppRouter {
       //   name: 'details',
       //   builder: (context, state) => const DetailsPage(),
       // ),
-      GoRoute(
-        path: RoutePaths.visitReport,
-        name: 'visit_report',
-        builder: (context, state) => const VisitReport(),
-      ),
 
       GoRoute(
         path: RoutePaths.selectCompany,
@@ -157,14 +152,6 @@ class AppRouter {
           child: const CompanyInfoPage(),
         ),
       ),
-      GoRoute(
-        path: RoutePaths.myVisit,
-        name: 'my-visit',
-        builder: (context, state) => BlocProvider(
-          create: (_) => GetIt.I<VisitBloc>(),
-          child: const MyVisitPage(),
-        ),
-      ),
       // GoRoute(
       //   path: RoutePaths.language,
       //   name: 'language',
@@ -172,6 +159,7 @@ class AppRouter {
       // ),
       ...takeOrderRoutes,
       ...payslipRoutes,
+      ...chatRoutes,
 
       GoRoute(
         path: RoutePaths.faceDetection,
@@ -179,7 +167,7 @@ class AppRouter {
         pageBuilder: (context, state) => MaterialPage(
           child: BlocProvider(
             create: (context) =>
-                GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+            GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
             child: const FaceDetectionPage(),
           ),
         ),
@@ -216,17 +204,9 @@ class AppRouter {
         name: 'contact-admin',
         builder: (context, state) => const ContactAdminPage(),
       ),
-      GoRoute(
-        path: RoutePaths.addCustomer,
-        name: 'addCustomer',
-        builder: (context, state) => const AddCustomer(),
-      ),
 
-      GoRoute(
-        path: RoutePaths.AddExpense,
-        name: 'addExpense',
-        builder: (context, state) => const AddExpensePage(),
-      ),
+      ...myVisitRoutes,
+
       GoRoute(
         path: RoutePaths.lostAndFoundAddScreen,
         name: 'lost-and-found-add-screen',
@@ -253,11 +233,6 @@ class AppRouter {
         name: 'lost-and-found',
         builder: (context, state) => const LostAndFound(),
       ),
-      GoRoute(
-        path: RoutePaths.CustomerAddNewVisit,
-        name: 'CustomerAddNewVisit',
-        builder: (context, state) => const CustomerAddNewVisit(),
-      ),
 
       GoRoute(
         path: RoutePaths.viewVisitDetails,
@@ -278,22 +253,17 @@ class AppRouter {
         ),
         routes: adminViewRoutes,
       ),
-      ...cahatRoutes,
+      ...adminViewRoutes,
 
       ...assetsRoutes,
 
       ...WorkAllocationRoutes,
       ...leaveRoutes, //leave
       GoRoute(
-        path: RoutePaths.addVisit,
-        name: 'add-visit',
-        builder: (context, state) => const AddNewVisit(),
+        path: RoutePaths.myProfile,
+        name: 'my-profile',
+        builder: (context, state) => const MyProfilePage(),
       ),
-      // GoRoute(
-      //   path: RoutePaths.myProfile,
-      //   name: 'my-profile',
-      //   builder: (context, state) => const MyProfilePage(),
-      // ),
 
       // Add all modular routes here
       // ...authRoutes,

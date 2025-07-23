@@ -61,6 +61,8 @@ dependencies:
   bloc: ^9.0.0
   flutter_expandable_fab: ^2.5.2
 
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 dependency_overrides:
   source_gen: 2.0.0
@@ -106,16 +108,10 @@ flutter:
     - assets/svgs/visit/
     - assets/add_expense/
     - assets/dashboard/svgs/
-    - assets/face_detection/
     - assets/svgs/visit/
-    - assets/dashboard/svgs/
-
-    - assets/dashboard/svgs/
-    - assets/assets/
+    - assets/chat/
     - assets/svgs/work_allocation/
-
     - assets/asset/
-
     - assets/svgs/take_order/
     - assets/work_allocation/
     - assets/animations/

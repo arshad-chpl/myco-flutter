@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_entity.dart';
+import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_response_entity.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/custom_shadow_container.dart';
 import 'package:shimmer/shimmer.dart';
@@ -21,6 +21,7 @@ class BigHomeMenu extends StatelessWidget {
       children: [
         Expanded(
           child: BigHomeMenuIcon(
+            context,
             appMenuBig.first.menuIcon ?? '',
             appMenuBig.first.menuTitle ?? '',
             Responsive.getResponsive(context) * 70,
@@ -28,6 +29,7 @@ class BigHomeMenu extends StatelessWidget {
         ),
         Expanded(
           child: BigHomeMenuIcon(
+            context,
             appMenuBig.last.menuIcon ?? '',
             appMenuBig.last.menuTitle ?? '',
             Responsive.getResponsive(context) * 70,
@@ -38,11 +40,19 @@ class BigHomeMenu extends StatelessWidget {
   }
 }
 
-Widget BigHomeMenuIcon(String icon, String title, double? height) {
+Widget BigHomeMenuIcon(
+  BuildContext context,
+  String icon,
+  String title,
+  double? height,
+) {
   return BorderContainerWraper(
     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
     child: CustomShadowContainer(
       width: double.infinity,
+      // boxPadding: 14 * Responsive.getResponsive(context),
+      // imagePadding: 20 * Responsive.getResponsive(context),
+      imgTitleSpacing: 8,
       image: CachedNetworkImage(
         imageUrl: icon,
         height: height,
