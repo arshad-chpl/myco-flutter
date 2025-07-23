@@ -283,14 +283,6 @@ class GroupChat extends StatelessWidget {
         //   ),
         // ),
         SizedBox(height: 0.02 * Responsive.getHeight(context)),
-       MyCoButton(
-          title: 'new_group',
-          onTap: () => {
-            showCustomSimpleBottomSheet(context: context, dataList: [{'id': '1','name': 'Qa ',},{'id': '2','name': 'Qa ',},], heading: "heading")
-          },
-          backgroundColor: Colors.amber,
-        ),
-        SizedBox(height: 0.06 * Responsive.getHeight(context)),
       ],
     ),
   );
