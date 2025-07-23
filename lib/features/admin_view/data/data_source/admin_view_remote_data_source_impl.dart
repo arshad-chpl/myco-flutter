@@ -9,6 +9,9 @@ import 'package:myco_flutter/features/admin_view/data/models/admin_view_request.
 import 'package:myco_flutter/features/admin_view/data/models/admin_view_response_model.dart';
 
 class AdminViewRemoteDataSourceImpl extends AdminViewRemoteDataSource {
+  ApiClient apiClient;
+  AdminViewRemoteDataSourceImpl({required this.apiClient});
+
   @override
   Future<AdminViewResponseModel> getAdminViewNew(
     AdminViewRequest request,

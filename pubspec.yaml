@@ -60,6 +60,9 @@ dependencies:
   modal_bottom_sheet: ^3.0.0
   bloc: ^9.0.0
 
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
 dependency_overrides:
   source_gen: 2.0.0
 dev_dependencies:
@@ -106,21 +109,14 @@ flutter:
     - assets/svgs/visit/
     - assets/add_expense/
     - assets/dashboard/svgs/
-    #    - assets/face_detection/
     - assets/svgs/visit/
-    - assets/dashboard/svgs/
-    #    - assets/face_detection/
-    #    - assets/dashboard/svgs/
-    - assets/assets/
+    - assets/chat/
+    - assets/svgs/work_allocation/
+    - assets/asset/
     - assets/svgs/take_order/
+    - assets/work_allocation/
     - assets/animations/
     - assets/stepper/
-    - assets/dashboard/svgs/
-    - assets/assets/
-    - assets/svgs/take_order/
-    - assets/animations/
-    - assets/stepper/
-    - assets/assets/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

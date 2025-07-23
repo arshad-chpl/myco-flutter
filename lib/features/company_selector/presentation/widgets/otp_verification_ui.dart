@@ -41,7 +41,9 @@ class OtpVerificationUi extends StatelessWidget {
     final String message = isEmail
         ? 'Sign in code has been sent to $contactValue, check your inbox to continue.'
         : 'Sign in code has been sent to $countryCode $contactValue, check your messages to continue.';
-    final String imagePath = isEmail ? 'assets/sign_in/email.png' : 'assets/sign_in/phone.png';
+    final String imagePath = isEmail
+        ? 'assets/sign_in/email.png'
+        : 'assets/sign_in/phone.png';
     String currentOtp = '';
 
     return BlocListener<LoginBloc, LoginState>(
@@ -51,10 +53,14 @@ class OtpVerificationUi extends StatelessWidget {
           preference.setLoginSession(true);
           preference.setUserId(state.response.userId ?? '');
           preference.setCountryId(state.response.countryId ?? '');
-          context.go(RoutePaths.dashboard);
+          context.go(RoutePaths.home);
         } else if (state is OtpVerificationFailedState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.response.message ?? 'OTP Verification Failed')),
+            SnackBar(
+              content: Text(
+                state.response.message ?? 'OTP Verification Failed',
+              ),
+            ),
           );
           // You can add more complex dialog logic here if needed based on the response
         }
@@ -86,12 +92,23 @@ class OtpVerificationUi extends StatelessWidget {
                       height: 0.088 * Responsive.getHeight(context),
                       width: 0.21 * Responsive.getWidth(context),
                       isShadowBottomLeft: true,
-                      image: Image.asset(imagePath, height: 0.035 * Responsive.getHeight(context)),
+                      image: Image.asset(
+                        imagePath,
+                        height: 0.035 * Responsive.getHeight(context),
+                      ),
                     ),
                     const SizedBox(height: 20),
-                    CustomText(title, fontSize: 24 * Responsive.getResponsiveText(context), fontWeight: FontWeight.w900),
+                    CustomText(
+                      title,
+                      fontSize: 24 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w900,
+                    ),
                     const SizedBox(height: 8),
-                    CustomText(message, textAlign: TextAlign.center, fontSize: 16 * Responsive.getResponsiveText(context)),
+                    CustomText(
+                      message,
+                      textAlign: TextAlign.center,
+                      fontSize: 16 * Responsive.getResponsiveText(context),
+                    ),
                   ],
                 ),
               ),
@@ -132,7 +149,11 @@ class OtpVerificationUi extends StatelessWidget {
                     );
                     context.read<LoginBloc>().add(VerifyOtpEvent(model: model));
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter a valid 6-digit OTP.')));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please enter a valid 6-digit OTP.'),
+                      ),
+                    );
                   }
                 },
                 title: 'Submit',
@@ -143,9 +164,14 @@ class OtpVerificationUi extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomText('Sign in with different method ', fontSize: 16 * Responsive.getResponsiveText(context)),
+                  CustomText(
+                    'Sign in with different method ',
+                    fontSize: 16 * Responsive.getResponsiveText(context),
+                  ),
                   InkWell(
-                    onTap: () => context.read<SelectCompanyStepBloc>().add(GoToPreviousStep()),
+                    onTap: () => context.read<SelectCompanyStepBloc>().add(
+                      GoToPreviousStep(),
+                    ),
                     child: CustomText(
                       'Here.',
                       fontSize: 16 * Responsive.getResponsiveText(context),

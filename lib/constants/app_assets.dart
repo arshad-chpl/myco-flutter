@@ -12,12 +12,16 @@ class AppAssets {
   static const String svgsVisit = '$svgsPath/visit';
   static const String assetVisit = '$basePath/add_expense';
 
-  static const String assets = '$basePath/assets';
+  static const String assets = '$basePath/asset';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
   static const String employees = '$basePath/employees';
   static const String mediaPicker = '$basePath/media_picker';
+  static const String workAllocation = '$basePath/work_allocation';
+
   static const String stepper = '$basePath/stepper';
+  static const String workAllocationSvgs = '$svgsPath/work_allocation';
+
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -32,11 +36,12 @@ class AppAssets {
   static const String imageSearch = '$imagesPath/search.png';
   static const String imageLaptop = '$imagesPath/laptop.png';
   static const String imageCamera = '$imagesPath/camera.png';
-  static const String imageNoteFavorite = '$imagesPath/note-favorite.png';
+  static const String imageNoteFavorite = '$imagesPath/note-favorite.svg';
   static const String imageGalleryExport = '$imagesPath/gallery-export.png';
   static const String imageNoAssets = '$imagesPath/noAssets.png';
 
   //Svgs
+  static const String search_company_icon = '$svgsPath/company_icon.svg';
   static const String timeCardBtn = '$svgsPath/timeCardBtn.svg';
   static const String punchIn = '$svgsPath/punchIn.svg';
   static const String scanQR = '$svgsPath/scanQR.svg';
@@ -58,6 +63,8 @@ class AppAssets {
   static const String personalcard = '$svgsVisit/personalcard.svg';
   static const String profileCircle = '$svgsVisit/profile-circle.svg';
   static const String share = '$svgsVisit/share.svg';
+  static const String arrowRight = '$svgsVisit/arrow-right.svg';
+  static const String arrowDoubleDown = '$svgsVisit/arrow_double_down.svg';
   static const String stickynote = '$svgsVisit/stickynote.svg';
   static const String whatsapp = '$svgsVisit/whatsapp.svg';
   static const String ref = '$svgsVisit/refresh_new.svg';
@@ -75,13 +82,20 @@ class AppAssets {
   static const String xCircle = '$svgsTakeOrder/XCircle.svg';
   static const String messageEdit = '$svgsTakeOrder/message-edit.svg';
   static const String placeOrder = '$svgsTakeOrder/place-order.svg';
-  static const String orderHistory = '$svgsTakeOrder/order-history.svg';
+  static const String
+  y = '$svgsTakeOrder/order-history.svg';
   static const String noOrder = '$svgsTakeOrder/no-order.svg';
   static const String start = '$svgsTakeOrder/start.svg';
   static const String stop = '$svgsTakeOrder/stop.svg';
   static const String calling = '$svgsTakeOrder/calling.svg';
   static const String arrowBack = '$svgsPath/back_arrow.svg';
   static const String cancelOrder = '$svgsTakeOrder/cancel_order.svg';
+
+  static const String element_1 = '$workAllocationSvgs/element-1.svg';
+  static const String receiptEdittt = '$workAllocationSvgs/receiptedittt.svg';
+  static const String monitor = '$workAllocationSvgs/monitor.svg';
+  static const String location1 = '$workAllocationSvgs/location.svg';
+  static const String msgedit = '$workAllocationSvgs/msgedit.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
@@ -121,6 +135,7 @@ class AppAssets {
   static const String downArrow = '$svgsVisit/arrow-down.svg';
   static const String galleryExport = '$svgsVisit/gallery-export.svg';
   static const String arrow_down = '$svgsVisit/arrow-down.svg';
+  static const String areaMap = '$svgsVisit/area_map.svg';
 
   //images visit
   static const String assetBookmark = '$assetVisit/bookmark.svg';
@@ -135,6 +150,8 @@ class AppAssets {
   static const String assetDocumentText = '$assetVisit/document-text.svg';
   static const String assetGalleryExport = '$assetVisit/gallery-export.svg';
   static const String Search = '$svgsVisit/search.svg';
+  static const String Addicon = '$svgsVisit/addicon.svg';
+  static const String DoubleDown_Arrow = '$svgsVisit/dropdown_visit.svg';
 
   //face detection screen assets
   static const String assetCircle = '$visit/circle.png';
@@ -158,6 +175,17 @@ class AppAssets {
 
   static const String lostFoundData = '$lostFound/data.png';
   static const String lostFoundMessageEdit = '$lostFound/message-edit.png';
+/*
+  static const String location = '$basePath/take_order/location.png';
+*/
+
+
+  //work allocation
+  static const String plus = '$workAllocation/plus.png';
+  static const String calendarIcon = '$workAllocation/calendar.png';
+  static const String personProfileImage = '$workAllocation/person_image.png';
+  static const String checkMark = '$workAllocation/check_mark.png';
+  static const String cancelCross = '$workAllocation/cancel_cross.png';
 
   // static const String location = '$basePath/take_order/location.png';
   static const String assetMessageEdit = '$svgsVisit/message-edit.svg';

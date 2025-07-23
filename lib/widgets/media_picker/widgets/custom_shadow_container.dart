@@ -13,6 +13,11 @@ class CustomShadowContainer extends StatelessWidget {
   final double? width;
   final double? containerHeight;
   final double? borderRadius;
+  final TextAlign? textAlign;
+
+  // highlight text
+  final String? highlight;
+  final bool? isHighlightOn;
 
   const CustomShadowContainer({
     required this.image,
@@ -23,89 +28,87 @@ class CustomShadowContainer extends StatelessWidget {
     this.width,
     this.borderRadius,
     this.containerHeight,
+    this.textAlign,
+    this.highlight,
+    this.isHighlightOn,
   });
 
   @override
-  Widget build(BuildContext context) => Column(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Stack(
-        children: [
-          Container(
-            width:
-                width ??
-                (Responsive.isTablet
-                    ? 140 * Responsive.getResponsive(context)
-                    : 70 * Responsive.getResponsive(context)),
-            height:
-                containerHeight ??
-                (Responsive.isTablet
-                    ? 140 * Responsive.getResponsive(context)
-                    : 70 * Responsive.getResponsive(context)),
-            padding: EdgeInsets.all(15 * Responsive.getResponsive(context)),
-            decoration: BoxDecoration(
-              color: AppTheme.getColor(context).onPrimary,
-              borderRadius: BorderRadius.circular(
-                borderRadius ?? 20 * Responsive.getResponsive(context),
-              ),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black26,
-                  offset: Offset(2.5, 2),
-                  blurRadius: 1,
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(
-                Responsive.isTablet
-                    ? 8.0 * Responsive.getResponsive(context)
-                    : 0.0,
+  Widget build(BuildContext context) => SizedBox(
+    width: width ?? 70,
+    height: height,
+    child: Column(
+      // mainAxisSize: MainAxisSize.min,
+      // crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Stack(
+          children: [
+            Container(
+              width: width ?? 70,
+              height: containerHeight ?? 70,
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: AppTheme.getColor(context).onPrimary,
+                borderRadius: BorderRadius.circular(borderRadius ?? 20),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    offset: Offset(2.5, 2),
+                    blurRadius: 1,
+                  ),
+                ],
               ),
               child: Center(child: image),
             ),
-          ),
-          Positioned.fill(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(
-                borderRadius ?? 20 * Responsive.getResponsive(context),
-              ),
-              child: CustomPaint(
-                painter: InnerShadowPainter(
-                  shadowColor: const Color.fromARGB(50, 0, 0, 0),
-                  blur: 4,
-                  offset: const Offset(3, -3.5),
-                  borderRadius: 20 * Responsive.getResponsive(context),
-                  isShadowBottomRight: true,
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(borderRadius ?? 20),
+                child: CustomPaint(
+                  painter: InnerShadowPainter(
+                    shadowColor: const Color.fromARGB(50, 0, 0, 0),
+                    blur: 4,
+                    offset: const Offset(3, -3.5),
+                    borderRadius: 20,
+                    isShadowBottomRight: true,
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned.fill(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(
-                borderRadius ?? 20 * Responsive.getResponsive(context),
-              ),
-              child: CustomPaint(
-                painter: InnerShadowPainter(
-                  shadowColor: const Color.fromARGB(50, 0, 0, 0),
-                  blur: 4,
-                  offset: const Offset(3, -3.5),
-                  borderRadius: 20 * Responsive.getResponsive(context),
-                  isShadowBottomLeft: true,
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(borderRadius ?? 20),
+                child: CustomPaint(
+                  painter: InnerShadowPainter(
+                    shadowColor: const Color.fromARGB(50, 0, 0, 0),
+                    blur: 4,
+                    offset: const Offset(3, -3.5),
+                    borderRadius: 20,
+                    isShadowBottomLeft: true,
+                  ),
                 ),
               ),
             ),
+          ],
+        ),
+        // const SizedBox(height: 6),
+        // const Spacer(),
+        SizedBox(
+          width: Responsive.getWidth(context),
+
+          child: CustomText(
+            title,
+            color: AppColors.black,
+            fontSize: 12 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w600,
+            textAlign: textAlign,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            highlightText: highlight, // highlighted text
+            isHighlight: isHighlightOn ?? false, // flag for highlight
           ),
-        ],
-      ),
-      SizedBox(height: 0.006 * Responsive.getHeight(context)),
-      CustomText(
-        title,
-        color: AppTheme.getColor(context).onSurfaceVariant,
-        fontSize: 14 * Responsive.getResponsiveText(context),
-        fontWeight: FontWeight.w600,
-      ),
-    ],
+        ),
+      ],
+    ),
   );
 }

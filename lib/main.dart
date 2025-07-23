@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/router/app_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
@@ -12,7 +14,10 @@ Future<void> main() async {
   // await Firebase.initializeApp();
   await dotenv.load(fileName: '.env');
   ApiUrl.getMainURL();
-  await init();
+
+  await Hive.initFlutter();
+
+  await initDi();
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(

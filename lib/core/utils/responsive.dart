@@ -84,6 +84,7 @@ class Responsive {
     return getWidth(context) > 600 ? 1.5 : 0.9;
   }
 
+
   static double getDashboardResponsiveText(BuildContext context) =>
       getWidth(context) > 600 ? 1.2 : 1;
 

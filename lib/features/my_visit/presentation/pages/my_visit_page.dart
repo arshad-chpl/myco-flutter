@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/auto_expense_card.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/build_other_employee_visit_tab.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/custom_visit_calender.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_tab.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_card.dart';
-import 'package:myco_flutter/features/visit/presentation/widgets/build_other_employee_visit_tab.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -29,6 +30,7 @@ class _VisitPageState extends State<MyVisitPage> {
   int selectedTabIndex = 0;
 
   final List<Map<String, dynamic>> visitList = [
+    //1st
     {
       'title': 'Mahakali Tractor ( RT4567 )',
       'time': '01st April, 2025(09:45 AM) TO 01st April, 2025(12:45 PM)',
@@ -45,6 +47,7 @@ class _VisitPageState extends State<MyVisitPage> {
       'showShare': true,
       'showDelete': true,
     },
+    //2nd
     {
       'title': 'Rajdeep Implements ( RJ2020 )',
       'time': '02nd April, 2025(10:00 AM) TO 02nd April, 2025(01:00 PM)',
@@ -59,6 +62,7 @@ class _VisitPageState extends State<MyVisitPage> {
       'showShare': true,
       'showDelete': true,
     },
+    //3th
     {
       'title': 'Special Customer ( SC2025 )',
       'time': '03rd April, 2025(11:00 AM) TO 03rd April, 2025(02:00 PM)',
@@ -72,6 +76,7 @@ class _VisitPageState extends State<MyVisitPage> {
       'showWhatsapp': true,
       'showShare': true,
     },
+    //4th
     {
       'title': 'Final Customer ( FC2025 )',
       'time': '05th April, 2025(03:00 PM) TO 05th April, 2025(05:00 PM)',
@@ -88,6 +93,7 @@ class _VisitPageState extends State<MyVisitPage> {
       'showWhatsapp': true,
       'showShare': true,
     },
+    //5th
     {
       'title': 'Hidden Buttons Visit ( HB2025 )',
       'time': '06th April, 2025(11:00 AM) TO 06th April, 2025(02:00 PM)',
@@ -107,7 +113,7 @@ class _VisitPageState extends State<MyVisitPage> {
       'showShare': true,
       'showDelete': true,
     },
-    // 6th Container
+    // 6th
     {
       'title': 'Late Visit End ( LV2025 )',
       'time': '07th April, 2025(01:30 PM) TO 07th April, 2025(03:30 PM)',
@@ -235,13 +241,6 @@ class _VisitPageState extends State<MyVisitPage> {
 
     return Scaffold(
       appBar: CustomAppbar(
-        appBarBackgoundColor: AppTheme.getColor(context).onPrimary,
-        elevation: 0,
-        centerTitle: false,
-        leading: IconButton(
-          onPressed: () {},
-          icon: SvgPicture.asset('assets/visit/svgs/backarrow.svg'),
-        ),
         title: 'Visit',
         actions: [
           Padding(
@@ -300,7 +299,7 @@ class _VisitPageState extends State<MyVisitPage> {
                     selectDateFromPicker: selectDateFromPicker,
                     visitList: visitList,
                     buildVisitCard: buildVisitCard,
-                    buildAutoExpenseCard: buildAutoExpenseCard(context),
+                    buildAutoExpenseCard: AutoExpenseCard(),
                   )
                 //other emp visit tab
                 : buildOtherEmployeeVisitTab(
@@ -324,12 +323,16 @@ class _VisitPageState extends State<MyVisitPage> {
                 ExpandableFabAction(
                   label: 'Add Visit',
                   icon: Icons.location_on,
-                  onTap: () {},
+                  onTap: () {
+                    context.pushNamed('add-visit');
+                  },
                 ),
                 ExpandableFabAction(
                   label: 'Add Expense',
                   icon: Icons.money,
-                  onTap: () {},
+                  onTap: () {
+                    context.pushNamed('addExpense');
+                  },
                 ),
               ],
               imageSize: 66 * Responsive.getResponsiveText(context),
