@@ -68,6 +68,7 @@ class RoutePaths {
   static const String teamLeaveBalance = '/my-team-leave-balance';
   static const String addShortLeaveScreen = '/add_short_leave_screen';
   static const String addLeaveScreen = '/add_leave_screen';
+  static const String editLeaveScreen = '/edit_leave_screen';
 
   // ======== Admin View ========
   static const String adminView = '/admin-view';

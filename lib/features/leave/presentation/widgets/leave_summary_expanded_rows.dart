@@ -75,40 +75,90 @@ class LeaveSummaryExpandedRows extends StatelessWidget {
   }
 
   Widget _dottedRow(
-    String title,
+    String label,
     String value, {
+    TextStyle? labelStyle,
+    TextStyle? valueStyle,
     VoidCallback? onTap,
-  }) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 6),
-    child: InkWell(
-      onTap: onTap,
-      child: Row(
-        children: [
-          Expanded(
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(text: title, style: const TextStyle(fontSize: 14)),
-                  const TextSpan(text: ' ', style: TextStyle(fontSize: 14)),
-                  const TextSpan(
-                    text: '............................',
+  }) {
+    final defaultLabelStyle = const TextStyle(fontSize: 14);
+    final defaultValueStyle = const TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+    );
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Row(
+          children: [
+            Text(label, style: labelStyle ?? defaultLabelStyle),
+            const SizedBox(width: 4),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  const dotWidth = 4.0;
+                  final count = (constraints.maxWidth / dotWidth).floor();
+                  final dots = List.filled(count, '-').join();
+
+                  return Text(
+                    dots,
+                    overflow: TextOverflow.clip,
+                    softWrap: false,
                     style: TextStyle(
                       fontSize: 14,
-                      letterSpacing: 2,
-                      fontWeight: FontWeight.w300,
+                      color: Colors.black.withOpacity(0.4),
+                      letterSpacing: 1,
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
-          ),
-          const SizedBox(width: 8),
-          Text(
-            value,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-          ),
-        ],
+            const SizedBox(width: 4),
+            Text(value, style: valueStyle ?? defaultValueStyle),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
+
+  // Widget _dottedRow(
+  //   String title,
+  //   String value, {
+  //   VoidCallback? onTap,
+  // }) => Padding(
+  //   padding: const EdgeInsets.symmetric(vertical: 6),
+  //   child: InkWell(
+  //     onTap: onTap,
+  //     child: Row(
+  //       children: [
+  //         Expanded(
+  //           child: Text.rich(
+  //             TextSpan(
+  //               children: [
+  //                 TextSpan(text: title, style: const TextStyle(fontSize: 14)),
+  //                 const TextSpan(text: ' ', style: TextStyle(fontSize: 14)),
+  //                 const TextSpan(
+  //                   text: '.......................',
+  //                   style: TextStyle(
+  //                     fontSize: 14,
+  //                     letterSpacing: 2,
+  //                     fontWeight: FontWeight.w300,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //         const SizedBox(width: 8),
+  //         Text(
+  //           value,
+  //           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+  //         ),
+  //       ],
+  //     ),
+  //   ),
+  // );
 }

@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/leave/domain/entities'
@@ -128,7 +131,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               backgroundColor: Colors.black54,
-              textColor: Colors.white,
+              textColor: AppTheme.getColor(context).surface,
               fontSize: 16.0,
             );
             _fetchLeaveList(); // Trigger leave list fetch when leaves are empty
@@ -265,6 +268,75 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
           value: 'View',
           isVisible: isLeaveRestricted,
           onTap: () {
+            log(leave.leaveRestrictionsRules.toString());
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (context) {
+                final maxHeight = Responsive.getHeight(context) * 0.9;
+
+                return FractionallySizedBox(
+                  heightFactor: null, // allow child to define height
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: maxHeight),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(16),
+                        ),
+                      ),
+                      padding: const EdgeInsets.all(18),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          spacing: 25,
+                          children: [
+                            LeaveExpandableCard(
+                              title: 'Total Leave Days',
+
+                              initiallyExpanded: true,
+                              isText: true,
+                              TextChild: Text(
+                                "Apply Before",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                      17 *
+                                      Responsive.getResponsiveText(context),
+                                  color: AppTheme.getColor(context).onPrimary,
+                                ),
+                              ),
+                              collapsedChild: const SizedBox.shrink(),
+                              expandedChild: LeaveSummaryExpandedRows(
+                                rows: leave.leaveRestrictionsRules!
+                                    .map(
+                                      (e) => LeaveRowData(
+                                        label: e.leave!,
+                                        value: e.applyBefore!,
+                                        isVisible: true,
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                            MyCoButton(
+                              boarderRadius: 50,
+                              isShadowBottomLeft: true,
+                              onTap: () {
+                                context.pop();
+                              },
+                              title: 'CLOSE',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+
             // Handle view rules click
           },
         ),
@@ -359,7 +431,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               backgroundColor: Colors.black54,
-              textColor: Colors.white,
+              textColor: AppTheme.getColor(context).surface,
               fontSize: 16.0,
             );
           }
@@ -472,7 +544,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppTheme.getColor(context).surface,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -482,7 +554,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
             Container(
               height: 20,
               width: 0.4 * Responsive.getWidth(context),
-              color: Colors.white,
+              color: AppTheme.getColor(context).surface,
             ),
             const SizedBox(height: 12),
             // chips row
@@ -493,18 +565,22 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
                   margin: const EdgeInsets.only(right: 8),
                   height: 20,
                   width: 80,
-                  color: Colors.white,
+                  color: AppTheme.getColor(context).surface,
                 ),
               ),
             ),
             const SizedBox(height: 12),
             // a few more rows as placeholder
-            Container(height: 12, width: double.infinity, color: Colors.white),
+            Container(
+              height: 12,
+              width: double.infinity,
+              color: AppTheme.getColor(context).surface,
+            ),
             const SizedBox(height: 8),
             Container(
               height: 12,
               width: 0.8 * Responsive.getWidth(context),
-              color: Colors.white,
+              color: AppTheme.getColor(context).surface,
             ),
           ],
         ),
@@ -526,7 +602,7 @@ class _MyLeaveBalanceScreenState extends State<MyLeaveBalanceScreen> {
       return MonthData(
         name: monthName,
         value: int.tryParse(leaveBalance) ?? 0,
-        backgroundColor: Colors.white,
+        backgroundColor: AppTheme.getColor(context).surface,
         textColor: Colors.black,
         valueColor: AppColors.primary,
         selectedBackgroundColor: Colors.blue.shade100,

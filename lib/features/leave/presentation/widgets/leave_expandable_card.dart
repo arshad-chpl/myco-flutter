@@ -12,6 +12,7 @@ class LeaveExpandableCard extends StatefulWidget {
   final String buttonText;
   final Widget collapsedChild;
   final Widget expandedChild;
+  final Widget? TextChild;
   final void Function()? onTap;
   final double? headerHeight;
   final double? borderRadius;
@@ -21,6 +22,10 @@ class LeaveExpandableCard extends StatefulWidget {
   final bool? showHeaderPrefixIcon;
   final String? headerPrefixIcon;
   final Color? headerPrefixIconColor;
+
+  /// New: if true, card will be expanded on first build
+  final bool initiallyExpanded;
+  final bool isText;
 
   const LeaveExpandableCard({
     super.key,
@@ -40,6 +45,9 @@ class LeaveExpandableCard extends StatefulWidget {
     this.secondTitle,
     this.borderRadius,
     this.headerColor,
+    this.initiallyExpanded = false,
+    this.isText = false,
+    this.TextChild = const SizedBox.shrink(),
   });
 
   @override
@@ -48,6 +56,19 @@ class LeaveExpandableCard extends StatefulWidget {
 
 class _LeaveExpandableCardState extends State<LeaveExpandableCard> {
   bool _expanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initiallyExpanded) {
+      // Animate expansion after first frame
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          setState(() => _expanded = true);
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +89,9 @@ class _LeaveExpandableCardState extends State<LeaveExpandableCard> {
             borderRadius: BorderRadius.circular(0),
             child: Container(
               height:
-              widget.headerHeight ?? 0.06 * Responsive.getHeight(context),
+                  widget.headerHeight ?? 0.06 * Responsive.getHeight(context),
               padding:
-              widget.headerPadding ??
+                  widget.headerPadding ??
                   EdgeInsets.all(10 * Responsive.getResponsive(context)),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.vertical(
@@ -78,7 +99,8 @@ class _LeaveExpandableCardState extends State<LeaveExpandableCard> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: widget.headerColor?.withAlpha(200) ??
+                    color:
+                        widget.headerColor?.withAlpha(200) ??
                         colors.secondary.withAlpha(200),
                   ),
                   BoxShadow(
@@ -112,18 +134,18 @@ class _LeaveExpandableCardState extends State<LeaveExpandableCard> {
                         ),
                         if (widget.secondTitle != null)
                           CustomText(
-                            '${widget.secondTitle}',
+                            widget.secondTitle!,
                             color: colors.onPrimary,
                             fontSize:
-                            17 * Responsive.getResponsiveText(context),
+                                17 * Responsive.getResponsiveText(context),
                             fontWeight: FontWeight.bold,
                           ),
                         if (widget.subTitle != null)
                           CustomText(
-                            '${widget.subTitle}',
+                            widget.subTitle!,
                             color: colors.onPrimary,
                             fontSize:
-                            15 * Responsive.getResponsiveText(context),
+                                15 * Responsive.getResponsiveText(context),
                             fontWeight: FontWeight.bold,
                           ),
                       ],
@@ -145,15 +167,18 @@ class _LeaveExpandableCardState extends State<LeaveExpandableCard> {
                       isShadowBottomLeft: true,
                       enabled: true,
                     ),
-                  IconButton(
-                    icon: Icon(
-                      _expanded
-                          ? Icons.keyboard_arrow_up
-                          : Icons.keyboard_arrow_down,
-                      color: colors.onPrimary,
-                    ),
-                    onPressed: () => setState(() => _expanded = !_expanded),
-                  ),
+                  widget.isText
+                      ? widget.TextChild!
+                      : IconButton(
+                          icon: Icon(
+                            _expanded
+                                ? Icons.keyboard_arrow_up
+                                : Icons.keyboard_arrow_down,
+                            color: colors.onPrimary,
+                          ),
+                          onPressed: () =>
+                              setState(() => _expanded = !_expanded),
+                        ),
                 ],
               ),
             ),
