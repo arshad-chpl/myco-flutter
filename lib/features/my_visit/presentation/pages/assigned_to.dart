@@ -113,7 +113,6 @@ class _VisitWithState extends State<AssignedTo> {
                       heading: 'select_branch',
                       dataList: branches,
                       btnTitle: 'add',
-                      isMultipleSelection: true,
                     );
 
                     if (selectedIds != null && selectedIds.isNotEmpty) {

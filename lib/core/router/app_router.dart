@@ -276,7 +276,6 @@ class AppRouter {
         ),
         routes: adminViewRoutes,
       ),
-      ...cahatRoutes,
       GoRoute(
         path: RoutePaths.leaveBalance,
         name: RoutePaths.leaveBalance,
