@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myco_flutter/widgets/custom_appbar.dart';
 
 class AlbumViewScreen extends StatefulWidget {
   final String albumName;
-
-  const AlbumViewScreen({super.key, required this.albumName});
+  const AlbumViewScreen({required this.albumName, super.key});
 
   @override
   State<AlbumViewScreen> createState() => _AlbumViewScreenState();
@@ -12,13 +10,13 @@ class AlbumViewScreen extends StatefulWidget {
 
 class _AlbumViewScreenState extends State<AlbumViewScreen> {
   @override
-  Widget build(BuildContext context) => const Scaffold(
-    appBar: CustomAppbar(title: 'Album View'),
-    body: Column(
-      children: [
-        Text('Album View Screen'),
-        // Add your album view content here
-      ],
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('Album View')),
+    body: Center(
+      child: Text(
+        'Album View Screen',
+        style: TextStyle(fontSize: 24, color: Theme.of(context).primaryColor),
+      ),
     ),
   );
 }

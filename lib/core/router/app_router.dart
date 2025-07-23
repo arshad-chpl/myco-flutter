@@ -62,7 +62,7 @@ class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: RoutePaths
-        .splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+        .gallery, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -345,6 +345,7 @@ class AppRouter {
       ),
 
       ...galleryRoutes,
+
       // GoRoute(
       //   path: RoutePaths.myProfile,
       //   name: 'my-profile',

@@ -40,7 +40,7 @@ Future<void> refreshApiServiceCompany(GetIt sl) async {
   final password = Util.getCurrentPassword(
     companyId?.toString() ?? '',
     userId?.toString() ?? '',
-    userMobile?.toString() ?? '7016864065',
+    userMobile?.toString() ?? '9428913811',
   );
   final credentials = base64Encode(utf8.encode('$userId:$password'));
   // final Dio dioWithAuth= createDio(credentials);

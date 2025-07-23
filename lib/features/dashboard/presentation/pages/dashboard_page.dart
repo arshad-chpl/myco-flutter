@@ -33,15 +33,29 @@ class _DashBoardPageState extends State<DashBoardPage> {
     Future.microtask(() async {
       final prefs = GetIt.I<PreferenceManager>();
 
-      final userId = prefs.getUserId();
+      final userId = await prefs.getUserId();
       final companyId = await prefs.getCompanyId();
       final languageId = await prefs.getLanguageId();
       if (!mounted) return;
+      // context.read<DashboardBloc>().add(
+      //   GetIDCardDetails(
+      //     userId: userId,
+      //     companyId: companyId,
+      //     languageId: languageId,
+      //   ),
+      // );
       context.read<DashboardBloc>().add(
-        GetIDCardDetails(
-          userId: await userId,
+        GetAppMenuGridWithCategory(
+          userId: userId,
           companyId: companyId,
           languageId: languageId,
+          society_id: '1',
+          city_id: '15449',
+          state_id: '1558',
+          country_id: '101',
+          device: 'android',
+          language_id: '1',
+          unit_id: '21',
         ),
       );
     });
@@ -52,28 +66,51 @@ class _DashBoardPageState extends State<DashBoardPage> {
     floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     backgroundColor: AppTheme.getColor(context).surface,
 
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 16,
-          children: [
-            // AppBar
-            const DashboardAppBar(),
+    body: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 16,
+        children: [
+          // AppBar
+          const DashboardAppBar(),
 
-            // Body content
-            Expanded(
-              child: Responsive.getWidth(context) > 600
-                  ? _tabview(context)
-                  : _mobileView(context),
+          // Body content
+          Expanded(
+            child: BlocBuilder<DashboardBloc, DashboardState>(
+              builder: (context, state) {
+                // Loading State
+                if (state is DashboardInitial) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                // Error State
+                if (state is DashboardError) {
+                  return Center(
+                    child: Text('Failed to load data: ${state.message}'),
+                  );
+                }
+
+                // Loaded State
+                if (state is AppMenuGridLoaded) {
+                  final responseData = state.res;
+                  // Based on screen size, build the appropriate layout
+                  return Responsive.getWidth(context) > 600
+                      ? _tabview(context, responseData)
+                      : _mobileView(context, responseData);
+                }
+
+                // Fallback for any other state
+                return const Center(child: Text('Something went wrong.'));
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     ),
   );
 
-  Widget _tabview(BuildContext context) => Row(
+  Widget _tabview(BuildContext context, HomeMenuResponseEntity homeData) => Row(
     children: [
       Expanded(
         child: SingleChildScrollView(
@@ -81,10 +118,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
             spacing: 16,
             children: [
               // timer and slider section
-              timerAndSlider(context),
+              timerAndSlider(context, homeData.slider ?? [], homeData),
 
               // Circulars and discussion section
-              const CircularAndDiscussion(),
+              BigHomeMenu(appMenuBig: homeData.appmenuBig ?? []),
               // My Team Section
               const MyTeamSection(),
               // Your Department Section
@@ -99,7 +136,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
           child: Column(
             children: [
               // Quick Access Section
-              QuickActionSection(),
+              QuickActionSection(appMenuHome: homeData.appmenuHome),
 
               // Upcoming Celebrations Section
               const UpcomingCelebrationSection(),
@@ -110,31 +147,32 @@ class _DashBoardPageState extends State<DashBoardPage> {
     ],
   );
 
-  Widget _mobileView(BuildContext context) => SingleChildScrollView(
-    child: Column(
-      spacing: 16,
-      children: [
-        // timer and slider section
-        timerAndSlider(context),
+  Widget _mobileView(BuildContext context, HomeMenuResponseEntity homeData) =>
+      SingleChildScrollView(
+        child: Column(
+          spacing: 16,
+          children: [
+            // timer and slider section
+            timerAndSlider(context, homeData.slider ?? [], homeData),
 
-        // Circulars and discussion section
-        const CircularAndDiscussion(),
-        // My Team Section
-        const MyTeamSection(),
+            // Circulars and discussion section
+            BigHomeMenu(appMenuBig: homeData.appmenuBig ?? []),
+            // My Team Section
+            const MyTeamSection(),
 
-        // Quick Access Section
-        QuickActionSection(),
+            // Quick Access Section
+            QuickActionSection(appMenuHome: homeData.appmenuHome),
 
-        // Upcoming Celebrations Section
-        const UpcomingCelebrationSection(),
+            // Upcoming Celebrations Section
+            const UpcomingCelebrationSection(),
 
-        //Your Department Section
-        //Your Department Section
-        const YourDepartmentSection(),
+            //Your Department Section
+            //Your Department Section
+            const YourDepartmentSection(),
 
-        // Moments Section
-        const MomentsSection(),
-      ],
-    ),
-  );
+            // Moments Section
+            const MomentsSection(),
+          ],
+        ),
+      );
 }

@@ -8,11 +8,11 @@ import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/chat/presentation/widgets/select_department.dart';
 import 'package:myco_flutter/features/gallery/presentation/bloc/gallery_bloc.dart';
 import 'package:myco_flutter/features/gallery/presentation/widget/album_shimmer.dart';
 import 'package:myco_flutter/features/gallery/presentation/widget/album_tile.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
@@ -35,15 +35,15 @@ class _GalleryScreenState extends State<GalleryScreen> {
     dev.log('Loading gallery albums...');
 
     final preferenceManager = GetIt.I<PreferenceManager>();
-    final userId = preferenceManager.getUserId();
+    final userId = await preferenceManager.getUserId();
     final languageId = await preferenceManager.getLanguageId();
 
     if (mounted) {
       context.read<GalleryBloc>().add(
         FetchGalleryAlbum(
           societyId: '1',
-          userId: userId,
-          languageId: languageId ?? '1',
+          userId: userId ?? '',
+          languageId: languageId ?? '',
           floorId: '151',
           blockId: '30',
           filterYear: '2024',
@@ -180,7 +180,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
 
                           // final preferenceManager =
                           //     GetIt.I<PreferenceManager>();
-                          // final userId = preferenceManager.getUserId();
+                          // final userId = await preferenceManager.getUserId();
                           // final languageId = await preferenceManager
                           //     .getLanguageId();
 
@@ -189,8 +189,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
                           //   context.read<GalleryBloc>().add(
                           //     GetGalleryNewAlbum(
                           //       societyId: '1',
-                          //       userId: userId,
-                          //       languageId: languageId ?? '1',
+                          //       userId: userId ?? '',
+                          //       languageId: languageId ?? '',
                           //       floorId: '151',
                           //       blockId: '30',
                           //       galleryAlbumId: album.galleryAlbumId ?? '',
@@ -198,7 +198,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
                           //   );
                           // }
 
-                          context.push(RoutePaths.albumView);
+                          context.push(
+                            RoutePaths.albumView,
+                            extra: album.albumTitle ?? '',
+                          );
                         },
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

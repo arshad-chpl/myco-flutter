@@ -14,13 +14,13 @@ List<RouteBase> galleryRoutes = [
       GoRoute(
         path: RoutePaths.gallery,
         builder: (context, state) => const GalleryScreen(),
-        name: 'gallery',
+        // name: 'gallery',
       ),
       GoRoute(
         path: RoutePaths.albumView,
         builder: (context, state) =>
             AlbumViewScreen(albumName: state.extra as String),
-        name: 'album-view',
+        // name: 'album-view',
       ),
     ],
   ),

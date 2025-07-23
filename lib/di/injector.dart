@@ -8,6 +8,7 @@ import 'package:myco_flutter/features/company_info/presentation/di/company_info_
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/request_otp_di.dart';
 import 'package:myco_flutter/features/dashboard/presentation/di/dashboard_di.dart';
+import 'package:myco_flutter/features/gallery/presentation/di/gallery_di.dart';
 import 'package:myco_flutter/features/holiday/presentation/di/holiday_di.dart';
 import 'package:myco_flutter/features/language_selector/presentation/di/language_di.dart';
 import 'package:myco_flutter/features/leave/presentation/di/leave_di.dart';
@@ -74,4 +75,7 @@ Future<void> init() async {
 
   //========Chat=========
   initChatFeatureDI(sl);
+
+  //========Gallery=========
+  galleryDi(sl);
 }

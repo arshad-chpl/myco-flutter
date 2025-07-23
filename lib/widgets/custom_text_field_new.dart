@@ -40,7 +40,9 @@ class NewTextField extends StatelessWidget {
     this.onTap,
     this.controller,
     this.formFieldKey,
-    this.isKey, this.suffix, this.prefix,
+    this.isKey,
+    this.suffix,
+    this.prefix,
   });
 
   @override
@@ -56,7 +58,7 @@ class NewTextField extends StatelessWidget {
               color: AppTheme.getColor(context).onSurfaceVariant,
               fontSize: 14 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w700,
-              isKey: isKey??false,
+              isKey: isKey ?? false,
             ),
             if (isRequired) ...[
               CustomText(
@@ -89,15 +91,22 @@ class NewTextField extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: EdgeInsetsGeometry.only(
-                  top: 17.5 * Responsive.getResponsive(context),
+              if (prefixIconPath != null)
+                Padding(
+                  padding: EdgeInsetsGeometry.only(
+                    top: 17.5 * Responsive.getResponsive(context),
+                    left:
+                        10 *
+                        Responsive.getResponsive(
+                          context,
+                        ), // Added left padding here
+                  ),
+                  child: SvgPicture.asset(
+                    prefixIconPath!, // Now this is safe because of the check above
+                    height: 0.022 * Responsive.getHeight(context),
+                  ),
                 ),
-                child: SvgPicture.asset(
-                  prefixIconPath!,
-                  height: 0.022 * Responsive.getHeight(context),
-                ),
-              ),
+
               SizedBox(
                 // height:50,
                 width: 0.8 * Responsive.getWidth(context),
