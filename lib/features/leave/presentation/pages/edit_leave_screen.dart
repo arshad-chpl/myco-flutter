@@ -61,7 +61,7 @@ class _EditLeave extends State<EditLeave> {
             //Submit button
             MyCoButton(
               onTap: () {},
-              title: 'Submit',
+              title: 'Update',
               isShadowBottomLeft: true,
               boarderRadius: 50,
               fontFamily: 'Gilroy-Bold',

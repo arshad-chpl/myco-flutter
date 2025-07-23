@@ -51,6 +51,7 @@ class RoutePaths {
   static const String myTeamLeavesScreen = '/my_team_leaves_screen';
   static const String addShortLeaveScreen = '/add_short_leave_screen';
   static const String addLeaveScreen = '/add_leave_screen';
+  static const String editLeaveScreen = '/edit_leave_screen';
   static const String holiday = '/holiday';
 
 
