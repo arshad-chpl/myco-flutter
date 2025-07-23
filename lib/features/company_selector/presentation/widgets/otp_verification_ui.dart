@@ -59,6 +59,7 @@ class OtpVerificationUi extends StatelessWidget {
           final PreferenceManager preference = GetIt.I<PreferenceManager>();
           preference.setLoginSession(true);
           preference.setUserId(state.response.userId ?? '');
+          preference.setUserMobileNo(state.response.userMobile ?? '');
           preference.setCountryId(state.response.countryId ?? '');
           preference.setCompanyId(state.response.societyId ?? '');
           preference.setCompanyAddress(state.response.societyAddress ?? '');
