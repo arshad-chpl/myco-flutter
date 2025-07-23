@@ -68,48 +68,46 @@ class _DashBoardPageState extends State<DashBoardPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       backgroundColor: AppTheme.getColor(context).surface,
 
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 16,
-            children: [
-              // AppBar
-              const DashboardAppBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16,
+          children: [
+            // AppBar
+            const DashboardAppBar(),
 
-              // Body content
-              Expanded(
-                child: BlocBuilder<DashboardBloc, DashboardState>(
-                  builder: (context, state) {
-                    // Loading State
-                    if (state is DashboardInitial) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
+            // Body content
+            Expanded(
+              child: BlocBuilder<DashboardBloc, DashboardState>(
+                builder: (context, state) {
+                  // Loading State
+                  if (state is DashboardInitial) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
 
-                    // Error State
-                    if (state is DashboardError) {
-                      return Center(
-                        child: Text('Failed to load data: ${state.message}'),
-                      );
-                    }
+                  // Error State
+                  if (state is DashboardError) {
+                    return Center(
+                      child: Text('Failed to load data: ${state.message}'),
+                    );
+                  }
 
-                    // Loaded State
-                    if (state is AppMenuGridLoaded) {
-                      final responseData = state.res;
-                      // Based on screen size, build the appropriate layout
-                      return Responsive.getWidth(context) > 600
-                          ? _tabview(context, responseData)
-                          : _mobileView(context, responseData);
-                    }
+                  // Loaded State
+                  if (state is AppMenuGridLoaded) {
+                    final responseData = state.res;
+                    // Based on screen size, build the appropriate layout
+                    return Responsive.getWidth(context) > 600
+                        ? _tabview(context, responseData)
+                        : _mobileView(context, responseData);
+                  }
 
-                    // Fallback for any other state
-                    return const Center(child: Text('Something went wrong.'));
-                  },
-                ),
+                  // Fallback for any other state
+                  return const Center(child: Text('Something went wrong.'));
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
