@@ -158,7 +158,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
                     context,
                     MaterialPageRoute(
                       builder: (_) =>
-                          AssignToVisit(), // replace with your target page widget
+                          AssignToVisit(title: 'visit',), // replace with your target page widget
                     ),
                   );
                 },

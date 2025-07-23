@@ -133,14 +133,14 @@ Widget MyVisitBottomWidget(
                 backgroundColor: Util.applyOpacity(AppColors.red, 0.1),
                 textStyle: TextStyle(
                   color: AppColors.red,
-                  fontSize: 13.5 * Responsive.getResponsiveText(context),
+                  fontSize: 12* Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
                 isShadowBottomLeft: true,
                 height: 0.050 * Responsive.getHeight(context),
                 width: 0.38 * Responsive.getWidth(context),
               ),
-              SizedBox(width: VariableBag.buttonRowSpacing * Responsive.getResponsive(context),),
+              Spacer(),
               MyCoButton(
                 onTap: () {},
                 title: 'TAKE ORDER',
@@ -148,7 +148,7 @@ Widget MyVisitBottomWidget(
                 boarderRadius: VariableBag.buttonBorderRadius,
                 textStyle: TextStyle(
                   color: Colors.white,
-                  fontSize: 13.5 * Responsive.getResponsiveText(context),
+                  fontSize: 12 * Responsive.getResponsiveText(context),
                   fontWeight: FontWeight.bold,
                 ),
                 isShadowBottomLeft: true,

@@ -1,27 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
-import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 Widget startVisitBottomSheet(BuildContext context) => Padding(
   padding: EdgeInsets.only(
-    left:
-        VariableBag.bottomSheetLeftPadding * Responsive.getResponsive(context),
-    right:
-        VariableBag.bottomSheetRightPadding * Responsive.getResponsive(context),
-    top: VariableBag.bottomSheetTopPadding * Responsive.getResponsive(context),
-    bottom:
-        VariableBag.bottomSheetBottomPadding *
-        Responsive.getResponsive(context),
+    left: 0.05 * Responsive.getWidth(context),
+    right: 0.05 * Responsive.getWidth(context),
+    bottom: MediaQuery.of(context).viewInsets.bottom + 0.03 * Responsive.getHeight(context),
+    top: 0.03 * Responsive.getHeight(context),
   ),
   child: Column(
-    spacing:
-        VariableBag.formContentSpacingVertical *
-        Responsive.getResponsive(context),
     mainAxisSize: MainAxisSize.min,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -31,8 +25,14 @@ Widget startVisitBottomSheet(BuildContext context) => Padding(
         fontSize: 18 * Responsive.getResponsiveText(context),
         fontWeight: FontWeight.w700,
       ),
-      Center(child: Image.asset(AppAssets.faceMatch, fit: BoxFit.contain)),
-
+      SizedBox(height: 0.02 * Responsive.getHeight(context)),
+      Center(
+        child: Image.asset(
+          AppAssets.faceMatch,
+          fit: BoxFit.contain,
+        ),
+      ),
+      SizedBox(height: 0.025 * Responsive.getHeight(context)),
       CustomText(
         'visit_face_alert_info',
         isKey: true,
@@ -40,7 +40,7 @@ Widget startVisitBottomSheet(BuildContext context) => Padding(
         fontWeight: FontWeight.w400,
         textAlign: TextAlign.center,
       ),
-
+      SizedBox(height: 0.03 * Responsive.getHeight(context)),
       Row(
         children: [
           Expanded(
@@ -48,40 +48,32 @@ Widget startVisitBottomSheet(BuildContext context) => Padding(
               onTap: () {
                 Navigator.pop(context);
               },
-              title: 'CLOSE',
+              title: LanguageManager().get('close'),
               textStyle: TextStyle(
                 color: AppColors.primary,
                 fontSize: 14 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.bold,
               ),
               backgroundColor: Colors.transparent,
-              boarderRadius:
-                  VariableBag.buttonBorderRadius *
-                  Responsive.getResponsive(context),
+              boarderRadius: 30,
               wantBorder: true,
               borderColor: AppColors.primary,
             ),
           ),
-          SizedBox(
-            width:
-                VariableBag.buttonRowSpacing *
-                Responsive.getResponsive(context),
-          ),
+          SizedBox(width: 0.04 * Responsive.getWidth(context)),
           Expanded(
             child: MyCoButton(
               onTap: () {
-                Navigator.pop(context);
+                context.pushNamed('faceDetection');
               },
-              title: 'CONTINUE',
+              title: LanguageManager().get('Continue'),
               textStyle: TextStyle(
                 color: Colors.white,
                 fontSize: 14 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.bold,
               ),
               backgroundColor: AppColors.primary,
-              boarderRadius:
-                  VariableBag.buttonBorderRadius *
-                  Responsive.getResponsive(context),
+              boarderRadius: 30,
               wantBorder: false,
               isShadowBottomLeft: true,
             ),

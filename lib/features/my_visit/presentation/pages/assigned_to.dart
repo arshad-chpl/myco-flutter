@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Input_Tag_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Input_Tag_event.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Input_Tag_state.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/row_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/tag_input_widget.dart';
 import 'package:myco_flutter/widgets/custom_employee_card.dart';
@@ -62,8 +61,8 @@ class _VisitWithState extends State<AssignedTo> {
     {'id': '19', 'name': 'Anand'},
     {'id': '20', 'name': 'Nadiad'},
   ];
-  Color blendedColor = Color.lerp(const Color(0xFFF54444), const Color(0xFFFFFFFF), 0.5)!;
 
+  Color blendedColor = Color.lerp(const Color(0xFFF54444), const Color(0xFFFFFFFF), 0.5)!;
 
   @override
   Widget build(BuildContext context) => SafeArea(
@@ -77,6 +76,7 @@ class _VisitWithState extends State<AssignedTo> {
       child: Column(
         spacing: VariableBag.textFieldRowGap * Responsive.getResponsive(context),
         children: [
+          // Header
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -98,84 +98,82 @@ class _VisitWithState extends State<AssignedTo> {
             controller: searchController,
           ),
 
-
           // Branch Section
-          BlocBuilder<InputTagBloc, InputTagState>(
-            builder: (context, state) => Column(
-              children: [
-                LabelRow(
-                  title: 'blocks',
-                  actionLabel: 'select_branch',
-                  Isselectbtn: state.Branchtags.isNotEmpty,
-                  onTap: () async {
-                    final List<String>? selectedIds = await showCustomSimpleBottomSheet(
-                      context: context,
-                      heading: 'select_branch',
-                      dataList: branches,
-                      btnTitle: 'add',
-                      isMultipleSelection: true,
-                    );
+          BlocBuilder<VisitBloc, VisitState>(
+            builder: (context, state) {
+              final List<String> branchTags = state is VisitLoaded ? state.branchTags : [];
 
-                    if (selectedIds != null && selectedIds.isNotEmpty) {
-                      for (final id in selectedIds) {
-                        final selectedMap = branches.firstWhere(
-                              (e) => e['id'] == id,
-                          orElse: () => {'id': '', 'name': ''},
-                        );
-
-                        context.read<InputTagBloc>().add(
-                          AddBranchTagFromSheet(selectedMap['name'] ?? ''),
-                        );
-                      }
-                    }
-                  },
-                ),
-                CustomTagInputField(
-                  tags: state.Branchtags,
-                  hint: 'block',
-                  onAdd: (value) {
-                    final cleanValue = value.replaceAll(',', '').trim();
-                    if (cleanValue.isNotEmpty &&
-                        !state.Branchtags.contains(cleanValue)) {
-                      context.read<InputTagBloc>().add(
-                        AddBranchTagFromSheet(cleanValue),
+              return Column(
+                children: [
+                  LabelRow(
+                    title: 'blocks',
+                    actionLabel: 'select_branch',
+                    Isselectbtn: branchTags.isNotEmpty,
+                    onTap: () async {
+                      final List<String>? selectedIds = await showCustomSimpleBottomSheet(
+                        context: context,
+                        heading: 'select_branch',
+                        dataList: branches,
+                        btnTitle: 'add',
+                        isMultipleSelection: true,
                       );
-                    }
-                  },
-                  onRemove: (tag) {
-                    context.read<InputTagBloc>().add(RemoveBranchTag(tag));
-                  },
-                  onArrowTap: () async {
-                    final List<String>? selectedIds = await showCustomSimpleBottomSheet(
-                      context: context,
-                      heading: 'select_branch',
-                      dataList: branches,
-                      btnTitle: 'add',
-                      isMultipleSelection: true,
-                    );
 
-                    if (selectedIds != null && selectedIds.isNotEmpty) {
-                      for (final id in selectedIds) {
-                        final selectedMap = branches.firstWhere(
-                              (e) => e['id'] == id,
-                          orElse: () => {'id': '', 'name': ''},
-                        );
+                      if (selectedIds != null && selectedIds.isNotEmpty) {
+                        for (final id in selectedIds) {
+                          final selectedMap = branches.firstWhere(
+                                (e) => e['id'] == id,
+                            orElse: () => {'id': '', 'name': ''},
+                          );
 
-                        context.read<InputTagBloc>().add(
-                          AddBranchTagFromSheet(selectedMap['name'] ?? ''),
-                        );
+                          context.read<VisitBloc>().add(
+                            AddBranchTagFromSheet(selectedMap['name'] ?? ''),
+                          );
+                        }
                       }
-                    }
-                  },
-                ),
-              ],
-            ),
+                    },
+                  ),
+                  CustomTagInputField(
+                    tags: branchTags,
+                    hint: 'block',
+                    onAdd: (value) {
+                      final cleanValue = value.replaceAll(',', '').trim();
+                      if (cleanValue.isNotEmpty && !branchTags.contains(cleanValue)) {
+                        context.read<VisitBloc>().add(AddBranchTagFromSheet(cleanValue));
+                      }
+                    },
+                    onRemove: (tag) => context.read<VisitBloc>().add(RemoveBranchTag(tag)),
+                    onArrowTap: () async {
+                      final List<String>? selectedIds = await showCustomSimpleBottomSheet(
+                        context: context,
+                        heading: 'select_branch',
+                        dataList: branches,
+                        btnTitle: 'add',
+                        isMultipleSelection: true,
+                      );
+
+                      if (selectedIds != null && selectedIds.isNotEmpty) {
+                        for (final id in selectedIds) {
+                          final selectedMap = branches.firstWhere(
+                                (e) => e['id'] == id,
+                            orElse: () => {'id': '', 'name': ''},
+                          );
+
+                          context.read<VisitBloc>().add(
+                            AddBranchTagFromSheet(selectedMap['name'] ?? ''),
+                          );
+                        }
+                      }
+                    },
+                  ),
+                ],
+              );
+            },
           ),
 
-          // Department Section - SHOWN ONLY IF branch selected
-          BlocBuilder<InputTagBloc, InputTagState>(
+          // Department Section
+          BlocBuilder<VisitBloc, VisitState>(
             builder: (context, state) {
-              if (state.Branchtags.isEmpty) {
+              if (state is! VisitLoaded || state.branchTags.isEmpty) {
                 return const SizedBox.shrink();
               }
 
@@ -184,7 +182,7 @@ class _VisitWithState extends State<AssignedTo> {
                   LabelRow(
                     title: 'department',
                     actionLabel: 'select_department',
-                    Isselectbtn: state.Departmenttags.isNotEmpty,
+                    Isselectbtn: state.departmentTags.isNotEmpty,
                     onTap: () async {
                       final List<String>? selectedIds = await showCustomSimpleBottomSheet(
                         context: context,
@@ -201,7 +199,7 @@ class _VisitWithState extends State<AssignedTo> {
                             orElse: () => {'id': '', 'name': ''},
                           );
 
-                          context.read<InputTagBloc>().add(
+                          context.read<VisitBloc>().add(
                             AddDepartmentTagFromSheet(selectedMap['name'] ?? ''),
                           );
                         }
@@ -225,33 +223,30 @@ class _VisitWithState extends State<AssignedTo> {
                             orElse: () => {'id': '', 'name': ''},
                           );
 
-                          context.read<InputTagBloc>().add(
+                          context.read<VisitBloc>().add(
                             AddDepartmentTagFromSheet(selectedMap['name'] ?? ''),
                           );
                         }
                       }
                     },
-                    tags: state.Departmenttags,
+                    tags: state.departmentTags,
                     hint: 'department',
                     onAdd: (value) {
                       final cleanValue = value.replaceAll(',', '').trim();
                       if (cleanValue.isNotEmpty &&
-                          !state.Departmenttags.contains(cleanValue)) {
-                        context.read<InputTagBloc>().add(
-                          AddDepartmentTagFromSheet(cleanValue),
-                        );
+                          !state.departmentTags.contains(cleanValue)) {
+                        context.read<VisitBloc>().add(AddDepartmentTagFromSheet(cleanValue));
                       }
                     },
-                    onRemove: (tag) {
-                      context.read<InputTagBloc>().add(RemoveDepartmentTag(tag));
-                    },
+                    onRemove: (tag) =>
+                        context.read<VisitBloc>().add(RemoveDepartmentTag(tag)),
                   ),
                 ],
               );
             },
           ),
 
-          // Employees Grid
+          // Employee Grid
           Expanded(
             child: LayoutBuilder(
               builder: (context, constraints) => GridView.builder(
@@ -299,7 +294,7 @@ class _VisitWithState extends State<AssignedTo> {
             ),
           ),
 
-          // Add Button
+          // Submit Button
           Align(
             alignment: Alignment.bottomCenter,
             child: MyCoButton(
@@ -310,7 +305,7 @@ class _VisitWithState extends State<AssignedTo> {
               fontFamily: 'Inter',
               fontWeight: FontWeight.w500,
               onTap: () {
-                Navigator.pop(context);
+           Navigator.pop(context);
               },
             ),
           ),

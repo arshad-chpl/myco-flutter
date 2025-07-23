@@ -41,10 +41,10 @@ import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_m
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
 
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/add_short_leave_screen.dart';
 
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
@@ -202,7 +202,7 @@ class AppRouter {
         pageBuilder: (context, state) => MaterialPage(
           child: BlocProvider(
             create: (context) =>
-            GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+            GetIt.I<VisitBloc>()..add(LaunchCamera()),
             child: const FaceDetectionPage(),
           ),
         ),

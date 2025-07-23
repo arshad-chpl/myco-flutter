@@ -50,8 +50,6 @@ Future<void> init() async {
   // ========Admin View=========
   await adminViewDi(sl);
 
-  //========VISIT WITH=========
-  visitWithDi(sl);
 
   //========Company Info=========
   setupCompanyInfoDI(sl);

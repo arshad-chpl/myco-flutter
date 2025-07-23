@@ -6,17 +6,15 @@ import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_custom_radio_button.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_label_textfield.dart';
-import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class AssignToVisit extends StatelessWidget {
-   AssignToVisit({super.key});
+  String title;
+   AssignToVisit({super.key , required this.title});
 
   String selectedVisitType = 'Self Visit';
 
@@ -65,7 +63,7 @@ class AssignToVisit extends StatelessWidget {
             ),
             SizedBox(height: 16 * Responsive.getResponsive(context)),
             CommonCard(
-              title: LanguageManager().get('assign_to'),
+              title: LanguageManager().get(title),
               borderRadius: 12,
               headerPadding: EdgeInsets.symmetric(
                 horizontal: 12 * Responsive.getResponsive(context),
