@@ -2,14 +2,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
-import 'package:myco_flutter/features/gallery/presentation/bloc/gallery_bloc.dart';
+import 'package:myco_flutter/features/gallery/presentation/bloc/album/album_bloc.dart';
+import 'package:myco_flutter/features/gallery/presentation/bloc/gallery/gallery_bloc.dart';
 import 'package:myco_flutter/features/gallery/presentation/screen/album_view_screen.dart';
 import 'package:myco_flutter/features/gallery/presentation/screen/gallery_screen.dart';
 
 List<RouteBase> galleryRoutes = [
   ShellRoute(
-    builder: (context, state, child) =>
-        BlocProvider(create: (_) => GetIt.I<GalleryBloc>(), child: child),
+    builder: (context, state, child) => MultiBlocProvider(
+      providers: [
+        BlocProvider<GalleryBloc>(create: (context) => GetIt.I<GalleryBloc>()),
+        BlocProvider<AlbumBloc>(create: (context) => GetIt.I<AlbumBloc>()),
+      ],
+      child: child,
+    ),
     routes: [
       GoRoute(
         path: RoutePaths.gallery,

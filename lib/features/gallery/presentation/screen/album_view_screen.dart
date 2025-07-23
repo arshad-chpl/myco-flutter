@@ -5,10 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
-import 'package:myco_flutter/features/gallery/presentation/bloc/gallery_bloc.dart';
+import 'package:myco_flutter/features/gallery/presentation/bloc/album/album_bloc.dart';
 import 'package:myco_flutter/features/gallery/presentation/widget/album_shimmer.dart';
 import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 class AlbumViewScreen extends StatefulWidget {
   final String albumName;
@@ -35,8 +36,8 @@ class _AlbumViewScreenState extends State<AlbumViewScreen> {
 
     if (mounted) {
       // ignore: use_build_context_synchronously
-      context.read<GalleryBloc>().add(
-        GetGalleryNewAlbum(
+      context.read<AlbumBloc>().add(
+        GetGalleryNew(
           societyId: '1',
           userId: userId ?? '',
           languageId: languageId ?? '',
@@ -62,24 +63,40 @@ class _AlbumViewScreenState extends State<AlbumViewScreen> {
       elevation: 0,
       scrolledUnderElevation: 0,
     ),
-    body: BlocBuilder<GalleryBloc, GalleryState>(
+    body: BlocBuilder<AlbumBloc, AlbumState>(
       builder: (context, state) {
-        if (state is GalleryInitial || state is GalleryLoading) {
+        if (state is AlbumInitial || state is AlbumLoading) {
           return const SizedBox.expand(child: AlbumShimmer());
         }
-        if (state is GalleryNewLoaded) {
+
+        if (state is AlbumError) {
+          return Center(
+            child: CustomText(state.message, fontWeight: FontWeight.w600),
+          );
+        }
+
+        if (state is AlbumLoaded) {
+          // Extract images from the loaded entity
           final images = state.getGalleryNewEntity.images;
+
+          // If images are null or empty, show a message
+          if (images == null || images.isEmpty) {
+            return const Center(
+              child: CustomText('no_image_found', fontWeight: FontWeight.w600),
+            );
+          }
+
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               crossAxisSpacing: 2,
               mainAxisSpacing: 2,
             ),
-            itemCount: images?.length ?? 0,
+            itemCount: images.length,
             itemBuilder: (context, index) {
-              final image = images?[index];
+              final image = images[index];
               return CachedImage(
-                imageUrl: image?.galleryPhoto ?? '',
+                imageUrl: image.galleryPhoto ?? '',
                 errorWidget: Image.asset(AppAssets.myCoLogo),
               );
             },

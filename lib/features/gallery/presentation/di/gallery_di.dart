@@ -10,7 +10,8 @@ import 'package:myco_flutter/features/gallery/data/repositories/gallery_reposito
 import 'package:myco_flutter/features/gallery/domain/repositories/gallery_repository.dart';
 import 'package:myco_flutter/features/gallery/domain/usecases/get_gallery_album.dart';
 import 'package:myco_flutter/features/gallery/domain/usecases/get_gallery_new.dart';
-import 'package:myco_flutter/features/gallery/presentation/bloc/gallery_bloc.dart';
+import 'package:myco_flutter/features/gallery/presentation/bloc/album/album_bloc.dart';
+import 'package:myco_flutter/features/gallery/presentation/bloc/gallery/gallery_bloc.dart';
 
 Future<void> galleryDi(GetIt sl) async {
   // data sources
@@ -44,9 +45,9 @@ Future<void> galleryDi(GetIt sl) async {
 
   // bloc
   sl.registerFactory(
-    () => GalleryBloc(
-      getGalleryAlbumUseCase: sl<GetGalleryAlbumUseCase>(),
-      getGalleryNewUseCase: sl<GetGalleryNewUseCase>(),
-    ),
+    () => GalleryBloc(getGalleryAlbumUseCase: sl<GetGalleryAlbumUseCase>()),
+  );
+  sl.registerFactory(
+    () => AlbumBloc(getGalleryNewUseCase: sl<GetGalleryNewUseCase>()),
   );
 }

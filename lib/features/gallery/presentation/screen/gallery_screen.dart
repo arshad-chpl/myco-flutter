@@ -8,7 +8,7 @@ import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/gallery/presentation/bloc/gallery_bloc.dart';
+import 'package:myco_flutter/features/gallery/presentation/bloc/gallery/gallery_bloc.dart';
 import 'package:myco_flutter/features/gallery/presentation/widget/album_shimmer.dart';
 import 'package:myco_flutter/features/gallery/presentation/widget/album_tile.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
@@ -40,7 +40,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
 
     if (mounted) {
       context.read<GalleryBloc>().add(
-        FetchGalleryAlbum(
+        GetGalleryAlbum(
           societyId: '1',
           userId: userId ?? '',
           languageId: languageId ?? '',
@@ -135,7 +135,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
               }
 
               // loaded state
-              if (state is GalleryAlbumLoaded) {
+              if (state is GalleryLoaded) {
                 final albums = state.galleryAlbumEntity.eventAlbum ?? [];
 
                 dev.log(

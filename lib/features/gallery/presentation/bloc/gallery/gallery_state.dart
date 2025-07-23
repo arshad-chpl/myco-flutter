@@ -11,22 +11,14 @@ final class GalleryInitial extends GalleryState {}
 
 final class GalleryLoading extends GalleryState {}
 
-final class GalleryAlbumLoaded extends GalleryState {
+// State when the gallery album is successfully loaded
+final class GalleryLoaded extends GalleryState {
   final GalleryAlbumEntity galleryAlbumEntity;
 
-  const GalleryAlbumLoaded({required this.galleryAlbumEntity});
+  const GalleryLoaded({required this.galleryAlbumEntity});
 
   @override
   List<Object> get props => [galleryAlbumEntity];
-}
-
-final class GalleryNewLoaded extends GalleryState {
-  final GetGalleryNewEntity getGalleryNewEntity;
-
-  const GalleryNewLoaded({required this.getGalleryNewEntity});
-
-  @override
-  List<Object> get props => [getGalleryNewEntity];
 }
 
 final class GalleryError extends GalleryState {
