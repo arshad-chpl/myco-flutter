@@ -105,12 +105,12 @@ flutter:
     - assets/svgs/visit/
     - assets/add_expense/
     - assets/dashboard/svgs/
-    - assets/face_detection/
     - assets/svgs/visit/
     - assets/dashboard/svgs/
 
     - assets/dashboard/svgs/
     - assets/assets/
+    - assets/chat/
     - assets/svgs/work_allocation/
 
     - assets/asset/
