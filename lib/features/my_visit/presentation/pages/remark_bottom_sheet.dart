@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/close_end_visit_button_widget.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/follow_up_widget.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/select_attachment_widget.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_type_selection.dart';
+import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/test_new_visit1.dart';
 import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_label_textfield.dart';
+import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
+import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
+import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class RemarkBottomSheet extends StatefulWidget {
   const RemarkBottomSheet({super.key});
@@ -24,162 +28,111 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
   String? selectedVisitDate;
   bool autoStartVisit = false;
 
-  final List<String> visitTimes = [
-    '08:00 AM',
-    '09:00 AM',
-    '10:00 AM',
-    '11:00 AM',
-    '12:00 PM',
-    '01:00 PM',
-    '02:00 PM',
-    '03:00 PM',
-    '04:00 PM',
-    '05:00 PM',
-    '06:00 PM',
-  ];
-
-  final List<String> visitDates = [
-    '09 Jul 2025',
-    '10 Jul 2025',
-    '11 Jul 2025',
-    '12 Jul 2025',
-    '13 Jul 2025',
-    '14 Jul 2025',
-    '15 Jul 2025',
-    '16 Jul 2025',
-    '17 Jul 2025',
-    '18 Jul 2025',
-    '19 Jul 2025',
-    '20 Jul 2025',
-    '21 Jul 2025',
-    '22 Jul 2025',
-  ];
-
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: EdgeInsets.symmetric(
-      horizontal: 16.0 * Responsive.getResponsive(context),
-    ),
-    child: SingleChildScrollView(
+  Widget build(BuildContext context) => SingleChildScrollView(
+    child: Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-        left: 16.0 * Responsive.getResponsive(context),
-        right: 16.0 * Responsive.getResponsive(context),
-        top: 20 * Responsive.getResponsive(context),
+        left:
+        VariableBag.bottomSheetLeftPadding * Responsive.getResponsive(context),
+        right:
+        VariableBag.bottomSheetRightPadding * Responsive.getResponsive(context),
+        top: VariableBag.bottomSheetTopPadding * Responsive.getResponsive(context),
+        bottom:
+        VariableBag.bottomSheetBottomPadding *
+            Responsive.getResponsive(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
-        spacing: 12 * Responsive.getResponsive(context),
+        spacing:
+        VariableBag.formContentSpacingVertical *
+            Responsive.getResponsive(context),
         children: [
-          SizedBox(height: 0.03 * Responsive.getHeight(context)),
 
           // Remark text field
-          LabeledTextField(
-            textAlignment: TextAlign.start,
-            label: 'Remark',
-            hint: 'Type here',
-            isSuffixIconOn: false,
-            fontWeight: FontWeight.w700,
-            widthFactor: Responsive.getWidth(context),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
-              ),
-            ),
-            prefix: SvgPicture.asset(
-              AppAssets.assetMessageEdit,
-              fit: BoxFit.scaleDown,
-            ),
+          NewTextField(
+            isKey: true,
+            label: 'remark',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.assetMessageEdit,
           ),
 
           //  widget Follow-up time and date selection
-          FollowUpWidget(
-            visitTimes: visitTimes,
-            selectedVisitTime: selectedVisitTime,
-            visitDates: visitDates,
-            selectedVisitDate: selectedVisitDate,
+          Row(
+            children: [
+              Expanded(
+                child: NewTextField(
+                  isKey: true,
+                  label: 'follow_up_visit_time',
+                  hintText: LanguageManager().get('select'),
+                  prefixIconPath: AppAssets.assetClock,
+                  suffixIconPath: AppAssets.downArrow,
+                ),
+              ),
+
+              SizedBox(
+                width:
+                VariableBag.textFieldRowGap *
+                    Responsive.getResponsive(context),
+              ), // spacing between dropdowns
+              Expanded(
+                child: NewTextField(
+                  isKey: true,
+                  label: 'Follow Up Visit Date',
+                  hintText: LanguageManager().get('select'),
+                  prefixIconPath: AppAssets.assetNoteFavorite,
+                  suffixIconPath: AppAssets.downArrow,
+                ),
+              ),
+            ],
           ),
 
-          // widget for visit type selector
-          VisitTypeSelector(
-            initialSelection: 'Field Visit',
-            onChanged: (val) {},
+          CustomRadioButton(
+            options: const ['Field Visit', 'Virtual Visit'],
+            onChanged: (_) {},
+            height: 0.065 * Responsive.getHeight(context),
           ),
 
           // Textfield for Visit Area
-          LabeledTextField(
-            textAlignment: TextAlign.start,
-            label: 'Visit Area',
-            hint: 'Type here',
-            isSuffixIconOn: false,
-            fontWeight: FontWeight.w700,
-            widthFactor: Responsive.getWidth(context),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
-              ),
-            ),
-            prefix: SvgPicture.asset(
-              AppAssets.assetArrowSquare,
-              fit: BoxFit.scaleDown,
-            ),
+          NewTextField(
+            isKey: true,
+            label: 'visit_area',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.assetArrowSquare,
           ),
 
           //TextField for Visit Catalogue
-          LabeledTextField(
-            textAlignment: TextAlign.start,
-            label: 'Visit Catalogue',
-            hint: 'Type here',
-            isSuffixIconOn: false,
-            fontWeight: FontWeight.w700,
-            widthFactor: Responsive.getWidth(context),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
-              ),
-            ),
-            prefix: SvgPicture.asset(
-              AppAssets.assetNoteFavorite,
-              fit: BoxFit.scaleDown,
-            ),
+          NewTextField(
+            isKey: true,
+            label: 'visit_catalogue',
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.assetNoteFavorite,
           ),
 
           //Textfield for Contact Person Name
-          LabeledTextField(
-            textAlignment: TextAlign.start,
+          NewTextField(
+            isKey: true,
             label: 'Visit Contact Person Name',
-            hint: 'Type here',
-            isSuffixIconOn: false,
-            fontWeight: FontWeight.w700,
-            widthFactor: Responsive.getWidth(context),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
-              ),
-            ),
-            prefix: SvgPicture.asset(
-              AppAssets.assetProfileCircle,
-              fit: BoxFit.scaleDown,
-            ),
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.assetProfileCircle,
           ),
 
           // label for Attachment
-          CustomText(
-            'Attachment',
-            fontWeight: FontWeight.w700,
-            fontSize: 16 * Responsive.getResponsiveText(context),
-            color: AppTheme.getColor(context).onSurfaceVariant,
-          ),
-
-          // Media Picker container
-          const SelectAttachmentWidget(
-            label: 'Select Attachment',
-            iconPath: AppAssets.assetBookmark_2,
+          CustomMediaPickerContainer(
+            title: 'attachment',
+            titleColor: AppTheme.getColor(context).onSurfaceVariant,
+            titleFontSize: 16 * Responsive.getResponsiveText(context),
+            imageTitle: 'select_attachment',
+            containerHeight: 0.115 * Responsive.getHeight(context),
+            multipleImage: 5,
+            imagePath: 'assets/media_picker/gallery-export.png',
+            backgroundColor: AppTheme.getColor(context).surfaceContainer,
+            isCameraShow: true,
+            isGalleryShow: true,
+            isDocumentShow: true,
+            isCropImage: true,
+            imageTitleSize: 14 * Responsive.getResponsiveText(context),
+            imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
           ),
 
           SizedBox(height: 0.05 * Responsive.getHeight(context)),
@@ -203,8 +156,55 @@ class _RemarkBottomSheetState extends State<RemarkBottomSheet> {
           ),
 
           // Buttons Close & End Visit
-          const CloseEndVistButtonWidget(),
-          SizedBox(height: 0.06 * Responsive.getHeight(context)),
+          Row(
+            children: [
+              MyCoButton(
+                onTap: () => Navigator.pop(context),
+                title: 'CLOSE',
+                textStyle: TextStyle(
+                  color: AppTheme.getColor(context).primary,
+                  fontWeight: FontWeight.bold,
+                ),
+                backgroundColor: Colors.transparent,
+                boarderRadius: 30,
+                width: 0.41 * Responsive.getWidth(context),
+                height: 0.06 * Responsive.getHeight(context),
+                borderColor: AppTheme.getColor(context).primary,
+              ),
+              SizedBox(
+                width:
+                VariableBag.buttonRowSpacing *
+                    Responsive.getResponsive(context),
+              ),
+              MyCoButton(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(
+                          16 * Responsive.getResponsive(context),
+                        ),
+                      ),
+                    ),
+                    builder: (context) => const TestNewVisit1(),
+                  );
+                },
+                title: 'END VISIT',
+                textStyle: TextStyle(
+                  color: AppTheme.getColor(context).onPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+                backgroundColor: AppTheme.getColor(context).primary,
+                boarderRadius: 30 * Responsive.getResponsive(context),
+                width: 0.41 * Responsive.getWidth(context),
+                height: 0.06 * Responsive.getHeight(context),
+                wantBorder: false,
+                isShadowBottomLeft: true,
+              ),
+            ],
+          ),
         ],
       ),
     ),

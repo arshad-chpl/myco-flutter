@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/select_attachment_widget.dart';
-import 'package:myco_flutter/widgets/custom_label_textfield.dart';
-import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
+import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class TestNewVisit1 extends StatefulWidget {
   const TestNewVisit1({super.key});
@@ -17,34 +18,30 @@ class TestNewVisit1 extends StatefulWidget {
 }
 
 class _TestNewVisitState extends State<TestNewVisit1> {
-  final List<String> branchType = [
-    'Head Office',
-    'Mumbai Branch',
-    'Delhi Branch',
-    'Ahmedabad Branch',
-    'Remote Site',
-  ];
-
-  String? selectedBranchType;
-
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: EdgeInsets.symmetric(
-      horizontal: 16.0 * Responsive.getResponsive(context),
-    ),
-    child: SingleChildScrollView(
+  Widget build(BuildContext context) => SingleChildScrollView(
+    child: Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-        left: 16.0 * Responsive.getResponsive(context),
-        right: 16.0 * Responsive.getResponsive(context),
-        top: 20 * Responsive.getResponsive(context),
+        left:
+        VariableBag.bottomSheetLeftPadding *
+            Responsive.getResponsive(context),
+        right:
+        VariableBag.bottomSheetRightPadding *
+            Responsive.getResponsive(context),
+        top:
+        VariableBag.bottomSheetTopPadding *
+            Responsive.getResponsive(context),
+        bottom:
+        VariableBag.bottomSheetBottomPadding *
+            Responsive.getResponsive(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
+        spacing:
+        VariableBag.formContentSpacingVertical *
+            Responsive.getResponsive(context),
         children: [
-          SizedBox(height: 0.02 * Responsive.getHeight(context)),
-
           //label for Test New Visit
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,69 +54,51 @@ class _TestNewVisitState extends State<TestNewVisit1> {
               SvgPicture.asset(AppAssets.assetVector, fit: BoxFit.scaleDown),
             ],
           ),
-          SizedBox(height: 0.03 * Responsive.getHeight(context)),
 
           //dropdown for branch selection
-          LabeledDropdown(
-            label: 'Branch',
-            items: branchType,
-            width: Responsive.getWidth(context),
-            hintText: 'Select',
-            border: BoxBorder.all(color: AppTheme.getColor(context).outline),
-            prefix: SvgPicture.asset(
-              AppAssets.assetData,
-              fit: BoxFit.scaleDown,
-            ),
-            itemToString: (item) => item,
-            selectedItem: selectedBranchType,
-            onChanged: (value, index) {},
+          NewTextField(
+            isKey: true,
+            label: 'branch',
+            hintText: LanguageManager().get('select'),
+            prefixIconPath: AppAssets.assetData,
+            suffixIconPath: AppAssets.downArrow,
           ),
-
-          SizedBox(height: 0.02 * Responsive.getHeight(context)),
-
-          // Section label for media upload
-          CustomText(
-            'Media',
-            fontWeight: FontWeight.w600,
-            fontSize: 16 * Responsive.getResponsiveText(context),
-          ),
-          SizedBox(height: 0.005 * Responsive.getHeight(context)),
 
           // Media Picker container
-          const SelectAttachmentWidget(
-            label: 'Select Media',
-            iconPath: AppAssets.assetGalleryExport,
+          CustomMediaPickerContainer(
+            title: 'Media',
+            titleColor: AppTheme.getColor(context).onSurfaceVariant,
+            titleFontSize: 16 * Responsive.getResponsiveText(context),
+            imageTitle: 'select_media',
+            containerHeight: 0.115 * Responsive.getHeight(context),
+            multipleImage: 5,
+            imagePath: 'assets/media_picker/gallery-export.png',
+            backgroundColor: AppTheme.getColor(context).surfaceContainer,
+            isCameraShow: true,
+            isGalleryShow: true,
+            isDocumentShow: true,
+            isCropImage: true,
+            imageTitleSize: 14 * Responsive.getResponsiveText(context),
+            imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
           ),
-          SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
           // Text field for "Today's Work"
-          LabeledTextField(
+          NewTextField(
+            isKey: true,
             label: 'Today Work',
-            hint: 'Type here',
-            widthFactor: Responsive.getWidth(context),
-            textAlignment: TextAlign.start,
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
-              ),
-            ),
-            prefix: SvgPicture.asset(
-              AppAssets.assetDocumentText,
-              fit: BoxFit.scaleDown,
-            ),
+            hintText: LanguageManager().get('type_here'),
+            prefixIconPath: AppAssets.assetDocumentText,
           ),
-
-          SizedBox(height: 0.08 * Responsive.getHeight(context)),
-
+          SizedBox(height: 0.04 * Responsive.getHeight(context)),
           //submit button
           MyCoButton(
-            boarderRadius: 30 * Responsive.getResponsive(context),
+            boarderRadius:
+            VariableBag.buttonBorderRadius *
+                Responsive.getResponsive(context),
             isShadowBottomLeft: true,
             onTap: () {},
-            title: 'SUBMIT',
+            title: 'submit',
           ),
-          SizedBox(height: 0.02 * Responsive.getHeight(context)),
         ],
       ),
     ),

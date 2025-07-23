@@ -52,7 +52,7 @@ class _CurrentLocationWithLabelWidgetState
               // isKey: true,
               color: AppColors.textPrimary,
               fontWeight: FontWeight.w600,
-              fontSize: 15 * Responsive.getResponsiveText(context),
+              fontSize: 13 * Responsive.getResponsiveText(context),
             ),
             SizedBox(width: 0.040 * Responsive.getWidth(context)),
             Image(
