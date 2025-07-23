@@ -66,6 +66,7 @@ class AppTheme {
 
       surface: AppColors.darkbackgroundPrimary, //0xFFFAFAFF
       surfaceContainer: AppColors.lightTeal, //0xFFEEF7FD
+      surfaceContainerHigh: AppColors.containerHigh,
       surfaceBright: AppColors.black,
       error: AppColors.error, //0xFFE53935
       onPrimary: AppColors.white, //0xFFFFFFFF

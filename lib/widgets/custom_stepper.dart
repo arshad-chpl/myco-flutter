@@ -125,7 +125,7 @@ class CustomStepper extends StatelessWidget {
         ? getColorForStatus(globalStatus!)
         : const Color(0xffA9A3A3);
 
-    return Container(width: isHorizontal ? 60 : 3, height: 30, color: color);
+    return Container(width: isHorizontal ? 60 : 3, height: 10, color: color);
   }
 
   /// Builds each step
