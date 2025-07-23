@@ -390,7 +390,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                                     context: context,
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
-                                    builder: (_) => BottomTermAndCondition(),
+                                    builder: (_) => BottomTermAndCondition(url : 'url'),
                                   );
                                 },
                             ),
@@ -406,7 +406,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                                     context: context,
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
-                                    builder: (_) => BottomTermAndCondition(),
+                                    builder: (_) => BottomTermAndCondition(url : 'url'),
                                   );
                                 },
                             ),
@@ -430,7 +430,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                                     context: context,
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
-                                    builder: (_) => BottomTermAndCondition(),
+                                    builder: (_) => BottomTermAndCondition(url : 'url'),
                                   );
                                 },
                             ),

@@ -380,7 +380,7 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                               context: context,
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
-                              builder: (_) => BottomTermAndCondition(),
+                              builder: (_) => BottomTermAndCondition(url : 'url'),
                             );
                           },
                       ),
@@ -392,7 +392,7 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                               context: context,
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
-                              builder: (_) => BottomTermAndCondition(),
+                              builder: (_) => BottomTermAndCondition(url : 'url'),
                             );
                           },
                         text: "Terms & Conditions",
@@ -419,7 +419,7 @@ class _SelectOtherCompanyScreenState extends State<SelectOtherCompanyScreen> {
                               context: context,
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
-                              builder: (_) => BottomTermAndCondition(),
+                              builder: (_) => BottomTermAndCondition(url : 'url'),
                             );
                           },
                       ),
