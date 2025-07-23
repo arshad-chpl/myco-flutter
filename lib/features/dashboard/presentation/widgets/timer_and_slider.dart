@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -88,7 +90,7 @@ Widget punchInAndTimeCard({required BuildContext context}) =>
                   MyCoButton(
                     title: 'Punch Out',
                     onTap: () {
-                      // context.pushNamed('faceDetection');
+                      context.push(RoutePaths.appointments);
                     },
 
                     // height: 0.18 * Responsive.getWidth(context),

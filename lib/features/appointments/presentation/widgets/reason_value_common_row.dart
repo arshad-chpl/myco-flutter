@@ -4,23 +4,23 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-class ReasonValueCommonRowWidget extends StatefulWidget {
+class ReasonValueCommonRow extends StatefulWidget {
   final String heading;
   final String value;
 
-  const ReasonValueCommonRowWidget({
+  const ReasonValueCommonRow({
     required this.heading,
     required this.value,
     super.key,
   });
 
   @override
-  State<ReasonValueCommonRowWidget> createState() =>
-      _ReasonValueCommonRowWidgetState();
+  State<ReasonValueCommonRow> createState() =>
+      _ReasonValueCommonRowState();
 }
 
-class _ReasonValueCommonRowWidgetState
-    extends State<ReasonValueCommonRowWidget> {
+class _ReasonValueCommonRowState
+    extends State<ReasonValueCommonRow> {
   @override
   Widget build(BuildContext context) {
     final double headingColumnWidth = Responsive.getWidth(context) * 0.42;

@@ -3,6 +3,7 @@ import 'package:myco_flutter/core/router/app_router.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.dart';
+import 'package:myco_flutter/features/appointments/presentation/di/appointment_di.dart';
 import 'package:myco_flutter/features/company_info/presentation/di/company_info_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/request_otp_di.dart';
@@ -60,8 +61,6 @@ Future<void> init() async {
   //========Holiday=========
   setupHolidayDI(sl);
 
-  // ========Admin View=========
-  adminViewDi(sl);
   //Leave
   setUpLeaveDI(sl);
 
@@ -70,4 +69,7 @@ Future<void> init() async {
 
   //========Payslip=========
   initPayslipFeatureDI(sl);
+
+  //====== Appointment =====
+  appointmentDi(sl);
 }

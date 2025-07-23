@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_bloc.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_event.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_state.dart';
-import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_request_list_view_widget.dart';
-import 'package:myco_flutter/features/appointments/presentation/widgets/my_appointments_list_view_widgets.dart';
+import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_requests.dart';
+import 'package:myco_flutter/features/appointments/presentation/widgets/my_appointments.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
@@ -23,7 +23,6 @@ class AppointmentsPage extends StatefulWidget {
 
 class _AppointmentsPageState extends State<AppointmentsPage> {
   List<String> appointments = ['Requests', 'My Appointments'];
-  int _selectedIndex = 0;
   late PageController pageController;
 
   void onTabChanged(BuildContext context, int index) {
@@ -33,16 +32,12 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.ease,
     );
-
-    Fluttertoast.showToast(
-      msg: index == 0 ? 'request appointment' : 'my appointments',
-    );
   }
 
   @override
   void initState() {
     super.initState();
-    pageController = PageController(initialPage: _selectedIndex);
+    pageController = PageController(initialPage:  context.read<AppointmentBloc>().state.tabIndex);
   }
 
   @override
@@ -54,17 +49,16 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
   @override
   Widget build(BuildContext context) => BlocBuilder<AppointmentBloc, AppointmentState>(
       builder: (context, state) {
-        int currentIndex = 0;
-        if(state is AppointmentLoaded) {
-          currentIndex = state.selectIndex;
-        }
+        final int selectedIndex = state.tabIndex;
 
-        _selectedIndex = currentIndex;
+        if (pageController.hasClients && pageController.page?.round() != selectedIndex) {
+          pageController.jumpToPage(selectedIndex);
+        }
 
         return Scaffold(
           appBar: const CustomAppbar(title: 'Appointments'),
           body: Padding(
-            padding: EdgeInsets.all(23 * Responsive.getResponsive(context)),
+            padding: EdgeInsets.symmetric(horizontal: VariableBag.screenHorizontalPadding * Responsive.getResponsive(context)),
             child: Column(
               children: [
                 MyCustomTabBar(
@@ -76,12 +70,12 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
                   unselectedBorderAndTextColor: AppTheme.getColor(context).secondary,
                   tabBarBorderColor: AppTheme.getColor(context).primary,
                   isShadowBottomLeft: true,
-                  selectedIndex: _selectedIndex,
+                  selectedIndex: selectedIndex,
                   onTabChange: (index) => onTabChanged(context, index),
                 ),
-                SizedBox(height: 21 * Responsive.getResponsive(context)),
+                SizedBox(height: VariableBag.tabBarAfterSpace * Responsive.getResponsive(context)),
                 const CustomSearchField(hintText: 'Search'),
-                SizedBox(height: 17 * Responsive.getResponsive(context)),
+                SizedBox(height: VariableBag.searchFiledAfterSpace * Responsive.getResponsive(context)),
                 Expanded(
                     child: PageView(
                       controller: pageController,
@@ -90,8 +84,8 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
                         context.read<AppointmentBloc>().add(AppointmentTabChange(tabIndex: index));
                       },
                       children: const [
-                        AppointmentRequestListViewWidget(),
-                        MyAppointmentsListViewWidgets()
+                        AppointmentRequests(),
+                        MyAppointments()
                       ],
                     )
                 )

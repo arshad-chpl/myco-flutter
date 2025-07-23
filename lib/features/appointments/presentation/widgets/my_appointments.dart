@@ -5,19 +5,19 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_person_details.dart';
-import 'package:myco_flutter/features/appointments/presentation/widgets/reason_value_common_row_widget.dart';
+import 'package:myco_flutter/features/appointments/presentation/widgets/reason_value_common_row.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-class MyAppointmentsListViewWidgets extends StatefulWidget {
-  const MyAppointmentsListViewWidgets({super.key});
+class MyAppointments extends StatefulWidget {
+  const MyAppointments({super.key});
 
   @override
-  State<MyAppointmentsListViewWidgets> createState() => _MyAppointmentsListViewWidgetsState();
+  State<MyAppointments> createState() => _MyAppointmentsState();
 }
 
-class _MyAppointmentsListViewWidgetsState extends State<MyAppointmentsListViewWidgets> {
+class _MyAppointmentsState extends State<MyAppointments> {
 
 
   List<Map<String, dynamic>> myAppointmentData = [
@@ -140,17 +140,17 @@ class _MyAppointmentsListViewWidgetsState extends State<MyAppointmentsListViewWi
                     fieldWithCity: myAppointment['requesterFieldCity'],
                   ),
                   Divider(color: AppTheme.getColor(context).secondary),
-                  ReasonValueCommonRowWidget(
+                  ReasonValueCommonRow(
                     heading: 'Reason for Appointment',
                     value: myAppointment['reason'],
                   ),
                   SizedBox(height: 0.01 * Responsive.getHeight(context)),
-                  ReasonValueCommonRowWidget(
+                  ReasonValueCommonRow(
                     heading: 'Location',
                     value: myAppointment['location'],
                   ),
                   SizedBox(height: 0.01 * Responsive.getHeight(context)),
-                  ReasonValueCommonRowWidget(
+                  ReasonValueCommonRow(
                     heading: 'Phone No. ',
                     value: myAppointment['phoneNo'],
                   ),
@@ -158,7 +158,7 @@ class _MyAppointmentsListViewWidgetsState extends State<MyAppointmentsListViewWi
                     Column(
                       children: [
                         SizedBox(height: 0.01 * Responsive.getHeight(context)),
-                        ReasonValueCommonRowWidget(
+                        ReasonValueCommonRow(
                           heading: 'Reason for Rejection',
                           value: myAppointment['rejectionReason'],
                         ),

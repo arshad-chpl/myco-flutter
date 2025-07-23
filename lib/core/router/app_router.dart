@@ -346,25 +346,19 @@ class AppRouter {
       ),
       ...cahatRoutes,
 
-      GoRoute(
-        path: RoutePaths.assetsHome,
-        name: 'assets-home',
-        builder: (context, state) => MultiBlocProvider(
-          providers: [
-            // BlocProvider<AssetsTabBloc>(create: (_) => AssetsTabBloc()),
-            BlocProvider<AssetsFilterBloc>(create: (_) => AssetsFilterBloc()),
-          ],
-          child: const AssetsHomePage(),
-        ),
-      ),
 
 
 
-      GoRoute(
-        path: RoutePaths.qrScanner,
-        name: 'qr-scanner',
-        builder: (context, state) => const QRScannerPage(),
-      ),
+
+
+
+
+
+      // GoRoute(
+      //   path: RoutePaths.qrScanner,
+      //   name: 'qr-scanner',
+      //   builder: (context, state) => const QRScannerPage(),
+      // ),
       ...assetsRoutes,
 
       ...WorkAllocationRoutes,
@@ -380,36 +374,36 @@ class AppRouter {
       //   builder: (context, state) => const MyProfilePage(),
       // ),
 
-      GoRoute(
-        path: RoutePaths.assetsDetails,
-        name: 'assets-details',
-        builder: (context, state) => const AssetsDetailsPage(),
-      ),
-      GoRoute(
-        path: RoutePaths.addAssets,
-        name: 'add-assets',
-        builder: (context, state) => const AddAssets(),
-      ),
-      GoRoute(
-        path: RoutePaths.editAssets,
-        name: 'edit-assets',
-        builder: (context, state) => const EditAssetsPage(),
-      ),
-      GoRoute(
-        path: RoutePaths.handoverAssets,
-        name: 'handover-assets',
-        builder: (context, state) => const HandoverAssetsPage(),
-      ),
-      GoRoute(
-        path: RoutePaths.takeoverAssets,
-        name: 'takeover-assets',
-        builder: (context, state) => const TakeoverAssets(),
-      ),
-      GoRoute(
-        path: RoutePaths.swapAssets,
-        name: 'swap-assets',
-        builder: (context, state) => const SwapAssetsPage(),
-      ),
+      // GoRoute(
+      //   path: RoutePaths.assetsDetails,
+      //   name: 'assets-details',
+      //   builder: (context, state) => const AssetsDetailsPage(),
+      // ),
+      // GoRoute(
+      //   path: RoutePaths.addAssets,
+      //   name: 'add-assets',
+      //   builder: (context, state) => const AddAssets(),
+      // ),
+      // GoRoute(
+      //   path: RoutePaths.editAssets,
+      //   name: 'edit-assets',
+      //   builder: (context, state) => const EditAssetsPage(),
+      // ),
+      // GoRoute(
+      //   path: RoutePaths.handoverAssets,
+      //   name: 'handover-assets',
+      //   builder: (context, state) => const HandoverAssetsPage(),
+      // ),
+      // GoRoute(
+      //   path: RoutePaths.takeoverAssets,
+      //   name: 'takeover-assets',
+      //   builder: (context, state) => const TakeoverAssets(),
+      // ),
+      // GoRoute(
+      //   path: RoutePaths.swapAssets,
+      //   name: 'swap-assets',
+      //   builder: (context, state) => const SwapAssetsPage(),
+      // ),
 
       ...AppointmentsRoutes,
 
