@@ -266,9 +266,11 @@ class AssignEngineerField extends StatelessWidget {
                         image: const Icon(Icons.person),
                         isSelected: true,
                         showDelete: true,
-                        onSelected: (_) => context
-                            .read<WorkAllocationBloc>()
-                            .add(RemoveSelectedEmployeeEvent()),
+                        onDeleteTap: () {
+                          context.read<WorkAllocationBloc>().add(
+                            RemoveSelectedEmployeeEvent(),
+                          );
+                        },
                       ),
                     ),
                   ),
