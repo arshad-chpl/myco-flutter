@@ -269,11 +269,6 @@ class AppRouter {
       ),
 
       GoRoute(
-        path: RoutePaths.viewVisitDetails,
-        name: 'view-visit-details',
-        builder: (context, state) => const ViewVisitDetailsPage(),
-      ),
-      GoRoute(
         path: RoutePaths.myProfile,
         name: 'my-profile',
         builder: (context, state) => const MyProfilePage(),
@@ -299,11 +294,7 @@ class AppRouter {
       ...assetsRoutes,
 
       ...WorkAllocationRoutes,
-      GoRoute(
-        path: RoutePaths.myProfile,
-        name: 'my-profile',
-        builder: (context, state) => const MyProfilePage(),
-      ),
+
 
       // Add all modular routes here
       // ...authRoutes,

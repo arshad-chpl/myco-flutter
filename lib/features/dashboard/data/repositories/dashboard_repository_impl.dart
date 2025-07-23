@@ -3,7 +3,7 @@ import 'package:myco_flutter/core/error/failure.dart';
 import 'package:myco_flutter/core/utils/safe_api_call.dart';
 import 'package:myco_flutter/features/dashboard/data/datasources/dashboard_remote_data_source.dart';
 import 'package:myco_flutter/features/dashboard/data/models/id_card_detail_response.dart';
-import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_entity.dart';
+import 'package:myco_flutter/features/dashboard/domain/entites/home_menu_response_entity.dart';
 import 'package:myco_flutter/features/dashboard/domain/entites/id_card_entity.dart';
 import 'package:myco_flutter/features/dashboard/domain/repositories/dashboard_repository.dart';
 

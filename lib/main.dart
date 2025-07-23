@@ -17,7 +17,7 @@ Future<void> main() async {
 
   await Hive.initFlutter();
 
-  await init();
+  await initDi();
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
