@@ -200,7 +200,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
 
                           context.push(
                             RoutePaths.albumView,
-                            extra: album.albumTitle ?? '',
+                            extra: {
+                              'albumName': album.albumTitle ?? '',
+                              'galleryAlbumId': album.galleryAlbumId ?? '',
+                            },
                           );
                         },
                         child: Column(

@@ -18,8 +18,13 @@ List<RouteBase> galleryRoutes = [
       ),
       GoRoute(
         path: RoutePaths.albumView,
-        builder: (context, state) =>
-            AlbumViewScreen(albumName: state.extra as String),
+        builder: (context, state) {
+          final extra = state.extra as Map<dynamic, String>;
+          return AlbumViewScreen(
+            albumName: extra['albumName'] ?? '',
+            galleryAlbumId: extra['galleryAlbumId'] ?? '',
+          );
+        },
         // name: 'album-view',
       ),
     ],

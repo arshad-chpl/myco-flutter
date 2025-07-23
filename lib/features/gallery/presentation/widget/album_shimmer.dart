@@ -7,7 +7,7 @@ class AlbumShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GridView.builder(
-    itemCount: 6, // Number of shimmer items
+    itemCount: 20, // Number of shimmer items
     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 3,
       crossAxisSpacing: 16 * Responsive.getResponsive(context),
