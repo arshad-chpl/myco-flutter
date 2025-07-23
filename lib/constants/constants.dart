@@ -85,6 +85,12 @@ class VariableBag {
   static const String ADMIN_VIEW_MENU_ACHIEVEMENTS = '66';
   static const String ADMIN_VIEW_MENU_EMPLOYEES_FACE = '69';
 
+  /////////////////////////
+  // Hive Boxes
+  ////////////////////////
+
+  static const String ADMIN_VIEW_BOX = 'admin_view_box';
+
 
   // const variables of pages
   static const formContentSpacingVertical = 20 ;

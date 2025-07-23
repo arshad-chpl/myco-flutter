@@ -45,6 +45,7 @@ import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
+import 'package:myco_flutter/features/my_visit/presentation/pages/view_visit_details_page.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
@@ -268,14 +269,16 @@ class AppRouter {
       ),
 
       GoRoute(
-        path: RoutePaths.adminView,
-        name: RoutePaths.adminView,
-        builder: (context, state) => BlocProvider(
-          create: (_) => GetIt.I<AdminViewBloc>(),
-          child: const AdminViewPage(),
-        ),
-        routes: adminViewRoutes,
+        path: RoutePaths.viewVisitDetails,
+        name: 'view-visit-details',
+        builder: (context, state) => const ViewVisitDetailsPage(),
       ),
+      GoRoute(
+        path: RoutePaths.myProfile,
+        name: 'my-profile',
+        builder: (context, state) => const MyProfilePage(),
+      ),
+      ...adminViewRoutes,
       GoRoute(
         path: RoutePaths.leaveBalance,
         name: RoutePaths.leaveBalance,
