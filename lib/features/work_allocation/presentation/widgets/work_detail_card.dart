@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/common_row.dart';
@@ -19,7 +20,8 @@ class WorkDetailCard extends StatelessWidget {
       {'title': 'Created Date & Time', 'value': '12 May 2025 , 10:00 AM'},
     ];
     return BorderContainerWraper(
-      borderRadius: 14 * Responsive.getResponsive(context),
+      borderRadius:
+          VariableBag.containerBorderRadius * Responsive.getResponsive(context),
       borderColor: AppTheme.getColor(context).outline,
       padding: EdgeInsets.only(
         top: 16 * Responsive.getResponsive(context),
@@ -40,13 +42,13 @@ class WorkDetailCard extends StatelessWidget {
                     'Work Start Date',
                     fontWeight: FontWeight.w700,
                     color: AppTheme.getColor(context).onSurface,
-                    fontSize: 18 * Responsive.getResponsiveText(context),
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                   ),
                   CustomText(
                     '21 st May 2025',
                     color: AppTheme.getColor(context).outline,
                     fontWeight: FontWeight.w500,
-                    fontSize: 17 * Responsive.getResponsiveText(context),
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                   ),
                 ],
               ),
@@ -57,13 +59,13 @@ class WorkDetailCard extends StatelessWidget {
                     'Work Completion Date',
                     fontWeight: FontWeight.w700,
                     color: AppTheme.getColor(context).onSurface,
-                    fontSize: 18 * Responsive.getResponsiveText(context),
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                   ),
                   CustomText(
                     '22nd May 2025',
                     color: AppTheme.getColor(context).outline,
                     fontWeight: FontWeight.w500,
-                    fontSize: 17 * Responsive.getResponsiveText(context),
+                    fontSize: 14 * Responsive.getResponsiveText(context),
                   ),
                 ],
               ),

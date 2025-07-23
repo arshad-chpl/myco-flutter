@@ -20,7 +20,6 @@ class AppAssets {
   static const String stepper = '$basePath/stepper';
   static const String workAllocationSvgs = '$svgsPath/work_allocation';
 
-
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
   static const String chplLogo = '$imagesPath/chpl_logo.png';
@@ -77,8 +76,7 @@ class AppAssets {
   static const String xCircle = '$svgsTakeOrder/XCircle.svg';
   static const String messageEdit = '$svgsTakeOrder/message-edit.svg';
   static const String placeOrder = '$svgsTakeOrder/place-order.svg';
-  static const String
-  y = '$svgsTakeOrder/order-history.svg';
+  static const String y = '$svgsTakeOrder/order-history.svg';
   static const String noOrder = '$svgsTakeOrder/no-order.svg';
   static const String start = '$svgsTakeOrder/start.svg';
   static const String stop = '$svgsTakeOrder/stop.svg';
@@ -167,10 +165,9 @@ class AppAssets {
 
   static const String lostFoundData = '$lostFound/data.png';
   static const String lostFoundMessageEdit = '$lostFound/message-edit.png';
-/*
+  /*
   static const String location = '$basePath/take_order/location.png';
 */
-
 
   //work allocation
   static const String plus = '$workAllocation/plus.png';
@@ -179,11 +176,17 @@ class AppAssets {
   static const String checkMark = '$workAllocation/check_mark.png';
   static const String cancelCross = '$workAllocation/cancel_cross.png';
   // static const String location = '$basePath/take_order/location.png';
-  static const String assetMessageEdit = '$svgsVisit/message-edit.svg';
-  static const String assetArrowSquare = '$svgsVisit/arrow-square.svg';
-  static const String assetProfileCircle = '$svgsVisit/profile-circle.svg';
-  static const String assetClock = '$svgsVisit/clock.svg';
-  static const String assetSearchNormal = '$svgsVisit/search-normal.svg';
+  static const String assetMessageEdit = '$workAllocationSvgs/message-edit.svg';
+  static const String assetArrowSquare = '$workAllocationSvgs/arrow-square.svg';
+  static const String assetProfileCircle =
+      '$workAllocationSvgs/profile-circle.svg';
+  static const String assetClock = '$workAllocationSvgs/clock.svg';
+  static const String assetSearchNormal =
+      '$workAllocationSvgs/search-normal.svg';
+  static const String assetApproveWork = '$workAllocationSvgs/approve_work.svg';
+  static const String assetArrowDown = '$workAllocationSvgs/arrow-down.svg';
+  static const String assetCalendarTick =
+      '$workAllocationSvgs/calendar-tick.svg';
 
   //images stepper
   static const String stepperCheckIcon = '$stepper/check.svg';
