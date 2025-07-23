@@ -13,8 +13,6 @@ import 'package:myco_flutter/features/leave/presentation/di/leave_di.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/di/lost_and_found_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/di/lost_and_found_di.dart';
-import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/payslip/presentation/di/payslip_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/di/work_allocation_di.dart';
@@ -77,5 +75,5 @@ Future<void> init() async {
   registerLostAndFoundDI(sl);
 
   //========LostAndFound=========
-  LostAndFoundDI(sl);
+  registerLostAndFoundDI(sl);
 }

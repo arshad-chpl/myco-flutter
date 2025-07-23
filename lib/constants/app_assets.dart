@@ -15,7 +15,6 @@ class AppAssets {
   static const String assets = '$basePath/asset';
   static const String lostAndFound = '$basePath/lost_and_found';
 
-  static const String assets = '$basePath/assets';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
   static const String workAllocation = '$basePath/work_allocation';
@@ -202,5 +201,4 @@ class AppAssets {
 
   static const String document = '$lostFound/documents.svg';
   static const String gallary = '$lostFound/gallery-add.svg';
-  static const String camera = '$lostFound/camera.svg';
 }
