@@ -12,10 +12,10 @@ import 'package:myco_flutter/features/asset/presentation/text_controllers/takeov
 import 'package:myco_flutter/features/asset/presentation/widgets/assets_bottom_sheet.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/assets_label_text_field.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_radio_button.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/custom_media_picker_container.dart';
 
 class TakeoverAssets extends StatefulWidget {
   const TakeoverAssets({super.key});
@@ -117,16 +117,6 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                         ).onSurfaceVariant,
                         backgroundColor: const Color(0xFFEEF7FD),
                         containerHeight: 0.1 * Responsive.getHeight(context),
-                        pickerBoxBorderRadius: 10,
-                        titleFontWeight: FontWeight.w700,
-                        titleWidgetBetweenSpace:
-                            0.006 * Responsive.getHeight(context),
-                        onSelectMedia: (List<File> selectedFiles) {
-                          // Do something with selectedFiles
-                          for (var file in selectedFiles) {
-                            log("Selected File: ${file.path}");
-                          }
-                        },
                       ),
                       SizedBox(height: 0.024 * Responsive.getHeight(context)),
 
@@ -350,10 +340,6 @@ class _TakeoverAssetsState extends State<TakeoverAssets> {
                           ).onSurfaceVariant,
                           backgroundColor: const Color(0xFFEEF7FD),
                           containerHeight: 0.1 * Responsive.getHeight(context),
-                          pickerBoxBorderRadius: 10,
-                          titleFontWeight: FontWeight.w700,
-                          titleWidgetBetweenSpace:
-                              0.006 * Responsive.getHeight(context),
                         ),
                         SizedBox(height: 0.035 * Responsive.getHeight(context)),
                       ],
