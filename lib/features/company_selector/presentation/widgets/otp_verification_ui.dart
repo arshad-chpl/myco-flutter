@@ -10,6 +10,7 @@ import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/company_selector/data/models/request/verify_otp_request_model.dart';
 import 'package:myco_flutter/features/company_selector/domain/entites/company_response_entity.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/device_change/device_change_bloc.dart';
@@ -64,7 +65,7 @@ class OtpVerificationUi extends StatelessWidget {
           preference.setCompanyId(state.response.societyId ?? '');
           preference.setCompanyAddress(state.response.societyAddress ?? '');
           preference.setCompanyName(state.response.societyName ?? '');
-
+          refreshApiServiceCompany(GetIt.instance);
           context.go(RoutePaths.dashboard);
         } else if (state is OtpVerificationFailedState) {
           if (state.response.viewDialogApiCall == true) {
