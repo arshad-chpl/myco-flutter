@@ -15,6 +15,8 @@ class CustomShadowContainer extends StatelessWidget {
       boxTextBetweenSpace,
       width,
       boxPadding,
+      imagePadding,
+      imgTitleSpacing,
       titleFontSize,
       borderRadius;
 
@@ -33,6 +35,8 @@ class CustomShadowContainer extends StatelessWidget {
     this.titleAlign,
     this.boxColor,
     this.boxTextBetweenSpace,
+    this.imagePadding,
+    this.imgTitleSpacing,
   });
 
   @override
@@ -41,83 +45,77 @@ class CustomShadowContainer extends StatelessWidget {
     height: height,
     child: Column(
       mainAxisSize: MainAxisSize.min,
+      spacing: imgTitleSpacing ?? 8,
       children: [
-        Stack(
-          children: [
-            Center(
-              child: Container(
-                padding: EdgeInsets.all(
-                  boxPadding ?? 15 * Responsive.getResponsive(context),
+        Padding(
+          padding: EdgeInsets.only(
+            top: boxPadding ?? 14,
+            right: boxPadding ?? 14,
+            left: boxPadding ?? 14,
+          ),
+          child: Stack(
+            children: [
+              Center(
+                child: Container(
+                  padding: EdgeInsets.all(imagePadding ?? 15),
+                  decoration: BoxDecoration(
+                    color: boxColor ?? AppTheme.getColor(context).onPrimary,
+                    borderRadius: BorderRadius.circular(
+                      borderRadius ?? 20 * Responsive.getResponsive(context),
+                    ),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black26,
+                        offset: Offset(2, 1.5),
+                        blurRadius: 1,
+                      ),
+                    ],
+                  ),
+                  child: Center(child: image),
                 ),
-                decoration: BoxDecoration(
-                  color: boxColor ?? AppTheme.getColor(context).onPrimary,
+              ),
+              Positioned.fill(
+                child: ClipRRect(
                   borderRadius: BorderRadius.circular(
                     borderRadius ?? 20 * Responsive.getResponsive(context),
                   ),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black26,
-                      offset: Offset(2, 1.5),
-                      blurRadius: 1,
+                  child: CustomPaint(
+                    painter: InnerShadowPainter(
+                      shadowColor: const Color.fromARGB(50, 0, 0, 0),
+                      blur: 4,
+                      offset: const Offset(3, -3.5),
+                      borderRadius: 20,
+                      isShadowBottomRight: true,
                     ),
-                  ],
-                ),
-                child: Center(child: image),
-              ),
-            ),
-            Positioned.fill(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  borderRadius ?? 20 * Responsive.getResponsive(context),
-                ),
-                child: CustomPaint(
-                  painter: InnerShadowPainter(
-                    shadowColor: const Color.fromARGB(50, 0, 0, 0),
-                    blur: 4,
-                    offset: const Offset(2, -3.5),
-                    borderRadius: 12,
-                    isShadowBottomRight: true,
-                    isShadowBottomLeft: true,
                   ),
                 ),
               ),
-            ),
-            // Positioned.fill(
-            //   child: ClipRRect(
-            //     borderRadius: BorderRadius.circular(
-            //       borderRadius ?? 20 * Responsive.getResponsive(context),
-            //     ),
-            //     child: CustomPaint(
-            //       painter: InnerShadowPainter(
-            //         shadowColor: const Color.fromARGB(50, 0, 0, 0),
-            //         blur: 4,
-            //         offset: const Offset(3, -3.5),
-            //         borderRadius: 20,
-            //         isShadowBottomLeft: true,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-          ],
+              Positioned.fill(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                    borderRadius ?? 20 * Responsive.getResponsive(context),
+                  ),
+                  child: CustomPaint(
+                    painter: InnerShadowPainter(
+                      shadowColor: const Color.fromARGB(50, 0, 0, 0),
+                      blur: 4,
+                      offset: const Offset(3, -3.5),
+                      borderRadius: 20,
+                      isShadowBottomLeft: true,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
 
-        if (title != null)
-          SizedBox(
-            height: boxTextBetweenSpace ?? 0.01 * Responsive.getHeight(context),
-          ),
-
-        if (title != null)
-          titleStyle != null
-              ? Text(title ?? '', style: titleStyle)
-              : CustomText(
-                  title ?? '',
-                  fontSize:
-                      titleFontSize ??
-                      10 * Responsive.getDashboardResponsiveText(context),
-                  fontWeight: titleWeight ?? FontWeight.w600,
-                  textAlign: titleAlign ?? TextAlign.center,
-                  color: titleColor ?? AppTheme.getColor(context).onSurface,
-                ),
+        CustomText(
+          title ?? '',
+          textAlign: TextAlign.center,
+          fontSize: 14 * Responsive.getResponsive(context),
+          fontWeight: FontWeight.w600,
+        ),
       ],
     ),
   );

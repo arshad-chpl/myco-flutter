@@ -179,12 +179,12 @@ class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
     _pastAssetsEntity = results[1] as AssetsEntity?;
     _allAssetsEntity = results[2] as AllAssetsEntity?;
 
-    if (_allAssetsEntity == null) {
-      emit(
-        const AssetsError(message: 'Unable to fetch assets', selectedIndex: 0),
-      );
-      return;
-    }
+    // if (_allAssetsEntity == null) {
+    //   emit(
+    //     const AssetsError(message: 'Unable to fetch assets', selectedIndex: 0),
+    //   );
+    //   return;
+    // }
 
     emit(
       AssetsLoaded(
@@ -346,6 +346,7 @@ class AssetsBloc extends Bloc<AssetsEvent, AssetsState> {
       'floor_id': '1',
       'old_items': _mapIndexToOldItems(index),
     };
+
     final result = await assetsUseCases.getAssets(dataMap);
     return result.fold((l) => null, (r) => r);
   }

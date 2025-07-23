@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:myco_flutter/core/encryption/gzip_util.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/asset/data/datasource/asset_data_source.dart';
+import 'package:myco_flutter/features/asset/data/models/all_assets_model.dart';
 import 'package:myco_flutter/features/asset/data/models/asset_model.dart';
 
 class AssetsRemoteDataSourceImpl extends AssetsRemoteDataSource {
@@ -12,11 +14,36 @@ class AssetsRemoteDataSourceImpl extends AssetsRemoteDataSource {
 
   @override
   Future<AssetModel> getAssets(Map<String, dynamic> dataMap) async {
+    log(dataMap.toString(), name: 'dataamap');
+    final encryptedBody = GzipUtil.encryptAES(json.encode(dataMap));
+
+    log(encryptedBody);
+    final response = await apiClient.postDynamic(
+      'assets_controller.php',
+      encryptedBody,
+    );
+
+    final descript = GzipUtil.decryptAES(response);
+    log(name: 'response', response);
+    log(name: 'decript', descript);
+    return AssetModel.fromJson(json.decode(descript));
+  }
+}
+
+class AllAssetsRemoteDataSourceImpl extends AllAssetsRemoteDataSource {
+  final ApiClient apiClient;
+
+  AllAssetsRemoteDataSourceImpl({required this.apiClient});
+
+  @override
+  Future<AllAssetsModel> getAllAssets(Map<String, dynamic> dataMap) async {
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
     final response = await apiClient.postDynamic(
       'https://dev.my-company.app/india/employeeMobileApi/assets_controller.php',
       encryptedBody,
     );
-    return AssetModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
+
+    log(GzipUtil.decryptAES(response));
+    return AllAssetsModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 }

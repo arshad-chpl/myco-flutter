@@ -88,8 +88,8 @@ class AssetsLoading extends AssetsState {
 
 class AssetsLoaded extends AssetsState {
   // ───────────────────── Raw Lists ─────────────────────
-  final List<AssetEntity>       activeAssets;
-  final List<AssetEntity>       pastAssets;
+  final List<AssetEntity> activeAssets;
+  final List<AssetEntity> pastAssets;
   final List<AssetDetailEntity> allAssets;
 
   // The list the UI is currently showing. It can be either
@@ -98,7 +98,7 @@ class AssetsLoaded extends AssetsState {
 
   // Filters meta-data (only meaningful for tab 2)
   final List<CategoryListEntity> categories;
-  final List<BrandListEntity>    brands;
+  final List<BrandListEntity> brands;
   final String appliedCategory;
   final String appliedBrand;
 
@@ -116,40 +116,38 @@ class AssetsLoaded extends AssetsState {
 
   @override
   List<Object?> get props => [
-        activeAssets,
-        pastAssets,
-        allAssets,
-        currentAssets,
-        categories,
-        brands,
-        appliedCategory,
-        appliedBrand,
-        selectedIndex,
-      ];
+    activeAssets,
+    pastAssets,
+    allAssets,
+    currentAssets,
+    categories,
+    brands,
+    appliedCategory,
+    appliedBrand,
+    selectedIndex,
+  ];
 
   AssetsLoaded copyWith({
-    List<AssetEntity>?       activeAssets,
-    List<AssetEntity>?       pastAssets,
+    List<AssetEntity>? activeAssets,
+    List<AssetEntity>? pastAssets,
     List<AssetDetailEntity>? allAssets,
-    List<dynamic>?           currentAssets,
+    List<dynamic>? currentAssets,
     List<CategoryListEntity>? categories,
-    List<BrandListEntity>?    brands,
+    List<BrandListEntity>? brands,
     String? appliedCategory,
     String? appliedBrand,
     int? selectedIndex,
-  }) {
-    return AssetsLoaded(
-      activeAssets    : activeAssets    ?? this.activeAssets,
-      pastAssets      : pastAssets      ?? this.pastAssets,
-      allAssets       : allAssets       ?? this.allAssets,
-      currentAssets   : currentAssets   ?? this.currentAssets,
-      categories      : categories      ?? this.categories,
-      brands          : brands          ?? this.brands,
-      appliedCategory : appliedCategory ?? this.appliedCategory,
-      appliedBrand    : appliedBrand    ?? this.appliedBrand,
-      selectedIndex   : selectedIndex   ?? this.selectedIndex,
-    );
-  }
+  }) => AssetsLoaded(
+    activeAssets: activeAssets ?? this.activeAssets,
+    pastAssets: pastAssets ?? this.pastAssets,
+    allAssets: allAssets ?? this.allAssets,
+    currentAssets: currentAssets ?? this.currentAssets,
+    categories: categories ?? this.categories,
+    brands: brands ?? this.brands,
+    appliedCategory: appliedCategory ?? this.appliedCategory,
+    appliedBrand: appliedBrand ?? this.appliedBrand,
+    selectedIndex: selectedIndex ?? this.selectedIndex,
+  );
 }
 
 class AssetsError extends AssetsState {
