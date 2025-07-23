@@ -32,29 +32,33 @@ class BorderContainerWraper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-      height: height,
-      width: width,
-      padding: padding ?? EdgeInsets.all(8.0),
-      margin: margin ?? EdgeInsets.all(0.0),
-      decoration: BoxDecoration(
-        color: backgroundColor ?? AppTheme.getColor(context).surface,
-        borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
-        border: isBorder == true
-            ? Border.all(
-                color: borderColor ?? AppTheme.getColor(context).outlineVariant,
-                width: borderWidth ?? 1.0,
-              )
-            : null,
-        boxShadow: isShadow == true
-            ? [
-                BoxShadow(
-                  color: Util.applyOpacity(AppTheme.getColor(context).onSurface, 0.1),
-                  blurRadius: 5.0,
-                  offset: Offset(0, 2), // changes position of shadow
+    height: height,
+    width: width,
+    padding: padding ?? EdgeInsets.all(8.0),
+    margin: margin ?? EdgeInsets.all(0.0),
+
+    decoration: BoxDecoration(
+      color: backgroundColor ?? AppTheme.getColor(context).surface,
+      borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
+      border: isBorder == true
+          ? Border.all(
+              color: borderColor ?? AppTheme.getColor(context).outlineVariant,
+              width: borderWidth ?? 1.0,
+            )
+          : null,
+      boxShadow: isShadow == true
+          ? [
+              BoxShadow(
+                color: Util.applyOpacity(
+                  AppTheme.getColor(context).onSurface,
+                  0.1,
                 ),
-              ]
-            : [],
-      ),
-      child: child,
-    );
+                blurRadius: 5.0,
+                offset: Offset(0, 2), // changes position of shadow
+              ),
+            ]
+          : [],
+    ),
+    child: child,
+  );
 }
