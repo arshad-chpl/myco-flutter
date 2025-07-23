@@ -1,97 +1,129 @@
+// custom_fab_menu.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
-class FabButtonModel {
-  final String label;
-  final IconData? icon;
-  final String? imagePath;
+class FabMenuItem {
   final VoidCallback onTap;
-  final Color backgroundColor;
-  final Color labelColor;
+  final Widget icon;
+  final String label;
 
-  FabButtonModel({
-    required this.label,
-    required this.onTap,
-    this.icon,
-    this.imagePath,
-    this.backgroundColor = Colors.white,
-    this.labelColor = const Color(0xFF2F5D83),
-  });
+  FabMenuItem({required this.onTap, required this.icon, required this.label});
 }
 
-class CustomFabMenu extends StatefulWidget {
-  final List<FabButtonModel> buttons;
-  final IconData mainIcon;
-  final IconData activeIcon;
-  final Color fabBackgroundColor;
-  final Color fabForegroundColor;
+class CustomFabMenu extends StatelessWidget {
+  final List<FabMenuItem> items;
+  final String heroTagOpen;
+  final String closeTitle;
+  final Key? keyFab;
 
   const CustomFabMenu({
+    required this.items,
     super.key,
-    required this.buttons,
-    this.mainIcon = Icons.add,
-    this.activeIcon = Icons.close,
-    this.fabBackgroundColor = const Color(0xFF2F5D83),
-    this.fabForegroundColor = Colors.white,
+    this.keyFab,
+    this.heroTagOpen = 'fab_open',
+    this.closeTitle = 'close',
   });
 
   @override
-  State<CustomFabMenu> createState() => _CustomFabMenuState();
-}
-
-class _CustomFabMenuState extends State<CustomFabMenu> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) => SpeedDial(
-    icon: widget.mainIcon,
-
-    activeIcon: widget.activeIcon,
-    backgroundColor: widget.fabBackgroundColor,
-    foregroundColor: widget.fabForegroundColor,
-    overlayColor: Colors.black,
-    overlayOpacity: 0.5,
-    spacing: 0,
-    spaceBetweenChildren: 0,
-    childrenButtonSize: Size(
-      0.09 * Responsive.getWidth(context),
-      0.09 * Responsive.getHeight(context),
+  Widget build(BuildContext context) => ExpandableFab(
+    key: keyFab,
+    type: ExpandableFabType.up,
+    openCloseStackAlignment: Alignment.bottomRight,
+    childrenAnimation: ExpandableFabAnimation.none,
+    distance: 70,
+    duration: const Duration(milliseconds: 300),
+    overlayStyle: ExpandableFabOverlayStyle(
+      color: AppTheme.getColor(context).surface.withValues(alpha: 0.5),
     ),
-    // elevation: 4.0,
-    animationCurve: Curves.easeInOut,
-    children: widget.buttons
-        .map(
-          (button) => SpeedDialChild(
-            child: button.imagePath != null
-                ? ClipOval(
-                    child: Image.asset(
-                      button.imagePath!,
-                      width: 0.04 * Responsive.getWidth(context),
-                      height: 0.04 * Responsive.getHeight(context),
-                      fit: BoxFit.contain,
-                    ),
-                  )
-                : Icon(
-                    button.icon,
-                    color: button.labelColor,
-                    size: 0.02 * Responsive.getHeight(context),
-                  ),
-            label: button.label,
-            labelBackgroundColor: button.backgroundColor,
-            shape: const CircleBorder(),
-            labelStyle: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: button.labelColor,
+
+    closeButtonBuilder: FloatingActionButtonBuilder(
+      size: 0,
+      builder: (context, onPressed, progress) {
+        final curvedAnimation = CurvedAnimation(
+          parent: progress,
+          curve: Curves.easeInOutCubic,
+        );
+        return IgnorePointer(
+          ignoring: progress.value == 0,
+          child: AnimatedBuilder(
+            animation: curvedAnimation,
+            builder: (context, child) => MyCoButton(
+              isShadowBottomLeft: true,
+              boarderRadius: 50,
+              width:
+                  (0.11 + (0.3 - 0.11) * curvedAnimation.value) *
+                  Responsive.getWidth(context),
+              height: 0.1 * Responsive.getWidth(context),
+              onTap: onPressed,
+              imagePosition: AxisDirection.left,
+              image: Hero(
+                tag: heroTagOpen,
+                child: Icon(
+                  Icons.close,
+                  color: AppTheme.getColor(context).surface,
+                ),
+              ),
+              title: LanguageManager().get(closeTitle),
             ),
-            backgroundColor: button.backgroundColor,
-            onTap: button.onTap,
           ),
-        )
-        .toList(),
+        );
+      },
+    ),
+
+    openButtonBuilder: FloatingActionButtonBuilder(
+      size: 0,
+      builder: (context, onPressed, progress) {
+        final curvedAnimation = CurvedAnimation(
+          parent: progress,
+          curve: Curves.easeInOutCubic,
+        );
+
+        return IgnorePointer(
+          ignoring: progress.value == 1,
+          child: AnimatedBuilder(
+            animation: curvedAnimation,
+            builder: (context, child) => MyCoButton(
+              isShadowBottomLeft: true,
+              boarderRadius: 50,
+              width:
+                  (0.11 + (0.3 - 0.11) * curvedAnimation.value) *
+                  Responsive.getWidth(context),
+              height: 0.11 * Responsive.getWidth(context),
+              onTap: onPressed,
+              title: '',
+              image: Icon(Icons.add, color: AppTheme.getColor(context).surface),
+            ),
+          ),
+        );
+      },
+    ),
+
+    children: items.map((item) {
+      return InkWell(
+        onTap: item.onTap,
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: AppTheme.getColor(context).surface,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(LanguageManager().get(item.label)),
+            ),
+            SizedBox(width: 0.02 * Responsive.getWidth(context)),
+            FloatingActionButton.small(
+              heroTag: null,
+              onPressed: null,
+              child: item.icon,
+            ),
+          ],
+        ),
+      );
+    }).toList(),
   );
 }
