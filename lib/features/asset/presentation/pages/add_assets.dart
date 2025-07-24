@@ -9,6 +9,8 @@ import 'package:myco_flutter/features/asset/presentation/text_controllers/add_as
 import 'package:myco_flutter/features/asset/presentation/widgets/assets_label_text_field.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
+import 'package:myco_flutter/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/widgets/media_picker/widgets/custom_media_picker_container.dart';
 
 class AddAssets extends StatefulWidget {
@@ -59,6 +61,32 @@ class _AddAssets extends State<AddAssets> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // NewTextField(
+                //   label: 'assets_category',
+                //   hintText: 'select',
+                //   prefixIconPath: AppAssets.assetsElement,
+                //   controller: addAssetsControllers.categoryController,
+                //   validator: (value) {
+                //     if (_currentFieldErrorIndex == 0 &&
+                //         (value == null || value.trim().isEmpty)) {
+                //       return 'Assets category is required';
+                //     }
+                //     return null;
+                //   },
+                //   onTap: () async {
+                //     final data = await showPicker(
+                //       context,
+                //       pickDay: false,
+                //       timePicker: true,
+                //     );
+                //     log(name: 'data pick', data.toString());
+                //     if (data != null) {
+                //       setState(() {
+                //         addAssetsControllers.categoryController.text = data;
+                //       });
+                //     }
+                //   },
+                // ),
                 AssetsTextFieldWidget(
                   label: 'assets_category',
                   hintText: 'select',
