@@ -14,6 +14,7 @@ import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/common_api/presentation/bloc/common_api_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/ios_calendar_time_picker.dart';
@@ -27,7 +28,6 @@ import 'package:myco_flutter/widgets/custom_loader_dialog.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/media_picker.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 import 'package:myco_flutter/widgets/custom_text_radio_button.dart';
 
@@ -86,8 +86,9 @@ class _SignupFormPageState extends State<SignupFormPage> {
   }
 
   String? selectedBranch;
-  String selectedGender = 'Male';
-  bool gender = false;
+  String selectedGender = '';
+  String Gender = 'MALE';
+
   String selectedCountry = 'IND';
   bool isChecked = false;
   final Map<String, String> countryMap = {
@@ -102,6 +103,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
   String profileImage = '';
   String? selectedImage = '';
+
+  final  formKey = GlobalKey<FormState>();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
@@ -131,11 +134,87 @@ class _SignupFormPageState extends State<SignupFormPage> {
   late List<String> shiftOptionIds = [];
   late List<String> shiftOptionNames = [];
 
+
   @override
   void initState() {
     super.initState();
-    context.read<CommonApiBloc>().add(LoadBranch(societyId ?? '1', '0'));
+     _fetchBranchList();
   }
+
+  void _fetchBranchList() {
+    context.read<CommonApiBloc>().add(LoadBranch(
+        societyId ?? '1',
+        '0'
+    ));
+  }
+
+
+  void _fetchFloorUnitList() {
+    context.read<CommonApiBloc>().add(LoadFloorUnit(
+        societyId ?? '1',
+        selectedBranchId
+    ));
+  }
+
+
+  void _fetchShiftList() {
+    context.read<CommonApiBloc>().add(LoadShift(
+        societyId ?? '1',
+        selectedDepartmentId
+    ));
+  }
+
+  void _fetchImageDataApi(List<String> imgList) {
+    context.read<CommonApiBloc>().add(LoadUploaded(
+        true,
+        imgList
+    ));
+  }
+
+
+  Future<void> _fetchAddPrimaryUser() async {
+
+    final String platform = Platform.isAndroid ? 'android' : 'ios';
+    String? languageId =  await preferenceManager.getLanguageId();
+
+    final dataMap = {
+      'addPrimaryUser': 'addPrimaryUser',
+      'society_id': societyId,
+      'society_address': societyAddress,
+      'block_id': selectedBranchId,
+      'floor_id': selectedDepartmentId,
+      'unit_id': '0',
+      'shift_time_id': selectedShiftId,
+      'designation': selectedDesignationName,
+      'user_first_name': _firstNameController.text,
+      'user_last_name': _lastNameController.text,
+      'user_full_name': '${_firstNameController.text} ${_lastNameController.text}',
+      'user_mobile': phoneNumberController.text,
+      'user_email': _emailController.text,
+      'user_profile_pic': profileImage,
+      'user_type': '0',
+      'user_token': 'cIkYCvpYR9yMnlfHzsDZYi:APA91bH-uXuHf2w4xvrhn4KrTAG8BGG8ai8FhR7IgS3et5J3UQtLMuL9j2UCYxOyMC3BQJJTHPgg5LX1JVeehELDfa4aUX278e7FJ6zsyDe8iPvnDwjM8CU',
+      'device': platform,
+      'gender': Gender,
+      'country_code': '+91'/*selectedCountry*/, //
+      'unit_name': '',
+      'newUserByAdmin': isAddByAdmin! ? '1' : '0',
+      'joining_date': joiningDateController.text,
+      'language_id': languageId,
+      'sub_department_id': selectedSubDepartmentId,
+      'vi_dependants': departmentNumberController.text,
+      'designation_id': selectedDesignationId,
+    };
+
+    // Pretty print:
+    dataMap.forEach((key, value) {
+      print('data add primary: $value');
+    });
+
+    context.read<PrimaryRegisterBloc>().add(LoadAddPrimaryUser(dataMap));
+  }
+
+
   @override
   Widget build(BuildContext context) {
     Responsive.init(context);
@@ -256,578 +335,537 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
 
   Widget setUi() => SingleChildScrollView(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 0.020 * Responsive.getHeight(context)),
+    child: Form(
+      key: formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
-        Center(
-          child: badges.Badge(
-            badgeStyle: const badges.BadgeStyle(badgeColor: Colors.transparent),
-            position: badges.BadgePosition.bottomEnd(
-              bottom: -22 * Responsive.getResponsive(context),
-              end: -15 * Responsive.getResponsive(context),
-            ),
-            badgeContent: GestureDetector(
-              onTap: () async {
-                final List<File>? files = await showMediaFilePicker(
-                  isDialog: false,
-                  isCameraShow: true,
-                  isGalleryShow: true,
-                  isDocumentShow: false,
-                  context: context,
-                );
+          Center(
+            child: badges.Badge(
+              badgeStyle: const badges.BadgeStyle(badgeColor: Colors.transparent),
+              position: badges.BadgePosition.bottomEnd(
+                bottom: -22 * Responsive.getResponsive(context),
+                end: -15 * Responsive.getResponsive(context),
+              ),
+              badgeContent: GestureDetector(
+                onTap: () async {
+                  final List<File>? files = await showMediaFilePicker(
+                    isDialog: false,
+                    isCameraShow: true,
+                    isGalleryShow: true,
+                    isDocumentShow: false,
+                    context: context,
+                  );
 
-                if (files == null || files.isEmpty) return;
-                final List<String> imgList = [files.first.path];
-                context.read<CommonApiBloc>().add(LoadUploaded(true, imgList));
-                setState(() {});
-              },
+                  if (files == null || files.isEmpty) return;
+                  final List<String> imgList = [files.first.path];
+                  _fetchImageDataApi(imgList);
 
-              child: Image.asset(
-                'assets/sign_in/camera_icon.png',
-                fit: BoxFit.contain,
-                height: 0.04 * Responsive.getHeight(context),
+                  setState(() {});
+                },
+
+                child: Image.asset(
+                  'assets/sign_in/camera_icon.png',
+                  fit: BoxFit.contain,
+                  height: 0.04 * Responsive.getHeight(context),
+                ),
+              ),
+              child: FramedProfileImage(
+                imagePath: selectedImage,
+                borderColor: AppTheme.getColor(context).primary,
+                borderWidth: 1,
+                size: 80,
               ),
             ),
-            child: FramedProfileImage(
-              imagePath: selectedImage,
-              borderColor: AppTheme.getColor(context).primary,
-              borderWidth: 1,
-              size: 80,
-            ),
           ),
-        ),
 
-        SizedBox(height: 0.030 * Responsive.getHeight(context)),
+          SizedBox(height: 0.030 * Responsive.getHeight(context)),
 
-        buildCustomSelector(
-          context: context,
-          label: 'Branch',
-          selectedId: selectedBranchId,
-          selectedName: selectedBranchName,
-          optionIds: branchOptionIds,
-          optionNames: branchOptionNames,
-          defaultLabelKey: 'branch',
-          prefixIcon: 'assets/sign_in/branch_icon.png',
-          onSelected: (id, name) {
-            selectedBranchId = id;
-            selectedBranchName = name;
-            selectedDepartmentId = '';
-            selectedDepartmentName = '';
-            selectedSubDepartmentId = '';
-            selectedSubDepartmentName = '';
-            selectedShiftId = '';
-            selectedShiftName = '';
-            selectedDesignationId = '';
-            selectedDesignationName = '';
-            context.read<CommonApiBloc>().add(LoadFloorUnit(societyId ?? '1',selectedBranchId));
-            setState(() {});
-          },
-        ),
-        SizedBox(height: 0.015 * Responsive.getHeight(context)),
-
-        buildCustomSelector(
-          context: context,
-          label: 'Department',
-          selectedId: selectedDepartmentId,
-          selectedName: selectedDepartmentName,
-          optionIds: departmentOptionIds,
-          optionNames: departmentOptionNames,
-          defaultLabelKey: 'department',
-          prefixIcon: 'assets/sign_in/department_icon.png',
-          onSelected: (id, name) {
-            selectedDepartmentId = id;
-            selectedDepartmentName = name;
-            selectedSubDepartmentId = '';
-            selectedSubDepartmentName = '';
-
-            context.read<CommonApiBloc>().add(LoadShift(societyId ?? '1',selectedDepartmentId));
-            setState(() {});
-          },
-        ),
-        SizedBox(height: 0.015 * Responsive.getHeight(context)),
-
-        if (subDepartmentOptionIds.isNotEmpty) ...[
           buildCustomSelector(
             context: context,
-            label: 'Sub Department',
-            selectedId: selectedSubDepartmentId,
-            selectedName: selectedSubDepartmentName,
-            optionIds: subDepartmentOptionIds,
-            optionNames: subDepartmentOptionNames,
-            defaultLabelKey: 'sub department',
-            prefixIcon: 'assets/sign_in/sub_department_icon.png',
+            label: LanguageManager().get('select_your_branch'),
+            selectedId: selectedBranchId,
+            selectedName: selectedBranchName,
+            optionIds: branchOptionIds,
+            optionNames: branchOptionNames,
+            defaultLabelKey: 'branch',
+            prefixIcon: AppAssets.branchIcon,
             onSelected: (id, name) {
-              selectedSubDepartmentId = id;
-              selectedSubDepartmentName = name;
+              selectedBranchId = id;
+              selectedBranchName = name;
+              selectedDepartmentId = '';
+              selectedDepartmentName = '';
+              selectedSubDepartmentId = '';
+              selectedSubDepartmentName = '';
+              selectedShiftId = '';
+              selectedShiftName = '';
+              selectedDesignationId = '';
+              selectedDesignationName = '';
+              _fetchFloorUnitList();
+              setState(() {});
+            },
+          ),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
+
+          buildCustomSelector(
+            context: context,
+            label: LanguageManager().get('please_select_area'),
+            selectedId: selectedDepartmentId,
+            selectedName: selectedDepartmentName,
+            optionIds: departmentOptionIds,
+            optionNames: departmentOptionNames,
+            defaultLabelKey: 'department',
+            prefixIcon: AppAssets.departmentIcon,
+            onSelected: (id, name) {
+              selectedDepartmentId = id;
+              selectedDepartmentName = name;
+              selectedSubDepartmentId = '';
+              selectedSubDepartmentName = '';
+
+              _fetchShiftList();
+              setState(() {});
+            },
+          ),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
+
+          if (subDepartmentOptionIds.isNotEmpty) ...[
+            buildCustomSelector(
+              context: context,
+              label: LanguageManager().get('select_sub_department'),
+              selectedId: selectedSubDepartmentId,
+              selectedName: selectedSubDepartmentName,
+              optionIds: subDepartmentOptionIds,
+              optionNames: subDepartmentOptionNames,
+              defaultLabelKey: 'sub department',
+              prefixIcon: AppAssets.subDepartmentIcon,
+              onSelected: (id, name) {
+                selectedSubDepartmentId = id;
+                selectedSubDepartmentName = name;
+
+                setState(() {});
+              },
+            ),
+            SizedBox(height: 0.015 * Responsive.getHeight(context)),
+          ],
+
+          buildCustomSelector(
+            context: context,
+            label: LanguageManager().get('select_shift_time'),
+            selectedId: selectedShiftId,
+            selectedName: selectedShiftName,
+            optionIds: shiftOptionIds,
+            optionNames: shiftOptionNames,
+            defaultLabelKey: 'shift',
+            prefixIcon: AppAssets.clockIcon,
+            onSelected: (id, name) {
+              selectedShiftId = id;
+              selectedShiftName = name;
 
               setState(() {});
             },
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
-        ],
 
-        buildCustomSelector(
-          context: context,
-          label: 'Shift',
-          selectedId: selectedShiftId,
-          selectedName: selectedShiftName,
-          optionIds: shiftOptionIds,
-          optionNames: shiftOptionNames,
-          defaultLabelKey: 'shift',
-          prefixIcon: 'assets/sign_in/clock_icon.png',
-          onSelected: (id, name) {
-            selectedShiftId = id;
-            selectedShiftName = name;
+          buildCustomSelector(
+            context: context,
+            label: LanguageManager().get('designation'),
+            selectedId: selectedDesignationId,
+            selectedName: selectedDesignationName,
+            optionIds: floorUnitOptionIds,
+            optionNames: floorUnitOptionNames,
+            defaultLabelKey: 'designation',
+            prefixIcon: AppAssets.designationIcon,
+            onSelected: (id, name) {
+              selectedDesignationId = id;
+              selectedDesignationName = name;
+              setState(() {});
+            },
+          ),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
-            setState(() {});
-          },
-        ),
-        SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
-        buildCustomSelector(
-          context: context,
-          label: 'Designation',
-          selectedId: selectedDesignationId,
-          selectedName: selectedDesignationName,
-          optionIds: floorUnitOptionIds,
-          optionNames: floorUnitOptionNames,
-          defaultLabelKey: 'designation',
-          prefixIcon: 'assets/sign_in/designation_icon.png',
-          onSelected: (id, name) {
-            selectedDesignationId = id;
-            selectedDesignationName = name;
-            setState(() {});
-          },
-        ),
-        SizedBox(height: 0.015 * Responsive.getHeight(context)),
+          NewTextField(
+            label: LanguageManager().get('joining_date'),
+            controller: joiningDateController,
+            hintText: LanguageManager().get('select'),
+            prefixIconPath: AppAssets.joiningDate,
+            suffixIconPath: AppAssets.downArrow,
+            isRequired: true,
+            enabled: true,
 
-        CustomText(
-          'Joining Date *',
-          color: AppTheme.getColor(context).onSurfaceVariant,
-          fontSize: 13 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.bold,
-        ),
-        SizedBox(height: 0.005 * Responsive.getHeight(context)),
+            validator: (value) {
+              if(value!.isEmpty){
+                return 'Please enter first name';
+              }
+            },
 
-        NewTextField(
-          controller: joiningDateController,
-          hintText: 'Select here',
-          prefixIconPath: AppAssets.joiningDate,
-          suffixIconPath: AppAssets.downArrow,
-          enabled: false,
-
-          onTap: () async {
-            showModalBottomSheet(
-              backgroundColor: AppColors.white,
-              context: context,
-              builder: (context) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
-                  vertical: 10,
+            onTap: () async {
+              showModalBottomSheet(
+                backgroundColor: AppColors.white,
+                context: context,
+                builder: (context) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0,
+                    vertical: 10,
+                  ),
+                  child: DialDatePickerWidget(
+                    initialDate: DateTime.now(),
+                    onSubmit: (selectedDate) {
+                      final String date = DateFormat('dd-MM-yy',).format(selectedDate);
+                      joiningDateController.text = date;
+                      Navigator.pop(context);
+                    },
+                  ),
                 ),
-                child: DialDatePickerWidget(
-                  initialDate: DateTime.now(),
-                  onSubmit: (selectedDate) {
-                    final String date = DateFormat('dd-MM-yy',).format(selectedDate);
-                    joiningDateController.text = date;
-                    Navigator.pop(context);
+              );
+            },
+          ),
+
+          SizedBox(height: 0.020 * Responsive.getHeight(context)),
+
+          // First Name and Last Name
+          Row(
+            children: [
+              Expanded(
+                child: NewTextField(
+                  label: LanguageManager().get('first_name'),
+                  hintText: LanguageManager().get('enter_here'),
+                  controller: _firstNameController,
+                  // Add validation if needed
+                  isRequired: true,
+                    validator: (value) {
+                      if(value!.isEmpty){
+                        return 'Please enter first name';
+                      }
+                    },
+                ),
+              ),
+              SizedBox(width: 0.02 * Responsive.getWidth(context)),
+              Expanded(
+                child: NewTextField(
+                  label: LanguageManager().get('last_name'),
+                  hintText: LanguageManager().get('enter_here'),
+                  controller: _lastNameController,
+                  // Add validation if needed
+                  isRequired: true,
+                  validator: (value) {
+                    if(value!.isEmpty){
+                      return 'Please enter last name';
+                    }
                   },
                 ),
               ),
-            );
-          },
-        ),
+            ],
+          ),
 
-        SizedBox(height: 0.020 * Responsive.getHeight(context)),
+          SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
-        // First Name and Last Name
-        Row(
-          children: [
-            Expanded(
-              child: NewTextField(
-                label: 'First Name',
-                hintText: 'First Name',
-                controller: _firstNameController,
-                // Add validation if needed
-                isRequired: true,
+
+          CustomText(
+            LanguageManager().get('gender'),
+            color: AppTheme.getColor(context).onSurfaceVariant,
+            fontSize: 13 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.bold,
+          ),
+
+          SizedBox(height: 0.005 * Responsive.getHeight(context)),
+          Row(
+            children: [
+              CustomTextRadioButton(
+                gender: LanguageManager().get('male'),
+                selectedGender: selectedGender,
+                textStyle: TextStyle(
+                  fontFamily: 'Gilroy-semiBold',
+                  fontSize: 14 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.getColor(context).onSurfaceVariant,
+                ),
+                onSelect: (val) {
+                  setState(() {
+                    selectedGender = val;
+                    Gender = 'MALE';
+                  });
+                },
+                height: 0.057 * Responsive.getHeight(context),
+                width: 0.43 * Responsive.getWidth(context),
               ),
-            ),
-            SizedBox(width: 0.02 * Responsive.getWidth(context)),
-            Expanded(
-              child: NewTextField(
-                label: 'Last Name',
-                hintText: 'Last Name',
-                controller: _lastNameController,
-                // Add validation if needed
-                isRequired: true,
-              ),
-            ),
-          ],
-        ),
-
-        SizedBox(height: 0.020 * Responsive.getHeight(context)),
-
-
-        CustomText(
-          'Gender',
-          color: AppTheme.getColor(context).onSurfaceVariant,
-          fontSize: 13 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.bold,
-        ),
-
-        SizedBox(height: 0.005 * Responsive.getHeight(context)),
-        Row(
-          children: [
-            CustomTextRadioButton(
-              gender: 'MALE',
-              selectedGender: selectedGender,
-              textStyle: TextStyle(
+              const Spacer(),
+              CustomTextRadioButton(
+                gender: LanguageManager().get('female'),
+                selectedGender: selectedGender,
+                textStyle: TextStyle(
                 fontFamily: 'Gilroy-semiBold',
                 fontSize: 14 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w600,
                 color: AppTheme.getColor(context).onSurfaceVariant,
               ),
-              onSelect: (val) {
-                setState(() {
-                  selectedGender = val;
-                });
+                onSelect: (val) {
+                  setState(() {
+                    selectedGender = val;
+                    Gender = 'FEMALE';
+                  });
+                },
+                height: 0.057 * Responsive.getHeight(context),
+                width: 0.43 * Responsive.getWidth(context),
+              ),
+            ],
+          ),
+
+          SizedBox(height: 0.020 * Responsive.getHeight(context)),
+
+          if ('240' == preferenceManager.getCountryId()) ...[
+            NewTextField(
+              label: LanguageManager().get('number_of_dependent'),
+              controller: departmentNumberController,
+              hintText: LanguageManager().get('enter_here'),
+              prefixIconPath: AppAssets.unitNumberIcon,
+              isRequired: true,
+
+              validator: (value) {
+                if('240' == preferenceManager.getCountryId() && value!.isEmpty){
+                  return 'Please enter number of department';
+                }
               },
-              height: 0.063 * Responsive.getHeight(context),
-              width: 0.43 * Responsive.getWidth(context),
+
             ),
-            const Spacer(),
-            CustomTextRadioButton(
-              gender: 'FEMALE',
-              selectedGender: selectedGender,
-              textStyle: TextStyle(
-              fontFamily: 'Gilroy-semiBold',
-              fontSize: 14 * Responsive.getResponsiveText(context),
-              fontWeight: FontWeight.w600,
-              color: AppTheme.getColor(context).onSurfaceVariant,
-            ),
-              onSelect: (val) {
-                setState(() {
-                  selectedGender = val;
-                });
-              },
-              height: 0.063 * Responsive.getHeight(context),
-              width: 0.43 * Responsive.getWidth(context),
-            ),
+
+            SizedBox(height: 0.020 * Responsive.getHeight(context)),
           ],
-        ),
 
-        SizedBox(height: 0.020 * Responsive.getHeight(context)),
-
-        if ('240' == preferenceManager.getCountryId()) ...[
           CustomText(
-            'Number of Dependent *',
+            LanguageManager().get('mobile_number'),
             color: AppTheme.getColor(context).onSurfaceVariant,
             fontSize: 13 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.bold,
           ),
           SizedBox(height: 0.005 * Responsive.getHeight(context)),
-
-          MyCoTextfield(
-            controller: departmentNumberController,
-            textAlignment: TextAlign.start,
-            hintText: 'Type here',
-            border: OutlineInputBorder(
+          PhoneNumberField(
+            validation: (value) {
+              if(value!.isEmpty){
+                return 'Please enter Mobile Number';
+              }
+            },
+            selectedCountry: selectedCountry,
+            countries: countryMap.keys.toList(),
+            onCountryChanged: (value, index) {
+              if (value != null) {
+                setState(() {
+                  selectedCountry = value;
+                });
+              }
+            },
+            countryDialCodes: countryMap,
+            phoneController: phoneNumberController,
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(
-                10 * Responsive.getResponsive(context),
+                15 * Responsive.getResponsive(context),
               ),
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-            ),
-            preFixImage: 'assets/sign_in/unit_number_icon.png',
-            prefixIconConstraints: BoxConstraints(
-              minHeight: 0.02 * Responsive.getHeight(context),
-              minWidth: 0.11 * Responsive.getWidth(context),
+              border: Border.all(color: AppTheme.getColor(context).outline),
+              color: AppTheme.getColor(context).onPrimary,
             ),
           ),
 
           SizedBox(height: 0.020 * Responsive.getHeight(context)),
-        ],
 
-        CustomText(
-          'Phone Number *',
-          color: AppTheme.getColor(context).onSurfaceVariant,
-          fontSize: 13 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.bold,
-        ),
-        SizedBox(height: 0.005 * Responsive.getHeight(context)),
-        PhoneNumberField(
-          selectedCountry: selectedCountry,
-          countries: countryMap.keys.toList(),
-          onCountryChanged: (value, index) {
-            if (value != null) {
-              setState(() {
-                selectedCountry = value;
-              });
-            }
-          },
-          countryDialCodes: countryMap,
-          phoneController: phoneNumberController,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              15 * Responsive.getResponsive(context),
-            ),
-            border: Border.all(color: AppTheme.getColor(context).outline),
-            color: AppTheme.getColor(context).onPrimary,
+           NewTextField(
+            label: LanguageManager().get('email_id'),
+            hintText: LanguageManager().get('enter_here'),
+            controller: _emailController,
+            prefixIconPath: AppAssets.emailIcon,
           ),
-        ),
 
-        SizedBox(height: 0.020 * Responsive.getHeight(context)),
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
+          Row(
+            children: [
+              CustomCheckbox(
+                value: isChecked,
+                onChanged: (val) {
+                  setState(() {
+                    isChecked = val;
+                  });
+                },
+                borderColor: isChecked
+                    ? AppTheme.getColor(context).primary
+                    : AppTheme.getColor(context).primary,
+                activeColor: AppTheme.getColor(context).primaryContainer,
+                checkColor: AppTheme.getColor(context).primary,
+                height: 0.026 * Responsive.getHeight(context),
+                width: 0.056 * Responsive.getWidth(context),
+                unCheckedBackground: AppTheme.getColor(context).primaryContainer,
+              ),
+              SizedBox(width: 0.015 * Responsive.getWidth(context)),
+              SizedBox(
+                width: 0.82 * Responsive.getWidth(context),
+                child: RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      color: AppTheme.getColor(context).onSurface,
+                      fontSize: 14 * Responsive.getResponsiveText(context),
+                    ),
+                    children: [
+                      TextSpan(
+                        text: LanguageManager().get('I_agree_with'),
+                        style: TextStyle(
+                          color: AppTheme.getColor(context).onSurface,
+                          fontSize: 12 * Responsive.getResponsiveText(context),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
 
-         NewTextField(
-          label: 'Email Address',
-          hintText: 'Enter here',
-          controller: _emailController,
-           prefixIconPath: 'assets/sign_in/email_icon.png',
-        ),
+                      TextSpan(
+                        text: '${LanguageManager().get('terms_and_condition')} ',
+                        style: TextStyle(
+                          color: AppTheme.getColor(context).primary,
+                          fontSize: 12 * Responsive.getResponsiveText(context),
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (_) => const BottomTermAndCondition(url : 'url'),
+                            );
+                          },
+                      ),
 
-        SizedBox(height: 0.015 * Responsive.getHeight(context)),
-        Row(
-          children: [
-            CustomCheckbox(
-              value: isChecked,
-              onChanged: (val) {
-                setState(() {
-                  isChecked = val;
-                });
-              },
-              borderColor: isChecked
-                  ? AppTheme.getColor(context).primary
-                  : AppTheme.getColor(context).primary,
-              activeColor: AppTheme.getColor(context).primaryContainer,
-              checkColor: AppTheme.getColor(context).primary,
-              height: 0.026 * Responsive.getHeight(context),
-              width: 0.056 * Responsive.getWidth(context),
-              unCheckedBackground: AppTheme.getColor(context).primaryContainer,
-            ),
-            SizedBox(width: 0.015 * Responsive.getWidth(context)),
-            SizedBox(
-              width: 0.82 * Responsive.getWidth(context),
-              child: RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    color: AppTheme.getColor(context).onSurface,
-                    fontSize: 14 * Responsive.getResponsiveText(context),
+                      TextSpan(
+                        text: '${LanguageManager().get('and')} ',
+                        style: TextStyle(
+                          color: AppTheme.getColor(context).onSurface,
+                          fontSize: 14 * Responsive.getResponsiveText(context),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      TextSpan(
+                        text: LanguageManager().get('privacy_policy'),
+                        style: TextStyle(
+                          color: AppTheme.getColor(context).primary,
+                          fontSize: 12 * Responsive.getResponsiveText(context),
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (_) => const BottomTermAndCondition(url : 'url'),
+                            );
+                          },
+                      ),
+                    ],
                   ),
-                  children: [
-                    TextSpan(
-                      text: 'Please confirm that you agree to our ',
-                      style: TextStyle(
-                        color: AppTheme.getColor(context).onSurface,
-                        fontSize: 12 * Responsive.getResponsiveText(context),
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'Privacy Policy',
-                      style: TextStyle(
-                        color: AppTheme.getColor(context).primary,
-                        fontSize: 12 * Responsive.getResponsiveText(context),
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (_) => const BottomTermAndCondition(),
-                          );
-                        },
-                    ),
-                    const TextSpan(text: ', '),
-                    TextSpan(
-                      text: 'Terms & Conditions',
-                      style: TextStyle(
-                        color: AppTheme.getColor(context).primary,
-                        fontSize: 12 * Responsive.getResponsiveText(context),
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (_) => const BottomTermAndCondition(),
-                          );
-                        },
-                    ),
-                    TextSpan(
-                      text: ' & ',
-                      style: TextStyle(
-                        color: AppTheme.getColor(context).onSurface,
-                        fontSize: 14 * Responsive.getResponsiveText(context),
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'Cancellation & Refund Policy',
-                      style: TextStyle(
-                        color: AppTheme.getColor(context).primary,
-                        fontSize: 12 * Responsive.getResponsiveText(context),
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (_) => const BottomTermAndCondition(),
-                          );
-                        },
-                    ),
-                    TextSpan(
-                      text: '.',
-                      style: TextStyle(
-                        color: AppTheme.getColor(context).onSurface,
-                        fontSize: 14 * Responsive.getResponsiveText(context),
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ],
                 ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: 0.1 * Responsive.getWidth(context)),
-        MyCoButton(
-          textStyle: TextStyle(
-            color: AppTheme.getColor(context).onPrimary,
-            fontSize: 16 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.bold,
+            ],
           ),
-          onTap: () {
-
-            final bool isValid = FormValidator.validateAll(
-              selectedBranchId: selectedBranchId,
-              selectedDepartmentId: selectedDepartmentId,
-              selectedDesignationId: selectedDesignationId,
-              joiningDate: joiningDateController.text,
-              phoneNumber: phoneNumberController,
-              firstNameController: _firstNameController,
-              lastNameController: _lastNameController,
-              emailController: _emailController,
-              profileImage: profileImage,
-              departmentNumberController: departmentNumberController,
-              preferenceManager: preferenceManager,
-            );
-            if (!isValid) return;
-
-            final String platform = Platform.isAndroid ? 'android' : 'ios';
-
-
-            final dataMap = {
-              'addPrimaryUser': 'addPrimaryUser',
-              'society_id': societyId,
-              'society_address': societyAddress,
-              'block_id': selectedBranchId,
-              'floor_id': selectedDepartmentId,
-              'unit_id': '0',
-              'shift_time_id': selectedShiftId,
-              'designation': selectedDesignationName,
-              'user_first_name': _firstNameController.text,
-              'user_last_name': _lastNameController.text,
-              'user_full_name': '${_firstNameController.text} ${_lastNameController.text}',
-              'user_mobile': phoneNumberController.text,
-              'user_email': _emailController.text,
-              'user_profile_pic': profileImage,
-              'user_type': '0',
-              'user_token': 'cIkYCvpYR9yMnlfHzsDZYi:APA91bH-uXuHf2w4xvrhn4KrTAG8BGG8ai8FhR7IgS3et5J3UQtLMuL9j2UCYxOyMC3BQJJTHPgg5LX1JVeehELDfa4aUX278e7FJ6zsyDe8iPvnDwjM8CU',
-              'device': platform,
-              'gender': selectedGender,
-              'country_code': '+91'/*selectedCountry*/, //
-              'unit_name': '',
-              'newUserByAdmin': isAddByAdmin! ? '1' : '0',
-              'joining_date': joiningDateController.text,
-              'language_id': '1', //
-              'sub_department_id': selectedSubDepartmentId,
-              'vi_dependants': departmentNumberController.text,
-              'designation_id': selectedDesignationId,
-            };
-
-            // Pretty print:
-            dataMap.forEach((key, value) {
-              print('data add primary: $value');
-            });
-
-
-            context.read<PrimaryRegisterBloc>().add(LoadAddPrimaryUser(dataMap));
-
-            // PrimaryRegisterBloc(
-            //   registerUseCase: GetIt.I<PrimaryRegisterUseCase>(),
-            // ).add(LoadAddPrimaryUser(dataMap));
-
-            // showCustomEmailVerificationSheet(
-            //   imageUrl: 'assets/sign_in/email.png',
-            //   imageHeight: 0.035 * Responsive.getHeight(context),
-            //   imageWidth: 0.09 * Responsive.getWidth(context),
-            //   // isDialog: true,
-            //   context: context,
-            //   title: 'Email Verification Sent!',
-            //   description:
-            //   'A verification code will be sent to the email Hello@work.com for your account verification process.',
-            //   emailAddress: "example@example.com",
-            //   onSubmit: (String otp) {
-            //     dev.log("OTP submitted: $otp");
-            //     // context.pop();
-            //     showModalBottomSheet(
-            //       context: context,
-            //       backgroundColor: AppTheme.getColor(context).onPrimary,
-            //       builder: (context) => BottomGetStarted(),
-            //     );
-            //   },
-            //   onResend: () {
-            //     dev.log("Resend OTP");
-            //   },
-            //   onVerifyButtonPressed: () {
-            //     dev.log("Verify button pressed");
-            //     context.pop();
-            //     showModalBottomSheet(
-            //       context: context,
-            //       backgroundColor: AppTheme.getColor(context).onPrimary,
-            //       builder: (context) => BottomGetStarted(),
-            //     );
-            //   },
-            //   length: 6,
-            // );
-          },
-          title: 'Sign Up',
-          boarderRadius: 30 * Responsive.getResponsive(context),
-          isShadowBottomLeft: true,
-        ),
-        SizedBox(height: 0.1 * Responsive.getWidth(context)),
-        Center(
-          child: GestureDetector(
+          SizedBox(height: 0.1 * Responsive.getWidth(context)),
+          MyCoButton(
+            textStyle: TextStyle(
+              color: AppTheme.getColor(context).onPrimary,
+              fontSize: 16 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.bold,
+            ),
             onTap: () {
-              context.pop();
+
+              print('gender: $Gender');
+
+          //    if(formKey.currentState!.validate()){
+                final bool isValid = FormValidator.validateAll(
+                  selectedBranchId: selectedBranchId,
+                  selectedDepartmentId: selectedDepartmentId,
+                  selectedDesignationId: selectedDesignationId,
+                  joiningDate: joiningDateController.text,
+                  phoneNumber: phoneNumberController,
+                  firstNameController: _firstNameController,
+                  lastNameController: _lastNameController,
+                  emailController: _emailController,
+                  profileImage: profileImage,
+                  departmentNumberController: departmentNumberController,
+                  preferenceManager: preferenceManager,
+                );
+                if (!isValid) return;
+
+                _fetchAddPrimaryUser();
+
+
+          //    }
+
+
+
+              // PrimaryRegisterBloc(
+              //   registerUseCase: GetIt.I<PrimaryRegisterUseCase>(),
+              // ).add(LoadAddPrimaryUser(dataMap));
+
+              // showCustomEmailVerificationSheet(
+              //   imageUrl: 'assets/sign_in/email.png',
+              //   imageHeight: 0.035 * Responsive.getHeight(context),
+              //   imageWidth: 0.09 * Responsive.getWidth(context),
+              //   // isDialog: true,
+              //   context: context,
+              //   title: 'Email Verification Sent!',
+              //   description:
+              //   'A verification code will be sent to the email Hello@work.com for your account verification process.',
+              //   emailAddress: "example@example.com",
+              //   onSubmit: (String otp) {
+              //     dev.log("OTP submitted: $otp");
+              //     // context.pop();
+              //     showModalBottomSheet(
+              //       context: context,
+              //       backgroundColor: AppTheme.getColor(context).onPrimary,
+              //       builder: (context) => BottomGetStarted(),
+              //     );
+              //   },
+              //   onResend: () {
+              //     dev.log("Resend OTP");
+              //   },
+              //   onVerifyButtonPressed: () {
+              //     dev.log("Verify button pressed");
+              //     context.pop();
+              //     showModalBottomSheet(
+              //       context: context,
+              //       backgroundColor: AppTheme.getColor(context).onPrimary,
+              //       builder: (context) => BottomGetStarted(),
+              //     );
+              //   },
+              //   length: 6,
+              // );
             },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomText(
-                  'Already have an account?',
-                  fontSize: 13 * Responsive.getResponsiveText(context),
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.getColor(context).onSurface,
-                ),
-                const SizedBox(width: 5),
-                CustomText(
-                  'Sign in here',
-                  fontSize: 13 * Responsive.getResponsiveText(context),
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.getColor(context).primary,
-                ),
-              ],
+            title: LanguageManager().get('sign_up'),
+            boarderRadius: 30 * Responsive.getResponsive(context),
+            isShadowBottomLeft: true,
+          ),
+          SizedBox(height: 0.1 * Responsive.getWidth(context)),
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                context.pop();
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomText(
+                    LanguageManager().get('already_have_an_account'),
+                    fontSize: 13 * Responsive.getResponsiveText(context),
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.getColor(context).onSurface,
+                  ),
+                  const SizedBox(width: 5),
+                  CustomText(
+                    LanguageManager().get('sign_in'),
+                    fontSize: 13 * Responsive.getResponsiveText(context),
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.getColor(context).primary,
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        SizedBox(height: 0.015 * Responsive.getHeight(context)),
-      ],
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
+        ],
+      ),
     ),
   );
 }

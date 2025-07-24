@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/select_custom_dialog.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
@@ -21,13 +22,24 @@ Widget buildCustomSelector({
 
   return FormField<String>(
     validator: (val) {
-      if (optionIds.isEmpty) {
-        // Show toast if list is empty — handled on tap
-        return null;
+
+      if (defaultLabelKey == 'branch' && optionIds.isEmpty) {
+        Fluttertoast.showToast(msg: 'No branch found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+        return;
+      } else if (defaultLabelKey == 'department' && optionIds.isEmpty) {
+        Fluttertoast.showToast(msg: 'No department found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+        return;
+      } else if (defaultLabelKey == 'sub department' && optionIds.isEmpty) {
+        Fluttertoast.showToast(msg: 'No sub department found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+        return;
+      } else if (defaultLabelKey == 'shift' && optionIds.isEmpty) {
+        Fluttertoast.showToast(msg: 'No shift found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+        return;
+      } else if (defaultLabelKey == 'designation' && optionIds.isEmpty) {
+        Fluttertoast.showToast(msg: 'No designation found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+        return;
       }
-      if (isRequired && isDefault) {
-        return 'Please select your ${defaultLabelKey.toLowerCase()}';
-      }
+
       return null;
     },
     builder: (field) => Column(
@@ -37,7 +49,7 @@ Widget buildCustomSelector({
           label: label,
           prefixIconPath: prefixIcon,
           suffixIconPath: AppAssets.downArrow,
-          hintText: defaultValue,
+          hintText: LanguageManager().get('select'),
           isRequired: isRequired,
           controller: TextEditingController(text: selectedName),
           onTap: () {

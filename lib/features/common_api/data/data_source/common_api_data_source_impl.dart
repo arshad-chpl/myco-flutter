@@ -86,6 +86,9 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
       'language_id': '1' /*preferenceManager.getLanguageId()*/
     };
 
+    print('societyId: $societyId');
+    print('blockId: $blockId');
+
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
     final controller = 'blockListControllerEnc.php';
 
