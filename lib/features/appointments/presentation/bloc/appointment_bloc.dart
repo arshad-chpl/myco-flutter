@@ -8,34 +8,67 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
 
 
   AppointmentBloc(this.useCase) : super(const AppointmentInitial()) {
+
     on<AppointmentTabChange>((event, emit) {
-      emit(AppointmentInitial(tabIndex: event.tabIndex));
+      emit(state.copyWith(tabIndex: event.tabIndex));
     });
 
     on<GetAppointmentEvent>((event, emit) async {
-      emit(const AppointmentLoading());
+      emit(AppointmentLoading(tabIndex: state.tabIndex));
       try {
         final result = await useCase.getAppointment(event.params);
         result.fold(
-              (failure) => emit(AppointmentError(failure.message)),
-              (getAppointment) => emit(AppointmentLoaded(getAppointment)),
+              (failure) => emit(AppointmentError(failure.message, tabIndex:  state.tabIndex)),
+              (getAppointment) => emit(AppointmentLoaded(getAppointment, tabIndex: state.tabIndex)),
         );
       } catch (e) {
-        emit(const AppointmentError('Failed to load getAppointment'));
+        emit(AppointmentError('Failed to load getAppointment', tabIndex: state.tabIndex));
       }
     });
 
 
     on<GetMyAppointmentEvent>((event, emit) async {
-      emit(const AppointmentLoading());
+      emit(AppointmentLoading(tabIndex: state.tabIndex));
       try {
         final result = await useCase.getMyAppointment(event.params);
         result.fold(
-            (failure) => emit(AppointmentError(failure.message)),
-            (getMyAppointment) => emit(AppointmentLoaded(getMyAppointment)),
+              (failure) {
+            print('GetMyAppointmentEvent failed in Bloc: ${failure.message}');
+            emit(AppointmentError(failure.message,  tabIndex: state.tabIndex));
+          },
+              (getMyAppointment) {
+            print('GetMyAppointmentEvent successful in Bloc. Entity myAppointments count received: ${getMyAppointment.myAppointments?.length ?? 0}'); // <--- CRITICAL PRINT
+            emit(AppointmentLoaded(getMyAppointment,  tabIndex: state.tabIndex),);
+          },
         );
       } catch (e) {
-        emit(const AppointmentError('Failed to load getMyAppointment'));
+        emit(AppointmentError('Failed to load getMyAppointment', tabIndex: state.tabIndex));
+      }
+    });
+
+    on<ApprovedAppointmentEvent>((event, emit) async {
+      emit(AppointmentLoading(tabIndex: state.tabIndex));
+      try {
+        final result = await useCase.approvedAppointment(event.params);
+        result.fold(
+          (failure) => emit(AppointmentError(failure.message, tabIndex: state.tabIndex)),
+          (approvedAppointment) => emit(CommonResponseAppointment(approvedAppointment, tabIndex: state.tabIndex)),
+        );
+      } catch (e) {
+        emit(AppointmentError('Failed to load approved appointment', tabIndex: state.tabIndex));
+      }
+    });
+
+    on<RejectAppointmentEvent>((event, emit) async {
+      emit(AppointmentLoading(tabIndex: state.tabIndex));
+      try {
+        final result = await useCase.rejectAppointment(event.params);
+        result.fold(
+              (failure) => emit(AppointmentError(failure.message, tabIndex: state.tabIndex)),
+              (approvedAppointment) => emit(CommonResponseAppointment(approvedAppointment, tabIndex: state.tabIndex)),
+        );
+      } catch (e) {
+        emit(AppointmentError('Failed to load approved appointment', tabIndex: state.tabIndex));
       }
     });
   }

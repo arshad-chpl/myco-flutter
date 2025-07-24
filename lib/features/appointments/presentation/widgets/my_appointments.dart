@@ -12,7 +12,6 @@ import 'package:myco_flutter/features/appointments/presentation/bloc/appointment
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_event.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_state.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_person_details.dart';
-import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_requests.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/reason_value_common_row.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -26,43 +25,6 @@ class MyAppointments extends StatefulWidget {
 }
 
 class _MyAppointmentsState extends State<MyAppointments> {
-
-
-  List<Map<String, dynamic>> myAppointmentData = [
-    {
-      'status' : 'Approved',
-      'timeDate': '05:14 PM, 18th Jun 2025',
-      'requesterName': 'Ajaj Ajmeri',
-      'requesterDesignation': 'Tester',
-      'requesterFieldCity': 'Junagadh - Technical - QA',
-      'reason': 'To meet and learn',
-      'location': 'CHPL',
-      'phoneNo': '+91 7980239236',
-      'rejectionReason': 'Lmnopq',
-    },
-    {
-      'status' : 'Rejected',
-      'timeDate': '05:14 PM, 18th Jun 2025',
-      'requesterName': 'Ajaj Ajmeri',
-      'requesterDesignation': 'Tester',
-      'requesterFieldCity': 'Junagadh - Technical - QA',
-      'reason': 'To meet and learn',
-      'location': 'CHPL',
-      'phoneNo': '+91 7980239236',
-      'rejectionReason': 'Lmnopq',
-    },
-    {
-      'status' : 'Pending',
-      'timeDate': '05:14 PM, 18th Jun 2025',
-      'requesterName': 'Ajaj Ajmeri',
-      'requesterDesignation': 'Tester',
-      'requesterFieldCity': 'Junagadh - Technical - QA',
-      'reason': 'XYZ',
-      'location': 'CHPL',
-      'phoneNo': '+91 7980239236',
-      'rejectionReason': 'Lmnopq',
-    }
-  ];
 
   Color getHeaderColor(String status) {
     if(status.toLowerCase() == 'approved') {
@@ -89,9 +51,17 @@ class _MyAppointmentsState extends State<MyAppointments> {
   @override
   Widget build(BuildContext context) => BlocBuilder<AppointmentBloc, AppointmentState>(
       builder: (context, state) {
+
+        if (state.tabIndex != 1 && (state is AppointmentLoaded || state is AppointmentError)) {
+          return const Center(child: CustomText('Switch to My Appointments Tab'));
+        }
+
         if(state is AppointmentLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if(state is AppointmentLoaded) {
+          if (state.appointments.myAppointments == null || state.appointments.myAppointments!.isEmpty) {
+            return const Center(child: CustomText('No Appointments Found.'));
+          }
           return ListView.builder(
             itemCount: state.appointments.myAppointments!.length,
             scrollDirection: Axis.vertical,

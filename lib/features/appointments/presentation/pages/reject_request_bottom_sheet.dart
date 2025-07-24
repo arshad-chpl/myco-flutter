@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/constants/constants.dart';
+import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/appointments/data/models/request/reject_appointment_request_model.dart';
+import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_bloc.dart';
+import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_event.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class RejectRequestBottomSheet extends StatefulWidget {
-  const RejectRequestBottomSheet({super.key});
+  final String appointmentId;
+  final String appointmentByUserId;
+  final String userName;
+  final String appointmentWithUserProfilePic;
+
+  const RejectRequestBottomSheet({
+    super.key,
+    required this.appointmentId,
+    required this.appointmentByUserId,
+    required this.userName,
+    required this.appointmentWithUserProfilePic,
+  });
 
   @override
   State<RejectRequestBottomSheet> createState() =>
@@ -16,75 +35,106 @@ class RejectRequestBottomSheet extends StatefulWidget {
 }
 
 class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
+  final formKey = GlobalKey<FormState>();
+  final reasonController = TextEditingController();
+  late final PreferenceManager preferenceManager;
+
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-    padding: EdgeInsets.only(
-      bottom: MediaQuery.of(context).viewInsets.bottom,
-      left:
-          VariableBag.bottomSheetLeftPadding *
-          Responsive.getResponsive(context),
-      right:
-          VariableBag.bottomSheetRightPadding *
-          Responsive.getResponsive(context),
-      top:
-          VariableBag.bottomSheetTopPadding * Responsive.getResponsive(context),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        //NewTextField for Reject Request
-        NewTextField(
-          prefixIconPath: AppAssets.assetMsgEdit.toString(),
-          maxLines: 3,
-          hintText: 'Type Here',
-          label: 'Reject Request',
-        ),
-        SizedBox(
-          height:
-              VariableBag.textFieldRowGap * Responsive.getResponsive(context),
-        ),
+  void initState() {
+    super.initState();
+    preferenceManager = GetIt.I<PreferenceManager>();
+  }
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            //MyCoButton CLOSE button
-            MyCoButton(
-              boarderRadius:
-                  VariableBag.buttonBorderRadius *
-                  Responsive.getResponsive(context),
-              width: 0.42 * Responsive.getWidth(context),
-              height: 0.06 * Responsive.getHeight(context),
-              onTap: () {
-                context.pop();
-              },
-              backgroundColor: AppTheme.getColor(context).surfaceBright,
-              title: 'CLOSE',
-              textStyle: TextStyle(
-                color: AppTheme.getColor(context).primary,
-                fontWeight: FontWeight.w600,
+  @override
+  void dispose() {
+    reasonController.dispose();
+    super.dispose();
+  }
+
+  Future<void> submitRejection() async {
+    if (formKey.currentState!.validate()) {
+      final rejectModel = RejectAppointmentRequestModel(
+        rejectAppointment: 'rejectAppointment',
+        userId: await preferenceManager.getUserId(),
+        companyId: await preferenceManager.getCompanyId(),
+        languageId: await preferenceManager.getLanguageId(),
+        appointmentId: widget.appointmentId,
+        appointmentByUserId: widget.appointmentByUserId,
+        userName: widget.userName,
+        appointmentRejectReason: reasonController.text.trim(),
+      );
+
+      if (mounted) {
+        context.read<AppointmentBloc>().add(RejectAppointmentEvent(rejectModel));
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => Form(
+    key: formKey,
+    autovalidateMode: AutovalidateMode.onUserInteraction,
+    child: Padding(
+      padding: EdgeInsets.all(VariableBag.screenHorizontalPadding * Responsive.getResponsive(context)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          NewTextField(
+            controller: reasonController,
+            prefixIconPath: AppAssets.assetMsgEdit.toString(),
+            maxLines: 15,
+            hintText: 'Type Here',
+            label: 'Reject Request',
+            isRequired: true,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Please enter a reason for rejection.';
+              }
+              return null;
+            },
+          ),
+          SizedBox(
+            height:
+                40 * Responsive.getResponsive(context),
+          ),
+      
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: MyCoButton(
+                  title: 'Close',
+                  height: Responsive.getHeight(context) * .05,
+                  boarderRadius: 30 * Responsive.getResponsive(context),
+                  width: Responsive.getWidth(context) * .450,
+                  backgroundColor: AppColors.white,
+                  border: Border.all(
+                    color: AppTheme.getColor(context).primary,
+                  ),
+                  textStyle: MyCoButtonTheme.getWhiteBackgroundTextStyle(context),
+                  onTap: () => Navigator.of(context).pop(),
+                ),
               ),
-            ),
-
-            // MyCoButton SUBMIT button to confirm rejection
-            MyCoButton(
-              boarderRadius:
-                  VariableBag.buttonBorderRadius *
-                  Responsive.getResponsive(context),
-              width: 0.42 * Responsive.getWidth(context),
-              height: 0.06 * Responsive.getHeight(context),
-              onTap: () {},
-              title: 'SUBMIT',
-              fontWeight: FontWeight.w600,
-              isShadowBottomLeft: true,
-            ),
-          ],
-        ),
-        SizedBox(
-          height:
-              VariableBag.textFieldRowGap * Responsive.getResponsive(context),
-        ),
-      ],
+              const SizedBox(width: 8),
+              Expanded(
+                child: MyCoButton(
+                  title: 'Submit',
+                  height: Responsive.getHeight(context) * .05,
+                  isShadowBottomLeft: true,
+                  boarderRadius: 30,
+                  width: Responsive.getWidth(context) * .450,
+                  onTap: () =>  submitRejection(),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height:
+                VariableBag.textFieldRowGap * Responsive.getResponsive(context),
+          ),
+        ],
+      ),
     ),
   );
 }

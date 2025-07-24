@@ -135,7 +135,13 @@ class _AppointmentDetailsBottomSheetState
                             borderRadius: BorderRadiusGeometry.circular(20),
                           ),
                           builder: (context) =>
-                              const RejectRequestBottomSheet(),
+                              const RejectRequestBottomSheet(
+                                userName: '',
+                                appointmentByUserId: '',
+                                appointmentId: '',
+                                appointmentWithUserProfilePic: '',
+
+                              ),
                         );
                       },
                       title: 'SEND REQUEST',

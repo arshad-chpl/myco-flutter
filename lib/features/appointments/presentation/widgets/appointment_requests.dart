@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/constants/constants.dart';
@@ -7,15 +8,19 @@ import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/appointments/data/models/request/get_appointment_request_model.dart';
+import 'package:myco_flutter/features/appointments/data/models/request/approve_appointment_entity_model.dart';
+import 'package:myco_flutter/features/appointments/data/models/request/reject_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_bloc.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_event.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_state.dart';
+import 'package:myco_flutter/features/appointments/presentation/pages/reject_request_bottom_sheet.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_person_details.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/reason_value_common_row.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
+import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AppointmentRequests extends StatefulWidget {
@@ -26,39 +31,48 @@ class AppointmentRequests extends StatefulWidget {
 }
 
 class _AppointmentRequestsState extends State<AppointmentRequests> {
+  late PreferenceManager preferenceManager;
+
   @override
   void initState() {
     super.initState();
-    loadAppointmentData();
-  }
-
-  Future<void> loadAppointmentData() async {
-    final preferenceManager = GetIt.I<PreferenceManager>();
-
-    final userId = await preferenceManager.getUserId();
-    final companyId = await preferenceManager.getCompanyId();
-    final languageId = await preferenceManager.getLanguageId();
-
-    context.read<AppointmentBloc>().add(
-      GetAppointmentEvent(
-        GetAppointmentRequestModel(
-          getAppointments: 'getAppointments',
-          userId: userId,
-          companyId: companyId,
-          languageId: languageId,
-        ),
-      ),
-    );
+    preferenceManager = GetIt.I<PreferenceManager>();
   }
 
   @override
   Widget build(
     BuildContext context,
-  ) => BlocBuilder<AppointmentBloc, AppointmentState>(
+  ) => BlocConsumer<AppointmentBloc, AppointmentState>(
+    listener: (context, state) {
+      if (state is CommonResponseAppointment) {
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
+        Fluttertoast.showToast(
+          msg: state.commonResponse.message ?? 'Action successful!',
+        );
+
+        // context.read<AppointmentBloc>().add(const AppointmentTabChange(tabIndex: 1));
+      } else if (state is AppointmentError) {
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
+        Fluttertoast.showToast(msg: state.message);
+      }
+    },
     builder: (context, state) {
+      if (state.tabIndex != 0 &&
+          (state is AppointmentLoaded || state is AppointmentError)) {
+        return const Center(child: CustomText('Switch to Requests Tab'));
+      }
+
       if (state is AppointmentLoading) {
         return appointmentRequestsShimmer(context);
       } else if (state is AppointmentLoaded) {
+        if (state.appointments.myAppointments == null ||
+            state.appointments.myAppointments!.isEmpty) {
+          return const Center(child: CustomText('No Appointments Found.'));
+        }
         return ListView.builder(
           itemCount: state.appointments.myAppointments!.length,
           itemBuilder: (context, index) {
@@ -117,13 +131,35 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
                       ),
                       SizedBox(height: 0.03 * Responsive.getHeight(context)),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         spacing:
                             VariableBag.buttonRowSpacing *
                             Responsive.getResponsive(context),
                         children: [
                           MyCoButton(
-                            onTap: () {},
+                            onTap: () async {
+                              showBottomSheet(
+                                context: context,
+                                builder: (context) => CustomAlertDialog(
+                                  alertType: AlertType.delete,
+                                  title: 'Are you sure do you want to reject this appointment request?',
+                                  onCancel: () {Navigator.pop(context);},
+                                  cancelText: 'No',
+                                  onConfirm: () async {
+                                    showBottomSheet(
+                                      context: context,
+                                      builder: (context) => RejectRequestBottomSheet(
+                                        userName: appointmentRequest.userFullName ?? '',
+                                        appointmentId: appointmentRequest.appointmentId ?? '',
+                                        appointmentWithUserProfilePic: appointmentRequest.userProfilePic ?? '',
+                                        appointmentByUserId: appointmentRequest.appointmentByUserId ?? '',
+                                      ),
+                                    );
+                                  },
+                                  confirmText: 'Yes',
+                                ),
+                              );
+                            },
                             title: 'Reject',
                             textStyle: TextStyle(
                               color: AppTheme.getColor(context).error,
@@ -137,7 +173,44 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
                             backgroundColor: AppColors.removeBackground,
                           ),
                           MyCoButton(
-                            onTap: () {},
+                            onTap: () {
+                              showBottomSheet(
+                                context: context,
+                                builder: (context) => CustomAlertDialog(
+                                  alertType: AlertType.alert,
+                                  title:
+                                      'Are you sure do you want to approve this appointment request ?',
+                                  onCancel: () async {
+                                    Navigator.pop(context);
+                                  },
+                                  cancelText: 'No',
+                                  onConfirm: () async {
+                                    context.read<AppointmentBloc>().add(
+                                      ApprovedAppointmentEvent(
+                                        ApproveAppointmentRequestModel(
+                                          approveAppointment:
+                                              'approveAppointment',
+                                          userId: await preferenceManager
+                                              .getUserId(),
+                                          companyId: await preferenceManager
+                                              .getCompanyId(),
+                                          languageId: await preferenceManager
+                                              .getLanguageId(),
+                                          userName:
+                                              appointmentRequest.userFullName,
+                                          appointmentId:
+                                              appointmentRequest.appointmentId,
+                                          appointmentByUserId:
+                                              appointmentRequest
+                                                  .appointmentByUserId,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  confirmText: 'Yes',
+                                ),
+                              );
+                            },
                             title: 'Approve',
                             textStyle: TextStyle(
                               color: AppTheme.getColor(context).surface,

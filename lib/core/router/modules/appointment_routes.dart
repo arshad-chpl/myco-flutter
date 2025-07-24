@@ -6,7 +6,7 @@ import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_bloc.dart';
 import 'package:myco_flutter/features/appointments/presentation/pages/appointments_page.dart';
 
-List<GoRoute> AppointmentsRoutes = [
+List<GoRoute> appointmentsRoutes = [
   GoRoute(
     path: RoutePaths.appointments,
     name: RoutePaths.appointments,

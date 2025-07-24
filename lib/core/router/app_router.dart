@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
+import 'package:myco_flutter/core/router/modules/appointment_routes.dart';
 import 'package:myco_flutter/core/router/modules/assets_routes.dart';
 import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
@@ -154,6 +155,8 @@ class AppRouter {
       ),
 
       ...assetsRoutes,
+
+      ...appointmentsRoutes,
 
       ...WorkAllocationRoutes,
 

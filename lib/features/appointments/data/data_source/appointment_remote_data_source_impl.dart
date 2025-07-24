@@ -51,7 +51,9 @@ class AppointmentRemoteDataSourceImpl extends AppointmentRemoteDataSource {
     );
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.employeeMobileApi,
-    ).postDynamic('admin_view_controller.php', encryptedBody);
+    ).postDynamic('appointment_controller.php', encryptedBody);
+    final decryptedResponse = GzipUtil.decryptAES(response);
+    print('API Decrypted Response: $decryptedResponse');
     return AppointmentResponseModel.fromJson(
       json.decode(GzipUtil.decryptAES(response)),
     );
@@ -66,7 +68,7 @@ class AppointmentRemoteDataSourceImpl extends AppointmentRemoteDataSource {
     );
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.employeeMobileApi,
-    ).postDynamic('admin_view_controller.php', encryptedBody);
+    ).postDynamic('appointment_controller.php', encryptedBody);
     return CommonResponseModel.fromJson(
       json.decode(GzipUtil.decryptAES(response)),
     );
