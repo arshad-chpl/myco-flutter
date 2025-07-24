@@ -22,7 +22,7 @@ class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   final PreferenceManager _preference = GetIt.I<PreferenceManager>();
-  bool _canNavigate = false;
+  bool _canNavigate = true;
   String version = '';
   String buildNumber = '';
 
