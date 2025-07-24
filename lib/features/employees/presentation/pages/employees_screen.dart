@@ -18,16 +18,44 @@ import 'package:myco_flutter/features/employees/presentation/bloc/employee_state
 import 'package:myco_flutter/features/employees/presentation/widgets/employee_card.dart';
 import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_countrycode_bottomsheet.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/media_picker/widgets/custom_media_picker_container.dart';
 
-class EmployeesScreen extends StatelessWidget {
+class EmployeesScreen extends StatefulWidget {
   EmployeesScreen({super.key});
 
+  @override
+  State<EmployeesScreen> createState() => _EmployeesScreenState();
+}
+
+class _EmployeesScreenState extends State<EmployeesScreen> {
   final EmployeeBloc bloc = GetIt.I<EmployeeBloc>();
+
   final TextEditingController _searchController = TextEditingController();
+
+  // final List<Map<String, String>> countryList = [
+  //   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
+  //   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
+  //   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
+  //   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
+  //   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
+  //   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
+  //   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
+  //   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
+  //   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
+  //   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
+  //   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
+  //   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
+  //   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
+  //   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
+  //   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
+  //   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
+  //   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
+  //   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -51,50 +79,18 @@ class EmployeesScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: VariableBag.screenHorizontalPadding,
-            ),
-            child: Column(
-              children: [
-                //      /Media picker container
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomMediaPickerContainer(
-                    title: 'Assets Image',
-                    titleFontSize: 14 * Responsive.getResponsiveText(context),
-                    imageTitle: 'Capture Image',
-                    // imageTitleSize: 10,
-                    // containerHeight: 0.100 * Responsive.getHeight(context),
-                    multipleImage: 5,
-                    imagePath: AppAssets.assetGalleryExport,
-                    isCameraShow: true,
-                    isGalleryShow: true,
-                    isDocumentShow: true,
-                    isCropImage: true,
-                    onSelectedMedia: (files) {
-                      final paths = files.map((file) => file.path).toList();
-                      log('Selected file paths: $paths');
-                    },
-                  ),
-                ),
-              ],
-            ),
+          body: BlocBuilder<EmployeeBloc, EmployeeState>(
+            builder: (context, state) {
+              if (state is EmployeeLoading || state is EmployeeInitial) {
+                return _buildLoadedContent(context, bloc, null);
+              } else if (state is EmployeeError) {
+                return Center(child: Text('Error: ${state.message}'));
+              } else if (state is EmployeeLoaded) {
+                return _buildLoadedContent(context, bloc, state);
+              }
+              return const SizedBox();
+            },
           ),
-
-          /// body: BlocBuilder<EmployeeBloc, EmployeeState>(
-          //   builder: (context, state) {
-          //     if (state is EmployeeLoading || state is EmployeeInitial) {
-          //       return _buildLoadedContent(context, bloc, null);
-          //     } else if (state is EmployeeError) {
-          //       return Center(child: Text('Error: ${state.message}'));
-          //     } else if (state is EmployeeLoaded) {
-          //       return _buildLoadedContent(context, bloc, state);
-          //     }
-          //     return const SizedBox();
-          //   },
-          // ),
         ),
       ),
     );
@@ -359,6 +355,53 @@ class EmployeesScreen extends StatelessWidget {
     );
   }
 }
+
+// body: Padding(
+//   padding: const EdgeInsets.symmetric(
+//     horizontal: VariableBag.screenHorizontalPadding,
+//   ),
+//   child: Column(
+//     children: [
+///Media picker container
+// Padding(
+//   padding: const EdgeInsets.all(8.0),
+//   child: CustomMediaPickerContainer(
+//     title: 'Assets Image',
+//     titleFontSize: 14 * Responsive.getResponsiveText(context),
+//     imageTitle: 'Capture Image',
+//     // imageTitleSize: 10,
+//     // containerHeight: 0.100 * Responsive.getHeight(context),
+//     multipleImage: 5,
+//     imagePath: AppAssets.assetGalleryExport,
+//     isCameraShow: true,
+//     isGalleryShow: true,
+//     isDocumentShow: true,
+//     isCropImage: true,
+//     onSelectedMedia: (files) {
+//       final paths = files.map((file) => file.path).toList();
+//       log('Selected file paths: $paths');
+//     },
+//   ),
+// ),
+
+///Country code bottom sheet
+// ElevatedButton(
+//   onPressed: () async {
+//     final selectedCountry = await showCountryCodeBottomSheet(
+//       context: context,
+//       dataList: countryList,
+//       heading: 'country_code',
+//     );
+//     if (selectedCountry != null) {
+//       debugPrint(selectedCountry['name']);
+//     }
+//   },
+//   child: Icon(Icons.account_tree_rounded),
+// ),
+//     ],
+//   ),
+// ),
+
 
 // body: Column(
 //   children: [
