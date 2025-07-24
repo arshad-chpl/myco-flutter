@@ -36,27 +36,6 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
 
   final TextEditingController _searchController = TextEditingController();
 
-  // final List<Map<String, String>> countryList = [
-  //   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
-  //   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
-  //   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
-  //   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
-  //   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
-  //   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
-  //   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
-  //   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
-  //   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
-  //   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
-  //   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
-  //   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
-  //   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
-  //   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
-  //   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
-  //   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
-  //   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
-  //   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
-  // ];
-
   @override
   Widget build(BuildContext context) {
     Responsive.init(context);
@@ -384,6 +363,27 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
 //   ),
 // ),
 
+// final List<Map<String, String>> countryList = [
+//   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
+//   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
+//   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
+//   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
+//   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
+//   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
+//   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
+//   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
+//   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
+//   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
+//   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
+//   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
+//   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
+//   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
+//   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
+//   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
+//   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
+//   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
+// ];
+
 ///Country code bottom sheet
 // ElevatedButton(
 //   onPressed: () async {
@@ -402,30 +402,6 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
 //   ),
 // ),
 
-// body: Column(
-//   children: [
-///Media picker container
-// Padding(
-//   padding: const EdgeInsets.all(8.0),
-//   child: CustomMediaPickerContainer(
-//     title: 'Assets Image',
-//     titleFontSize: 14 * Responsive.getResponsiveText(context),
-//     imageTitle: 'Capture Image',
-//     // imageTitleSize: 10,
-//     // containerHeight: 100,
-//     multipleImage: 5,
-//     imagePath: AppAssets.assetGalleryExport,
-//     backgroundColor: Colors.blue.shade50,
-//     isCameraShow: true,
-//     isGalleryShow: true,
-//     isDocumentShow: true,
-//     isCropImage: true,
-//     onSelectedMedia: (files) {
-//       final paths = files.map((file) => file.path).toList();
-//       log('Selected file paths: $paths');
-//     },
-//   ),
-// ),
 
 /// stepper
 // const SizedBox(height: 10),
