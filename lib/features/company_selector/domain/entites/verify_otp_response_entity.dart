@@ -80,6 +80,7 @@ class VerifyOtpResponseEntity extends Equatable {
   final String? facultyToken;
   final String? facultyTokenData;
   final bool? viewDialogApiCall;
+  final bool? viewDialog;
 
   const VerifyOtpResponseEntity({
     this.error,
@@ -160,6 +161,7 @@ class VerifyOtpResponseEntity extends Equatable {
     this.facultyToken,
     this.facultyTokenData,
     this.viewDialogApiCall,
+    this.viewDialog,
   });
 
   @override
@@ -242,6 +244,7 @@ class VerifyOtpResponseEntity extends Equatable {
     facultyToken,
     facultyTokenData,
     viewDialogApiCall,
+    viewDialog,
   ];
 }
 

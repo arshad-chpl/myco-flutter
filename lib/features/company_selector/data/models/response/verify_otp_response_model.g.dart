@@ -90,7 +90,8 @@ VerifyOtpResponseModel _$VerifyOtpResponseModelFromJson(
       facultyPassword: json['faculty_password'] as String?,
       facultyToken: json['faculty_token'] as String?,
       facultyTokenData: json['faculty_token_data'] as String?,
-      viewDialogApiCall: json['view_dialog_api_call'] as bool? ?? false,
+      viewDialogApiCall: json['view_dialog_api_call'] as bool?,
+      viewDialog: json['view_dialog'] as bool?,
     );
 
 Map<String, dynamic> _$VerifyOtpResponseModelToJson(
@@ -174,6 +175,7 @@ Map<String, dynamic> _$VerifyOtpResponseModelToJson(
       'faculty_token': instance.facultyToken,
       'faculty_token_data': instance.facultyTokenData,
       'view_dialog_api_call': instance.viewDialogApiCall,
+      'view_dialog': instance.viewDialog,
     };
 
 MemberModel _$MemberModelFromJson(Map<String, dynamic> json) => MemberModel(
