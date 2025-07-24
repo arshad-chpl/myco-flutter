@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:myco_flutter/constants/constants.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -127,6 +129,20 @@ class PreferenceManager {
     return prefs.getString(key) ?? '';
   }
 
+
+    // Set boolean value
+    Future<void> setKeyValueBoolean(String key, bool value) async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(key, value);
+    }
+
+
+// Get boolean value
+  Future<bool> getKeyValueBoolean(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(key) ?? false; // default to false if null
+  }
+
   // ====== Custom Methods ======
 
   Future<void> setUserId(String value) async {
@@ -158,6 +174,12 @@ class PreferenceManager {
     await writeString(countryId, '101');
   }
 
+  Future<String?> getBlockId() => readString(companyId);
+
+  Future<void> setBlockId(String value) async {
+    await writeString(countryId, '0');
+  }
+
   Future<String?> getCountryId() => readString(countryId);
 
   Future<void> setCompanyName(String value) async {
@@ -177,6 +199,18 @@ class PreferenceManager {
   }
 
   Future<String?> getBaseUrl() => readString(baseUrl);
+
+  /// Save API key
+  Future<void> setApiKey(String wiFiSession) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('key', wiFiSession);
+  }
+
+  /// Get API key
+  Future<String> getApiKey() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('key') ?? '0';
+  }
 
   // Future<Society?> getSelectedCompany() async {
   //   final jsonString = await readString('selectedCompany');
