@@ -52,47 +52,48 @@ class EmployeesScreen extends StatelessWidget {
             ),
           ),
 
-          // body: Padding(
-          //   padding: const EdgeInsets.symmetric(
-          //     horizontal: VariableBag.screenHorizontalPadding,
-          //   ),
-          //   child: Column(
-          //     children: [
-          //       //      /Media picker container
-          //       Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: CustomMediaPickerContainer(
-          //           title: 'Assets Image',
-          //           titleFontSize: 14 * Responsive.getResponsiveText(context),
-          //           imageTitle: 'Capture Image',
-          //           // imageTitleSize: 10,
-          //           // containerHeight: 0.100 * Responsive.getHeight(context),
-          //           multipleImage: 5,
-          //           imagePath: AppAssets.assetGalleryExport,
-          //           isCameraShow: true,
-          //           isGalleryShow: true,
-          //           isDocumentShow: true,
-          //           isCropImage: true,
-          //           onSelectedMedia: (files) {
-          //             final paths = files.map((file) => file.path).toList();
-          //             log('Selected file paths: $paths');
-          //           },
-          //         ),
-          //       ),
-          body: BlocBuilder<EmployeeBloc, EmployeeState>(
-            builder: (context, state) {
-              if (state is EmployeeLoading || state is EmployeeInitial) {
-                return _buildLoadedContent(context, bloc, null);
-              } else if (state is EmployeeError) {
-                return Center(child: Text('Error: ${state.message}'));
-              } else if (state is EmployeeLoaded) {
-                return _buildLoadedContent(context, bloc, state);
-              }
-              return const SizedBox();
-            },
+          body: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: VariableBag.screenHorizontalPadding,
+            ),
+            child: Column(
+              children: [
+                //      /Media picker container
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomMediaPickerContainer(
+                    title: 'Assets Image',
+                    titleFontSize: 14 * Responsive.getResponsiveText(context),
+                    imageTitle: 'Capture Image',
+                    // imageTitleSize: 10,
+                    // containerHeight: 0.100 * Responsive.getHeight(context),
+                    multipleImage: 5,
+                    imagePath: AppAssets.assetGalleryExport,
+                    isCameraShow: true,
+                    isGalleryShow: true,
+                    isDocumentShow: true,
+                    isCropImage: true,
+                    onSelectedMedia: (files) {
+                      final paths = files.map((file) => file.path).toList();
+                      log('Selected file paths: $paths');
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
-          // ],
-          // ),
+
+          /// body: BlocBuilder<EmployeeBloc, EmployeeState>(
+          //   builder: (context, state) {
+          //     if (state is EmployeeLoading || state is EmployeeInitial) {
+          //       return _buildLoadedContent(context, bloc, null);
+          //     } else if (state is EmployeeError) {
+          //       return Center(child: Text('Error: ${state.message}'));
+          //     } else if (state is EmployeeLoaded) {
+          //       return _buildLoadedContent(context, bloc, state);
+          //     }
+          //     return const SizedBox();
+          //   },
           // ),
         ),
       ),

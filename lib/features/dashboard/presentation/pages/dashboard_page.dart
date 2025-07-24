@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -76,7 +77,12 @@ class _DashBoardPageState extends State<DashBoardPage> {
           children: [
             // AppBar
             const DashboardAppBar(),
-
+            ElevatedButton(
+              onPressed: () {
+                context.pushNamed('employees');
+              },
+              child: const Icon(Icons.person, color: Colors.blue),
+            ),
             // Body content
             Expanded(
               child: BlocBuilder<DashboardBloc, DashboardState>(
