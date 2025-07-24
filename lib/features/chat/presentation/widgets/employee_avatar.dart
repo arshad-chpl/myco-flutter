@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/chat/presentation/bloc/chat_bloc.dart';
+import 'package:myco_flutter/features/chat/presentation/bloc/chat_list_bloc/chat_bloc.dart';
 
 class AvatarList extends StatefulWidget {
   const AvatarList({super.key});
@@ -25,7 +25,7 @@ class _AvatarListState extends State<AvatarList> {
   @override
   Widget build(BuildContext context) => Container(
     height: 0.09 * Responsive.getHeight(context),
-    child: BlocBuilder<ChatBloc, ChatState>(
+    child: BlocBuilder<ChatListBloc, ChatListState>(
       builder: (context, state) => ListView.separated(
           scrollDirection: Axis.horizontal,
           itemCount: state is RemoveAvatarState
@@ -39,7 +39,7 @@ class _AvatarListState extends State<AvatarList> {
                 : imageUrls[index]['image'],
             onRemove: () {   
               log('Remove avatar at index $index');
-              context.read<ChatBloc>().add(RemoveAvatar(imageUrls, index));
+              context.read<ChatListBloc>().add(RemoveAvatar(imageUrls, index));
               log('Remove avatar at index ${state is RemoveAvatarState ? state.updateAvtarList : imageUrls[index]['image']}');
             },
           ),
