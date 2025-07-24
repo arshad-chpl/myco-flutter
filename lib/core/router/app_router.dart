@@ -9,6 +9,10 @@ import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
 import 'package:myco_flutter/core/router/modules/initial_routes.dart';
 import 'package:myco_flutter/core/router/modules/lost_and_found.dart';
 import 'package:myco_flutter/core/router/modules/my_profile.dart';
+import 'package:myco_flutter/core/router/modules/employee_view_routes.dart';
+import 'package:myco_flutter/core/router/modules/initial_routes.dart';
+import 'package:myco_flutter/core/router/modules/lost_and_found.dart';
+import 'package:myco_flutter/core/router/modules/my_profile.dart';
 import 'package:myco_flutter/core/router/modules/my_visit_routes.dart';
 import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
@@ -45,7 +49,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths.splash,
+    // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -58,7 +63,6 @@ class AppRouter {
       //   name: 'details',
       //   builder: (context, state) => const DetailsPage(),
       // ),
-
       ...DashboardRoutes,
 
       GoRoute(
@@ -70,16 +74,8 @@ class AppRouter {
         ),
       ),
       GoRoute(
-        path: RoutePaths.companyInfo,
-        name: 'company-info',
-        builder: (context, state) => BlocProvider<CompanyInfoBloc>(
-          create: (_) => GetIt.I<CompanyInfoBloc>(),
-          child: const CompanyInfoPage(),
-        ),
-      ),
-      GoRoute(
         path: RoutePaths.holiday,
-        name: RoutePaths.holiday,
+        name: 'HolidayVC',
         builder: (context, state) {
           final controller = TextEditingController();
           return HolidayListPage(controller: controller);
@@ -126,11 +122,7 @@ class AppRouter {
       ...payslipRoutes,
       ...chatRoutes,
 
-      GoRoute(
-        path: RoutePaths.employees,
-        name: 'employees',
-        builder: (context, state) => const EmployeesScreen(),
-      ),
+      ...employeeRoute,
       GoRoute(
         path: RoutePaths.contactAdmin,
         name: 'contact-admin',

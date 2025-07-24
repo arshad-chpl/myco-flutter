@@ -168,8 +168,8 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
             IconButton(
               onPressed: () => Navigator.pop(context),
               icon: SvgPicture.asset(
-                widget.icon ?? AppAssets.dashboard,
-                width: Responsive.isTablet
+                widget.icon ?? AppAssets.downArrowBottomSheet,
+                width: Responsive.isTablet(context)
                     ? 0.03 * Responsive.getWidth(context)
                     : 0.06 * Responsive.getWidth(context),
                 fit: BoxFit.scaleDown,
@@ -179,7 +179,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
         ),
 
         SizedBox(
-          height: Responsive.isTablet
+          height: Responsive.isTablet(context)
               ? 0.006 * Responsive.getHeight(context)
               : 0.009 * Responsive.getHeight(context),
         ),
@@ -260,7 +260,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                         : id == selectedItemId;
 
                     return Container(
-                      height: Responsive.isTablet
+                      height: Responsive.isTablet(context)
                           ? 0.10 * Responsive.getHeight(context)
                           : 0.045 * Responsive.getHeight(context),
                       margin: EdgeInsets.symmetric(
@@ -364,7 +364,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
             : MyCoButton(
                 title: LanguageManager().get(widget.btnTitle ?? 'submit'),
                 boarderRadius: 50,
-                height: Responsive.isTablet
+                height: Responsive.isTablet(context)
                     ? 0.10 * Responsive.getHeight(context)
                     : 0.05 * Responsive.getHeight(context),
                 isShadowBottomLeft: true,

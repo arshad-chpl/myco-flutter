@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_label_gifs.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/custom_shadow_container.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/custom_shadow_container.dart';
 
 class ProfileWordAttendanceCard extends StatelessWidget {
   ProfileWordAttendanceCard({super.key});

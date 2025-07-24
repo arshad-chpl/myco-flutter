@@ -15,11 +15,12 @@ class AppAssets {
   static const String assets = '$basePath/asset';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
+  static const String employees = '$basePath/employees';
+  static const String mediaPicker = '$basePath/media_picker';
   static const String workAllocation = '$basePath/work_allocation';
 
   static const String stepper = '$basePath/stepper';
   static const String workAllocationSvgs = '$svgsPath/work_allocation';
-
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -39,7 +40,8 @@ class AppAssets {
   static const String imageNoAssets = '$imagesPath/noAssets.png';
 
   //Svgs
-  static const String downArrowBottomSheet = '$svgsPath/down_arrow_bottomsheet.svg';
+  static const String downArrowBottomSheet =
+      '$svgsPath/down_arrow_bottomsheet.svg';
   static const String search_company_icon = '$svgsPath/company_icon.svg';
   static const String timeCardBtn = '$svgsPath/timeCardBtn.svg';
   static const String punchIn = '$svgsPath/punchIn.svg';
@@ -81,8 +83,7 @@ class AppAssets {
   static const String xCircle = '$svgsTakeOrder/XCircle.svg';
   static const String messageEdit = '$svgsTakeOrder/message-edit.svg';
   static const String placeOrder = '$svgsTakeOrder/place-order.svg';
-  static const String
-  y = '$svgsTakeOrder/order-history.svg';
+  static const String y = '$svgsTakeOrder/order-history.svg';
   static const String noOrder = '$svgsTakeOrder/no-order.svg';
   static const String start = '$svgsTakeOrder/start.svg';
   static const String stop = '$svgsTakeOrder/stop.svg';
@@ -174,10 +175,10 @@ class AppAssets {
 
   static const String lostFoundData = '$lostFound/data.png';
   static const String lostFoundMessageEdit = '$lostFound/message-edit.png';
-/*
+
+  /*
   static const String location = '$basePath/take_order/location.png';
 */
-
 
   //work allocation
   static const String plus = '$workAllocation/plus.png';
@@ -185,6 +186,7 @@ class AppAssets {
   static const String personProfileImage = '$workAllocation/person_image.png';
   static const String checkMark = '$workAllocation/check_mark.png';
   static const String cancelCross = '$workAllocation/cancel_cross.png';
+
   // static const String location = '$basePath/take_order/location.png';
   static const String assetMessageEdit = '$svgsVisit/message-edit.svg';
   static const String assetArrowSquare = '$svgsVisit/arrow-square.svg';
@@ -194,4 +196,12 @@ class AppAssets {
 
   //images stepper
   static const String stepperCheckIcon = '$stepper/check.svg';
+
+  //employee-screen
+  static const String noEmployeeFound = '$employees/no_emp_found.svg';
+
+  //media picker
+  static const String mediaPickerCamera = '$mediaPicker/camera.svg';
+  static const String mediaPickerGallery = '$mediaPicker/gallery-add.svg';
+  static const String mediaPickerDocument = '$mediaPicker/document.svg';
 }

@@ -31,6 +31,8 @@ class VariableBag {
   static const String residentApiEnd = 'residentApiNew/';
   static const String mainKey = 'bmsapikey';
   static const String mainURL = 'https://master.my-company.app/mainApiEnc/';
+  static const String URL_PRIVACY = 'https://master.my-company.app/';
+  static const String CP_URL = 'https://www.my-co.app/cancellationpolicy';
   // "https://master.my-company.app/mainApiEnc/";
   static const String masterAPICall = 'masterAPICall';
   static const String employeeMobileApi = 'employeeMobileApi';
