@@ -7,61 +7,67 @@ part of 'admin_view_response_model.dart';
 // **************************************************************************
 
 AdminViewResponseModel _$AdminViewResponseModelFromJson(
-        Map<String, dynamic> json) =>
-    AdminViewResponseModel(
-      employeeList: (json['employee_list'] as List<dynamic>?)
+  Map<String, dynamic> json,
+) => AdminViewResponseModel(
+  employeeList:
+      (json['employee_list'] as List<dynamic>?)
           ?.map((e) => EmployeeModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      branchList: (json['branch_list'] as List<dynamic>?)
+  branchList:
+      (json['branch_list'] as List<dynamic>?)
           ?.map((e) => BranchModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      departmentList: (json['department_list'] as List<dynamic>?)
+  departmentList:
+      (json['department_list'] as List<dynamic>?)
           ?.map((e) => DepartmentModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      adminMenuCategory: (json['admin_menu_category'] as List<dynamic>?)
+  adminMenuCategory:
+      (json['admin_menu_category'] as List<dynamic>?)
           ?.map(
-              (e) => AdminMenuCategoryModel.fromJson(e as Map<String, dynamic>))
+            (e) => AdminMenuCategoryModel.fromJson(e as Map<String, dynamic>),
+          )
           .toList(),
-      message: json['message'] as String?,
-      status: json['status'] as String?,
-    );
+  message: json['message'] as String?,
+  status: json['status'] as String?,
+);
 
 Map<String, dynamic> _$AdminViewResponseModelToJson(
-        AdminViewResponseModel instance) =>
-    <String, dynamic>{
-      'employee_list': instance.employeeList,
-      'branch_list': instance.branchList,
-      'department_list': instance.departmentList,
-      'admin_menu_category': instance.adminMenuCategory,
-      'message': instance.message,
-      'status': instance.status,
-    };
+  AdminViewResponseModel instance,
+) => <String, dynamic>{
+  'employee_list': instance.employeeList,
+  'branch_list': instance.branchList,
+  'department_list': instance.departmentList,
+  'admin_menu_category': instance.adminMenuCategory,
+  'message': instance.message,
+  'status': instance.status,
+};
 
 AdminMenuCategoryModel _$AdminMenuCategoryModelFromJson(
-        Map<String, dynamic> json) =>
-    AdminMenuCategoryModel(
-      accessTypeId: json['access_type_id'] as String?,
-      accessTypeParentId: json['access_type_parent_id'] as String?,
-      accessType: json['access_type'] as String?,
-      accessTypeFor: json['access_type_for'] as String?,
-      accessTypeImage: json['access_type_image'] as String?,
-      accessTypeImageNew: json['access_type_image_new'] as String?,
-      adminSubMenu: (json['admin_sub_menu'] as List<dynamic>?)
+  Map<String, dynamic> json,
+) => AdminMenuCategoryModel(
+  accessTypeId: json['access_type_id'] as String?,
+  accessTypeParentId: json['access_type_parent_id'] as String?,
+  accessType: json['access_type'] as String?,
+  accessTypeFor: json['access_type_for'] as String?,
+  accessTypeImage: json['access_type_image'] as String?,
+  accessTypeImageNew: json['access_type_image_new'] as String?,
+  adminSubMenu:
+      (json['admin_sub_menu'] as List<dynamic>?)
           ?.map((e) => AdminSubMenuModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-    );
+);
 
 Map<String, dynamic> _$AdminMenuCategoryModelToJson(
-        AdminMenuCategoryModel instance) =>
-    <String, dynamic>{
-      'access_type_id': instance.accessTypeId,
-      'access_type_parent_id': instance.accessTypeParentId,
-      'access_type': instance.accessType,
-      'access_type_for': instance.accessTypeFor,
-      'access_type_image': instance.accessTypeImage,
-      'access_type_image_new': instance.accessTypeImageNew,
-      'admin_sub_menu': instance.adminSubMenu,
-    };
+  AdminMenuCategoryModel instance,
+) => <String, dynamic>{
+  'access_type_id': instance.accessTypeId,
+  'access_type_parent_id': instance.accessTypeParentId,
+  'access_type': instance.accessType,
+  'access_type_for': instance.accessTypeFor,
+  'access_type_image': instance.accessTypeImage,
+  'access_type_image_new': instance.accessTypeImageNew,
+  'admin_sub_menu': instance.adminSubMenu,
+};
 
 AdminSubMenuModel _$AdminSubMenuModelFromJson(Map<String, dynamic> json) =>
     AdminSubMenuModel(
@@ -100,9 +106,9 @@ Map<String, dynamic> _$AdminSubMenuModelToJson(AdminSubMenuModel instance) =>
     };
 
 BranchModel _$BranchModelFromJson(Map<String, dynamic> json) => BranchModel(
-      blockId: json['block_id'] as String?,
-      blockName: json['block_name'] as String?,
-    );
+  blockId: json['block_id'] as String?,
+  blockName: json['block_name'] as String?,
+);
 
 Map<String, dynamic> _$BranchModelToJson(BranchModel instance) =>
     <String, dynamic>{

@@ -31,6 +31,15 @@ class SelectCompanyUi extends StatelessWidget {
     // The controller is managed locally within this stateless widget.
     // It doesn't need to be part of a State object as its lifecycle
     // is contained within this build method.
+    final TextEditingController controller = TextEditingController();
+    final FocusNode focusNode = FocusNode();
+
+    // Schedule focus request after build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!focusNode.hasFocus) {
+        focusNode.requestFocus();
+      }
+    });
 
     // Schedule focus request after build
     WidgetsBinding.instance.addPostFrameCallback((_) {

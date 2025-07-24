@@ -1,9 +1,9 @@
 import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
+
 class PreferenceManager {
-  static const String companyName = "company_name";
+    static const String companyName = "company_name";
   static const String companyId = "company_id";
   static const String countryId = "country_id";
   static const String companyAddress = "company_address";
@@ -21,6 +21,7 @@ class PreferenceManager {
   static const String masterAPICall = "masterAPICall";
   static const String employeeMobileApi = "employeeMobileApi";
   static const String residentApiNew = "residentApiNew";
+  static const String cachedEmployeeResponse = 'cached_employee_response';
 
   static final PreferenceManager _instance = PreferenceManager._internal();
   factory PreferenceManager() => _instance;
@@ -183,6 +184,15 @@ class PreferenceManager {
   //   final json = jsonDecode(jsonString);
   //   return Society.fromJson(json);
   // }
+
+  // ====== Employee Methods ======
+  Future<void> setCachedEmployeeResponse(String json) =>
+      writeString(cachedEmployeeResponse, json);
+
+  Future<String?> getCachedEmployeeResponse() =>
+      readString(cachedEmployeeResponse);
+
+  Future<void> clearCachedEmployeeResponse() => delete(cachedEmployeeResponse);
 
   Future<void> setLoginSession(bool value) async {
     await writeBool("loginSession", value);
