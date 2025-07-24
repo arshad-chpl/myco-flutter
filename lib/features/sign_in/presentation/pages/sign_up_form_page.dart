@@ -19,6 +19,8 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/common_api/presentation/bloc/common_api_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/features/sign_in/presentation/bloc/primary_register_bloc.dart';
+import 'package:myco_flutter/features/sign_in/presentation/custome_bloc/my_form_state.dart';
+import 'package:myco_flutter/features/sign_in/presentation/custome_bloc/my_from_bloc.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_term_and_condition.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/framed_profile_image.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/sign_up_custom_selector.dart';
@@ -315,6 +317,14 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
                 },
               ),
+
+
+              BlocListener<MyFormBloc, MyFormState>(
+                  listener: (context, state) {
+
+                  },
+              ),
+
             ],
             child: BlocBuilder<CommonApiBloc, CommonApiState>(
               builder: (context, state) {
@@ -355,7 +365,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     isDialog: false,
                     isCameraShow: true,
                     isGalleryShow: true,
-                    isDocumentShow: false,
                     context: context,
                   );
 
