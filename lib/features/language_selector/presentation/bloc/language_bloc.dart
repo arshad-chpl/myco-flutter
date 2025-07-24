@@ -43,7 +43,7 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
       emit(LanguageLoaded(current, selected: event.selectedLanguage));
       // fetch and store language JSON from languageFile
       final success = await repository.getAppLanguageValues(
-        event.selectedLanguage?.languageId ?? "1",
+        event.selectedLanguage?.languageId ?? '1',
         preference.getCompanyId().toString(),
       );
       success.fold(
@@ -67,7 +67,7 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
   ) async {
     // fetch and store language JSON from languageFile
     final success = await repository.getAppLanguageValues(
-      "2",
+      '1',
       preference.getCompanyId().toString(),
     );
     success.fold(
