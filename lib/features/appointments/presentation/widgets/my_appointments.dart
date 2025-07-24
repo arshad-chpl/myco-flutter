@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
-import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/appointments/data/models/request/get_my_appointments_request_model.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_bloc.dart';
-import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_event.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_state.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_person_details.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/reason_value_common_row.dart';
@@ -47,7 +43,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
     }
     return 'not define';
   }
-  
+
   @override
   Widget build(BuildContext context) => BlocBuilder<AppointmentBloc, AppointmentState>(
       builder: (context, state) {

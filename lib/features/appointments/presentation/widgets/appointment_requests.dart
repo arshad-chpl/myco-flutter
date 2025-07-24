@@ -9,7 +9,6 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/approve_appointment_entity_model.dart';
-import 'package:myco_flutter/features/appointments/data/models/request/reject_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_bloc.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_event.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_state.dart';
@@ -20,7 +19,6 @@ import 'package:myco_flutter/features/idea_box/presentation/widgets/common_conta
 import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 import 'package:shimmer/shimmer.dart';
 
 class AppointmentRequests extends StatefulWidget {
