@@ -125,8 +125,10 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
     final double gridPadding = 8 * Responsive.getResponsive(context);
 
     return Padding(
-      padding: EdgeInsets.all(
-        VariableBag.screenHorizontalPadding * Responsive.getResponsive(context),
+      padding: EdgeInsets.symmetric(
+        horizontal:
+            VariableBag.screenHorizontalPadding *
+            Responsive.getResponsive(context),
       ),
       child: Column(
         children: [
@@ -201,9 +203,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                         crossAxisSpacing: Responsive.getGridConfig(
                           context,
                         ).spacing,
-                        childAspectRatio: Responsive.getGridConfig(
-                          context,
-                        ).childAspectRatio,
+                        childAspectRatio: 2 / 2.5,
                       ),
                       itemBuilder: (_, index) {
                         final emp = filteredEmployees[index];
@@ -401,7 +401,6 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
 //     ],
 //   ),
 // ),
-
 
 // body: Column(
 //   children: [
