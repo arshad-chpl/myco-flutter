@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:myco_flutter/features/work_allocation/domain/entities/get_work_category_entity.dart';
+import 'package:myco_flutter/features/work_allocation/domain/entities/work_allocation_entity.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/employee_details.dart';
 
 abstract class WorkAllocationState extends Equatable {
@@ -78,3 +79,11 @@ class EmployeeSelected extends WorkAllocationState {
 
 // Selected employee removed
 class EmployeeDeselected extends WorkAllocationState {}
+
+class WorkAllocationList extends WorkAllocationState {
+  final WorkAllocationResponseEntity workAllocationList;
+
+  const WorkAllocationList(this.workAllocationList);
+  @override
+  List<Object?> get props => [workAllocationList];
+}

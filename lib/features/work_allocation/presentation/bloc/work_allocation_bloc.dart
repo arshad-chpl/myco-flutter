@@ -31,6 +31,7 @@ class WorkAllocationBloc
     on<FilterEmployeesEvent>(_onFilterEmployees);
     on<SelectEmployeeEvent>(_onSelectEmployee);
     on<RemoveSelectedEmployeeEvent>(_onRemoveSelectedEmployee);
+    on<FetchWorkAllocationListEvent>(_onFetchWorkAllocationList);
   }
 
   Future<void> _onFetchWorkCategoryList(
@@ -136,5 +137,24 @@ class WorkAllocationBloc
   ) {
     _selectedEmployee = null;
     emit(EmployeeDeselected());
+  }
+
+  Future<void> _onFetchWorkAllocationList(
+    FetchWorkAllocationListEvent event,
+    Emitter<WorkAllocationState> emit,
+  ) async {
+    print('fetching work allocation..........');
+    emit(WorkAllocationLoading());
+
+    try {
+      final result = await useCase.getPendingWorkAllocations(event.params);
+      result.fold((failure) => emit(WorkAllocationError(failure.message)), (
+        response,
+      ) {
+        emit(WorkAllocationList(response));
+      });
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }
