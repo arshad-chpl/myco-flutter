@@ -89,10 +89,7 @@ class _CustomCropImageScreenState extends State<CustomCropImageScreen> {
             );
           } else if (!state.isLoading && state.processedFiles != null) {
             Navigator.pop(context); // Pop the loader
-            Navigator.pop(
-              context,
-              state.processedFiles,
-            ); // Pop the screen with results
+            Navigator.pop(context, state.processedFiles);
           }
         },
         builder: (context, state) => Column(
