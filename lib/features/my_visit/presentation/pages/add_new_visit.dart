@@ -5,10 +5,8 @@ import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/auto_start_checkbox_row.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/field_virtual_visit_toggle.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_custom_radio_button.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -25,6 +23,7 @@ class AddNewVisit extends StatefulWidget {
 class _AddNewVisitState extends State<AddNewVisit> {
   /// State variables for form data
   String selectedVisitType = 'Self Visit';
+  String selectedFieldVisit = 'Field Visit';
   bool isChecked = false;
 
   String? selectedCustomer;
@@ -38,6 +37,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
   ];
   final TextEditingController customerController = TextEditingController();
   final TextEditingController visitDateController = TextEditingController();
+  final TextEditingController visitSlotController = TextEditingController();
   final List<String> customers = ['Customer 1', 'Customer 2', 'Customer 3'];
   final List<String> visitSlots = ['Morning', 'Afternoon', 'Evening'];
 
@@ -83,10 +83,11 @@ class _AddNewVisitState extends State<AddNewVisit> {
               prefixIconPath: AppAssets.personalcard,
               suffixIconPath: AppAssets.arrow_down,
               hintText: LanguageManager().get('select'),
-              onTap: ()  {
+              onTap: () {
                 context.pop(context);
                 context.pushNamed('customerPage');
               },
+              controller: customerController,
             ),
 
             /// Visit Date text field
@@ -108,6 +109,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
               prefixIconPath: AppAssets.clock,
               suffixIconPath: AppAssets.arrow_down,
               hintText: LanguageManager().get('select_time_slot'),
+              controller: visitSlotController,
               onTap: () async {
                 // handle op tap
               },
@@ -123,17 +125,16 @@ class _AddNewVisitState extends State<AddNewVisit> {
                   fontWeight: FontWeight.w600,
                   color: AppTheme.getColor(context).onSurface,
                 ),
-                CustomRadioButton(
-                  height: 0.06 * Responsive.getHeight(context),
-                  options: const ['Field Visit', 'Virutal Visit'],
-                  onChanged: (selected) {
-                    // handle radio button selection
+                FieldVirtualVisitToggle(
+                  selectedValue: selectedFieldVisit,
+                  onChanged: (v) => {
+                    // handle toggle button
                   },
                 ),
               ],
             ),
 
-            /// Purpose of Visit (big text field)
+            /// Purpose of Visit
             NewTextField(
               label: 'purpose_of_visiting',
               isKey: true,
@@ -156,12 +157,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
                 vertical: 50 * Responsive.getResponsive(context),
               ),
               child: MyCoButton(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => AssignToVisit()),
-                  );
-                },
+                onTap: () {},
 
                 title: LanguageManager().get('submit'),
                 textStyle: TextStyle(

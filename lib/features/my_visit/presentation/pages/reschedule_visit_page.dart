@@ -96,7 +96,7 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
             // Visit Date
             NewTextField(
               label: 'Visit Date',
-              prefixIconPath: AppAssets.calendar,
+              prefixIconPath: AppAssets.note_favorite,
               hintText: 'Select Date',
               controller: amountController,
               keyboardType: TextInputType.datetime,

@@ -219,12 +219,14 @@ class ViewVisitDetailsPage extends StatelessWidget {
                               context,
                               title: LanguageManager().get('end_visit_remark'),
                               value: 'sdfsdasgas',
+                              textColor: AppTheme.getColor(context).onSurface,
                               onTap: () {},
                             ),
                             getCommonRow(
                               context,
                               title: LanguageManager().get('end_visit_area'),
                               value: 'sdfsdasgas',
+                              textColor: AppTheme.getColor(context).onSurface,
                               onTap: () {},
                             ),
                             getCommonRow(
@@ -233,6 +235,7 @@ class ViewVisitDetailsPage extends StatelessWidget {
                                 'end_visit_catalogue',
                               ),
                               value: 'sdfsdasgas',
+                              textColor: AppTheme.getColor(context).onSurface,
                               onTap: () {},
                             ),
                             getCommonRow(

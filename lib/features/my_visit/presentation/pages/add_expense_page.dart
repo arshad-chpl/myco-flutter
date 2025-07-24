@@ -58,7 +58,6 @@ class _AddExpensePageState extends State<AddExpensePage> {
               hintText: LanguageManager().get('select_date'),
               prefixIconPath: AppAssets.assetNoteFavorite,
               onTap: () {},
-              enabled: false,
             ),
 
             // Dropdown for selecting expense type

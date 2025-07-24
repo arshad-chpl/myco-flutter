@@ -8,6 +8,7 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/travel_mode.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/field_virtual_visit_toggle.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_custom_radio_button.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -15,7 +16,6 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
 class AssignToVisit extends StatefulWidget {
-
   const AssignToVisit({super.key});
 
   @override
@@ -24,6 +24,7 @@ class AssignToVisit extends StatefulWidget {
 
 class _AssignToVisitState extends State<AssignToVisit> {
   String selectedVisitType = 'Self Visit';
+  String selectedFieldVisit = 'Field Visit';
 
   final List<String> Customer = ['Customer 1', 'Customer 2', 'Customer 3'];
   final List<String> VisitSlot = ['Morning', 'Afternoon', 'Evening'];
@@ -37,6 +38,7 @@ class _AssignToVisitState extends State<AssignToVisit> {
     'Visit With',
   ];
 
+
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
@@ -48,12 +50,13 @@ class _AssignToVisitState extends State<AssignToVisit> {
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal:
-          VariableBag.screenHorizontalPadding *
+              VariableBag.screenHorizontalPadding *
               Responsive.getResponsive(context),
         ),
         child: Column(
           spacing:
-          VariableBag.formContentSpacingVertical * Responsive.getResponsive(context),
+              VariableBag.formContentSpacingVertical *
+              Responsive.getResponsive(context),
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomVisitTypeRadioButton(
@@ -73,14 +76,14 @@ class _AssignToVisitState extends State<AssignToVisit> {
             CommonCard(
               title: LanguageManager().get('assign_to'),
               borderRadius:
-              VariableBag.commonCardBorderRadius *
+                  VariableBag.commonCardBorderRadius *
                   Responsive.getResponsive(context),
               headerPadding: EdgeInsets.symmetric(
                 horizontal:
-                VariableBag.commonCardHorizontalPadding *
+                    VariableBag.commonCardHorizontalPadding *
                     Responsive.getResponsive(context),
                 vertical:
-                VariableBag.commonCardVerticalPadding *
+                    VariableBag.commonCardVerticalPadding *
                     Responsive.getResponsive(context),
               ),
               headerColor: AppTheme.getColor(context).secondary,
@@ -96,7 +99,7 @@ class _AssignToVisitState extends State<AssignToVisit> {
                 width: 0.18 * Responsive.getWidth(context),
                 height: 0.03 * Responsive.getHeight(context),
                 boarderRadius:
-                VariableBag.buttonBorderRadius *
+                    VariableBag.buttonBorderRadius *
                     Responsive.getResponsive(context),
                 isShadowBottomLeft: true,
                 backgroundColor: AppTheme.getColor(context).primary,
@@ -118,9 +121,8 @@ class _AssignToVisitState extends State<AssignToVisit> {
                   ),
                   itemBuilder: (context, index) => Row(
                     spacing:
-                    VariableBag.textFieldRowGap *
+                        VariableBag.textFieldRowGap *
                         Responsive.getResponsive(context),
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CircleAvatar(
                         radius: 14 * Responsive.getResponsive(context),
@@ -132,19 +134,18 @@ class _AssignToVisitState extends State<AssignToVisit> {
                         child: Column(
                           spacing: 5 * Responsive.getResponsive(context),
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CustomText(
                               'Vatsal Champaneri',
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
-                              10 * Responsive.getResponsiveText(context),
+                                  10 * Responsive.getResponsiveText(context),
                               overflow: TextOverflow.ellipsis,
                             ),
                             CustomText(
                               'QA',
                               fontSize:
-                              10 * Responsive.getResponsiveText(context),
+                                  10 * Responsive.getResponsiveText(context),
                               color: AppTheme.getColor(context).onSurface,
                             ),
                           ],
@@ -175,7 +176,6 @@ class _AssignToVisitState extends State<AssignToVisit> {
               isKey: true,
               hintText: LanguageManager().get('select_date'),
               prefixIconPath: AppAssets.note_favorite,
-              suffixIconPath:AppAssets.calendar,
               onTap: () async {
                 // show date picker
               },
@@ -186,46 +186,40 @@ class _AssignToVisitState extends State<AssignToVisit> {
               prefixIconPath: AppAssets.clock,
               suffixIconPath: AppAssets.arrow_down,
               hintText: LanguageManager().get('select_time_slot'),
-              controller: TextEditingController(text: selectedleavetype ?? ''),
               onTap: () async {
                 // handle tap function
               },
             ),
-            CustomRadioButton(
-              height: 0.06 * Responsive.getHeight(context),
-              options: const ['Field visit', 'Virtual visit'],
-              onChanged: (selected) {},
-            ),
+      FieldVirtualVisitToggle(
+        selectedValue: selectedFieldVisit,
+        onChanged: (v) => {
+          // handle toggle button
+        },
+      ),
 
             NewTextField(
               label: LanguageManager().get('visit_purpose'),
               prefixIconPath: AppAssets.gps,
               suffixIconPath: AppAssets.arrow_down,
               hintText: LanguageManager().get('select'),
-              controller: TextEditingController(text: selectedleavetype ?? ''),
               onTap: () async {
                 // handle tap function
               },
             ),
             Padding(
-              padding:  EdgeInsets.all(8.0 * Responsive.getResponsive(context)),
+              padding: EdgeInsets.all(8.0 * Responsive.getResponsive(context)),
               child: MyCoButton(
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) => const TravelMode(),
-                  );
-                },
+                onTap: () {},
                 title: LanguageManager().get('submit'),
                 textStyle: TextStyle(
                   color: AppTheme.getColor(context).onPrimary,
                   fontSize:
-                  22 * Responsive.getResponsiveText(context), // reduced
+                      22 * Responsive.getResponsiveText(context), // reduced
                   fontFamily: 'Gilroy-Bold',
                 ),
                 isShadowBottomLeft: true,
                 boarderRadius:
-                VariableBag.buttonBorderRadius *
+                    VariableBag.buttonBorderRadius *
                     Responsive.getResponsive(context),
               ),
             ),

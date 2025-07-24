@@ -25,7 +25,6 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
   String selectedVisitType = 'Self Visit';
   String selectedFieldVisit = 'Field Visit';
 
-
   // Dropdown options
   final List<String> customerList = ['Customer 1', 'Customer 2', 'Customer 3'];
   final List<String> visitSlotList = ['Morning', 'Afternoon', 'Evening'];
@@ -49,13 +48,13 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
     body: Padding(
       padding: EdgeInsets.symmetric(
         horizontal:
-        VariableBag.screenHorizontalPadding *
+            VariableBag.screenHorizontalPadding *
             Responsive.getResponsive(context),
       ),
       child: SingleChildScrollView(
         child: Column(
           spacing:
-          VariableBag.formContentSpacingVertical *
+              VariableBag.formContentSpacingVertical *
               Responsive.getResponsive(context),
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -105,16 +104,11 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
             ),
 
             /// Visit Mode Radio Buttons
-            CustomRadioButton(
-              height: 0.05 * Responsive.getHeight(context),
-              options: const ['Field Visit', 'Virtual Visit'],
-              onChanged: (selected) {
-                // handle radio button
-              },
-            ),
             FieldVirtualVisitToggle(
               selectedValue: selectedFieldVisit,
-              onChanged: (v) => setState(() => selectedFieldVisit = v),
+              onChanged: (v) => {
+                // handle toggle button
+              },
             ),
 
             /// Visit Type
@@ -152,7 +146,7 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
                 ),
                 isShadowBottomLeft: true,
                 boarderRadius:
-                VariableBag.buttonBorderRadius *
+                    VariableBag.buttonBorderRadius *
                     Responsive.getResponsive(context),
               ),
             ),
