@@ -2,16 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/dashboard/domain/entites/my_unit_response_entity.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_section.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+
 part 'custom_upcoming_celebration_card.dart';
 
 class UpcomingCelebrationSection extends StatelessWidget {
-  const UpcomingCelebrationSection({super.key});
+  final List<TodayBirthDayEntity>? birthdays;
+  const UpcomingCelebrationSection({super.key, this.birthdays});
 
   @override
-  Widget build(BuildContext context) => CustomSection(
+  Widget build(BuildContext context) {
+    if (birthdays == null || birthdays!.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    return CustomSection(
       title: 'Upcoming Celebrations',
       subtitle: 'Spread smiles — celebrate someone today!',
       icon: Image.asset(
@@ -24,18 +31,16 @@ class UpcomingCelebrationSection extends StatelessWidget {
         width: Responsive.getWidth(context),
         height: 248,
         child: ListView.builder(
-          itemCount: 3,
+          itemCount: birthdays?.length ?? 0,
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return UpcomingCelebrationCard(
-              name: 'Arsahd Shaikh $index',
-              description: index == 1
-                  ? 'Big Decsription of hello there $index'
-                  : 'Big Decsription of  $index',
-              imagePath:
-                  'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
-              chipLabel: 'BirthDay',
+              name: birthdays?[index].userFullName ?? '',
+              description:
+                  '${birthdays?[index].userDesignation ?? ''}\n${birthdays?[index].blockName ?? ''}-${birthdays?[index].floorName ?? ''}',
+              imagePath: birthdays?[index].userProfilePic ?? '',
+              chipLabel: birthdays?[index].totalYearView ?? '',
               onButtonPressed: () {},
               cardWidth: 300 * Responsive.getDashboardResponsiveText(context),
               cardPadding: EdgeInsets.zero,
@@ -48,4 +53,5 @@ class UpcomingCelebrationSection extends StatelessWidget {
         ),
       ),
     );
+  }
 }

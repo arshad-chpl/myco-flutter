@@ -112,8 +112,10 @@ class UpcomingCelebrationCard extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      width: imageHeight ?? 80,
-                      height: imageWidth ?? 80,
+                      width:
+                          imageHeight ?? 74 * Responsive.getDashboardResponsiveText(context),
+                      height:
+                          imageWidth ?? 74 * Responsive.getResponsive(context),
                       decoration:
                           decoration ??
                           BoxDecoration(
@@ -128,10 +130,11 @@ class UpcomingCelebrationCard extends StatelessWidget {
                             ),
                           ),
                       child: CircleAvatar(
-                        backgroundImage: imagePath.startsWith('http')
-                            ? NetworkImage(imagePath)
-                            : AssetImage(imagePath) as ImageProvider,
-                        radius: imageRadius ?? 40,
+                        // backgroundImage: imagePath.startsWith('http')
+                        //     // TODO: use Common widget - User Profile Pic cached network image
+                        //     ? NetworkImage(imagePath)
+                        //     : AssetImage(imagePath) as ImageProvider,
+                        radius: imageRadius,
                       ),
                     ),
                     const SizedBox(width: 14),
@@ -140,16 +143,18 @@ class UpcomingCelebrationCard extends StatelessWidget {
                         contentPadding: EdgeInsets.all(0),
                         title: CustomText(
                           name,
-                          fontSize: 24,
+                          isKey: false,
+                          fontSize: 20,
                           fontWeight: FontWeight.w600,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           color: AppTheme.getColor(context).primary,
                         ),
                         subtitle: SizedBox(
-                          height: 40,
+                          // height: 40,
                           child: CustomText(
                             description,
+                            isKey: false,
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             maxLines: 2,

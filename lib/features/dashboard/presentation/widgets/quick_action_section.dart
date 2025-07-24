@@ -77,7 +77,7 @@ class QuickActionSection extends StatelessWidget {
               ).spacing,
               childAspectRatio: Responsive.getGridConfig(
                 context,
-                screenWide: constraints.maxWidth,
+                screenWide: constraints.maxWidth>=600?:,
               ).childAspectRatio, // Adjust for container shape
             ),
             itemCount: appMenuHome?.length ?? 0,
@@ -91,11 +91,9 @@ class QuickActionSection extends StatelessWidget {
               child: BorderContainerWraper(
                 padding: EdgeInsets.zero,
                 child: CustomShadowContainer(
-                  height: Responsive.getResponsive(context) * 0,
-                  width: Responsive.getResponsive(context) * 0,
                   title: appMenuHome?[index].menuLanguageKey ?? '',
-                  boxPadding: 14 * Responsive.getResponsive(context),
-                  imagePadding: 20 * Responsive.getResponsive(context),
+                  boxPadding: 14 * Responsive.getDashboardResponsive(context),
+                  imagePadding: 20 * Responsive.getDashboardResponsive(context),
                   image: CachedNetworkImage(
                     imageUrl: appMenuHome?[index].menuIcon ?? '',
 
