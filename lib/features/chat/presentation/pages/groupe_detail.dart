@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/chat/presentation/bloc/chat_bloc.dart';
+import 'package:myco_flutter/features/chat/presentation/bloc/chat_list_bloc/chat_bloc.dart';
 import 'package:myco_flutter/features/chat/presentation/widgets/chat_list_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
@@ -45,7 +45,7 @@ class GroupInfo extends StatelessWidget {
         horizontal: 0.05 * Responsive.getWidth(context),
         // vertical: 0.01 * Responsive.getHeight(context),
       ),
-      child: BlocBuilder<ChatBloc, ChatState>(
+      child: BlocBuilder<ChatListBloc, ChatListState>(
         builder: (context, state) => Column(
             children: [
               Center(
@@ -70,7 +70,7 @@ class GroupInfo extends StatelessWidget {
               CustomSearchField(
                 hintText: 'Search',
                 onChanged: (value) => {
-                  context.read<ChatBloc>().add(
+                  context.read<ChatListBloc>().add(
                     SearchEvent(value),
                   ),
                  

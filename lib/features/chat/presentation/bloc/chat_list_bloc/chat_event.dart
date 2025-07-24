@@ -1,13 +1,13 @@
 part of 'chat_bloc.dart';
 
-sealed class ChatEvent extends Equatable {
-  const ChatEvent();
+sealed class ChatListEvent extends Equatable {
+  const ChatListEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class SearchEvent extends ChatEvent {
+class SearchEvent extends ChatListEvent {
   final String query;
   // final List chatList;
 
@@ -21,7 +21,7 @@ class SearchEvent extends ChatEvent {
   ];
 }
 
-class RemoveAvatar extends ChatEvent {
+class RemoveAvatar extends ChatListEvent {
   final List<Map<String, dynamic>> avtarList;
   final int index;
 
@@ -31,21 +31,26 @@ class RemoveAvatar extends ChatEvent {
   
 }
 
-class SelectDepEvent extends ChatEvent {
+class SelectDepEvent extends ChatListEvent {
   final Map<String, String> department;
   const SelectDepEvent(this.department);
   @override
   List<Object> get props => [department];
 }
 
-class RemoveDepEvent extends ChatEvent {
+class RemoveDepEvent extends ChatListEvent {
   final String departmentId;
   const RemoveDepEvent(this.departmentId);
   @override
   List<Object> get props => [departmentId];
 }
 
-class GetChatListEvent extends ChatEvent {
+class GetChatListEvent extends ChatListEvent {
   @override
   List<Object> get props => [];
 }
+
+// class GetGroupChatListEvent extends ChatListEvent {
+//   @override
+//   List<Object> get props => [];
+// }

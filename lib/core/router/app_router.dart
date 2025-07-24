@@ -45,7 +45,7 @@ import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart'
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-
+    
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
