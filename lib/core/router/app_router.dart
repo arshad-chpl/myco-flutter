@@ -6,6 +6,7 @@ import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/assets_routes.dart';
 import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
+import 'package:myco_flutter/core/router/modules/employee_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/initial_routes.dart';
 import 'package:myco_flutter/core/router/modules/lost_and_found.dart';
 import 'package:myco_flutter/core/router/modules/my_profile.dart';
@@ -47,7 +48,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths.splash,
+    // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -60,7 +62,6 @@ class AppRouter {
       //   name: 'details',
       //   builder: (context, state) => const DetailsPage(),
       // ),
-
       ...DashboardRoutes,
 
       GoRoute(
@@ -120,11 +121,7 @@ class AppRouter {
       ...payslipRoutes,
       ...chatRoutes,
 
-      GoRoute(
-        path: RoutePaths.employees,
-        name: 'employees',
-        builder: (context, state) => const EmployeesScreen(),
-      ),
+      ...employeeRoute,
       GoRoute(
         path: RoutePaths.contactAdmin,
         name: 'contact-admin',
