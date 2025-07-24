@@ -6,16 +6,16 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_label_gifs.dart';
 import 'package:myco_flutter/widgets/custom_media_picker_container/custom_shadow_container.dart';
 
-class ProfilePersonalInfoCard extends StatelessWidget {
-  ProfilePersonalInfoCard({super.key});
+class ProfileWordAttendanceCard extends StatelessWidget {
+  ProfileWordAttendanceCard({super.key});
 
   List svgList = [
-    "assets/dashboard/svgs/contact_details.svg",
-    "assets/dashboard/svgs/personal_Info.svg",
-    "assets/dashboard/svgs/employment_detail.svg",
-    "assets/dashboard/svgs/past_experience.svg",
-    "assets/dashboard/svgs/education_&_achievement.svg",
-    "assets/dashboard/svgs/my_timeline.svg",
+    "assets/dashboard/svgs/attendance_face.svg",
+    "assets/dashboard/svgs/shift_details.svg",
+    "assets/dashboard/svgs/local_attendance.svg",
+    "assets/dashboard/svgs/my_travel_summary.svg",
+    "assets/dashboard/svgs/my_transaction.svg",
+    "assets/dashboard/svgs/admin_view.svg",
   ];
 
   @override
@@ -23,8 +23,8 @@ class ProfilePersonalInfoCard extends StatelessWidget {
     spacing: 0.015 * Responsive.getHeight(context),
     children: [
       CustomLabelGifs(
-        title: 'Personal Info',
-        gifAssetPath: 'assets/gifs/profile_info.gif',
+        title: 'Work & Attendance',
+        gifAssetPath: 'assets/gifs/profile_work_attendance.gif',
       ),
       GridView.builder(
         physics: NeverScrollableScrollPhysics(),
@@ -50,6 +50,7 @@ class ProfilePersonalInfoCard extends StatelessWidget {
             ),
           ),
           child: CustomShadowContainer(
+            textAlign: TextAlign.center,
             image: SvgPicture.asset(svgList[index]),
             title: "hello",
             containerHeight: 0.08 * Responsive.getHeight(context),

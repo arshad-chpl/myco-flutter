@@ -168,7 +168,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
             IconButton(
               onPressed: () => Navigator.pop(context),
               icon: SvgPicture.asset(
-                widget.icon ?? AppAssets.downArrowBottomSheet,
+                widget.icon ?? AppAssets.dashboard,
                 width: Responsive.isTablet
                     ? 0.03 * Responsive.getWidth(context)
                     : 0.06 * Responsive.getWidth(context),

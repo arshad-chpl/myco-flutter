@@ -51,6 +51,7 @@ class ProfileToolSupportSettingCard extends StatelessWidget {
             border: Border.all(color: AppTheme.getColor(context).outlineVariant),
           ),
           child: CustomShadowContainer(
+            textAlign: TextAlign.center,
             image: SvgPicture.asset(svgList[index]),
             title: "hello",
             containerHeight: 0.08 * Responsive.getHeight(context),
