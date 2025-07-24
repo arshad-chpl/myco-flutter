@@ -320,7 +320,7 @@ class HolidayListPage extends StatelessWidget {
                                                     '',
                                                 optionalHolidayAssignId:
                                                     holiday
-                                                        .optionalHolidayAssignDeleteId ??
+                                                        .optionalHolidayAssignId ??
                                                     '',
                                               );
                                               blocContext

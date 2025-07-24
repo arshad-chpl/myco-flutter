@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
-import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/device_change/device_change_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
@@ -18,18 +17,20 @@ class SelectCompanyPage extends StatelessWidget {
   const SelectCompanyPage({super.key});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    body: SafeArea(
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => SelectCompanyStepBloc()),
-          BlocProvider(create: (context) => GetIt.I<CompanyBloc>()),
-          BlocProvider(create: (context) => GetIt.I<LoginBloc>()),
-        ],
-        child: const _CompanySearchBody(),
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => SelectCompanyStepBloc()),
+            BlocProvider(create: (context) => GetIt.I<CompanyBloc>()),
+            BlocProvider(create: (context) => GetIt.I<LoginBloc>()),
+          ],
+          child: const _CompanySearchBody(),
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class _CompanySearchBody extends StatefulWidget {
@@ -49,7 +50,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
     'INA': '+62',
   };
   String selectedCountry = 'IND';
-  bool isChecked = true;
+  bool isChecked = false;
 
   @override
   void dispose() {
@@ -101,8 +102,8 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                   alertType: AlertType.custom,
                   icon: 'assets/login/device_change_icon.svg',
                   content: loginState.response.message,
-                  cancelText: LanguageManager().get('cancel'),
-                  confirmText: LanguageManager().get('request'),
+                  cancelText: 'Cancel',
+                  confirmText: 'Request',
                   onConfirm: () {
                     Navigator.of(context).pop();
                     showModalBottomSheet(
@@ -111,9 +112,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                       backgroundColor: Colors.transparent,
                       builder: (context) => BlocProvider(
                         create: (context) => GetIt.I<DeviceChangeBloc>(),
-                        child: GetReasonUi(
-                          title: LanguageManager().get('change_request') + ' *',
-                        ),
+                        child: const GetReasonUi(title: 'Change Request *'),
                       ),
                     );
                   },
@@ -135,7 +134,7 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
                 child: CustomAlertDialog(
                   alertType: AlertType.defaultType,
                   content: loginState.response.message,
-                  confirmText: LanguageManager().get('ok'),
+                  confirmText: 'Ok',
                   onConfirm: () {
                     Navigator.of(context).pop();
                   },
@@ -146,7 +145,8 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
             Fluttertoast.showToast(msg: loginState.response.message ?? '');
           }
         }
-      }, // This builder reacts to the page flow state to show the correct UI.
+      },
+      // This builder reacts to the page flow state to show the correct UI.
       child: BlocBuilder<SelectCompanyStepBloc, SelectCompanyStepState>(
         builder: (context, stepState) {
           if (stepState is SelectCompanyStepLogin) {

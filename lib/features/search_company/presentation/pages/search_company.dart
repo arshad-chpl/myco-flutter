@@ -23,9 +23,6 @@ class SearchCompanyScreen extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         useSafeArea: true,
         isScrollControlled: true,
-        isDismissible: false,
-        enableDrag: false,
-        requestFocus: false,
         context: context,
         builder: (bottomSheetContext) => BlocProvider(
           create: (_) => GetIt.I<CompanyBloc>(),
