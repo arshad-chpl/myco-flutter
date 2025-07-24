@@ -12,6 +12,7 @@ class AppAssets {
   static const String svgsVisit = '$svgsPath/visit';
   static const String calenderPath= '$basePath/calender';
   static const String assetVisit = '$basePath/add_expense';
+  static const String signUp = '$basePath/sign_in';
 
   static const String assets = '$basePath/asset';
   static const String lostFound = '$basePath/lost_and_found';
@@ -97,6 +98,16 @@ class AppAssets {
   static const String monitor = '$workAllocationSvgs/monitor.svg';
   static const String location1 = '$workAllocationSvgs/location.svg';
   static const String msgedit = '$workAllocationSvgs/msgedit.svg';
+
+  //sign up
+  static const String joiningDate = '$signUp/joining_date_icon.svg';
+  static const String designationIcon = '$signUp/designation_icon.svg';
+  static const String branchIcon = '$signUp/branch_icon.svg';
+  static const String departmentIcon = '$signUp/department_icon.svg';
+  static const String subDepartmentIcon = '$signUp/sub_department_icon.svg';
+  static const String clockIcon = '$signUp/clock_icon.svg';
+  static const String emailIcon = '$signUp/email_icon.svg';
+  static const String unitNumberIcon = '$signUp/unit_number_icon.svg';
 
   // Gifs
   static const String quickAccessGif = '$basePath/gifs/quickAccess.gif';
