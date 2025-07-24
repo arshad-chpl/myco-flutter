@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
@@ -130,15 +129,15 @@ class PermissionUtil {
             const SizedBox(width: 10),
             CustomText(
               'Permission Needed',
-              fontSize: 20 * Responsive.getResponsiveText(context),
+              fontSize: 16 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
-              color: AppTheme.getColor(context).onSurface,
+              color: AppTheme.getColor(context).surface,
             ),
           ],
         ),
         content: CustomText(
           message,
-          fontSize: 16 * Responsive.getResponsiveText(context),
+          fontSize: 12 * Responsive.getResponsiveText(context),
           fontWeight: FontWeight.w600,
           color: AppTheme.getColor(context).onSurfaceVariant,
         ),
@@ -152,7 +151,7 @@ class PermissionUtil {
             onPressed: () => Navigator.of(context).pop(),
             child: CustomText(
               'Cancel',
-              fontSize: 18 * Responsive.getResponsiveText(context),
+              fontSize: 12 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
               color: AppTheme.getColor(context).outline,
             ),
@@ -168,14 +167,15 @@ class PermissionUtil {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               elevation: 2,
             ),
             icon: const Icon(Icons.settings, size: 20),
             label: CustomText(
               'Open Settings',
-              fontSize: 14 * Responsive.getResponsiveText(context),
+              fontSize: 12 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w600,
+              color: AppTheme.getColor(context).onPrimary,
             ),
           ),
         ],
@@ -214,62 +214,26 @@ class PermissionUtil {
 
     try {
       if (type == 'camera') {
-        // Check if already granted first
-        if (Platform.isAndroid) {
-          granted = await isPermissionGranted(AppPermission.camera);
-        } else if (Platform.isIOS) {
-          granted = await isPermissionGranted(AppPermission.camera);
-
-          // granted = true;
-        } else {
-          granted = await requestPermission(AppPermission.camera);
-          showPermissionDeniedDialog(context);
-        }
-
-        // if (!granted) {
-        //   // Only request if not already granted
-        // }
-
-        debugPrint('Camera permission: $granted');
+        granted = await requestPermission(AppPermission.camera);
       } else if (type == 'gallery') {
         if (Platform.isIOS) {
-          // Check if already granted first
-          granted = await isPermissionGranted(AppPermission.photos);
-
-          if (!granted) {
-            // Only request if not already granted
-            granted = true;
-          } else {
-            granted = await requestPermission(AppPermission.photos);
-            showPermissionDeniedDialog(context);
-          }
-
-          debugPrint('Photos permission: $granted');
+          granted = await requestPermission(AppPermission.photos);
         } else {
-          // Android logic
           final int sdkInt = await getAndroidSdkInt();
           final permission = sdkInt < 33
               ? AppPermission.storage
               : AppPermission.photos;
-
-          granted = await isPermissionGranted(permission);
-          if (!granted) {
-            granted = await requestPermission(permission);
-          }
+          granted = await requestPermission(permission);
         }
       } else if (type == 'document') {
         if (Platform.isIOS) {
-          granted = true; // No explicit permission needed for documents on iOS
+          granted = true;
         } else {
           final int sdkInt = await getAndroidSdkInt();
           final permission = sdkInt >= 30
               ? AppPermission.manageExternalStorage
               : AppPermission.storage;
-
-          granted = await isPermissionGranted(permission);
-          if (!granted) {
-            granted = await requestPermission(permission);
-          }
+          granted = await requestPermission(permission);
         }
       }
     } catch (e) {
@@ -277,9 +241,8 @@ class PermissionUtil {
       granted = false;
     }
 
-    // IMPORTANT: Only show dialog if permission is actually denied
+    // Final check if denied
     if (!granted && context.mounted) {
-      // Double check the permission status before showing dialog
       bool finalCheck = false;
 
       if (type == 'camera') {
@@ -288,7 +251,6 @@ class PermissionUtil {
         finalCheck = await isPermissionGranted(AppPermission.photos);
       }
 
-      // Only show dialog if final check also fails
       if (!finalCheck) {
         String message = '';
         if (type == 'camera') {
@@ -305,7 +267,6 @@ class PermissionUtil {
 
         showPermissionDeniedDialog(context, message: message);
       } else {
-        // Update granted status if final check passed
         granted = true;
       }
     }

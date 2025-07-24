@@ -33,8 +33,6 @@ class Responsive {
 
   static double screenHeight() => _screenHeight;
 
-  static bool isTablet(BuildContext context) => getWidth(context) >= 600;
-
   static double scaleHeight(double height) => (_screenHeight / 812) * height;
 
   static double scaleWidth(double width) => (_screenWidth / 375) * width;
@@ -44,6 +42,8 @@ class Responsive {
     factor = factor.clamp(0.85, 1.2);
     return size * factor;
   }
+
+  static bool isTablet(BuildContext context) => getWidth(context) >= 600;
 
   static double responsivePadding(context) => isTablet(context) ? 24 : 16;
 
@@ -80,7 +80,7 @@ class Responsive {
   static double getResponsiveText(context) {
     double width = MediaQuery.of(context).size.width;
     if (kIsWeb) return width > 600 ? 1.5 : 1.0;
-    if (Platform.isAndroid) return getWidth(context) > 600 ? 1.5 : 0.9;
+    if (Platform.isAndroid) return getWidth(context) > 600 ? 1.5 : 1.0;
     return getWidth(context) > 600 ? 1.5 : 0.9;
   }
 
@@ -89,7 +89,7 @@ class Responsive {
 
   static GridConfig getGridConfig(BuildContext context, {double? screenWide}) {
     final screenWidth = screenWide ?? getWidth(context);
-    final spacing = 12.0 * getResponsive(context);
+    final spacing = 15.0 * getResponsive(context);
     final itemCount = screenWidth > 1200
         ? 10
         : screenWidth > 1000
@@ -97,19 +97,22 @@ class Responsive {
         // : screenWidth > 600
         // ? 6
         : 3;
-    final itemWidth = (screenWidth - (spacing * (itemCount - 1))) / itemCount;
+
+    final itemWidth =
+        (screenWidth - (spacing * (itemCount - 1)) + 50) / itemCount;
     final itemHeight = screenWidth > 600
         ? 180.0
         : screenWidth > 500
         ? 160.0
         : 155.0;
-    final childAspectRatio = itemWidth / itemHeight;
+    // final childAspectRatio = itemWidth / itemHeight;
+
     return GridConfig(
       itemCount: itemCount,
       spacing: spacing,
       itemWidth: itemWidth,
       itemHeight: itemHeight,
-      childAspectRatio: childAspectRatio,
+      childAspectRatio: 2 / 2.5,
     );
   }
 }
