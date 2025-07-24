@@ -5,11 +5,11 @@ import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/models/data/common_response_model.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/leave/data/datasources/leave_remote_data_source.dart';
-import 'package:myco_flutter/features/leave/model/check_leave_balance_response.dart';
-import 'package:myco_flutter/features/leave/model/comp_off_leave_response_model.dart';
-import 'package:myco_flutter/features/leave/model/leave_history_response_model.dart';
-import 'package:myco_flutter/features/leave/model/leave_type_response.dart';
-import 'package:myco_flutter/features/leave/model/my_team_response_model.dart';
+import 'package:myco_flutter/features/leave/data/model/check_leave_balance_response.dart';
+import 'package:myco_flutter/features/leave/data/model/comp_off_leave_response_model.dart';
+import 'package:myco_flutter/features/leave/data/model/leave_history_response_model.dart';
+import 'package:myco_flutter/features/leave/data/model/leave_type_response.dart';
+import 'package:myco_flutter/features/leave/data/model/my_team_response_model.dart';
 
 class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
   @override
@@ -259,7 +259,10 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
   }
 
   @override
-  Future<CompOffLeaveResponseModel> getCompOffLeaves(String startDate, String endDate) {
+  Future<CompOffLeaveResponseModel> getCompOffLeaves(
+    String startDate,
+    String endDate,
+  ) {
     final dataMap = {
       'getCompOffLeaves': 'getCompOffLeaves',
       'society_id': '1',
@@ -268,8 +271,10 @@ class LeaveRemoteDataSourceImpl implements LeaveRemoteDataSource {
       'start_date': startDate,
       'end_date': endDate,
     };
-    return GetIt.I<ApiClient>(
-      instanceName: VariableBag.residentApiNew,
-    ).postFormDynamic('leave_controller.php', dataMap).then((value) => CompOffLeaveResponseModel.fromJson(json.decode(value)));
+    return GetIt.I<ApiClient>(instanceName: VariableBag.residentApiNew)
+        .postFormDynamic('leave_controller.php', dataMap)
+        .then(
+          (value) => CompOffLeaveResponseModel.fromJson(json.decode(value)),
+        );
   }
 }

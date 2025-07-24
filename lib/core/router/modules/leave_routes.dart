@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
+import 'package:myco_flutter/features/leave/presentation/bloc/edit_leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/add_leave_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/add_short_leave_screen.dart';
@@ -54,8 +55,8 @@ List<RouteBase> leaveRoutes = [
   GoRoute(
     path: RoutePaths.editLeaveScreen,
     name: RoutePaths.editLeaveScreen,
-    builder: (context, state) => BlocProvider<LeaveBloc>(
-      create: (_) => GetIt.I<LeaveBloc>(),
+    builder: (context, state) => BlocProvider<EditLeaveBloc>(
+      create: (_) => GetIt.I<EditLeaveBloc>(),
       child: const EditLeave(),
     ),
   ),
