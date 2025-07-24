@@ -6,8 +6,11 @@ import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.dart';
 import 'package:myco_flutter/features/chat/presentation/di/chat_list_di.dart';
+import 'package:myco_flutter/features/circuler/presentation/di/circular_di.dart';
+import 'package:myco_flutter/features/common_api/presentation/di/common_api_di.dart';
 import 'package:myco_flutter/features/company_info/presentation/di/company_info_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
+import 'package:myco_flutter/features/company_selector/presentation/di/device_change_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/device_change_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/request_otp_di.dart';
 import 'package:myco_flutter/features/dashboard/presentation/di/dashboard_di.dart';
@@ -22,6 +25,10 @@ import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dar
 import 'package:myco_flutter/features/leave/presentation/di/leave_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
+import 'package:myco_flutter/features/leave/presentation/di/leave_di.dart';
+import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
+import 'package:myco_flutter/features/sign_in/presentation/di/primary_register_di.dart';
+import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/payslip/presentation/di/payslip_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/di/work_allocation_di.dart';
@@ -72,6 +79,16 @@ Future<void> initDi() async {
 
   // ========Employee View=========
   employeeDi(sl);
+
+  // ========Sign up=========
+  setupPrimaryRegisterDi(sl);
+
+  // ========Circular=========
+  CircularDi(sl);
+
+  // ========common api=========
+  CommonApiDi(sl);
+
 
   //========Company Info=========
   setupCompanyInfoDi(sl);
