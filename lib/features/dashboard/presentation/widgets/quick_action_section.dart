@@ -77,7 +77,7 @@ class QuickActionSection extends StatelessWidget {
               ).spacing,
               childAspectRatio: Responsive.getGridConfig(
                 context,
-                screenWide: constraints.maxWidth>=600?:,
+                screenWide: constraints.maxWidth,
               ).childAspectRatio, // Adjust for container shape
             ),
             itemCount: appMenuHome?.length ?? 0,
