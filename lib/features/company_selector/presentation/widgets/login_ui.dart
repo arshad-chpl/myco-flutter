@@ -321,6 +321,9 @@ class LoginUi extends StatelessWidget {
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
+          isDismissible: false,
+          enableDrag: false,
+          requestFocus: false,
           backgroundColor: Colors.transparent,
           builder: (_) => BottomTermAndCondition(url: url),
         );
@@ -389,7 +392,9 @@ class _PhoneInput extends StatelessWidget {
     children: [
       CustomText(
         LanguageManager().get('phone_number'),
-        fontWeight: FontWeight.w600,
+        color: AppTheme.getColor(context).onSurfaceVariant,
+        fontSize: 14 * Responsive.getResponsiveText(context),
+        fontWeight: FontWeight.w700,
       ),
       PhoneNumberField(
         selectedCountry: selectedCountry!,
