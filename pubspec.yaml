@@ -103,6 +103,8 @@ flutter:
     - assets/payslip/
     - assets/visit/
     - assets/media_picker/
+    - assets/employees/
+    - assets/stepper/
     - assets/lost_and_found/
     - assets/visit_svgs/
     - assets/svgs/visit/
@@ -155,6 +157,9 @@ flutter:
     - family: Gilroy-Heavy
       fonts:
         - asset: assets/fonts/Gilroy-Heavy.ttf
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
