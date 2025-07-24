@@ -17,6 +17,10 @@ class CommonResponseModel {
   final String? status;
   @JsonKey(name: 'error')
   final String? error;
+  @JsonKey(name: 'view_dialog_api_call')
+  final bool? viewDialogApiCall;
+  @JsonKey(name: 'view_dialog')
+  final bool? viewDialog;
   @JsonKey(name: 'remining_document_count')
   final String? reminingDocumentCount;
   @JsonKey(name: 'message')
@@ -132,6 +136,8 @@ class CommonResponseModel {
     this.outOfRangeReason,
     this.status,
     this.error,
+    this.viewDialogApiCall,
+    this.viewDialog,
     this.reminingDocumentCount,
     this.message,
     this.viewMessage,
@@ -199,6 +205,8 @@ class CommonResponseModel {
     outOfRangeReason: outOfRangeReason?.map((e) => e.toEntity()).toList(),
     status: status,
     error: error,
+    viewDialogApiCall: viewDialogApiCall,
+    viewDialog: viewDialog,
     reminingDocumentCount: reminingDocumentCount,
     message: message,
     viewMessage: viewMessage,

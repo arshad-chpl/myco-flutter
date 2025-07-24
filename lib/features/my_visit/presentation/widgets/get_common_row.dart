@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
@@ -29,7 +29,7 @@ Row getCommonRow(
             ),
             if (showMap)
               Padding(
-                padding: const EdgeInsets.only(top: 8.0),
+                padding: EdgeInsets.only(top: Responsive.getResponsive(context) * 8),
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: AppColors.secondary),
@@ -38,7 +38,7 @@ Row getCommonRow(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: SvgPicture.asset(
-                      'assets/visit/svgs/map.svg',
+                      AppAssets.map,
                       height: 0.04 * Responsive.getHeight(context),
                       width: 0.05 * Responsive.getWidth(context),
                     ),
@@ -48,7 +48,7 @@ Row getCommonRow(
           ],
         ),
       ),
-      const CustomText(':'),
+       const CustomText(':'),
       SizedBox(width: 0.03 * Responsive.getWidth(context)),
       Expanded(
         flex: 9,

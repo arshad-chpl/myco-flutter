@@ -8,8 +8,8 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/text_controllers/add_assets_controllers.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/assets_label_text_field.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/custom_media_picker_container.dart';
 
 class EditAssetsPage extends StatefulWidget {
   const EditAssetsPage({super.key});
@@ -242,10 +242,6 @@ class _EditAssetsPage extends State<EditAssetsPage> {
                   imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
                   backgroundColor: const Color(0xFFEEF7FD),
                   containerHeight: 0.1 * Responsive.getHeight(context),
-                  pickerBoxBorderRadius: 10,
-                  titleFontWeight: FontWeight.w600,
-                  titleWidgetBetweenSpace:
-                      0.006 * Responsive.getHeight(context),
                 ),
                 SizedBox(
                   height:
@@ -267,10 +263,6 @@ class _EditAssetsPage extends State<EditAssetsPage> {
                   imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
                   backgroundColor: const Color(0xFFEEF7FD),
                   containerHeight: 0.1 * Responsive.getHeight(context),
-                  pickerBoxBorderRadius: 10,
-                  titleFontWeight: FontWeight.w600,
-                  titleWidgetBetweenSpace:
-                      0.006 * Responsive.getHeight(context),
                 ),
                 SizedBox(
                   height:

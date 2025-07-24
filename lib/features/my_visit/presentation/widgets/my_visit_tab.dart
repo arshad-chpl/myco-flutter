@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/date_selection_row.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_search_bar.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 
 class MyVisitTab extends StatelessWidget {
   final TextEditingController searchController;
@@ -12,13 +12,8 @@ class MyVisitTab extends StatelessWidget {
   final VoidCallback goToNextDate;
   final VoidCallback selectDateFromPicker;
   final List<Map<String, dynamic>> visitList;
-  final Widget Function(
-      BuildContext,
-      Map<String, dynamic>,
-      int,
-      Size,
-      int,
-      ) buildVisitCard;
+  final Widget Function(BuildContext, Map<String, dynamic>, int, int)
+  buildVisitCard;
   final Widget buildAutoExpenseCard;
 
   const MyVisitTab({
@@ -35,46 +30,49 @@ class MyVisitTab extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-      padding: EdgeInsets.all(Responsive.getWidth(context) * 0.04),
-      child: Column(
-        children: [
+  Widget build(BuildContext context) => Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal:
+          Responsive.getResponsive(context) *
+          VariableBag.screenHorizontalPadding,
+      vertical:
+          Responsive.getResponsive(context) * VariableBag.tabBarAfterSpace,
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // DateSelectionRow
+        DateSelectionRow(
+          formattedDate: formattedDate,
+          goToPreviousDate: goToPreviousDate,
+          goToNextDate: goToNextDate,
+          selectDateFromPicker: selectDateFromPicker,
+        ),
+        SizedBox(height: Responsive.getHeight(context) * 0.010),
 
-          // DateSelectionRow
-          DateSelectionRow(
-            formattedDate: formattedDate,
-            goToPreviousDate: goToPreviousDate,
-            goToNextDate: goToNextDate,
-            selectDateFromPicker: selectDateFromPicker,
-          ),
-          SizedBox(height: Responsive.getHeight(context) * 0.010),
+        // Search Field
+        CustomSearchField(
+          controller: searchController,
+          hintText: 'Search with Customer',
+        ),
+        SizedBox(height: Responsive.getHeight(context) * 0.010),
+        // Auto Expense Card
+        buildAutoExpenseCard,
+        SizedBox(height: Responsive.getHeight(context) * 0.010),
 
-          // Search Field
-          VisitSearchBar(
-            controller: searchController,
-            focusNode: searchFocus,
-            hintText: 'Search with Customer',
-          ),
-          SizedBox(height: Responsive.getHeight(context) * 0.010),
-
-          // Auto Expense Card
-          buildAutoExpenseCard,
-          SizedBox(height: Responsive.getHeight(context) * 0.010),
-
-          // Visit List
-          ListView.builder(
+        // Visit List - Only this is scrollable
+        Expanded(
+          child: ListView.builder(
             itemCount: visitList.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) => buildVisitCard(
               context,
               visitList[index],
               index,
-              MediaQuery.of(context).size,
               visitList.length,
             ),
           ),
-        ],
-      ),
-    );
+        ),
+      ],
+    ),
+  );
 }

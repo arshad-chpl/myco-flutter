@@ -60,6 +60,9 @@ dependencies:
   modal_bottom_sheet: ^3.0.0
   bloc: ^9.0.0
 
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  webview_flutter: ^4.13.0
 
 dependency_overrides:
   source_gen: 2.0.0
@@ -100,23 +103,21 @@ flutter:
     - assets/payslip/
     - assets/visit/
     - assets/media_picker/
+    - assets/employees/
+    - assets/stepper/
     - assets/lost_and_found/
     - assets/visit_svgs/
     - assets/svgs/visit/
     - assets/add_expense/
     - assets/dashboard/svgs/
-    - assets/face_detection/
-    - assets/svgs/visit/
-    - assets/dashboard/svgs/
-
-    - assets/dashboard/svgs/
     - assets/svgs/asset/
+    - assets/chat/
     - assets/svgs/work_allocation/
-
     - assets/svgs/take_order/
     - assets/work_allocation/
     - assets/animations/
     - assets/stepper/
+    - assets/login/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
@@ -156,6 +157,9 @@ flutter:
     - family: Gilroy-Heavy
       fonts:
         - asset: assets/fonts/Gilroy-Heavy.ttf
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
