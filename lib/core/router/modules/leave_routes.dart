@@ -13,7 +13,7 @@ import 'package:myco_flutter/features/leave/presentation/pages/my_team_leaves_sc
 List<RouteBase> leaveRoutes = [
   GoRoute(
     path: RoutePaths.leave,
-    name: RoutePaths.leave,
+    name: 'LeaveTrackVC',
     builder: (context, state) => BlocProvider<LeaveBloc>(
       create: (_) => GetIt.I<LeaveBloc>(),
       child: const LeaveScreen(),
