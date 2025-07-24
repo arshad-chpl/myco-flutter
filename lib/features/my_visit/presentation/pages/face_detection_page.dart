@@ -157,7 +157,6 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                     );
                   } else if (state is FaceDetectionLoading) {
                     return const CameraShimmerWidgets();
-                    // return const Center(child: CircularProgressIndicator());
                   } else if (state is FaceDetectionError) {
                     return Center(child: CustomText(state.message));
                   }

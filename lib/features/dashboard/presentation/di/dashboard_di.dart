@@ -2,7 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/core/utils/safe_api_call.dart';
-import 'package:myco_flutter/features/bottom_navigation_bar/bloc/bottom_navigation_bar_bloc.dart';
+import 'package:myco_flutter/features/home_screen/bloc/bottom_navigation_bar_bloc.dart';
 import 'package:myco_flutter/features/dashboard/data/datasources/dashboard_remote_data_source.dart';
 import 'package:myco_flutter/features/dashboard/data/datasources/dashboard_remote_data_source_impl.dart';
 import 'package:myco_flutter/features/dashboard/data/repositories/dashboard_repository_impl.dart';
