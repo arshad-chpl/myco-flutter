@@ -4,16 +4,19 @@ import 'package:myco_flutter/features/leave/data/datasources/leave_remote_data_s
 import 'package:myco_flutter/features/leave/data/repositories/leave_repository_impl.dart';
 import 'package:myco_flutter/features/leave/domain/repositories/leave_repository.dart';
 import 'package:myco_flutter/features/leave/domain/use_case/leave_use_case.dart';
+import 'package:myco_flutter/features/leave/presentation/bloc/edit_leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 
-Future<void>setUpLeaveDI(GetIt sl) async{
-
+Future<void> setUpLeaveDI(GetIt sl) async {
   sl.registerFactory(() => LeaveBloc(sl<LeaveUseCase>()));
-
+  sl.registerFactory(EditLeaveBloc.new);
   sl.registerLazySingleton(() => LeaveUseCase(repository: sl()));
 
-  sl.registerLazySingleton<LeaveRepository>(() => LeaveRepositoryImpl(sl(), sl()),);
+  sl.registerLazySingleton<LeaveRepository>(
+    () => LeaveRepositoryImpl(sl(), sl()),
+  );
 
-  sl.registerLazySingleton<LeaveRemoteDataSource>(LeaveRemoteDataSourceImpl.new,);
-
+  sl.registerLazySingleton<LeaveRemoteDataSource>(
+    LeaveRemoteDataSourceImpl.new,
+  );
 }

@@ -1,76 +1,134 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/leave/presentation/bloc/edit_leave_bloc.dart';
+import 'package:myco_flutter/features/leave/presentation/bloc/edit_leave_event.dart';
+import 'package:myco_flutter/features/leave/presentation/bloc/edit_leave_state.dart';
+import 'package:myco_flutter/features/leave/presentation/widgets/file_preview_tile.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
-import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/media_picker/widgets/custom_media_picker_container.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/design_border_container.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/media_picker.dart';
 
-class EditLeave extends StatefulWidget {
+class EditLeave extends StatelessWidget {
   const EditLeave({super.key});
 
-  @override
-  State<EditLeave> createState() => _EditLeave();
-}
-
-class _EditLeave extends State<EditLeave> {
   @override
   Widget build(BuildContext context) {
     Responsive.init(context);
     return Scaffold(
-      appBar: AppBar(
-        title: CustomText(
-          isKey: true,
-          'apply_leave',
-          fontSize: 22 * Responsive.getResponsiveText(context),
-          fontWeight: FontWeight.w700,
-          color: AppTheme.getColor(context).onSurface,
-        ),
+      appBar: const CustomAppbar(
+        isKey: true,
+        centerTitle: true,
+        title: 'edit_leave_attachment',
         titleSpacing: 0,
-        leading: const BackButton(),
+        leading: BackButton(),
         // backgroundColor: const Color(0xFFF6F7FB),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 0.04 * Responsive.getWidth(context),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              CustomMediaPickerContainer(
-                imagePath: AppAssets.imageGalleryExport,
-                imageTitle: 'assets_image',
-                multipleImage: 1,
-                title: 'invoice',
-                isCameraShow: true,
-                isGalleryShow: true,
-                isDocumentShow: true,
-                titleColor: AppTheme.getColor(context).onSurfaceVariant,
-                titleFontSize: 16 * Responsive.getResponsiveText(context),
-                imageTitleSize: 18 * Responsive.getResponsiveText(context),
-                imageTitleColor: AppTheme.getColor(context).onSurfaceVariant,
-                backgroundColor: const Color(0xFFEEF7FD),
-                containerHeight: 0.1 * Responsive.getHeight(context),
-                // pickerBoxBorderRadius: 10,
-                // titleFontWeight: FontWeight.w600,
-                // titleWidgetBetweenSpace: 0.006 * Responsive.getHeight(context),
-              ),
-              SizedBox(height: 0.035 * Responsive.getHeight(context)),
-
-              //Submit button
-              MyCoButton(
-                onTap: () {},
-                title: LanguageManager().get('update'),
-                isShadowBottomLeft: true,
-                boarderRadius: 50,
-                fontFamily: 'Gilroy-Bold',
-                fontWeight: FontWeight.w500,
-              ),
-              SizedBox(height: 0.024 * Responsive.getHeight(context)),
-            ],
-          ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 0.04 * Responsive.getWidth(context),
+          vertical: 0.02 * Responsive.getHeight(context),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            BlocBuilder<EditLeaveBloc, EditLeaveState>(
+              builder: (context, state) {
+                if (state.selectedImage != null) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(LanguageManager().get('attachment')),
+                      const SizedBox(height: 10),
+                      DesignBorderContainer(
+                        onTap: () async {
+                          List<File>? selectedFiles = await showMediaFilePicker(
+                            context: context,
+                            maxCount: 1,
+                            isCameraShow: true,
+                            isGalleryShow: true,
+                            isDocumentShow: true,
+                            isCropImage: false,
+                          );
+                          if (selectedFiles != null &&
+                              selectedFiles.isNotEmpty) {
+                            context.read<EditLeaveBloc>().add(
+                              ImageSelectedEvent(selectedFiles.first),
+                            );
+                            log('Selected Files: ${selectedFiles.first.path}');
+                          }
+                        },
+                        width: 0.4 * Responsive.getWidth(context),
+                        height: 0.2 * Responsive.getHeight(context),
+                        padding: const EdgeInsets.all(0),
+                        borderRadius: 10,
+                        backgroundColor: AppTheme.getColor(context).surface,
+                        child: FilePreviewTile(
+                          height: 0.2 * Responsive.getHeight(context),
+                          width: 0.4 * Responsive.getWidth(context),
+                          file: state.selectedImage!,
+                          onRemove: () {
+                            context.read<EditLeaveBloc>().add(
+                              RemoveSelectedImageEvent(),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                }
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(LanguageManager().get('attachment')),
+                    DesignBorderContainer(
+                      onTap: () async {
+                        List<File>? selectedFiles = await showMediaFilePicker(
+                          context: context,
+                          maxCount: 1,
+                          isCameraShow: true,
+                          isGalleryShow: true,
+                          isDocumentShow: true,
+                          isCropImage: false,
+                        );
+                        if (selectedFiles != null && selectedFiles.isNotEmpty) {
+                          context.read<EditLeaveBloc>().add(
+                            ImageSelectedEvent(selectedFiles.first),
+                          );
+                          log('Selected Files: ${selectedFiles.first.path}');
+                        }
+                      },
+                      width: 0.4 * Responsive.getWidth(context),
+                      height: 0.03 * Responsive.getHeight(context),
+                      padding: const EdgeInsets.all(0),
+                      borderRadius: 10,
+                      backgroundColor: AppTheme.getColor(context).surface,
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/svgs/visit/document-text.svg',
+                            ),
+                            Text(LanguageManager().get('select_attachment')),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+            MyCoButton(onTap: () {}, title: 'update'),
+          ],
         ),
       ),
     );

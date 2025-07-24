@@ -21,6 +21,7 @@ class AppAssets {
 
   static const String stepper = '$basePath/stepper';
   static const String workAllocationSvgs = '$svgsPath/work_allocation';
+  static const String leave = '$svgsPath/leave';
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
@@ -204,4 +205,7 @@ class AppAssets {
   static const String mediaPickerCamera = '$mediaPicker/camera.svg';
   static const String mediaPickerGallery = '$mediaPicker/gallery-add.svg';
   static const String mediaPickerDocument = '$mediaPicker/document.svg';
+  static const String leavePdf = '$leave/pdf.png';
+  static const String leaveCsv = '$leave/csv.png';
+  static const String leaveXls = '$leave/xls.png';
 }
