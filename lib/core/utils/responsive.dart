@@ -80,12 +80,10 @@ class Responsive {
   static double getResponsiveText(context) {
     double width = MediaQuery.of(context).size.width;
     if (kIsWeb) return width > 600 ? 1.5 : 1.0;
-    if (Platform.isAndroid) return getWidth(context) > 600 ? 1.5 : 1;
+    if (Platform.isAndroid) return getWidth(context) > 600 ? 1.5 : 1.0;
     return getWidth(context) > 600 ? 1.5 : 0.9;
   }
 
-  static double getDashboardResponsive(BuildContext context) =>
-      getWidth(context) > 600 ? 1 : 0.9;
   static double getDashboardResponsiveText(BuildContext context) =>
       getWidth(context) > 600 ? 1.2 : 1;
 
@@ -107,14 +105,14 @@ class Responsive {
         : screenWidth > 500
         ? 160.0
         : 155.0;
-    final childAspectRatio = itemWidth / itemHeight;
+    // final childAspectRatio = itemWidth / itemHeight;
 
     return GridConfig(
       itemCount: itemCount,
       spacing: spacing,
       itemWidth: itemWidth,
       itemHeight: itemHeight,
-      childAspectRatio: childAspectRatio,
+      childAspectRatio: 2 / 2.5,
     );
   }
 }

@@ -91,9 +91,11 @@ class QuickActionSection extends StatelessWidget {
               child: BorderContainerWraper(
                 padding: EdgeInsets.zero,
                 child: CustomShadowContainer(
+                  height: Responsive.getResponsive(context) * 0,
+                  width: Responsive.getResponsive(context) * 0,
                   title: appMenuHome?[index].menuLanguageKey ?? '',
-                  boxPadding: 14 * Responsive.getDashboardResponsive(context),
-                  imagePadding: 20 * Responsive.getDashboardResponsive(context),
+                  boxPadding: 14 * Responsive.getResponsive(context),
+                  imagePadding: 20 * Responsive.getResponsive(context),
                   image: CachedNetworkImage(
                     imageUrl: appMenuHome?[index].menuIcon ?? '',
 

@@ -35,11 +35,8 @@ Future<void> refreshApiServiceCompany(GetIt sl) async {
 
   // TODO: currently static userID and Mobile, need to change later
   final userId = await preference.getUserId();
-  final userMobile = await preference.getUserMobileNo();
+  final userMobile =await preference.getUserMobileNo();
   var baseUrl = await preference.getBaseUrl();
-  print(
-    'UserID: $userId \n userMobile: $userMobile \n companyId: $companyId \n baseUrl: $baseUrl',
-  );
   final password = Util.getCurrentPassword(
     companyId?.toString() ?? '',
     userId?.toString() ?? '',

@@ -119,42 +119,6 @@ class IdCardDetailResponse {
     factory IdCardDetailResponse.fromJson(Map<String, dynamic> json) => _$IdCardDetailResponseFromJson(json);
 
     Map<String, dynamic> toJson() => _$IdCardDetailResponseToJson(this);
-
-    IdCardEntity toEntity() => IdCardEntity(
-      userId: userId,
-      userFirstName: userFirstName,
-      userLastName: userLastName,
-      mobileNumber: mobileNumber,
-      userDesignation: userDesignation,
-      bloodGroup: bloodGroup,
-      blockName: blockName,
-      floorName: floorName,
-      memberStatus: memberStatus,
-      companyEmployeeId: companyEmployeeId,
-      currentAddressLat: currentAddressLat,
-      currentAddressLong: currentAddressLong,
-      permanentAddressLat: permanentAddressLat,
-      permanentAddressLong: permanentAddressLong,
-      emergencyContact: emergencyContact,
-      icardQrCode: icardQrCode,
-      userProfilePic: userProfilePic,
-      companyName: companyName,
-      companyEmail: companyEmail,
-      companyAddress: companyAddress,
-      companyNumber: companyNumber,
-      companyWebsite: companyWebsite,
-      companyLatitude: companyLatitude,
-      companyLongitude: companyLongitude,
-      companyLogo: companyLogo,
-      isUserApproved: isUserApproved,
-      isAccountActive: isAccountActive,
-      currentAddress: currentAddress,
-      permanentAddress: permanentAddress,
-      // Map the list of models to a list of entities by calling the other mapper
-      wfhAddressList: wfhAddressList?.map((model) => model.toEntity()).toList() ?? [],
-      message: message,
-      status: status,
-    );
 }
 
 @JsonSerializable()

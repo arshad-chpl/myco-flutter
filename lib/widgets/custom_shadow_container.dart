@@ -116,7 +116,7 @@ class CustomShadowContainer extends StatelessWidget {
         CustomText(
           title ?? '',
           textAlign: TextAlign.center,
-          fontSize: 12 * Responsive.getDashboardResponsiveText(context),
+          fontSize: 14 * Responsive.getResponsive(context),
           fontWeight: FontWeight.w600,
         ),
       ],

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/dashboard/domain/entites/my_unit_response_entity.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_department_container.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_section.dart';
 
 class MomentsSection extends StatelessWidget {
-  final List<EventAlbumEntity>? events; 
-  const MomentsSection({super.key,this.events});
+  const MomentsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
