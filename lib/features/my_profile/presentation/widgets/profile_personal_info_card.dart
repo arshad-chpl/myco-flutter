@@ -7,7 +7,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_label_gifs.dart';
 import 'package:myco_flutter/features/my_profile/domain/entites/profile_entity.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/custom_shadow_container.dart';
+import 'package:myco_flutter/widgets/custom_shadow_container.dart';
 
 class ProfilePersonalInfoCard extends StatelessWidget {
   final List personalInfoList;
@@ -52,10 +52,10 @@ class ProfilePersonalInfoCard extends StatelessWidget {
                 log(personalInfoList.toString());
               },
               child: CustomShadowContainer(
-                textAlign: TextAlign.center,
+                titleAlign: TextAlign.center,
                 image: Image.network(item.profileMenuPhoto.toString()),
                 title: item.profileMenuName.toString(),
-                containerHeight: 0.08 * Responsive.getHeight(context),
+                height: 0.08 * Responsive.getHeight(context),
                 titleStyle: TextStyle(
                   fontSize: 50 * Responsive.getResponsiveText(context),
                 ),
