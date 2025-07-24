@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/features/leave/model/my_team_response_model.dart';
+import 'package:myco_flutter/features/leave/data/model/my_team_response_model.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';

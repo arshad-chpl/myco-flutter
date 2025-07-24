@@ -8,7 +8,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
-import 'package:myco_flutter/features/leave/model/comp_off_leave_response_model.dart';
+import 'package:myco_flutter/features/leave/data/model/comp_off_leave_response_model.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
 class CompOffLeavesScreen extends StatelessWidget {
