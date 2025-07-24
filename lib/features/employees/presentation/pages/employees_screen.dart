@@ -18,20 +18,13 @@ import 'package:myco_flutter/features/employees/presentation/bloc/employee_state
 import 'package:myco_flutter/features/employees/presentation/widgets/employee_card.dart';
 import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_countrycode_bottomsheet.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/media_picker/widgets/custom_media_picker_container.dart';
 
-class EmployeesScreen extends StatefulWidget {
+class EmployeesScreen extends StatelessWidget {
   EmployeesScreen({super.key});
 
-  @override
-  State<EmployeesScreen> createState() => _EmployeesScreenState();
-}
-
-class _EmployeesScreenState extends State<EmployeesScreen> {
   final EmployeeBloc bloc = GetIt.I<EmployeeBloc>();
 
   final TextEditingController _searchController = TextEditingController();
@@ -401,7 +394,6 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
 //     ],
 //   ),
 // ),
-
 
 /// stepper
 // const SizedBox(height: 10),
