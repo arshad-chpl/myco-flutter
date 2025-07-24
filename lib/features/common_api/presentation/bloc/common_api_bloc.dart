@@ -19,18 +19,18 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
   CommonApiBloc({required this.registerUseCase}) : super(CommonInitial()) {
 
     //upload image and Pdf api
-    on<LoadUploaded>(_onFetchUploadedTemp);
+    on<UploadAttachments>(_onFetchUploadAttachments);
 
     on<LoadBranch>(_onFetchBranch);
-    on<LoadFloorUnit>(_onFetchFloorUnit);
+    on<LoadDepartmentAndDesignation>(_onFetchDepartmentAndDesignation);
     on<LoadShift>(_onFetchShift);
   }
 
 
   // uploaded image and pdf api
-  void _onFetchUploadedTemp(LoadUploaded event, Emitter<CommonApiState> emit) async {
+  void _onFetchUploadAttachments(UploadAttachments event, Emitter<CommonApiState> emit) async {
     emit(CommonApiLoading());
-    final Either<Failure, UploadFileResponseEntity> result = await registerUseCase.uploadedTemp(event.loginType, event.filePath);
+    final Either<Failure, UploadFileResponseEntity> result = await registerUseCase.uploadAttachments(event.loginType, event.filePath);
 
     result.fold(
           (failure) => emit(CommonApiError(failure.message)),
@@ -44,7 +44,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
   void _onFetchBranch(
       LoadBranch event, Emitter<CommonApiState> emit) async {
     emit(CommonApiLoading());
-    final Either<Failure, BranchResponseEntity> result = await registerUseCase.callBranch(event.societyId,event.userId);
+    final Either<Failure, BranchResponseEntity> result = await registerUseCase.callBranch(event.companyId,event.userId);
 
     result.fold(
           (failure) => emit(CommonApiError(failure.message)),
@@ -53,9 +53,9 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
   }
 
 
-  void _onFetchFloorUnit(LoadFloorUnit event, Emitter<CommonApiState> emit) async {
+  void _onFetchDepartmentAndDesignation(LoadDepartmentAndDesignation event, Emitter<CommonApiState> emit) async {
     emit(CommonApiLoading());
-    final Either<Failure, FloorAndUnitResponseEntity> result = await registerUseCase.floorList(event.societyId,event.branchId);
+    final Either<Failure, FloorAndUnitResponseEntity> result = await registerUseCase.getDepartmentAndDesignation(event.companyId,event.branchId);
 
     result.fold(
           (failure) => emit(CommonApiError(failure.message)),
@@ -66,7 +66,7 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
 
   void _onFetchShift(LoadShift event, Emitter<CommonApiState> emit) async {
     emit(CommonApiLoading());
-    final Either<Failure, ShiftResponseEntity> result = await registerUseCase.callShift(event.societyId,event.floorId);
+    final Either<Failure, ShiftResponseEntity> result = await registerUseCase.callShift(event.companyId,event.floorId);
 
     result.fold(
           (failure) => emit(CommonApiError(failure.message)),

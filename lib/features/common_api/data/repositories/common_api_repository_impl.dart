@@ -16,33 +16,33 @@ class CommonApiRepositoryImpl implements CommonApiRepository {
   CommonApiRepositoryImpl(this.remoteDataSource, this.safeApiCall);
 
   @override
-  Future<Either<Failure, UploadFileResponseEntity>> uploadedTemp(bool loginType, List<String> filePath) async =>
+  Future<Either<Failure, UploadFileResponseEntity>> uploadAttachments(bool loginType, List<String> filePath) async =>
       safeApiCall.execute(() async {
-        final responseModel = await remoteDataSource.uploadedTemp(loginType, filePath);
+        final responseModel = await remoteDataSource.uploadAttachments(loginType, filePath);
         return responseModel.toEntity();
       });
 
 
   @override
-  Future<Either<Failure, BranchResponseEntity>> getBranchList(String societyId, String userId) async =>
+  Future<Either<Failure, BranchResponseEntity>> getBranchList(String companyId, String userId) async =>
       safeApiCall.execute(() async {
-        final responseModel = await remoteDataSource.getBranchList(societyId,userId);
+        final responseModel = await remoteDataSource.getBranchList(companyId,userId);
         return responseModel.toEntity();
       });
 
 
   @override
-  Future<Either<Failure, FloorAndUnitResponseEntity>> getFloorAndUnit(String societyId, String blockId) async =>
+  Future<Either<Failure, FloorAndUnitResponseEntity>> getDepartmentAndDesignation(String companyId, String blockId) async =>
       safeApiCall.execute(() async {
-        final responseModel = await remoteDataSource.getFloorAndUnit(societyId,blockId);
+        final responseModel = await remoteDataSource.getDepartmentAndDesignation(companyId,blockId);
         return responseModel.toEntity();
       });
 
 
   @override
-  Future<Either<Failure, ShiftResponseEntity>> getShiftList(String societyId, String floorId) async =>
+  Future<Either<Failure, ShiftResponseEntity>> getShiftList(String companyId, String floorId) async =>
       safeApiCall.execute(() async {
-        final responseModel = await remoteDataSource.getShiftList(societyId,floorId);
+        final responseModel = await remoteDataSource.getShiftList(companyId,floorId);
         return responseModel.toEntity();
       });
 

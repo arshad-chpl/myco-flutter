@@ -13,11 +13,11 @@ class CommonApiUserCase {
   CommonApiUserCase({required this.repository});
 
   //uploaded image pdf
-  Future<Either<Failure, UploadFileResponseEntity>> uploadedTemp(bool loginType, List<String> filePath)
-  async => await repository.uploadedTemp(loginType, filePath);
+  Future<Either<Failure, UploadFileResponseEntity>> uploadAttachments(bool loginType, List<String> filePath)
+  async => await repository.uploadAttachments(loginType, filePath);
 
-  Future<Either<Failure, BranchResponseEntity>> callBranch(String societyId, String userId) async => await repository.getBranchList(societyId,userId);
-  Future<Either<Failure, FloorAndUnitResponseEntity>> floorList(String societyId, String blockId) async => await repository.getFloorAndUnit(societyId,blockId);
-  Future<Either<Failure, ShiftResponseEntity>> callShift(String societyId, String floorId) async => await repository.getShiftList(societyId,floorId);
+  Future<Either<Failure, BranchResponseEntity>> callBranch(String companyId, String userId) async => await repository.getBranchList(companyId,userId);
+  Future<Either<Failure, FloorAndUnitResponseEntity>> getDepartmentAndDesignation(String companyId, String blockId) async => await repository.getDepartmentAndDesignation(companyId,blockId);
+  Future<Either<Failure, ShiftResponseEntity>> callShift(String companyId, String floorId) async => await repository.getShiftList(companyId,floorId);
 
 }

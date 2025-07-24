@@ -9,12 +9,12 @@ abstract class CommonApiEvent extends Equatable {
 
 
 // uploaded image and pdf api
-class LoadUploaded extends CommonApiEvent {
+class UploadAttachments extends CommonApiEvent {
 
   final bool loginType;
   final List<String> filePath;
 
-  const LoadUploaded(
+  const UploadAttachments(
       this.loginType,
       this.filePath);
 
@@ -24,33 +24,33 @@ class LoadUploaded extends CommonApiEvent {
 
 
 class LoadBranch extends CommonApiEvent {
-  final String societyId;
+  final String companyId;
   final String userId;
 
-  const LoadBranch(this.societyId,this.userId);
+  const LoadBranch(this.companyId,this.userId);
 
   @override
-  List<Object> get props => [societyId,userId];
+  List<Object> get props => [companyId,userId];
 }
 
-class LoadFloorUnit extends CommonApiEvent {
-  final String societyId;
+class LoadDepartmentAndDesignation extends CommonApiEvent {
+  final String companyId;
   final String branchId;
 
-  const LoadFloorUnit(this.societyId,this.branchId);
+  const LoadDepartmentAndDesignation(this.companyId,this.branchId);
 
   @override
-  List<Object> get props => [societyId,branchId];
+  List<Object> get props => [companyId,branchId];
 }
 
 class LoadShift extends CommonApiEvent {
-  final String societyId;
+  final String companyId;
   final String floorId;
 
-  const LoadShift(this.societyId,this.floorId);
+  const LoadShift(this.companyId,this.floorId);
 
   @override
-  List<Object> get props => [societyId,floorId];
+  List<Object> get props => [companyId,floorId];
 }
 
 

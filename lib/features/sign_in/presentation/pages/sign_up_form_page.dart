@@ -47,7 +47,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
   String? floorId;
   String? unitId;
   bool? isFamily;
-  String? societyId;
+  String? companyId;
   String? type;
   String? from;
   String? baseUrl;
@@ -66,7 +66,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
     final args = GoRouterState.of(context).extra as Map<String, dynamic>?;
 
     if (args != null) {
-      societyId = args['societyId'] ?? '';
+      companyId = args['companyId'] ?? '';
       isSociety = args['isSociety'] ?? false;
       societyAddress = args['societyAddress'];
       isAddByAdmin = args['isAddByAdmin'] ?? false;
@@ -77,7 +77,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
     } else {
       // fallback if args is null
-      societyId = '';
+      companyId = '';
       from = '0';
       isAddMore = false;
       isAddByAdmin = false;
@@ -145,15 +145,15 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
   void _fetchBranchList() {
     context.read<CommonApiBloc>().add(LoadBranch(
-        societyId ?? '1',
+        companyId ?? '1',
         '0'
     ));
   }
 
 
   void _fetchFloorUnitList() {
-    context.read<CommonApiBloc>().add(LoadFloorUnit(
-        societyId ?? '1',
+    context.read<CommonApiBloc>().add(LoadDepartmentAndDesignation(
+        companyId ?? '1',
         selectedBranchId
     ));
   }
@@ -161,13 +161,13 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
   void _fetchShiftList() {
     context.read<CommonApiBloc>().add(LoadShift(
-        societyId ?? '1',
+        companyId ?? '1',
         selectedDepartmentId
     ));
   }
 
   void _fetchImageDataApi(List<String> imgList) {
-    context.read<CommonApiBloc>().add(LoadUploaded(
+    context.read<CommonApiBloc>().add(UploadAttachments(
         true,
         imgList
     ));
@@ -181,7 +181,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
     final dataMap = {
       'addPrimaryUser': 'addPrimaryUser',
-      'society_id': societyId,
+      'society_id': companyId,
       'society_address': societyAddress,
       'block_id': selectedBranchId,
       'floor_id': selectedDepartmentId,

@@ -1,19 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/encryption/gzip_util.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/features/common_api/data/data_source/common_api_data_source.dart';
-import 'package:myco_flutter/features/common_api/models/branch_response.dart';
-import 'package:myco_flutter/features/common_api/models/floor_and_unit_response.dart';
-import 'package:myco_flutter/features/common_api/models/shift_response.dart';
-import 'package:myco_flutter/features/common_api/models/uploaded_file_response.dart';
-import 'package:http_parser/http_parser.dart';
+import 'package:myco_flutter/features/common_api/data/models/branch_response.dart';
+import 'package:myco_flutter/features/common_api/data/models/floor_and_unit_response.dart';
+import 'package:myco_flutter/features/common_api/data/models/shift_response.dart';
+import 'package:myco_flutter/features/common_api/data/models/uploaded_file_response.dart';
 
 class CommonApiDataSourceImpl implements CommonApiDataSource {
   final Dio dio;
@@ -22,7 +21,7 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
   final preferenceManager = GetIt.I<PreferenceManager>();
 
   @override
-  Future<UploadFileResponseModel> uploadedTemp(bool loginType, List<String> filePath) async {
+  Future<UploadFileResponseModel> uploadAttachments(bool loginType, List<String> filePath) async {
     final List<MultipartFile> files = [];
 
     for (int i = 0; i < filePath.length; i++) {
@@ -59,13 +58,12 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
   }
 
 
-
-
   @override
-  Future<BranchResponseModel> getBranchList(String societyId, String userId) async {
+  Future<BranchResponseModel> getBranchList(String companyId, String userId) async {
+
     final dataMap = {
       'getBlocks': 'getBlocks',
-      'society_id': societyId,
+      'society_id': companyId,
       'user_id': userId,
       'language_id': '1' /*preferenceManager.getLanguageId()*/
     };
@@ -78,16 +76,13 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
   }
 
   @override
-  Future<FloorAndUnitResponseModel> getFloorAndUnit(String societyId, String blockId) async {
+  Future<FloorAndUnitResponseModel> getDepartmentAndDesignation(String companyId, String blockId) async {
     final dataMap = {
       'getFloorandUnitNew': 'getFloorandUnitNew',
-      'society_id': societyId,
+      'society_id': companyId,
       'block_id': blockId,
       'language_id': '1' /*preferenceManager.getLanguageId()*/
     };
-
-    print('societyId: $societyId');
-    print('blockId: $blockId');
 
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
     final controller = 'blockListControllerEnc.php';
@@ -99,10 +94,10 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
   }
 
   @override
-  Future<ShiftResponseModel> getShiftList(String societyId, String floorId) async {
+  Future<ShiftResponseModel> getShiftList(String companyId, String floorId) async {
     final dataMap = {
       'getShiftsRegister': 'getShiftsRegister',
-      'society_id': societyId,
+      'society_id': companyId,
       'floor_id': floorId,
       'language_id': '1' /*preferenceManager.getLanguageId()*/
     };
