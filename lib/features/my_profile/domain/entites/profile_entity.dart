@@ -1,6 +1,8 @@
 // domain/entities/profile_entity.dart
 
 // Top-level Profile Entity
+import 'package:myco_flutter/features/dashboard/domain/entites/my_unit_response_entity.dart';
+
 class ProfileEntity {
   final bool? applyResignation;
   final String? blockStatus;
@@ -210,38 +212,6 @@ class EmployeementSkillEntity {
     this.insuranceNumber,
     this.insuranceCompanyName,
     this.insuranceExpireDate,
-  });
-}
-
-class MyTeamEntity {
-  final String? userId;
-  final String? levelId;
-  final String? levelName;
-  final String? userFullName;
-  final String? userDesignation;
-  final String? shortName;
-  final String? userProfilePic;
-  final bool? isPresent;
-  final String? statusView;
-  final bool? isBreak;
-  final List<dynamic>? leaveData;
-  final bool? isLeaveFull;
-  final bool? isLeaveHalf;
-
-  MyTeamEntity({
-    this.userId,
-    this.levelId,
-    this.levelName,
-    this.userFullName,
-    this.userDesignation,
-    this.shortName,
-    this.userProfilePic,
-    this.isPresent,
-    this.statusView,
-    this.isBreak,
-    this.leaveData,
-    this.isLeaveFull,
-    this.isLeaveHalf,
   });
 }
 

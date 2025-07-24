@@ -30,13 +30,13 @@ class ProfilePersonalInfoCard extends StatelessWidget {
           crossAxisCount: 3,
           mainAxisSpacing: 10,
           crossAxisSpacing: 8,
-          childAspectRatio: 0.9,
+          childAspectRatio: 0.8,
         ),
         itemBuilder: (context, index) {
           final ProfileMenuEntity item = personalInfoList[index];
           return Container(
             padding: EdgeInsets.symmetric(
-              vertical: 16 * Responsive.getResponsive(context),
+              vertical: 1 * Responsive.getResponsive(context),
             ),
             decoration: BoxDecoration(
               color: Colors.transparent,
@@ -55,7 +55,9 @@ class ProfilePersonalInfoCard extends StatelessWidget {
                 titleAlign: TextAlign.center,
                 image: Image.network(item.profileMenuPhoto.toString()),
                 title: item.profileMenuName.toString(),
-                height: 0.08 * Responsive.getHeight(context),
+                height: 0.50 * Responsive.getHeight(context),
+                imagePadding: 20* Responsive.getResponsive(context),
+                boxPadding: 20* Responsive.getResponsive(context),
                 titleStyle: TextStyle(
                   fontSize: 50 * Responsive.getResponsiveText(context),
                 ),

@@ -8,6 +8,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_myteam.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_section.dart';
+import 'package:myco_flutter/features/dashboard/presentation/widgets/my_team_section.dart';
 import 'package:myco_flutter/features/my_profile/presentation/widgets/profile_details_card.dart';
 import 'package:myco_flutter/features/my_profile/presentation/widgets/profile_personal_info_card.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/profile_reporting_card.dart';
@@ -33,7 +34,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<MyProfileBloc>().add(FetchProfileDataEvent());
+    // context.read<MyProfileBloc>().add(FetchProfileDataEvent());
   }
 
   @override
@@ -204,7 +205,8 @@ class _MyProfilePageState extends State<MyProfilePage> {
                           ProfileReportingCard():SizedBox.shrink(),
 
                           //Personal Info Card
-                          ProfilePersonalInfoCard(personalInfoList: profileData.profileMenu??[],),
+                          profileData.profileMenu!=null && profileData.profileMenu!.isNotEmpty?
+                          ProfilePersonalInfoCard(personalInfoList: profileData.profileMenu??[],): SizedBox.shrink(),
 
                           //Work Atendance Card
                           ProfileWordAttendanceCard(),
@@ -213,48 +215,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                           ProfileToolSupportSettingCard(),
 
                           //Overlaping image
-                          CustomSection(
-                            title: 'My Team',
-                            child: BorderContainerWraper(
-                              child: OverlappingPeopleCard(
-                                people: [
-                                  PersonData(
-                                    firstName: "person",
-                                    lastName: "name",
-                                    imagePath:
-                                        'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
-                                  ),
-                                  PersonData(
-                                    firstName: "person",
-                                    lastName: "name",
-                                    imagePath:
-                                        'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
-                                  ),
-                                  PersonData(
-                                    firstName: "person",
-                                    lastName: "name",
-                                    imagePath:
-                                        'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
-                                  ),
-                                  PersonData(
-                                    firstName: "person",
-                                    lastName: "name",
-                                    imagePath:
-                                        'https://plus.unsplash.com/premium_photo-1690407617542-2f210cf20d7e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8fHww',
-                                  ),
-                                ],
-                              ),
-                            ),
-                            hasViewMoreButton: true,
-                            subtitle: "It’s Team That can Make it Happen",
-                            count: "04",
-                            icon: Image.asset(
-                              AppAssets.quickAccessGif,
-                              height:
-                                  70 * Responsive.getResponsiveOnWidth(context),
-                            ),
-                          ),
-
+                          MyTeamSection(myTeam: profileData.myTeam),
                           //MycoButton for apply
                           MyCoButton(
                             boarderRadius:
