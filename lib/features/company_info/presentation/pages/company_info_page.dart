@@ -9,6 +9,7 @@ import 'package:myco_flutter/features/company_info/domain/use_cases/get_company_
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_event.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_state.dart';
+import 'package:myco_flutter/features/company_info/presentation/widgets/authority_card.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,7 +35,7 @@ class CompanyInfoPage extends StatelessWidget {
           } else if (state is CompanyInfoLoaded) {
             final company = state.companyInfo;
             final commitie = company.commitie ?? [];
-            final logoUrl = state.companyInfo.socieatyLogo;
+            final logoUrl = state.companyInfo.companyLogo;
 
             return SingleChildScrollView(
               child: Column(
@@ -45,21 +46,21 @@ class CompanyInfoPage extends StatelessWidget {
                       logoUrl != null && logoUrl.isNotEmpty
                           ? Image.network(
                               logoUrl,
-                              height: 0.25 * Responsive.getHeight(context),
+                              height: 0.24 * Responsive.getHeight(context),
                               width: double.infinity,
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) =>
                                   Image.asset(
                                     'assets/sign_in/myco_logo.png',
                                     height:
-                                        0.25 * Responsive.getHeight(context),
+                                        0.24 * Responsive.getHeight(context),
                                     width: double.infinity,
                                     fit: BoxFit.cover,
                                   ),
                             )
                           : Image.asset(
                               'assets/sign_in/myco_logo.png',
-                              height: 0.25 * Responsive.getHeight(context),
+                              height: 0.24 * Responsive.getHeight(context),
                               width: double.infinity,
                               fit: BoxFit.cover,
                             ),
@@ -74,7 +75,7 @@ class CompanyInfoPage extends StatelessWidget {
                             horizontal: 16,
                           ),
                           child: Text(
-                            company.societyName ?? 'My Company',
+                            company.companyName ?? 'My Company',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize:
@@ -89,7 +90,7 @@ class CompanyInfoPage extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
-                      vertical: 5,
+                      vertical: 10,
                     ),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -117,11 +118,11 @@ class CompanyInfoPage extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                final companyName = company.societyName ?? 'My Company';
-                                final address = company.societyAddress ?? 'No address available';
+                                final companyName = company.companyName ?? 'My Company';
+                                final address = company.companyAddress ?? 'No address available';
 
-                                final latitude = company.societyLatitude;
-                                final longitude = company.societyLongitude;
+                                final latitude = company.companyLatitude;
+                                final longitude = company.companyLongitude;
 
                                 final googleMapsLink = (latitude != null && longitude != null)
                                     ? 'https://maps.google.com/?q=$latitude,$longitude'
@@ -149,10 +150,10 @@ class CompanyInfoPage extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          company.societyAddress ?? 'No address available',
+                          company.companyAddress ?? 'No address available',
                           style: TextStyle(
                             fontSize:
-                                18 * Responsive.getResponsiveText(context),
+                                16 * Responsive.getResponsiveText(context),
                             fontWeight: FontWeight.normal,
                           ),
                         ),
@@ -168,8 +169,8 @@ class CompanyInfoPage extends StatelessWidget {
                       "Company's Authorities",
                       style: TextStyle(
                         color: AppTheme.getColor(context).primary,
-                        fontSize: 20 * Responsive.getResponsiveText(context),
-                        fontWeight: FontWeight.bold,
+                        fontSize: 22 * Responsive.getResponsiveText(context),
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -185,116 +186,7 @@ class CompanyInfoPage extends StatelessWidget {
                       itemCount: commitie.length,
                       itemBuilder: (context, index) {
                         final authority = commitie[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                            left: 25,
-                            right: 25,
-                            bottom: 10,
-                          ),
-                          child: Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Colors.grey.shade300),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CircleAvatar(
-                                  radius: 25,
-                                  backgroundImage:
-                                      authority.adminProfile != null &&
-                                          authority.adminProfile!.isNotEmpty
-                                      ? NetworkImage(authority.adminProfile!)
-                                            as ImageProvider
-                                      : const AssetImage(
-                                          'assets/default_avatar.png',
-                                        ),
-                                ),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        authority.adminName ?? '',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: "Gilroy-SemiBold",
-                                          fontSize:
-                                              16 *
-                                              Responsive.getResponsiveText(
-                                                context,
-                                              ),
-                                        ),
-                                      ),
-                                      Text(
-                                        authority.roleName ?? '',
-                                        style: TextStyle(
-                                          fontFamily: "Gilroy-Medium",
-                                          fontSize:
-                                              14 *
-                                              Responsive.getResponsiveText(
-                                                context,
-                                              ),
-                                          color: AppTheme.getColor(
-                                            context,
-                                          ).primary,
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () async {
-                                          final phone = authority.adminMobile ?? '';
-                                          final uri = Uri(scheme: 'tel', path: phone);
-                                          if (await canLaunchUrl(uri)) {
-                                            await launchUrl(uri);
-                                          }
-                                        },
-                                        child: Text(
-                                          authority.adminMobile ?? '',
-                                          style: TextStyle(
-                                            fontFamily: "Gilroy-Medium",
-                                            fontSize: 14 * Responsive.getResponsiveText(context),
-                                          ),
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () async {
-                                          final email = authority.adminEmail?.trim() ?? '';
-                                          if (email.isEmpty || !email.contains('@')) {
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              const SnackBar(content: Text('Invalid or missing email address')),
-                                            );
-                                            return;
-                                          }
-                                          await EasyLauncher.email(email: email);
-                                        },
-                                        child: Text(
-                                          authority.adminEmail ?? '',
-                                          style: TextStyle(
-                                            fontFamily: "Gilroy-SemiBold",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14 * Responsive.getResponsiveText(context),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {},
-                                  child: SvgPicture.asset(
-                                    'assets/visit_svgs/add_contact.svg',
-                                    height: 24,
-                                    width: 24,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                        return AuthorityCard(authority: authority, context: context);
                       },
                     ),
                 ],

@@ -208,11 +208,11 @@ class _MainStepWidget extends StatelessWidget {
     final bool isWideScreen = Responsive.screenWidth() > 600;
     final double iconSize = isWideScreen
         ? 0.040 * Responsive.getHeight(context)
-        : 0.017 * Responsive.getHeight(context);
+        : 0.013 * Responsive.getHeight(context);
     if (customIcon != null) {
       return SizedBox(
-        height: 0.045 * Responsive.getHeight(context),
-        width: 0.045 * Responsive.getWidth(context),
+        height: iconSize,
+        width: iconSize,
         child: FittedBox(fit: BoxFit.scaleDown, child: customIcon),
       );
     }
@@ -253,10 +253,10 @@ class _MainStepWidget extends StatelessWidget {
         InnerShadowContainer(
           height: Responsive.screenWidth() > 600
               ? 0.042 * Responsive.getWidth(context)
-              : 0.042 * Responsive.getHeight(context),
+              : 0.028 * Responsive.getHeight(context),
           width: Responsive.screenWidth() > 600
               ? 0.042 * Responsive.getWidth(context)
-              : 0.042 * Responsive.getHeight(context),
+              : 0.028 * Responsive.getHeight(context),
           borderRadius: 20,
           backgroundColor: AppColors.white,
           isShadowTopLeft: true,
@@ -264,10 +264,10 @@ class _MainStepWidget extends StatelessWidget {
         InnerShadowContainer(
           height: Responsive.screenWidth() > 600
               ? 0.070 * Responsive.getHeight(context)
-              : 0.032 * Responsive.getHeight(context),
+              : 0.020 * Responsive.getHeight(context),
           width: Responsive.screenWidth() > 600
               ? 0.032 * Responsive.getWidth(context)
-              : 0.070 * Responsive.getWidth(context),
+              : 0.020 * Responsive.getHeight(context),
           borderRadius: 15,
           backgroundColor: color,
           isShadowBottomLeft: true,
@@ -306,7 +306,7 @@ class _MainStepWidget extends StatelessWidget {
                       minHeight: 0.040 * Responsive.getHeight(context),
                     ),
                     child: InnerShadowContainer(
-                      width: 3,
+                      width: 2,
                       isShadowBottomLeft: true,
                       borderRadius: 0,
                       backgroundColor: color,
@@ -374,8 +374,34 @@ class _StepDetails extends StatelessWidget {
 
   const _StepDetails({required this.details});
 
+  // Calculate the text length and return the width
+  double _calculateMaxTitleWidth(BuildContext context) {
+    double maxWidth = 0;
+
+    for (final item in details) {
+      final textStyle = TextStyle(
+        fontSize: item.titleFontSize ?? 12 * Responsive.getResponsiveText(context),
+        fontWeight: item.titleFontWeight ?? FontWeight.w600,
+      );
+
+      final textPainter = TextPainter(
+        text: TextSpan(text: item.title, style: textStyle),
+        textDirection: TextDirection.ltr,
+        maxLines: 1,
+      )..layout();
+
+      if (textPainter.width > maxWidth) {
+        maxWidth = textPainter.width;
+      }
+    }
+
+    return maxWidth + 15; // +4 for a little buffer/padding
+  }
+
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) {
+    final double maxTitleWidth = _calculateMaxTitleWidth(context);
+    return Container(
     margin: const EdgeInsets.only(top: 6),
     padding: const EdgeInsets.all(10),
     decoration: BoxDecoration(
@@ -393,11 +419,10 @@ class _StepDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: 0.35 * Responsive.getWidth(context),
+                    width: maxTitleWidth,
                     child: CustomText(
                       item.title,
-                      fontSize:
-                          item.titleFontSize ??
+                      fontSize: item.titleFontSize ??
                           12 * Responsive.getResponsiveText(context),
                       fontWeight: item.titleFontWeight ?? FontWeight.w600,
                       color: item.titleTextColor ?? AppColors.black,
@@ -405,8 +430,7 @@ class _StepDetails extends StatelessWidget {
                   ),
                   CustomText(
                     ' : ',
-                    fontSize:
-                        item.separatorFontSize ??
+                    fontSize: item.separatorFontSize ??
                         12 * Responsive.getResponsiveText(context),
                     fontWeight: item.separatorFontWeight ?? FontWeight.w600,
                     color: item.separatorColor ?? AppColors.black,
@@ -416,11 +440,9 @@ class _StepDetails extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 8),
                       child: CustomText(
                         item.description,
-                        fontSize:
-                            item.descriptionFontSize ??
+                        fontSize: item.descriptionFontSize ??
                             12 * Responsive.getResponsiveText(context),
-                        fontWeight:
-                            item.descriptionFontWeight ?? FontWeight.w500,
+                        fontWeight: item.descriptionFontWeight ?? FontWeight.w500,
                         color: item.separatorColor ?? AppColors.black,
                       ),
                     ),
@@ -432,6 +454,7 @@ class _StepDetails extends StatelessWidget {
           .toList(),
     ),
   );
+  }
 }
 
 class _SubStepper extends StatelessWidget {
