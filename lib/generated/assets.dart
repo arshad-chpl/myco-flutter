@@ -177,7 +177,7 @@ class Assets {
   static const String signInDepartmentIcon =
       'assets/sign_in/department_icon.png';
   static const String signInDesignationIcon =
-      'assets/sign_in/designation_icon.png';
+      'assets/sign_in/designation_icon.svg';
   static const String signInEmail = 'assets/sign_in/email.png';
   static const String signInEmailIcon = 'assets/sign_in/email_icon.png';
   static const String signInGoogleLogo = 'assets/sign_in/google_logo.png';

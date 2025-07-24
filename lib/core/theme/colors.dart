@@ -88,6 +88,8 @@ class AppColors {
   static const Color containerHighDark = Color(0xFF1A2A3C);
   static const Color transparent = Colors.transparent;
 
+
+
   // Stepper color
   static const Color stepperDenied = Color(0xFFFF2121);
   static const Color stepperDisabled = Color(0xFFCACACA);
