@@ -1,45 +1,100 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/holiday/model/request/apply_optional_holiday.dart';
+import 'package:myco_flutter/features/holiday/model/request/delete_optional_holiday.dart';
+import 'package:myco_flutter/features/holiday/model/request/holiday_list_request_model.dart';
 import 'package:myco_flutter/features/holiday/presentation/bloc/holiday_bloc.dart';
 import 'package:myco_flutter/features/holiday/presentation/bloc/holiday_event.dart';
 import 'package:myco_flutter/features/holiday/presentation/bloc/holiday_state.dart';
+import 'package:myco_flutter/features/holiday/presentation/widgets/holiday_item_card.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/text_field.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 
 class HolidayListPage extends StatelessWidget {
   final TextEditingController controller;
 
   HolidayListPage({super.key, required this.controller});
 
-  final List<Color> backgroundColors = [
-    const Color(0xFF2F648E),
-    const Color(0xFF2FBBA4),
-    const Color(0xFF08A4BB),
-    const Color(0xFFFFC026),
-    const Color(0xFFDCA7A7),
+  final preferenceManager = GetIt.I<PreferenceManager>();
+  final List<Color> backgroundColors = const [
+    Color(0xFF2F648E),
+    Color(0xFF2FBBA4),
+    Color(0xFF08A4BB),
+    Color(0xFFFFC026),
+    Color(0xFFFF2121),
   ];
+
+  Future<void> fetchHolidays(BuildContext context, DateTime date) async {
+    final year = DateFormat('yyyy').format(date);
+    final companyId = await preferenceManager.getCompanyId();
+    final userId = await preferenceManager.getUserId();
+
+    final fetchListModel = HolidayListRequestModel(
+      companyId: companyId ?? '',
+      languageId: '1',
+      unitId: '1',
+      userId: userId ?? '',
+      blockId: '1',
+      floorId: '1',
+      levelId: '1',
+      year: year,
+    );
+    context.read<HolidayBloc>().add(FetchHolidayList(fetchListModel));
+  }
+
+  Future<void> scrollToUpcomingHoliday(
+    int index,
+    List<GlobalKey> keys,
+    ScrollController controller,
+  ) async {
+    await Future.delayed(const Duration(milliseconds: 1));
+
+    double offset = 0.0;
+    for (int i = 0; i < index; i++) {
+      final keyContext = keys[i].currentContext;
+      if (keyContext != null) {
+        final box = keyContext.findRenderObject() as RenderBox?;
+        if (box != null && box.hasSize) {
+          offset += box.size.height;
+        } else {
+          offset += 133.0;
+        }
+      } else {
+        offset += 133.0;
+      }
+    }
+
+    if (controller.hasClients) {
+      controller.animateTo(
+        offset,
+        duration: const Duration(milliseconds: 1),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final selectedDateNotifier = ValueNotifier<DateTime>(DateTime.now());
-    final sl = GetIt.instance;
+    final scrollController = ScrollController();
 
-    void fetchHolidays(BuildContext context, DateTime date) {
-      final year = DateFormat('yyyy').format(date);
-      context.read<HolidayBloc>().add(FetchHolidayList(year));
-    }
+    final searchQuery = ValueNotifier<String>('');
+
+    controller.addListener(() {
+      searchQuery.value = controller.text.toLowerCase();
+    });
 
     return BlocProvider(
-      create: (_) => sl<HolidayBloc>(),
+      create: (_) => GetIt.instance<HolidayBloc>(),
       child: ValueListenableBuilder<DateTime>(
         valueListenable: selectedDateNotifier,
         builder: (context, currentDate, _) {
-          // Trigger fetch on date change
           WidgetsBinding.instance.addPostFrameCallback((_) {
             fetchHolidays(context, currentDate);
           });
@@ -50,14 +105,19 @@ class HolidayListPage extends StatelessWidget {
               title: const Text('Holiday'),
             ),
             body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 10,
+              ),
               child: Column(
                 children: [
                   MyCoTextField(
                     controller: controller,
                     preFixImage: 'assets/lost_and_found/search-normal.png',
                     hintText: 'Search',
-                    border: Border.all(color: AppTheme.getColor(context).outline),
+                    border: Border.all(
+                      color: AppTheme.getColor(context).outline,
+                    ),
                     typingtextStyle: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontFamily: 'Gilroy-Medium',
@@ -91,7 +151,8 @@ class HolidayListPage extends StatelessWidget {
                             Text(
                               DateFormat('MMMM, yyyy').format(currentDate),
                               style: TextStyle(
-                                fontSize: 18 * Responsive.getResponsiveText(context),
+                                fontSize:
+                                    18 * Responsive.getResponsiveText(context),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -116,167 +177,174 @@ class HolidayListPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Expanded(
-                    child: BlocBuilder<HolidayBloc, HolidayState>(
-                      builder: (context, state) {
-                        if (state is HolidayLoading) {
-                          return const Center(child: CircularProgressIndicator());
-                        } else if (state is HolidayListLoaded) {
-                          final holidays = state.holidays;
-                          if (holidays.isEmpty) {
-                            return const Center(child: Text('No holidays found'));
-                          }
+                    child: ValueListenableBuilder<String>(
+                      valueListenable: searchQuery,
+                      builder: (context, query, _) => BlocBuilder<HolidayBloc, HolidayState>(
+                        builder: (context, state) {
+                          if (state is HolidayLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (state is HolidayListLoaded) {
+                            final holidays = state.holidays;
 
-                          return ListView.builder(
-                            itemCount: holidays.length,
-                            itemBuilder: (context, index) {
-                              final holiday = holidays[index];
-                              final backgroundColor =
-                              backgroundColors[index % backgroundColors.length];
-                              final isApplied = holiday.alreadyAppliedHoliday == "true";
+                            // Filter holidays using search query
+                            final filteredHolidays = holidays.where((holiday) {
+                              final name = holiday.holidayName ?? '';
+                              return name.toLowerCase().contains(query);
+                            }).toList();
 
-                              return Container(
-                                margin: const EdgeInsets.only(top: 10),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: const Color(0xFF98A2B3)),
-                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        color: index == 0
-                                            ? const Color(0xFF999999)
-                                            : backgroundColor,
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(9),
-                                          topRight: Radius.circular(9),
-                                        ),
-                                      ),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/visit_svgs/calendar.svg',
-                                            height: 24,
-                                            width: 24,
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            DateFormat('d MMM yyyy').format(
-                                                holiday.holidayStartDate ?? DateTime.now()),
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize:
-                                              20 * Responsive.getResponsiveText(context),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10),
-                                        ),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.circular(8),
-                                            child: Image.asset(
-                                              holiday.holidayIcon ??
-                                                  'assets/search_society/contact_admin.png',
-                                              height: 50,
-                                              width: 50,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  holiday.holidayName ?? '',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20 *
-                                                        Responsive.getResponsiveText(context),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  holiday.holidayDay ?? '',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.normal,
-                                                    fontSize: 16 *
-                                                        Responsive.getResponsiveText(context),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                            child: MyCoButton(
-                                              onTap: () {
-                                                if (!isApplied) {
-                                                  context.read<HolidayBloc>().add(
-                                                      ApplyHolidayEvent(
-                                                          holiday.holidayId ?? ''));
-                                                }
-                                              },
-                                              title: isApplied ? 'Applied' : 'Apply',
-                                              textStyle: TextStyle(
-                                                fontFamily: 'Gilroy-semiBold',
-                                                fontSize:
-                                                14 * Responsive.getResponsiveText(context),
-                                                color: AppTheme.getColor(context).onPrimary,
-                                              ),
-                                              width: 0.26 * Responsive.getWidth(context),
-                                              height: 36,
-                                              boarderRadius: 8,
-                                              borderColor: isApplied
-                                                  ? const Color(0xFF2FBBA4)
-                                                  : const Color(0xFF08A4BB),
-                                              backgroundColor: isApplied
-                                                  ? const Color(0xFF2FBBA4)
-                                                  : const Color(0xFF08A4BB),
-                                              isShadowBottomLeft: true,
-                                            ),
-                                          ),
-                                          if (isApplied)
-                                            InkWell(
-                                              onTap: () {
-                                                context.read<HolidayBloc>().add(
-                                                  DeleteHolidayEvent(
-                                                      holiday.optionalHolidayAssignId ?? ''),
-                                                );
-                                              },
-                                              child: const Icon(
-                                                Icons.delete_outline,
-                                                color: Colors.red,
-                                              ),
-                                            ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                            if (filteredHolidays.isEmpty) {
+                              return const Center(
+                                child: Text('No holidays found'),
                               );
-                            },
-                          );
-                        } else if (state is HolidayError) {
-                          return Center(child: Text(state.message));
-                        }
-                        return const SizedBox.shrink();
-                      },
+                            }
+
+                            final now = DateTime.now();
+
+                            final upcomingIndex = filteredHolidays.indexWhere((
+                              holiday,
+                            ) {
+                              final start = holiday.holidayStartDate;
+                              return start != null &&
+                                  !start.isBefore(
+                                    DateTime(now.year, now.month, now.day),
+                                  );
+                            });
+
+                            final List<GlobalKey> itemKeys = List.generate(
+                              filteredHolidays.length,
+                              (_) => GlobalKey(),
+                            );
+
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              if (upcomingIndex != -1) {
+                                scrollToUpcomingHoliday(
+                                  upcomingIndex,
+                                  itemKeys,
+                                  scrollController,
+                                );
+                              }
+                            });
+
+                            return ListView.builder(
+                              controller: scrollController,
+                              itemCount: filteredHolidays.length,
+                              itemBuilder: (context, index) {
+                                final holiday = filteredHolidays[index];
+                                return Container(
+                                  key: itemKeys[index],
+                                  child: HolidayItemCard(
+                                    holiday: holiday,
+                                    index: index,
+                                    backgroundColors: backgroundColors,
+                                    context: context,
+                                    onApplyTap: () {
+                                      final blocContext = context;
+
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        builder: (context) => Padding(
+                                          padding: EdgeInsets.only(
+                                            bottom: MediaQuery.of(
+                                              context,
+                                            ).viewInsets.bottom,
+                                          ),
+                                          child: CustomAlertDialog(
+                                            alertType: AlertType.defaultType,
+                                            content:
+                                                'Are you sure you want to apply for optional leave?',
+                                            cancelText: 'Cancel',
+                                            confirmText: 'OK',
+                                            onConfirm: () async {
+                                              Navigator.of(context).pop();
+                                              final model = ApplyOptionalHoliday(
+                                                companyId:
+                                                    await preferenceManager
+                                                        .getCompanyId() ??
+                                                    '',
+                                                userId:
+                                                    await preferenceManager
+                                                        .getUserId() ??
+                                                    '',
+                                                holidayId:
+                                                    holiday.holidayId ?? '',
+                                                optionalHolidayAssignId:
+                                                    holiday
+                                                        .optionalHolidayAssignId ??
+                                                    '',
+                                              );
+                                              blocContext
+                                                  .read<HolidayBloc>()
+                                                  .add(
+                                                    ApplyHolidayEvent(model),
+                                                  );
+                                            },
+                                            onCancel: () =>
+                                                Navigator.of(context).pop(),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    onDeleteTap: () {
+                                      final blocContext = context;
+
+                                      showModalBottomSheet(
+                                        context: context,
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        builder: (context) => Padding(
+                                          padding: EdgeInsets.only(
+                                            bottom: MediaQuery.of(
+                                              context,
+                                            ).viewInsets.bottom,
+                                          ),
+                                          child: CustomAlertDialog(
+                                            alertType: AlertType.defaultType,
+                                            content:
+                                                'Are you sure you want to delete optional leave?',
+                                            cancelText: 'Cancel',
+                                            confirmText: 'OK',
+                                            onConfirm: () async {
+                                              Navigator.of(context).pop();
+                                              final model = DeleteOptionalHoliday(
+                                                companyId:
+                                                    await preferenceManager
+                                                        .getCompanyId() ??
+                                                    '',
+                                                userId:
+                                                    await preferenceManager
+                                                        .getUserId() ??
+                                                    '',
+                                                optionalHolidayAssignId:
+                                                    holiday
+                                                        .optionalHolidayAssignId ??
+                                                    '',
+                                              );
+                                              blocContext
+                                                  .read<HolidayBloc>()
+                                                  .add(
+                                                    DeleteHolidayEvent(model),
+                                                  );
+                                            },
+                                            onCancel: () =>
+                                                Navigator.of(context).pop(),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            );
+                          } else if (state is HolidayError) {
+                            Fluttertoast.showToast(msg: state.message);
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
                     ),
                   ),
                 ],

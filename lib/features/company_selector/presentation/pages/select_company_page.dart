@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
+import 'package:myco_flutter/features/company_selector/presentation/bloc/device_change/device_change_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/login/login_state.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/select_company_step/select_company_step_bloc.dart';
+import 'package:myco_flutter/features/company_selector/presentation/widgets/get_reason_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/login_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/otp_verification_ui.dart';
 import 'package:myco_flutter/features/company_selector/presentation/widgets/select_company_ui.dart';
+import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 
 class SelectCompanyPage extends StatelessWidget {
   const SelectCompanyPage({super.key});
@@ -85,13 +89,61 @@ class _CompanySearchBodyState extends State<_CompanySearchBody> {
             );
           }
         } else if (loginState is OtpNotSentState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                loginState.response.message ?? 'Failed to send OTP',
+          if (loginState.response.viewDialogApiCall == true) {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (context) => Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: CustomAlertDialog(
+                  alertType: AlertType.custom,
+                  icon: 'assets/login/device_change_icon.svg',
+                  content: loginState.response.message,
+                  cancelText: 'Cancel',
+                  confirmText: 'Request',
+                  onConfirm: () {
+                    Navigator.of(context).pop();
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => BlocProvider(
+                        create: (context) => GetIt.I<DeviceChangeBloc>(),
+                        child: const GetReasonUi(title: 'Change Request *'),
+                      ),
+                    );
+                  },
+                  onCancel: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
               ),
-            ),
-          );
+            );
+          } else if (loginState.response.viewDialog == true) {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (context) => Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: CustomAlertDialog(
+                  alertType: AlertType.defaultType,
+                  content: loginState.response.message,
+                  confirmText: 'Ok',
+                  onConfirm: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            );
+          } else {
+            Fluttertoast.showToast(msg: loginState.response.message ?? '');
+          }
         }
       },
       // This builder reacts to the page flow state to show the correct UI.

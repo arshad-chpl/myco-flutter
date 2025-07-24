@@ -6,6 +6,7 @@ import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/assets_routes.dart';
 import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
+import 'package:myco_flutter/core/router/modules/employee_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/initial_routes.dart';
 import 'package:myco_flutter/core/router/modules/leave_routes.dart';
 import 'package:myco_flutter/core/router/modules/lost_and_found.dart';
@@ -52,7 +53,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.holiday,
-        name: RoutePaths.holiday,
+        name: 'HolidayVC',
         builder: (context, state) {
           final controller = TextEditingController();
           return HolidayListPage(controller: controller);
@@ -75,11 +76,7 @@ class AppRouter {
       ...payslipRoutes,
       ...chatRoutes,
 
-      GoRoute(
-        path: RoutePaths.employees,
-        name: 'employees',
-        builder: (context, state) => const EmployeesScreen(),
-      ),
+      ...employeeRoute,
       GoRoute(
         path: RoutePaths.contactAdmin,
         name: 'contact-admin',

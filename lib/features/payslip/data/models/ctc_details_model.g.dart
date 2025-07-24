@@ -10,15 +10,20 @@ CtcDetailsModel _$CtcDetailsModelFromJson(Map<String, dynamic> json) =>
     CtcDetailsModel(
       lastMonthSalaryGenerated: json['last_month_salary_generated'] as bool?,
       salaryType: json['salary_type'] as String?,
-      earningHeadName: (json['earning_head_name'] as List<dynamic>?)
-          ?.map((e) => EarningHeadName.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      ctcHeadName: (json['ctc_head_name'] as List<dynamic>?)
-          ?.map((e) => CtcHeadName.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      deductionHeadName: (json['deduction_head_name'] as List<dynamic>?)
-          ?.map((e) => DeductionHeadName.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      earningHeadName:
+          (json['earning_head_name'] as List<dynamic>?)
+              ?.map((e) => EarningHeadName.fromJson(e as Map<String, dynamic>))
+              .toList(),
+      ctcHeadName:
+          (json['ctc_head_name'] as List<dynamic>?)
+              ?.map((e) => CtcHeadName.fromJson(e as Map<String, dynamic>))
+              .toList(),
+      deductionHeadName:
+          (json['deduction_head_name'] as List<dynamic>?)
+              ?.map(
+                (e) => DeductionHeadName.fromJson(e as Map<String, dynamic>),
+              )
+              .toList(),
       ctcPerMonth: json['ctc_per_month'] as String?,
       ctcPerAnnum: json['ctc_per_annum'] as String?,
       salaryPerMonth: json['salary_per_month'] as String?,
@@ -61,10 +66,10 @@ Map<String, dynamic> _$CtcDetailsModelToJson(CtcDetailsModel instance) =>
     };
 
 CtcHeadName _$CtcHeadNameFromJson(Map<String, dynamic> json) => CtcHeadName(
-      headName: json['head_name'] as String?,
-      ctcPerMonth: json['ctc_per_month'] as String?,
-      ctcPerAnnum: json['ctc_per_annum'] as String?,
-    );
+  headName: json['head_name'] as String?,
+  ctcPerMonth: json['ctc_per_month'] as String?,
+  ctcPerAnnum: json['ctc_per_annum'] as String?,
+);
 
 Map<String, dynamic> _$CtcHeadNameToJson(CtcHeadName instance) =>
     <String, dynamic>{

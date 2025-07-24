@@ -87,6 +87,14 @@ class Util {
     _ => 'Unknown', // Return a non-null String
   };
 
+  // Returns initials from name (e.g., "Karan Padaliya" → "KP", "Single" → "K")
+  static String getInitials(String name) {
+    final parts = name.trim().split(RegExp(r'\s+'));
+    if (parts.isEmpty) return '';
+    if (parts.length == 1) return parts[0][0].toUpperCase();
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
+
   /// Formats a date string from "yyyy-MM-dd" to "EEE, dd MMM yyyy".
   /// Returns an empty string if the input is null or parsing fails.
   static String getFormattedDateLeave(String? strDate) {

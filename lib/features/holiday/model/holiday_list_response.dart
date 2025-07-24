@@ -1,67 +1,121 @@
 import 'dart:convert';
 
-HolidayListResponse holidayListResponseFromJson(String str) => HolidayListResponse.fromJson(json.decode(str));
+import 'package:json_annotation/json_annotation.dart';
+import 'package:myco_flutter/features/holiday/domain/entities/holiday_list_response_entity.dart';
 
-String holidayListResponseToJson(HolidayListResponse data) => json.encode(data.toJson());
+part 'holiday_list_response.g.dart';
 
-class HolidayListResponse {
-  List<Holiday>? holiday;
-  int? count;
-  String? currentMonth;
-  String? message;
+HolidayListResponseModel holidayListResponseModelFromJson(String str) =>
+    HolidayListResponseModel.fromJson(json.decode(str));
 
-  HolidayListResponse({
+@JsonSerializable(explicitToJson: true)
+class HolidayListResponseModel {
+  final List<HolidayModel>? holiday;
+  final int? count;
+
+  @JsonKey(name: 'current_month')
+  final String? currentMonth;
+
+  final String? message;
+
+  HolidayListResponseModel({
     this.holiday,
     this.count,
     this.currentMonth,
     this.message,
   });
 
-  factory HolidayListResponse.fromJson(Map<String, dynamic> json) => HolidayListResponse(
-    holiday: json["holiday"] == null ? [] : List<Holiday>.from(json["holiday"]!.map((x) => Holiday.fromJson(x))),
-    count: json["count"],
-    currentMonth: json["current_month"],
-    message: json["message"],
-  );
+  factory HolidayListResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$HolidayListResponseModelFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-    "holiday": holiday == null ? [] : List<dynamic>.from(holiday!.map((x) => x.toJson())),
-    "count": count,
-    "current_month": currentMonth,
-    "message": message,
-  };
+  Map<String, dynamic> toJson() => _$HolidayListResponseModelToJson(this);
+
+  HolidayListResponseEntity toEntity() => HolidayListResponseEntity(
+    holiday: holiday?.map((h) => h.toEntity()).toList(),
+    count: count,
+    currentMonth: currentMonth,
+    message: message,
+  );
 }
 
-class Holiday {
-  String? holidayId;
-  String? optionalHolidayAssignId;
-  String? societyId;
-  String? holidayName;
-  String? holidayDescription;
-  DateTime? holidayStartDate;
-  String? holidayDay;
-  String? holidayMonth;
-  DateTime? holidayEndDate;
-  String? monthViewStart;
-  String? monthStart;
-  String? monthViewEnd;
-  String? monthEnd;
-  String? dayViewStart;
-  String? dayViewEnd;
-  String? holidayIcon;
-  bool? isGone;
-  String? holidayType;
-  String? holidayGroupId;
-  String? holidayTypeOption;
-  String? holidayTypeDisplay;
-  String? remainOptionalHoliday;
-  String? alreadyAppliedHoliday;
-  String? optionalHolidayAssignDeleteId;
+@JsonSerializable()
+class HolidayModel {
+  @JsonKey(name: 'holiday_id')
+  final String? holidayId;
 
-  Holiday({
+  @JsonKey(name: 'optional_holiday_assign_id')
+  final String? optionalHolidayAssignId;
+
+  @JsonKey(name: 'society_id')
+  final String? companyId;
+
+  @JsonKey(name: 'holiday_name')
+  final String? holidayName;
+
+  @JsonKey(name: 'holiday_description')
+  final String? holidayDescription;
+
+  @JsonKey(name: 'holiday_start_date')
+  final DateTime? holidayStartDate;
+
+  @JsonKey(name: 'holiday_day')
+  final String? holidayDay;
+
+  @JsonKey(name: 'holiday_month')
+  final String? holidayMonth;
+
+  @JsonKey(name: 'holiday_end_date')
+  final DateTime? holidayEndDate;
+
+  @JsonKey(name: 'month_view_start')
+  final String? monthViewStart;
+
+  @JsonKey(name: 'month_start')
+  final String? monthStart;
+
+  @JsonKey(name: 'month_view_end')
+  final String? monthViewEnd;
+
+  @JsonKey(name: 'month_end')
+  final String? monthEnd;
+
+  @JsonKey(name: 'day_view_start')
+  final String? dayViewStart;
+
+  @JsonKey(name: 'day_view_end')
+  final String? dayViewEnd;
+
+  @JsonKey(name: 'holiday_icon')
+  final String? holidayIcon;
+
+  @JsonKey(name: 'is_gone')
+  final bool? isGone;
+
+  @JsonKey(name: 'holiday_type')
+  final String? holidayType;
+
+  @JsonKey(name: 'holiday_group_id')
+  final String? holidayGroupId;
+
+  @JsonKey(name: 'holiday_type_option')
+  final String? holidayTypeOption;
+
+  @JsonKey(name: 'holiday_type_display')
+  final String? holidayTypeDisplay;
+
+  @JsonKey(name: 'remain_optional_holiday')
+  final String? remainOptionalHoliday;
+
+  @JsonKey(name: 'already_applied_holiday')
+  final String? alreadyAppliedHoliday;
+
+  @JsonKey(name: 'optional_holiday_assign_delete_id')
+  final String? optionalHolidayAssignDeleteId;
+
+  HolidayModel({
     this.holidayId,
     this.optionalHolidayAssignId,
-    this.societyId,
+    this.companyId,
     this.holidayName,
     this.holidayDescription,
     this.holidayStartDate,
@@ -85,57 +139,35 @@ class Holiday {
     this.optionalHolidayAssignDeleteId,
   });
 
-  factory Holiday.fromJson(Map<String, dynamic> json) => Holiday(
-    holidayId: json["holiday_id"],
-    optionalHolidayAssignId: json["optional_holiday_assign_id"],
-    societyId: json["society_id"],
-    holidayName: json["holiday_name"],
-    holidayDescription: json["holiday_description"],
-    holidayStartDate: json["holiday_start_date"] == null ? null : DateTime.parse(json["holiday_start_date"]),
-    holidayDay: json["holiday_day"],
-    holidayMonth: json["holiday_month"],
-    holidayEndDate: json["holiday_end_date"] == null ? null : DateTime.parse(json["holiday_end_date"]),
-    monthViewStart: json["month_view_start"],
-    monthStart: json["month_start"],
-    monthViewEnd: json["month_view_end"],
-    monthEnd: json["month_end"],
-    dayViewStart: json["day_view_start"],
-    dayViewEnd: json["day_view_end"],
-    holidayIcon: json["holiday_icon"],
-    isGone: json["is_gone"],
-    holidayType: json["holiday_type"],
-    holidayGroupId: json["holiday_group_id"],
-    holidayTypeOption: json["holiday_type_option"],
-    holidayTypeDisplay: json["holiday_type_display"],
-    remainOptionalHoliday: json["remain_optional_holiday"],
-    alreadyAppliedHoliday: json["already_applied_holiday"],
-    optionalHolidayAssignDeleteId: json["optional_holiday_assign_delete_id"],
-  );
+  factory HolidayModel.fromJson(Map<String, dynamic> json) =>
+      _$HolidayModelFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-    "holiday_id": holidayId,
-    "optional_holiday_assign_id": optionalHolidayAssignId,
-    "society_id": societyId,
-    "holiday_name": holidayName,
-    "holiday_description": holidayDescription,
-    "holiday_start_date": "${holidayStartDate!.year.toString().padLeft(4, '0')}-${holidayStartDate!.month.toString().padLeft(2, '0')}-${holidayStartDate!.day.toString().padLeft(2, '0')}",
-    "holiday_day": holidayDay,
-    "holiday_month": holidayMonth,
-    "holiday_end_date": "${holidayEndDate!.year.toString().padLeft(4, '0')}-${holidayEndDate!.month.toString().padLeft(2, '0')}-${holidayEndDate!.day.toString().padLeft(2, '0')}",
-    "month_view_start": monthViewStart,
-    "month_start": monthStart,
-    "month_view_end": monthViewEnd,
-    "month_end": monthEnd,
-    "day_view_start": dayViewStart,
-    "day_view_end": dayViewEnd,
-    "holiday_icon": holidayIcon,
-    "is_gone": isGone,
-    "holiday_type": holidayType,
-    "holiday_group_id": holidayGroupId,
-    "holiday_type_option": holidayTypeOption,
-    "holiday_type_display": holidayTypeDisplay,
-    "remain_optional_holiday": remainOptionalHoliday,
-    "already_applied_holiday": alreadyAppliedHoliday,
-    "optional_holiday_assign_delete_id": optionalHolidayAssignDeleteId,
-  };
+  Map<String, dynamic> toJson() => _$HolidayModelToJson(this);
+
+  HolidayEntity toEntity() => HolidayEntity(
+    holidayId: holidayId,
+    optionalHolidayAssignId: optionalHolidayAssignId,
+    companyId: companyId,
+    holidayName: holidayName,
+    holidayDescription: holidayDescription,
+    holidayStartDate: holidayStartDate,
+    holidayDay: holidayDay,
+    holidayMonth: holidayMonth,
+    holidayEndDate: holidayEndDate,
+    monthViewStart: monthViewStart,
+    monthStart: monthStart,
+    monthViewEnd: monthViewEnd,
+    monthEnd: monthEnd,
+    dayViewStart: dayViewStart,
+    dayViewEnd: dayViewEnd,
+    holidayIcon: holidayIcon,
+    isGone: isGone,
+    holidayType: holidayType,
+    holidayGroupId: holidayGroupId,
+    holidayTypeOption: holidayTypeOption,
+    holidayTypeDisplay: holidayTypeDisplay,
+    remainOptionalHoliday: remainOptionalHoliday,
+    alreadyAppliedHoliday: alreadyAppliedHoliday,
+    optionalHolidayAssignDeleteId: optionalHolidayAssignDeleteId,
+  );
 }

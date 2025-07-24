@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
@@ -54,32 +55,30 @@ class MyCoButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return _MyCoButtonMobile(
-      onTap: enabled ? onTap : null,
-      title: title,
-      height: height ?? 0.06 * Responsive.getHeight(context),
-      width: width,
-      backgroundColor: backgroundColor,
-      decoration: decoration,
-      textStyle: textStyle,
-      fontFamily: fontFamily,
-      fontWeight: fontWeight,
-      image: image,
-      imagePosition: imagePosition,
-      enabled: enabled,
-      spacing: spacing,
-      border: border,
-      borderColor: borderColor,
-      borderWidth: borderWidth,
-      boarderRadius: boarderRadius,
-      wantBorder: wantBorder,
-      isShadowTopLeft: isShadowTopLeft,
-      isShadowTopRight: isShadowTopRight,
-      isShadowBottomRight: isShadowBottomRight,
-      isShadowBottomLeft: isShadowBottomLeft,
-    );
-  }
+  Widget build(BuildContext context) => _MyCoButtonMobile(
+    onTap: enabled ? onTap : null,
+    title: title,
+    height: height ?? 0.06 * Responsive.getHeight(context),
+    width: width,
+    backgroundColor: backgroundColor,
+    decoration: decoration,
+    textStyle: textStyle,
+    fontFamily: fontFamily,
+    fontWeight: fontWeight,
+    image: image,
+    imagePosition: imagePosition,
+    enabled: enabled,
+    spacing: spacing,
+    border: border,
+    borderColor: borderColor,
+    borderWidth: borderWidth,
+    boarderRadius: boarderRadius,
+    wantBorder: wantBorder,
+    isShadowTopLeft: isShadowTopLeft,
+    isShadowTopRight: isShadowTopRight,
+    isShadowBottomRight: isShadowBottomRight,
+    isShadowBottomLeft: isShadowBottomLeft,
+  );
 }
 
 class _MyCoButtonMobile extends StatelessWidget {
@@ -149,7 +148,11 @@ class _MyCoButtonMobile extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            height: height ?? 0.04 * Responsive.getHeight(context),
+            height:
+                height ??
+                (Responsive.isTablet(context)
+                    ? 0.98 * Responsive.getHeight(context)
+                    : 0.48 * Responsive.getHeight(context)),
             width: width ?? 0.94 * Responsive.getWidth(context),
             decoration:
                 decoration ??
@@ -170,7 +173,7 @@ class _MyCoButtonMobile extends StatelessWidget {
                 ),
             child: Center(
               child: _ButtonContent(
-                title: title,
+                title: LanguageManager().get(title),
                 style: finalStyle,
                 image: image,
                 imagePosition: imagePosition,
@@ -241,52 +244,29 @@ class _ButtonContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final imageWidget = image ?? const SizedBox();
-    final double gap = spacing ?? 4;
+    final double gap = spacing ?? 1;
 
     List<Widget> children;
 
     if (imagePosition == AxisDirection.left) {
-      children = [
-        imageWidget,
-        SizedBox(width: gap),
-        Flexible(
-          child: Text(
-            title,
-            style: style,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-          ),
-        ),
-      ];
+      children = [imageWidget, SizedBox(width: gap), Text(title, style: style)];
     } else if (imagePosition == AxisDirection.right) {
-      children = [
-        Flexible(
-          child: Text(
-            title,
-            style: style,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-          ),
-        ),
-        SizedBox(width: gap),
-        imageWidget,
-      ];
+      children = [Text(title, style: style), SizedBox(width: gap), imageWidget];
     } else if (imagePosition == AxisDirection.up) {
       children = [
         imageWidget,
         SizedBox(height: gap),
-        Text(title, style: style, overflow: TextOverflow.ellipsis, maxLines: 1),
+        Text(title, style: style),
       ];
     } else {
       children = [
-        Text(title, style: style, overflow: TextOverflow.ellipsis, maxLines: 1),
+        Text(title, style: style),
         SizedBox(height: gap),
         imageWidget,
       ];
     }
 
-    final content =
-        (imagePosition == AxisDirection.left ||
+    return (imagePosition == AxisDirection.left ||
             imagePosition == AxisDirection.right)
         ? Row(
             mainAxisSize: MainAxisSize.min,
@@ -298,8 +278,6 @@ class _ButtonContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: children,
           );
-
-    return FittedBox(fit: BoxFit.scaleDown, child: content);
   }
 }
 

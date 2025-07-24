@@ -16,7 +16,7 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/admin_view/domain/entities/admin_view_entity.dart';
 import 'package:myco_flutter/widgets/border_container_wraper.dart';
 import 'package:myco_flutter/widgets/cached_image_holder.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/custom_shadow_container.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/custom_shadow_container.dart';
 import 'package:shimmer/shimmer.dart';
 
 /// Displays a grid of admin sub-menu items with images and titles.
