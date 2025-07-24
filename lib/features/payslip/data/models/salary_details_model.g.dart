@@ -22,19 +22,22 @@ SalaryDetailsModel _$SalaryDetailsModelFromJson(Map<String, dynamic> json) =>
       salaryMonthYear: json['salary_month_year'] as String?,
       salaryMode: json['salary_mode'] as String?,
       totalContri: json['total_contri'] as String?,
-      contriData: (json['contri_data'] as List<dynamic>?)
-          ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      earningData: (json['earning_data'] as List<dynamic>?)
-          ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      contriData:
+          (json['contri_data'] as List<dynamic>?)
+              ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
+              .toList(),
+      earningData:
+          (json['earning_data'] as List<dynamic>?)
+              ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
+              .toList(),
       specialEarningData: json['special_earning_data'],
       expenseAmount: json['expense_amount'] as String?,
       hasReimbursement: json['has_reimbursement'] as bool?,
       otherNetEarning: json['other_net_earning'] as List<dynamic>?,
-      deductionData: (json['deduction_data'] as List<dynamic>?)
-          ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      deductionData:
+          (json['deduction_data'] as List<dynamic>?)
+              ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
+              .toList(),
       otherEarning: json['other_earning'] as String?,
       otherDeduction: json['other_deduction'] as String?,
       grossSalary: json['gross_salary'] as String?,
@@ -84,12 +87,10 @@ Map<String, dynamic> _$SalaryDetailsModelToJson(SalaryDetailsModel instance) =>
       'status': instance.status,
     };
 
-Datum _$DatumFromJson(Map<String, dynamic> json) => Datum(
-      title: json['title'] as String?,
-      value: json['value'] as String?,
-    );
+Datum _$DatumFromJson(Map<String, dynamic> json) =>
+    Datum(title: json['title'] as String?, value: json['value'] as String?);
 
 Map<String, dynamic> _$DatumToJson(Datum instance) => <String, dynamic>{
-      'title': instance.title,
-      'value': instance.value,
-    };
+  'title': instance.title,
+  'value': instance.value,
+};
