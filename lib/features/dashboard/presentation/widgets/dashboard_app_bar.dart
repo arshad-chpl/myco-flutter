@@ -69,12 +69,6 @@ class DashboardAppBar extends StatelessWidget {
 
       // TODO: Add a button for notifications and search
       const Spacer(),
-      ElevatedButton(
-        onPressed: () {
-          context.pushNamed('employees');
-        },
-        child: Icon(Icons.person, color: Colors.blue),
-      ),
       Container(
         decoration: BoxDecoration(
           color: Util.applyOpacity(AppColors.myCoCyan, 0.1),
