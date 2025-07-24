@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.myco_flutter"
-    compileSdk = 36
+    compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
     compileOptions {
