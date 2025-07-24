@@ -383,7 +383,7 @@ class MyUnitResponse {
   String? visitorApproved;
   @HiveField(121)
   @JsonKey(name: "member_date_of_birth")
-  DateTime? memberDateOfBirth;
+  String? memberDateOfBirth;
   @HiveField(122)
   @JsonKey(name: "wedding_anniversary_date")
   String? weddingAnniversaryDate;
@@ -946,7 +946,7 @@ class EventAlbum {
   String? eventId;
   @HiveField(3)
   @JsonKey(name: "event_date")
-  DateTime? eventDate;
+  String? eventDate;
   @HiveField(4)
   @JsonKey(name: "block_id")
   String? blockId;
