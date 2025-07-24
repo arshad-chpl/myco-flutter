@@ -84,7 +84,6 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               // Category (Dropdown)
               NewTextField(
                 label: 'Category',
@@ -114,8 +113,6 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
                   }
                 },
               ),
-
-
               errorText(categoryError),
               SizedBox(height: spacing),
 

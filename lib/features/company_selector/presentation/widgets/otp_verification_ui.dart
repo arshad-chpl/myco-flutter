@@ -65,7 +65,7 @@ class OtpVerificationUi extends StatelessWidget {
           preference.setCompanyId(state.response.societyId ?? '');
           preference.setCompanyAddress(state.response.societyAddress ?? '');
           preference.setCompanyName(state.response.societyName ?? '');
-
+          refreshApiServiceCompany(GetIt.instance);
           context.go(RoutePaths.dashboard);
         } else if (state is OtpVerificationFailedState) {
           if (state.response.viewDialogApiCall == true) {
