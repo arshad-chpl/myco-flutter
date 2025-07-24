@@ -120,7 +120,7 @@ class MyUnitResponseEntity {
   String? memberStatus;
   String? publicMobile;
   String? visitorApproved;
-  DateTime? memberDateOfBirth;
+  String? memberDateOfBirth;
   String? weddingAnniversaryDate;
   String? facebook;
   String? instagram;
@@ -368,7 +368,7 @@ class EventAlbumEntity {
   String? galleryAlbumId;
   String? albumTitle;
   String? eventId;
-  DateTime? eventDate;
+  String? eventDate;
   String? blockId;
   String? floorId;
   String? uploadDate;

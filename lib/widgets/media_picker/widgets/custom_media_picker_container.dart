@@ -168,90 +168,84 @@ class _MediaPickerContent extends StatelessWidget {
         ),
       );
 
-  Widget _buildImageGrid(
-    BuildContext context,
-    List<File> images,
-  ) => DesignBorderContainer(
-    borderRadius: 8 * Responsive.getResponsive(context),
-    borderColor: AppTheme.getColor(context).primary,
-    backgroundColor: AppTheme.getColor(context).surface,
-    padding: const EdgeInsets.all(0),
-    child: Padding(
-      padding: EdgeInsets.all(
-        imageMargin ?? 10 * Responsive.getResponsive(context),
-      ),
-      child: GridView.count(
-        crossAxisCount: 4,
-        crossAxisSpacing: 8,
-        mainAxisSpacing: 8,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        childAspectRatio: 0.75,
-        children: List.generate(
-          images.length < multipleImage ? images.length + 1 : images.length,
-          (index) {
-            if (images.length < multipleImage && index == images.length) {
-              return GestureDetector(
-                onTap: () => openMediaPicker(context, images.length),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppTheme.getColor(context).surface,
-                    borderRadius: BorderRadius.circular(
-                      10 * Responsive.getResponsive(context),
+  Widget _buildImageGrid(BuildContext context, List<File> images) =>
+      DesignBorderContainer(
+        borderRadius: 8 * Responsive.getResponsive(context),
+        borderColor: AppTheme.getColor(context).primary,
+        backgroundColor: AppTheme.getColor(context).surface,
+        child: GridView.count(
+          crossAxisCount: 4,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+          shrinkWrap: true,
+          padding: EdgeInsetsGeometry.zero,
+          physics: const NeverScrollableScrollPhysics(),
+          childAspectRatio: 0.75,
+          children: List.generate(
+            images.length < multipleImage ? images.length + 1 : images.length,
+            (index) {
+              if (images.length < multipleImage && index == images.length) {
+                return GestureDetector(
+                  onTap: () => openMediaPicker(context, images.length),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppTheme.getColor(context).surface,
+                      borderRadius: BorderRadius.circular(
+                        10 * Responsive.getResponsive(context),
+                      ),
+                      border: Border.all(
+                        color: AppTheme.getColor(context).primary,
+                      ),
                     ),
-                    border: Border.all(
+                    child: Icon(
+                      Icons.add,
+                      size: 30 * Responsive.getResponsive(context),
                       color: AppTheme.getColor(context).primary,
                     ),
                   ),
-                  child: Icon(
-                    Icons.add,
-                    size: 30 * Responsive.getResponsive(context),
-                    color: AppTheme.getColor(context).primary,
+                );
+              }
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    10 * Responsive.getResponsive(context),
                   ),
+                  border: Border.all(color: AppTheme.getColor(context).primary),
+                ),
+                padding: EdgeInsets.all(8 * Responsive.getResponsive(context)),
+                // padding: EdgeInsets.zero,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                          8 * Responsive.getResponsive(context),
+                        ),
+                        child: Image.file(
+                          images[index],
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 0.008 * Responsive.getHeight(context)),
+                    GestureDetector(
+                      onTap: () => context.read<CustomMediaPickerBloc>().add(
+                        RemoveMediaFile(index),
+                      ),
+                      child: SvgPicture.asset(
+                        AppAssets.trash,
+                        height: 0.020 * Responsive.getHeight(context),
+                      ),
+                    ),
+                  ],
                 ),
               );
-            }
-            return Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  10 * Responsive.getResponsive(context),
-                ),
-                border: Border.all(color: AppTheme.getColor(context).primary),
-              ),
-              padding: EdgeInsets.all(8 * Responsive.getResponsive(context)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                        8 * Responsive.getResponsive(context),
-                      ),
-                      child: Image.file(
-                        images[index],
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 0.008 * Responsive.getHeight(context)),
-                  GestureDetector(
-                    onTap: () => context.read<CustomMediaPickerBloc>().add(
-                      RemoveMediaFile(index),
-                    ),
-                    child: SvgPicture.asset(
-                      AppAssets.trash,
-                      height: 0.020 * Responsive.getHeight(context),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
+            },
+          ),
         ),
-      ),
-    ),
-  );
+      );
 
   Widget _buildDocumentPreview(BuildContext context, File document) =>
       DesignBorderContainer(
@@ -317,7 +311,7 @@ class _MediaPickerContent extends StatelessWidget {
             containerHeight ??
             (Responsive.isTablet(context)
                 ? 0.3 * Responsive.getHeight(context)
-                : 0.1  * Responsive.getHeight(context)),
+                : 0.1 * Responsive.getHeight(context)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

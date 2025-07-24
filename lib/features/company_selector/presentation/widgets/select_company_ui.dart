@@ -24,8 +24,6 @@ class SelectCompanyUi extends StatelessWidget {
   SelectCompanyUi({super.key});
 
   final TextEditingController controller = TextEditingController();
-  final FocusNode focusNode = FocusNode();
-
   @override
   Widget build(BuildContext context) {
     // The controller is managed locally within this stateless widget.
@@ -33,13 +31,6 @@ class SelectCompanyUi extends StatelessWidget {
     // is contained within this build method.
     final TextEditingController controller = TextEditingController();
     final FocusNode focusNode = FocusNode();
-
-    // Schedule focus request after build
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!focusNode.hasFocus) {
-        focusNode.requestFocus();
-      }
-    });
 
     // Schedule focus request after build
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -65,7 +56,6 @@ class SelectCompanyUi extends StatelessWidget {
           SizedBox(height: 0.01 * Responsive.getHeight(context)),
           NewTextField(
             controller: controller,
-            focusNode: focusNode,
             onChange: (value) {
               if (value.length >= 3) {
                 context.read<CompanyBloc>().add(SearchCompany(value));
