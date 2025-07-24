@@ -238,7 +238,7 @@ class NewTextField extends StatelessWidget {
                 ),
               ),
             ),
-            if (field.hasError && controller!.text.isNotEmpty)
+            if (field.hasError && controller!.text.isEmpty)
               Padding(
                 padding: EdgeInsets.only(
                   top: 4 * Responsive.getResponsive(context),

@@ -20,6 +20,7 @@ class PhoneNumberField extends StatelessWidget {
   final TextStyle? hintTextStyle;
   final double? textFieldHeight;
   final double? textFieldWidth;
+  final FormFieldValidator<String>?  validation;
 
   const PhoneNumberField({
     super.key,
@@ -32,12 +33,13 @@ class PhoneNumberField extends StatelessWidget {
     this.hintText,
     this.hintTextStyle,
     this.textFieldHeight,
-    this.textFieldWidth,
+    this.textFieldWidth, this.validation,
   });
 
   @override
   Widget build(BuildContext context) {
     return MyCoTextfield(
+      validator: validation,
       controller: phoneController,
       textInputType: TextInputType.phone,
       inputFormater: [FilteringTextInputFormatter.digitsOnly],

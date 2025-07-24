@@ -2,9 +2,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
+import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
@@ -48,6 +50,8 @@ class LoginUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final preferenceManager = GetIt.I<PreferenceManager>();
     final bool isEmailLogin = selectedCompany?.loginVia == '1';
 
     return Container(
@@ -134,7 +138,7 @@ class LoginUi extends StatelessWidget {
                   // Email format validation
                   if (isEmailLogin) {
                     final emailRegex = RegExp(
-                      r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",
+                      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
                     );
                     if (!emailRegex.hasMatch(contactInfo)) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -196,13 +200,33 @@ class LoginUi extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomText(
-                    LanguageManager().get('don_t_have_an_account'),
+                    '${LanguageManager().get('don_t_have_an_account')} ',
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
                   InkWell(
                     onTap: () {
-                      context.go(RoutePaths.signUpForm);
+                      context.push(
+                        RoutePaths.signUpForm,
+                        extra: {
+                          'BlockNo': preferenceManager.getBlockId(),
+                          'blockId': preferenceManager.getBlockId(),
+                          'floorId': '0',
+                          'unitId': '0',
+                          'isFamily': false,
+                          'societyId': '1',
+                          'type': '0',
+                          'from': '0',
+                          'baseUrl': preferenceManager.getBaseUrl(),
+                          'apiKey': preferenceManager.getApiKey(),
+                          'isAddMore': false,
+                          'isAddByAdmin': false,
+                          'isAddMoreUnit': false,
+                          'isSociety': false,
+                          'loginVia': selectedCompany?.loginVia,
+                          'societyAddress': selectedCompany?.societyAddress,
+                        },
+                      );
                     },
                     child: CustomText(
                       LanguageManager().get('sign_up_here'),
@@ -269,8 +293,8 @@ class LoginUi extends StatelessWidget {
         borderColor: isChecked ? AppColors.primary : Colors.grey,
         activeColor: AppTheme.getColor(context).primaryContainer,
         checkColor: AppTheme.getColor(context).primary,
-        height: 20,
-        width: 20,
+        height: 20 * Responsive.getResponsive(context),
+        width: 20 * Responsive.getResponsive(context),
         unCheckedBackground: AppTheme.getColor(context).surface,
       ),
       SizedBox(width: 0.015 * Responsive.getWidth(context)),
@@ -284,15 +308,26 @@ class LoginUi extends StatelessWidget {
             children: [
               TextSpan(
                 text: '${LanguageManager().get('i_agree_to_fincasys')} ',
-                style: TextStyle(fontWeight: FontWeight.w400),
+                style: const TextStyle(fontWeight: FontWeight.w400),
               ),
-              _linkSpan(context, LanguageManager().get('privacy_policy'), VariableBag.URL_PRIVACY + "privacyPolicy.php?app=" + 'Myco'),
+              _linkSpan(
+                context,
+                LanguageManager().get('privacy_policy'),
+                VariableBag.URL_PRIVACY + 'privacyPolicy.php?app=' + 'Myco',
+                // INSTEAD OF MYCO IN THE ABOVE URL - APP NAME WILL COME
+              ),
               const TextSpan(text: ', '),
-              _linkSpan(context, LanguageManager().get('terms_and_condition'), VariableBag.URL_PRIVACY + "termsConditions.php?app=" + 'MyCo'),
+              _linkSpan(
+                context,
+                LanguageManager().get('terms_and_condition'),
+                VariableBag.URL_PRIVACY + 'termsConditions.php?app=' + 'MyCo',
+                // INSTEAD OF MYCO IN THE ABOVE URL - APP NAME WILL COME
+              ),
               TextSpan(text: ' ${LanguageManager().get('and')} '),
               _linkSpan(
                 context,
-                LanguageManager().get('cancellation_refund_policy'), VariableBag.CP_URL ,
+                LanguageManager().get('cancellation_refund_policy'),
+                VariableBag.CP_URL,
               ),
               const TextSpan(text: '.'),
             ],
@@ -306,12 +341,17 @@ class LoginUi extends StatelessWidget {
     text: text,
     style: TextStyle(color: AppTheme.getColor(context).primary),
     recognizer: TapGestureRecognizer()
-      ..onTap = () => showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (_) => BottomTermAndCondition(url : url),
-      ),
+      ..onTap = () {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          isDismissible: false,
+          enableDrag: false,
+          requestFocus: false,
+          backgroundColor: Colors.transparent,
+          builder: (_) => BottomTermAndCondition(url: url),
+        );
+      },
   );
 }
 
@@ -348,7 +388,7 @@ class _EmailInput extends StatelessWidget {
       if (value == null || value.isEmpty) {
         return LanguageManager().get('please_enter_email_id');
       }
-      final emailRegex = RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+      final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
       if (!emailRegex.hasMatch(value)) {
         return LanguageManager().get('please_enter_email_id');
       }
@@ -376,7 +416,9 @@ class _PhoneInput extends StatelessWidget {
     children: [
       CustomText(
         LanguageManager().get('phone_number'),
-        fontWeight: FontWeight.w600,
+        color: AppTheme.getColor(context).onSurfaceVariant,
+        fontSize: 14 * Responsive.getResponsiveText(context),
+        fontWeight: FontWeight.w700,
       ),
       PhoneNumberField(
         selectedCountry: selectedCountry!,
