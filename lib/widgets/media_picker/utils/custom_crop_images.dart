@@ -540,7 +540,8 @@ class _CustomCropImageScreenState extends State<CustomCropImageScreen> {
               Icon(Icons.crop, color: AppTheme.getColor(context).onPrimary),
               const SizedBox(width: 5),
               CustomText(
-                'Apply',
+                'apply',
+                isKey: true,
                 color: AppTheme.getColor(context).onPrimary,
                 fontWeight: FontWeight.w500,
               ),
@@ -613,7 +614,7 @@ class _CustomCropImageScreenState extends State<CustomCropImageScreen> {
                 children: [
                   _buildToolbarButton(
                     icon: Icons.refresh,
-                    label: 'Reset',
+                    label: 'resetNew',
                     onPressed: _resetCrop,
                   ),
                   _buildShapeButton(
@@ -726,6 +727,7 @@ class _CustomCropImageScreenState extends State<CustomCropImageScreen> {
           const SizedBox(height: 4),
           CustomText(
             label,
+            isKey: true,
             color: AppColors.secondary,
             fontSize: 12 * Responsive.getResponsiveText(context),
             fontWeight: FontWeight.w500,
@@ -770,14 +772,19 @@ class _CustomCropImageScreenState extends State<CustomCropImageScreen> {
   }
 
   Widget _buildThumbnailList() => Container(
-    height: 90,
-    padding: const EdgeInsets.symmetric(vertical: 10),
+    height: .09 * Responsive.getHeight(context),
+    padding: EdgeInsets.symmetric(
+      vertical: 0.020 * Responsive.getWidth(context),
+    ),
     color: AppColors.black.withValues(alpha: 0.5),
     child: ListView.separated(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(
+        horizontal: 0.016 * Responsive.getHeight(context),
+      ),
       itemCount: widget.assets.length,
-      separatorBuilder: (_, __) => const SizedBox(width: 12),
+      separatorBuilder: (_, __) =>
+          SizedBox(width: 0.012 * Responsive.getWidth(context)),
       itemBuilder: (context, index) {
         final isSelected = index == _currentIndex;
 
