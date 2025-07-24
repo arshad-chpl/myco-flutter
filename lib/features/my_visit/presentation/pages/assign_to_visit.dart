@@ -13,19 +13,17 @@ import 'package:myco_flutter/widgets/custom_label_textfield.dart';
 import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
-class AssignToVisit extends StatefulWidget {
-  const AssignToVisit({super.key});
+class AssignToVisit extends StatelessWidget {
+   AssignToVisit({super.key});
 
-  @override
-  State<AssignToVisit> createState() => _AssignToVisitState();
-}
-
-class _AssignToVisitState extends State<AssignToVisit> {
   String selectedVisitType = 'Self Visit';
 
   final List<String> Customer = ['Customer 1', 'Customer 2', 'Customer 3'];
+
   final List<String> VisitSlot = ['Morning', 'Afternoon', 'Evening'];
+
   final List<String> VisitPurpose = ['Purpose 1', 'Purpose 2', 'Purpose 3'];
 
   String? selectedleavetype;
@@ -40,8 +38,6 @@ class _AssignToVisitState extends State<AssignToVisit> {
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
       title: LanguageManager().get('add_new_visit'),
-      // appbartxtcolor: AppTheme.getColor(context).onSurface,
-      // size: 16 * Responsive.getResponsive(context),
       appBarBackgoundColor: AppTheme.getColor(context).surface,
       leading: BackButton(),
     ),
@@ -53,7 +49,6 @@ class _AssignToVisitState extends State<AssignToVisit> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // SizedBox(height: 16 * getResponsive(context)),
             CustomVisitTypeRadioButton(
               textStyle: TextStyle(
                 fontSize: 16 * Responsive.getResponsiveText(context),
@@ -97,7 +92,7 @@ class _AssignToVisitState extends State<AssignToVisit> {
                 padding: EdgeInsets.symmetric(
                   horizontal: 9 * Responsive.getResponsive(context),
                   vertical:
-                      0, // removed vertical padding to remove bottom space
+                  0, // removed vertical padding to remove bottom space
                 ),
                 child: GridView.builder(
                   shrinkWrap: true,
@@ -134,13 +129,13 @@ class _AssignToVisitState extends State<AssignToVisit> {
                                 'Vatsal Champaneri',
                                 color: AppTheme.getColor(context).onSurface,
                                 fontSize:
-                                    10 * Responsive.getResponsiveText(context),
+                                10 * Responsive.getResponsiveText(context),
                                 overflow: TextOverflow.ellipsis,
                               ),
                               CustomText(
                                 'QA',
                                 fontSize:
-                                    10 * Responsive.getResponsiveText(context),
+                                10 * Responsive.getResponsiveText(context),
                                 color: AppTheme.getColor(context).onSurface,
                               ),
                             ],
@@ -159,76 +154,42 @@ class _AssignToVisitState extends State<AssignToVisit> {
               ),
             ),
             SizedBox(height: 16 * Responsive.getResponsive(context)),
-            LabeledDropdown<String>(
+            NewTextField(
               label: LanguageManager().get('customer_to_visit'),
-              items: Customer,
-              selectedItem: selectedleavetype,
-              itemToString: (item) => item,
-              onChanged: (value, index) {
-                // handle change
-              },
-              height: 0.06 * Responsive.getHeight(context),
-              spacing: 10 * Responsive.getResponsive(context),
-              prefix: SvgPicture.asset(
-                AppAssets.personalcard,
-                fit: BoxFit.scaleDown,
-              ),
-              prefixImageHeight: 20 * Responsive.getHeight(context),
-              prefixImageWidth: 20 * Responsive.getWidth(context),
+              prefixIconPath: AppAssets.personalcard,
+              suffixIconPath: AppAssets.arrow_down,
               hintText: LanguageManager().get('select'),
-              hintTextStyle: TextStyle(
-                fontSize: 14 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).outline,
-              ),
-              textFontSize: 13 * Responsive.getResponsiveText(context),
-              textColor: AppTheme.getColor(context).onSurface,
-            ),
-            SizedBox(height: 16 * Responsive.getResponsive(context)),
-            LabeledTextField(
-              label: LanguageManager().get('visit_date'),
-              hint: LanguageManager().get('select_date'),
-              heightFactor: 0.06 * Responsive.getHeight(context),
-              widthFactor: Responsive.getWidth(context),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: AppTheme.getColor(context).primary,
-                ),
-                borderRadius: BorderRadius.circular(
-                  10 * Responsive.getResponsive(context),
-                ),
-              ),
-              textFontSize: 18 * Responsive.getResponsiveText(context),
-              textColor: AppTheme.getColor(context).onSurface,
-              textFontweight: FontWeight.w500,
-              hintTextStyle: TextStyle(
-                fontSize: 14 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).outline,
-              ),
-              prefix: SvgPicture.asset(
-                AppAssets.note_favorite,
-                fit: BoxFit.scaleDown,
-              ),
-              prefixImageHeight: 20 * Responsive.getHeight(context),
-              prefixImageWidth: 20 * Responsive.getWidth(context),
-            ),
-            SizedBox(height: 16 * Responsive.getResponsive(context)),
-            LabeledDropdown<String>(
-              label: LanguageManager().get('visit_slots'),
-              items: VisitSlot,
-              selectedItem: selectedleavetype,
-              itemToString: (item) => item,
-              onChanged: (value, index) {
-                // handle change
+              onTap: () async {
+                // open bottom sheet, modal, or page to pick customer
+                // after user selects, setState(() => selectedCustomer = value);
               },
-              spacing: 10 * Responsive.getResponsive(context),
-              prefix: SvgPicture.asset(AppAssets.clock, fit: BoxFit.scaleDown),
-              hintText: LanguageManager().get('select_time_slot'),
-              hintTextStyle: TextStyle(
-                fontSize: 14 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).outline,
+              controller: TextEditingController(
+                text: selectedleavetype ?? '', // show selected item
               ),
-              textFontSize: 12 * Responsive.getResponsiveText(context),
-              textColor: AppTheme.getColor(context).onSurface,
+              isRequired: false,
+            ),
+            SizedBox(height: 16 * Responsive.getResponsive(context)),
+            NewTextField(
+              label: LanguageManager().get('visit_date'),
+              hintText: LanguageManager().get('select_date'),
+              prefixIconPath: AppAssets.note_favorite,
+              suffixIconPath: null, // if you want, you can add calendar icon here
+              onTap: () async {
+                // show date picker
+              }
+            ),
+            SizedBox(height: 16 * Responsive.getResponsive(context)),
+            NewTextField(
+              label: LanguageManager().get('visit_slots'),
+              prefixIconPath: AppAssets.clock,
+              suffixIconPath: AppAssets.arrow_down,
+              hintText: LanguageManager().get('select_time_slot'),
+              controller: TextEditingController(
+                text: selectedleavetype ?? '',
+              ),
+              onTap: () async {
+                // handle tap function
+              },
             ),
             SizedBox(height: 16 * Responsive.getResponsive(context)),
             CustomRadioButton(
@@ -237,27 +198,17 @@ class _AssignToVisitState extends State<AssignToVisit> {
               onChanged: (selected) {},
             ),
             SizedBox(height: 16 * Responsive.getResponsive(context)),
-            LabeledDropdown<String>(
+            NewTextField(
               label: LanguageManager().get('visit_purpose'),
-              items: VisitPurpose,
-              selectedItem: selectedleavetype,
-              itemToString: (item) => item,
-              onChanged: (value, index) {
-                // handle change
-              },
-              height: 0.06 * Responsive.getHeight(context),
-              spacing: 10 * Responsive.getResponsive(context),
-              prefix: SvgPicture.asset(AppAssets.gps, fit: BoxFit.scaleDown),
-              prefixImageHeight: 20 * Responsive.getHeight(context),
-              prefixImageWidth: 20 * Responsive.getWidth(context),
+              prefixIconPath: AppAssets.gps,
+              suffixIconPath: AppAssets.arrow_down,
               hintText: LanguageManager().get('select'),
-              hintTextStyle: TextStyle(
-                fontSize: 14 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).outline,
-                fontWeight: FontWeight.w400,
+              controller: TextEditingController(
+                text: selectedleavetype ?? '',
               ),
-              textFontSize: 12 * Responsive.getResponsiveText(context),
-              textColor: AppTheme.getColor(context).onSurface,
+              onTap: () async {
+                // handle tap function
+              },
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -274,7 +225,7 @@ class _AssignToVisitState extends State<AssignToVisit> {
                 textStyle: TextStyle(
                   color: AppTheme.getColor(context).onPrimary,
                   fontSize:
-                      22 * Responsive.getResponsiveText(context), // reduced
+                  22 * Responsive.getResponsiveText(context), // reduced
                   fontFamily: 'Gilroy-Bold',
                 ),
                 isShadowBottomLeft: true,

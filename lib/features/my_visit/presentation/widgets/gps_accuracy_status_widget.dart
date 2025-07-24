@@ -29,7 +29,7 @@ class _GpsAccuracyStatusWidgetState extends State<GpsAccuracyStatusWidget> {
         color: AppTheme.getColor(context).onSurface,
         weight: FontWeight.w600,
       ),
-      SizedBox(width: 0.013 * Responsive.getWidth(context)),
+      SizedBox(width: 0.010 * Responsive.getWidth(context)),
       Row(
         children: [
           CustomText(
@@ -37,7 +37,7 @@ class _GpsAccuracyStatusWidgetState extends State<GpsAccuracyStatusWidget> {
             isKey: true,
             color: AppTheme.getColor(context).onSurface,
             fontWeight: FontWeight.w600,
-            fontSize: 17 * Responsive.getResponsiveText(context),
+            fontSize: 14 * Responsive.getResponsiveText(context),
           ),
           SizedBox(width: 0.015 * Responsive.getWidth(context)),
           CustomText(
@@ -45,7 +45,7 @@ class _GpsAccuracyStatusWidgetState extends State<GpsAccuracyStatusWidget> {
             isKey: true,
             color: AppTheme.getColor(context).onSurface,
             fontWeight: FontWeight.w600,
-            fontSize: 17 * Responsive.getResponsiveText(context),
+            fontSize: 15 * Responsive.getResponsiveText(context),
           ),
         ],
       ),
