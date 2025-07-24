@@ -13,7 +13,6 @@ class RoutePaths {
   static const String companySearch = '/search-company';
 
   static const String details = '/details';
-  static const String visitReport = '/visit_report';
 
   static const String offers = '/offers';
   static const String products = '/products';
@@ -24,10 +23,12 @@ class RoutePaths {
   static const String distributorVisitor = '/distributor-visitor';
   static const String noOrder = '/no-order';
   static const String faceDetection = '/face-detection';
+
   // static const String distributorVisitor = 'distributor-visitor';
   // static const String noOrder = 'no-order';
   static const String selectOtherCompany = '/select-other-company';
   static const String signUpForm = '/sign-up-form';
+
   //
   // static const String addVisit = '/add-visit';
 
@@ -38,19 +39,17 @@ class RoutePaths {
   static const String salaryBreakUp = '/salary-break-up';
   static const String payslipDetail = '/payslip-detail';
 
-  static const String addCustomer = '/add_Customer';
   static const String ideabox = '/idea-box';
   static const String ideaRequest = '/idea-request';
   static const String leave = '/leave';
+  static const String companyInfo = '/company-info';
+  static const String holiday = '/holiday';
   static const String leaveBalance = '/my-leave-balance';
   static const String teamLeaveBalance = '/my-team-leave-balance';
-  static const String companyInfo = '/company-info';
   static const String myLeaveBalanceScreen = '/my_leave_balance_screen';
   static const String myTeamLeavesScreen = '/my_team_leaves_screen';
   static const String addShortLeaveScreen = '/add_short_leave_screen';
   static const String addLeaveScreen = '/add_leave_screen';
-  static const String holiday = '/holiday';
-
 
   static const String employees = '/employees';
 
@@ -58,15 +57,10 @@ class RoutePaths {
   static const String lostAndFoundAddScreen = '/lost-and-found-add-screen';
   static const String lostAndFoundChatScreen = '/lost-and-found-chat-screen';
   static const String lostAndFoundItemDetails = '/lost-and-found-item-details';
-  static const String AddExpense = '/add_Expense';
-  static const String myVisit = '/my-visit';
+
   static const String contactAdmin = '/contact-admin';
   static const String qrScanner = '/qr-scanner';
   static const String assetsHome = '/assets-home';
-  static const String VisitWith = '/visit-with';
-  static const String assignedTo = '/assigned-to';
-  static const String addVisit = '/add-visit';
-  static const String viewVisitDetails = '/view-visit-details';
   static const String myProfile = '/my-profile';
 
   // ======== Admin View ========
@@ -116,7 +110,7 @@ class RoutePaths {
   static const String adminEducation = 'education';
   static const String adminAchievements = 'achievements';
   static const String adminEmployeesFace = 'employees-face';
-  static const String CustomerAddNewVisit = 'CustomerAddNewVisit';
+
 
   // ======== Chat ========
   static const String chatList = '/chat-list';
@@ -124,11 +118,26 @@ class RoutePaths {
   static const String startNewChat = '/start-chat';
   static const String groupInfo = '/group-info';
 
-  //maulik
+  // --- Asset Routes ---
   static const String assetsDetails = '/assets-details';
   static const String addAssets = '/add-assets';
   static const String editAssets = '/edit-assets';
   static const String handoverAssets = '/handover-assets';
   static const String takeoverAssets = '/takeover-assets';
   static const String swapAssets = '/swap-assets';
+
+  //work-allocation
+  static const String workAllocation = '/work-allocation';
+  static const String detailPage = '/detail-page';
+  static const String assignWork = '/assign-work';
+
+  // my_Visit
+  static const String addCustomer = '/add_Customer';
+  static const String customerPage = '/customerPage';
+  static const String CustomerAddNewVisit = 'CustomerAddNewVisit';
+  static const String AddExpense= '/add_Expense';
+  static const String myVisit = '/my-visit';
+  static const String viewVisitDetails = '/view-visit-details';
+  static const String visitReport = '/visit_report';
+  static const String addVisit = '/add-visit';
 }

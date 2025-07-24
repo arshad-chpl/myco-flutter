@@ -11,7 +11,6 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_multiselect_bottomsheet.dart';
 import 'package:myco_flutter/features/chat/presentation/widgets/select_employee.dart';
 import 'package:myco_flutter/features/language_selector/model/language_response.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/custom_dropdown_menu.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
@@ -76,6 +75,10 @@ class _StartNewChatState extends State<StartNewChat> {
           ),
            SizedBox(height: 30 * Responsive.getResponsive(context)),
           NewTextField(
+            controller: branchController,
+            label: 'Branch',
+            maxLines: 1,
+            prefixIconPath: "",
             enabled: true,
             hintText: selectedDepartments.isEmpty
                 ? LanguageManager().get('select_block')

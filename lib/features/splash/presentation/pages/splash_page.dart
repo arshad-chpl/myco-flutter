@@ -23,7 +23,7 @@ class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   final PreferenceManager _preference = GetIt.I<PreferenceManager>();
-  bool _canNavigate = false;
+  bool _canNavigate = true;
   String version = '';
   String buildNumber = '';
 
@@ -53,8 +53,7 @@ class _SplashPageState extends State<SplashPage>
   Future<void> _navigateNext() async {
     final isLoggedIn = await _preference.getLoginSession();
     if (!mounted) return;
-    // context.go('/assets-home');
-    context.go(isLoggedIn ?? false ? '/dashboard' : '/get-started');
+    context.go(isLoggedIn ?? false ? '/home' : '/get-started');
   }
 
   @override

@@ -44,7 +44,8 @@ class AdminViewRepositoryImpl extends AdminViewRepository {
     try {
       final localModel = await localDataSource.getLastAdminView(companyId);
       return Right(localModel.toEntity());
-    } on Exception {
+    } on CacheException {
+      // Catch the specific CacheException from the local data source.
       return const Left(CacheFailure('No cached data found.'));
     }
   }

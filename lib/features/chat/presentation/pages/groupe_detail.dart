@@ -71,33 +71,33 @@ class GroupInfo extends StatelessWidget {
                 hintText: 'Search',
                 onChanged: (value) => {
                   context.read<ChatBloc>().add(
-                    SearchEvent(value, groupMembers),
+                    SearchEvent(value),
                   ),
                  
                 },
               ),
               SizedBox(height: 0.012 * Responsive.getHeight(context)),
-              Expanded(
-                child: ListView.separated(
-                  itemCount: state is SearchQueryState
-                ? state.filteredList.length
-                : groupMembers.length,
-                  itemBuilder: (context, index) {
-                    final member = state is SearchQueryState
-                  ? state.filteredList[index]
-                  : groupMembers[index];
-                    return ChatListCard(
-                      name: member['name']!,
-                      lastMessage: member['message']!,
-                      timeAgo: member['time']!,
-                      profileImagePath: member['image']!,
-                      isSufixIcon: true,
-                    );
-                  },
-                  separatorBuilder: (context, index) =>
-                      SizedBox(height: 0.015 * Responsive.getHeight(context)),
-                ),
-              ),
+              // Expanded(
+              //   child: ListView.separated(
+              //     itemCount: state is SearchQueryState
+              //   ? state.filteredList.length
+              //   : groupMembers.length,
+              //     itemBuilder: (context, index) {
+              //       final member = state is SearchQueryState
+              //     ? state.filteredList[index]
+              //     : groupMembers[index];
+              //       return ChatListCard(
+              //         name: member['name']! ,
+              //         lastMessage: member['message']!,
+              //         timeAgo: member['time']!,
+              //         profileImagePath: member['image']!,
+              //         isSufixIcon: true,
+              //       );
+              //     },
+              //     separatorBuilder: (context, index) =>
+              //         SizedBox(height: 0.015 * Responsive.getHeight(context)),
+              //   ),
+              // ),
             ],
           ),
       ),

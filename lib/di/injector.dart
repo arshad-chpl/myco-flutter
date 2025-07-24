@@ -1,26 +1,39 @@
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/core/router/app_router.dart';
+import 'package:myco_flutter/core/services/cache_service.dart';
+import 'package:myco_flutter/core/services/hive_cache_service.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.dart';
 import 'package:myco_flutter/features/chat/presentation/di/chat_list_di.dart';
 import 'package:myco_flutter/features/company_info/presentation/di/company_info_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
+import 'package:myco_flutter/features/company_selector/presentation/di/device_change_di.dart';
+import 'package:myco_flutter/features/company_selector/presentation/di/request_otp_di.dart';
+import 'package:myco_flutter/features/dashboard/presentation/di/dashboard_di.dart';
+import 'package:myco_flutter/features/employees/presentation/di/employee_di.dart';
+import 'package:myco_flutter/features/holiday/presentation/di/holiday_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/request_otp_di.dart';
 import 'package:myco_flutter/features/dashboard/presentation/di/dashboard_di.dart';
 import 'package:myco_flutter/features/holiday/presentation/di/holiday_di.dart';
 import 'package:myco_flutter/features/language_selector/presentation/di/language_di.dart';
+import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
+import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
 import 'package:myco_flutter/features/leave/presentation/di/leave_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
-import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/payslip/presentation/di/payslip_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/di/work_allocation_di.dart';
 
 final sl = GetIt.instance;
 
-Future<void> init() async {
+Future<void> initDi() async {
   sl.registerSingleton<AppRouter>(AppRouter());
+
+  // Register our Hive-based CacheService as a singleton
+  sl.registerSingleton<CacheService>(HiveCacheService());
+
   sl.registerSingleton<PreferenceManager>(PreferenceManager());
   // await initFirebaseModule(sl);
 
@@ -35,6 +48,9 @@ Future<void> init() async {
 
   //========Login=========
   await setupLoginDi(sl);
+
+  //========Device Change=========
+  setupDeviceChangeDi(sl);
 
   //========Company Selector=========
   companySelectorDi(sl);
@@ -54,16 +70,20 @@ Future<void> init() async {
   //========VISIT WITH=========
   visitWithDi(sl);
 
+  // ========Employee View=========
+  employeeDi(sl);
+
   //========Company Info=========
-  setupCompanyInfoDI(sl);
+  setupCompanyInfoDi(sl);
 
   //========Holiday=========
-  setupHolidayDI(sl);
+  setupHolidayDi(sl);
 
-  // ========Admin View=========
-  adminViewDi(sl);
   //Leave
   setUpLeaveDI(sl);
+
+  //Work Allocation
+  setUpWorkAllocationDI(sl);
 
   //========Payslip=========
   initPayslipFeatureDI(sl);

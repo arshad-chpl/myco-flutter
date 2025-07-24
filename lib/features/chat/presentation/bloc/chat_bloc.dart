@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -10,6 +11,7 @@ part 'chat_state.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final GetChatList getChatList;
+  List<MemberEntity> fullList = [];
    final List<Map<String, String>> _selectedDepartments = [];
   ChatBloc(this.getChatList) : super(ChatInitial()) {
    on<SearchEvent> (_onSearch); 
@@ -20,21 +22,23 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   }
   void _onSearch(SearchEvent event, Emitter<ChatState> emit) {
   final query = event.query.trim().toLowerCase();
-
+  log(fullList.toString(), name: "fullList in _onSearch");
+  log(fullList.length.toString(), name: "fullList in _onSearch_length");
   if (query.isEmpty) {
-    emit(SearchQueryState(filteredList: event.chatList));
+    emit(SearchQueryState(filteredList: fullList));
   } else {
     // Prioritize startsWith
-    final startsWithResults = event.chatList
+    final startsWithResults = fullList
         .where((item) =>
-            item['name']?.toLowerCase().startsWith(query) ?? false)
+            item.userFullName?.toLowerCase().startsWith(query) ?? false)
         .toList();
 
+log(startsWithResults.toString(), name: "startsWithResults in _onSearch");
     // Fallback contains (excluding already matched items)
-    final containsResults = event.chatList
+    final containsResults = fullList
         .where((item) =>
-            !(item['name']?.toLowerCase().startsWith(query) ?? false) &&
-            (item['name']?.toLowerCase().contains(query) ?? false))
+            !(item.userFullName?.toLowerCase().startsWith(query) ?? false) &&
+            (item.userFullName?.toLowerCase().contains(query) ?? false))
         .toList();
 
     // Combine both
@@ -74,7 +78,10 @@ FutureOr<void> getMemberChatList(GetChatListEvent event , Emitter<ChatState> emi
 
   final result = await getChatList();
 
-  result.fold((failure) => emit(GetChatListErrorState(message:  failure.message)), (response) => emit(GetChatListSuccessState(chatList: response)));
+  result.fold((failure) => emit(GetChatListErrorState(message:  failure.message)), (response) { 
+    fullList = response.member ?? [];
+    emit(GetChatListSuccessState(chatList: response));
+    });
 
 }
 }

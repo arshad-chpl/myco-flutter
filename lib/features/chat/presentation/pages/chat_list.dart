@@ -19,6 +19,11 @@ import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
+import 'package:myco_flutter/widgets/custom_multiselect_bottomsheet.dart';
+import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
+import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
@@ -175,6 +180,7 @@ class _EmployeesChatState extends State<EmployeesChat> {
                   hintText: 'search_member',
                   onChanged: (value) => {
                     // context.read<ChatBloc>().add(SearchEvent(value, groupMembers)),
+                    context.read<ChatBloc>().add(SearchEvent(value)),
                     log(state.toString(), name: "state"),
                   },
                 ),
@@ -204,10 +210,10 @@ class _EmployeesChatState extends State<EmployeesChat> {
                           ? state.filteredList[index]
                           : chatList?.member?[index];
                       return ChatListCard(
-                        name: chatList?.member?[index].userFirstName ?? "",
-                        lastMessage: chatList?.member?[index].userLastName ?? "",
-                        timeAgo: chatList?.member?[index].memberDateOfBirth ?? "",
-                        profileImagePath: chatList?.member?[index].userProfilePic ?? "",
+                        name: member?.userFirstName ?? "",
+                        lastMessage: member?.userLastName ?? "",
+                        timeAgo: member?.memberDateOfBirth ?? "",
+                        profileImagePath: member?.userProfilePic ?? "",
                       );
                     },
                     separatorBuilder: (context, index) =>
@@ -245,6 +251,7 @@ class GroupChat extends StatelessWidget {
       'image': 'assets/chat/profile.jpg',
     },
   ];
+
   @override
   Widget build(BuildContext context) => BlocBuilder<ChatBloc, ChatState>(
     builder: (context, state) => Column(
@@ -253,6 +260,7 @@ class GroupChat extends StatelessWidget {
           hintText: 'search_member',
           onChanged: (value) => {
             context.read<ChatBloc>().add(SearchEvent(value, groups)),
+            context.read<ChatBloc>().add(SearchEvent(value)),
             log(state.toString(), name: "state"),
           },
         ),
@@ -279,6 +287,27 @@ class GroupChat extends StatelessWidget {
                 SizedBox(height: 0.015 * Responsive.getHeight(context)),
           ),
         ),
+        // Expanded(
+        //   child: ListView.separated(
+        //     itemCount: state is SearchQueryState
+        //         ? state.filteredList.length
+        //         : groups.length,
+        //     itemBuilder: (context, index) {
+        //       final member = state is SearchQueryState
+        //           ? state.filteredList[index]
+        //           : groups[index];
+        //       return ChatListCard(
+        //         name: member['name']!,
+        //         lastMessage: member['message']!,
+        //         timeAgo: member['time']!,
+        //         profileImagePath: member['image']!,
+        //         onTap: () => {context.pushNamed('group-info')},
+        //       );
+        //     },
+        //     separatorBuilder: (context, index) =>
+        //         SizedBox(height: 0.015 * Responsive.getHeight(context)),
+        //   ),
+        // ),
         SizedBox(height: 0.02 * Responsive.getHeight(context)),
       ],
     ),
