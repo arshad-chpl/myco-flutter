@@ -12,10 +12,12 @@ import 'package:myco_flutter/features/work_allocation/presentation/widgets/emplo
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
+import 'package:myco_flutter/widgets/ios_calendar_time_picker.dart';
 
 class AssignWorkPage extends StatefulWidget {
-  AssignWorkPage({super.key});
+  const AssignWorkPage({super.key});
 
   @override
   State<AssignWorkPage> createState() => _AssignWorkPageState();
@@ -43,7 +45,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
 
   int? _currentFieldErrorIndex;
 
-  void _validateFieldByField() {
+  void validation() {
     final controllers = [
       categoryController,
       srNoController,
@@ -72,14 +74,14 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
   void initState() {
     super.initState();
     Future.microtask(() async {
-      final companyId = await PreferenceManager().getCompanyId() ?? "100";
-      final languageId = await PreferenceManager().getLanguageId() ?? "100";
+      final companyId = await PreferenceManager().getCompanyId();
+      final languageId = await PreferenceManager().getLanguageId();
 
       context.read<WorkAllocationBloc>().add(
         FetchWorkCategoryList(
-          companyId: companyId,
           getWorkCategory: 'getWorkCategory',
-          languageId: languageId,
+          companyId: companyId!,
+          languageId: languageId!,
         ),
       );
     });
@@ -87,7 +89,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: const CustomAppbar(title: 'Assign Work'),
+    appBar: const CustomAppbar(title: 'assign_work', isKey: true),
     body: BlocListener<WorkAllocationBloc, WorkAllocationState>(
       listenWhen: (previous, current) => current is WorkCategoryListLoaded,
       listener: (context, state) {},
@@ -104,7 +106,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
                 VariableBag.textFieldRowGap * Responsive.getResponsive(context),
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// CATEGORY FIELD
+              /// CATEGORY
               BlocBuilder<WorkAllocationBloc, WorkAllocationState>(
                 builder: (context, state) {
                   final bloc = context.read<WorkAllocationBloc>();
@@ -116,16 +118,17 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
                   }
 
                   return NewTextField(
-                    label: 'Category',
+                    label: 'category',
+                    isKey: true,
                     isRequired: true,
                     controller: categoryController,
-                    hintText: 'Work Category',
+                    hintText: 'work_category',
                     prefixIconPath: AppAssets.element_1,
                     suffixIconPath: AppAssets.downArrow,
                     validator: (value) {
                       if (_currentFieldErrorIndex == 0 &&
                           (value == null || value.trim().isEmpty)) {
-                        return 'Select category';
+                        return 'please_select_work_category';
                       }
                       return null;
                     },
@@ -152,11 +155,11 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
 
                         final selectedName = await showCustomSimpleBottomSheet(
                           context: context,
-                          heading: 'Work Category',
+                          heading: 'work_category',
                           dataList: categoriesName,
                           selectedId: selectedCategory,
                           searchHint: 'Search Category',
-                          btnTitle: 'Select',
+                          btnTitle: 'select',
                         );
 
                         if (selectedName != null &&
@@ -191,11 +194,11 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
                           final selectedName =
                               await showCustomSimpleBottomSheet(
                                 context: context,
-                                heading: 'Work Category',
+                                heading: 'work_category',
                                 dataList: categoriesName,
                                 selectedId: selectedCategory,
                                 searchHint: 'Search Category',
-                                btnTitle: 'Select',
+                                btnTitle: 'select',
                               );
 
                           if (selectedName != null &&
@@ -207,7 +210,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Categories not available'),
+                              content: CustomText('Categories not available'),
                             ),
                           );
                         }
@@ -217,49 +220,58 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
                 },
               ),
 
-              /// OTHER FIELDS
+              /// Project Sr No
               NewTextField(
-                label: 'Project Sr No',
+                label: 'project_sr_no',
+                isKey: true,
                 isRequired: true,
                 prefixIconPath: AppAssets.receiptEdittt,
                 controller: srNoController,
-                hintText: 'Type here',
+                hintText: 'type_here',
                 validator: (value) {
                   if (_currentFieldErrorIndex == 1 &&
                       (value == null || value.trim().isEmpty)) {
-                    return 'Please enter Project Sr No';
+                    return 'please_enter_project_sr_no';
                   }
                   return null;
                 },
               ),
+
+              /// Site
               NewTextField(
-                label: 'Site',
+                label: 'site',
+                isKey: true,
                 prefixIconPath: AppAssets.monitor,
                 controller: siteController,
                 isRequired: true,
-                hintText: 'Type here',
+                hintText: 'type_here',
                 validator: (value) {
                   if (_currentFieldErrorIndex == 2 &&
                       (value == null || value.trim().isEmpty)) {
-                    return 'Please enter Site';
+                    return 'please_enter_site_name';
                   }
                   return null;
                 },
               ),
+
+              ///  Location
               NewTextField(
-                label: 'Location',
+                label: 'location_colon',
+                isKey: true,
                 prefixIconPath: AppAssets.location1,
                 controller: locationController,
                 isRequired: true,
-                hintText: 'Type here',
+                hintText: 'type_here',
                 validator: (value) {
                   if (_currentFieldErrorIndex == 3 &&
                       (value == null || value.trim().isEmpty)) {
-                    return 'Please enter Location';
+                    return 'please_enter_location';
                   }
                   return null;
                 },
               ),
+
+              /// Start Date
               NewTextField(
                 label: 'Start Date (DD/MM/YYYY)',
                 prefixIconPath: AppAssets.assetNoteFavorite,
@@ -269,12 +281,24 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
                 validator: (value) {
                   if (_currentFieldErrorIndex == 4 &&
                       (value == null || value.trim().isEmpty)) {
-                    return 'Please enter Start Date';
+                    return 'please_select_start_date';
                   }
                   return null;
                 },
-                onTap: () {},
+                onTap: () async {
+                  final formattedDate = await showPicker(
+                    context,
+                    pickDay: true,
+                    timePicker: false,
+                  );
+
+                  setState(() {
+                    startDateController.text = formattedDate.toString();
+                  });
+                },
               ),
+
+              /// Target Date of Completion
               NewTextField(
                 label: 'Target Date of Completion (DD/MM/YYYY)',
                 prefixIconPath: AppAssets.assetNoteFavorite,
@@ -284,11 +308,21 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
                 validator: (value) {
                   if (_currentFieldErrorIndex == 5 &&
                       (value == null || value.trim().isEmpty)) {
-                    return 'Please enter Target Date';
+                    return 'please_select_target_date_of_completion';
                   }
                   return null;
                 },
-                onTap: () {},
+                onTap: () async {
+                  final formattedDate = await showPicker(
+                    context,
+                    pickDay: true,
+                    timePicker: false,
+                  );
+
+                  setState(() {
+                    startDateController.text = formattedDate.toString();
+                  });
+                },
               ),
 
               /// ASSIGN ENGINEER
@@ -301,8 +335,9 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
               /// REMARK
               NewTextField(
                 controller: remarkController,
-                label: 'Remark',
-                hintText: 'Type here',
+                label: 'remark',
+                isKey: true,
+                hintText: 'type_here',
                 prefixIconPath: AppAssets.msgedit,
                 maxLines: 10,
                 keyboardType: TextInputType.multiline,
@@ -312,7 +347,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
 
               MyCoButton(
                 title: 'Submit',
-                onTap: _validateFieldByField,
+                onTap: validation,
                 backgroundColor: AppTheme.getColor(context).primary,
                 textStyle: TextStyle(
                   fontSize: 16 * Responsive.getResponsiveText(context),

@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button_theme.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -115,7 +114,7 @@ Future<String?> showPicker(
 
                 // ✅ Send formatted value
                 final formatted = formatDate(newDateTime);
-                Navigator.of(context).pop('$formatted');
+                Navigator.pop(context, '$formatted');
               },
             ),
           ),

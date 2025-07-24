@@ -61,7 +61,8 @@ class AssignEngineerField extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                'Assign Work Engineer',
+                'assign_work_engineer',
+                isKey: true,
                 fontSize: 14 * Responsive.getResponsiveText(context),
                 fontWeight: FontWeight.w700,
                 color: AppTheme.getColor(context).onSurfaceVariant,
