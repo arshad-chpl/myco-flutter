@@ -11,7 +11,7 @@ import 'package:myco_flutter/features/leave/domain/entities/leave_history_respon
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_event.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
-import 'package:myco_flutter/features/leave/presentation/pages/leave_skeloton/short_leave_card_skeleton.dart';
+import 'package:myco_flutter/features/leave/presentation/leave_utils/leave_skeloton/short_leave_card_skeleton.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/auto_leave_change.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/custom_fab_menu.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_action_button.dart';

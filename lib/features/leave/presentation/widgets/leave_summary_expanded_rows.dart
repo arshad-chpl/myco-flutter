@@ -42,8 +42,8 @@ class LeaveSummaryExpandedRows extends StatelessWidget {
         children: [
           ...rows.map((row) {
             if (!row.isVisible) return const SizedBox.shrink();
-            if (row.label == 'View Dates' ||
-                row.label == 'Apply for leave encashment') {
+            if (row.label == 'view_dates' ||
+                row.label == 'apply_for_leave_encashment') {
               return InkWell(
                 onTap: row.onTap,
                 child: Padding(
@@ -53,10 +53,10 @@ class LeaveSummaryExpandedRows extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          row.label,
+                          LanguageManager().get(row.label),
                           style: TextStyle(
                             fontSize: 14,
-                            color: row.label == 'Apply for leave encashment'
+                            color: row.label == 'apply_for_leave_encashment'
                                 ? AppColors.greenDark
                                 : AppColors.primary,
                           ),
