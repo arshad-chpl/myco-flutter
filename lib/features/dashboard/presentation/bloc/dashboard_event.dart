@@ -43,3 +43,8 @@ class GetAppMenuGridWithCategory extends DashboardEvent {
     this.languageId,
   });
 }
+
+class GetMyUnits extends DashboardEvent {
+  final GetMyUnitsRequest request;
+  const GetMyUnits({required this.request});
+}
