@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_multiselect_bottomsheet.dart';
 
@@ -40,11 +41,12 @@ class _CustomMultiSelectChipFieldState extends State<CustomMultiSelectChipField>
   List<Map<String, String>> selectedItems = [];
 
   void _openSelectionPicker() async {
-  final List<String>? selectedIds = await showMultiSelectBottomSheet(
+  final List<String>? selectedIds = await showCustomSimpleBottomSheet(
     context: context,
     heading: widget.bottomSheetHeading ?? widget.addButtonText,
     icon: 'assets/chat/Frame.svg',
     dataList: widget.items,
+    isMultipleSelection: true,
   );
 
   log(selectedIds.toString(), name: "selectedIds in _openSelectionPicker");
@@ -131,7 +133,7 @@ class _CustomMultiSelectChipFieldState extends State<CustomMultiSelectChipField>
         mainAxisSize: MainAxisSize.min,
         children: [
           CustomText(
-            item['department'] ?? 'Unknown',
+            item['name'] ?? 'Unknown',
             fontSize: 14 * Responsive.getResponsiveText(context),
             color: AppTheme.getColor(context).primary,
             fontWeight: FontWeight.w600,
