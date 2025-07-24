@@ -9,10 +9,10 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/app_permissions.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_loader.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/custom_shadow_container.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/gallery_picker_screen.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_shadow_container.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/media_picker/screens/gallery_picker_screen.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 Future<List<File>?> showMediaFilePicker({
