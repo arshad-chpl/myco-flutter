@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
-import 'package:myco_flutter/core/utils/api_result_state.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/company_selector/presentation/bloc/inquiry/inquiry_state.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
 import 'package:myco_flutter/features/work_allocation/data/models/request/work_allocation_request.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_bloc.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_event.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_state.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation/work_allocation_bloc.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation/work_allocation_event.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation/work_allocation_state.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/assign_to_and_detail_row_widget.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/common_row.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/work_allocation_person_detail_widget.dart';
@@ -32,33 +32,17 @@ class _WorkAllocationCardListViewState
     extends State<WorkAllocationCardListView> {
   String? userId;
   String? companyId;
+
   @override
   void initState() {
     super.initState();
-    _fetchInitialData();
+    _fetchWorkAllocationData();
   }
 
-  Future<void> _fetchInitialData() async {
+  Future<void> _fetchWorkAllocationData() async {
     final preferenceManager = GetIt.I<PreferenceManager>();
     companyId = await preferenceManager.getCompanyId();
     userId = await preferenceManager.getUserId();
-    final languageId = await preferenceManager.getLanguageId();
-    makeApiCall();
-    // final state = context.read<WorkAllocationBloc>().add(
-    //   FetchWorkAllocationListEvent(
-    //     WorkAllocationRequest(
-    //       tag: 'getWorkAllocation',
-    //       companyId: companyId ?? '',
-    //       userId: userId ?? '',
-    //       workAllocationAddAccess: '',
-    //       filterMonth: false,
-    //       filterYear: '2025',
-    //     ),
-    //   ),
-    // );
-  }
-
-  void makeApiCall() {
     if (userId != null && companyId != null) {
       final request = WorkAllocationRequest(
         tag: 'getWorkAllocation',
@@ -76,72 +60,6 @@ class _WorkAllocationCardListViewState
       print('Error: User ID or Company ID is null. Cannot make API call.');
     }
   }
-
-  /*   List<Map<String, dynamic>> workAllocationData = [
-    {
-      'title': '22 May 2025, 10:00 AM',
-      'imagePath': AppAssets.personProfileImage,
-      'empName': 'Ajaj Ajmeri',
-      'designation': 'H.O.D',
-      'fieldWithCity': 'Technical - Ahmedabad',
-      'workCategory': 'AI Tools',
-      'project': 'FJC',
-      'startDate': '21st May 2025',
-      'endDate': '22nd May 2025',
-      'status': 'Pending', // or 'Approved', 'Completed', 'Authorized', 'Denied'
-    },
-    {
-      'title': '22 May 2025, 10:00 AM',
-      'imagePath': AppAssets.personProfileImage,
-      'empName': 'vinay parihar',
-      'designation': 'H.O.D',
-      'fieldWithCity': 'Technical - Ahmedabad',
-      'workCategory': 'AI Tools',
-      'project': 'FJC',
-      'startDate': '21st May 2025',
-      'endDate': '22nd May 2025',
-      'status':
-          'Approved', // or 'Approved', 'Completed', 'Authorized', 'Denied'
-    },
-    {
-      'title': '22 May 2025, 10:00 AM',
-      'imagePath': AppAssets.personProfileImage,
-      'empName': 'vinay parihar',
-      'designation': 'H.O.D',
-      'fieldWithCity': 'Technical - Ahmedabad',
-      'workCategory': 'AI Tools',
-      'project': 'FJC',
-      'startDate': '21st May 2025',
-      'endDate': '22nd May 2025',
-      'status': 'Completed',
-      // or 'Approved', 'Completed', 'Authorized', 'Denied'
-    },
-    {
-      'title': '22 May 2025, 10:00 AM',
-      'imagePath': AppAssets.personProfileImage,
-      'empName': 'vinay parihar',
-      'designation': 'H.O.D',
-      'fieldWithCity': 'Technical - Ahmedabad',
-      'workCategory': 'AI Tools',
-      'project': 'FJC',
-      'startDate': '21st May 2025',
-      'endDate': '22nd May 2025',
-      'status': 'Authorized',
-      // or 'Approved', 'Completed', 'Authorized', 'Denied'
-    },
-    {
-      'title': '22 May 2025, 10:00 AM',
-      'imagePath': AppAssets.personProfileImage,
-      'empName': 'vinay parihar',
-      'designation': 'H.O.D',
-      'fieldWithCity': 'Technical - Ahmedabad',
-      'workCategory': 'AI Tools',
-      'project': 'FJC',
-      'startDate': '21st May 2025',
-      'endDate': '22nd May 2025',
-      'status': 'Denied', // or 'Approved', 'Completed', 'Authorized', 'Denied'
-    },
-  ]; */
 
   @override
   Widget build(
@@ -167,20 +85,16 @@ class _WorkAllocationCardListViewState
         );
       } else if (state is WorkAllocationList) {
         return ListView.builder(
-          padding: EdgeInsets.only(
-            top: 13 * Responsive.getResponsive(context),
-            left: 13 * Responsive.getResponsive(context),
-            bottom: 72 * Responsive.getResponsive(context),
-            right: 13 * Responsive.getResponsive(context),
-          ),
           itemCount: state.workAllocationList.workAllocation?.length ?? 0,
           itemBuilder: (context, index) {
             final workAllocation =
                 state.workAllocationList.workAllocation![index];
 
             return Padding(
-              padding: EdgeInsets.only(
-                bottom: 17 * Responsive.getResponsive(context),
+              padding: EdgeInsets.symmetric(
+                vertical:
+                    VariableBag.commonCardHorizontalPadding *
+                    Responsive.getResponsive(context),
               ),
               child: CommonCard(
                 title: workAllocation.createdDate ?? '',
@@ -188,7 +102,9 @@ class _WorkAllocationCardListViewState
                 headerPrefixIcon: AppAssets.calendarIcon,
                 showHeaderPrefixIcon: true,
                 bottomWidget: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(
+                    8 * Responsive.getResponsive(context),
+                  ),
                   child: Column(
                     children: [
                       const AssignToAndDetailRowWidget(),
@@ -200,41 +116,39 @@ class _WorkAllocationCardListViewState
                       ),
                       Divider(color: AppTheme.getColor(context).secondary),
                       CommonRow(
-                        title: 'Work Category',
+                        title: LanguageManager().get("work_category"),
                         value: workAllocation.workCategoryName ?? '',
                         textColor: AppColors.textGray,
                       ),
-                      SizedBox(height: 0.005 * Responsive.getHeight(context)),
                       CommonRow(
-                        title: 'Project',
+                        title: LanguageManager().get("project"),
                         value: workAllocation.projectName ?? '',
                         textColor: AppColors.textGray,
                       ),
-                      SizedBox(height: 0.005 * Responsive.getHeight(context)),
                       CommonRow(
-                        title: 'Work Start Date',
+                        title: LanguageManager().get("work_start_date"),
                         value: workAllocation.startDate ?? '',
                         textColor: AppColors.textGray,
                       ),
-                      SizedBox(height: 0.005 * Responsive.getHeight(context)),
                       CommonRow(
-                        title: 'Target Date of Completion',
+                        title: LanguageManager().get(
+                          "target_date_of_completion",
+                        ),
                         value: workAllocation.endDate ?? '',
                         textColor: AppColors.textGray,
                       ),
-                      SizedBox(height: 0.005 * Responsive.getHeight(context)),
                       Divider(color: AppTheme.getColor(context).secondary),
-
-                      SizedBox(height: 0.005 * Responsive.getHeight(context)),
                       StatusTimeline(
-                        steps: getTimelineSteps(
-                          workAllocation.engineerStatus ?? '',
+                        steps: getTimelineStepsFromModel(
+                          context: context,
+                          engineerStatus: workAllocation.engineerStatus ?? '',
+                          completionDateByEng:
+                              workAllocation.completionDateByEngg,
+                          authorizedDateByHod:
+                              workAllocation.authorizedDateByHod,
                         ),
-                        // linewidth: 72,
-                        // circleSize: 14,
                         textSlotWidthMultiplier: 3.5,
                       ),
-                      SizedBox(height: 0.005 * Responsive.getHeight(context)),
                     ],
                   ),
                 ),
@@ -243,155 +157,111 @@ class _WorkAllocationCardListViewState
           },
         );
       } else if (state is WorkAllocationError) {
-        return Center(child: Text(state.error));
+        return Center(child: CustomText(state.error));
       }
       return const SizedBox.shrink();
     },
   );
 
-  List<TimelineStep> getTimelineSteps(String currentStatus) {
+  List<TimelineStep> getTimelineStepsFromModel({
+    required BuildContext context,
+    required String engineerStatus,
+    required String? completionDateByEng,
+    required String? authorizedDateByHod,
+  }) {
     final steps = <TimelineStep>[];
 
-    if (currentStatus == 'Denied') {
-      // Only show "Pending" and "Denied"
-      steps.add(
+    // Normalize values
+    final status = engineerStatus.trim().toLowerCase();
+    final isCompleted = (completionDateByEng?.trim().isNotEmpty ?? false);
+    final isAuthorized = (authorizedDateByHod?.trim().isNotEmpty ?? false);
+
+    // Handle Denied case
+    if (status == 'denied') {
+      return [
         TimelineStep(
           label: 'Pending',
           color: AppTheme.getColor(context).error,
           isActive: true,
         ),
-      );
-      steps.add(
         TimelineStep(
           label: 'Denied',
           color: AppTheme.getColor(context).error,
           imagePath: AppAssets.cancelCross,
           isActive: true,
         ),
-      );
-    } else if (currentStatus == 'Pending') {
-      steps.add(
-        const TimelineStep(
-          label: 'Pending',
-          color: AppColors.spanishYellow,
-          isActive: true,
-        ),
-      );
-      steps.add(
-        const TimelineStep(
-          label: 'Approved',
-          color: AppColors.textGray,
-          imagePath: AppAssets.checkMark,
-        ),
-      );
-      steps.add(
-        const TimelineStep(
-          label: 'Completed',
-          color: AppColors.textGray,
-          imagePath: AppAssets.checkMark,
-        ),
-      );
-      steps.add(
-        const TimelineStep(
-          label: 'Authorized',
-          color: AppColors.textGray,
-          imagePath: AppAssets.checkMark,
-        ),
-      );
-    } else if (currentStatus == 'Approved') {
-      steps.add(
-        TimelineStep(
-          label: 'Pending',
-          color: AppTheme.getColor(context).secondary,
-          isActive: true,
-        ),
-      );
-      steps.add(
-        TimelineStep(
-          label: 'Approved',
-          color: AppTheme.getColor(context).secondary,
-          imagePath: AppAssets.checkMark,
-          isActive: true,
-        ),
-      );
-      steps.add(
-        const TimelineStep(
-          label: 'Completed',
-          color: AppColors.textGray,
-          imagePath: AppAssets.checkMark,
-        ),
-      );
-      steps.add(
-        const TimelineStep(
-          label: 'Authorized',
-          color: AppColors.textGray,
-          imagePath: AppAssets.checkMark,
-        ),
-      );
-    } else if (currentStatus == 'Completed') {
-      steps.add(
-        TimelineStep(
-          label: 'Pending',
-          color: AppTheme.getColor(context).secondary,
-          isActive: true,
-        ),
-      );
-      steps.add(
-        TimelineStep(
-          label: 'Approved',
-          color: AppTheme.getColor(context).secondary,
-          imagePath: AppAssets.checkMark,
-          isActive: true,
-        ),
-      );
-      steps.add(
-        TimelineStep(
-          label: 'Completed',
-          color: AppTheme.getColor(context).secondary,
-          imagePath: AppAssets.checkMark,
-          isActive: true,
-        ),
-      );
-      steps.add(
-        const TimelineStep(
-          label: 'Authorized',
-          color: AppColors.textGray,
-          imagePath: AppAssets.checkMark,
-        ),
-      );
-    } else if (currentStatus == 'Authorized') {
-      steps.add(
-        TimelineStep(
-          label: 'Pending',
-          color: AppTheme.getColor(context).secondary,
-          isActive: true,
-        ),
-      );
-      steps.add(
-        TimelineStep(
-          label: 'Approved',
-          color: AppTheme.getColor(context).secondary,
-          imagePath: AppAssets.checkMark,
-          isActive: true,
-        ),
-      );
-      steps.add(
-        TimelineStep(
-          label: 'Completed',
-          color: AppTheme.getColor(context).secondary,
-          imagePath: AppAssets.checkMark,
-          isActive: true,
-        ),
-      );
-      steps.add(
-        TimelineStep(
-          label: 'Authorized',
-          color: AppTheme.getColor(context).secondary,
-          imagePath: AppAssets.checkMark,
-          isActive: true,
-        ),
-      );
+      ];
     }
+
+    // Determine active steps
+    bool pendingActive = false;
+    bool approvedActive = false;
+    bool completedActive = false;
+    bool authorizedActive = false;
+
+    if (status == '0') {
+      // Only pending
+      pendingActive = true;
+    } else if (status == '1' && !isCompleted) {
+      // Pending and approved
+      pendingActive = true;
+      approvedActive = true;
+    } else if (status == '2') {
+      // Pending and approved
+      pendingActive = true;
+      approvedActive = true;
+    }
+
+    if (isCompleted && !isAuthorized) {
+      // Completed added
+      pendingActive = true;
+      approvedActive = true;
+      completedActive = true;
+    }
+
+    if (isCompleted && isAuthorized) {
+      // All steps complete
+      pendingActive = true;
+      approvedActive = true;
+      completedActive = true;
+      authorizedActive = true;
+    }
+
+    String? getIcon(bool active) => active ? AppAssets.checkMark : null;
+
+    // Build step list
+    steps.add(
+      TimelineStep(
+        label: 'Pending',
+        color: AppColors.spanishYellow,
+        isActive: pendingActive,
+      ),
+    );
+    steps.add(
+      TimelineStep(
+        label: 'Approved',
+        color: AppColors.textGray,
+        isActive: approvedActive,
+        imagePath: getIcon(approvedActive),
+      ),
+    );
+    steps.add(
+      TimelineStep(
+        label: 'Completed',
+        color: AppColors.secondary,
+        isActive: completedActive,
+        imagePath: getIcon(completedActive),
+      ),
+    );
+    steps.add(
+      TimelineStep(
+        label: 'Authorized',
+        color: AppColors.secondary,
+        isActive: authorizedActive,
+        imagePath: getIcon(authorizedActive),
+      ),
+    );
+
     return steps;
   }
 }

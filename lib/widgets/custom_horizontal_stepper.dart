@@ -517,7 +517,7 @@ class StatusTimeline extends StatelessWidget {
     super.key,
     required this.steps,
     this.circleSize = 19,
-    this.linewidth = 72,
+    this.linewidth = 64, //72
     this.textSlotWidthMultiplier = 2,
   });
 

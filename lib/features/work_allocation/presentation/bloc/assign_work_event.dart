@@ -3,14 +3,14 @@ import 'package:myco_flutter/features/work_allocation/data/models/request/add_wo
 import 'package:myco_flutter/features/work_allocation/data/models/request/work_allocation_request.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/employee_details.dart';
 
-abstract class WorkAllocationEvent extends Equatable {
-  const WorkAllocationEvent();
+abstract class AssignWorkEvent extends Equatable {
+  const AssignWorkEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class FetchWorkCategoryList extends WorkAllocationEvent {
+class FetchWorkCategoryList extends AssignWorkEvent {
   final String companyId;
   final String getWorkCategory;
   final String languageId;
@@ -25,7 +25,7 @@ class FetchWorkCategoryList extends WorkAllocationEvent {
   List<Object?> get props => [companyId, getWorkCategory, languageId];
 }
 
-class SelectDynamicWorkCategoryEvent extends WorkAllocationEvent {
+class SelectDynamicWorkCategoryEvent extends AssignWorkEvent {
   final String selectedCategory;
 
   const SelectDynamicWorkCategoryEvent(this.selectedCategory);
@@ -34,7 +34,7 @@ class SelectDynamicWorkCategoryEvent extends WorkAllocationEvent {
   List<Object?> get props => [selectedCategory];
 }
 
-class AddWorkAllocationEvent extends WorkAllocationEvent {
+class AddWorkAllocationEvent extends AssignWorkEvent {
   final AddWorkAllocationRequest request;
 
   const AddWorkAllocationEvent(this.request);
@@ -43,7 +43,7 @@ class AddWorkAllocationEvent extends WorkAllocationEvent {
   List<Object?> get props => [request];
 }
 
-class FilterEmployeesEvent extends WorkAllocationEvent {
+class FilterEmployeesEvent extends AssignWorkEvent {
   final String query;
   final List<Employee> allEmployees;
 
@@ -53,19 +53,19 @@ class FilterEmployeesEvent extends WorkAllocationEvent {
   List<Object?> get props => [query, allEmployees];
 }
 
-class SelectEmployeeEvent extends WorkAllocationEvent {
+class SelectEmployeeEvent extends AssignWorkEvent {
   final Employee employee;
 
   SelectEmployeeEvent(this.employee);
 }
 
-class RemoveSelectedEmployeeEvent extends WorkAllocationEvent {}
+class RemoveSelectedEmployeeEvent extends AssignWorkEvent {}
 
-  class FetchWorkAllocationListEvent extends WorkAllocationEvent {
+class FetchWorkAllocationListEvent extends AssignWorkEvent {
   final WorkAllocationRequest params;
 
-  const FetchWorkAllocationListEvent( this.params);
+  const FetchWorkAllocationListEvent(this.params);
+
   @override
   List<Object?> get props => [params];
 }
-

@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_bloc.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_event.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_state.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/assign_work_bloc.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/assign_work_event.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/assign_work_state.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/employee_card.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -48,9 +48,9 @@ class AssignEngineerField extends StatelessWidget {
   @override
   Widget build(
     BuildContext context,
-  ) => BlocBuilder<WorkAllocationBloc, WorkAllocationState>(
+  ) => BlocBuilder<AssignWorkBloc, AssignWorkState>(
     builder: (context, state) {
-      final bloc = context.read<WorkAllocationBloc>();
+      final bloc = context.read<AssignWorkBloc>();
       final filteredList = bloc.filteredEmployees;
       final selectedEmployee = bloc.selectedEmployee;
 
@@ -101,7 +101,7 @@ class AssignEngineerField extends StatelessWidget {
                   child: Focus(
                     onFocusChange: (hasFocus) {
                       if (!hasFocus) {
-                        context.read<WorkAllocationBloc>().add(
+                        context.read<AssignWorkBloc>().add(
                           FilterEmployeesEvent('', allEmployees),
                         );
                       }
@@ -109,9 +109,9 @@ class AssignEngineerField extends StatelessWidget {
                     child: TextField(
                       controller: controller,
                       focusNode: focusNode,
-                      onChanged: (query) => context
-                          .read<WorkAllocationBloc>()
-                          .add(FilterEmployeesEvent(query, allEmployees)),
+                      onChanged: (query) => context.read<AssignWorkBloc>().add(
+                        FilterEmployeesEvent(query, allEmployees),
+                      ),
                       decoration: InputDecoration(
                         hintText: 'Mention Here',
                         contentPadding: EdgeInsets.symmetric(
@@ -138,7 +138,7 @@ class AssignEngineerField extends StatelessWidget {
                                 icon: const Icon(Icons.clear),
                                 onPressed: () {
                                   controller.clear();
-                                  context.read<WorkAllocationBloc>().add(
+                                  context.read<AssignWorkBloc>().add(
                                     FilterEmployeesEvent('', allEmployees),
                                   );
                                 },
@@ -163,9 +163,9 @@ class AssignEngineerField extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final emp = filteredList[index];
                               return InkWell(
-                                onTap: () => context
-                                    .read<WorkAllocationBloc>()
-                                    .add(SelectEmployeeEvent(emp)),
+                                onTap: () => context.read<AssignWorkBloc>().add(
+                                  SelectEmployeeEvent(emp),
+                                ),
                                 child: Container(
                                   height: 0.07 * Responsive.getHeight(context),
                                   margin: EdgeInsets.symmetric(
@@ -268,7 +268,7 @@ class AssignEngineerField extends StatelessWidget {
                         isSelected: true,
                         showDelete: true,
                         onDeleteTap: () {
-                          context.read<WorkAllocationBloc>().add(
+                          context.read<AssignWorkBloc>().add(
                             RemoveSelectedEmployeeEvent(),
                           );
                         },

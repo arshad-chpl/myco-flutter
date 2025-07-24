@@ -5,9 +5,9 @@ import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_bloc.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_event.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_state.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/assign_work_bloc.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/assign_work_event.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/assign_work_state.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/employee_details.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -77,7 +77,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
       final companyId = await PreferenceManager().getCompanyId();
       final languageId = await PreferenceManager().getLanguageId();
 
-      context.read<WorkAllocationBloc>().add(
+      context.read<AssignWorkBloc>().add(
         FetchWorkCategoryList(
           getWorkCategory: 'getWorkCategory',
           companyId: companyId!,
@@ -90,8 +90,8 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: const CustomAppbar(title: 'assign_work', isKey: true),
-    body: BlocListener<WorkAllocationBloc, WorkAllocationState>(
-      listenWhen: (previous, current) => current is WorkCategoryListLoaded,
+    body: BlocListener<AssignWorkBloc, AssignWorkState>(
+      listenWhen: (previous, current) => current is AssignWorkListLoaded,
       listener: (context, state) {},
       child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
@@ -107,9 +107,9 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /// CATEGORY
-              BlocBuilder<WorkAllocationBloc, WorkAllocationState>(
+              BlocBuilder<AssignWorkBloc, AssignWorkState>(
                 builder: (context, state) {
-                  final bloc = context.read<WorkAllocationBloc>();
+                  final bloc = context.read<AssignWorkBloc>();
                   final selectedCategory = bloc.selectedCategory;
 
                   if (selectedCategory != null &&
@@ -138,11 +138,9 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
                       final languageId = await PreferenceManager()
                           .getLanguageId();
 
-                      final currentState = context
-                          .read<WorkAllocationBloc>()
-                          .state;
+                      final currentState = context.read<AssignWorkBloc>().state;
 
-                      if (currentState is WorkCategoryListLoaded &&
+                      if (currentState is AssignWorkListLoaded &&
                           currentState.categories.isNotEmpty) {
                         final categoriesName = currentState.categories
                             .map(
@@ -180,7 +178,7 @@ class _AssignWorkPageState extends State<AssignWorkPage> {
                         await Future.delayed(const Duration(milliseconds: 500));
 
                         final newState = bloc.state;
-                        if (newState is WorkCategoryListLoaded &&
+                        if (newState is AssignWorkListLoaded &&
                             newState.categories.isNotEmpty) {
                           final categoriesName = newState.categories
                               .map(

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
@@ -29,12 +28,16 @@ class _AssignToAndDetailRowWidgetState
       ),
       MyCoButton(
         onTap: () {
-         context.push('/detail-page');
+          context.push('/detail-page');
         },
         title: LanguageManager().get('view_details'),
-        fontWeight: FontWeight.w700,
+        textStyle: TextStyle(
+          fontSize: 12 * Responsive.getResponsiveText(context),
+          fontWeight: FontWeight.w600,
+          color: AppTheme.getColor(context).onPrimary,
+        ),
         height: 0.03 * Responsive.getHeight(context),
-        width: 0.28 * Responsive.getWidth(context),
+        width: 0.25 * Responsive.getWidth(context),
         backgroundColor: AppTheme.getColor(context).secondary,
         borderColor: AppTheme.getColor(context).secondary,
         boarderRadius: 23,

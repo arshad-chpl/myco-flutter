@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
-import 'package:myco_flutter/features/work_allocation/presentation/bloc/work_allocation_bloc.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/bloc/assign_work_bloc.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/pages/assign_work_page.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/pages/detail_page.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/pages/work_allocation_page.dart';
@@ -12,7 +12,7 @@ List<RouteBase> WorkAllocationRoutes = [
   ShellRoute(
     builder: (BuildContext context, GoRouterState state, Widget child) =>
         BlocProvider(
-          create: (context) => GetIt.I<WorkAllocationBloc>(),
+          create: (context) => GetIt.I<AssignWorkBloc>(),
           child: child,
         ),
     routes: [

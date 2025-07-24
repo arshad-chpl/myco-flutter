@@ -3,51 +3,51 @@ import 'package:myco_flutter/features/work_allocation/domain/entities/get_work_c
 import 'package:myco_flutter/features/work_allocation/domain/entities/work_allocation_entity.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/widgets/employee_details.dart';
 
-abstract class WorkAllocationState extends Equatable {
-  const WorkAllocationState();
+abstract class AssignWorkState extends Equatable {
+  const AssignWorkState();
 
   @override
   List<Object?> get props => [];
 }
 
-class WorkAllocationInitial extends WorkAllocationState {}
+class AssignWorkInitial extends AssignWorkState {}
 
 // Loading state (for fetching categories or submitting form)
-class WorkAllocationLoading extends WorkAllocationState {}
+class AssignWorkLoading extends AssignWorkState {}
 
 // Category list loaded
-class WorkCategoryListLoaded extends WorkAllocationState {
+class AssignWorkListLoaded extends AssignWorkState {
   final List<WorkCategoryListEntity> categories;
   final String? selectedCategory;
 
-  const WorkCategoryListLoaded(this.categories, {this.selectedCategory});
+  const AssignWorkListLoaded(this.categories, {this.selectedCategory});
 
   @override
   List<Object?> get props => [categories, selectedCategory];
 }
 
 // Work allocation form submitted successfully
-class WorkAllocationSuccess extends WorkAllocationState {
+class AssignWorkSuccess extends AssignWorkState {
   final String message;
 
-  const WorkAllocationSuccess(this.message);
+  const AssignWorkSuccess(this.message);
 
   @override
   List<Object?> get props => [message];
 }
 
 // Error state
-class WorkAllocationError extends WorkAllocationState {
+class AssignWorkError extends AssignWorkState {
   final String error;
 
-  const WorkAllocationError(this.error);
+  const AssignWorkError(this.error);
 
   @override
   List<Object?> get props => [error];
 }
 
 // Category selected
-class WorkCategorySelected extends WorkAllocationState {
+class WorkCategorySelected extends AssignWorkState {
   final String selectedCategory;
 
   const WorkCategorySelected(this.selectedCategory);
@@ -57,7 +57,7 @@ class WorkCategorySelected extends WorkAllocationState {
 }
 
 // Filtered employee list to show in search
-class EmployeeFiltered extends WorkAllocationState {
+class EmployeeFiltered extends AssignWorkState {
   final List<Employee> employees;
   final bool showList;
 
@@ -68,7 +68,7 @@ class EmployeeFiltered extends WorkAllocationState {
 }
 
 // Employee selected
-class EmployeeSelected extends WorkAllocationState {
+class EmployeeSelected extends AssignWorkState {
   final Employee employee;
 
   const EmployeeSelected(this.employee);
@@ -78,12 +78,13 @@ class EmployeeSelected extends WorkAllocationState {
 }
 
 // Selected employee removed
-class EmployeeDeselected extends WorkAllocationState {}
+class EmployeeDeselected extends AssignWorkState {}
 
-class WorkAllocationList extends WorkAllocationState {
+class WorkAllocationList extends AssignWorkState {
   final WorkAllocationResponseEntity workAllocationList;
 
   const WorkAllocationList(this.workAllocationList);
+
   @override
   List<Object?> get props => [workAllocationList];
 }
