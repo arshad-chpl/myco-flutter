@@ -2,8 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
-import 'package:myco_flutter/features/common_api/domain/usecase/common_api_usercase.dart';
-import 'package:myco_flutter/features/common_api/presentation/bloc/common_api_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
@@ -14,8 +12,6 @@ import 'package:myco_flutter/features/language_selector/presentation/bloc/langua
 import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
-import 'package:myco_flutter/features/sign_in/domain/usecases/primary_register_usecase.dart';
-import 'package:myco_flutter/features/sign_in/presentation/bloc/primary_register_bloc.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
@@ -79,22 +75,10 @@ List<RouteBase> InitialRoutes = [
       ),
     ],
   ),
-
   GoRoute(
     path: RoutePaths.signUpForm,
     name: 'select-other-company',
-    builder: (context, state) => MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => CommonApiBloc(registerUseCase: GetIt.I<CommonApiUserCase>()),
-        ),
-        BlocProvider(
-          create: (context) => PrimaryRegisterBloc(registerUseCase: GetIt.I<PrimaryRegisterUseCase>(),
-          ),
-        ),
-      ],
-      child: const SignupFormPage(),
-    ),
+    builder: (context, state) => const SignupFormPage(),
   ),
   GoRoute(
     path: RoutePaths.getStarted,

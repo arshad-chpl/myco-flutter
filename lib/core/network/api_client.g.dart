@@ -219,69 +219,6 @@ class _ApiClient implements ApiClient {
     return _value;
   }
 
-  @override
-  Future<String> postMultipartImage(
-    String path,
-    String tag,
-    String societyId,
-    String userId,
-    String beforeLogIn,
-    String fileFormatName,
-    List<MultipartFile> images,
-  ) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = FormData();
-    _data.fields.add(MapEntry(
-      'uploadImageToTemp',
-      tag,
-    ));
-    _data.fields.add(MapEntry(
-      'society_id',
-      societyId,
-    ));
-    _data.fields.add(MapEntry(
-      'user_id',
-      userId,
-    ));
-    _data.fields.add(MapEntry(
-      'beforeLogIn',
-      beforeLogIn,
-    ));
-    _data.fields.add(MapEntry(
-      'file_format_name',
-      fileFormatName,
-    ));
-    _data.files.addAll(images.map((i) => MapEntry('img[]', i)));
-    final _options = _setStreamType<String>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-      contentType: 'multipart/form-data',
-    )
-        .compose(
-          _dio.options,
-          '${path}',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<String>(_options);
-    late String _value;
-    try {
-      _value = _result.data!;
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    return _value;
-  }
-
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

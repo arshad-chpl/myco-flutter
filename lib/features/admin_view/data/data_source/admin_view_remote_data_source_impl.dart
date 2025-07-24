@@ -13,11 +13,15 @@ class AdminViewRemoteDataSourceImpl extends AdminViewRemoteDataSource {
   AdminViewRemoteDataSourceImpl({required this.apiClient});
 
   @override
-  Future<AdminViewResponseModel> getAdminViewNew(AdminViewRequest request)
-
-  async {
+  Future<AdminViewResponseModel> getAdminViewNew(
+    AdminViewRequest request,
+  ) async {
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
-    final response = await GetIt.I<ApiClient>(instanceName: VariableBag.employeeMobileApi).postDynamic('admin_view_controller.php', encryptedBody);
-    return AdminViewResponseModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
+    final response = await GetIt.I<ApiClient>(
+      instanceName: VariableBag.employeeMobileApi,
+    ).postDynamic('admin_view_controller.php', encryptedBody);
+    return AdminViewResponseModel.fromJson(
+      json.decode(GzipUtil.decryptAES(response)),
+    );
   }
 }
