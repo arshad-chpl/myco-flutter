@@ -7,35 +7,34 @@ part of 'get_other_earnings_model.dart';
 // **************************************************************************
 
 GetOtherEarningsModel _$GetOtherEarningsModelFromJson(
-  Map<String, dynamic> json,
-) => GetOtherEarningsModel(
-  otherEarnings:
-      (json['other_earnings'] as List<dynamic>?)
+        Map<String, dynamic> json) =>
+    GetOtherEarningsModel(
+      otherEarnings: (json['other_earnings'] as List<dynamic>?)
           ?.map((e) => OtherEarning.fromJson(e as Map<String, dynamic>))
           .toList(),
-  totalEarnings: json['total_earnings'] as String?,
-  message: json['message'] as String?,
-  status: json['status'] as String?,
-);
+      totalEarnings: json['total_earnings'] as String?,
+      message: json['message'] as String?,
+      status: json['status'] as String?,
+    );
 
 Map<String, dynamic> _$GetOtherEarningsModelToJson(
-  GetOtherEarningsModel instance,
-) => <String, dynamic>{
-  'other_earnings': instance.otherEarnings,
-  'total_earnings': instance.totalEarnings,
-  'message': instance.message,
-  'status': instance.status,
-};
+        GetOtherEarningsModel instance) =>
+    <String, dynamic>{
+      'other_earnings': instance.otherEarnings,
+      'total_earnings': instance.totalEarnings,
+      'message': instance.message,
+      'status': instance.status,
+    };
 
 OtherEarning _$OtherEarningFromJson(Map<String, dynamic> json) => OtherEarning(
-  leavePayoutId: json['leave_payout_id'] as String?,
-  leaveTypeId: json['leave_type_id'] as String?,
-  leaveTypeName: json['leave_type_name'] as String?,
-  noOfPayoutLeaves: json['no_of_payout_leaves'] as String?,
-  leavePayoutAmount: json['leave_payout_amount'] as String?,
-  leavePayoutRemark: json['leave_payout_remark'] as String?,
-  leavePayoutDate: json['leave_payout_date'] as String?,
-);
+      leavePayoutId: json['leave_payout_id'] as String?,
+      leaveTypeId: json['leave_type_id'] as String?,
+      leaveTypeName: json['leave_type_name'] as String?,
+      noOfPayoutLeaves: json['no_of_payout_leaves'] as String?,
+      leavePayoutAmount: json['leave_payout_amount'] as String?,
+      leavePayoutRemark: json['leave_payout_remark'] as String?,
+      leavePayoutDate: json['leave_payout_date'] as String?,
+    );
 
 Map<String, dynamic> _$OtherEarningToJson(OtherEarning instance) =>
     <String, dynamic>{

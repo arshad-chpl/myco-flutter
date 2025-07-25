@@ -20,6 +20,7 @@ import 'package:myco_flutter/features/language_selector/presentation/di/language
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
 import 'package:myco_flutter/features/leave/presentation/di/leave_di.dart';
+import 'package:myco_flutter/features/my_profile/presentation/di/my_profile_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
 import 'package:myco_flutter/features/payslip/presentation/di/payslip_di.dart';
@@ -90,4 +91,7 @@ Future<void> initDi() async {
 
   //========Chat=========
   initChatFeatureDI(sl);
+
+  //========My Profile=========
+  initMyProfileFeatureDI(sl);
 }

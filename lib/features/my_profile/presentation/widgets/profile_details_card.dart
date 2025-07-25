@@ -8,7 +8,28 @@ import 'package:myco_flutter/widgets/custom_progress_bar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class ProfileDetailsCard extends StatelessWidget {
-  const ProfileDetailsCard({super.key});
+  final String fullName;
+  final String employeeId;
+  final String designation;
+  final String department;
+  final String branchName;
+  final String phoneNumber;
+  final String email;
+  final String profileImage;
+  final List social_link;
+
+  const ProfileDetailsCard({
+    super.key,
+    required this.fullName,
+    required this.employeeId,
+    required this.designation,
+    required this.department,
+    required this.branchName,
+    required this.phoneNumber,
+    required this.email,
+    required this.profileImage,
+    required this.social_link,
+  });
 
   @override
   Widget build(BuildContext context) => CommonCard(
@@ -25,9 +46,14 @@ class ProfileDetailsCard extends StatelessWidget {
           Row(
             children: [
               badges.Badge(
-                badgeStyle: badges.BadgeStyle(badgeColor: Colors.transparent),
+                badgeStyle: badges.BadgeStyle(
+                  // Kept the badge background transparent as in your original code
+                  badgeColor: Colors.transparent,
+                  // Set elevation to 0 to avoid the badge's default shadow
+                  elevation: 0,
+                ),
                 position: badges.BadgePosition.bottomEnd(
-                  bottom: -13 * Responsive.getResponsive(context),
+                  bottom: -17 * Responsive.getResponsive(context),
                   end: -6 * Responsive.getResponsive(context),
                 ),
                 badgeContent: ClipRRect(
@@ -37,10 +63,67 @@ class ProfileDetailsCard extends StatelessWidget {
                     height: 0.04 * Responsive.getHeight(context),
                   ),
                 ),
-                child: Image.asset(
-                  "assets/dashboard/person_photo.png",
-                  fit: BoxFit.contain,
-                  height: 0.12 * Responsive.getHeight(context),
+                // MODIFICATION: The original child is wrapped in a Container to add a shadow.
+                child: Container(
+                  height: 0.1 * Responsive.getHeight(context),
+                  width: 0.1 * Responsive.getHeight(context),
+                  decoration: BoxDecoration(
+                    // The shape of the decoration should be circular to match the image.
+                    shape: BoxShape.circle,
+                    // The boxShadow property takes a list of BoxShadows.
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.4), // Shadow color
+                        spreadRadius: 2, // How far the shadow extends
+                        blurRadius: 8, // The blurriness of the shadow
+                        offset: const Offset(0, 4), // Moves the shadow (x, y)
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    // Corrected typo from BorderRadiusGeometry to BorderRadius
+                    // A large radius on a square widget makes it circular.
+                    borderRadius: BorderRadius.circular(
+                      50 * Responsive.getResponsive(context),
+                    ),
+                    child: Image.network(
+                      profileImage,
+                      fit: BoxFit.cover,
+                      // Height and width are now controlled by the parent Container.
+                      height: 0.1 * Responsive.getHeight(context),
+                      width: 0.1 * Responsive.getHeight(context),
+                      // It's good practice to add a loading builder for network images.
+                      loadingBuilder:
+                          (
+                            BuildContext context,
+                            Widget child,
+                            ImageChunkEvent? loadingProgress,
+                          ) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                value:
+                                    loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                            );
+                          },
+                      // And an error builder in case the image fails to load.
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: Colors.grey[300],
+                          child: Icon(
+                            Icons.person_outline,
+                            color: Colors.grey[600],
+                            size: 0.06 * Responsive.getHeight(context),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
               SizedBox(width: 0.015 * Responsive.getWidth(context)),
@@ -48,26 +131,29 @@ class ProfileDetailsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomText(
-                    "Manish Chandra",
+                    fullName,
                     fontSize: 18 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w700,
                   ),
                   CustomText(
-                    "Emplolyee ID : CHPL-QA-085",
+                    employeeId,
                     fontSize: 14 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w500,
                   ),
                   CustomText(
-                    "Tester",
+                    designation,
                     fontSize: 14 * Responsive.getResponsiveText(context),
                     fontWeight: FontWeight.w700,
                     color: AppTheme.getColor(context).outline,
                   ),
-                  CustomText(
-                    "Junagadh - Technical - QA",
-                    color: AppTheme.getColor(context).outline,
-                    fontSize: 14 * Responsive.getResponsiveText(context),
-                    fontWeight: FontWeight.w700,
+                  SizedBox(
+                    width: 0.55 * Responsive.getWidth(context),
+                    child: CustomText(
+                      "${branchName} - ${department} - ${designation}",
+                      color: AppTheme.getColor(context).outline,
+                      fontSize: 14 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ],
               ),
@@ -103,7 +189,7 @@ class ProfileDetailsCard extends StatelessWidget {
             children: [
               SvgPicture.asset("assets/dashboard/svgs/call-calling.svg"),
               CustomText(
-                "+91 9909945983",
+                phoneNumber,
                 fontWeight: FontWeight.w500,
                 fontSize: 16 * Responsive.getResponsiveText(context),
               ),
@@ -115,7 +201,7 @@ class ProfileDetailsCard extends StatelessWidget {
             children: [
               SvgPicture.asset("assets/dashboard/svgs/sms.svg"),
               CustomText(
-                "Mukund@yopmail.com",
+                email,
                 fontWeight: FontWeight.w500,
                 fontSize: 16 * Responsive.getResponsiveText(context),
               ),
