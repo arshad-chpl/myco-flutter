@@ -437,4 +437,5 @@ class OtherEarnings extends StatelessWidget {
       ],
     ),
   );
+  
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:myco_flutter/features/payslip/domain/entities/ctc_details_entity.dart';
@@ -114,6 +115,7 @@ class OtherEarningsBloc extends Bloc<PayslipEvent, PayslipState> {
 
     result.fold(
       (failure) => emit(GetOtherEarningsErrorState(error: failure.message)),
+
       (response) => emit(GetOtherEarningsSuccessState(otherEarnings: response)),
     );
   }
