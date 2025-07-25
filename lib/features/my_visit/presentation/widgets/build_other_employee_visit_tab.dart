@@ -16,7 +16,6 @@ import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart'
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-
 Widget buildOtherEmployeeVisitTab(
   BuildContext context, {
   required TextEditingController searchController,
@@ -123,83 +122,83 @@ Widget buildOtherEmployeeVisitTab(
                   ),
                 ),
 
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CommonRow(
-                    title: 'Visit',
-                    value: 'Physical',
-                    textColor: AppTheme.getColor(context).outline,
-                  ),
-                  CommonRow(
-                    title: 'Visit Type',
-                    value: 'Visit Type',
-                    textColor: AppTheme.getColor(context).outline,
-                  ),
-                  CommonRow(
-                    title: 'Visit Purpose',
-                    value: 'Visit Purpose',
-                    textColor: AppTheme.getColor(context).outline,
-                  ),
-                  CommonRow(
-                    title: 'Address',
-                    value: '5XJ6F9J, Haripura, Gujrat 394325,\nIndia',
-                    textColor: AppTheme.getColor(context).onSurface,
-                  ),
-                ],
-              ),
-              SizedBox(height: 0.01 * Responsive.getHeight(context)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    spacing: 20 * Responsive.getResponsive(context),
-                    children: [
-                      InkWell(
-                        child: SvgPicture.asset(AppAssets.whatsapp),
-                        onTap: () {
-                          // Handle whatsapp tap
-                        },
-                      ),
-                      InkWell(
-                        child: SvgPicture.asset(AppAssets.share),
-                        onTap: () {
-                          // Handle share tap
-                        },
-                      ),
-                      InkWell(
-                        child: SvgPicture.asset(AppAssets.delete),
-                        onTap: () {
-                          // Handle delete tap
-                        },
-                      ),
-                    ],
-                  ),
-                  MyCoButton(
-                    onTap: () {
-                      // Handle visit not started tap
-                    },
-                    textStyle: TextStyle(
-                      color: AppColors.spanishYellow,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 13 * Responsive.getResponsiveText(context),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CommonRow(
+                      title: 'Visit',
+                      value: 'Physical',
+                      textColor: AppTheme.getColor(context).outline,
                     ),
-                    boarderRadius: 30 * Responsive.getResponsive(context),
-                    height: 0.04 * Responsive.getHeight(context),
-                    width: 0.4 * Responsive.getWidth(context),
-                    borderColor: AppColors.spanishYellow,
-                    borderWidth: 1.2 * Responsive.getResponsive(context),
-                    backgroundColor: Colors.transparent,
-                    wantBorder: true,
-                    title: 'Visit Not Started',
-                  ),
-                ],
-              ),
-            ],
+                    CommonRow(
+                      title: 'Visit Type',
+                      value: 'Visit Type',
+                      textColor: AppTheme.getColor(context).outline,
+                    ),
+                    CommonRow(
+                      title: 'Visit Purpose',
+                      value: 'Visit Purpose',
+                      textColor: AppTheme.getColor(context).outline,
+                    ),
+                    CommonRow(
+                      title: 'Address',
+                      value: '5XJ6F9J, Haripura, Gujrat 394325,\nIndia',
+                      textColor: AppTheme.getColor(context).onSurface,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 0.01 * Responsive.getHeight(context)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      spacing: 20 * Responsive.getResponsive(context),
+                      children: [
+                        InkWell(
+                          child: SvgPicture.asset(AppAssets.whatsapp),
+                          onTap: () {
+                            // Handle whatsapp tap
+                          },
+                        ),
+                        InkWell(
+                          child: SvgPicture.asset(AppAssets.share),
+                          onTap: () {
+                            // Handle share tap
+                          },
+                        ),
+                        InkWell(
+                          child: SvgPicture.asset(AppAssets.delete),
+                          onTap: () {
+                            // Handle delete tap
+                          },
+                        ),
+                      ],
+                    ),
+                    MyCoButton(
+                      onTap: () {
+                        // Handle visit not started tap
+                      },
+                      textStyle: TextStyle(
+                        color: AppColors.spanishYellow,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13 * Responsive.getResponsiveText(context),
+                      ),
+                      boarderRadius: 30 * Responsive.getResponsive(context),
+                      height: 0.04 * Responsive.getHeight(context),
+                      width: 0.4 * Responsive.getWidth(context),
+                      borderColor: AppColors.spanishYellow,
+                      borderWidth: 1.2 * Responsive.getResponsive(context),
+                      backgroundColor: Colors.transparent,
+                      wantBorder: true,
+                      title: 'Visit Not Started',
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    ],
+      ],
+    ),
   ),
-  )
 );

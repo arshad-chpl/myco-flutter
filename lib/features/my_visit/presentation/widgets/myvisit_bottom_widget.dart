@@ -16,10 +16,10 @@ import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart'
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 Widget MyVisitBottomWidget(
-    BuildContext context,
-    Map<String, dynamic> visit,
-    int index,
-    ) {
+  BuildContext context,
+  Map<String, dynamic> visit,
+  int index,
+) {
   final bool showExtraButtons = visit['showExtraButtons'] == true;
   final bool showStartedVisit = visit['showStartedVisit'] == true;
   final bool isSixthContainer = visit['isSixthContainer'] == true;
@@ -124,7 +124,9 @@ Widget MyVisitBottomWidget(
                       context: context,
                       isScrollControlled: true,
                       shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(16),
+                        ),
                       ),
                       builder: (_) => const EndVisitBottomSheet(),
                     ),
@@ -203,7 +205,9 @@ Widget MyVisitBottomWidget(
                   isScrollControlled: true,
                   backgroundColor: AppTheme.getColor(context).onPrimary,
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(16),
+                    ),
                   ),
                   builder: (_) => startVisitBottomSheet(context),
                 );

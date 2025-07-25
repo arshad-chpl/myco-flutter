@@ -54,7 +54,7 @@ class VisitReport extends StatelessWidget {
                     builder: (context) => TestNewVisit(),
                   );
                 },
-                child: SvgPicture.asset(AppAssets.arrow_down),
+                child: SvgPicture.asset(AppAssets.arrowRight),
               ),
 
               bottomWidget: Padding(

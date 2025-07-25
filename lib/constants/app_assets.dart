@@ -22,7 +22,6 @@ class AppAssets {
   static const String stepper = '$basePath/stepper';
   static const String workAllocationSvgs = '$svgsPath/work_allocation';
 
-
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
   static const String chplLogo = '$imagesPath/chpl_logo.png';
@@ -180,7 +179,6 @@ class AppAssets {
   /*
   static const String location = '$basePath/take_order/location.png';
 */
-
 
   //work allocation
   static const String plus = '$workAllocation/plus.png';
