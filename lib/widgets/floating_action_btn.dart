@@ -78,7 +78,7 @@ class _ExpandableFabState extends State<ExpandableFab>
       curve: Curves.easeInOut,
     );
 
-    // ✅ Initialize _textAnimation AFTER _controller is ready
+    //  Initialize _textAnimation AFTER _controller is ready
     _textAnimation = Tween<double>(begin: 0, end: _closeText.length.toDouble())
         .animate(
           CurvedAnimation(

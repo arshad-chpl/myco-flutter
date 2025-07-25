@@ -126,7 +126,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
             BlocBuilder<VisitBloc, VisitState>(
               builder: (context, state) {
                 if (state is VisitLoaded) {
-                  if (!state.controller!.value.isInitialized) {
+                  if (!state.cameracontroller!.value.isInitialized) {
                     return const Center(child: CircularProgressIndicator());
                   }
 
@@ -137,7 +137,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
                   }
 
                   return CustomFaceDetectionWidgets(
-                    controller: state.controller!,
+                    controller: state.cameracontroller!,
                     /**
                      * Sets the scanning state use for UI display
                      *

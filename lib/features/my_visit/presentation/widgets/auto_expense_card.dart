@@ -30,6 +30,7 @@ class _AutoExpenseCardState extends State<AutoExpenseCard> {
       showHeaderPrefixIcon: false,
       showBlackShadowInChild: true,
       onHeaderTap: _toggleBottom,
+      headerBottomBorderRadius: 12 * Responsive.getResponsive(context),
       suffixIcon: Icon(
         _showBottom ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
         color: AppColors.white,

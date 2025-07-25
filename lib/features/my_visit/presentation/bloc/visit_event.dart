@@ -38,3 +38,17 @@ class RemoveDepartmentTag extends VisitEvent {
   final String departmentTag;
   RemoveDepartmentTag(this.departmentTag);
 }
+
+/// Myvisit Page
+class TabChanged extends VisitEvent {
+  final int newIndex;
+  TabChanged(this.newIndex);
+}
+class UpdateSelectedDate extends VisitEvent {
+  final DateTime newDate;
+  UpdateSelectedDate(this.newDate);
+}
+
+class NextDate extends VisitEvent {}
+
+class PreviousDate extends VisitEvent {}

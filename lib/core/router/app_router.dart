@@ -13,12 +13,8 @@ import 'package:myco_flutter/core/router/modules/work_allocation_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
-// import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
-
-
-
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
@@ -40,14 +36,7 @@ import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_m
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
-
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
-import 'package:myco_flutter/features/leave/presentation/pages/add_short_leave_screen.dart';
-
-import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
 import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
@@ -61,7 +50,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths.myVisit, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -196,24 +185,6 @@ class AppRouter {
       ...takeOrderRoutes,
       ...payslipRoutes,
       ...chatRoutes,
-
-      GoRoute(
-        path: RoutePaths.faceDetection,
-        name: 'faceDetection',
-        pageBuilder: (context, state) => MaterialPage(
-          child: BlocProvider(
-            create: (context) =>
-            GetIt.I<VisitBloc>()..add(LaunchCamera()),
-            child: const FaceDetectionPage(),
-          ),
-        ),
-        // builder: (context, state) => BlocProvider(
-        //   create: (context) =>
-        //   GetIt.I<FaceDetectionBloc>()
-        //     ..add(LaunchCamera()),
-        //   child: const FaceDetectionPage(),
-        // ),
-      ),
       GoRoute(
         path: RoutePaths.signUpForm,
         name: 'select-other-company',

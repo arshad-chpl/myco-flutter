@@ -78,15 +78,16 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
 
           NewTextField(
               prefixIconPath: AppAssets.result,
-              label: LanguageManager().get('day_type'),
+              label: 'day_type',
+              isKey: true,
               hintText: LanguageManager().get('select'),
             suffixIconPath: AppAssets.arrowDown,
           ),
 
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
            NewTextField(
-             enabled: false,
-            label: LanguageManager().get('out_of_range_reason'),
+            label: 'out_of_range_reason',
+            isKey: true,
             hintText: LanguageManager().get('write_here'),
             prefixIconPath: AppAssets.result,
           ),

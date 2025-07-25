@@ -115,53 +115,55 @@ Widget MyVisitBottomWidget(
         ),
         SizedBox(height: Responsive.getHeight(context) * 0.02),
 
-        // Action Buttons
-        if (index == 2 || index == 3)
-          Row(
+        // END VISIT & TAKE ORDER
+        if (visit['showEndAndOrderButtons'] == true)
+          Column(
             children: [
-              MyCoButton(
-                onTap: () => showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+              Row(
+                children: [
+                  MyCoButton(
+                    onTap: () => showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                      ),
+                      builder: (_) => const EndVisitBottomSheet(),
+                    ),
+                    title: 'END VISIT',
+                    boarderRadius: VariableBag.buttonBorderRadius,
+                    backgroundColor: Util.applyOpacity(AppColors.red, 0.1),
+                    textStyle: TextStyle(
+                      color: AppColors.red,
+                      fontSize: 12 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.bold,
+                    ),
+                    isShadowBottomLeft: true,
+                    height: 0.050 * Responsive.getHeight(context),
+                    width: 0.38 * Responsive.getWidth(context),
                   ),
-                  builder: (_) => const EndVisitBottomSheet(),
-                ),
-                title: 'END VISIT',
-                boarderRadius: VariableBag.buttonBorderRadius,
-                backgroundColor: Util.applyOpacity(AppColors.red, 0.1),
-                textStyle: TextStyle(
-                  color: AppColors.red,
-                  fontSize: 12* Responsive.getResponsiveText(context),
-                  fontWeight: FontWeight.bold,
-                ),
-                isShadowBottomLeft: true,
-                height: 0.050 * Responsive.getHeight(context),
-                width: 0.38 * Responsive.getWidth(context),
+                  Spacer(),
+                  MyCoButton(
+                    onTap: () {},
+                    title: 'TAKE ORDER',
+                    backgroundColor: AppTheme.getColor(context).primary,
+                    boarderRadius: VariableBag.buttonBorderRadius,
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.bold,
+                    ),
+                    isShadowBottomLeft: true,
+                    height: 0.050 * Responsive.getHeight(context),
+                    width: 0.38 * Responsive.getWidth(context),
+                  ),
+                ],
               ),
-              Spacer(),
-              MyCoButton(
-                onTap: () {},
-                title: 'TAKE ORDER',
-                backgroundColor: AppTheme.getColor(context).primary,
-                boarderRadius: VariableBag.buttonBorderRadius,
-                textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12 * Responsive.getResponsiveText(context),
-                  fontWeight: FontWeight.bold,
-                ),
-                isShadowBottomLeft: true,
-                height: 0.050 * Responsive.getHeight(context),
-                width: 0.38 * Responsive.getWidth(context),
-              ),
+              SizedBox(height: Responsive.getHeight(context) * 0.01),
             ],
           ),
 
-        if (index == 2 || index == 3)
-          SizedBox(height: Responsive.getHeight(context) * 0.01),
-
-        if (index == 6)
+        if (visit['isEndVisitRequested'] == true)
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -182,7 +184,7 @@ Widget MyVisitBottomWidget(
             ],
           ),
 
-        if (isSixthContainer && index == 5)
+        if (visit['forgotToEndVisit'] == true)
           Center(
             child: CustomText(
               'forgot_to_end_visit',
@@ -236,6 +238,7 @@ Widget MyVisitBottomWidget(
                 context,
                 title: LanguageManager().get('rejected_by'),
                 value: 'vatsal soni (UIUX Designer)',
+                textColor: AppTheme.getColor(context).onSurface,
                 onTap: () {},
               ),
               getCommonRow(

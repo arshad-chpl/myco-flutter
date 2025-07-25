@@ -23,8 +23,13 @@ class VisitBloc extends Bloc<VisitEvent, VisitState> {
     on<RemoveBranchTag>(_onRemoveBranch);
     on<AddDepartmentTagFromSheet>(_onAddDepartment);
     on<RemoveDepartmentTag>(_onRemoveDepartment);
+    on<TabChanged>(_ontabchange);
+    on<UpdateSelectedDate>(_onDateUpdate);
+    on<NextDate>(_onNextDate);
+    on<PreviousDate>(_onPreviousDate);
   }
-  Future<void> _onLaunchCamera(LaunchCamera e, Emitter<VisitState> emit) async {
+  ///face Detection
+  Future<void> _onLaunchCamera(LaunchCamera event, Emitter<VisitState> emit) async {
     emit(VisitLoading());
     try {
       _controller?.dispose();
@@ -33,7 +38,7 @@ class VisitBloc extends Bloc<VisitEvent, VisitState> {
       _controller = CameraController(front, ResolutionPreset.high, enableAudio: false);
       await _controller!.initialize();
       emit(VisitLoaded(
-        controller: _controller,
+        cameracontroller: _controller,
         dateTime: '',
         scanningState: _scanState,
         remainingTime: '02:00',
@@ -47,25 +52,25 @@ class VisitBloc extends Bloc<VisitEvent, VisitState> {
       emit(VisitError(message: err.toString()));
     }
   }
-  void _onStartDateTime(StartDateTime e, Emitter<VisitState> emit) {
+  void _onStartDateTime(StartDateTime event, Emitter<VisitState> emit) {
     _dateTimeTimer?.cancel();
     _dateTimeTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       _dateTime = DateFormat('d-MM-yyyy h:mm:ss a').format(DateTime.now());
       add(UpdateDateTime(formattedDateAndTime: _dateTime));
     });
   }
-  void _onUpdateDateTime(UpdateDateTime e, Emitter<VisitState> emit) {
+  void _onUpdateDateTime(UpdateDateTime event, Emitter<VisitState> emit) {
     if (state is VisitLoaded) {
-      emit((state as VisitLoaded).copyWith(dateTime: e.formattedDateAndTime));
+      emit((state as VisitLoaded).copyWith(dateTime: event.formattedDateAndTime));
     }
   }
-  void _onUpdateScanningState(UpdateScanningState e, Emitter<VisitState> emit) {
-    _scanState = e.scanningState;
+  void _onUpdateScanningState(UpdateScanningState event, Emitter<VisitState> emit) {
+    _scanState = event.scanningState;
     if (state is VisitLoaded) {
       emit((state as VisitLoaded).copyWith(scanningState: _scanState));
     }
   }
-  void _onStartScanningTimer(StartScanningTimer e, Emitter<VisitState> emit) {
+  void _onStartScanningTimer(StartScanningTimer event, Emitter<VisitState> emit) {
     const total = 120;
     int counter = 0;
     _scanningTimer?.cancel();
@@ -82,59 +87,86 @@ class VisitBloc extends Bloc<VisitEvent, VisitState> {
       add(UpdateProgress(progress: prog, remainingTime: rem));
     });
   }
-  void _onUpdateProgress(UpdateProgress e, Emitter<VisitState> emit) {
+  void _onUpdateProgress(UpdateProgress event, Emitter<VisitState> emit) {
     if (state is VisitLoaded) {
-      emit((state as VisitLoaded).copyWith(progress: e.progress, remainingTime: e.remainingTime));
+      emit((state as VisitLoaded).copyWith(progress: event.progress, remainingTime: event.remainingTime));
     }
   }
-  //tag_input logic
+  ///Tag_input logic
   void _onInitVisitTags(InitVisitTags event, Emitter<VisitState> emit) {
     if (state is! VisitLoaded) {
       emit(
         VisitLoaded(
-          controller: null,
+          cameracontroller: null,
           dateTime: '',
           scanningState: 'idle',
           remainingTime: '00:00',
           progress: 0.0,
           branchTags: [],
           departmentTags: [],
+          selectedIndex: 0,
         ),
       );
     }
   }
 
-  void _onAddBranch(AddBranchTagFromSheet e, Emitter<VisitState> emit) {
+  void _onAddBranch(AddBranchTagFromSheet event, Emitter<VisitState> emit) {
     if (state is VisitLoaded) {
-      final s = state as VisitLoaded;
-      final updated = List<String>.from(s.branchTags)..add(e.branchTag);
-      emit(s.copyWith(branchTags: updated));
+      final newstate = state as VisitLoaded;
+      final updated = List<String>.from(newstate.branchTags)..add(event.branchTag);
+      emit(newstate.copyWith(branchTags: updated));
     }
   }
 
-  void _onRemoveBranch(RemoveBranchTag e, Emitter<VisitState> emit) {
+  void _onRemoveBranch(RemoveBranchTag event, Emitter<VisitState> emit) {
     if (state is VisitLoaded) {
-      final s = state as VisitLoaded;
-      final updated = List<String>.from(s.branchTags)..remove(e.branchTag);
-      emit(s.copyWith(branchTags: updated));
+      final newstate = state as VisitLoaded;
+      final updated = List<String>.from(newstate.branchTags)..remove(event.branchTag);
+      emit(newstate.copyWith(branchTags: updated));
     }
   }
 
-  void _onAddDepartment(AddDepartmentTagFromSheet e, Emitter<VisitState> emit) {
+  void _onAddDepartment(AddDepartmentTagFromSheet event, Emitter<VisitState> emit) {
     if (state is VisitLoaded) {
-      final s = state as VisitLoaded;
-      final updated = List<String>.from(s.departmentTags)..add(e.departmentTag);
-      emit(s.copyWith(departmentTags: updated));
+      final newstate = state as VisitLoaded;
+      final updated = List<String>.from(newstate.departmentTags)..add(event.departmentTag);
+      emit(newstate.copyWith(departmentTags: updated));
     }
   }
 
-  void _onRemoveDepartment(RemoveDepartmentTag e, Emitter<VisitState> emit) {
+  void _onRemoveDepartment(RemoveDepartmentTag event, Emitter<VisitState> emit) {
     if (state is VisitLoaded) {
-      final s = state as VisitLoaded;
-      final updated = List<String>.from(s.departmentTags)..remove(e.departmentTag);
-      emit(s.copyWith(departmentTags: updated));
+      final newstate = state as VisitLoaded;
+      final updated = List<String>.from(newstate.departmentTags)..remove(event.departmentTag);
+      emit(newstate.copyWith(departmentTags: updated));
     }
   }
+  ///MyVisit page
+  void _ontabchange(TabChanged event , Emitter<VisitState>emit){
+    final newstate = state;
+    if (newstate is VisitLoaded) {
+      emit(newstate.copyWith(selectedIndex: event.newIndex));
+    }
+  }
+  void _onDateUpdate(UpdateSelectedDate event , Emitter<VisitState>emit){
+    if (state is VisitLoaded) {
+      emit((state as VisitLoaded).copyWith(selectedDate: event.newDate));
+    }
+  }
+  void _onNextDate(NextDate event , Emitter<VisitState>emit){
+    if (state is VisitLoaded) {
+      final current = (state as VisitLoaded).selectedDate;
+      emit((state as VisitLoaded).copyWith(selectedDate: current.add(const Duration(days: 1))));
+    }
+  }
+  void _onPreviousDate(PreviousDate event , Emitter<VisitState>emit){
+    if (state is VisitLoaded) {
+      final current = (state as VisitLoaded).selectedDate;
+      emit((state as VisitLoaded).copyWith(selectedDate: current.subtract(const Duration(days: 1))));
+    }
+  }
+
+
   @override
   Future<void> close() {
     _controller?.dispose();

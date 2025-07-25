@@ -21,16 +21,18 @@ class CommonCard extends StatelessWidget {
   final bool? showHeaderPrefixIcon, showBlackShadowInChild;
   final String? headerPrefixIcon;
   final Widget? suffixIcon, titleSuffix, subTitleIcon, headerPrefix;
-  final double? headerPrefixIconHeight, headerPrefixIconWidth;
+  final double? headerPrefixIconHeight,
+      headerPrefixIconWidth,
+      titleFontSize,
+      secondTitleFontSize,
+      subTitleFontSize,
+      buttonTextFontSize,
+      headerBottomBorderRadius;
   final FontWeight? titleFontWeight,
       secondTitleFontWeight,
       subTitleFontWeight,
       buttonTextFontWeight;
   final Color? titleColor, secondTitleColor, subTitleColor, buttonTextColor;
-  final double? titleFontSize,
-      secondTitleFontSize,
-      subTitleFontSize,
-      buttonTextFontSize;
   const CommonCard({
     required this.title,
     required this.bottomWidget,
@@ -70,6 +72,7 @@ class CommonCard extends StatelessWidget {
     this.buttonTextFontSize,
     this.onHeaderTap,
     this.headerPrefix,
+    this.headerBottomBorderRadius,
   });
 
   @override
@@ -91,12 +94,17 @@ class CommonCard extends StatelessWidget {
           child: Container(
             height: headerHeight, //?? 0.06 * Responsive.getHeight(context),
             padding:
-                headerPadding ??
+            headerPadding ??
                 EdgeInsets.all(10 * Responsive.getResponsive(context)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(
                   (borderRadius ?? 12) * Responsive.getResponsive(context) -
+                      1.0,
+                ),
+                bottom: Radius.circular(
+                  (headerBottomBorderRadius ?? 1) *
+                      Responsive.getResponsive(context) -
                       1.0,
                 ),
               ),
@@ -109,7 +117,7 @@ class CommonCard extends StatelessWidget {
                   ),
                 BoxShadow(
                   color:
-                      headerColor?.withAlpha(180) ??
+                  headerColor?.withAlpha(180) ??
                       AppTheme.getColor(context).secondary.withAlpha(180),
                 ),
                 BoxShadow(
@@ -129,7 +137,7 @@ class CommonCard extends StatelessWidget {
                             'assets/take_order/profile-circle.png',
                         // height: headerPrefixIconHeight ?? 0.1 * Responsive.getHeight(context),
                         width:
-                            headerPrefixIconWidth ??
+                        headerPrefixIconWidth ??
                             0.06 * Responsive.getWidth(context),
                         color: headerPrefixIconColor,
                       ),
@@ -146,10 +154,10 @@ class CommonCard extends StatelessWidget {
                             child: CustomText(
                               title,
                               color:
-                                  titleColor ??
+                              titleColor ??
                                   AppTheme.getColor(context).onPrimary,
                               fontSize:
-                                  titleFontSize ??
+                              titleFontSize ??
                                   16 * Responsive.getResponsiveText(context),
                               fontWeight: titleFontWeight ?? FontWeight.w700,
                             ),
@@ -164,10 +172,10 @@ class CommonCard extends StatelessWidget {
                         CustomText(
                           '$secondTitle',
                           color:
-                              secondTitleColor ??
+                          secondTitleColor ??
                               AppTheme.getColor(context).onPrimary,
                           fontSize:
-                              secondTitleFontSize ??
+                          secondTitleFontSize ??
                               16 * Responsive.getResponsiveText(context),
                           fontWeight: secondTitleFontWeight ?? FontWeight.w700,
                         ),
@@ -187,13 +195,13 @@ class CommonCard extends StatelessWidget {
                               child: CustomText(
                                 '$subTitle',
                                 color:
-                                    subTitleColor ??
+                                subTitleColor ??
                                     AppTheme.getColor(context).onPrimary,
                                 fontSize:
-                                    subTitleFontSize ??
+                                subTitleFontSize ??
                                     12 * Responsive.getResponsiveText(context),
                                 fontWeight:
-                                    subTitleFontWeight ?? FontWeight.w600,
+                                subTitleFontWeight ?? FontWeight.w600,
                               ),
                             ),
                           ],
@@ -211,10 +219,10 @@ class CommonCard extends StatelessWidget {
                     textStyle: TextStyle(
                       fontFamily: 'Gilroy-semiBold',
                       fontSize:
-                          buttonTextFontSize ??
+                      buttonTextFontSize ??
                           13 * Responsive.getResponsiveText(context),
                       color:
-                          buttonTextColor ??
+                      buttonTextColor ??
                           AppTheme.getColor(context).onPrimary,
                       fontWeight: buttonTextFontWeight,
                     ),
