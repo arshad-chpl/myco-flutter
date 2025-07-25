@@ -26,18 +26,25 @@ class HolidayItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final holidayDate = holiday.holidayStartDate ?? DateTime.now();
+    final holidayDate =
+        DateTime.tryParse(holiday.holidayStartDate ?? '') ?? DateTime.now();
     final backgroundColor = backgroundColors[index % backgroundColors.length];
-
     final isOptionalHoliday = holiday.holidayTypeOption == '2';
     final isApplied = holiday.alreadyAppliedHoliday == '1';
-    final isPastDate = holidayDate.isBefore(DateTime.now());
-    final remainingOptional = int.tryParse(holiday.remainOptionalHoliday ?? '0') ?? 0;
+    final currentDate = DateTime.now();
+    final isPastDate = holidayDate.isBefore(
+      DateTime(currentDate.year, currentDate.month, currentDate.day),
+    );
+    final remainingOptional =
+        int.tryParse(holiday.remainOptionalHoliday ?? '0') ?? 0;
     final canDelete = holiday.optionalHolidayAssignDeleteId != '0';
 
-    final showApplyButton = isOptionalHoliday && !isPastDate && !isApplied && remainingOptional > 0;
+    final showApplyButton =
+        isOptionalHoliday && !isPastDate && !isApplied && remainingOptional > 0;
     final showAppliedState = isOptionalHoliday && isApplied && canDelete;
-    final hideAll = (!isOptionalHoliday || isPastDate) || (remainingOptional == 0 && !canDelete);
+    final hideAll =
+        (!isOptionalHoliday || isPastDate) ||
+        (remainingOptional == 0 && !canDelete);
 
     return Container(
       margin: const EdgeInsets.only(top: 10),
@@ -63,7 +70,11 @@ class HolidayItemCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset('assets/visit_svgs/calendar.svg', height: 24, width: 24),
+                    SvgPicture.asset(
+                      'assets/visit_svgs/calendar.svg',
+                      height: 24,
+                      width: 24,
+                    ),
                     const SizedBox(width: 10),
                     Text(
                       DateFormat('dd MMM yyyy').format(holidayDate),
@@ -77,7 +88,10 @@ class HolidayItemCard extends StatelessWidget {
                 ),
                 if (isOptionalHoliday && !isPastDate)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 7.0, vertical: 2.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 7.0,
+                      vertical: 2.0,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(color: Colors.green),
@@ -114,17 +128,17 @@ class HolidayItemCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: holiday.holidayIcon != null
                       ? Image.network(
-                    holiday.holidayIcon!,
-                    height: 50,
-                    width: 50,
-                    fit: BoxFit.cover,
-                  )
+                          holiday.holidayIcon!,
+                          height: 50,
+                          width: 50,
+                          fit: BoxFit.cover,
+                        )
                       : Image.asset(
-                    'assets/search_society/contact_admin.png',
-                    height: 50,
-                    width: 50,
-                    fit: BoxFit.cover,
-                  ),
+                          'assets/search_society/contact_admin.png',
+                          height: 50,
+                          width: 50,
+                          fit: BoxFit.cover,
+                        ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
@@ -159,7 +173,8 @@ class HolidayItemCard extends StatelessWidget {
                           title: 'Apply',
                           textStyle: TextStyle(
                             fontFamily: 'Gilroy-semiBold',
-                            fontSize: 14 * Responsive.getResponsiveText(context),
+                            fontSize:
+                                14 * Responsive.getResponsiveText(context),
                             color: AppTheme.getColor(context).onPrimary,
                           ),
                           width: 0.26 * Responsive.getWidth(context),
@@ -175,7 +190,8 @@ class HolidayItemCard extends StatelessWidget {
                           title: 'Applied',
                           textStyle: TextStyle(
                             fontFamily: 'Gilroy-semiBold',
-                            fontSize: 14 * Responsive.getResponsiveText(context),
+                            fontSize:
+                                14 * Responsive.getResponsiveText(context),
                             color: AppTheme.getColor(context).onPrimary,
                           ),
                           width: 0.26 * Responsive.getWidth(context),
@@ -188,7 +204,10 @@ class HolidayItemCard extends StatelessWidget {
                         const SizedBox(width: 8),
                         InkWell(
                           onTap: onDeleteTap,
-                          child: const Icon(Icons.delete_outline, color: Colors.red),
+                          child: const Icon(
+                            Icons.delete_outline,
+                            color: Colors.red,
+                          ),
                         ),
                       ],
                     ],

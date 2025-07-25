@@ -200,16 +200,23 @@ class HolidayListPage extends StatelessWidget {
                               );
                             }
 
-                            final now = DateTime.now();
-
+                            final currentDate = DateTime.now();
                             final upcomingIndex = filteredHolidays.indexWhere((
                               holiday,
                             ) {
-                              final start = holiday.holidayStartDate;
-                              return start != null &&
-                                  !start.isBefore(
-                                    DateTime(now.year, now.month, now.day),
-                                  );
+                              final startString = holiday.holidayStartDate;
+                              if (startString == null) return false;
+
+                              final start = DateTime.tryParse(startString);
+                              if (start == null) return false;
+
+                              return !start.isBefore(
+                                DateTime(
+                                  currentDate.year,
+                                  currentDate.month,
+                                  currentDate.day,
+                                ),
+                              );
                             });
 
                             final List<GlobalKey> itemKeys = List.generate(
