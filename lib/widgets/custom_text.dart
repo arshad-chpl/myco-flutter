@@ -87,6 +87,7 @@ class CustomText extends StatelessWidget {
   final String? highlightText; // The substring to highlight.
   final Color?
   highlightBackgroundColor; // Background color of highlighted text.
+  final List<Shadow> textShadows; // Optional text shadows. 
 
   const CustomText(
     this.text, {
@@ -104,6 +105,7 @@ class CustomText extends StatelessWidget {
     this.isHighlight = false,
     this.highlightText,
     this.highlightBackgroundColor,
+    this.textShadows = const [],
   });
 
   @override
@@ -192,5 +194,6 @@ class CustomText extends StatelessWidget {
     decoration: decoration,
     decorationColor: decorationColor,
     fontStyle: fontStyle,
+    shadows: textShadows
   );
 }

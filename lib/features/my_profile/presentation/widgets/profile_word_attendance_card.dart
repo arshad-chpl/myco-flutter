@@ -6,19 +6,16 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_label_gifs.dart';
 import 'package:myco_flutter/widgets/media_picker/widgets/custom_shadow_container.dart';
 
-class ProfileToolSupportSettingCard extends StatelessWidget {
-  ProfileToolSupportSettingCard({super.key});
+class ProfileWordAttendanceCard extends StatelessWidget {
+  ProfileWordAttendanceCard({super.key});
 
   List svgList = [
-    "assets/dashboard/svgs/nominees.svg",
-    "assets/dashboard/svgs/hold_team_salary.svg",
-    "assets/dashboard/svgs/notfication_settings.svg",
-    "assets/dashboard/svgs/setting.svg",
-    "assets/dashboard/svgs/my_activities.svg",
-    "assets/dashboard/svgs/app_support.svg",
-    "assets/dashboard/svgs/rate_app.svg",
-    "assets/dashboard/svgs/share_app.svg",
-    "assets/dashboard/svgs/log_out.svg",
+    "assets/dashboard/svgs/attendance_face.svg",
+    "assets/dashboard/svgs/shift_details.svg",
+    "assets/dashboard/svgs/local_attendance.svg",
+    "assets/dashboard/svgs/my_travel_summary.svg",
+    "assets/dashboard/svgs/my_transaction.svg",
+    "assets/dashboard/svgs/admin_view.svg",
   ];
 
   @override
@@ -26,13 +23,13 @@ class ProfileToolSupportSettingCard extends StatelessWidget {
     spacing: 0.015 * Responsive.getHeight(context),
     children: [
       CustomLabelGifs(
-        title: 'Tools, Supports & Settings',
-        gifAssetPath: 'assets/gifs/profile_tool_support_setting.gif',
+        title: 'Work & Attendance',
+        gifAssetPath: 'assets/gifs/profile_work_attendance.gif',
       ),
       GridView.builder(
-        itemCount: 9,
-        shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
+        itemCount: 6,
+        shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           mainAxisSpacing: 10,
@@ -48,9 +45,12 @@ class ProfileToolSupportSettingCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(
               12 * Responsive.getResponsive(context),
             ),
-            border: Border.all(color: AppTheme.getColor(context).outlineVariant),
+            border: Border.all(
+              color: AppTheme.getColor(context).outlineVariant,
+            ),
           ),
           child: CustomShadowContainer(
+            textAlign: TextAlign.center,
             image: SvgPicture.asset(svgList[index]),
             title: "hello",
             containerHeight: 0.08 * Responsive.getHeight(context),
