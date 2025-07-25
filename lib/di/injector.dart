@@ -6,6 +6,7 @@ import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/di/modules/network_module.dart';
 import 'package:myco_flutter/features/admin_view/presentation/di/admin_view_di.dart';
 import 'package:myco_flutter/features/chat/presentation/di/chat_list_di.dart';
+import 'package:myco_flutter/features/common_api/presentation/di/common_api_di.dart';
 import 'package:myco_flutter/features/company_info/presentation/di/company_info_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/company_select_di.dart';
 import 'package:myco_flutter/features/company_selector/presentation/di/device_change_di.dart';
@@ -24,6 +25,7 @@ import 'package:myco_flutter/features/my_profile/presentation/di/my_profile_di.d
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
 import 'package:myco_flutter/features/payslip/presentation/di/payslip_di.dart';
+import 'package:myco_flutter/features/sign_in/presentation/di/primary_register_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/di/work_allocation_di.dart';
 
@@ -94,4 +96,11 @@ Future<void> initDi() async {
 
   //========My Profile=========
   initMyProfileFeatureDI(sl);
+
+  //========Sign in=========
+  setupPrimaryRegisterDi(sl);
+
+  //========Common Api=========
+  CommonApiDi(sl);
+
 }
