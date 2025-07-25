@@ -75,9 +75,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
       isAddMore = args['isAddMore'] ?? false;
       isAddMoreUnit = args['isAddMoreUnit'] ?? false;
 
-
-      print('companyIdData on: $companyId');
-
     } else {
       // fallback if args is null
       companyId = '';
