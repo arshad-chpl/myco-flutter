@@ -7,10 +7,10 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/label_with_add_botton.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/custom_media_picker_container.dart';
 
 class AddCustomer extends StatefulWidget {
   const AddCustomer({super.key});

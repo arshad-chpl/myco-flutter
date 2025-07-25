@@ -6,6 +6,13 @@ import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/assets_routes.dart';
 import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
+import 'package:myco_flutter/core/router/modules/initial_routes.dart';
+import 'package:myco_flutter/core/router/modules/lost_and_found.dart';
+import 'package:myco_flutter/core/router/modules/my_profile.dart';
+import 'package:myco_flutter/core/router/modules/employee_view_routes.dart';
+import 'package:myco_flutter/core/router/modules/initial_routes.dart';
+import 'package:myco_flutter/core/router/modules/lost_and_found.dart';
+import 'package:myco_flutter/core/router/modules/my_profile.dart';
 import 'package:myco_flutter/core/router/modules/my_visit_routes.dart';
 import 'package:myco_flutter/core/router/modules/payslip_routes.dart';
 import 'package:myco_flutter/core/router/modules/take_order_routes.dart';
@@ -13,13 +20,11 @@ import 'package:myco_flutter/core/router/modules/work_allocation_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/admin_view/presentation/bloc/admin_view_bloc.dart';
 import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_page.dart';
-// import 'package:myco_flutter/features/asset/view/testing.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
-
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
-import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
+// import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/holiday/presentation/pages/holiday_list_page.dart';
 import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
@@ -38,8 +43,8 @@ import 'package:myco_flutter/features/lost_and_found/model/lost_and_found_item_m
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/add_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/item_details_screen.dart';
+import 'package:myco_flutter/features/my_profile/presentation/pages/my_profile_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
-
 import 'package:myco_flutter/features/lost_and_found/presentation/pages/lost_and_found.dart';
 import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
@@ -229,7 +234,7 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.employees,
         name: 'employees',
-        builder: (context, state) => const EmployeesScreen(),
+        builder: (context, state) =>  EmployeesScreen(),
       ),
       GoRoute(
         path: RoutePaths.contactAdmin,

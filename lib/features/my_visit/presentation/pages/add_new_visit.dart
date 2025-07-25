@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/AutoStartVisitCheckboxRow.dart';
-import 'package:myco_flutter/features/lost_and_found/presentation/widgets/custom_radio_button.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/AutoStartVisitCheckboxRow.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/field_virtual_visit_toggle.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_custom_radio_button.dart';
-import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
-import 'package:myco_flutter/widgets/custom_label_textfield.dart';
-import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
+import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
@@ -29,7 +24,8 @@ class AddNewVisit extends StatefulWidget {
 class _AddNewVisitState extends State<AddNewVisit> {
   /// State variables for form data
   String selectedVisitType = 'Self Visit';
-  bool autoStartVisit = false;
+  String selectedFieldVisit = 'Field Visit';
+  bool isChecked = false;
 
   String? selectedCustomer;
   String? selectedVisitSlot;
@@ -42,33 +38,37 @@ class _AddNewVisitState extends State<AddNewVisit> {
   ];
   final TextEditingController customerController = TextEditingController();
   final TextEditingController visitDateController = TextEditingController();
+  final TextEditingController visitSlotController = TextEditingController();
   final List<String> customers = ['Customer 1', 'Customer 2', 'Customer 3'];
   final List<String> visitSlots = ['Morning', 'Afternoon', 'Evening'];
 
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      title: LanguageManager().get('add_new_visit'),
+      title: 'add_new_visit',
+      isKey: true,
       appBarBackgoundColor: AppTheme.getColor(context).surface,
-      leading: const BackButton(),
     ),
-    body: Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 31.0 * Responsive.getResponsive(context),
-      ),
-      child: SingleChildScrollView(
+    body: SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal:
+              VariableBag.screenHorizontalPadding *
+              Responsive.getResponsive(context),
+        ),
         child: Column(
-          spacing: 16 * Responsive.getResponsive(context),
+          spacing:
+              VariableBag.formContentSpacingVertical *
+              Responsive.getResponsive(context),
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /// Visit type radio buttons
             CustomVisitTypeRadioButton(
               textStyle: TextStyle(
-                fontSize: 20 * Responsive.getResponsiveText(context),
+                fontSize: 16 * Responsive.getResponsiveText(context),
                 color: AppTheme.getColor(context).onSurface,
               ),
               borderRadius: 8 * Responsive.getResponsive(context),
-              height: 30 * Responsive.getHeight(context),
               borderColor: AppTheme.getColor(context).primary,
               options: visitTypes,
               selectedValue: selectedVisitType,
@@ -79,89 +79,106 @@ class _AddNewVisitState extends State<AddNewVisit> {
 
             /// Customer to Visit dropdown
             NewTextField(
-              label: LanguageManager().get('customer_to_visit'),
+              label: 'customer_to_visit',
+              isKey: true,
               prefixIconPath: AppAssets.personalcard,
               suffixIconPath: AppAssets.arrow_down,
-              controller: customerController,
               hintText: LanguageManager().get('select'),
-              onTap: ()  {
-                // handle op tap
+              onTap: () {
+                context.pop(context);
+                context.pushNamed('customerPage');
               },
+              controller: customerController,
             ),
 
             /// Visit Date text field
             NewTextField(
-              label: LanguageManager().get('visit_date'),
+              label: 'visit_date',
+              isKey: true,
               prefixIconPath: AppAssets.note_favorite,
               hintText: LanguageManager().get('select_date'),
               controller: visitDateController,
               onTap: () async {
                 // show date picker
               },
+              enabled: true,
             ),
 
             /// Visit Slot dropdown
             NewTextField(
-              label: LanguageManager().get('visit_slots'),
+              label: 'visit_slots',
+              isKey: true,
               prefixIconPath: AppAssets.clock,
               suffixIconPath: AppAssets.arrow_down,
-              hintText: LanguageManager().get('select_slot'),
+              hintText: LanguageManager().get('select_time_slot'),
+              controller: visitSlotController,
               onTap: () async {
-                // show modal, bottom sheet, or page
+                // handle op tap
               },
             ),
 
             /// Visit Type label
-            CustomText(
-              LanguageManager().get('visit_type'),
-              fontSize: 12 * Responsive.getResponsiveText(context),
-              fontWeight: FontWeight.w600,
-              color: AppTheme.getColor(context).onSurface,
-            ),
-
-            /// Visit mode radio buttons
-            CustomRadioButton(
-              height: 0.05 * Responsive.getHeight(context),
-              options: [
-                LanguageManager().get('field_visit'),
-                LanguageManager().get('virtual_visit'),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomText(
+                  LanguageManager().get('visit_type'),
+                  fontSize: 12 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.getColor(context).onSurface,
+                ),
+                FieldVirtualVisitToggle(
+                  selectedValue: selectedFieldVisit,
+                  onChanged: (v) => {
+                    // handle toggle button
+                  },
+                ),
               ],
-              onChanged: (selected) {
-                // handle radio button selection
-              },
             ),
 
-            /// Purpose of Visit (big text field)
+            /// Purpose of Visit
             NewTextField(
-              label: LanguageManager().get('purpose_of_visit'),
+              label: 'purpose_of_visiting',
+              isKey: true,
               prefixIconPath: AppAssets.sticky_note,
               hintText: LanguageManager().get('write_here'),
-              maxLines: 10,
+              maxLines: 5,
             ),
 
             /// Auto Start Visit checkbox
-            AutoStartVisitCheckboxRow(
-              autoStartVisit: autoStartVisit,
-              onChanged: (value) {
-                // handle change
-              },
+            Row(
+              children: [
+                CustomCheckbox(
+                  value: isChecked,
+                  onChanged: (newValue) {
+                    // handle checkbox change
+                  },
+                  borderColor: AppTheme.getColor(context).primary,
+                  activeColor: AppColors.primary,
+                  checkColor: Colors.white,
+                  height: 24 * Responsive.getResponsive(context),
+                  width: 24 * Responsive.getResponsive(context),
+                  unCheckedBackground: Colors.transparent,
+                ),
+                SizedBox(width: 10 * Responsive.getResponsive(context)),
+                Expanded(
+                  child: CustomText(
+                    'auto_start_visit',
+                    isKey: true,
+                    fontSize: 14 * Responsive.getResponsiveText(context),
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
             ),
 
             /// Submit button
             Padding(
-              padding: EdgeInsets.only(
-                top: 0.05 * Responsive.getHeight(context),
+              padding: EdgeInsets.symmetric(
+                vertical: 50 * Responsive.getResponsive(context),
               ),
               child: MyCoButton(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) =>
-                          AssignToVisit(), // replace with your target page widget
-                    ),
-                  );
-                },
+                onTap: () {},
 
                 title: LanguageManager().get('submit'),
                 textStyle: TextStyle(
@@ -169,7 +186,9 @@ class _AddNewVisitState extends State<AddNewVisit> {
                   fontSize: 18 * Responsive.getResponsiveText(context),
                 ),
                 isShadowBottomLeft: true,
-                boarderRadius: 50 * Responsive.getResponsive(context),
+                boarderRadius:
+                    VariableBag.buttonBorderRadius *
+                    Responsive.getResponsive(context),
               ),
             ),
             const SizedBox(),

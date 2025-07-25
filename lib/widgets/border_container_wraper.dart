@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/util.dart';
 
+/// A customizable container widget with optional border, shadow, padding,
+/// and a top-right notification badge.
+// ignore: must_be_immutable
 class BorderContainerWraper extends StatelessWidget {
   Color? borderColor;
   Color? backgroundColor;
@@ -14,6 +17,8 @@ class BorderContainerWraper extends StatelessWidget {
   bool? isShadow;
   bool? isBorder;
   Widget child;
+  bool isNotificationBadge;
+  String? notificationCount;
 
   BorderContainerWraper({
     super.key,
@@ -28,33 +33,39 @@ class BorderContainerWraper extends StatelessWidget {
     this.margin,
     this.isShadow = false,
     this.isBorder = true,
+    this.isNotificationBadge = false,
+    this.notificationCount,
   });
 
   @override
   Widget build(BuildContext context) => Container(
-      height: height,
-      width: width,
-      padding: padding ?? EdgeInsets.all(8.0),
-      margin: margin ?? EdgeInsets.all(0.0),
-      decoration: BoxDecoration(
-        color: backgroundColor ?? AppTheme.getColor(context).surface,
-        borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
-        border: isBorder == true
-            ? Border.all(
-                color: borderColor ?? AppTheme.getColor(context).outlineVariant,
-                width: borderWidth ?? 1.0,
-              )
-            : null,
-        boxShadow: isShadow == true
-            ? [
-                BoxShadow(
-                  color: Util.applyOpacity(AppTheme.getColor(context).onSurface, 0.1),
-                  blurRadius: 5.0,
-                  offset: Offset(0, 2), // changes position of shadow
+    height: height,
+    width: width,
+    padding: padding ?? EdgeInsets.all(8.0),
+    margin: margin ?? EdgeInsets.all(0.0),
+
+    decoration: BoxDecoration(
+      color: backgroundColor ?? AppTheme.getColor(context).surface,
+      borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
+      border: isBorder == true
+          ? Border.all(
+              color: borderColor ?? AppTheme.getColor(context).outlineVariant,
+              width: borderWidth ?? 1.0,
+            )
+          : null,
+      boxShadow: isShadow == true
+          ? [
+              BoxShadow(
+                color: Util.applyOpacity(
+                  AppTheme.getColor(context).onSurface,
+                  0.1,
                 ),
-              ]
-            : [],
-      ),
-      child: child,
-    );
+                blurRadius: 5.0,
+                offset: Offset(0, 2), // changes position of shadow
+              ),
+            ]
+          : [],
+    ),
+    child: child,
+  );
 }

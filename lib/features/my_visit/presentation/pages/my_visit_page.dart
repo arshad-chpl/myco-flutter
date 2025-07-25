@@ -304,7 +304,6 @@ class _VisitPageState extends State<MyVisitPage> {
                 //other emp visit tab
                 : buildOtherEmployeeVisitTab(
                     context,
-                    MediaQuery.of(context).size,
                     searchController: searchController,
                     searchFocus: searchFocus,
                     formattedDate: formattedDate,

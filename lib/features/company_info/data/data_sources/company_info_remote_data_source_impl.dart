@@ -14,7 +14,7 @@ class CompanyInfoRemoteDataSourceImpl implements CompanyInfoRemoteDataSource {
   CompanyInfoRemoteDataSourceImpl({required this.dio});
 
   @override
-  Future<CompanyInfoResponse> getCompanyInfo() async {
+  Future<CompanyInfoResponseModel> getCompanyInfo() async {
     final dataMap = {
       'buildingDetails': 'buildingDetails',
       'society_id': '1',
@@ -27,7 +27,7 @@ class CompanyInfoRemoteDataSourceImpl implements CompanyInfoRemoteDataSource {
     final response = await GetIt.I<ApiClient>(
       instanceName: VariableBag.employeeMobileApi,
     ).postDynamic(controller, encryptedBody);
-    return CompanyInfoResponse.fromJson(
+    return CompanyInfoResponseModel.fromJson(
       json.decode(GzipUtil.decryptAES(response)),
     );
   }
