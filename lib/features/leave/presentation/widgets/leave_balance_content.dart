@@ -8,7 +8,7 @@ import 'package:myco_flutter/features/leave/presentation/bloc/leave_state.dart';
 import 'package:myco_flutter/features/leave/presentation/leave_utils/leave_skeloton/leave_balance_skeleton_loader.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/leave_balance_list_view.dart';
 import 'package:myco_flutter/features/leave/presentation/widgets/show_comp_off_leave_item.dart';
-import 'package:myco_flutter/widgets/custom_loader_dialog.dart';
+import 'package:myco_flutter/widgets/media_picker/custom_loader_dialog.dart';
 
 class LeaveBalanceContent extends StatelessWidget {
   final LeaveState state;
