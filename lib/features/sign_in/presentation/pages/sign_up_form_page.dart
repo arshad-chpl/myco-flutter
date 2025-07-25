@@ -27,11 +27,11 @@ import 'package:myco_flutter/features/sign_in/presentation/widgets/sign_up_custo
 import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_countrycodetextfield.dart';
 import 'package:myco_flutter/widgets/custom_loader_dialog.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/media_picker.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 import 'package:myco_flutter/widgets/custom_text_radio_button.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/media_picker.dart';
 
 class SignupFormPage extends StatefulWidget {
   const SignupFormPage({super.key});

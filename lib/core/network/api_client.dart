@@ -49,4 +49,16 @@ abstract class ApiClient {
     @Part(name: 'description') String description,
     @Part(name: 'file') File file, // File will be converted to MultipartFile
   );
+
+  @POST('{path}')
+  @MultiPart()
+  Future<String> postMultipartImage(
+      @Path('path') String path,
+      @Part(name: 'uploadImageToTemp') String tag,
+      @Part(name: 'society_id') String societyId,
+      @Part(name: 'user_id') String userId,
+      @Part(name: 'beforeLogIn') String beforeLogIn,
+      @Part(name: 'file_format_name') String fileFormatName,
+      @Part(name: 'img[]') List<MultipartFile> images);
 }
+
