@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_expression_function_bodies
-
+ 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
@@ -8,7 +8,8 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
-
+import 'package:myco_flutter/widgets/custom_text_field_new.dart';
+ 
 class PhoneNumberField extends StatelessWidget {
   final String selectedCountry;
   final List<String> countries;
@@ -20,7 +21,7 @@ class PhoneNumberField extends StatelessWidget {
   final TextStyle? hintTextStyle;
   final double? textFieldHeight;
   final double? textFieldWidth;
-
+ 
   const PhoneNumberField({
     super.key,
     required this.selectedCountry,
@@ -34,29 +35,22 @@ class PhoneNumberField extends StatelessWidget {
     this.textFieldHeight,
     this.textFieldWidth,
   });
-
+ 
   @override
   Widget build(BuildContext context) {
-    return MyCoTextfield(
+    return NewTextField(
       controller: phoneController,
-      textInputType: TextInputType.phone,
-      inputFormater: [FilteringTextInputFormatter.digitsOnly],
-      // maxLenght: 10,
-      // border: InputBorder.none,
-      decoration: decoration,
-      textAlignment: TextAlign.start,
+ 
       prefix: Padding(  
         padding: const EdgeInsets.only(left: 8.0),
         child: Container(
-          width: 0.26 * Responsive.getWidth(context),
-           
+          // width: 0.26 * Responsive.getWidth(context),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              
                 Container(
-                width: 0.19 * Responsive.getWidth(context),
+                // width: 0.19 * Responsive.getWidth(context),
                 child: CustomPopupDropdownStyled<String>(
                   items: countries,
                   spacing:  1,
@@ -89,8 +83,8 @@ class PhoneNumberField extends StatelessWidget {
           ),
         ),
       ),
-      hintText: "Enter phone number",
-
+      hintText:hintText ?? "Enter phone number",
+ 
     );
   }
 }
