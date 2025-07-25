@@ -170,24 +170,24 @@ class Assets {
       'assets/search_society/search-company.png';
   static const String signInAppleLogo = 'assets/sign_in/apple_logo.png';
   static const String signInBackArrow = 'assets/sign_in/back_arrow.png';
-  static const String signInBranchIcon = 'assets/sign_in/branch_icon.png';
+  static const String signInBranchIcon = 'assets/sign_in/branch_icon.svg';
   static const String signInCameraIcon = 'assets/sign_in/camera_icon.png';
-  static const String signInClockIcon = 'assets/sign_in/clock_icon.png';
+  static const String signInClockIcon = 'assets/sign_in/clock_icon.svg';
   static const String signInContactFrame = 'assets/sign_in/contact_frame.png';
   static const String signInDepartmentIcon =
-      'assets/sign_in/department_icon.png';
+      'assets/sign_in/department_icon.svg';
   static const String signInDesignationIcon =
-      'assets/sign_in/designation_icon.png';
+      'assets/sign_in/designation_icon.svg';
   static const String signInEmail = 'assets/sign_in/email.png';
-  static const String signInEmailIcon = 'assets/sign_in/email_icon.png';
+  static const String signInEmailIcon = 'assets/sign_in/email_icon.svg';
   static const String signInGoogleLogo = 'assets/sign_in/google_logo.png';
   static const String signInJoiningDateIcon =
-      'assets/sign_in/joining_date_icon.png';
+      'assets/sign_in/joining_date_icon.svg';
   static const String signInMessageEdit = 'assets/sign_in/message_edit.png';
   static const String signInMycoLogo = 'assets/sign_in/myco_logo.png';
   static const String signInPhone = 'assets/sign_in/phone.png';
   static const String signInSubDepartmentIcon =
-      'assets/sign_in/sub_department_icon.png';
+      'assets/sign_in/sub_department_icon.svg';
   static const String signInUnitNumberIcon =
       'assets/sign_in/unit_number_icon.png';
   static const String signInUpdate = 'assets/sign_in/update.png';
