@@ -11,6 +11,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
+import 'package:myco_flutter/features/employees/domain/entites/branch.dart';
 import 'package:myco_flutter/features/employees/domain/entites/department.dart';
 import 'package:myco_flutter/features/employees/presentation/bloc/employee_bloc.dart';
 import 'package:myco_flutter/features/employees/presentation/bloc/employee_event.dart';
@@ -236,29 +237,54 @@ class EmployeesScreen extends StatelessWidget {
     );
   }
 
-  Widget _dropdownBranch(BuildContext ctx, EmployeeLoaded? st) =>
-      GestureDetector(
-        onTap: () async {
-          if (st == null) return;
-          final id = await showCustomSimpleBottomSheet(
-            context: ctx,
-            heading: 'branch',
-            dataList: st.branches
-                .map((b) => {'id': b.blockId ?? '', 'name': b.blockName ?? ''})
-                .toList(),
-            selectedId: st.selectedBranch?.blockId,
-          );
-          if (id == null || id == st.selectedBranch?.blockId) return;
-          final branch = st.branches.firstWhere((b) => b.blockId == id);
-          _searchController.clear();
-          FocusScope.of(ctx).unfocus();
-          ctx.read<EmployeeBloc>().add(ChangeBranch(branch));
-        },
-        child: _buildDropdownBox(
-          ctx,
-          st?.selectedBranch?.blockName ?? 'branch',
-        ),
+  Widget _dropdownBranch(
+    BuildContext ctx,
+    EmployeeLoaded? st,
+  ) => GestureDetector(
+    onTap: () async {
+      if (st == null) return;
+
+      // The bottom sheet returns a selected map with 'id' and 'name'.
+      final selectedMap = await showCustomSimpleBottomSheet(
+        context: ctx,
+        heading: 'branch',
+        dataList: st.branches
+            .map(
+              (b) => {
+                'id': b.blockId ?? '', // Branch ID
+                'name': b.blockName ?? '', // Branch name
+              },
+            )
+            .toList(),
+        selectedId: st.selectedBranch?.blockId,
       );
+
+      // Debug print the selected map from the bottom sheet
+      debugPrint('Selected Map from Bottom Sheet: $selectedMap');
+
+      // If the user cancelled or selected the same branch again, do nothing.
+      if (selectedMap == null ||
+          selectedMap['id'] == st.selectedBranch?.blockId)
+        return;
+
+      // Create a new Branch instance from the selected map
+      final branch = Branch(
+        blockId: selectedMap['id'],
+        blockName: selectedMap['name'],
+      );
+
+      debugPrint(
+        'New Branch Selected: ${branch.blockId} - ${branch.blockName}',
+      );
+
+      _searchController.clear();
+      FocusScope.of(ctx).unfocus();
+
+      ctx.read<EmployeeBloc>().add(ChangeBranch(branch));
+    },
+
+    child: _buildDropdownBox(ctx, st?.selectedBranch?.blockName ?? 'branch'),
+  );
 
   Widget _dropdownDepartment(
     BuildContext ctx,
@@ -267,20 +293,31 @@ class EmployeesScreen extends StatelessWidget {
   ) => GestureDetector(
     onTap: () async {
       if (st == null) return;
-      final id = await showCustomSimpleBottomSheet(
+
+      final selectedMap = await showCustomSimpleBottomSheet(
         context: ctx,
-        heading: 'departement',
+        heading: 'department',
         dataList: depts
             .map((d) => {'id': d.floorId ?? '', 'name': d.departmentName ?? ''})
             .toList(),
         selectedId: st.selectedDepartment?.floorId,
       );
-      if (id == null || id == st.selectedDepartment?.floorId) return;
-      final dept = depts.firstWhere((d) => d.floorId == id);
+
+      if (selectedMap == null ||
+          selectedMap['id'] == st.selectedDepartment?.floorId)
+        return;
+
+      final dept = Department(
+        floorId: selectedMap['id'],
+        departmentName: selectedMap['name'],
+      );
+
       _searchController.clear();
       FocusScope.of(ctx).unfocus();
+
       ctx.read<EmployeeBloc>().add(ChangeDepartment(dept));
     },
+
     child: _buildDropdownBox(
       ctx,
       st?.selectedDepartment?.departmentName ?? 'departement',
