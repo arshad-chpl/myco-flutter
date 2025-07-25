@@ -20,29 +20,15 @@ import 'package:myco_flutter/core/router/modules/work_allocation_routes.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
-import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
-import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/employees/presentation/pages/employees_screen.dart';
 import 'package:myco_flutter/features/holiday/presentation/pages/holiday_list_page.dart';
-import 'package:myco_flutter/features/idea_box/presentation/bloc/list_idea_bloc.dart';
-import 'package:myco_flutter/features/idea_box/presentation/pages/idea_request.dart';
-import 'package:myco_flutter/features/idea_box/presentation/pages/list_of_ideas.dart';
-import 'package:myco_flutter/features/language_selector/presentation/bloc/language_bloc.dart';
-import 'package:myco_flutter/features/language_selector/presentation/bloc/language_event.dart';
-import 'package:myco_flutter/features/leave/presentation/pages/add_leave_screen.dart';
-import 'package:myco_flutter/features/language_selector/presentation/pages/language_selector_page.dart';
 import 'package:myco_flutter/features/leave/presentation/bloc/leave_bloc.dart';
+import 'package:myco_flutter/features/leave/presentation/pages/add_leave_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/add_short_leave_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/leave_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/my_leave_balance_screen.dart';
 import 'package:myco_flutter/features/leave/presentation/pages/my_team_leaves_screen.dart';
-import 'package:myco_flutter/features/search_company/presentation/pages/get_started.dart';
-import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
-import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
-import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
-import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
-import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
     
@@ -83,7 +69,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.companyInfo,
-        name: RoutePaths.companyInfo,
+        name: 'BuildingDetailsVC',
         builder: (context, state) => BlocProvider<CompanyInfoBloc>(
           create: (_) => GetIt.I<CompanyInfoBloc>(),
           child: const CompanyInfoPage(),
