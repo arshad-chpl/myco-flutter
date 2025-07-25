@@ -8,7 +8,8 @@ class CommonRow extends StatelessWidget {
   final String title;
   final String value;
   final Widget? valueWidget;
-  final double? size;
+  final double? titleFontSize;
+  final double? valueFontSize;
   final Color? textColor;
   final TextDecoration? decoration;
 
@@ -17,7 +18,8 @@ class CommonRow extends StatelessWidget {
     required this.title,
     required this.value,
     this.valueWidget,
-    this.size,
+    this.titleFontSize,
+    this.valueFontSize,
     this.textColor,
     this.decoration,
   }) : super(key: key);
@@ -28,18 +30,16 @@ class CommonRow extends StatelessWidget {
     textBaseline: TextBaseline.alphabetic,
     children: [
       Expanded(
-        flex: 7,
         child: CustomText(
           LanguageManager().get('${title}'),
           isKey: true,
           fontWeight: FontWeight.w600,
-          fontSize: size ?? 15 * Responsive.getResponsiveText(context),
+          fontSize: titleFontSize ?? 15 * Responsive.getResponsiveText(context),
         ),
       ),
       const CustomText(':'),
       SizedBox(width: 0.03 * Responsive.getWidth(context)),
       Expanded(
-        flex: 5,
         child:
             valueWidget ??
             CustomText(
@@ -47,7 +47,8 @@ class CommonRow extends StatelessWidget {
               decoration: decoration,
               color: textColor ?? AppTheme.getColor(context).onSurface,
               fontWeight: FontWeight.w500,
-              fontSize: size ?? 13 * Responsive.getResponsiveText(context),
+              fontSize:
+                  valueFontSize ?? 13 * Responsive.getResponsiveText(context),
             ),
       ),
     ],
