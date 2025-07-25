@@ -38,10 +38,8 @@ class AppointmentLoaded extends AppointmentState {
   List<Object> get props => [appointments, tabIndex];
 
   @override
-  AppointmentState copyWith({int? tabIndex}) => AppointmentLoaded(
-      appointments,
-      tabIndex: tabIndex ?? this.tabIndex,
-    );
+  AppointmentState copyWith({int? tabIndex}) =>
+      AppointmentLoaded(appointments, tabIndex: tabIndex ?? this.tabIndex);
 }
 
 class CommonResponseAppointment extends AppointmentState {
@@ -68,8 +66,6 @@ class AppointmentError extends AppointmentState {
   List<Object?> get props => [message, tabIndex];
 
   @override
-  AppointmentError copyWith({int? tabIndex}) => AppointmentError(
-      message,
-      tabIndex: tabIndex ?? this.tabIndex,
-    );
+  AppointmentError copyWith({int? tabIndex}) =>
+      AppointmentError(message, tabIndex: tabIndex ?? this.tabIndex);
 }

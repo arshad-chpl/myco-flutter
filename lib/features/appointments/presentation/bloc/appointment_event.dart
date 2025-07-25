@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/approve_appointment_entity_model.dart';
+import 'package:myco_flutter/features/appointments/data/models/request/delete_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/get_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/get_my_appointments_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/reject_appointment_request_model.dart';
 
-abstract class AppointmentEvent extends Equatable{
+abstract class AppointmentEvent extends Equatable {
   const AppointmentEvent();
 
   @override
@@ -20,7 +21,7 @@ class AppointmentTabChange extends AppointmentEvent {
 class GetAppointmentEvent extends AppointmentEvent {
   final GetAppointmentRequestModel params;
 
-  const GetAppointmentEvent( this.params);
+  const GetAppointmentEvent(this.params);
 }
 
 class GetMyAppointmentEvent extends AppointmentEvent {
@@ -39,4 +40,10 @@ class RejectAppointmentEvent extends AppointmentEvent {
   final RejectAppointmentRequestModel params;
 
   const RejectAppointmentEvent(this.params);
+}
+
+class DeleteAppointmentEvent extends AppointmentEvent {
+  final DeleteAppointmentRequestModel params;
+
+  const DeleteAppointmentEvent(this.params);
 }

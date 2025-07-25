@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/appointments/data/models/request/delete_appointment_request_model.dart';
+import 'package:myco_flutter/features/appointments/data/models/request/get_my_appointments_request_model.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_bloc.dart';
+import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_event.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_state.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_person_details.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_shimmer.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/reason_value_common_row.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
+import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
@@ -22,6 +29,8 @@ class MyAppointments extends StatefulWidget {
 }
 
 class _MyAppointmentsState extends State<MyAppointments> {
+  late PreferenceManager preferenceManager;
+
 
   Color getHeaderColor(String status) {
     switch (status) {
@@ -50,7 +59,40 @@ class _MyAppointmentsState extends State<MyAppointments> {
   }
 
   @override
-  Widget build(BuildContext context) => BlocBuilder<AppointmentBloc, AppointmentState>(
+  void initState() {
+    super.initState();
+    preferenceManager = GetIt.I<PreferenceManager>();
+  }
+
+  @override
+  Widget build(BuildContext context) => BlocConsumer<AppointmentBloc, AppointmentState>(
+    listener: (context, state) async {
+      if (state is CommonResponseAppointment) {
+        Fluttertoast.showToast(
+          msg: state.commonResponse.message ?? 'Action successful!',
+        );
+
+        final userId = await preferenceManager.getUserId();
+        final companyId = await preferenceManager.getCompanyId();
+        final languageId = await preferenceManager.getLanguageId();
+
+        context.read<AppointmentBloc>().add(
+          GetMyAppointmentEvent(
+            GetMyAppointmentsRequestModel(
+              getMyAppointments: 'getMyAppointments',
+              userId: userId,
+              companyId: companyId,
+              languageId: languageId,
+            ),
+          ),
+        );
+
+        context.read<AppointmentBloc>().add(const AppointmentTabChange(tabIndex: 1));
+      } else if (state is AppointmentError) {
+        Fluttertoast.showToast(msg: state.message);
+      }
+    } ,
+
       builder: (context, state) {
 
         if (state.tabIndex != 1 && (state is AppointmentLoaded || state is AppointmentError)) {
@@ -81,10 +123,47 @@ class _MyAppointmentsState extends State<MyAppointments> {
                       ? Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SvgPicture.asset(AppAssets.assetBellRinging),
+                      GestureDetector(
+                        onTap: () {
+
+                        },
+                          child: SvgPicture.asset(AppAssets.assetBellRinging)
+                      ),
                       SizedBox(width: 0.03
                           * Responsive.getWidth(context)),
-                      SvgPicture.asset(AppAssets.assetTrashIcon),
+                      GestureDetector(
+                        onTap: () {
+                          showBottomSheet(
+                            context: context,
+                            builder: (context) => CustomAlertDialog(
+                              alertType: AlertType.delete,
+                              title:
+                              'Are you sure do you want to delete this appointment?',
+                              onCancel: () async {
+                                Navigator.pop(context);
+                              },
+                              cancelText: 'No',
+                              onConfirm: () async {
+                                Navigator.pop(context);
+                                context.read<AppointmentBloc>().add(
+                                  DeleteAppointmentEvent(
+                                    DeleteAppointmentRequestModel(
+                                      deleteAppointment:
+                                      'deleteAppointment',
+                                      companyId: await preferenceManager.getCompanyId(),
+                                      languageId: await preferenceManager.getLanguageId(),
+                                      appointmentId: myAppointment.appointmentId,
+                                    ),
+
+                                  ),
+                                );
+                              },
+                              confirmText: 'Yes',
+                            ),
+                          );
+                        },
+                          child: SvgPicture.asset(AppAssets.assetTrashIcon)
+                      ),
                     ],
                   )
                       : null,

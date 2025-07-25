@@ -74,5 +74,21 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
         emit(AppointmentError('Failed to load approved appointment', tabIndex: state.tabIndex));
       }
     });
+
+    on<DeleteAppointmentEvent>((event, emit) async {
+      emit(AppointmentLoading(tabIndex: state.tabIndex));
+
+      try {
+        final result = await useCase.deleteAppointment(event.params);
+        result.fold(
+            (failure) => emit(AppointmentError(failure.message, tabIndex: state.tabIndex)),
+            (deleteAppointment) {
+              emit(CommonResponseAppointment(deleteAppointment, tabIndex: state.tabIndex));
+            },
+        );
+      } catch (e) {
+        emit(AppointmentError('Failed to load Delete Appointment', tabIndex: state.tabIndex));
+      }
+    });
   }
 }
