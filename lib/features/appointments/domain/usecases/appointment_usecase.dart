@@ -35,4 +35,7 @@ class AppointmentUseCase {
     DeleteAppointmentRequestModel params,
   ) async => await repository.deleteAppointmentRequest(params);
 
+  Future<Either<Failure, CommonResponseModelEntity>> sendAppointmentReminder(
+      SendAppointmentReminderRequestModel params,
+      ) async => await repository.sendAppointmentReminder(params);
 }

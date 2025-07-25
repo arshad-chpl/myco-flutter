@@ -90,5 +90,19 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
         emit(AppointmentError('Failed to load Delete Appointment', tabIndex: state.tabIndex));
       }
     });
+
+    on<SendAppointmentReminderEvent>((event, emit) async {
+      emit(AppointmentLoading(tabIndex: state.tabIndex));
+
+      try {
+        final result = await useCase.sendAppointmentReminder(event.params);
+        result.fold(
+            (failure) => emit(AppointmentError(failure.message, tabIndex: state.tabIndex)),
+            (sendAppointmentReminder) => emit(CommonResponseAppointment(sendAppointmentReminder, tabIndex: state.tabIndex)),
+        );
+      } catch (e) {
+        emit(AppointmentError('Failed to Send Reminder Appointment', tabIndex: state.tabIndex));
+      }
+    },);
   }
 }

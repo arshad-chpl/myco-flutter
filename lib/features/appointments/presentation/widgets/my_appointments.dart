@@ -10,6 +10,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/delete_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/get_my_appointments_request_model.dart';
+import 'package:myco_flutter/features/appointments/data/models/request/send_appointment_reminder_request_model.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_bloc.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_event.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_state.dart';
@@ -124,44 +125,78 @@ class _MyAppointmentsState extends State<MyAppointments> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       GestureDetector(
-                        onTap: () {
+                          onTap: () {
+                            showBottomSheet(
+                              context: context,
+                              builder: (context) => CustomAlertDialog(
+                                alertType: AlertType.warning,
+                                title:
+                                'Send reminder notification?',
+                                onCancel: () async {
+                                  Navigator.pop(context);
+                                },
+                                cancelText: 'No',
+                                onConfirm: () async {
+                                  Navigator.pop(context);
+                                  context.read<AppointmentBloc>().add(
+                                    SendAppointmentReminderEvent(
+                                      SendAppointmentReminderRequestModel(
+                                        sendAppointmentReminder:
+                                        'sendAppointmentReminder',
+                                        companyId: await preferenceManager.getCompanyId(),
+                                        languageId: await preferenceManager.getLanguageId(),
+                                        appointmentId: myAppointment.appointmentId,
+                                        userName: myAppointment.userFullName,
+                                        userId: await preferenceManager.getUserId(),
+                                        appointmentAgenda: myAppointment.appointmentAgenda,
+                                        appointmentForUserId: myAppointment.appointmentForUserId,
+                                        appointmentPlace: myAppointment.appointmentPlace,
+                                        appointmentTime: myAppointment.appointmentDatetime,
+                                        forUserName: '',
+                                      ),
 
-                        },
+                                    ),
+                                  );
+                                },
+                                confirmText: 'Yes',
+                              ),
+                            );
+                          },
                           child: SvgPicture.asset(AppAssets.assetBellRinging)
                       ),
                       SizedBox(width: 0.03
                           * Responsive.getWidth(context)),
                       GestureDetector(
-                        onTap: () {
-                          showBottomSheet(
-                            context: context,
-                            builder: (context) => CustomAlertDialog(
-                              alertType: AlertType.delete,
-                              title:
-                              'Are you sure do you want to delete this appointment?',
-                              onCancel: () async {
-                                Navigator.pop(context);
-                              },
-                              cancelText: 'No',
-                              onConfirm: () async {
-                                Navigator.pop(context);
-                                context.read<AppointmentBloc>().add(
-                                  DeleteAppointmentEvent(
-                                    DeleteAppointmentRequestModel(
-                                      deleteAppointment:
-                                      'deleteAppointment',
-                                      companyId: await preferenceManager.getCompanyId(),
-                                      languageId: await preferenceManager.getLanguageId(),
-                                      appointmentId: myAppointment.appointmentId,
-                                    ),
+                          onTap: () {
+                            showBottomSheet(
+                              context: context,
+                              builder: (context) => CustomAlertDialog(
+                                alertType: AlertType.delete,
+                                title:
+                                'Are you sure do you want to delete this appointment?',
+                                onCancel: () async {
+                                  Navigator.pop(context);
+                                },
+                                cancelText: 'No',
+                                onConfirm: () async {
+                                  Navigator.pop(context);
+                                  context.read<AppointmentBloc>().add(
+                                    DeleteAppointmentEvent(
+                                      DeleteAppointmentRequestModel(
+                                        deleteAppointment:
+                                        'deleteAppointment',
+                                        companyId: await preferenceManager.getCompanyId(),
+                                        languageId: await preferenceManager.getLanguageId(),
+                                        appointmentId: myAppointment.appointmentId,
+                                      ),
 
-                                  ),
-                                );
-                              },
-                              confirmText: 'Yes',
-                            ),
-                          );
-                        },
+                                    ),
+                                  );
+                                },
+                                confirmText: 'Yes',
+                              ),
+                            );
+                          },
                           child: SvgPicture.asset(AppAssets.assetTrashIcon)
                       ),
                     ],
