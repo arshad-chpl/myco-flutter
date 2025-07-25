@@ -172,6 +172,7 @@ class AppAssets {
   static const String assetsSimCard = '$assets/simcard.svg';
   static const String assetsVector = '$assets/Vector.svg';
   static const String assetsUserTick = '$assets/user-tick.svg';
+  static const String assetsData = '$assets/data.svg';
 
   static const String lostFoundData = '$lostFound/data.png';
   static const String lostFoundMessageEdit = '$lostFound/message-edit.png';

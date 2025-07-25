@@ -297,7 +297,7 @@ class _AddAssets extends State<AddAssets> {
                     AssetsTextFieldWidget(
                       label: 'credential',
                       hintText: 'type_here',
-                      image: AppAssets.lostFoundData,
+                      image: AppAssets.assetsData,
                       isRequired:
                           selectedCategory?.assetCredentialRequired ?? false,
 
@@ -314,8 +314,7 @@ class _AddAssets extends State<AddAssets> {
                       label: 'branch',
                       hintText: 'select',
                       isRequired: selectedCategory?.brandNameRequired ?? false,
-
-                      image: AppAssets.lostFoundData,
+                      image: AppAssets.assetsData,
                       controller: addAssetsControllers.branchController,
                       validator: (value) {
                         if (currentError == AddAssetFieldKey.branch &&
