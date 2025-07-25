@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/constants.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -38,8 +39,6 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
 
     final initialTabIndex = context.read<AppointmentBloc>().state.tabIndex;
     pageController = PageController(initialPage: initialTabIndex);
-
-    // pageController = PageController(initialPage:  context.read<AppointmentBloc>().state.tabIndex);
 
     fetchDataForTab(initialTabIndex);
 
@@ -107,7 +106,7 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
         }
 
         return Scaffold(
-          appBar: const CustomAppbar(title: 'Appointments'),
+          appBar: const CustomAppbar(title: 'appointments', isKey: true,),
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: VariableBag.screenHorizontalPadding * Responsive.getResponsive(context)),
             child: Column(
@@ -147,7 +146,7 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
             innericonsize: 30 * Responsive.getResponsive(context),
             imageSize: 50 * Responsive.getResponsive(context),
             onTap: () {
-              context.pushNamed('/');
+              context.push(RoutePaths.employees);
             },
             openIcon: Icons.add,
             closeIcon: Icons.close,

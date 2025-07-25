@@ -4,9 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/delete_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/get_my_appointments_request_model.dart';
@@ -16,6 +18,7 @@ import 'package:myco_flutter/features/appointments/presentation/bloc/appointment
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_state.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_person_details.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_shimmer.dart';
+import 'package:myco_flutter/features/appointments/presentation/widgets/no_data_preview.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/reason_value_common_row.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
 import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
@@ -104,7 +107,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
           return const AppointmentShimmer();
         } else if(state is AppointmentLoaded) {
           if (state.appointments.myAppointments == null || state.appointments.myAppointments!.isEmpty) {
-            return const Center(child: CustomText('No Appointments Found.'));
+            return const NoDataPreview();
           }
           return ListView.builder(
             itemCount: state.appointments.myAppointments?.length ?? 0,
@@ -114,7 +117,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
               final status = myAppointment.appointmentStatus ?? '';
 
               return Padding(
-                padding: EdgeInsets.only(bottom: 21 * Responsive.getResponsive(context)),
+                padding: EdgeInsets.only(bottom: 23 * Responsive.getResponsive(context)),
                 child: CommonCard(
                   title: myAppointment.appointmentDatetime ?? 'NA',
                   headerPrefixIcon: AppAssets.calendarIcon,
@@ -130,12 +133,11 @@ class _MyAppointmentsState extends State<MyAppointments> {
                               context: context,
                               builder: (context) => CustomAlertDialog(
                                 alertType: AlertType.warning,
-                                title:
-                                'Send reminder notification?',
+                                title: LanguageManager().get('send_reminder_notification'),
                                 onCancel: () async {
                                   Navigator.pop(context);
                                 },
-                                cancelText: 'No',
+                                cancelText: LanguageManager().get('no'),
                                 onConfirm: () async {
                                   Navigator.pop(context);
                                   context.read<AppointmentBloc>().add(
@@ -158,7 +160,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
                                     ),
                                   );
                                 },
-                                confirmText: 'Yes',
+                                confirmText: LanguageManager().get('yes'),
                               ),
                             );
                           },
@@ -172,12 +174,11 @@ class _MyAppointmentsState extends State<MyAppointments> {
                               context: context,
                               builder: (context) => CustomAlertDialog(
                                 alertType: AlertType.delete,
-                                title:
-                                'Are you sure do you want to delete this appointment?',
+                                title: LanguageManager().get('delete_appointment'),
                                 onCancel: () async {
                                   Navigator.pop(context);
                                 },
-                                cancelText: 'No',
+                                cancelText: LanguageManager().get('no'),
                                 onConfirm: () async {
                                   Navigator.pop(context);
                                   context.read<AppointmentBloc>().add(
@@ -193,7 +194,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
                                     ),
                                   );
                                 },
-                                confirmText: 'Yes',
+                                confirmText: LanguageManager().get('yes'),
                               ),
                             );
                           },
@@ -203,7 +204,10 @@ class _MyAppointmentsState extends State<MyAppointments> {
                   )
                       : null,
                   bottomWidget: Padding(
-                    padding: EdgeInsets.all(13 * Responsive.getResponsive(context)),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: VariableBag.commonCardHorizontalPadding * Responsive.getResponsive(context),
+                        vertical: VariableBag.commonCardHorizontalPadding * Responsive.getResponsive(context)
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -213,7 +217,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
                           children: [
                             CustomText(
                               'Appointment From',
-                              fontSize: 10,
+                              fontSize: 13 * Responsive.getResponsiveText(context),
                               color: AppTheme.getColor(context).primary,
                               fontWeight: FontWeight.w600,
                             ),
@@ -240,17 +244,17 @@ class _MyAppointmentsState extends State<MyAppointments> {
                         ),
                         Divider(color: AppTheme.getColor(context).secondary),
                         ReasonValueCommonRow(
-                          heading: 'Reason for Appointment',
+                          heading: 'reason_for_appointment',
                           value: myAppointment.appointmentAgenda ?? '',
                         ),
                         SizedBox(height: 0.01 * Responsive.getHeight(context)),
                         ReasonValueCommonRow(
-                          heading: 'Location',
+                          heading: 'location',
                           value: myAppointment.appointmentPlace ?? '',
                         ),
                         SizedBox(height: 0.01 * Responsive.getHeight(context)),
                         ReasonValueCommonRow(
-                          heading: 'Phone No. ',
+                          heading: 'phone_no',
                           value: myAppointment.userMobile ?? '',
                         ),
                         if (status == '2')
@@ -258,7 +262,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
                             children: [
                               SizedBox(height: 0.01 * Responsive.getHeight(context)),
                               ReasonValueCommonRow(
-                                heading: 'Reason for Rejection',
+                                heading: 'reason_for_rejection',
                                 value: myAppointment.appointmentRejectReason ?? '',
                               ),
                             ],
@@ -267,7 +271,8 @@ class _MyAppointmentsState extends State<MyAppointments> {
                         Align(
                           alignment: Alignment.topRight,
                           child: CustomText(
-                            'Re-Appointment',
+                            're_appointment',
+                            isKey: true,
                             fontWeight: FontWeight.w600,
                             color: AppTheme.getColor(context).primary,
                             textAlign: TextAlign.end,

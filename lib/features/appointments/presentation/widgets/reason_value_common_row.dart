@@ -32,6 +32,7 @@ class _ReasonValueCommonRowState
           width: headingColumnWidth,
           child: CustomText(
             widget.heading,
+            isKey: true,
             fontWeight: FontWeight.w600,
             fontSize: 14 * Responsive.getResponsiveText(context),
             textAlign: TextAlign.start,

@@ -4,7 +4,7 @@ import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/appointments/presentation/pages/reject_request_bottom_sheet.dart';
+import 'package:myco_flutter/features/appointments/presentation/bottomsheet/reject_request_bottom_sheet.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';

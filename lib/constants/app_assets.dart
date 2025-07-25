@@ -214,4 +214,6 @@ class AppAssets {
   static const String assetTrashIcon = '$appointmentSvgs/trash_icon.svg';
   static const String assetBellRinging = '$appointmentSvgs/bell_ringing.svg';
   static const String assetMsgEdit = '$appointmentSvgs/message-edit.svg';
+  static const String mycoGrey = '$appointmentSvgs/mycoGreyLogo.svg';
+  static const String noDataImage = '$appointmentSvgs/no_data_image.svg';
 }

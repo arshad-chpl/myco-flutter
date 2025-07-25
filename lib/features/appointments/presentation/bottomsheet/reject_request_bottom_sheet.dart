@@ -6,6 +6,7 @@ import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/reject_appointment_request_model.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_bloc.dart';
@@ -107,8 +108,8 @@ class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
             controller: reasonController,
             prefixIconPath: AppAssets.assetMsgEdit.toString(),
             maxLines: 15,
-            hintText: 'Type Here',
-            label: 'Reject Request',
+            hintText: LanguageManager().get('type_here'),
+            label: LanguageManager().get('reject_request'),
             isRequired: true,
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
@@ -128,7 +129,7 @@ class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
             children: [
               Expanded(
                 child: MyCoButton(
-                  title: 'Close',
+                  title: LanguageManager().get('close'),
                   height: Responsive.getHeight(context) * .05,
                   boarderRadius: 30 * Responsive.getResponsive(context),
                   width: Responsive.getWidth(context) * .450,
@@ -143,7 +144,7 @@ class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
               const SizedBox(width: 8),
               Expanded(
                 child: MyCoButton(
-                  title: 'Submit',
+                  title: LanguageManager().get('submit'),
                   onTap: submitRejection,
                   height: Responsive.getHeight(context) * .05,
                   isShadowBottomLeft: true,

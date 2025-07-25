@@ -7,15 +7,17 @@ import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/approve_appointment_entity_model.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/get_my_appointments_request_model.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_bloc.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_event.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_state.dart';
-import 'package:myco_flutter/features/appointments/presentation/pages/reject_request_bottom_sheet.dart';
+import 'package:myco_flutter/features/appointments/presentation/bottomsheet/reject_request_bottom_sheet.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_person_details.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_shimmer.dart';
+import 'package:myco_flutter/features/appointments/presentation/widgets/no_data_preview.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/reason_value_common_row.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
 import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
@@ -79,7 +81,7 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
       } else if (state is AppointmentLoaded) {
         if (state.appointments.myAppointments == null ||
             state.appointments.myAppointments!.isEmpty) {
-          return const Center(child: CustomText('No Appointments Found.'));
+          return const NoDataPreview();
         }
         return ListView.builder(
           itemCount: state.appointments.myAppointments!.length,
@@ -92,7 +94,7 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
 
             return Padding(
               padding: EdgeInsets.only(
-                bottom: 21 * Responsive.getResponsive(context),
+                bottom: 23 * Responsive.getResponsive(context),
               ),
               child: CommonCard(
                 borderRadius:
@@ -103,15 +105,17 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
                 showHeaderPrefixIcon: true,
                 headerColor: AppTheme.getColor(context).primary,
                 bottomWidget: Padding(
-                  padding: EdgeInsets.all(
-                    13 * Responsive.getResponsive(context),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: VariableBag.commonCardHorizontalPadding * Responsive.getResponsive(context),
+                    vertical: VariableBag.commonCardHorizontalPadding * Responsive.getResponsive(context)
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        'Appointment Request By',
-                        fontSize: 10 * Responsive.getResponsiveText(context),
+                        'appointment_request_by',
+                        isKey: true,
+                        fontSize: 13 * Responsive.getResponsiveText(context),
                         color: AppTheme.getColor(context).primary,
                         fontWeight: FontWeight.w600,
                       ),
@@ -124,20 +128,22 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
                       ),
                       Divider(color: AppTheme.getColor(context).secondary),
                       ReasonValueCommonRow(
-                        heading: 'Reason for Appointment',
+                        heading: 'reason_for_appointment',
                         value: appointmentRequest.appointmentAgenda ?? 'NA',
                       ),
                       SizedBox(height: 0.01 * Responsive.getHeight(context)),
                       ReasonValueCommonRow(
-                        heading: 'Location',
+                        heading: 'location',
                         value: appointmentRequest.appointmentPlace ?? 'NA',
                       ),
                       SizedBox(height: 0.01 * Responsive.getHeight(context)),
                       ReasonValueCommonRow(
-                        heading: 'Phone No. ',
+                        heading: 'phone_no',
                         value: appointmentRequest.userMobile ?? 'NA',
                       ),
-                      SizedBox(height: 0.03 * Responsive.getHeight(context)),
+                      SizedBox(height: 0.02 * Responsive.getHeight(context)),
+                      Divider(color: AppTheme.getColor(context).secondary),
+                      SizedBox(height: 0.01 * Responsive.getHeight(context)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         spacing:
@@ -150,9 +156,9 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
                                 context: context,
                                 builder: (context) => CustomAlertDialog(
                                   alertType: AlertType.delete,
-                                  title: 'Are you sure do you want to reject this appointment request?',
+                                  title: LanguageManager().get('reject_appointment'),
                                   onCancel: () {Navigator.pop(context);},
-                                  cancelText: 'No',
+                                  cancelText: LanguageManager().get('no'),
                                   onConfirm: () async {
                                     showBottomSheet(
                                       context: context,
@@ -164,11 +170,12 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
                                       ),
                                     );
                                   },
-                                  confirmText: 'Yes',
+                                  confirmText: LanguageManager().get('yes'),
                                 ),
                               );
                             },
-                            title: 'Reject',
+                            title: LanguageManager().get('reject'),
+                            fontWeight: FontWeight.w600,
                             textStyle: TextStyle(
                               color: AppTheme.getColor(context).error,
                             ),
@@ -187,11 +194,11 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
                                 builder: (context) => CustomAlertDialog(
                                   alertType: AlertType.alert,
                                   title:
-                                      'Are you sure do you want to approve this appointment request ?',
+                                      LanguageManager().get('approve_appointment'),
                                   onCancel: () async {
                                     Navigator.pop(context);
                                   },
-                                  cancelText: 'No',
+                                  cancelText: LanguageManager().get('no'),
                                   onConfirm: () async {
                                     Navigator.pop(context);
                                     context.read<AppointmentBloc>().add(
@@ -216,11 +223,12 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
                                       ),
                                     );
                                   },
-                                  confirmText: 'Yes',
+                                  confirmText: LanguageManager().get('yes'),
                                 ),
                               );
                             },
-                            title: 'Approve',
+                            title: LanguageManager().get('approve'),
+                            fontWeight: FontWeight.w600,
                             textStyle: TextStyle(
                               color: AppTheme.getColor(context).surface,
                             ),
