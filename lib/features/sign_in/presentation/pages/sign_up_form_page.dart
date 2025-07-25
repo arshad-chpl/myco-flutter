@@ -330,13 +330,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
                   switch (state.fieldKey) {
                     case 'branch':
-
                       selectedBranchId = state.selectedId!;
                       selectedBranchName = state.selectedName!;
-
-                      print('branchId: $selectedBranchId');
-                      print('branchName: $selectedBranchName');
-
                       selectedDepartmentId = '';
                       selectedDepartmentName = '';
                       selectedSubDepartmentId = '';
@@ -370,7 +365,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
                 },
               ),
             ],
-
 
             child: BlocBuilder<CommonApiBloc, CommonApiState>(
               builder: (context, state) {

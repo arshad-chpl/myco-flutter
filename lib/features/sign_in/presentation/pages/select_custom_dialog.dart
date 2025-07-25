@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/sign_in/presentation/custome_bloc/my_form_event.dart';
 import 'package:myco_flutter/features/sign_in/presentation/custome_bloc/my_form_bloc.dart';
@@ -84,37 +86,54 @@ class _SelectCustomDialogState extends State<SelectCustomDialog> {
               child: TextField(
                 controller: searchController,
                 decoration: InputDecoration(
-                  hintText: 'Search',
+                  hintText: LanguageManager().get('search'),
                   filled: true,
-                  fillColor: const Color(0xFFE6E6E6),
-                  prefixIcon: const Icon(Icons.search, color: Color(0xFF2F648E)),
+                  fillColor: Colors.white,
+                  prefixIcon: const Padding(
+                    padding: EdgeInsets.all(12),
+                    child: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: ImageIcon(
+                        AssetImage('assets/take_order/search-normal.png'),
+                        size: 20,
+                      ),
+                    ),
+                  ),
                   suffixIcon: searchController.text.isNotEmpty
                       ? IconButton(
-                    icon: const Icon(Icons.clear, color: Color(0xFF2F648E)),
+                    icon: const Icon(Icons.clear, color: Color(0xFF98A2B3)),
                     onPressed: () {
                       searchController.clear();
                       FocusScope.of(context).unfocus();
                     },
                   )
-                      : const Icon(Icons.mic, color: Color(0xFF2F648E)),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
-                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+                      : null,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(color: Color(0xFF98A2B3), width: 1.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(color: Color(0xFF98A2B3), width: 1.5),
+                  ),
                 ),
                 onChanged: _filterList,
               ),
             ),
+
             const SizedBox(height: 18),
             SizedBox(
               height: 250,
               child: filteredIndexes.isEmpty
-                  ? const Center(
+                  ? Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.inbox, size: 48, color: Colors.grey),
-                    SizedBox(height: 10),
-                    Text('No data available', style: TextStyle(fontSize: 16, color: Colors.grey)),
+                    const Icon(Icons.inbox, size: 48, color: Colors.grey),
+                    const SizedBox(height: 10),
+                    Text(LanguageManager().get('no_data'), style: const TextStyle(fontSize: 16, color: Colors.grey)),
                   ],
                 ),
               )
@@ -166,15 +185,31 @@ class _SelectCustomDialogState extends State<SelectCustomDialog> {
                     fontWeight: FontWeight.w600,
                     color: AppColors.primary,
                   ),
-                  title: 'Cancel',
+                  title: LanguageManager().get('cancel').toUpperCase(),
                   height: 0.05 * Responsive.getHeight(context),
                   width: 0.42 * Responsive.getWidth(context),
                   backgroundColor: AppColors.white,
                 ),
                 MyCoButton(
                   onTap: () {
+
                     if (tempSelectedId == null || tempSelectedId!.isEmpty) {
-                      Fluttertoast.showToast(msg: "Please select a ${widget.title.toLowerCase()}", backgroundColor: Colors.redAccent, textColor: Colors.white);
+                      String message = '';
+                      if (widget.title.toLowerCase() == 'branch') {
+                        message = LanguageManager().get('please_select_branch');
+                      } else if (widget.title.toLowerCase() == 'department') {
+                        message = LanguageManager().get('please_select_department');
+                      } else if (widget.title.toLowerCase() == 'sub department') {
+                        message = LanguageManager().get('please_select_sub_department');
+                      } else if (widget.title.toLowerCase() == 'shift') {
+                        message = LanguageManager().get('please_select_shift');
+                      } else if (widget.title.toLowerCase() == 'designation') {
+                        message = LanguageManager().get('select_designation');
+                      } else {
+                        message = 'Please select data first';
+                      }
+
+                      Fluttertoast.showToast(msg: message, backgroundColor: Colors.redAccent, textColor: Colors.white,);
                       return;
                     }
 
@@ -186,7 +221,7 @@ class _SelectCustomDialogState extends State<SelectCustomDialog> {
 
                     Navigator.pop(context);
                   },
-                  title: 'Done',
+                  title: LanguageManager().get('done').toUpperCase(),
                   height: 0.05 * Responsive.getHeight(context),
                   width: 0.42 * Responsive.getWidth(context),
                   boarderRadius: 30 * Responsive.getResponsive(context),
