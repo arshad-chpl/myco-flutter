@@ -42,15 +42,14 @@ class RoutePaths {
   static const String ideabox = '/idea-box';
   static const String ideaRequest = '/idea-request';
   static const String leave = '/leave';
+  static const String companyInfo = '/company-info';
+  static const String holiday = '/holiday';
   static const String leaveBalance = '/my-leave-balance';
   static const String teamLeaveBalance = '/my-team-leave-balance';
-  static const String companyInfo = '/company-info';
   static const String myLeaveBalanceScreen = '/my_leave_balance_screen';
   static const String myTeamLeavesScreen = '/my_team_leaves_screen';
   static const String addShortLeaveScreen = '/add_short_leave_screen';
   static const String addLeaveScreen = '/add_leave_screen';
-  static const String holiday = '/holiday';
-
 
   static const String employees = '/employees';
 
@@ -142,5 +141,4 @@ class RoutePaths {
   static const String visitReport = '/visit_report';
   static const String addVisit = '/add-visit';
   static const String AssignToVisit = '/assign-to-visit';
-
 }

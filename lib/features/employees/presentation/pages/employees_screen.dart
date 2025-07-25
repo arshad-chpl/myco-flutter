@@ -1,47 +1,507 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/core/utils/util.dart';
+import 'package:myco_flutter/features/employees/domain/entites/branch.dart';
+import 'package:myco_flutter/features/employees/domain/entites/department.dart';
+import 'package:myco_flutter/features/employees/presentation/bloc/employee_bloc.dart';
+import 'package:myco_flutter/features/employees/presentation/bloc/employee_event.dart';
+import 'package:myco_flutter/features/employees/presentation/bloc/employee_state.dart';
+import 'package:myco_flutter/features/employees/presentation/widgets/employee_card.dart';
+import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
+import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
-class EmployeesScreen extends StatefulWidget {
-  const EmployeesScreen({super.key});
+class EmployeesScreen extends StatelessWidget {
+  EmployeesScreen({super.key});
+
+  final EmployeeBloc bloc = GetIt.I<EmployeeBloc>();
+
+  final TextEditingController _searchController = TextEditingController();
 
   @override
-  State<EmployeesScreen> createState() => _EmployeesScreenState();
-}
+  Widget build(BuildContext context) {
+    Responsive.init(context);
 
-class _EmployeesScreenState extends State<EmployeesScreen> {
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(
-      title: 'Junagadh',
-      appBarBackgoundColor: AppTheme.getColor(context).surface,
-      titileColor: AppTheme.getColor(context).onSurface,
-      // fontWeight: AppTextTheme.getTextTheme(context).titleMedium,
-    ),
-    body: Column(
-      children: [
-        const SizedBox(height: 50),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomMediaPickerContainer(
-            title: 'Assets Image',
-            titleFontSize: 14,
-            imageTitle: 'Capture Image',
-            containerHeight: 100,
-            multipleImage: 5,
-            imagePath: 'assets/media_picker/gallery-export.png',
-            backgroundColor: Colors.blue.shade50,
-            isCameraShow: true,
-            isGalleryShow: true,
-            isDocumentShow: true,
-            isCropImage: true,
+    return BlocProvider<EmployeeBloc>(
+      create: (_) => bloc..add(LoadUserData()),
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: BlocBuilder<EmployeeBloc, EmployeeState>(
+              builder: (context, state) => CustomAppbar(
+                title: 'employees',
+                isKey: true,
+                titleFontSize: 18 * Responsive.getResponsiveText(context),
+                titleFontWeight: FontWeight.w700,
+                appBarBackgoundColor: AppTheme.getColor(context).surface,
+              ),
+            ),
+          ),
+          body: BlocBuilder<EmployeeBloc, EmployeeState>(
+            builder: (context, state) {
+              if (state is EmployeeLoading || state is EmployeeInitial) {
+                return _buildLoadedContent(context, bloc, null);
+              } else if (state is EmployeeError) {
+                return Center(child: Text('Error: ${state.message}'));
+              } else if (state is EmployeeLoaded) {
+                return _buildLoadedContent(context, bloc, state);
+              }
+              return const SizedBox();
+            },
           ),
         ),
-      ],
+      ),
+    );
+  }
+
+  Widget _buildLoadedContent(
+    BuildContext context,
+    EmployeeBloc bloc,
+    EmployeeLoaded? st,
+  ) {
+    final bool isShimmer = st == null;
+
+    final filteredEmployees = isShimmer
+        ? List.generate(8, (_) => null)
+        : st.employees.where((e) {
+            final matchesBranch = e.blockId == st.selectedBranch?.blockId;
+            final matchesDepartment =
+                e.floorId == st.selectedDepartment?.floorId;
+            final matchesSearch =
+                st.searchQuery.isEmpty ||
+                (e.userFullName?.toLowerCase().contains(
+                      st.searchQuery.toLowerCase(),
+                    ) ??
+                    false) ||
+                (e.designation?.toLowerCase().contains(
+                      st.searchQuery.toLowerCase(),
+                    ) ??
+                    false);
+            return matchesBranch && matchesDepartment && matchesSearch;
+          }).toList();
+
+    final double gridPadding = 8 * Responsive.getResponsive(context);
+
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal:
+            VariableBag.screenHorizontalPadding *
+            Responsive.getResponsive(context),
+      ),
+      child: Column(
+        children: [
+          CustomSearchField(
+            hintText: 'search',
+            controller: _searchController,
+
+            onChanged: (q) {
+              if (!isShimmer) bloc.add(SearchEmployees(q));
+            },
+            onSubmitted: (value) {
+              FocusScope.of(context).unfocus();
+              debugPrint('value------------>$value');
+            },
+          ),
+          SizedBox(height: 0.012 * Responsive.getHeight(context)),
+          Row(
+            children: [
+              Expanded(child: _dropdownBranch(context, st)),
+              SizedBox(width: 0.013 * Responsive.getWidth(context)),
+              Expanded(
+                child: _dropdownDepartment(
+                  context,
+                  st,
+                  st?.filteredDepartments ?? [],
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 0.024 * Responsive.getHeight(context)),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: () async =>
+                  context.read<EmployeeBloc>().add(RefreshEmployeeData()),
+              child: filteredEmployees.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            AppAssets.noEmployeeFound,
+                            height: Responsive.isTablet(context)
+                                ? 0.200 * Responsive.getHeight(context)
+                                : 0.100 * Responsive.getHeight(context),
+                          ),
+                          const SizedBox(height: 12),
+                          CustomText(
+                            'No employees found',
+                            fontSize:
+                                16 * Responsive.getResponsiveText(context),
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.getColor(context).onSurface,
+                          ),
+                        ],
+                      ),
+                    )
+                  : GridView.builder(
+                      padding: EdgeInsets.only(
+                        top: gridPadding,
+                        left: gridPadding,
+                        right: gridPadding,
+                        bottom: 20 * Responsive.getResponsive(context),
+                      ),
+                      itemCount: filteredEmployees.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: Responsive.getGridConfig(
+                          context,
+                        ).itemCount,
+                        mainAxisSpacing: Responsive.getGridConfig(
+                          context,
+                        ).spacing,
+                        crossAxisSpacing: Responsive.getGridConfig(
+                          context,
+                        ).spacing,
+                        childAspectRatio: 2 / 2.5,
+                      ),
+                      itemBuilder: (_, index) {
+                        final emp = filteredEmployees[index];
+                        if (emp == null) {
+                          return const EmployeeSelectionCard(
+                            name: '',
+                            department: '',
+                            image: SizedBox(),
+                            isSelected: false,
+                          );
+                        }
+                        return EmployeeSelectionCard(
+                          name: emp.userFullName ?? '',
+                          department: emp.designation ?? '',
+                          image: CachedImage(
+                            key: ValueKey(emp.userId),
+                            errorWidget: Center(
+                              child: CustomText(
+                                Util.getInitials(
+                                  emp.userFullName?.trim().isNotEmpty == true
+                                      ? emp.userFullName!
+                                      : 'NA',
+                                ),
+                                fontSize:
+                                    20 * Responsive.getResponsiveText(context),
+                                fontWeight: FontWeight.w700,
+                                color: AppTheme.getColor(context).primary,
+                              ),
+                            ),
+                            imageProvider: NetworkImage(
+                              emp.userProfilePic ?? '',
+                            ),
+                          ),
+                          isSelected:
+                              st?.selectedEmployeeIds.contains(emp.userId) ??
+                              false,
+
+                          onSelected: (_) {
+                            bloc.add(ToggleEmployeeSelection(emp.userId ?? ''));
+                            debugPrint(
+                              '🧾 Selected Employee Details:\n'
+                              'ID: ${emp.userId}\n'
+                              'Name: ${emp.userFullName}\n'
+                              'Designation: ${emp.designation}\n'
+                              'Floor ID: ${emp.floorId}\n'
+                              'Block ID: ${emp.blockId}\n'
+                              'Phone: ${emp.userMobile}\n'
+                              'Profile Pic: ${emp.userProfilePic}',
+                            );
+                          },
+                        );
+                      },
+                    ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _dropdownBranch(
+    BuildContext ctx,
+    EmployeeLoaded? st,
+  ) => GestureDetector(
+    onTap: () async {
+      if (st == null) return;
+
+      // The bottom sheet returns a selected map with 'id' and 'name'.
+      final selectedMap = await showCustomSimpleBottomSheet(
+        context: ctx,
+        heading: 'branch',
+        dataList: st.branches
+            .map(
+              (b) => {
+                'id': b.blockId ?? '', // Branch ID
+                'name': b.blockName ?? '', // Branch name
+              },
+            )
+            .toList(),
+        selectedId: st.selectedBranch?.blockId,
+      );
+
+      // Debug print the selected map from the bottom sheet
+      debugPrint('Selected Map from Bottom Sheet: $selectedMap');
+
+      // If the user cancelled or selected the same branch again, do nothing.
+      if (selectedMap == null ||
+          selectedMap['id'] == st.selectedBranch?.blockId)
+        return;
+
+      // Create a new Branch instance from the selected map
+      final branch = Branch(
+        blockId: selectedMap['id'],
+        blockName: selectedMap['name'],
+      );
+
+      debugPrint(
+        'New Branch Selected: ${branch.blockId} - ${branch.blockName}',
+      );
+
+      _searchController.clear();
+      FocusScope.of(ctx).unfocus();
+
+      ctx.read<EmployeeBloc>().add(ChangeBranch(branch));
+    },
+
+    child: _buildDropdownBox(ctx, st?.selectedBranch?.blockName ?? 'branch'),
+  );
+
+  Widget _dropdownDepartment(
+    BuildContext ctx,
+    EmployeeLoaded? st,
+    List<Department> depts,
+  ) => GestureDetector(
+    onTap: () async {
+      if (st == null) return;
+
+      final selectedMap = await showCustomSimpleBottomSheet(
+        context: ctx,
+        heading: 'department',
+        dataList: depts
+            .map((d) => {'id': d.floorId ?? '', 'name': d.departmentName ?? ''})
+            .toList(),
+        selectedId: st.selectedDepartment?.floorId,
+      );
+
+      if (selectedMap == null ||
+          selectedMap['id'] == st.selectedDepartment?.floorId)
+        return;
+
+      final dept = Department(
+        floorId: selectedMap['id'],
+        departmentName: selectedMap['name'],
+      );
+
+      _searchController.clear();
+      FocusScope.of(ctx).unfocus();
+
+      ctx.read<EmployeeBloc>().add(ChangeDepartment(dept));
+    },
+
+    child: _buildDropdownBox(
+      ctx,
+      st?.selectedDepartment?.departmentName ?? 'departement',
     ),
   );
+
+  Widget _buildDropdownBox(BuildContext context, String text) {
+    final boxHeight = Responsive.isTablet(context)
+        ? 48.0
+        : 44 * Responsive.getResponsive(context);
+    final horizontalPadding = Responsive.isTablet(context) ? 16.0 : 10.0;
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+      height: boxHeight,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: AppColors.white,
+        border: Border.all(color: AppTheme.getColor(context).outline),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: CustomText(
+              LanguageManager().get(text),
+              fontSize: 14 * Responsive.getResponsiveText(context),
+              fontWeight: FontWeight.w600,
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              color: AppTheme.getColor(context).primary,
+            ),
+          ),
+          Icon(
+            Icons.keyboard_arrow_down_rounded,
+            size: Responsive.isTablet(context)
+                ? 0.060 * Responsive.getHeight(context)
+                : 0.020 * Responsive.getHeight(context),
+            color: AppTheme.getColor(context).primary,
+          ),
+        ],
+      ),
+    );
+  }
 }
+
+// body: Padding(
+//   padding: const EdgeInsets.symmetric(
+//     horizontal: VariableBag.screenHorizontalPadding,
+//   ),
+//   child: Column(
+//     children: [
+///Media picker container
+// Padding(
+//   padding: const EdgeInsets.all(8.0),
+//   child: CustomMediaPickerContainer(
+//     title: 'Assets Image',
+//     titleFontSize: 14 * Responsive.getResponsiveText(context),
+//     imageTitle: 'Capture Image',
+//     // imageTitleSize: 10,
+//     // containerHeight: 0.100 * Responsive.getHeight(context),
+//     multipleImage: 5,
+//     imagePath: AppAssets.assetGalleryExport,
+//     isCameraShow: true,
+//     isGalleryShow: true,
+//     isDocumentShow: true,
+//     isCropImage: true,
+//     onSelectedMedia: (files) {
+//       final paths = files.map((file) => file.path).toList();
+//       log('Selected file paths: $paths');
+//     },
+//   ),
+// ),
+
+// final List<Map<String, String>> countryList = [
+//   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
+//   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
+//   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
+//   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
+//   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
+//   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
+//   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
+//   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
+//   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
+//   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
+//   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
+//   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
+//   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
+//   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
+//   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
+//   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
+//   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
+//   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
+// ];
+
+///Country code bottom sheet
+// ElevatedButton(
+//   onPressed: () async {
+//     final selectedCountry = await showCountryCodeBottomSheet(
+//       context: context,
+//       dataList: countryList,
+//       heading: 'country_code',
+//     );
+//     if (selectedCountry != null) {
+//       debugPrint(selectedCountry['name']);
+//     }
+//   },
+//   child: Icon(Icons.account_tree_rounded),
+// ),
+//     ],
+//   ),
+// ),
+
+/// stepper
+// const SizedBox(height: 10),
+// const Text('Punch in-out Demo'),
+// Expanded(
+//   child: SingleChildScrollView(
+//     child: Padding(
+//       padding: const EdgeInsets.all(10.0),
+//       child: CustomVerticalStepper(
+//         steps: [
+//           StepData(
+//             title: 'PUNCH IN',
+//             // title: '',
+//             subTitle: '10:25:06 AM',
+//             subTitleFontSize: 20,
+//             status: StepStatus.inActive,
+//             // isStepIconShow: false,
+//             customStatusIcon: SvgPicture.asset(
+//               AppAssets.assetGalleryExport,
+//             ),
+//             // customStatusIcon: const Icon(
+//             //   Icons.ac_unit,
+//             //   color: Colors.white,
+//             // ),
+//             details: [
+//               StepDetail(title: 'title', description: 'description'),
+//               StepDetail(
+//                 title: 'Remark',
+//                 description: 'description',
+//               ), StepDetail(
+//                 title: 'Remark Remark',
+//                 description: 'description',
+//               ),
+//             ],
+//             subSteps: [
+//               SubStepData(
+//                 subStepTitle: 'Lunch Break',
+//                 subStepSubTitle: '01:32:56 PM - 02:01:46 PM',
+//                 subStepTrailingTitle: '28 min 50 sec',
+//                 subStepStatus: StepStatus.pending,
+//                 subStepCustomStatusIcon: Icon(Icons.lunch_dining),
+//                 subStepSubTitleFontSize: 20,
+//                 isSubStepIconShow: false,
+//               ),
+//               SubStepData(
+//                 subStepTitle: 'Tea Break',
+//                 subStepSubTitle: '06:05:02 PM - 06:07:51 PM',
+//                 subStepTrailingTitle: '2 min 49 sec',
+//                 subStepStatus: StepStatus.pending,
+//                 // isSubStepIconShow: false,
+//               ),
+//             ],
+//           ),
+//           StepData(
+//             title: 'PUNCH OUT',
+//             subTitle: '06:08:39 PM',
+//             trillingTitle: '7 hour 43 min 33 sec',
+//             status: StepStatus.pending,
+//             // isStepIconShow: false,
+//           ),
+//           StepData(
+//             title: 'PUNCH IN & OUT',
+//             subTitle: '06:08:39 PM',
+//             trillingTitle: '1 min 18 sec',
+//             status: StepStatus.approved,
+//             // isStepIconShow: true,
+//           ),
+//         ],
+//       ),
+//     ),
+//   ),
+// ),
+// ],
+// ),

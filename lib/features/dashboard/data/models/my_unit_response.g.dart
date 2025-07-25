@@ -3,6 +3,843 @@
 part of 'my_unit_response.dart';
 
 // **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class MyUnitResponseAdapter extends TypeAdapter<MyUnitResponse> {
+  @override
+  final int typeId = 5;
+
+  @override
+  MyUnitResponse read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return MyUnitResponse(
+      androidLocationTrackingLoopType: fields[0] as String?,
+      upcomingEvents: fields[1] as bool?,
+      outOfRangePunchInRestrictionMsg: fields[2] as String?,
+      outOfRangePunchOutRestrictionMsg: fields[3] as String?,
+      todayBirthDays: (fields[4] as List?)?.cast<TodayBirthDay>(),
+      managerLevelVisits: fields[5] as String?,
+      expireMsg: fields[6] as String?,
+      isPlanExpired: fields[7] as bool?,
+      wfhApplyType: fields[8] as String?,
+      restrictUserProfile: fields[9] as bool?,
+      allowZeroProductPriceOrder: fields[10] as bool?,
+      customerVisibility: fields[11] as bool?,
+      calculateVisitDistance: fields[12] as bool?,
+      distanceCalculatingType: fields[13] as String?,
+      retailerProductView: fields[14] as String?,
+      retailerPhotoRequired: fields[15] as bool?,
+      endVisitAttachment: fields[16] as String?,
+      onBackEndVisitRequired: fields[17] as bool?,
+      hideDistributorSelection: fields[18] as bool?,
+      onlyAutoApprovedAttendance: fields[19] as bool?,
+      takeEndVisitReason: fields[20] as bool?,
+      manageOrderStock: fields[21] as bool?,
+      isFinanceYear: fields[22] as bool?,
+      appUpdateDailogType: fields[23] as String?,
+      multipleCompanyLogin: fields[24] as bool?,
+      orderWithoutPunchIn: fields[25] as bool?,
+      locationLogEveryMinute: fields[26] as String?,
+      shareOrderAccess: fields[27] as bool?,
+      cancelOrderAfterConfirm: fields[28] as bool?,
+      workReportOn: fields[29] as bool?,
+      takeProductPriceFromUser: fields[30] as bool?,
+      attendanceType: fields[31] as String?,
+      takeAttendanceSelfie: fields[32] as String?,
+      hideTimeline: fields[33] as bool?,
+      hideChat: fields[34] as bool?,
+      hideMyactivity: fields[35] as bool?,
+      vpnCheck: fields[36] as bool?,
+      socieatyLogo: fields[37] as String?,
+      downloadUrlTrackingApp: fields[38] as String?,
+      trackingAppVersionAndroid: fields[39] as String?,
+      hideAttendanceFaceMenu: fields[40] as bool?,
+      hideBirthdayView: fields[41] as bool?,
+      hideDepartmentEmployeeView: fields[42] as bool?,
+      hideGalleryView: fields[43] as bool?,
+      attendanceWithMatchingFace: fields[44] as bool?,
+      attendanceWithMatchingFaceIos: fields[45] as bool?,
+      byPassRouteList: fields[46] as bool?,
+      odometerTracking: fields[47] as bool?,
+      hideExpenseTitle: fields[48] as bool?,
+      isAmazonFaceMatch: fields[49] as bool?,
+      startEndVisitWithFaceMatch: fields[50] as bool?,
+      viewSalaryDaysMonthAttendance: fields[51] as bool?,
+      restrictDownloading: fields[52] as bool?,
+      restrictScreenshot: fields[53] as bool?,
+      visitAddExpenseButtonVisibility: fields[54] as bool?,
+      dobOnboardingRequired: fields[55] as bool?,
+      resignationDateRequiredMarkExEmployee: fields[56] as bool?,
+      autoVisitStartEndDefaultTime: fields[57] as String?,
+      employeeIdGenerate: fields[58] as bool?,
+      employeeIdRequired: fields[59] as bool?,
+      employeeMultipleRetailerBinding: fields[60] as String?,
+      reminder: (fields[61] as List?)?.cast<dynamic>(),
+      logoutIosDevice: fields[62] as bool?,
+      userId: fields[63] as String?,
+      allowToPreApplyShortLeave: fields[64] as bool?,
+      linkPunchInWithVisitStart: fields[65] as bool?,
+      visitAutoStartEndInRange: fields[66] as bool?,
+      taskAssignToOtherEmployeeAccess: fields[67] as bool?,
+      shiftData: (fields[68] as List?)?.cast<dynamic>(),
+      isExpenseOn: fields[69] as bool?,
+      changeFace: fields[70] as bool?,
+      takeAccessibilityPermission: fields[71] as bool?,
+      societyId: fields[72] as String?,
+      stateIdEmployee: fields[73] as String?,
+      takeAttendanceFrom: fields[74] as String?,
+      companyEmployeeId: fields[75] as String?,
+      shiftTimeId: fields[76] as String?,
+      userEmploymentType: fields[77] as String?,
+      userFullName: fields[78] as String?,
+      userFirstName: fields[79] as String?,
+      userLastName: fields[80] as String?,
+      activeStatus: fields[81] as String?,
+      expenseGradeId: fields[82] as String?,
+      userMobile: fields[83] as String?,
+      countryCode: fields[84] as String?,
+      userEmail: fields[85] as String?,
+      userIdProof: fields[86] as dynamic,
+      currentAddressLat: fields[87] as String?,
+      currentAddressLong: fields[88] as String?,
+      permanentAddressLat: fields[89] as String?,
+      permanentAddressLong: fields[90] as String?,
+      lastAddress: fields[91] as String?,
+      permanentAddress: fields[92] as String?,
+      facultyUsername: fields[93] as String?,
+      facultyPassword: fields[94] as String?,
+      facultyToken: fields[95] as String?,
+      facultyTokenData: fields[96] as String?,
+      isAdminAccess: fields[97] as String?,
+      jobLocationNames: fields[98] as String?,
+      memberAccessDenied: fields[99] as bool?,
+      expenseGradeAssigned: fields[100] as bool?,
+      chatAccessDenied: fields[101] as bool?,
+      timlineAccessDenied: fields[102] as bool?,
+      userVisitingCard: fields[103] as String?,
+      userVisitingCardBack: fields[104] as String?,
+      shortName: fields[105] as String?,
+      blockId: fields[106] as String?,
+      blockName: fields[107] as String?,
+      floorName: fields[108] as String?,
+      baseUrl: fields[109] as String?,
+      floorId: fields[110] as String?,
+      unitId: fields[111] as String?,
+      zoneId: fields[112] as String?,
+      branchType: fields[113] as String?,
+      levelId: fields[114] as String?,
+      workAllocationAddAccess: fields[115] as bool?,
+      unitStatus: fields[116] as String?,
+      userStatus: fields[117] as String?,
+      memberStatus: fields[118] as String?,
+      publicMobile: fields[119] as String?,
+      visitorApproved: fields[120] as String?,
+      memberDateOfBirth: fields[121] as String?,
+      weddingAnniversaryDate: fields[122] as String?,
+      facebook: fields[123] as String?,
+      instagram: fields[124] as String?,
+      linkedin: fields[125] as String?,
+      userGeofenceLatitude: fields[126] as String?,
+      userGeofenceLongitude: fields[127] as String?,
+      userGeofenceRange: fields[128] as String?,
+      trackUserTime: fields[129] as String?,
+      geoFenceInOutNotification: fields[130] as String?,
+      userLocationList: (fields[131] as List?)?.cast<dynamic>(),
+      blockGeofenceLatitude: fields[132] as String?,
+      blockGeofenceLongitude: fields[133] as String?,
+      blockGeofenceRange: fields[134] as String?,
+      allowWfh: fields[135] as bool?,
+      trackUserLocation: fields[136] as bool?,
+      addAssetsAccess: fields[137] as bool?,
+      parcelSecurityCheck: fields[138] as String?,
+      viewOtherAssets: fields[139] as String?,
+      addVisitForOther: fields[140] as bool?,
+      designation: fields[141] as String?,
+      accountDeactive: fields[142] as bool?,
+      bloodGroup: fields[143] as String?,
+      altMobile: fields[144] as String?,
+      countryCodeAlt: fields[145] as String?,
+      userProfilePic: fields[146] as String?,
+      gender: fields[147] as String?,
+      sisterCompanyId: fields[148] as String?,
+      companyName: fields[149] as String?,
+      companyAddress: fields[150] as String?,
+      plotLattitude: fields[151] as String?,
+      plotLongitude: fields[152] as String?,
+      companyLogo: fields[153] as String?,
+      societyAddress: fields[154] as String?,
+      societyLatitude: fields[155] as String?,
+      societyLongitude: fields[156] as String?,
+      societyName: fields[157] as String?,
+      countryId: fields[158] as String?,
+      stateId: fields[159] as String?,
+      cityId: fields[160] as String?,
+      cityName: fields[161] as String?,
+      currency: fields[162] as String?,
+      apiKey: fields[163] as String?,
+      isSociety: fields[164] as bool?,
+      profileProgress: fields[165] as String?,
+      readStatus: fields[166] as String?,
+      chatStatus: fields[167] as String?,
+      visitorOnOff: fields[168] as String?,
+      entryAllVisitorGroup: fields[169] as String?,
+      groupChatStatus: fields[170] as String?,
+      screenSortCaptureInTimeline: fields[171] as String?,
+      createGroup: fields[172] as String?,
+      member: (fields[173] as List?)?.cast<Member>(),
+      totalEmployeeDepartment: fields[174] as String?,
+      myTeam: (fields[175] as List?)?.cast<MyTeam>(),
+      eventAlbum: (fields[176] as List?)?.cast<EventAlbum>(),
+      unitName: fields[177] as String?,
+      message: fields[178] as String?,
+      status: fields[179] as String?,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, MyUnitResponse obj) {
+    writer
+      ..writeByte(180)
+      ..writeByte(0)
+      ..write(obj.androidLocationTrackingLoopType)
+      ..writeByte(1)
+      ..write(obj.upcomingEvents)
+      ..writeByte(2)
+      ..write(obj.outOfRangePunchInRestrictionMsg)
+      ..writeByte(3)
+      ..write(obj.outOfRangePunchOutRestrictionMsg)
+      ..writeByte(4)
+      ..write(obj.todayBirthDays)
+      ..writeByte(5)
+      ..write(obj.managerLevelVisits)
+      ..writeByte(6)
+      ..write(obj.expireMsg)
+      ..writeByte(7)
+      ..write(obj.isPlanExpired)
+      ..writeByte(8)
+      ..write(obj.wfhApplyType)
+      ..writeByte(9)
+      ..write(obj.restrictUserProfile)
+      ..writeByte(10)
+      ..write(obj.allowZeroProductPriceOrder)
+      ..writeByte(11)
+      ..write(obj.customerVisibility)
+      ..writeByte(12)
+      ..write(obj.calculateVisitDistance)
+      ..writeByte(13)
+      ..write(obj.distanceCalculatingType)
+      ..writeByte(14)
+      ..write(obj.retailerProductView)
+      ..writeByte(15)
+      ..write(obj.retailerPhotoRequired)
+      ..writeByte(16)
+      ..write(obj.endVisitAttachment)
+      ..writeByte(17)
+      ..write(obj.onBackEndVisitRequired)
+      ..writeByte(18)
+      ..write(obj.hideDistributorSelection)
+      ..writeByte(19)
+      ..write(obj.onlyAutoApprovedAttendance)
+      ..writeByte(20)
+      ..write(obj.takeEndVisitReason)
+      ..writeByte(21)
+      ..write(obj.manageOrderStock)
+      ..writeByte(22)
+      ..write(obj.isFinanceYear)
+      ..writeByte(23)
+      ..write(obj.appUpdateDailogType)
+      ..writeByte(24)
+      ..write(obj.multipleCompanyLogin)
+      ..writeByte(25)
+      ..write(obj.orderWithoutPunchIn)
+      ..writeByte(26)
+      ..write(obj.locationLogEveryMinute)
+      ..writeByte(27)
+      ..write(obj.shareOrderAccess)
+      ..writeByte(28)
+      ..write(obj.cancelOrderAfterConfirm)
+      ..writeByte(29)
+      ..write(obj.workReportOn)
+      ..writeByte(30)
+      ..write(obj.takeProductPriceFromUser)
+      ..writeByte(31)
+      ..write(obj.attendanceType)
+      ..writeByte(32)
+      ..write(obj.takeAttendanceSelfie)
+      ..writeByte(33)
+      ..write(obj.hideTimeline)
+      ..writeByte(34)
+      ..write(obj.hideChat)
+      ..writeByte(35)
+      ..write(obj.hideMyactivity)
+      ..writeByte(36)
+      ..write(obj.vpnCheck)
+      ..writeByte(37)
+      ..write(obj.socieatyLogo)
+      ..writeByte(38)
+      ..write(obj.downloadUrlTrackingApp)
+      ..writeByte(39)
+      ..write(obj.trackingAppVersionAndroid)
+      ..writeByte(40)
+      ..write(obj.hideAttendanceFaceMenu)
+      ..writeByte(41)
+      ..write(obj.hideBirthdayView)
+      ..writeByte(42)
+      ..write(obj.hideDepartmentEmployeeView)
+      ..writeByte(43)
+      ..write(obj.hideGalleryView)
+      ..writeByte(44)
+      ..write(obj.attendanceWithMatchingFace)
+      ..writeByte(45)
+      ..write(obj.attendanceWithMatchingFaceIos)
+      ..writeByte(46)
+      ..write(obj.byPassRouteList)
+      ..writeByte(47)
+      ..write(obj.odometerTracking)
+      ..writeByte(48)
+      ..write(obj.hideExpenseTitle)
+      ..writeByte(49)
+      ..write(obj.isAmazonFaceMatch)
+      ..writeByte(50)
+      ..write(obj.startEndVisitWithFaceMatch)
+      ..writeByte(51)
+      ..write(obj.viewSalaryDaysMonthAttendance)
+      ..writeByte(52)
+      ..write(obj.restrictDownloading)
+      ..writeByte(53)
+      ..write(obj.restrictScreenshot)
+      ..writeByte(54)
+      ..write(obj.visitAddExpenseButtonVisibility)
+      ..writeByte(55)
+      ..write(obj.dobOnboardingRequired)
+      ..writeByte(56)
+      ..write(obj.resignationDateRequiredMarkExEmployee)
+      ..writeByte(57)
+      ..write(obj.autoVisitStartEndDefaultTime)
+      ..writeByte(58)
+      ..write(obj.employeeIdGenerate)
+      ..writeByte(59)
+      ..write(obj.employeeIdRequired)
+      ..writeByte(60)
+      ..write(obj.employeeMultipleRetailerBinding)
+      ..writeByte(61)
+      ..write(obj.reminder)
+      ..writeByte(62)
+      ..write(obj.logoutIosDevice)
+      ..writeByte(63)
+      ..write(obj.userId)
+      ..writeByte(64)
+      ..write(obj.allowToPreApplyShortLeave)
+      ..writeByte(65)
+      ..write(obj.linkPunchInWithVisitStart)
+      ..writeByte(66)
+      ..write(obj.visitAutoStartEndInRange)
+      ..writeByte(67)
+      ..write(obj.taskAssignToOtherEmployeeAccess)
+      ..writeByte(68)
+      ..write(obj.shiftData)
+      ..writeByte(69)
+      ..write(obj.isExpenseOn)
+      ..writeByte(70)
+      ..write(obj.changeFace)
+      ..writeByte(71)
+      ..write(obj.takeAccessibilityPermission)
+      ..writeByte(72)
+      ..write(obj.societyId)
+      ..writeByte(73)
+      ..write(obj.stateIdEmployee)
+      ..writeByte(74)
+      ..write(obj.takeAttendanceFrom)
+      ..writeByte(75)
+      ..write(obj.companyEmployeeId)
+      ..writeByte(76)
+      ..write(obj.shiftTimeId)
+      ..writeByte(77)
+      ..write(obj.userEmploymentType)
+      ..writeByte(78)
+      ..write(obj.userFullName)
+      ..writeByte(79)
+      ..write(obj.userFirstName)
+      ..writeByte(80)
+      ..write(obj.userLastName)
+      ..writeByte(81)
+      ..write(obj.activeStatus)
+      ..writeByte(82)
+      ..write(obj.expenseGradeId)
+      ..writeByte(83)
+      ..write(obj.userMobile)
+      ..writeByte(84)
+      ..write(obj.countryCode)
+      ..writeByte(85)
+      ..write(obj.userEmail)
+      ..writeByte(86)
+      ..write(obj.userIdProof)
+      ..writeByte(87)
+      ..write(obj.currentAddressLat)
+      ..writeByte(88)
+      ..write(obj.currentAddressLong)
+      ..writeByte(89)
+      ..write(obj.permanentAddressLat)
+      ..writeByte(90)
+      ..write(obj.permanentAddressLong)
+      ..writeByte(91)
+      ..write(obj.lastAddress)
+      ..writeByte(92)
+      ..write(obj.permanentAddress)
+      ..writeByte(93)
+      ..write(obj.facultyUsername)
+      ..writeByte(94)
+      ..write(obj.facultyPassword)
+      ..writeByte(95)
+      ..write(obj.facultyToken)
+      ..writeByte(96)
+      ..write(obj.facultyTokenData)
+      ..writeByte(97)
+      ..write(obj.isAdminAccess)
+      ..writeByte(98)
+      ..write(obj.jobLocationNames)
+      ..writeByte(99)
+      ..write(obj.memberAccessDenied)
+      ..writeByte(100)
+      ..write(obj.expenseGradeAssigned)
+      ..writeByte(101)
+      ..write(obj.chatAccessDenied)
+      ..writeByte(102)
+      ..write(obj.timlineAccessDenied)
+      ..writeByte(103)
+      ..write(obj.userVisitingCard)
+      ..writeByte(104)
+      ..write(obj.userVisitingCardBack)
+      ..writeByte(105)
+      ..write(obj.shortName)
+      ..writeByte(106)
+      ..write(obj.blockId)
+      ..writeByte(107)
+      ..write(obj.blockName)
+      ..writeByte(108)
+      ..write(obj.floorName)
+      ..writeByte(109)
+      ..write(obj.baseUrl)
+      ..writeByte(110)
+      ..write(obj.floorId)
+      ..writeByte(111)
+      ..write(obj.unitId)
+      ..writeByte(112)
+      ..write(obj.zoneId)
+      ..writeByte(113)
+      ..write(obj.branchType)
+      ..writeByte(114)
+      ..write(obj.levelId)
+      ..writeByte(115)
+      ..write(obj.workAllocationAddAccess)
+      ..writeByte(116)
+      ..write(obj.unitStatus)
+      ..writeByte(117)
+      ..write(obj.userStatus)
+      ..writeByte(118)
+      ..write(obj.memberStatus)
+      ..writeByte(119)
+      ..write(obj.publicMobile)
+      ..writeByte(120)
+      ..write(obj.visitorApproved)
+      ..writeByte(121)
+      ..write(obj.memberDateOfBirth)
+      ..writeByte(122)
+      ..write(obj.weddingAnniversaryDate)
+      ..writeByte(123)
+      ..write(obj.facebook)
+      ..writeByte(124)
+      ..write(obj.instagram)
+      ..writeByte(125)
+      ..write(obj.linkedin)
+      ..writeByte(126)
+      ..write(obj.userGeofenceLatitude)
+      ..writeByte(127)
+      ..write(obj.userGeofenceLongitude)
+      ..writeByte(128)
+      ..write(obj.userGeofenceRange)
+      ..writeByte(129)
+      ..write(obj.trackUserTime)
+      ..writeByte(130)
+      ..write(obj.geoFenceInOutNotification)
+      ..writeByte(131)
+      ..write(obj.userLocationList)
+      ..writeByte(132)
+      ..write(obj.blockGeofenceLatitude)
+      ..writeByte(133)
+      ..write(obj.blockGeofenceLongitude)
+      ..writeByte(134)
+      ..write(obj.blockGeofenceRange)
+      ..writeByte(135)
+      ..write(obj.allowWfh)
+      ..writeByte(136)
+      ..write(obj.trackUserLocation)
+      ..writeByte(137)
+      ..write(obj.addAssetsAccess)
+      ..writeByte(138)
+      ..write(obj.parcelSecurityCheck)
+      ..writeByte(139)
+      ..write(obj.viewOtherAssets)
+      ..writeByte(140)
+      ..write(obj.addVisitForOther)
+      ..writeByte(141)
+      ..write(obj.designation)
+      ..writeByte(142)
+      ..write(obj.accountDeactive)
+      ..writeByte(143)
+      ..write(obj.bloodGroup)
+      ..writeByte(144)
+      ..write(obj.altMobile)
+      ..writeByte(145)
+      ..write(obj.countryCodeAlt)
+      ..writeByte(146)
+      ..write(obj.userProfilePic)
+      ..writeByte(147)
+      ..write(obj.gender)
+      ..writeByte(148)
+      ..write(obj.sisterCompanyId)
+      ..writeByte(149)
+      ..write(obj.companyName)
+      ..writeByte(150)
+      ..write(obj.companyAddress)
+      ..writeByte(151)
+      ..write(obj.plotLattitude)
+      ..writeByte(152)
+      ..write(obj.plotLongitude)
+      ..writeByte(153)
+      ..write(obj.companyLogo)
+      ..writeByte(154)
+      ..write(obj.societyAddress)
+      ..writeByte(155)
+      ..write(obj.societyLatitude)
+      ..writeByte(156)
+      ..write(obj.societyLongitude)
+      ..writeByte(157)
+      ..write(obj.societyName)
+      ..writeByte(158)
+      ..write(obj.countryId)
+      ..writeByte(159)
+      ..write(obj.stateId)
+      ..writeByte(160)
+      ..write(obj.cityId)
+      ..writeByte(161)
+      ..write(obj.cityName)
+      ..writeByte(162)
+      ..write(obj.currency)
+      ..writeByte(163)
+      ..write(obj.apiKey)
+      ..writeByte(164)
+      ..write(obj.isSociety)
+      ..writeByte(165)
+      ..write(obj.profileProgress)
+      ..writeByte(166)
+      ..write(obj.readStatus)
+      ..writeByte(167)
+      ..write(obj.chatStatus)
+      ..writeByte(168)
+      ..write(obj.visitorOnOff)
+      ..writeByte(169)
+      ..write(obj.entryAllVisitorGroup)
+      ..writeByte(170)
+      ..write(obj.groupChatStatus)
+      ..writeByte(171)
+      ..write(obj.screenSortCaptureInTimeline)
+      ..writeByte(172)
+      ..write(obj.createGroup)
+      ..writeByte(173)
+      ..write(obj.member)
+      ..writeByte(174)
+      ..write(obj.totalEmployeeDepartment)
+      ..writeByte(175)
+      ..write(obj.myTeam)
+      ..writeByte(176)
+      ..write(obj.eventAlbum)
+      ..writeByte(177)
+      ..write(obj.unitName)
+      ..writeByte(178)
+      ..write(obj.message)
+      ..writeByte(179)
+      ..write(obj.status);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MyUnitResponseAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class EventAlbumAdapter extends TypeAdapter<EventAlbum> {
+  @override
+  final int typeId = 6;
+
+  @override
+  EventAlbum read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return EventAlbum(
+      galleryAlbumId: fields[0] as String?,
+      albumTitle: fields[1] as String?,
+      eventId: fields[2] as String?,
+      eventDate: fields[3] as String?,
+      blockId: fields[4] as String?,
+      floorId: fields[5] as String?,
+      uploadDate: fields[6] as String?,
+      imageOne: fields[7] as String?,
+      galleryType: fields[8] as String?,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, EventAlbum obj) {
+    writer
+      ..writeByte(9)
+      ..writeByte(0)
+      ..write(obj.galleryAlbumId)
+      ..writeByte(1)
+      ..write(obj.albumTitle)
+      ..writeByte(2)
+      ..write(obj.eventId)
+      ..writeByte(3)
+      ..write(obj.eventDate)
+      ..writeByte(4)
+      ..write(obj.blockId)
+      ..writeByte(5)
+      ..write(obj.floorId)
+      ..writeByte(6)
+      ..write(obj.uploadDate)
+      ..writeByte(7)
+      ..write(obj.imageOne)
+      ..writeByte(8)
+      ..write(obj.galleryType);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is EventAlbumAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class MemberAdapter extends TypeAdapter<Member> {
+  @override
+  final int typeId = 7;
+
+  @override
+  Member read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Member(
+      userId: fields[0] as String?,
+      userFullName: fields[1] as String?,
+      userFirstName: fields[2] as String?,
+      userLastName: fields[3] as String?,
+      userDesignation: fields[4] as String?,
+      shortName: fields[5] as String?,
+      userProfilePic: fields[6] as String?,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Member obj) {
+    writer
+      ..writeByte(7)
+      ..writeByte(0)
+      ..write(obj.userId)
+      ..writeByte(1)
+      ..write(obj.userFullName)
+      ..writeByte(2)
+      ..write(obj.userFirstName)
+      ..writeByte(3)
+      ..write(obj.userLastName)
+      ..writeByte(4)
+      ..write(obj.userDesignation)
+      ..writeByte(5)
+      ..write(obj.shortName)
+      ..writeByte(6)
+      ..write(obj.userProfilePic);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MemberAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class MyTeamAdapter extends TypeAdapter<MyTeam> {
+  @override
+  final int typeId = 8;
+
+  @override
+  MyTeam read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return MyTeam(
+      userId: fields[0] as String?,
+      levelId: fields[1] as String?,
+      levelName: fields[2] as String?,
+      userFullName: fields[3] as String?,
+      shortName: fields[4] as String?,
+      userDesignation: fields[5] as String?,
+      userProfilePic: fields[6] as String?,
+      isPresent: fields[7] as bool?,
+      statusView: fields[8] as String?,
+      isBreak: fields[9] as bool?,
+      leaveData: (fields[10] as List?)?.cast<dynamic>(),
+      isLeaveFull: fields[11] as bool?,
+      isLeaveHalf: fields[12] as bool?,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, MyTeam obj) {
+    writer
+      ..writeByte(13)
+      ..writeByte(0)
+      ..write(obj.userId)
+      ..writeByte(1)
+      ..write(obj.levelId)
+      ..writeByte(2)
+      ..write(obj.levelName)
+      ..writeByte(3)
+      ..write(obj.userFullName)
+      ..writeByte(4)
+      ..write(obj.shortName)
+      ..writeByte(5)
+      ..write(obj.userDesignation)
+      ..writeByte(6)
+      ..write(obj.userProfilePic)
+      ..writeByte(7)
+      ..write(obj.isPresent)
+      ..writeByte(8)
+      ..write(obj.statusView)
+      ..writeByte(9)
+      ..write(obj.isBreak)
+      ..writeByte(10)
+      ..write(obj.leaveData)
+      ..writeByte(11)
+      ..write(obj.isLeaveFull)
+      ..writeByte(12)
+      ..write(obj.isLeaveHalf);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MyTeamAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class TodayBirthDayAdapter extends TypeAdapter<TodayBirthDay> {
+  @override
+  final int typeId = 9;
+
+  @override
+  TodayBirthDay read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return TodayBirthDay(
+      userId: fields[0] as String?,
+      userFullName: fields[1] as String?,
+      userDesignation: fields[2] as String?,
+      blockName: fields[3] as String?,
+      floorName: fields[4] as String?,
+      wishId: fields[5] as String?,
+      wishReply: fields[6] as String?,
+      shortName: fields[7] as String?,
+      userProfilePic: fields[8] as String?,
+      memberDateOfBirth: fields[9] as String?,
+      isBirthDay: fields[10] as bool?,
+      isAnniversary: fields[11] as bool?,
+      isWorkAnniversary: fields[12] as bool?,
+      totalYearView: fields[13] as String?,
+      isToday: fields[14] as bool?,
+      memberDateOfBirthView: fields[15] as String?,
+      joiningDate: fields[16] as String?,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, TodayBirthDay obj) {
+    writer
+      ..writeByte(17)
+      ..writeByte(0)
+      ..write(obj.userId)
+      ..writeByte(1)
+      ..write(obj.userFullName)
+      ..writeByte(2)
+      ..write(obj.userDesignation)
+      ..writeByte(3)
+      ..write(obj.blockName)
+      ..writeByte(4)
+      ..write(obj.floorName)
+      ..writeByte(5)
+      ..write(obj.wishId)
+      ..writeByte(6)
+      ..write(obj.wishReply)
+      ..writeByte(7)
+      ..write(obj.shortName)
+      ..writeByte(8)
+      ..write(obj.userProfilePic)
+      ..writeByte(9)
+      ..write(obj.memberDateOfBirth)
+      ..writeByte(10)
+      ..write(obj.isBirthDay)
+      ..writeByte(11)
+      ..write(obj.isAnniversary)
+      ..writeByte(12)
+      ..write(obj.isWorkAnniversary)
+      ..writeByte(13)
+      ..write(obj.totalYearView)
+      ..writeByte(14)
+      ..write(obj.isToday)
+      ..writeByte(15)
+      ..write(obj.memberDateOfBirthView)
+      ..writeByte(16)
+      ..write(obj.joiningDate);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TodayBirthDayAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+// **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
@@ -150,9 +987,7 @@ MyUnitResponse _$MyUnitResponseFromJson(Map<String, dynamic> json) =>
       memberStatus: json['member_status'] as String?,
       publicMobile: json['public_mobile'] as String?,
       visitorApproved: json['visitor_approved'] as String?,
-      memberDateOfBirth: json['member_date_of_birth'] == null
-          ? null
-          : DateTime.parse(json['member_date_of_birth'] as String),
+      memberDateOfBirth: json['member_date_of_birth'] as String?,
       weddingAnniversaryDate: json['wedding_anniversary_date'] as String?,
       facebook: json['facebook'] as String?,
       instagram: json['instagram'] as String?,
@@ -354,7 +1189,7 @@ Map<String, dynamic> _$MyUnitResponseToJson(MyUnitResponse instance) =>
       'member_status': instance.memberStatus,
       'public_mobile': instance.publicMobile,
       'visitor_approved': instance.visitorApproved,
-      'member_date_of_birth': instance.memberDateOfBirth?.toIso8601String(),
+      'member_date_of_birth': instance.memberDateOfBirth,
       'wedding_anniversary_date': instance.weddingAnniversaryDate,
       'facebook': instance.facebook,
       'instagram': instance.instagram,
@@ -419,9 +1254,7 @@ EventAlbum _$EventAlbumFromJson(Map<String, dynamic> json) => EventAlbum(
       galleryAlbumId: json['gallery_album_id'] as String?,
       albumTitle: json['album_title'] as String?,
       eventId: json['event_id'] as String?,
-      eventDate: json['event_date'] == null
-          ? null
-          : DateTime.parse(json['event_date'] as String),
+      eventDate: json['event_date'] as String?,
       blockId: json['block_id'] as String?,
       floorId: json['floor_id'] as String?,
       uploadDate: json['upload_date'] as String?,
@@ -434,7 +1267,7 @@ Map<String, dynamic> _$EventAlbumToJson(EventAlbum instance) =>
       'gallery_album_id': instance.galleryAlbumId,
       'album_title': instance.albumTitle,
       'event_id': instance.eventId,
-      'event_date': instance.eventDate?.toIso8601String(),
+      'event_date': instance.eventDate,
       'block_id': instance.blockId,
       'floor_id': instance.floorId,
       'upload_date': instance.uploadDate,

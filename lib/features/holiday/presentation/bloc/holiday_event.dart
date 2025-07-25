@@ -1,4 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:myco_flutter/features/holiday/model/request/apply_optional_holiday.dart';
+import 'package:myco_flutter/features/holiday/model/request/delete_optional_holiday.dart';
+import 'package:myco_flutter/features/holiday/model/request/holiday_list_request_model.dart';
 
 abstract class HolidayEvent extends Equatable {
   const HolidayEvent();
@@ -8,28 +11,28 @@ abstract class HolidayEvent extends Equatable {
 }
 
 class FetchHolidayList extends HolidayEvent {
-  final String year; // or year if API expects it
+  final HolidayListRequestModel model;
 
-  const FetchHolidayList(this.year);
+  const FetchHolidayList(this.model);
 
   @override
-  List<Object?> get props => [year];
+  List<Object?> get props => [model];
 }
 
 class ApplyHolidayEvent extends HolidayEvent {
-  final String holidayId;
+  final ApplyOptionalHoliday model;
 
-  const ApplyHolidayEvent(this.holidayId);
+  const ApplyHolidayEvent(this.model);
 
   @override
-  List<Object?> get props => [holidayId];
+  List<Object?> get props => [model];
 }
 
 class DeleteHolidayEvent extends HolidayEvent {
-  final String holidayAssignId;
+  final DeleteOptionalHoliday model;
 
-  const DeleteHolidayEvent(this.holidayAssignId);
+  const DeleteHolidayEvent(this.model);
 
   @override
-  List<Object?> get props => [holidayAssignId];
+  List<Object?> get props => [model];
 }

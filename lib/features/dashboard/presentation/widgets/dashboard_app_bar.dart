@@ -72,7 +72,6 @@ class DashboardAppBar extends StatelessWidget {
       Container(
         decoration: BoxDecoration(
           color: Util.applyOpacity(AppColors.myCoCyan, 0.1),
-
           shape: BoxShape.circle,
         ),
         height: 40,

@@ -9,17 +9,17 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 Future<dynamic> showCustomSimpleBottomSheet({
   required BuildContext context,
   required List<Map<String, String>> dataList,
   required String heading,
-  dynamic selectedId, // String or List<String>
-  icon,
-  searchHint,
-  btnTitle,
+  dynamic selectedId,
+  String? icon,
+  String? searchHint,
+  String? btnTitle,
   bool isMultipleSelection = false,
+  bool isCloseButton = false,
 }) => showModalBottomSheet<dynamic>(
   context: context,
   isScrollControlled: true,
@@ -32,6 +32,7 @@ Future<dynamic> showCustomSimpleBottomSheet({
     searchHint: searchHint,
     btnTitle: btnTitle,
     isMultipleSelection: isMultipleSelection,
+    isCloseButton: isCloseButton,
   ),
 );
 
@@ -40,7 +41,7 @@ class _CustomSimpleBottomSheet extends StatefulWidget {
   final String heading;
   final dynamic selectedId;
   final String? searchHint, btnTitle, icon;
-  final bool isMultipleSelection;
+  final bool isMultipleSelection, isCloseButton;
 
   const _CustomSimpleBottomSheet({
     required this.dataList,
@@ -50,6 +51,7 @@ class _CustomSimpleBottomSheet extends StatefulWidget {
     this.btnTitle,
     this.icon,
     this.isMultipleSelection = false,
+    this.isCloseButton = false,
   });
 
   @override
@@ -59,8 +61,8 @@ class _CustomSimpleBottomSheet extends StatefulWidget {
 
 class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
   String searchQuery = '';
-  String? selectedItemId;
-  List<String> selectedItemIds = [];
+  Map<String, String>? selectedItem;
+  List<Map<String, String>> selectedItems = [];
   late List<Map<String, String>> filteredList;
   bool isAllSelected = false;
 
@@ -71,11 +73,17 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
 
     if (widget.isMultipleSelection) {
       if (widget.selectedId is List<String>) {
-        selectedItemIds = List<String>.from(widget.selectedId);
+        final ids = List<String>.from(widget.selectedId);
+        selectedItems = widget.dataList
+            .where((item) => ids.contains(item['id']))
+            .toList();
       }
     } else {
       if (widget.selectedId is String) {
-        selectedItemId = widget.selectedId;
+        selectedItem = widget.dataList.firstWhere(
+          (item) => item['id'] == widget.selectedId,
+          orElse: () => {},
+        );
       }
     }
   }
@@ -86,21 +94,22 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
       filteredList = widget.dataList
           .where(
             (item) => (item['name'] ?? '').toLowerCase().contains(
-          query.toLowerCase(),
-        ),
-      )
+              query.toLowerCase(),
+            ),
+          )
           .toList();
     });
   }
 
-  void _toggleSelection(String id) {
+  void _toggleSelection(Map<String, String> item) {
     setState(() {
-      if (selectedItemIds.contains(id)) {
-        selectedItemIds.remove(id);
+      final exists = selectedItems.any((e) => e['id'] == item['id']);
+      if (exists) {
+        selectedItems.removeWhere((e) => e['id'] == item['id']);
         isAllSelected = false;
       } else {
-        selectedItemIds.add(id);
-        if (selectedItemIds.length == filteredList.length) {
+        selectedItems.add(item);
+        if (selectedItems.length == filteredList.length) {
           isAllSelected = true;
         }
       }
@@ -108,30 +117,39 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
   }
 
   void _selectAll() {
-    if (isAllSelected) {
-      setState(() {
-        selectedItemIds.clear();
+    setState(() {
+      if (isAllSelected) {
+        selectedItems.clear();
         isAllSelected = false;
-      });
-    } else {
-      final allIds = filteredList.map((e) => e['id']!).toList();
-      setState(() {
-        selectedItemIds = allIds;
+      } else {
+        selectedItems = List.from(filteredList);
         isAllSelected = true;
-      });
-    }
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) => Container(
     height: Responsive.getHeight(context) * 0.75,
     width: Responsive.getWidth(context),
-    padding: EdgeInsets.all(
-      VariableBag.screenHorizontalPadding * Responsive.getResponsive(context),
+    padding: EdgeInsets.only(
+      top:
+          VariableBag.bottomSheetTopPadding * Responsive.getResponsive(context),
+      bottom:
+          VariableBag.bottomSheetBottomPadding *
+          Responsive.getResponsive(context),
+      left:
+          VariableBag.bottomSheetLeftPadding *
+          Responsive.getResponsive(context),
+      right:
+          VariableBag.bottomSheetRightPadding *
+          Responsive.getResponsive(context),
     ),
     decoration: BoxDecoration(
       color: AppTheme.getColor(context).surface,
-      borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(12 * Responsive.getResponsive(context)),
+      ),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,30 +161,30 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                 child: CustomText(
                   LanguageManager().get(widget.heading),
                   fontWeight: FontWeight.w700,
-                  fontSize: 18 * Responsive.getResponsiveText(context),
+                  fontSize: 16 * Responsive.getResponsiveText(context),
                   color: AppTheme.getColor(context).onSurface,
                 ),
               ),
-            if (widget.icon != null)
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: SvgPicture.asset(
-                  widget.icon ?? 'NO_Image||Icon',
-                  width: Responsive.isTablet
-                      ? 0.03 * Responsive.getWidth(context)
-                      : 0.06 * Responsive.getWidth(context),
-                  fit: BoxFit.scaleDown,
-                ),
+            IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: SvgPicture.asset(
+                widget.icon ?? AppAssets.downArrowBottomSheet,
+                width: Responsive.isTablet(context)
+                    ? 0.03 * Responsive.getWidth(context)
+                    : 0.06 * Responsive.getWidth(context),
+                fit: BoxFit.scaleDown,
               ),
+            ),
           ],
         ),
         SizedBox(
-          height: Responsive.isTablet
+          height: Responsive.isTablet(context)
               ? 0.006 * Responsive.getHeight(context)
               : 0.009 * Responsive.getHeight(context),
         ),
         CustomSearchField(hintText: 'search', onChanged: _onSearch),
         SizedBox(height: 12 * Responsive.getResponsive(context)),
+
         if (widget.isMultipleSelection && filteredList.length > 1)
           InkWell(
             onTap: _selectAll,
@@ -182,7 +200,9 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                 color: isAllSelected
                     ? AppTheme.getColor(context).surfaceContainer
                     : AppTheme.getColor(context).surface,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(
+                  12 * Responsive.getResponsive(context),
+                ),
                 border: Border.all(
                   color: AppTheme.getColor(context).primary,
                   width: isAllSelected ? 2 : 1,
@@ -196,45 +216,44 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                   fontWeight: FontWeight.w700,
                   fontSize: 14 * Responsive.getResponsiveText(context),
                   color: isAllSelected
-                      ? Theme.of(context).brightness == Brightness.dark
                       ? AppColors.textPrimary
-                      : AppColors.textPrimary
                       : AppTheme.getColor(context).onSurface,
                 ),
               ),
             ),
           ),
+
         Expanded(
           child: filteredList.isEmpty
               ? Center(
-            child: Padding(
-              padding: EdgeInsets.all(
-                16.0 * Responsive.getResponsive(context),
-              ),
-              child: CustomText(
-                'No matching results found',
-                fontSize: 16 * Responsive.getResponsiveText(context),
-                fontWeight: FontWeight.w600,
-                color: AppTheme.getColor(context).onSurface,
-              ),
-            ),
-          )
+                  child: Padding(
+                    padding: EdgeInsets.all(
+                      16.0 * Responsive.getResponsive(context),
+                    ),
+                    child: CustomText(
+                      'No matching results found',
+                      fontSize: 16 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.getColor(context).onSurface,
+                    ),
+                  ),
+                )
               : ListView.builder(
-            itemCount: filteredList.length,
-            itemBuilder: (context, index) {
-              final item = filteredList[index];
-              final id = item['id'];
-              final name = item['name'] ?? '';
-              if (id == null || name.isEmpty) {
-                return const SizedBox.shrink();
-              }
+                  itemCount: filteredList.length,
+                  itemBuilder: (context, index) {
+                    final item = filteredList[index];
+                    final id = item['id'];
+                    final name = item['name'] ?? '';
+                    if (id == null || name.isEmpty) {
+                      return const SizedBox.shrink();
+                    }
 
                     final isSelected = widget.isMultipleSelection
-                        ? selectedItemIds.contains(id)
-                        : id == selectedItemId;
+                        ? selectedItems.any((e) => e['id'] == id)
+                        : selectedItem != null && selectedItem!['id'] == id;
 
                     return Container(
-                      height: Responsive.isTablet
+                      height: Responsive.isTablet(context)
                           ? 0.10 * Responsive.getHeight(context)
                           : 0.045 * Responsive.getHeight(context),
                       margin: EdgeInsets.symmetric(
@@ -244,7 +263,9 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                         color: isSelected
                             ? AppColors.lightTeal
                             : AppTheme.getColor(context).surface,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(
+                          12 * Responsive.getResponsive(context),
+                        ),
                         border: Border.all(
                           color: AppTheme.getColor(context).primary,
                           width: isSelected ? 2 : 1,
@@ -253,10 +274,10 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                       child: InkWell(
                         onTap: () {
                           if (widget.isMultipleSelection) {
-                            _toggleSelection(id);
+                            _toggleSelection(item);
                           } else {
                             setState(() {
-                              selectedItemId = id;
+                              selectedItem = item;
                             });
                           }
                         },
@@ -275,10 +296,7 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                             fontSize:
                                 14 * Responsive.getResponsiveText(context),
                             color: isSelected
-                                ? Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? AppColors.textPrimary
-                                      : AppColors.textPrimary
+                                ? AppColors.textPrimary
                                 : AppTheme.getColor(context).onSurface,
                           ),
                         ),
@@ -287,26 +305,68 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                   },
                 ),
         ),
-        MyCoButton(
-          title: LanguageManager().get(widget.btnTitle ?? 'submit'),
-          boarderRadius: 50,
-          height: Responsive.isTablet
-              ? 0.10 * Responsive.getHeight(context)
-              : 0.05 * Responsive.getHeight(context),
-          isShadowBottomLeft: true,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w500,
-          onTap: () {
-            if (widget.isMultipleSelection) {
-              Navigator.pop(context, selectedItemIds);
-            } else if (selectedItemId != null) {
-              Navigator.pop(context, selectedItemId);
-            } else {
-              Navigator.pop(context);
-            }
-          },
-        ),
-        SizedBox(height: 0.015 * Responsive.getHeight(context)),
+        SizedBox(height: 0.01 * Responsive.getHeight(context)),
+
+        widget.isCloseButton
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MyCoButton(
+                    title: LanguageManager().get('close'),
+                    textStyle: TextStyle(
+                      color: AppTheme.getColor(context).primary,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16 * Responsive.getResponsiveText(context),
+                    ),
+                    boarderRadius: 50 * Responsive.getResponsive(context),
+                    height: 0.05 * Responsive.getHeight(context),
+                    width: 0.42 * Responsive.getWidth(context),
+                    isShadowBottomLeft: true,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                    backgroundColor: AppTheme.getColor(context).onPrimary,
+                    onTap: () => Navigator.pop(context),
+                    wantBorder: false,
+                  ),
+                  MyCoButton(
+                    title: LanguageManager().get(widget.btnTitle ?? 'submit'),
+                    boarderRadius: 50 * Responsive.getResponsive(context),
+                    height: 0.05 * Responsive.getHeight(context),
+                    width: 0.42 * Responsive.getWidth(context),
+                    isShadowBottomLeft: true,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                    onTap: () {
+                      if (widget.isMultipleSelection) {
+                        Navigator.pop(context, selectedItems);
+                      } else if (selectedItem != null) {
+                        Navigator.pop(context, selectedItem);
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                ],
+              )
+            : MyCoButton(
+                title: LanguageManager().get(widget.btnTitle ?? 'submit'),
+                boarderRadius: 50,
+                height: Responsive.isTablet(context)
+                    ? 0.10 * Responsive.getHeight(context)
+                    : 0.05 * Responsive.getHeight(context),
+                isShadowBottomLeft: true,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w500,
+                onTap: () {
+                  if (widget.isMultipleSelection) {
+                    Navigator.pop(context, selectedItems);
+                  } else if (selectedItem != null) {
+                    Navigator.pop(context, selectedItem);
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
       ],
     ),
   );

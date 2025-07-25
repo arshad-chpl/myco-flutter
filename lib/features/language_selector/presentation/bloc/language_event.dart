@@ -10,4 +10,6 @@ class SelectLanguage extends LanguageEvent {
   SelectLanguage({this.selectedLanguage});
 }
 
-class LoadLanguageToPreferences extends LanguageEvent {}
+class LoadLanguageToPreferences extends LanguageEvent {
+
+}

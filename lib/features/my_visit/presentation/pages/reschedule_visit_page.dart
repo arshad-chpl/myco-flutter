@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/customer_page.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/auto_start_checkbox_row.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/custom_visit_type_radio_button.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/field_virtual_visit_toggle.dart';
-import 'package:myco_flutter/widgets/big_textfield.dart';
+import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_custom_radio_button.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-import 'package:myco_flutter/widgets/custom_dropdown_button.dart';
-import 'package:myco_flutter/widgets/custom_label_textfield.dart';
-import 'package:myco_flutter/widgets/custom_labeled_dropdown.dart';
-import 'package:myco_flutter/widgets/custom_media_picker_container/custom_media_picker_container.dart';
+import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/custom_media_picker_container.dart';
 
 class RescheduleVisitPage extends StatefulWidget {
   const RescheduleVisitPage({super.key});
@@ -65,10 +60,13 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
 
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
-          horizontal: 31 * Responsive.getResponsive(context),
-          // vertical: 12 * Responsive.getResponsive(context),
+          horizontal:
+          VariableBag.screenHorizontalPadding *
+              Responsive.getResponsive(context),
         ),
         child: Column(
+          spacing:
+          VariableBag.textFieldRowGap * Responsive.getResponsive(context),
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Visit Type Radio Group
@@ -81,31 +79,24 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
               borderColor: AppTheme.getColor(context).primary,
               textStyle: TextStyle(color: AppTheme.getColor(context).onSurface),
             ),
-            SizedBox(height: 12 * Responsive.getResponsive(context)),
 
             //Select Customer *
             NewTextField(
-              label: 'Customer',
+              label: 'customer_to_visit',
+              isKey: true,
               prefixIconPath: AppAssets.personalcard,
               suffixIconPath: AppAssets.arrow_down,
-              hintText: selectedCustomer ?? 'Select Customer *',
-              controller: TextEditingController(
-                text: selectedCustomer ?? '',
-              ),
-              onTap: () async {
-                final selected = await context.pushNamed<String>('customerPage');
-                if (selected != null) {
-                  setState(() => selectedCustomer = selected);
-                }
+              hintText: 'Select',
+              onTap: ()  {
+                context.pop(context);
+                context.pushNamed('customerPage');
               },
+
             ),
-
-            SizedBox(height: 12 * Responsive.getResponsive(context)),
-
             // Visit Date
             NewTextField(
               label: 'Visit Date',
-              prefixIconPath: AppAssets.calendar,
+              prefixIconPath: AppAssets.note_favorite,
               hintText: 'Select Date',
               controller: amountController,
               keyboardType: TextInputType.datetime,
@@ -116,49 +107,41 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
               },
             ),
 
-            SizedBox(height: 12 * Responsive.getResponsive(context)),
-
             //Select Slot
             NewTextField(
               label: 'visit_slots',
+              isKey: true,
               prefixIconPath: AppAssets.clock,
               suffixIconPath: AppAssets.arrow_down,
               hintText: selectedTimeSlot ?? 'Select Slot',
-              controller: TextEditingController(
-                text: selectedTimeSlot ?? '',
-              ),
-              onTap: ()  {
+              controller: TextEditingController(text: selectedTimeSlot ?? ''),
+              onTap: () {
                 // handle tap function
               },
             ),
-
-            SizedBox(height: 12 * Responsive.getResponsive(context)),
 
             // Field / Virtual Visit
             FieldVirtualVisitToggle(
               selectedValue: selectedFieldVisit,
               onChanged: (v) => setState(() => selectedFieldVisit = v),
             ),
-            SizedBox(height: 12 * Responsive.getResponsive(context)),
             //Select Purpose
             NewTextField(
               label: 'visit_type',
+              isKey: true,
               prefixIconPath: AppAssets.gps,
               suffixIconPath: AppAssets.arrow_down,
-              hintText: selectedVisitPurpose ?? 'Select Purpose',
-              controller: TextEditingController(
-                text: selectedVisitPurpose ?? '',
-              ),
-              onTap: ()  {
+              hintText: selectedTimeSlot ?? 'Select Purpose',
+              onTap: () {
                 // handle tap function
               },
             ),
 
-            SizedBox(height: 12 * Responsive.getResponsive(context)),
 
             // Visit Purpose dropdown
             NewTextField(
               label: 'visit_purpose',
+              isKey: true,
               prefixIconPath: AppAssets.gps,
               suffixIconPath: AppAssets.arrow_down,
               hintText: selectedRescheduleReason ?? 'Select Reason',
@@ -170,14 +153,13 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
               },
             ),
 
-            SizedBox(height: 12 * Responsive.getResponsive(context)),
             NewTextField(
-              label: LanguageManager().get('purpose_of_visit'),
+              label: 'purpose_of_visiting',
+              isKey: true,
               prefixIconPath: AppAssets.sticky_note,
               hintText: LanguageManager().get('write_here'),
               maxLines: 10,
             ),
-            SizedBox(height: 12 * Responsive.getResponsive(context)),
 
             const CustomMediaPickerContainer(
               title: 'Attachment *',
@@ -187,16 +169,35 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
               isDocumentShow: true,
             ),
 
-            SizedBox(height: 0.10 * Responsive.getHeight(context)),
-
             // Agreement + Submit
-            AutoStartCheckboxRow(
-              isChecked: isChecked,
-              onChanged: (val) => {
-                // handle checkbox change
-              },
+            Padding(
+              padding:  EdgeInsets.only(top: 0.08 * Responsive.getHeight(context)),
+              child: Row(
+                children: [
+                  CustomCheckbox(
+                    value: isChecked,
+                    onChanged: (newValue) {
+                      // handle checkbox change
+                    },
+                    borderColor: AppTheme.getColor(context).primary,
+                    activeColor: AppColors.primary,
+                    checkColor: Colors.white,
+                    height: 24 * Responsive.getResponsive(context),
+                    width: 24 * Responsive.getResponsive(context),
+                    unCheckedBackground: Colors.transparent,
+                  ),
+                  SizedBox(width: 10 * Responsive.getResponsive(context)),
+                  Expanded(
+                    child: CustomText(
+                      'auto_start_visit',
+                      isKey: true,
+                      fontSize: 14 * Responsive.getResponsiveText(context),
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            SizedBox(height: 16 * Responsive.getResponsive(context)),
 
             //Submit
             MyCoButton(
@@ -212,7 +213,9 @@ class _RescheduleVisitPageState extends State<RescheduleVisitPage> {
               ),
               width: 1.2 * Responsive.getWidth(context),
               isShadowBottomLeft: true,
-              boarderRadius: 30 * Responsive.getResponsive(context),
+              boarderRadius:
+              VariableBag.buttonBorderRadius *
+                  Responsive.getResponsive(context),
             ),
             SizedBox(height: 0.01 * Responsive.getHeight(context)),
           ],

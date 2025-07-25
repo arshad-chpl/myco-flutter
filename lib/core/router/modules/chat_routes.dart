@@ -2,7 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
-import 'package:myco_flutter/features/chat/presentation/bloc/chat_bloc.dart';
+import 'package:myco_flutter/features/chat/presentation/bloc/chat_list_bloc/chat_bloc.dart';
+import 'package:myco_flutter/features/chat/presentation/bloc/group_chat_bloc/bloc/group_chat_bloc.dart';
+import 'package:myco_flutter/features/chat/presentation/bloc/member_chat_bloc.dart/bloc/member_chat_bloc.dart';
 import 'package:myco_flutter/features/chat/presentation/pages/chat_list.dart';
 import 'package:myco_flutter/features/chat/presentation/pages/chat_screen.dart';
 import 'package:myco_flutter/features/chat/presentation/pages/groupe_detail.dart';
@@ -13,7 +15,9 @@ List<RouteBase> chatRoutes = [
   ShellRoute(
     builder: (context, state, child) => MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => GetIt.I<ChatBloc>()),
+        BlocProvider(create: (context) => GetIt.I<ChatListBloc>()),
+        BlocProvider(create: (context) => GetIt.I<GroupChatBloc>()),
+        BlocProvider(create: (context) => GetIt.I<MemberChatBloc>()),
         BlocProvider(create: (context) => TabbarBloc()),
       ],
       child: child,

@@ -44,8 +44,11 @@ class CustomShadowContainer extends StatelessWidget {
     width: width ?? 0.02 * Responsive.getWidth(context),
     height: height,
     child: Column(
+      mainAxisAlignment: imgTitleSpacing != null
+          ? MainAxisAlignment.center
+          : MainAxisAlignment.spaceEvenly,
       mainAxisSize: MainAxisSize.min,
-      spacing: imgTitleSpacing ?? 8,
+      spacing: imgTitleSpacing ?? 0,
       children: [
         Padding(
           padding: EdgeInsets.only(
@@ -113,7 +116,7 @@ class CustomShadowContainer extends StatelessWidget {
         CustomText(
           title ?? '',
           textAlign: TextAlign.center,
-          fontSize: 14 * Responsive.getResponsive(context),
+          fontSize: 12 * Responsive.getDashboardResponsiveText(context),
           fontWeight: FontWeight.w600,
         ),
       ],
