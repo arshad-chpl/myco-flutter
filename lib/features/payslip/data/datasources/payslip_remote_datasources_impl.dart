@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:myco_flutter/core/models/data/common_response_model.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/payslip/data/datasources/payslip_remote_datasources.dart';
 import 'package:myco_flutter/features/payslip/data/models/ctc_details_model.dart';
@@ -35,7 +36,7 @@ class PayslipRemoteDataSourceImpl implements PayslipRemoteDatasources {
     return CtcDetailsModel.fromJson(json.decode(response));
   }
 
-  // Payslip Screen's Payslip tan + View Summary bottomsheet
+  // Payslip Screen's Payslip tab + View Summary bottomsheet
   @override
   Future<SalaryModel> getSalary() async {
     final body = {
@@ -43,7 +44,7 @@ class PayslipRemoteDataSourceImpl implements PayslipRemoteDatasources {
       'block_id': '1',
       'language_id': '1',
       'user_id':
-          '2', // to be changed according to the actual user_id from shared preferences
+          '553', // to be changed according to the actual user_id from shared preferences
       'society_id':
           '1', // to be changed according to the actual society_id from shared preferences
       'floor_id': '1',
@@ -58,6 +59,7 @@ class PayslipRemoteDataSourceImpl implements PayslipRemoteDatasources {
     return SalaryModel.fromJson(json.decode(response));
   }
 
+  // Payslip Screen's Get other earnings tab
   @override
   Future<GetOtherEarningsModel> getOtherEarnings() async {
     final body = {
@@ -76,15 +78,18 @@ class PayslipRemoteDataSourceImpl implements PayslipRemoteDatasources {
     return GetOtherEarningsModel.fromJson(json.decode(response));
   }
 
+  // Salary Details Screen
   @override
-  Future<SalaryDetailsModel> getSalaryDetails() async {
+  Future<SalaryDetailsModel> getSalaryDetails(String salarySlipId) async {
     final body = {
       'getSalaryDetails': 'getSalaryDetails',
       'society_id': '1',
       'language_id': '1',
       'user_id': '553',
-      'salary_slip_id': '881',
+      'salary_slip_id': salarySlipId,
     };
+
+    log(salarySlipId, name: 'SALARY_SLIP_ID');
 
     final response = await apiClient.postFormDynamic(
       'salary_controller.php',
@@ -92,5 +97,31 @@ class PayslipRemoteDataSourceImpl implements PayslipRemoteDatasources {
     );
 
     return SalaryDetailsModel.fromJson(json.decode(response));
+  }
+
+  // Salary Details Screen Add Issue Bottomsheet
+  @override
+  Future<CommonResponseModel> addSalaryIssue(
+    String issueMessage,
+    String salarySlipId,
+  ) async {
+    final body = {
+      'addSalaryIssue': 'addSalaryIssue',
+      'society_id': '1',
+      'language_id': '1',
+      'user_id': '553',
+      'salary_slip_id': salarySlipId, //'881'
+      'salary_issue': issueMessage,
+      'user_name': 'Aziz Kachwala (Jr. Android Developer)',
+    };
+
+    print('$body -------BODY');
+
+    final response = await apiClient.postFormDynamic(
+      'salary_controller.php',
+      body,
+    );
+
+    return CommonResponseModel.fromJson(json.decode(response));
   }
 }

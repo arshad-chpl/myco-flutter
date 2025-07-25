@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
@@ -16,7 +15,7 @@ import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
 
 // ignore: must_be_immutable
 class TakeOrderPage extends StatefulWidget {
@@ -47,7 +46,7 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
         ),
         SizedBox(width: 0.01 * Responsive.getWidth(context)),
         Stack(
-          alignment: const AlignmentGeometry.directional(1.5, -1.5),
+          alignment: const AlignmentGeometry.directional(1.7, -2.5),
           children: [
             MyCoButton(
               onTap: () {
@@ -105,10 +104,13 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
                   AppTheme.getColor(context).primary,
                   AppTheme.getColor(context).secondary,
                 ],
+
                 unselectedBorderAndTextColor: AppTheme.getColor(
                   context,
                 ).onPrimary,
-                tabBarBorderColor: AppTheme.getColor(context).onSurface,
+                tabBarBorderColor: selectedIndex == 0
+                    ? AppTheme.getColor(context).primary
+                    : AppTheme.getColor(context).secondary,
                 tabBarBackgroundColor: AppTheme.getColor(context).surface,
                 isShadowBottomLeft: true,
                 selectedIndex: selectedIndex,
@@ -118,8 +120,8 @@ class _TakeOrderPageState extends State<TakeOrderPage> {
               );
             },
           ),
-          SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
           Expanded(
             child: BlocBuilder<TabbarBloc, TabbarState>(
               builder: (context, state) {
@@ -175,18 +177,32 @@ class AllProductsScreen extends StatelessWidget {
                 products = productList;
               }
               return ListView.separated(
-                itemBuilder: (context, index) => MyCoTextfield(
-                  onClick: () => context.pushNamed(RoutePaths.products),
-                  isReadOnly: true,
-                  hintText: products[index],
-                  hintTextStyle: AppTheme.getTextStyle(context).bodyLarge!
-                      .copyWith(color: AppTheme.getColor(context).primary),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: AppTheme.getColor(context).outline,
+                itemBuilder: (context, index) => InkWell(
+                  onTap: () => context.pushNamed(RoutePaths.products),
+                  child: Container(
+                    height: 0.055 * Responsive.getHeight(context),
+                    width: Responsive.getWidth(context),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: AppTheme.getColor(context).outline,
+                      ),
+                      borderRadius: BorderRadius.circular(
+                        12 * Responsive.getResponsive(context),
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(
-                      12 * Responsive.getResponsive(context),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 10.0 * Responsive.getResponsive(context),
+                        ),
+                        child: CustomText(
+                          products[index],
+                          textAlign: TextAlign.justify,
+                          color: AppTheme.getColor(context).primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -203,14 +219,25 @@ class AllProductsScreen extends StatelessWidget {
 }
 
 class FrequentsBuyScreen extends StatelessWidget {
-  const FrequentsBuyScreen({super.key});
+  final bool isSearchFieldOn;
+  const FrequentsBuyScreen({super.key, this.isSearchFieldOn = false});
 
   @override
   Widget build(BuildContext context) => Column(
     children: [
+      if (isSearchFieldOn)
+        CustomSearchField(
+          hintText: 'Search',
+          onChanged: (value) {
+            // TODO: Implement search functionality
+            // Implement search functionality
+          },
+        ),
+      if (isSearchFieldOn)
+        SizedBox(height: 0.03 * Responsive.getHeight(context)),
       Expanded(
         child: ListView.separated(
-          itemCount: 7,
+          itemCount: 10,
           itemBuilder: (context, index) => const FrequentBuyCard(),
           separatorBuilder: (context, index) =>
               SizedBox(height: 0.015 * Responsive.getHeight(context)),

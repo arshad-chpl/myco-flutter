@@ -5,11 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
-import 'package:myco_flutter/features/payslip/presentation/bloc/payslip_bloc.dart';
+import 'package:myco_flutter/features/payslip/presentation/bloc/payslip_bloc/payslip_bloc.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/payslip_card.dart';
+import 'package:myco_flutter/features/payslip/presentation/widgets/payslip_webview.dart';
+import 'package:myco_flutter/features/payslip/presentation/widgets/shimmer_salary_loading.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/summary_bottomsheet.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
@@ -30,12 +33,11 @@ class _PayslipPageState extends State<PayslipPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.microtask(loadData);
   }
 
-  void loadData() async {
+  void loadData() {
     context.read<PayslipBloc>().add(GetSalaryEvent());
     context.read<OtherEarningsBloc>().add(GetOtherEarningsEvent());
   }
@@ -43,7 +45,7 @@ class _PayslipPageState extends State<PayslipPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      title: 'Payslip',
+      title: LanguageManager().get('payslip'),
       actions: [
         MyCoButton(
           onTap: () {
@@ -52,7 +54,7 @@ class _PayslipPageState extends State<PayslipPage> {
           backgroundColor: AppTheme.getColor(context).secondary,
           borderColor: AppTheme.getColor(context).secondary,
           boarderRadius: 30 * Responsive.getResponsive(context),
-          title: 'View CTC',
+          title: LanguageManager().get('view_ctc'),
           textStyle: TextStyle(
             fontSize: 14 * Responsive.getResponsiveText(context),
             color: AppTheme.getColor(context).onSecondary,
@@ -74,18 +76,20 @@ class _PayslipPageState extends State<PayslipPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 8 * Responsive.getResponsive(context),
+                padding: EdgeInsets.only(
+                  left: 8 * Responsive.getResponsive(context),
+                  top: 2 * Responsive.getResponsive(context),
+                  bottom: 2 * Responsive.getResponsive(context),
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
                     6 * Responsive.getResponsive(context),
                   ),
 
-                  border: Border.all(color: AppTheme.getColor(context).outline),
+                  color: AppTheme.getColor(context).primary.withAlpha(40),
                 ),
                 child: const Center(
-                  child: CustomText('<', fontWeight: FontWeight.w700),
+                  child: Icon(Icons.arrow_back_ios, size: 16),
                 ),
               ),
               InkWell(
@@ -101,7 +105,7 @@ class _PayslipPageState extends State<PayslipPage> {
 
                   // if (selectedDate != null) {
                   //   setState(() {
-                  //     myDate = selectedDate;
+                  //     var date = selectedDate;
                   //   });
                   // }
                 },
@@ -121,17 +125,17 @@ class _PayslipPageState extends State<PayslipPage> {
               ),
               Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 8 * Responsive.getResponsive(context),
+                  horizontal: 3 * Responsive.getResponsive(context),
+                  vertical: 2 * Responsive.getResponsive(context),
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
                     6 * Responsive.getResponsive(context),
                   ),
-                  border: Border.all(color: AppTheme.getColor(context).outline),
-                  // color: AppColors.gray10,
+                  color: AppTheme.getColor(context).primary.withAlpha(40),
                 ),
                 child: const Center(
-                  child: CustomText('>', fontWeight: FontWeight.w700),
+                  child: Icon(Icons.arrow_forward_ios, size: 16),
                 ),
               ),
             ],
@@ -149,7 +153,10 @@ class _PayslipPageState extends State<PayslipPage> {
                   ? state.selectedIndex
                   : 0;
               return MyCustomTabBar(
-                tabs: const ['Paylsip', 'Other Earnings'],
+                tabs: [
+                  LanguageManager().get('payslip'),
+                  LanguageManager().get('other_earnings'),
+                ],
                 selectedBgColors: [
                   AppTheme.getColor(context).secondary,
                   AppTheme.getColor(context).primary,
@@ -157,8 +164,9 @@ class _PayslipPageState extends State<PayslipPage> {
                 unselectedBorderAndTextColor: AppTheme.getColor(
                   context,
                 ).primary,
-                tabBarBorderColor: AppTheme.getColor(context).onSurface,
-
+                tabBarBorderColor: selectedIndex == 0
+                    ? AppTheme.getColor(context).secondary
+                    : AppTheme.getColor(context).primary,
                 selectedIndex: selectedIndex,
                 isShadowBottomLeft: true,
                 onTabChange: (index) {
@@ -190,54 +198,67 @@ class PaySlip extends StatelessWidget {
   Widget build(BuildContext context) => BlocBuilder<PayslipBloc, PayslipState>(
     builder: (context, state) {
       if (state is GetSalaryLoadingState) {
-        log('Loading...', name: 'GetSalaryLoadingState');
-        return const Center(child: CircularProgressIndicator());
+        return const ShimmerSalaryLoadingWidget(loadingFor: 'payslip');
       }
 
       if (state is GetSalaryErrorState) {
-        log('Error', name: 'GetSalaryErrorState');
-        return Center(child: CustomText(state.error));
+        return Column(
+          children: [
+            SizedBox(height: 0.3 * Responsive.getHeight(context)),
+            CustomText(state.error),
+          ],
+        );
       }
 
       if (state is GetSalarySuccessState) {
         log('Success', name: 'GetSalarySuccessState');
         final salary = state.salary;
-
         return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              height: 0.63 * Responsive.getHeight(context),
+              height: 0.65 * Responsive.getHeight(context),
               padding: EdgeInsets.symmetric(
                 horizontal: 0.08 * Responsive.getWidth(context),
               ),
               child: ListView.separated(
                 itemCount: salary.salaryItem?.length ?? 0,
                 itemBuilder: (context, index) => PayslipCard(
-                  month: salary.salaryItem?[index].monthName ?? "",
-                  year: salary.salaryItem?[index].year ?? "",
-                  netPay: salary.salaryItem?[index].totalNetSalary ?? "",
+                  month: salary.salaryItem?[index].monthName ?? '',
+                  year: salary.salaryItem?[index].year ?? '',
+                  netPay: salary.salaryItem?[index].totalNetSalary ?? '',
                   grossSalary:
-                      salary.salaryItem?[index].totalEarningSalary ?? "",
+                      salary.salaryItem?[index].totalEarningSalary ?? '',
                   totalDeduction:
-                      salary.salaryItem?[index].totalDeductionSalary ?? "",
+                      salary.salaryItem?[index].totalDeductionSalary ?? '',
                   onView: () {
-                    context.pushNamed(RoutePaths.payslipDetail);
+                    // log(salary.salaryItem?[index].salarySlipId.toString() )
+                    context.pushNamed(
+                      RoutePaths.payslipDetail,
+                      extra: salary.salaryItem?[index].salarySlipId ?? '',
+                    );
                   },
                   onDownload: () {
                     // Download with
                     // salary.salaryItem?[index].payslipDownloadUrl ?? "",
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PayslipWebViewScreen(
+                          url:
+                              salary.salaryItem?[index].payslipDownloadUrl ??
+                              '',
+                        ),
+                      ),
+                    );
                   },
                 ),
                 separatorBuilder: (context, index) =>
                     SizedBox(height: 0.01 * Responsive.getHeight(context)),
               ),
             ),
-
             Container(
               padding: EdgeInsets.symmetric(
                 horizontal: 0.08 * Responsive.getWidth(context),
-                vertical: 0.02 * Responsive.getHeight(context),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -246,7 +267,7 @@ class PaySlip extends StatelessWidget {
                     onTap: () {
                       showModalBottomSheet(
                         constraints: BoxConstraints(
-                          maxHeight: 0.67 * Responsive.getHeight(context),
+                          maxHeight: 0.7 * Responsive.getHeight(context),
                         ),
                         useSafeArea: true,
                         isScrollControlled: true,
@@ -258,28 +279,36 @@ class PaySlip extends StatelessWidget {
                         clipBehavior: Clip.hardEdge,
                         context: context,
                         builder: (context) => SummaryBottomsheet(
-                          basic: salary.earningsTotal?[0].earningAmount ?? "",
-                          hra: salary.earningsTotal?[1].earningAmount ?? "",
+                          basic: salary.earningsTotal?[0].earningAmount ?? '',
+                          basicName: salary.earningsTotal?[0].earningType ?? '',
+                          hra: salary.earningsTotal?[1].earningAmount ?? '',
+                          hraName: salary.earningsTotal?[1].earningType ?? '',
                           conveyance:
-                              salary.earningsTotal?[2].earningAmount ?? "",
+                              salary.earningsTotal?[2].earningAmount ?? '',
+                          conveyanceName:
+                              salary.earningsTotal?[2].earningType ?? '',
 
                           grossDeductions:
-                              salary.deductionsTotal?[0].deductionAmount ?? "",
+                              salary.deductionsTotal?[0].deductionAmount ?? '',
+                          grossDeductionsName:
+                              salary.deductionsTotal?[0].deductionType ?? '',
                           professionalTax:
-                              salary.deductionsTotal?[1].deductionAmount ?? "",
+                              salary.deductionsTotal?[1].deductionAmount ?? '',
+                          professionalTaxName:
+                              salary.deductionsTotal?[1].deductionType ?? '',
 
-                          totalEarnings: salary.totalEarning ?? "",
-                          leaveEncashment: "",
-                          paidLeaveAllowance: "",
+                          totalEarnings: salary.totalEarning ?? '',
+                          leaveEncashment: '',
+                          paidLeaveAllowance: '',
                           totalEmplotersContributions:
                               salary
                                   .employerContributionTotal?[0]
                                   .employerContributionAmount ??
-                              "",
+                              '',
                         ),
                       );
                     },
-                    title: 'View Summary',
+                    title: LanguageManager().get('view_summary'),
                     width: 0.4 * Responsive.getWidth(context),
                     height: 0.04 * Responsive.getHeight(context),
                     boarderRadius: 30 * Responsive.getResponsive(context),
@@ -294,6 +323,14 @@ class PaySlip extends StatelessWidget {
                     onTap: () {
                       // Download with
                       // salary.payslipDownloadUrl ?? ""
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PayslipWebViewScreen(
+                            url: salary.payslipDownloadUrl ?? '',
+                          ),
+                        ),
+                      );
                     },
                     child: CustomText(
                       'download_all_payslip',
@@ -326,12 +363,17 @@ class OtherEarnings extends StatelessWidget {
     builder: (context, state) {
       if (state is GetOtherEarningsLoadingState) {
         log('Loading...', name: 'GetOtherEarningsLoadingState');
-        return const Center(child: CircularProgressIndicator());
+        return const ShimmerSalaryLoadingWidget(loadingFor: 'payslip');
       }
 
       if (state is GetOtherEarningsErrorState) {
         log('Error', name: 'GetOtherEarningsErrorState');
-        return Center(child: CustomText(state.error));
+        return Column(
+          children: [
+            SizedBox(height: 0.3 * Responsive.getHeight(context)),
+            CustomText(state.error),
+          ],
+        );
       }
 
       if (state is GetOtherEarningsSuccessState) {
@@ -351,7 +393,7 @@ class OtherEarnings extends StatelessWidget {
                     itemBuilder: (context, index) => CommonCard(
                       title:
                           otherEarning.otherEarnings?[index].leavePayoutDate ??
-                          "",
+                          '',
                       showHeaderPrefixIcon: true,
                       headerPrefixIcon: 'assets/payslip/calendar.png',
                       headerPrefixIconHeight:
@@ -361,17 +403,17 @@ class OtherEarnings extends StatelessWidget {
                         context,
                         leaveTypeName:
                             otherEarning.otherEarnings?[index].leaveTypeName ??
-                            "",
+                            '',
                         numberOfPayoutLeaves:
                             otherEarning
                                 .otherEarnings?[index]
                                 .noOfPayoutLeaves ??
-                            "",
+                            '',
                         leavePayoutAmount:
                             otherEarning
                                 .otherEarnings?[index]
                                 .leavePayoutAmount ??
-                            "",
+                            '',
                       ),
                     ),
                     separatorBuilder: (context, index) =>

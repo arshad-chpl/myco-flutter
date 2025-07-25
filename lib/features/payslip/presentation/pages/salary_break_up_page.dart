@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/payslip/presentation/bloc/payslip_bloc.dart';
+import 'package:myco_flutter/features/payslip/presentation/bloc/ctc_bloc/ctc_bloc.dart';
+import 'package:myco_flutter/features/payslip/presentation/bloc/ctc_bloc/ctc_event.dart';
+import 'package:myco_flutter/features/payslip/presentation/bloc/ctc_bloc/ctc_state.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/payslip_card.dart';
+import 'package:myco_flutter/features/payslip/presentation/widgets/shimmer_salary_loading.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
@@ -21,7 +24,7 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
   @override
   void initState() {
     super.initState();
-    context.read<PayslipBloc>().add(GetCtcDetailsEvent());
+    context.read<CtcDetailsBloc>().add(GetCtcDetailsEvent());
   }
 
   @override
@@ -46,11 +49,10 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
             isShadowBottomLeft: true,
           ),
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
-
-          BlocBuilder<PayslipBloc, PayslipState>(
+          BlocBuilder<CtcDetailsBloc, CtcDetailsState>(
             builder: (context, state) {
               if (state is GetCtcDetailsLoadingState) {
-                return const Center(child: CircularProgressIndicator());
+                return const ShimmerSalaryLoadingWidget(loadingFor: 'ctc');
               }
               if (state is GetCtcDetailsSuccessState) {
                 return Column(
@@ -58,7 +60,6 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                     // Earning Card
                     CommonCard(
                       title: 'earnings',
-                      //  'Earnings',
                       bottomWidget: Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: 0.04 * Responsive.getWidth(context),
@@ -98,7 +99,6 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                       ),
                                       child: CustomText(
                                         'salary_head',
-                                        // 'Salary Heading',
                                         fontWeight: FontWeight.w700,
                                         fontSize:
                                             14 *
@@ -119,11 +119,11 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                             Responsive.getHeight(context),
                                       ),
                                       child: CustomText(
-                                        'amount' + '(₹)',
-                                        // 'Amount (₹)',
+                                        'amount'
+                                        '(₹)',
                                         fontWeight: FontWeight.w700,
                                         fontSize:
-                                            14 *
+                                            13 *
                                             Responsive.getResponsiveText(
                                               context,
                                             ),
@@ -140,7 +140,11 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                             Responsive.getHeight(context),
                                       ),
                                       child: CustomText(
-                                        'Basic',
+                                        state
+                                                .ctcDetails
+                                                .earningHeads?[0]
+                                                .headName ??
+                                            'Basic',
                                         fontSize:
                                             12 *
                                             Responsive.getResponsiveText(
@@ -166,7 +170,7 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                                 .ctcDetails
                                                 .earningHeads?[0]
                                                 .salaryPerMonth ??
-                                            "",
+                                            '',
                                         fontSize:
                                             12 *
                                             Responsive.getResponsiveText(
@@ -186,7 +190,11 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                             Responsive.getHeight(context),
                                       ),
                                       child: CustomText(
-                                        'HRA',
+                                        state
+                                                .ctcDetails
+                                                .earningHeads?[1]
+                                                .headName ??
+                                            'HRA',
                                         fontSize:
                                             12 *
                                             Responsive.getResponsiveText(
@@ -212,7 +220,7 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                                 .ctcDetails
                                                 .earningHeads?[1]
                                                 .salaryPerMonth ??
-                                            "",
+                                            '',
                                         fontSize:
                                             12 *
                                             Responsive.getResponsiveText(
@@ -232,7 +240,11 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                             Responsive.getHeight(context),
                                       ),
                                       child: CustomText(
-                                        'conveyance',
+                                        state
+                                                .ctcDetails
+                                                .earningHeads?[2]
+                                                .headName ??
+                                            'conveyance',
                                         // 'Conveyance',
                                         fontSize:
                                             12 *
@@ -259,7 +271,7 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                                 .ctcDetails
                                                 .earningHeads?[2]
                                                 .salaryPerMonth ??
-                                            "",
+                                            '',
                                         fontSize:
                                             12 *
                                             Responsive.getResponsiveText(
@@ -306,7 +318,7 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                                 .ctcDetails
                                                 .ctcHeads?[0]
                                                 .ctcPerMonth ??
-                                            "",
+                                            '',
                                         fontSize:
                                             12 *
                                             Responsive.getResponsiveText(
@@ -352,7 +364,7 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                                 .ctcDetails
                                                 .ctcHeads?[0]
                                                 .ctcPerAnnum ??
-                                            "",
+                                            '',
                                         fontSize:
                                             12 *
                                             Responsive.getResponsiveText(
@@ -386,7 +398,11 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                  'professional_tex',
+                                  state
+                                          .ctcDetails
+                                          .deductionHeads?[1]
+                                          .headName ??
+                                      'professional_tex',
                                   // 'Professional Tax',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontSize:
@@ -400,7 +416,7 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                           .ctcDetails
                                           .deductionHeads?[0]
                                           .perMonth ??
-                                      "",
+                                      '',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontSize:
                                       14 *
@@ -430,7 +446,7 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                           .ctcDetails
                                           .deductionHeads?[1]
                                           .perMonth ??
-                                      "",
+                                      '',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontWeight: FontWeight.w700,
                                   fontSize:
@@ -471,7 +487,7 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                 CustomText(
                                   // '₹38,800.00',
                                   state.ctcDetails.netSalaryPerMonthInHand ??
-                                      "",
+                                      '',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontWeight: FontWeight.bold,
                                   fontSize:
@@ -497,7 +513,7 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                                 CustomText(
                                   // '₹468,000.00',
                                   state.ctcDetails.netSalaryPerAnnumInHand ??
-                                      "",
+                                      '',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontWeight: FontWeight.bold,
                                   fontSize:
@@ -514,12 +530,15 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
                 );
               }
 
-              return Center(
-                child: CustomText(
-                  state is GetCtcDetailsErrorState
-                      ? 'ERROR : ${state.error}'
-                      : 'Something Went Wrong',
-                ),
+              return Column(
+                children: [
+                  SizedBox(height: 0.3 * Responsive.getHeight(context)),
+                  CustomText(
+                    state is GetCtcDetailsErrorState
+                        ? 'ERROR : ${state.error}'
+                        : 'Something Went Wrong',
+                  ),
+                ],
               );
             },
           ),

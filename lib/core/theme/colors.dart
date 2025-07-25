@@ -13,7 +13,6 @@ class AppColors {
   static const Color textSecondary = Color(0xFF475467);
   static const Color textGray = Color(0xFF7C7C7C);
 
-
   // Surface
   static const Color surfacePrimary = Color(0xFFF5F5F5);
 
@@ -83,8 +82,6 @@ class AppColors {
   static const Color lightBlue = Color(0xFFDEE5EF);
   static const Color littleDarkBlue = Color(0xFF5B84A6);
 
-
-
   static const Color deleteIcon = Color(0xFFD01515);
   static const Color greenDark = Color(0xFF4FC44B);
   static const Color transparent = Colors.transparent;
@@ -93,9 +90,9 @@ class AppColors {
   static const Color stepperDenied = Color(0xFFFF2121);
   static const Color stepperDisabled = Color(0xFFCACACA);
   static const Color stepperDisabledTitle = Color(0xFFAFA8A8);
-// static const Color stepperPending = Color(0xFFFDB913);
-// static const Color stepperCompleted = Color(0xFF2FBBA4);
-// static const Color stepperAuthorized = Color(0xFF2FBBA4);
-// static const Color stepperApproved = Color(0xFF2FBBA4);
-// static const Color stepperDataBorder = Color(0xFF98A2B3);
+  // static const Color stepperPending = Color(0xFFFDB913);
+  // static const Color stepperCompleted = Color(0xFF2FBBA4);
+  // static const Color stepperAuthorized = Color(0xFF2FBBA4);
+  // static const Color stepperApproved = Color(0xFF2FBBA4);
+  // static const Color stepperDataBorder = Color(0xFF98A2B3);
 }

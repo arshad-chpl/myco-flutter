@@ -18,8 +18,8 @@ class ProductsPage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          SizedBox(height: 0.02 * Responsive.getHeight(context)),
-          const Expanded(child: FrequentsBuyScreen()),
+          SizedBox(height: 0.01 * Responsive.getHeight(context)),
+          const Expanded(child: FrequentsBuyScreen(isSearchFieldOn: true)),
         ],
       ),
     ),

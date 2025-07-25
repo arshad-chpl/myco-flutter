@@ -1,5 +1,7 @@
 part of 'payslip_bloc.dart';
 
+//======== Payslip =========
+
 sealed class PayslipEvent extends Equatable {
   const PayslipEvent();
 
@@ -7,10 +9,8 @@ sealed class PayslipEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetCtcDetailsEvent extends PayslipEvent {}
-
 class GetSalaryEvent extends PayslipEvent {}
 
-class GetOtherEarningsEvent extends PayslipEvent {}
+// ======== Other Earning =========
 
-class GetSalaryDetailsEvent extends PayslipEvent {}
+class GetOtherEarningsEvent extends PayslipEvent {}
