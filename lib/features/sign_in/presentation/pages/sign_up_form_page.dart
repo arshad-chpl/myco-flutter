@@ -232,56 +232,32 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   if (state is BlockApiSuccess) {
                     branchOptionIds = [];
                     branchOptionNames = [];
-                    branchOptionIds = state.blockList.blocks!
-                        .map((block) => block.blockId ?? '')
-                        .toList();
-                    branchOptionNames = state.blockList.blocks!
-                        .map((block) => block.blockName ?? '')
-                        .toList();
+                    branchOptionIds = state.blockList.blocks!.map((block) => block.blockId ?? '').toList();
+                    branchOptionNames = state.blockList.blocks!.map((block) => block.blockName ?? '').toList();
                   }
 
                   if (state is FloorUnitApiSuccess) {
                     floorUnitOptionIds = [];
                     floorUnitOptionNames = [];
-                    floorUnitOptionIds = state.floorUnitList.designation!
-                        .map((d) => d.designationId ?? '')
-                        .toList();
-                    floorUnitOptionNames = state.floorUnitList.designation!
-                        .map((d) => d.designationName ?? '')
-                        .toList();
+                    floorUnitOptionIds = state.floorUnitList.designation!.map((d) => d.designationId ?? '').toList();
+                    floorUnitOptionNames = state.floorUnitList.designation!.map((d) => d.designationName ?? '').toList();
 
                     departmentOptionIds = [];
                     departmentOptionNames = [];
-                    departmentOptionIds = state.floorUnitList.floors!
-                        .map((f) => f.floorId ?? '')
-                        .toList();
-                    departmentOptionNames = state.floorUnitList.floors!
-                        .map((f) => f.floorName ?? '')
-                        .toList();
+                    departmentOptionIds = state.floorUnitList.floors!.map((f) => f.floorId ?? '').toList();
+                    departmentOptionNames = state.floorUnitList.floors!.map((f) => f.floorName ?? '').toList();
 
                     subDepartmentOptionIds = [];
                     subDepartmentOptionNames = [];
-                    subDepartmentOptionIds = state
-                        .floorUnitList
-                        .subDepartmentList!
-                        .map((sd) => sd.subDepartmentId ?? '')
-                        .toList();
-                    subDepartmentOptionNames = state
-                        .floorUnitList
-                        .subDepartmentList!
-                        .map((sd) => sd.subDepartmentName ?? '')
-                        .toList();
+                    subDepartmentOptionIds = state.floorUnitList.subDepartmentList!.map((sd) => sd.subDepartmentId ?? '').toList();
+                    subDepartmentOptionNames = state.floorUnitList.subDepartmentList!.map((sd) => sd.subDepartmentName ?? '').toList();
                   }
 
                   if (state is ShiftApiSuccess) {
                     shiftOptionIds = [];
                     shiftOptionNames = [];
-                    shiftOptionIds = state.shiftList.shift!
-                        .map((s) => s.shiftTimeId ?? '')
-                        .toList();
-                    shiftOptionNames = state.shiftList.shift!
-                        .map((s) => s.shiftTimeView ?? '')
-                        .toList();
+                    shiftOptionIds = state.shiftList.shift!.map((s) => s.shiftTimeId ?? '').toList();
+                    shiftOptionNames = state.shiftList.shift!.map((s) => s.shiftTimeView ?? '').toList();
                   }
 
                   if (state is UploadImagePdfApiSuccess) {
@@ -301,40 +277,23 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     CustomLoaderDialog.show(context);
                   }
 
-                  if (state is AddPrimaryUserApiSuccess ||
-                      state is PrimaryRegisterError) {
+                  if (state is AddPrimaryUserApiSuccess || state is PrimaryRegisterError) {
                     Navigator.of(context, rootNavigator: true).pop();
                   }
 
                   if (state is AddPrimaryUserApiSuccess) {
-                    Fluttertoast.showToast(
-                      msg: state.response.message ?? '',
-                      backgroundColor: Colors.green,
-                      textColor: Colors.white,
-                    );
+                    Fluttertoast.showToast(msg: state.response.message ?? '', backgroundColor: Colors.green, textColor: Colors.white,);
                     if (isAddMore != true) {
                       if (from == '1') {
-                        preferenceManager.setKeyValueBoolean(
-                          VariableBag.REQUEST_EMPLOYEE,
-                          true,
-                        );
+                        preferenceManager.setKeyValueBoolean(VariableBag.REQUEST_EMPLOYEE, true,);
                         Navigator.of(context).pop();
                       } else {
                         if (state.response.isApprove == true) {
-                          preferenceManager.setKeyValueBoolean(
-                            VariableBag.REGISTRATION_REQUEST_IS_APPROVE,
-                            true,
-                          );
+                          preferenceManager.setKeyValueBoolean(VariableBag.REGISTRATION_REQUEST_IS_APPROVE, true,);
                           Navigator.of(context).pop();
                         } else {
-                          preferenceManager.setKeyValueBoolean(
-                            VariableBag.REGISTRATION_REQUEST_IS_APPROVE,
-                            false,
-                          );
-                          await preferenceManager.setKeyValueString(
-                            VariableBag.registrationRequestPendingUserId,
-                            state.response.userId ?? '',
-                          );
+                          preferenceManager.setKeyValueBoolean(VariableBag.REGISTRATION_REQUEST_IS_APPROVE, false,);
+                          await preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, state.response.userId ?? '',);
 
                           context.go(RoutePaths.contactAdmin);
                         }
@@ -390,16 +349,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
             child: BlocBuilder<CommonApiBloc, CommonApiState>(
               builder: (context, state) {
                 if (state is CommonApiError) {
-                  Fluttertoast.showToast(
-                    msg: state.message,
-                    backgroundColor: Colors.redAccent,
-                    textColor: Colors.white,
-                  );
+                  Fluttertoast.showToast(msg: state.message, backgroundColor: Colors.redAccent, textColor: Colors.white,);
                 }
                 return Padding(
-                  padding: EdgeInsets.all(
-                    20 * Responsive.getResponsive(context),
-                  ),
+                  padding: EdgeInsets.all(20 * Responsive.getResponsive(context)),
                   child: setUi(),
                 );
               },
@@ -461,10 +414,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
           ),
           SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
-          if (selectedImage.isEmpty)
+          if (!isAddByAdmin! && !isAddMoreUnit! && selectedImage.isEmpty)
             Center(
               child: CustomText(
-                'Please Select Profile',
+               LanguageManager().get('please_select_profile_photo'),
                 color: AppColors.error,
                 fontSize: 14 * Responsive.getDashboardResponsiveText(context),
               ),
@@ -483,7 +436,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
             prefixIcon: AppAssets.branchIcon,
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
-                return 'Pre select Branch';
+                return LanguageManager().get('please_select_branch');
               }
               return null;
             },
@@ -503,7 +456,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
             prefixIcon: AppAssets.departmentIcon,
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
-                return 'Pre select Department';
+                return LanguageManager().get('please_select_department');
               }
               return null;
             },
@@ -521,13 +474,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
               optionNames: subDepartmentOptionNames,
               defaultLabelKey: 'sub department',
               prefixIcon: AppAssets.subDepartmentIcon,
-              isRequired: true,
-              validator: (value) {
-                if (value == null || value.trim().isEmpty) {
-                  return 'Pre select subDepartment';
-                }
-                return null;
-              },
+              isRequired: false,
               // **REMOVED**: onSelected callback
             ),
             SizedBox(height: 0.015 * Responsive.getHeight(context)),
@@ -558,7 +505,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
             prefixIcon: AppAssets.designationIcon,
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
-                return 'Pre select Branch';
+                return LanguageManager().get('please_enter_valid_designation');
               }
               return null;
             },
@@ -577,7 +524,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
-                return 'Please enter first name';
+                return LanguageManager().get('select_joining_date');
               }
               return null;
             },
@@ -594,9 +541,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   child: DialDatePickerWidget(
                     initialDate: DateTime.now(),
                     onSubmit: (selectedDate) {
-                      final String date = DateFormat(
-                        'dd-MM-yy',
-                      ).format(selectedDate);
+                      final String date = DateFormat('dd-MM-yy').format(selectedDate);
                       joiningDateController.text = date;
                       Navigator.pop(context);
                     },
@@ -621,7 +566,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     isRequired: true,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Please enter first name';
+                        return LanguageManager().get('please_enter_valid_first_name');
                       }
                       return null;
                     },
@@ -638,7 +583,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   isRequired: true,
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return 'Please enter last name';
+                      return LanguageManager().get('please_enter_valid_last_name');
                     }
                     return null;
                   },
@@ -710,10 +655,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
               isRequired: true,
 
               validator: (value) {
-                if (value != null ||
-                    '240' == preferenceManager.getCountryId() &&
-                        value!.isEmpty) {
-                  return 'Please enter number of department';
+                if (value == null || '240' == preferenceManager.getCountryId() && value.trim().isEmpty) {
+                  return LanguageManager().get('please_enter_number_of_dependent');
                 }
                 return null;
               },
@@ -731,8 +674,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
           SizedBox(height: 0.005 * Responsive.getHeight(context)),
           PhoneNumberField(
             validation: (value) {
-              if (value!.isEmpty) {
-                return 'Please enter Mobile Number';
+              if (value == null || value.trim().isEmpty || value.trim().length < 7 || value.trim().length > 15) {
+                return LanguageManager().get('enter_your_mobile_number');
               }
             },
             selectedCountry: selectedCountry,
@@ -762,6 +705,12 @@ class _SignupFormPageState extends State<SignupFormPage> {
             hintText: LanguageManager().get('enter_here'),
             controller: _emailController,
             prefixIconPath: AppAssets.emailIcon,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty || !isValidEmail(value)) {
+                return LanguageManager().get('please_enter_valid_email_id');
+              }
+              return null;
+            },
           ),
 
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
@@ -881,7 +830,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
                 // );
                 // if (!isValid) return;
 
-                // _fetchAddPrimaryUser();
                 if (!isChecked) {
                   Fluttertoast.showToast(
                     msg: 'Please accept Terms and Conditions',
@@ -890,6 +838,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   );
                   return;
                 }
+
+                _fetchAddPrimaryUser();
               }
 
               // PrimaryRegisterBloc(
