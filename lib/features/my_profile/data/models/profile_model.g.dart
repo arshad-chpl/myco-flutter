@@ -247,38 +247,6 @@ Map<String, dynamic> _$EmployeementSkillToJson(EmployeementSkill instance) =>
       'insurance_expire_date': instance.insuranceExpireDate,
     };
 
-MyTeam _$MyTeamFromJson(Map<String, dynamic> json) => MyTeam(
-      userId: json['user_id'] as String?,
-      levelId: json['level_id'] as String?,
-      levelName: json['level_name'] as String?,
-      userFullName: json['user_full_name'] as String?,
-      userDesignation: json['user_designation'] as String?,
-      shortName: json['short_name'] as String?,
-      userProfilePic: json['user_profile_pic'] as String?,
-      isPresent: json['is_present'] as bool?,
-      statusView: json['status_view'] as String?,
-      isBreak: json['is_break'] as bool?,
-      leaveData: json['leave_data'] as List<dynamic>?,
-      isLeaveFull: json['is_leave_full'] as bool?,
-      isLeaveHalf: json['is_leave_half'] as bool?,
-    );
-
-Map<String, dynamic> _$MyTeamToJson(MyTeam instance) => <String, dynamic>{
-      'user_id': instance.userId,
-      'level_id': instance.levelId,
-      'level_name': instance.levelName,
-      'user_full_name': instance.userFullName,
-      'user_designation': instance.userDesignation,
-      'short_name': instance.shortName,
-      'user_profile_pic': instance.userProfilePic,
-      'is_present': instance.isPresent,
-      'status_view': instance.statusView,
-      'is_break': instance.isBreak,
-      'leave_data': instance.leaveData,
-      'is_leave_full': instance.isLeaveFull,
-      'is_leave_half': instance.isLeaveHalf,
-    };
-
 Personal _$PersonalFromJson(Map<String, dynamic> json) => Personal(
       memberDateOfBirth: json['member_date_of_birth'] == null
           ? null

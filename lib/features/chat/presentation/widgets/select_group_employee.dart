@@ -4,7 +4,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/chat/presentation/bloc/chat_bloc.dart';
+import 'package:myco_flutter/features/chat/presentation/bloc/chat_list_bloc/chat_bloc.dart';
 import 'package:myco_flutter/features/chat/presentation/widgets/creat_group_bottomsheet.dart';
 
 import 'package:myco_flutter/features/chat/presentation/widgets/employee_avatar.dart';
@@ -25,7 +25,7 @@ class SelectGroupEmp extends StatelessWidget {
     {'id': '5', 'department': 'HR', 'name': 'Kamal modi'},
   ];
   @override
-  Widget build(BuildContext context) => BlocBuilder<ChatBloc, ChatState>(
+  Widget build(BuildContext context) => BlocBuilder<ChatListBloc, ChatListState>(
     builder: (context, state) => Container(
       height: Responsive.getHeight(context) * 0.8,
       padding: EdgeInsets.only(

@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:myco_flutter/features/dashboard/data/models/my_unit_response.dart';
 import 'package:myco_flutter/features/my_profile/domain/entites/profile_entity.dart';
 
 part 'profile_model.g.dart';
@@ -433,73 +434,6 @@ class EmployeementSkill {
     insuranceNumber: insuranceNumber,
     insuranceCompanyName: insuranceCompanyName,
     insuranceExpireDate: insuranceExpireDate,
-  );
-
-}
-
-@JsonSerializable()
-class MyTeam {
-  @JsonKey(name: 'user_id')
-  String? userId;
-  @JsonKey(name: 'level_id')
-  String? levelId;
-  @JsonKey(name: 'level_name')
-  String? levelName;
-  @JsonKey(name: 'user_full_name')
-  String? userFullName;
-  @JsonKey(name: 'user_designation')
-  String? userDesignation;
-  @JsonKey(name: 'short_name')
-  String? shortName;
-  @JsonKey(name: 'user_profile_pic')
-  String? userProfilePic;
-  @JsonKey(name: 'is_present')
-  bool? isPresent;
-  @JsonKey(name: 'status_view')
-  String? statusView;
-  @JsonKey(name: 'is_break')
-  bool? isBreak;
-  @JsonKey(name: 'leave_data')
-  List<dynamic>? leaveData;
-  @JsonKey(name: 'is_leave_full')
-  bool? isLeaveFull;
-  @JsonKey(name: 'is_leave_half')
-  bool? isLeaveHalf;
-
-  MyTeam({
-    this.userId,
-    this.levelId,
-    this.levelName,
-    this.userFullName,
-    this.userDesignation,
-    this.shortName,
-    this.userProfilePic,
-    this.isPresent,
-    this.statusView,
-    this.isBreak,
-    this.leaveData,
-    this.isLeaveFull,
-    this.isLeaveHalf,
-  });
-
-  factory MyTeam.fromJson(Map<String, dynamic> json) => _$MyTeamFromJson(json);
-
-  Map<String, dynamic> toJson() => _$MyTeamToJson(this);
-
-  MyTeamEntity toEntity() => MyTeamEntity(
-    userId: userId,
-    levelId: levelId,
-    levelName: levelName,
-    userFullName: userFullName,
-    userDesignation: userDesignation,
-    shortName: shortName,
-    userProfilePic: userProfilePic,
-    isPresent: isPresent,
-    statusView: statusView,
-    isBreak: isBreak,
-    leaveData: leaveData ?? [],
-    isLeaveFull: isLeaveFull,
-    isLeaveHalf: isLeaveHalf,
   );
 
 }

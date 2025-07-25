@@ -4,10 +4,10 @@ import 'package:myco_flutter/features/my_profile/domain/entites/profile_entity.d
 import 'package:myco_flutter/features/my_profile/domain/repositories/my_profile_repository.dart';
 
 class GetProfileData{
-
   final MyProfileRepository repository;
-
   GetProfileData(this.repository);
 
-  Future<Either<Failure,ProfileEntity>> call() async=> await repository.getProfileData();
+  Future<Either<Failure,ProfileEntity>> getProileData(Map<String,dynamic> dataMap) async{
+    return await repository.getProfileData(dataMap);
+  }
 }

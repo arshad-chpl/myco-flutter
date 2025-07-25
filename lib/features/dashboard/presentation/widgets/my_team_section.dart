@@ -28,7 +28,7 @@ class MyTeamSection extends StatelessWidget {
       child: BorderContainerWraper(
         child: OverlappingPeopleCard(
           people: List.generate(
-            myTeam?.length ?? 0,
+            myTeam !=null && myTeam!.length > 4 ? 4 : myTeam?.length ?? 0,
             (index) => PersonData(
               firstName: myTeam?[index].userFullName ?? '',
               lastName: 'name',
