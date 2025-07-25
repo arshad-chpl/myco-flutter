@@ -24,6 +24,7 @@ class NewTextField extends StatelessWidget {
   final bool? isKey;
   final Widget? suffix;
   final Widget? prefix;
+  final int? minLines;
 
   const NewTextField({
     super.key,
@@ -41,9 +42,10 @@ class NewTextField extends StatelessWidget {
     this.onTap,
     this.controller,
     this.formFieldKey,
-    this.isKey=true,
+    this.isKey = true,
     this.suffix,
     this.prefix,
+    this.minLines,
   });
 
   @override
@@ -76,14 +78,14 @@ class NewTextField extends StatelessWidget {
       FormField<String>(
         key: formFieldKey,
         validator:
-        validator ??
+            validator ??
             (isRequired
                 ? (value) {
-              if (value == null || value.isEmpty) {
-                return 'This field is required';
-              }
-              return null;
-            }
+                    if (value == null || value.isEmpty) {
+                      return 'This field is required';
+                    }
+                    return null;
+                  }
                 : null),
         builder: (FormFieldState<String> field) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,11 +126,11 @@ class NewTextField extends StatelessWidget {
                         child: IgnorePointer(
                           ignoring: onTap != null,
                           child: TextFormField(
-                            minLines: 1,
+                            minLines: minLines??1,
                             maxLines: maxLines ?? 1,
                             style: TextStyle(
                               fontSize:
-                              16 * Responsive.getResponsiveText(context),
+                                  16 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w600,
                               color: AppTheme.getColor(context).onSurface,
                             ),
@@ -137,43 +139,45 @@ class NewTextField extends StatelessWidget {
                             keyboardType: keyboardType,
                             controller: controller,
                             decoration: InputDecoration(
-                              hintText: LanguageManager().get(hintText.toString()),
+                              hintText: LanguageManager().get(
+                                hintText.toString(),
+                              ),
                               suffixIcon: suffixIconPath == null
                                   ? suffix
                                   : suffixIconPath != null
                                   ? Padding(
-                                padding: EdgeInsets.only(
-                                  left:
-                                  8 *
-                                      Responsive.getResponsive(context),
-                                  right:
-                                  12 *
-                                      Responsive.getResponsive(context),
-                                ),
-                                child: SvgPicture.asset(
-                                  suffixIconPath!,
-                                  height:
-                                  0.022 *
-                                      Responsive.getHeight(context),
-                                ),
-                              )
+                                      padding: EdgeInsets.only(
+                                        left:
+                                            8 *
+                                            Responsive.getResponsive(context),
+                                        right:
+                                            12 *
+                                            Responsive.getResponsive(context),
+                                      ),
+                                      child: SvgPicture.asset(
+                                        suffixIconPath!,
+                                        height:
+                                            0.022 *
+                                            Responsive.getHeight(context),
+                                      ),
+                                    )
                                   : null,
                               suffixIconConstraints: suffixIconPath != null
                                   ? BoxConstraints(
-                                minHeight:
-                                0.022 * Responsive.getHeight(context),
-                                minWidth:
-                                (12 + 8) *
-                                    Responsive.getResponsive(
-                                      context,
-                                    ) +
-                                    0.022 * Responsive.getHeight(context),
-                              )
+                                      minHeight:
+                                          0.022 * Responsive.getHeight(context),
+                                      minWidth:
+                                          (12 + 8) *
+                                              Responsive.getResponsive(
+                                                context,
+                                              ) +
+                                          0.022 * Responsive.getHeight(context),
+                                    )
                                   : null,
                               filled: true,
                               hintStyle: TextStyle(
                                 fontSize:
-                                16 * Responsive.getResponsiveText(context),
+                                    16 * Responsive.getResponsiveText(context),
                                 fontWeight: FontWeight.w600,
                                 color: AppTheme.getColor(context).outline,
                               ),
@@ -223,6 +227,11 @@ class NewTextField extends StatelessWidget {
                                 ),
                                 borderRadius: BorderRadius.circular(
                                   12 * Responsive.getResponsive(context),
+                                ),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
                                 ),
                               ),
                             ),

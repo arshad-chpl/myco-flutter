@@ -6,6 +6,9 @@ import 'package:myco_flutter/core/router/modules/admin_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/assets_routes.dart';
 import 'package:myco_flutter/core/router/modules/chat_routes.dart';
 import 'package:myco_flutter/core/router/modules/dashboard_routes.dart';
+import 'package:myco_flutter/core/router/modules/initial_routes.dart';
+import 'package:myco_flutter/core/router/modules/lost_and_found.dart';
+import 'package:myco_flutter/core/router/modules/my_profile.dart';
 import 'package:myco_flutter/core/router/modules/employee_view_routes.dart';
 import 'package:myco_flutter/core/router/modules/initial_routes.dart';
 import 'package:myco_flutter/core/router/modules/leave_routes.dart';
@@ -29,7 +32,7 @@ import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart'
 import 'package:myco_flutter/features/splash/presentation/pages/splash_page.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-
+    
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,

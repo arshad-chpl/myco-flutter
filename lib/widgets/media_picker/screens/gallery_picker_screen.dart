@@ -12,7 +12,7 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/media_picker/bloc/gallery_picker_bloc/gallery_picker_bloc.dart';
 import 'package:myco_flutter/widgets/media_picker/bloc/gallery_picker_bloc/gallery_picker_event.dart';
 import 'package:myco_flutter/widgets/media_picker/bloc/gallery_picker_bloc/gallery_picker_state.dart';
-import 'package:myco_flutter/widgets/media_picker/utils/custom_crop_images.dart';
+import 'package:myco_flutter/widgets/media_picker/screens/custom_crop_images.dart';
 import 'package:myco_flutter/widgets/media_picker/widgets/gallery_picker_bottom_sheet.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_manager_image_provider/photo_manager_image_provider.dart';
