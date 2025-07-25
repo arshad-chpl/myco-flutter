@@ -34,90 +34,100 @@ class _VisitTemplateState extends State<VisitTemplate> {
   final TextEditingController branchTypeController = TextEditingController();
 
   String? selectedBranchType;
+
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-    padding: EdgeInsets.only(
-      bottom:
-          VariableBag.bottomSheetBottomPadding *
-          Responsive.getResponsive(context),
-      left:
-          VariableBag.bottomSheetLeftPadding *
-          Responsive.getResponsive(context),
-      right:
-          VariableBag.bottomSheetRightPadding *
-          Responsive.getResponsive(context),
-      top:
-          VariableBag.bottomSheetTopPadding * Responsive.getResponsive(context),
-    ),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing:
-          VariableBag.formContentSpacingVertical *
-          Responsive.getResponsive(context),
-      children: [
-        // row with title and icon
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: bottomInset > 0
+              ? bottomInset + 30
+              : VariableBag.bottomSheetBottomPadding *
+                    Responsive.getResponsive(context),
+          left:
+              VariableBag.bottomSheetLeftPadding *
+              Responsive.getResponsive(context),
+          right:
+              VariableBag.bottomSheetRightPadding *
+              Responsive.getResponsive(context),
+          top:
+              VariableBag.bottomSheetTopPadding *
+              Responsive.getResponsive(context),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing:
+              VariableBag.formContentSpacingVertical *
+              Responsive.getResponsive(context),
           children: [
-            CustomText(
-              'Visit Template',
-              fontWeight: FontWeight.w600,
-              fontSize: 16 * Responsive.getResponsiveText(context),
+            // row with title and icon
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomText(
+                  'Visit Template',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16 * Responsive.getResponsiveText(context),
+                ),
+                InkWell(
+                  onTap: () {
+                    context.pop();
+                  },
+                  child: SvgPicture.asset(
+                    AppAssets.arrowDoubleDown,
+                    fit: BoxFit.scaleDown,
+                  ),
+                ),
+              ],
             ),
-            InkWell(
+
+            /// Text field with label "Q1"
+            NewTextField(
+              label: 'Q1',
+              hintText: LanguageManager().get('type_here'),
+              prefixIconPath: AppAssets.note_favorite,
+              suffixIconPath: AppAssets.arrow_down,
+            ),
+
+            /// Custom dropdown to select branch
+            NewTextField(
+              isKey: true,
+              label: 'blocks_colon',
+              hintText: LanguageManager().get('select'),
+              prefixIconPath: AppAssets.assetData,
+              suffixIconPath: AppAssets.arrow_down,
+            ),
+
+            ///Submit button
+            MyCoButton(
+              boarderRadius:
+                  VariableBag.buttonBorderRadius *
+                  Responsive.getResponsive(context),
+              isShadowBottomLeft: true,
               onTap: () {
+                //use below code to open bottom sheet
+                // showModalBottomSheet(
+                //   context: context,
+                //   isScrollControlled: true,
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.vertical(
+                //       top: Radius.circular(
+                //         16 * Responsive.getResponsive(context),
+                //       ),
+                //     ),
+                //   ),
+                //   builder: (context) => const RemarkBottomSheet(),
+                // );
                 context.pop();
               },
-              child: SvgPicture.asset(
-                AppAssets.arrowDoubleDown,
-                fit: BoxFit.scaleDown,
-              ),
+              title: LanguageManager().get('submit'),
             ),
           ],
         ),
-
-        // Text field with label "Q1"
-        NewTextField(
-          label: 'Q1',
-          hintText: LanguageManager().get('type_here'),
-          prefixIconPath: AppAssets.note_favorite,
-          suffixIconPath: AppAssets.arrow_down,
-        ),
-
-        // Custom dropdown to select branch
-        NewTextField(
-          label: LanguageManager().get('blocks_colon'),
-          hintText: LanguageManager().get('select'),
-          prefixIconPath: AppAssets.assetData,
-          suffixIconPath: AppAssets.arrow_down,
-        ),
-
-        // Submit button
-        MyCoButton(
-          boarderRadius:
-              VariableBag.buttonBorderRadius *
-              Responsive.getResponsive(context),
-          isShadowBottomLeft: true,
-          onTap: () {
-            //use below code to open bottom sheet
-            // showModalBottomSheet(
-            //   context: context,
-            //   isScrollControlled: true,
-            //   shape: RoundedRectangleBorder(
-            //     borderRadius: BorderRadius.vertical(
-            //       top: Radius.circular(
-            //         16 * Responsive.getResponsive(context),
-            //       ),
-            //     ),
-            //   ),
-            //   builder: (context) => const RemarkBottomSheet(),
-            // );
-            context.pop();
-          },
-          title: LanguageManager().get('submit'),
-        ),
-      ],
-    ),
-  );
+      ),
+    );
+  }
 }

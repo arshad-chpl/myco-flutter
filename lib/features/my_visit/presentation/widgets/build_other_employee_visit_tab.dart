@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/reschedule_visit_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/date_selection_row.dart';
+import 'package:myco_flutter/features/work_allocation/presentation/widgets/common_row.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/get_common_row.dart';
+
 
 Widget buildOtherEmployeeVisitTab(
   BuildContext context,
@@ -117,32 +117,24 @@ Widget buildOtherEmployeeVisitTab(
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  getCommonRow(
-                    context,
+                  CommonRow(
                     title: 'Visit',
                     value: 'Physical',
-                    onTap: () {},
                     textColor: AppTheme.getColor(context).outline,
                   ),
-                  getCommonRow(
-                    context,
+                  CommonRow(
                     title: 'Visit Type',
                     value: 'Visit Type',
-                    onTap: () {},
                     textColor: AppTheme.getColor(context).outline,
                   ),
-                  getCommonRow(
-                    context,
+                  CommonRow(
                     title: 'Visit Purpose',
                     value: 'Visit Purpose',
-                    onTap: () {},
                     textColor: AppTheme.getColor(context).outline,
                   ),
-                  getCommonRow(
-                    context,
+                  CommonRow(
                     title: 'Address',
                     value: '5XJ6F9J, Haripura, Gujrat 394325,\nIndia',
-                    onTap: () {},
                     textColor: AppTheme.getColor(context).onSurface,
                   ),
                 ],

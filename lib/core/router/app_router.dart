@@ -17,8 +17,6 @@ import 'package:myco_flutter/features/admin_view/presentation/pages/admin_view_p
 import 'package:myco_flutter/features/company_info/presentation/bloc/company_info_bloc.dart';
 import 'package:myco_flutter/features/company_info/presentation/pages/company_info_page.dart';
 
-
-
 import 'package:myco_flutter/features/company_selector/presentation/bloc/company/company_bloc.dart';
 import 'package:myco_flutter/features/company_selector/presentation/pages/select_company_page.dart';
 import 'package:myco_flutter/features/dashboard/presentation/pages/my_profile_page.dart';
@@ -58,7 +56,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: RoutePaths.splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
+    initialLocation: RoutePaths
+        .splash, // Don't change this line keep it as is [RoutePaths.splash] rs 500 penalty if anyone changes it
     // initialLocation: RoutePaths.dashboard,
     observers: [
       // FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
@@ -74,7 +73,7 @@ class AppRouter {
             ),
             BlocProvider(
               create: (_) =>
-              GetIt.I<LanguageBloc>()..add(LoadLanguageToPreferences()),
+                  GetIt.I<LanguageBloc>()..add(LoadLanguageToPreferences()),
               lazy: false,
             ),
           ],
@@ -92,12 +91,12 @@ class AppRouter {
         name: RoutePaths.login,
         builder: (context, state) => const OtpVerifyDialog(),
       ),
+
       // GoRoute(
       //   path: RoutePaths.details,
       //   name: 'details',
       //   builder: (context, state) => const DetailsPage(),
       // ),
-
       GoRoute(
         path: RoutePaths.selectCompany,
         name: 'selectCompany',
@@ -200,7 +199,7 @@ class AppRouter {
         pageBuilder: (context, state) => MaterialPage(
           child: BlocProvider(
             create: (context) =>
-            GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
+                GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
             child: const FaceDetectionPage(),
           ),
         ),

@@ -69,6 +69,7 @@ class _EndVisitBottomSheetState extends State<EndVisitBottomSheet> {
             onTap: () {
               showModalBottomSheet(
                 context: context,
+                isScrollControlled: true,
                 builder: (context) => VisitTemplate(),
               );
             },

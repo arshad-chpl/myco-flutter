@@ -101,7 +101,6 @@ flutter:
     - assets/visit/
     - assets/media_picker/
     - assets/lost_and_found/
-    - assets/visit_svgs/
     - assets/svgs/visit/
     - assets/add_expense/
     - assets/dashboard/svgs/

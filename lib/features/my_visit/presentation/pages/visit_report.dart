@@ -18,7 +18,7 @@ class VisitReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //Custom app bar
+      ///Custom app bar
       appBar: CustomAppbar(
         leading: BackButton(),
         title: LanguageManager().get('visit_report'),
@@ -33,7 +33,7 @@ class VisitReport extends StatelessWidget {
               vertical: VariableBag.commonCardVerticalPadding,
             ),
 
-            //Common card
+            ///Visit Report Common Card
             child: CommonCard(
               borderRadius: VariableBag.commonCardBorderRadius,
               showBlackShadowInChild: true,
@@ -42,6 +42,7 @@ class VisitReport extends StatelessWidget {
                 onTap: () {
                   showModalBottomSheet(
                     context: context,
+                    isScrollControlled: true,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(
@@ -94,7 +95,7 @@ class VisitReport extends StatelessWidget {
                           child: CustomText(
                             LanguageManager().get('download_report'),
                             fontSize:
-                            12 * Responsive.getResponsiveText(context),
+                                12 * Responsive.getResponsiveText(context),
                             color: AppTheme.getColor(context).secondary,
                             decoration: TextDecoration.underline,
                             fontWeight: FontWeight.w700,
