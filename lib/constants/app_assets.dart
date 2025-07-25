@@ -90,6 +90,7 @@ class AppAssets {
   static const String result = '$svgsVisit/result.svg';
   static const String arrowDown = '$svgsPath/arrow_down.svg';
   static const String searchIcon = '$svgsPath/search_icon.svg';
+  static const String signUpUser = '$svgsPath/user.svg';
 
   // Svgs Take Order
   static const String offers = '$svgsTakeOrder/offers.svg';

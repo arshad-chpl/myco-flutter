@@ -16,14 +16,16 @@ Widget buildCustomSelector({
   required List<String> optionNames,
   required String defaultLabelKey, // This is our 'fieldKey'
   required String prefixIcon,
-  bool isRequired = true,
+   String? Function(String?)? validator,
+  bool? isRequired,
 }) => NewTextField(
     label: label,
     prefixIconPath: prefixIcon,
     suffixIconPath: AppAssets.downArrow,
     hintText: LanguageManager().get('select'),
-    isRequired: isRequired,// Prevent keyboard from appearing
+    isRequired: isRequired ?? false,// Prevent keyboard from appearing
     controller: TextEditingController(text: selectedName),
+    validator: validator,
     onTap: () {
       if (optionIds.isEmpty) {
         Fluttertoast.showToast(msg: 'No ${defaultLabelKey.replaceAll('_', ' ')} found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);

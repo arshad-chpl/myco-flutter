@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:badges/badges.dart' as badges;
@@ -41,7 +42,6 @@ class SignupFormPage extends StatefulWidget {
 }
 
 class _SignupFormPageState extends State<SignupFormPage> {
-
   String? blockNo;
   String? blockId;
   String? floorId;
@@ -74,7 +74,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
       from = args['from'] ?? '0';
       isAddMore = args['isAddMore'] ?? false;
       isAddMoreUnit = args['isAddMoreUnit'] ?? false;
-
     } else {
       // fallback if args is null
       companyId = '';
@@ -88,7 +87,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
   }
 
   String? selectedBranch;
-  String selectedGender = '';
+  String selectedGender = 'Male';
   String Gender = 'MALE';
 
   String selectedCountry = 'IND';
@@ -104,14 +103,15 @@ class _SignupFormPageState extends State<SignupFormPage> {
   //
 
   String profileImage = '';
-  String? selectedImage = '';
+  String selectedImage = '';
 
-  final  formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController departmentNumberController = TextEditingController();
+  final TextEditingController departmentNumberController =
+      TextEditingController();
   final TextEditingController joiningDateController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
 
@@ -136,48 +136,35 @@ class _SignupFormPageState extends State<SignupFormPage> {
   late List<String> shiftOptionIds = [];
   late List<String> shiftOptionNames = [];
 
-
   @override
   void initState() {
     super.initState();
-     _fetchBranchList();
+    _fetchBranchList();
   }
 
   void _fetchBranchList() {
-    context.read<CommonApiBloc>().add(LoadBranch(
-        companyId ?? '1',
-        '0'
-    ));
+    context.read<CommonApiBloc>().add(LoadBranch(companyId ?? '1', '0'));
   }
-
 
   void _fetchFloorUnitList() {
-    context.read<CommonApiBloc>().add(LoadDepartmentAndDesignation(
-        companyId ?? '1',
-        selectedBranchId
-    ));
+    context.read<CommonApiBloc>().add(
+      LoadDepartmentAndDesignation(companyId ?? '1', selectedBranchId),
+    );
   }
 
-
   void _fetchShiftList() {
-    context.read<CommonApiBloc>().add(LoadShift(
-        companyId ?? '1',
-        selectedDepartmentId
-    ));
+    context.read<CommonApiBloc>().add(
+      LoadShift(companyId ?? '1', selectedDepartmentId),
+    );
   }
 
   void _fetchImageDataApi(List<String> imgList) {
-    context.read<CommonApiBloc>().add(UploadAttachments(
-        true,
-        imgList
-    ));
+    context.read<CommonApiBloc>().add(UploadAttachments(true, imgList));
   }
 
-
   Future<void> _fetchAddPrimaryUser() async {
-
     final String platform = Platform.isAndroid ? 'android' : 'ios';
-    final String? languageId =  await preferenceManager.getLanguageId();
+    final String? languageId = await preferenceManager.getLanguageId();
 
     final dataMap = {
       'addPrimaryUser': 'addPrimaryUser',
@@ -190,15 +177,17 @@ class _SignupFormPageState extends State<SignupFormPage> {
       'designation': selectedDesignationName,
       'user_first_name': _firstNameController.text,
       'user_last_name': _lastNameController.text,
-      'user_full_name': '${_firstNameController.text} ${_lastNameController.text}',
+      'user_full_name':
+          '${_firstNameController.text} ${_lastNameController.text}',
       'user_mobile': phoneNumberController.text,
       'user_email': _emailController.text,
       'user_profile_pic': profileImage,
       'user_type': '0',
-      'user_token': 'cIkYCvpYR9yMnlfHzsDZYi:APA91bH-uXuHf2w4xvrhn4KrTAG8BGG8ai8FhR7IgS3et5J3UQtLMuL9j2UCYxOyMC3BQJJTHPgg5LX1JVeehELDfa4aUX278e7FJ6zsyDe8iPvnDwjM8CU',
+      'user_token':
+          'cIkYCvpYR9yMnlfHzsDZYi:APA91bH-uXuHf2w4xvrhn4KrTAG8BGG8ai8FhR7IgS3et5J3UQtLMuL9j2UCYxOyMC3BQJJTHPgg5LX1JVeehELDfa4aUX278e7FJ6zsyDe8iPvnDwjM8CU',
       'device': platform,
       'gender': Gender,
-      'country_code': '+91'/*selectedCountry*/, //
+      'country_code': '+91' /*selectedCountry*/, //
       'unit_name': '',
       'newUserByAdmin': isAddByAdmin! ? '1' : '0',
       'joining_date': joiningDateController.text,
@@ -216,7 +205,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
     context.read<PrimaryRegisterBloc>().add(LoadAddPrimaryUser(dataMap));
   }
 
-
   @override
   Widget build(BuildContext context) {
     Responsive.init(context);
@@ -233,7 +221,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     CustomLoaderDialog.show(context);
                   }
 
-                  if (state is BlockApiSuccess || state is FloorUnitApiSuccess || state is ShiftApiSuccess || state is UploadImagePdfApiSuccess ||
+                  if (state is BlockApiSuccess ||
+                      state is FloorUnitApiSuccess ||
+                      state is ShiftApiSuccess ||
+                      state is UploadImagePdfApiSuccess ||
                       state is CommonApiError) {
                     Navigator.of(context, rootNavigator: true).pop();
                   }
@@ -241,71 +232,109 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   if (state is BlockApiSuccess) {
                     branchOptionIds = [];
                     branchOptionNames = [];
-                    branchOptionIds = state.blockList.blocks!.map((block) => block.blockId ?? '').toList();
-                    branchOptionNames = state.blockList.blocks!.map((block) => block.blockName ?? '').toList();
+                    branchOptionIds = state.blockList.blocks!
+                        .map((block) => block.blockId ?? '')
+                        .toList();
+                    branchOptionNames = state.blockList.blocks!
+                        .map((block) => block.blockName ?? '')
+                        .toList();
                   }
 
                   if (state is FloorUnitApiSuccess) {
                     floorUnitOptionIds = [];
                     floorUnitOptionNames = [];
-                    floorUnitOptionIds = state.floorUnitList.designation!.map((d) => d.designationId ?? '').toList();
-                    floorUnitOptionNames = state.floorUnitList.designation!.map((d) => d.designationName ?? '').toList();
+                    floorUnitOptionIds = state.floorUnitList.designation!
+                        .map((d) => d.designationId ?? '')
+                        .toList();
+                    floorUnitOptionNames = state.floorUnitList.designation!
+                        .map((d) => d.designationName ?? '')
+                        .toList();
 
                     departmentOptionIds = [];
                     departmentOptionNames = [];
-                    departmentOptionIds = state.floorUnitList.floors!.map((f) => f.floorId ?? '').toList();
-                    departmentOptionNames = state.floorUnitList.floors!.map((f) => f.floorName ?? '').toList();
-
+                    departmentOptionIds = state.floorUnitList.floors!
+                        .map((f) => f.floorId ?? '')
+                        .toList();
+                    departmentOptionNames = state.floorUnitList.floors!
+                        .map((f) => f.floorName ?? '')
+                        .toList();
 
                     subDepartmentOptionIds = [];
                     subDepartmentOptionNames = [];
-                    subDepartmentOptionIds = state.floorUnitList.subDepartmentList!.map((sd) => sd.subDepartmentId ?? '').toList();
-                    subDepartmentOptionNames = state.floorUnitList.subDepartmentList!.map((sd) => sd.subDepartmentName ?? '').toList();
+                    subDepartmentOptionIds = state
+                        .floorUnitList
+                        .subDepartmentList!
+                        .map((sd) => sd.subDepartmentId ?? '')
+                        .toList();
+                    subDepartmentOptionNames = state
+                        .floorUnitList
+                        .subDepartmentList!
+                        .map((sd) => sd.subDepartmentName ?? '')
+                        .toList();
                   }
 
                   if (state is ShiftApiSuccess) {
                     shiftOptionIds = [];
                     shiftOptionNames = [];
-                    shiftOptionIds = state.shiftList.shift!.map((s) => s.shiftTimeId ?? '').toList();
-                    shiftOptionNames = state.shiftList.shift!.map((s) => s.shiftTimeView ?? '').toList();
+                    shiftOptionIds = state.shiftList.shift!
+                        .map((s) => s.shiftTimeId ?? '')
+                        .toList();
+                    shiftOptionNames = state.shiftList.shift!
+                        .map((s) => s.shiftTimeView ?? '')
+                        .toList();
                   }
 
                   if (state is UploadImagePdfApiSuccess) {
                     final List<String>? dataList = state.imgPdfList.imgNameArr;
-                    final String image = (dataList != null && dataList.isNotEmpty)
+                    final String image =
+                        (dataList != null && dataList.isNotEmpty)
                         ? dataList.join(',')
                         : '';
                     profileImage = image.toString();
                     selectedImage = '${state.imgPdfList.baseUrl}$image';
                   }
                 },
-
-
               ),
               BlocListener<PrimaryRegisterBloc, PrimaryRegisterState>(
                 listener: (context, state) async {
-
                   if (state is PrimaryRegisterLoading) {
                     CustomLoaderDialog.show(context);
                   }
 
-                  if (state is AddPrimaryUserApiSuccess || state is PrimaryRegisterError) {
+                  if (state is AddPrimaryUserApiSuccess ||
+                      state is PrimaryRegisterError) {
                     Navigator.of(context, rootNavigator: true).pop();
                   }
 
                   if (state is AddPrimaryUserApiSuccess) {
-                    Fluttertoast.showToast(msg: state.response.message ?? '', backgroundColor: Colors.green, textColor: Colors.white,);
+                    Fluttertoast.showToast(
+                      msg: state.response.message ?? '',
+                      backgroundColor: Colors.green,
+                      textColor: Colors.white,
+                    );
                     if (isAddMore != true) {
                       if (from == '1') {
-                        preferenceManager.setKeyValueBoolean(VariableBag.REQUEST_EMPLOYEE, true);
+                        preferenceManager.setKeyValueBoolean(
+                          VariableBag.REQUEST_EMPLOYEE,
+                          true,
+                        );
                         Navigator.of(context).pop();
                       } else {
                         if (state.response.isApprove == true) {
-                          preferenceManager.setKeyValueBoolean(VariableBag.REGISTRATION_REQUEST_IS_APPROVE, true,);
+                          preferenceManager.setKeyValueBoolean(
+                            VariableBag.REGISTRATION_REQUEST_IS_APPROVE,
+                            true,
+                          );
                           Navigator.of(context).pop();
                         } else {
-                          preferenceManager.setKeyValueBoolean(VariableBag.REGISTRATION_REQUEST_IS_APPROVE, false,);
-                          await preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, state.response.userId ?? '',);
+                          preferenceManager.setKeyValueBoolean(
+                            VariableBag.REGISTRATION_REQUEST_IS_APPROVE,
+                            false,
+                          );
+                          await preferenceManager.setKeyValueString(
+                            VariableBag.registrationRequestPendingUserId,
+                            state.response.userId ?? '',
+                          );
 
                           context.go(RoutePaths.contactAdmin);
                         }
@@ -314,7 +343,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       Navigator.of(context).pop();
                     }
                   }
-
                 },
               ),
               BlocListener<MyFormBloc, MyFormState>(
@@ -361,12 +389,17 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
             child: BlocBuilder<CommonApiBloc, CommonApiState>(
               builder: (context, state) {
-
                 if (state is CommonApiError) {
-                  Fluttertoast.showToast(msg: state.message, backgroundColor: Colors.redAccent, textColor: Colors.white,);
+                  Fluttertoast.showToast(
+                    msg: state.message,
+                    backgroundColor: Colors.redAccent,
+                    textColor: Colors.white,
+                  );
                 }
                 return Padding(
-                  padding: EdgeInsets.all(20 * Responsive.getResponsive(context)),
+                  padding: EdgeInsets.all(
+                    20 * Responsive.getResponsive(context),
+                  ),
                   child: setUi(),
                 );
               },
@@ -376,7 +409,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
       ),
     );
   }
-
 
   Widget setUi() => SingleChildScrollView(
     child: Form(
@@ -388,7 +420,9 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
           Center(
             child: badges.Badge(
-              badgeStyle: const badges.BadgeStyle(badgeColor: Colors.transparent),
+              badgeStyle: const badges.BadgeStyle(
+                badgeColor: Colors.transparent,
+              ),
               position: badges.BadgePosition.bottomEnd(
                 bottom: -22 * Responsive.getResponsive(context),
                 end: -15 * Responsive.getResponsive(context),
@@ -400,6 +434,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     isCameraShow: true,
                     isGalleryShow: true,
                     context: context,
+                    isCropImage: true,
+                    maxCount: 1,
                   );
 
                   if (files == null || files.isEmpty) return;
@@ -423,7 +459,16 @@ class _SignupFormPageState extends State<SignupFormPage> {
               ),
             ),
           ),
+          SizedBox(height: 0.02 * Responsive.getHeight(context)),
 
+          if (selectedImage.isEmpty)
+            Center(
+              child: CustomText(
+                'Please Select Profile',
+                color: AppColors.error,
+                fontSize: 14 * Responsive.getDashboardResponsiveText(context),
+              ),
+            ),
           SizedBox(height: 0.030 * Responsive.getHeight(context)),
 
           buildCustomSelector(
@@ -434,7 +479,14 @@ class _SignupFormPageState extends State<SignupFormPage> {
             optionIds: branchOptionIds,
             optionNames: branchOptionNames,
             defaultLabelKey: 'branch',
+            isRequired: true,
             prefixIcon: AppAssets.branchIcon,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Pre select Branch';
+              }
+              return null;
+            },
             // **REMOVED**: onSelected callback
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
@@ -447,7 +499,14 @@ class _SignupFormPageState extends State<SignupFormPage> {
             optionIds: departmentOptionIds,
             optionNames: departmentOptionNames,
             defaultLabelKey: 'department',
+            isRequired: true,
             prefixIcon: AppAssets.departmentIcon,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Pre select Department';
+              }
+              return null;
+            },
             // **REMOVED**: onSelected callback
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
@@ -462,6 +521,13 @@ class _SignupFormPageState extends State<SignupFormPage> {
               optionNames: subDepartmentOptionNames,
               defaultLabelKey: 'sub department',
               prefixIcon: AppAssets.subDepartmentIcon,
+              isRequired: true,
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Pre select subDepartment';
+                }
+                return null;
+              },
               // **REMOVED**: onSelected callback
             ),
             SizedBox(height: 0.015 * Responsive.getHeight(context)),
@@ -488,11 +554,17 @@ class _SignupFormPageState extends State<SignupFormPage> {
             optionIds: floorUnitOptionIds,
             optionNames: floorUnitOptionNames,
             defaultLabelKey: 'designation',
+            isRequired: true,
             prefixIcon: AppAssets.designationIcon,
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Pre select Branch';
+              }
+              return null;
+            },
             // **REMOVED**: onSelected callback
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
-
 
           NewTextField(
             label: LanguageManager().get('joining_date'),
@@ -504,9 +576,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
             enabled: true,
 
             validator: (value) {
-              if(value!.isEmpty){
+              if (value == null || value.trim().isEmpty) {
                 return 'Please enter first name';
               }
+              return null;
             },
 
             onTap: () async {
@@ -521,7 +594,9 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   child: DialDatePickerWidget(
                     initialDate: DateTime.now(),
                     onSubmit: (selectedDate) {
-                      final String date = DateFormat('dd-MM-yy',).format(selectedDate);
+                      final String date = DateFormat(
+                        'dd-MM-yy',
+                      ).format(selectedDate);
                       joiningDateController.text = date;
                       Navigator.pop(context);
                     },
@@ -537,17 +612,20 @@ class _SignupFormPageState extends State<SignupFormPage> {
           Row(
             children: [
               Expanded(
-                child: NewTextField(
-                  label: LanguageManager().get('first_name'),
-                  hintText: LanguageManager().get('enter_here'),
-                  controller: _firstNameController,
-                  // Add validation if needed
-                  isRequired: true,
+                child: SizedBox(
+                  child: NewTextField(
+                    label: LanguageManager().get('first_name'),
+                    hintText: LanguageManager().get('enter_here'),
+                    controller: _firstNameController,
+                    // Add validation if needed
+                    isRequired: true,
                     validator: (value) {
-                      if(value!.isEmpty){
+                      if (value == null || value.trim().isEmpty) {
                         return 'Please enter first name';
                       }
+                      return null;
                     },
+                  ),
                 ),
               ),
               SizedBox(width: 0.02 * Responsive.getWidth(context)),
@@ -559,9 +637,10 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   // Add validation if needed
                   isRequired: true,
                   validator: (value) {
-                    if(value!.isEmpty){
+                    if (value == null || value.trim().isEmpty) {
                       return 'Please enter last name';
                     }
+                    return null;
                   },
                 ),
               ),
@@ -569,7 +648,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
           ),
 
           SizedBox(height: 0.020 * Responsive.getHeight(context)),
-
 
           CustomText(
             LanguageManager().get('gender'),
@@ -604,11 +682,11 @@ class _SignupFormPageState extends State<SignupFormPage> {
                 gender: LanguageManager().get('female'),
                 selectedGender: selectedGender,
                 textStyle: TextStyle(
-                fontFamily: 'Gilroy-semiBold',
-                fontSize: 14 * Responsive.getResponsiveText(context),
-                fontWeight: FontWeight.w600,
-                color: AppTheme.getColor(context).onSurfaceVariant,
-              ),
+                  fontFamily: 'Gilroy-semiBold',
+                  fontSize: 14 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.getColor(context).onSurfaceVariant,
+                ),
                 onSelect: (val) {
                   setState(() {
                     selectedGender = val;
@@ -623,7 +701,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
           SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
-          if ('240' == preferenceManager.getCountryId()) ...[
+          if ('240' == preferenceManager.getCountryId().toString()) ...[
             NewTextField(
               label: LanguageManager().get('number_of_dependent'),
               controller: departmentNumberController,
@@ -632,11 +710,13 @@ class _SignupFormPageState extends State<SignupFormPage> {
               isRequired: true,
 
               validator: (value) {
-                if('240' == preferenceManager.getCountryId() && value!.isEmpty){
+                if (value != null ||
+                    '240' == preferenceManager.getCountryId() &&
+                        value!.isEmpty) {
                   return 'Please enter number of department';
                 }
+                return null;
               },
-
             ),
 
             SizedBox(height: 0.020 * Responsive.getHeight(context)),
@@ -651,7 +731,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
           SizedBox(height: 0.005 * Responsive.getHeight(context)),
           PhoneNumberField(
             validation: (value) {
-              if(value!.isEmpty){
+              if (value!.isEmpty) {
                 return 'Please enter Mobile Number';
               }
             },
@@ -677,7 +757,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
           SizedBox(height: 0.020 * Responsive.getHeight(context)),
 
-           NewTextField(
+          NewTextField(
             label: LanguageManager().get('email_id'),
             hintText: LanguageManager().get('enter_here'),
             controller: _emailController,
@@ -701,7 +781,9 @@ class _SignupFormPageState extends State<SignupFormPage> {
                 checkColor: AppTheme.getColor(context).primary,
                 height: 0.026 * Responsive.getHeight(context),
                 width: 0.056 * Responsive.getWidth(context),
-                unCheckedBackground: AppTheme.getColor(context).primaryContainer,
+                unCheckedBackground: AppTheme.getColor(
+                  context,
+                ).primaryContainer,
               ),
               SizedBox(width: 0.015 * Responsive.getWidth(context)),
               SizedBox(
@@ -723,7 +805,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
                       ),
 
                       TextSpan(
-                        text: '${LanguageManager().get('terms_and_condition')} ',
+                        text:
+                            '${LanguageManager().get('terms_and_condition')} ',
                         style: TextStyle(
                           color: AppTheme.getColor(context).primary,
                           fontSize: 12 * Responsive.getResponsiveText(context),
@@ -734,7 +817,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
                               context: context,
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
-                              builder: (_) => const BottomTermAndCondition(url : 'url'),
+                              builder: (_) =>
+                                  const BottomTermAndCondition(url: 'url'),
                             );
                           },
                       ),
@@ -759,7 +843,8 @@ class _SignupFormPageState extends State<SignupFormPage> {
                               context: context,
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
-                              builder: (_) => const BottomTermAndCondition(url : 'url'),
+                              builder: (_) =>
+                                  const BottomTermAndCondition(url: 'url'),
                             );
                           },
                       ),
@@ -777,29 +862,35 @@ class _SignupFormPageState extends State<SignupFormPage> {
               fontWeight: FontWeight.bold,
             ),
             onTap: () {
+              if (selectedImage.isEmpty) {
+                return;
+              }
+              if (formKey.currentState!.validate()) {
+                // final bool isValid = FormValidator.validateAll(
+                //   selectedBranchId: selectedBranchId,
+                //   selectedDepartmentId: selectedDepartmentId,
+                //   selectedDesignationId: selectedDesignationId,
+                //   joiningDate: joiningDateController.text,
+                //   phoneNumber: phoneNumberController,
+                //   firstNameController: _firstNameController,
+                //   lastNameController: _lastNameController,
+                //   emailController: _emailController,
+                //   profileImage: profileImage,
+                //   departmentNumberController: departmentNumberController,
+                //   preferenceManager: preferenceManager,
+                // );
+                // if (!isValid) return;
 
-          //    if(formKey.currentState!.validate()){
-                final bool isValid = FormValidator.validateAll(
-                  selectedBranchId: selectedBranchId,
-                  selectedDepartmentId: selectedDepartmentId,
-                  selectedDesignationId: selectedDesignationId,
-                  joiningDate: joiningDateController.text,
-                  phoneNumber: phoneNumberController,
-                  firstNameController: _firstNameController,
-                  lastNameController: _lastNameController,
-                  emailController: _emailController,
-                  profileImage: profileImage,
-                  departmentNumberController: departmentNumberController,
-                  preferenceManager: preferenceManager,
-                );
-                if (!isValid) return;
-
-                _fetchAddPrimaryUser();
-
-
-          //    }
-
-
+                // _fetchAddPrimaryUser();
+                if (!isChecked) {
+                  Fluttertoast.showToast(
+                    msg: 'Please accept Terms and Conditions',
+                    backgroundColor: Colors.red,
+                    textColor: Colors.white,
+                  );
+                  return;
+                }
+              }
 
               // PrimaryRegisterBloc(
               //   registerUseCase: GetIt.I<PrimaryRegisterUseCase>(),
@@ -874,7 +965,39 @@ class _SignupFormPageState extends State<SignupFormPage> {
       ),
     ),
   );
+
+
+  int? _currentFieldErrorIndex;
+ 
+  void _validateFieldByField() {
+    final controllers = [
+    _emailController,
+_firstNameController , 
+_lastNameController, 
+departmentNumberController, 
+joiningDateController, 
+phoneNumberController
+    ];
+ 
+    for (int i = 0; i < controllers.length; i++) {
+      if (controllers[i].text.trim().isEmpty) {
+        setState(() {
+          _currentFieldErrorIndex = i;
+        });
+        formKey.currentState!.validate(); // trigger rebuild
+        return;
+      }
+    }
+ 
+    setState(() {
+      _currentFieldErrorIndex = null;
+    });
+ 
+    log('All fields are valid. Proceed to submit.');
+  }
 }
+
+
 
 mixin FormValidator {
   static String? validateNotEmpty(String value, String fieldName) {
@@ -897,37 +1020,78 @@ mixin FormValidator {
     required TextEditingController departmentNumberController,
     required PreferenceManager preferenceManager,
   }) {
-
-    if (/*!isAddByAdmin && !isAddMoreUnit && */profileImage.isEmpty) {
-      Fluttertoast.showToast(msg: 'Please select profile picture', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+    if ( /*!isAddByAdmin && !isAddMoreUnit && */ profileImage.isEmpty) {
+      Fluttertoast.showToast(
+        msg: 'Please select profile picture',
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+      );
       return false;
     }
     if (selectedBranchId.isEmpty) {
-      Fluttertoast.showToast(msg: 'Please select your Branch', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+      Fluttertoast.showToast(
+        msg: 'Please select your Branch',
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+      );
       return false;
     } else if (selectedDepartmentId.isEmpty) {
-      Fluttertoast.showToast(msg: 'Please select your Department', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+      Fluttertoast.showToast(
+        msg: 'Please select your Department',
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+      );
       return false;
     } else if (selectedDesignationId.isEmpty) {
-      Fluttertoast.showToast(msg: 'Please select your Designation', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+      Fluttertoast.showToast(
+        msg: 'Please select your Designation',
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+      );
       return false;
     } else if (joiningDate.isEmpty) {
-      Fluttertoast.showToast(msg: 'Please select Joining Date', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+      Fluttertoast.showToast(
+        msg: 'Please select Joining Date',
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+      );
       return false;
     } else if (firstNameController.text.isEmpty) {
-      Fluttertoast.showToast(msg: 'Please enter first name', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+      Fluttertoast.showToast(
+        msg: 'Please enter first name',
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+      );
       return false;
     } else if (lastNameController.text.isEmpty) {
-      Fluttertoast.showToast(msg: 'Please enter last name', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+      Fluttertoast.showToast(
+        msg: 'Please enter last name',
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+      );
       return false;
-    } else if ('240' == preferenceManager.getCountryId() && departmentNumberController.text.isEmpty) {
-      Fluttertoast.showToast(msg: 'Please enter number of department', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+    } else if ('240' == preferenceManager.getCountryId() &&
+        departmentNumberController.text.isEmpty) {
+      Fluttertoast.showToast(
+        msg: 'Please enter number of department',
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+      );
       return false;
-    } else if (emailController.text.toString().isNotEmpty && !isValidEmail(emailController.text)) {
-      Fluttertoast.showToast(msg: 'Please enter valid email address', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+    } else if (emailController.text.toString().isNotEmpty &&
+        !isValidEmail(emailController.text)) {
+      Fluttertoast.showToast(
+        msg: 'Please enter valid email address',
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+      );
       return false;
     } else if (phoneNumber.text.length < 7 || phoneNumber.text.length > 15) {
-      Fluttertoast.showToast(msg: 'Please enter Mobile Number', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+      Fluttertoast.showToast(
+        msg: 'Please enter Mobile Number',
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+      );
       return false;
     }
 

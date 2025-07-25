@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
 
 class FramedProfileImage extends StatelessWidget {
   final String? imagePath;
@@ -15,7 +18,7 @@ class FramedProfileImage extends StatelessWidget {
     this.size = 120,
     this.borderWidth = 4,
     this.borderColor = const Color(0xFF2F648E),
-    this.defaultAsset = 'assets/sign_in/contact_frame.png',
+    this.defaultAsset = AppAssets.signUpUser,
   });
 
   @override
@@ -42,11 +45,14 @@ class FramedProfileImage extends StatelessWidget {
         fit: BoxFit.cover,
       );
     } else {
-      imageWidget = Image.asset(
-        defaultAsset,
-        width: size - borderWidth * 2,
-        height: size - borderWidth * 2,
-        fit: BoxFit.cover,
+      imageWidget = Padding(
+        padding: EdgeInsets.all(10 * Responsive.getResponsive(context)),
+        child: SvgPicture.asset(
+          defaultAsset,
+          width: size - borderWidth * 2,
+          height: size - borderWidth * 2,
+          fit: BoxFit.cover,
+        ),
       );
     }
 
@@ -54,7 +60,8 @@ class FramedProfileImage extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: AppTheme.getColor(context).surface,
+        color: AppTheme.getColor(context).primary,
+
         border: Border.all(color: borderColor, width: borderWidth),
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
