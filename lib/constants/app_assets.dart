@@ -39,6 +39,19 @@ class AppAssets {
   static const String imageGalleryExport = '$imagesPath/gallery-export.png';
   static const String imageNoAssets = '$imagesPath/noAssets.png';
 
+
+  static const String signUp = '$basePath/sign_in';
+
+  //sign up
+  static const String joiningDate = '$signUp/joining_date_icon.svg';
+  static const String designationIcon = '$signUp/designation_icon.svg';
+  static const String branchIcon = '$signUp/branch_icon.svg';
+  static const String departmentIcon = '$signUp/department_icon.svg';
+  static const String subDepartmentIcon = '$signUp/sub_department_icon.svg';
+  static const String clockIcon = '$signUp/clock_icon.svg';
+  static const String emailIcon = '$signUp/email_icon.svg';
+  static const String unitNumberIcon = '$signUp/unit_number_icon.svg';
+
   //Svgs
   static const String downArrowBottomSheet =
       '$svgsPath/down_arrow_bottomsheet.svg';

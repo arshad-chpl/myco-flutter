@@ -21,6 +21,7 @@ class PhoneNumberField extends StatelessWidget {
   final TextStyle? hintTextStyle;
   final double? textFieldHeight;
   final double? textFieldWidth;
+  final FormFieldValidator<String>?  validation;
  
   const PhoneNumberField({
     super.key,
@@ -34,6 +35,7 @@ class PhoneNumberField extends StatelessWidget {
     this.hintTextStyle,
     this.textFieldHeight,
     this.textFieldWidth,
+    this.validation,
   });
  
   @override

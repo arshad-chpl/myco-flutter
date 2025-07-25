@@ -127,6 +127,19 @@ class PreferenceManager {
     return prefs.getString(key) ?? '';
   }
 
+    // Set boolean value
+    Future<void> setKeyValueBoolean(String key, bool value) async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool(key, value);
+    }
+
+
+// Get boolean value
+  Future<bool> getKeyValueBoolean(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(key) ?? false; // default to false if null
+  }
+
   // ====== Custom Methods ======
 
   Future<void> setUserId(String value) async {
