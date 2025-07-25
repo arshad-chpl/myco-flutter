@@ -9,6 +9,8 @@ class AssetsTextFieldWidget extends StatelessWidget {
   final String image;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final VoidCallback? onTap;
+  final bool? isRequired;
   const AssetsTextFieldWidget({
     required this.label,
     required this.image,
@@ -16,6 +18,8 @@ class AssetsTextFieldWidget extends StatelessWidget {
     super.key,
     this.controller,
     this.validator,
+    this.onTap,
+    this.isRequired,
   });
 
   @override
@@ -30,6 +34,8 @@ class AssetsTextFieldWidget extends StatelessWidget {
         maxLines: 1,
         prefixIconPath: image,
         validator: validator,
+        isRequired: isRequired ?? false,
+        onTap: onTap,
       ),
       SizedBox(
         height:

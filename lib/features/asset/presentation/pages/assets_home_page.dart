@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
@@ -25,10 +23,8 @@ import 'package:myco_flutter/features/asset/presentation/widgets/asset_simmer_wi
 import 'package:myco_flutter/features/asset/presentation/widgets/assets_bottom_sheet.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/assets_holder_bottom_sheet.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/past_assets_card.dart';
-import 'package:myco_flutter/features/language_selector/model/language_response.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
-import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field.dart';
 
@@ -93,18 +89,27 @@ class _AssetsHomePageState extends State<AssetsHomePage> {
         ),
         child: CustomScrollView(
           slivers: [
-            // Search Field
-            searchField(bloc),
-
             // Pinned TabBar
             tabBar(bloc),
+
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height:
+                    VariableBag.tabBarAfterSpace *
+                    Responsive.getResponsive(context),
+              ),
+            ),
 
             // Asset List
             ..._buildAssetListByTab(context),
 
             // Extra spacing at the bottom
             SliverToBoxAdapter(
-              child: SizedBox(height: 0.02 * Responsive.getHeight(context)),
+              child: SizedBox(
+                height:
+                    VariableBag.formContentSpacingVertical *
+                    Responsive.getResponsive(context),
+              ),
             ),
           ],
         ),
@@ -112,97 +117,89 @@ class _AssetsHomePageState extends State<AssetsHomePage> {
     );
   }
 
-  Widget searchField(AssetsBloc bloc) => SliverAppBar(
-    expandedHeight:
-        (VariableBag.searchFiledAfterSpace + 45) *
-        Responsive.getResponsive(context),
-    backgroundColor: AppTheme.getColor(context).surface,
-    floating: true,
-    snap: true,
-    automaticallyImplyLeading: false,
-    titleSpacing: 0,
-    title: MyCoTextfield(
-      key: ValueKey(bloc.state.selectedIndex),
-      hintText: LanguageManager().get('search'),
-      maxLines: 1,
-      textAlignment: TextAlign.start,
-      hintTextStyle: AppTheme.getTextStyle(
-        context,
-      ).labelLarge!.copyWith(color: AppColors.textSecondary),
-      preFixImage: AppAssets.imageSearch,
-      isSuffixIconOn: true,
-      suFixImage: AppAssets.imageScanner,
-      suFixImageWidth: 25,
-      onTap1: () => context.push('/qr-scanner'),
-      contentPadding: EdgeInsets.only(
-        top: 0.012 * Responsive.getHeight(context),
-      ),
-      onChanged: (value) {
-        context.read<AssetsBloc>().add(SearchAssetsEvent(value));
-      },
-      boarderRadius: 12 * Responsive.getResponsive(context),
-    ),
-  );
-
   Widget tabBar(AssetsBloc bloc) => SliverPersistentHeader(
     pinned: true,
     delegate: _SliverTabBarDelegate(
       height:
-          (VariableBag.tabBarAfterSpace + 45) *
+          (VariableBag.searchFiledAfterSpace + 120) *
           Responsive.getResponsive(context),
-      child: Padding(
-        padding: EdgeInsets.only(
-          bottom:
-              VariableBag.tabBarAfterSpace * Responsive.getResponsive(context) -
-              10 * Responsive.getResponsive(context),
-        ),
-        child: BlocBuilder<AssetsBloc, AssetsState>(
-          builder: (context, state) => MyCustomTabBar(
-            isShadowBottomLeft: true,
-            tabBarBorderColor: AppTheme.getColor(context).outline,
-            selectedBgColors: [
-              AppTheme.getColor(context).secondary,
-              AppTheme.getColor(context).primary,
-              const Color(0xFF08A4BB),
-            ],
-            selectedIndex: state.selectedIndex,
-            tabs: [
-              'Active Assets (${state is AssetsLoaded ? state.activeAssets.length : 0})',
-              'Past Assets (${state is AssetsLoaded ? state.pastAssets.length : 0})',
-              'All Assets (${state is AssetsLoaded ? state.allAssets.length : 0})',
-            ],
-            onTabChange: (int index) {
-              bloc.add(TabChanged(index));
-            },
-            unselectedTextStyles: [
-              TextStyle(
-                fontSize: 10 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).secondary,
-                fontFamily: 'Gilroy-Bold',
-                fontWeight: FontWeight.w700,
-              ),
-              TextStyle(
-                fontSize: 10 * Responsive.getResponsiveText(context),
-                color: AppTheme.getColor(context).primary,
-                fontFamily: 'Gilroy-Bold',
-                fontWeight: FontWeight.w700,
-              ),
-              TextStyle(
-                fontSize: 10 * Responsive.getResponsiveText(context),
-                color: const Color(0xFF08A4BB),
-                fontFamily: 'Gilroy-Bold',
-                fontWeight: FontWeight.w700,
-              ),
-            ],
-            selectedTextStyle: TextStyle(
-              fontSize: 10 * Responsive.getResponsiveText(context),
-              color: Colors.white,
-              fontFamily: 'Gilroy-Bold',
-              fontWeight: FontWeight.w700,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          MyCoTextfield(
+            key: ValueKey(bloc.state.selectedIndex),
+            hintText: LanguageManager().get('search'),
+            maxLines: 1,
+            textAlignment: TextAlign.start,
+            hintTextStyle: AppTheme.getTextStyle(
+              context,
+            ).labelLarge!.copyWith(color: AppColors.textSecondary),
+            preFixImage: AppAssets.imageSearch,
+            isSuffixIconOn: true,
+            suFixImage: AppAssets.imageScanner,
+            suFixImageWidth: 25,
+            onTap1: () => context.push('/qr-scanner'),
+            contentPadding: EdgeInsets.only(
+              top: 0.012 * Responsive.getHeight(context),
             ),
-            unselectedBorderAndTextColor: AppTheme.getColor(context).outline,
+            onChanged: (value) {
+              context.read<AssetsBloc>().add(SearchAssetsEvent(value));
+            },
+            boarderRadius: 12 * Responsive.getResponsive(context),
           ),
-        ),
+          SizedBox(
+            height:
+                VariableBag.searchFiledAfterSpace *
+                Responsive.getResponsive(context),
+          ),
+          BlocBuilder<AssetsBloc, AssetsState>(
+            builder: (context, state) => MyCustomTabBar(
+              isShadowBottomLeft: true,
+              tabBarBorderColor: AppTheme.getColor(context).outline,
+              selectedBgColors: [
+                AppTheme.getColor(context).secondary,
+                AppTheme.getColor(context).primary,
+                const Color(0xFF08A4BB),
+              ],
+              selectedIndex: state.selectedIndex,
+              tabs: [
+                'Active Assets (${state is AssetsLoaded ? state.activeAssets.length : 0})',
+                'Past Assets (${state is AssetsLoaded ? state.pastAssets.length : 0})',
+                'All Assets (${state is AssetsLoaded ? state.allAssets.length : 0})',
+              ],
+              onTabChange: (int index) {
+                bloc.add(TabChanged(index));
+              },
+              unselectedTextStyles: [
+                TextStyle(
+                  fontSize: 10 * Responsive.getResponsiveText(context),
+                  color: AppTheme.getColor(context).secondary,
+                  fontFamily: 'Gilroy-Bold',
+                  fontWeight: FontWeight.w700,
+                ),
+                TextStyle(
+                  fontSize: 10 * Responsive.getResponsiveText(context),
+                  color: AppTheme.getColor(context).primary,
+                  fontFamily: 'Gilroy-Bold',
+                  fontWeight: FontWeight.w700,
+                ),
+                TextStyle(
+                  fontSize: 10 * Responsive.getResponsiveText(context),
+                  color: const Color(0xFF08A4BB),
+                  fontFamily: 'Gilroy-Bold',
+                  fontWeight: FontWeight.w700,
+                ),
+              ],
+              selectedTextStyle: TextStyle(
+                fontSize: 10 * Responsive.getResponsiveText(context),
+                color: Colors.white,
+                fontFamily: 'Gilroy-Bold',
+                fontWeight: FontWeight.w700,
+              ),
+              unselectedBorderAndTextColor: AppTheme.getColor(context).outline,
+            ),
+          ),
+        ],
       ),
     ),
   );
@@ -228,7 +225,7 @@ class _AssetsHomePageState extends State<AssetsHomePage> {
       SliverPersistentHeader(
         pinned: true,
         delegate: _SliverTabBarDelegate(
-          height: 50 * Responsive.getResponsive(context),
+          height: 65 * Responsive.getResponsive(context),
           child: Padding(
             padding: EdgeInsets.only(
               bottom: 10.0 * Responsive.getResponsive(context),
@@ -547,32 +544,6 @@ class AllAssetsListPage extends StatelessWidget {
               //     "language_id": "1",
               //     "floor_id": "1",
               //     "old_items": "1",
-              //   };
-
-              //   final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
-              //   final response =
-              //       await GetIt.I<ApiClient>(
-              //         instanceName: VariableBag.masterAPICall,
-              //       ).postDynamic(
-              //         'https://dev.my-company.app/india/employeeMobileApi/assets_controller.php',
-              //         encryptedBody,
-              //       );
-              //   // log(GzipUtil.decryptAES(response));
-              //   log(jsonEncode(json.decode(GzipUtil.decryptAES(response))));
-
-              //   // log(json.decode(GzipUtil.decryptAES(response)));
-              // },
-              // onTap: () async {
-              //   final dataMap = {
-              //     'getOtherAssets': 'getOtherAssets',
-              //     'user_id': '1679',
-              //     'society_id': '1',
-              //     'language_id': '1',
-              //     'floor_id': '1',
-              //     'assets_category_id': '',
-              //     'brand_name': '',
-              //     'filter': '1',
-              //     'view_other_assets': '2',
               //   };
 
               //   final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));

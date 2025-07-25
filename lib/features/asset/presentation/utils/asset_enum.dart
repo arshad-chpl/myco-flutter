@@ -1,0 +1,15 @@
+enum AddAssetFieldKey {
+  category,
+  itemName,
+  brandName,
+  location,
+  itemCode,
+  description,
+  purchaseDate,
+  sno,
+  price,
+  assetCredential,
+  branch,
+  department,
+  custodian,
+}

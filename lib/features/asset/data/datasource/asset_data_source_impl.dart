@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:myco_flutter/core/encryption/gzip_util.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/features/asset/data/datasource/asset_data_source.dart';
+import 'package:myco_flutter/features/asset/data/models/add_asset_model.dart';
 import 'package:myco_flutter/features/asset/data/models/all_assets_model.dart';
 import 'package:myco_flutter/features/asset/data/models/asset_model.dart';
 
@@ -14,19 +15,16 @@ class AssetsRemoteDataSourceImpl extends AssetsRemoteDataSource {
 
   @override
   Future<AssetModel> getAssets(Map<String, dynamic> dataMap) async {
-    log(dataMap.toString(), name: 'dataamap');
     final encryptedBody = GzipUtil.encryptAES(json.encode(dataMap));
 
-    log(encryptedBody);
     final response = await apiClient.postDynamic(
       'assets_controller.php',
       encryptedBody,
     );
 
-    final descript = GzipUtil.decryptAES(response);
+    final decrypt = GzipUtil.decryptAES(response);
     log(name: 'response', response);
-    log(name: 'decript', descript);
-    return AssetModel.fromJson(json.decode(descript));
+    return AssetModel.fromJson(json.decode(decrypt));
   }
 }
 
@@ -39,11 +37,29 @@ class AllAssetsRemoteDataSourceImpl extends AllAssetsRemoteDataSource {
   Future<AllAssetsModel> getAllAssets(Map<String, dynamic> dataMap) async {
     final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
     final response = await apiClient.postDynamic(
-      'https://dev.my-company.app/india/employeeMobileApi/assets_controller.php',
+      'assets_controller.php',
       encryptedBody,
     );
 
     log(GzipUtil.decryptAES(response));
     return AllAssetsModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
+  }
+}
+
+class AddAssetDataSourceImpl extends AddAssetDataSource {
+  final ApiClient apiClient;
+
+  AddAssetDataSourceImpl({required this.apiClient});
+
+  @override
+  Future<AddAssetModel> getAddAsset(Map<String, dynamic> dataMap) async {
+    final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
+    final response = await apiClient.postDynamic(
+      'assets_controller.php',
+      encryptedBody,
+    );
+
+    log(GzipUtil.decryptAES(response));
+    return AddAssetModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 }
