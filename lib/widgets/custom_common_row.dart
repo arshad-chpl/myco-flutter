@@ -7,7 +7,6 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 class CommonRow extends StatelessWidget {
   final String title;
   final String value;
-  final VoidCallback onTap;
   final Widget? valueWidget;
   final double? size;
   final Color? textColor;
@@ -17,7 +16,6 @@ class CommonRow extends StatelessWidget {
     Key? key,
     required this.title,
     required this.value,
-    required this.onTap,
     this.valueWidget,
     this.size,
     this.textColor,
@@ -42,18 +40,15 @@ class CommonRow extends StatelessWidget {
       SizedBox(width: 0.03 * Responsive.getWidth(context)),
       Expanded(
         flex: 5,
-        child: InkWell(
-          onTap: onTap,
-          child:
-              valueWidget ??
-              CustomText(
-                value,
-                decoration: decoration,
-                color: textColor ?? AppTheme.getColor(context).onSurface,
-                fontWeight: FontWeight.w500,
-                fontSize: size ?? 13 * Responsive.getResponsiveText(context),
-              ),
-        ),
+        child:
+            valueWidget ??
+            CustomText(
+              value,
+              decoration: decoration,
+              color: textColor ?? AppTheme.getColor(context).onSurface,
+              fontWeight: FontWeight.w500,
+              fontSize: size ?? 13 * Responsive.getResponsiveText(context),
+            ),
       ),
     ],
   );

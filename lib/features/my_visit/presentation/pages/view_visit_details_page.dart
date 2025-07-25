@@ -58,7 +58,6 @@ class ViewVisitDetailsPage extends StatelessWidget {
                         CommonRow(
                           title: 'contact_person_name',
                           value: 'Jashvant Jatoliya',
-                          onTap: () {},
                         ),
                         CommonRow(
                           title: LanguageManager().get('contact_person_mobile'),
@@ -83,24 +82,21 @@ class ViewVisitDetailsPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                          onTap: () {},
+
                           value: '',
                         ),
                         CommonRow(
                           title: LanguageManager().get('visit_status'),
                           value: 'Approved',
                           textColor: AppTheme.getColor(context).secondary,
-                          onTap: () {},
                         ),
                         CommonRow(
                           title: LanguageManager().get('visit_type'),
                           value: 'Test visit',
-                          onTap: () {},
                         ),
                         CommonRow(
                           title: LanguageManager().get('visit_purpose'),
                           value: 'Feature check',
-                          onTap: () {},
                         ),
                         CommonRow(
                           title: LanguageManager().get('address'),
@@ -121,7 +117,6 @@ class ViewVisitDetailsPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          onTap: () {},
                           value: '',
                         ),
                         SizedBox(height: 0.007 * Responsive.getHeight(context)),
@@ -196,17 +191,14 @@ class ViewVisitDetailsPage extends StatelessWidget {
                         CommonRow(
                           title: LanguageManager().get('end_visit_remark'),
                           value: 'sdfsdasgas',
-                          onTap: () {},
                         ),
                         CommonRow(
                           title: LanguageManager().get('end_visit_area'),
                           value: 'sdfsdasgas',
-                          onTap: () {},
                         ),
                         CommonRow(
                           title: LanguageManager().get('end_visit_catalogue'),
                           value: 'sdfsdasgas',
-                          onTap: () {},
                         ),
                         CommonRow(
                           title: LanguageManager().get('contact_person_number'),
@@ -231,7 +223,6 @@ class ViewVisitDetailsPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                          onTap: () {},
                           value: '',
                         ),
                       ],
