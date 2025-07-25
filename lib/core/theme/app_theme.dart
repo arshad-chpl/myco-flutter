@@ -44,8 +44,7 @@ class AppTheme {
       primaryContainer: AppColors.lightPurple, //0xFFF4F3FF
       onTertiary: AppColors.darksecondary, //0xFF2FBBA4
       onTertiaryContainer: AppColors.spanishYellow,
-      inversePrimary: AppColors.primaryLight//0xFF2F648E
-
+      inversePrimary: AppColors.primaryLight, //0xFF2F648E
     ),
   );
 
@@ -66,6 +65,7 @@ class AppTheme {
 
       surface: AppColors.darkbackgroundPrimary, //0xFFFAFAFF
       surfaceContainer: AppColors.lightTeal, //0xFFEEF7FD
+      surfaceContainerHigh: AppColors.containerHighDark,
       surfaceBright: AppColors.black,
       error: AppColors.error, //0xFFE53935
       onPrimary: AppColors.white, //0xFFFFFFFF

@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
+import 'package:myco_flutter/features/payslip/presentation/bloc/payslip_bloc.dart';
 import 'package:myco_flutter/features/payslip/presentation/bloc/ctc_bloc/ctc_bloc.dart';
 import 'package:myco_flutter/features/payslip/presentation/bloc/payslip_bloc/payslip_bloc.dart';
 import 'package:myco_flutter/features/payslip/presentation/bloc/payslip_details_bloc/payslip_details_bloc.dart';

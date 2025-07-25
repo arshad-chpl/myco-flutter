@@ -112,6 +112,9 @@ class _PayslipDetailState extends State<PayslipDetail> {
                           SizedBox(
                             height: 0.02 * Responsive.getHeight(context),
                           ),
+                          SizedBox(
+                            height: 0.02 * Responsive.getHeight(context),
+                          ),
 
                           Padding(
                             padding: EdgeInsets.symmetric(

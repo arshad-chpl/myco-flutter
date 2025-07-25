@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CustomSlider extends StatefulWidget {
@@ -47,7 +48,7 @@ class _CustomSliderState extends State<CustomSlider>
   List<ImageProvider<Object>> get _imageProviders {
     return widget.imagePaths.map<ImageProvider<Object>>((path) {
       if (path.startsWith('http://') || path.startsWith('https://')) {
-        return NetworkImage(path);
+        return CachedNetworkImageProvider(path);
       } else {
         return AssetImage(path);
       }
@@ -121,24 +122,23 @@ class _CustomSliderState extends State<CustomSlider>
                 padding: const EdgeInsets.all(5.0),
                 child: GestureDetector(
                   onTap: () {
-                    widget.isPreviewEnabled == true
-                        ? showDialog(
-                            context: context,
-                            barrierColor: Colors.black.withValues(alpha: 0.8),
-                            builder: (_) => AlertDialog(
-                              backgroundColor: Colors.transparent,
-                              insetPadding: const EdgeInsets.all(10),
-                              contentPadding: EdgeInsets.zero,
-                              content: _ImagePreviewDialog(
-                                isButton: widget.isButton,
-                                imagePath: widget
-                                    .imagePaths[_currentIndex % _images.length],
-                              ),
-                            ),
-                          )
-                        : null;
+                    if (widget.isPreviewEnabled) {
+                      showDialog(
+                        context: context,
+                        barrierColor: Colors.black.withOpacity(0.8),
+                        builder: (_) => AlertDialog(
+                          backgroundColor: Colors.transparent,
+                          insetPadding: const EdgeInsets.all(10),
+                          contentPadding: EdgeInsets.zero,
+                          content: _ImagePreviewDialog(
+                            isButton: widget.isButton,
+                            imagePath:
+                                widget.imagePaths[_currentIndex % _images.length],
+                          ),
+                        ),
+                      );
+                    }
                   },
-
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Stack(
@@ -153,7 +153,7 @@ class _CustomSliderState extends State<CustomSlider>
                             right: 0,
                             height: 40,
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.black12,
@@ -196,7 +196,7 @@ class _CustomSliderState extends State<CustomSlider>
                       color: isActive
                           ? (widget.activeIndicatorColor ?? Colors.white)
                           : (widget.inactiveIndicatorColor ??
-                                Colors.white.withValues(alpha: 0.4)),
+                              Colors.white.withOpacity(0.4)),
                     ),
                   );
                 }),
@@ -216,10 +216,6 @@ class _ImagePreviewDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageProvider = imagePath.startsWith('http')
-        ? NetworkImage(imagePath)
-        : AssetImage(imagePath) as ImageProvider;
-
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Container(
@@ -230,7 +226,16 @@ class _ImagePreviewDialog extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 16 / 9,
-              child: Image(image: imageProvider, fit: BoxFit.contain),
+              child: imagePath.startsWith('http')
+                  ? CachedNetworkImage(
+                      imageUrl: imagePath,
+                      fit: BoxFit.contain,
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    )
+                  : Image.asset(imagePath, fit: BoxFit.contain),
             ),
             const SizedBox(height: 10),
             if (isButton == true)

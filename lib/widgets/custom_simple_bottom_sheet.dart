@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
 
-Future<String?> showCustomSimpleBottomSheet({
+Future<dynamic> showCustomSimpleBottomSheet({
   required BuildContext context,
   required List<Map<String, String>> dataList,
   required String heading,
-  String? selectedId,
-  ImageProvider? icon,
+  dynamic selectedId,
+  String? icon,
   String? searchHint,
   String? btnTitle,
-}) => showModalBottomSheet<String>(
+  bool isMultipleSelection = false,
+  bool isCloseButton = false,
+}) => showModalBottomSheet<dynamic>(
   context: context,
   isScrollControlled: true,
   backgroundColor: Colors.transparent,
@@ -26,17 +31,17 @@ Future<String?> showCustomSimpleBottomSheet({
     icon: icon,
     searchHint: searchHint,
     btnTitle: btnTitle,
+    isMultipleSelection: isMultipleSelection,
+    isCloseButton: isCloseButton,
   ),
 );
 
 class _CustomSimpleBottomSheet extends StatefulWidget {
   final List<Map<String, String>> dataList;
   final String heading;
-  final bool isKey;
-  final String? selectedId;
-  final String? searchHint;
-  final String? btnTitle;
-  final ImageProvider? icon;
+  final dynamic selectedId;
+  final String? searchHint, btnTitle, icon;
+  final bool isMultipleSelection, isCloseButton;
 
   const _CustomSimpleBottomSheet({
     required this.dataList,
@@ -45,7 +50,8 @@ class _CustomSimpleBottomSheet extends StatefulWidget {
     this.searchHint,
     this.btnTitle,
     this.icon,
-    this.isKey = false,
+    this.isMultipleSelection = false,
+    this.isCloseButton = false,
   });
 
   @override
@@ -55,14 +61,31 @@ class _CustomSimpleBottomSheet extends StatefulWidget {
 
 class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
   String searchQuery = '';
-  String? selectedItemId;
+  Map<String, String>? selectedItem;
+  List<Map<String, String>> selectedItems = [];
   late List<Map<String, String>> filteredList;
+  bool isAllSelected = false;
 
   @override
   void initState() {
     super.initState();
-    selectedItemId = widget.selectedId;
     filteredList = List.from(widget.dataList);
+
+    if (widget.isMultipleSelection) {
+      if (widget.selectedId is List<String>) {
+        final ids = List<String>.from(widget.selectedId);
+        selectedItems = widget.dataList
+            .where((item) => ids.contains(item['id']))
+            .toList();
+      }
+    } else {
+      if (widget.selectedId is String) {
+        selectedItem = widget.dataList.firstWhere(
+          (item) => item['id'] == widget.selectedId,
+          orElse: () => {},
+        );
+      }
+    }
   }
 
   void _onSearch(String query) {
@@ -71,26 +94,66 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
       filteredList = widget.dataList
           .where(
             (item) => (item['name'] ?? '').toLowerCase().contains(
-          query.toLowerCase(),
-        ),
-      )
+              query.toLowerCase(),
+            ),
+          )
           .toList();
+    });
+  }
+
+  void _toggleSelection(Map<String, String> item) {
+    setState(() {
+      final exists = selectedItems.any((e) => e['id'] == item['id']);
+      if (exists) {
+        selectedItems.removeWhere((e) => e['id'] == item['id']);
+        isAllSelected = false;
+      } else {
+        selectedItems.add(item);
+        if (selectedItems.length == filteredList.length) {
+          isAllSelected = true;
+        }
+      }
+    });
+  }
+
+  void _selectAll() {
+    setState(() {
+      if (isAllSelected) {
+        selectedItems.clear();
+        isAllSelected = false;
+      } else {
+        selectedItems = List.from(filteredList);
+        isAllSelected = true;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) => Container(
-    height: Responsive.getHeight(context) * 0.625,
+    height: Responsive.getHeight(context) * 0.75,
     width: Responsive.getWidth(context),
-    padding: EdgeInsets.all(16 * Responsive.getResponsive(context)),
-    decoration: const BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+    padding: EdgeInsets.only(
+      top:
+          VariableBag.bottomSheetTopPadding * Responsive.getResponsive(context),
+      bottom:
+          VariableBag.bottomSheetBottomPadding *
+          Responsive.getResponsive(context),
+      left:
+          VariableBag.bottomSheetLeftPadding *
+          Responsive.getResponsive(context),
+      right:
+          VariableBag.bottomSheetRightPadding *
+          Responsive.getResponsive(context),
+    ),
+    decoration: BoxDecoration(
+      color: AppTheme.getColor(context).surface,
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(12 * Responsive.getResponsive(context)),
+      ),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Title + Optional Icon
         Row(
           children: [
             if (widget.heading.isNotEmpty)
@@ -98,123 +161,212 @@ class _CustomSimpleBottomSheetState extends State<_CustomSimpleBottomSheet> {
                 child: CustomText(
                   LanguageManager().get(widget.heading),
                   fontWeight: FontWeight.w700,
-                  fontSize: 18 * Responsive.getResponsiveText(context),
-                  color: AppColors.textPrimary,
+                  fontSize: 16 * Responsive.getResponsiveText(context),
+                  color: AppTheme.getColor(context).onSurface,
                 ),
               ),
-            if (widget.icon != null)
-              GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image(
-                    image: widget.icon!,
-                    width: 0.04 * Responsive.getWidth(context),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+            IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: SvgPicture.asset(
+                widget.icon ?? AppAssets.downArrowBottomSheet,
+                width: Responsive.isTablet(context)
+                    ? 0.03 * Responsive.getWidth(context)
+                    : 0.06 * Responsive.getWidth(context),
+                fit: BoxFit.scaleDown,
               ),
+            ),
           ],
         ),
-
-        SizedBox(height: 12 * Responsive.getResponsive(context)),
-
-        // Search field
-        MyCoTextfield(
-          prefix: Image.asset('assets/take_order/search-normal.png', scale: 20),
-          hintText: widget.searchHint ?? 'Search',
-          hintTextStyle: TextStyle(
-            fontSize: 14 * Responsive.getResponsiveText(context),
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-          ),
-          textInputType: TextInputType.text,
-          textAlignment: TextAlign.left,
-          boarderRadius: 10,
-          contentPadding: EdgeInsets.all(
-            10 * Responsive.getResponsive(context),
-          ),
-          onChanged: _onSearch,
+        SizedBox(
+          height: Responsive.isTablet(context)
+              ? 0.006 * Responsive.getHeight(context)
+              : 0.009 * Responsive.getHeight(context),
         ),
-
+        CustomSearchField(hintText: 'search', onChanged: _onSearch),
         SizedBox(height: 12 * Responsive.getResponsive(context)),
 
-        // List of items
+        if (widget.isMultipleSelection && filteredList.length > 1)
+          InkWell(
+            onTap: _selectAll,
+            child: Container(
+              margin: EdgeInsets.symmetric(
+                vertical: 6 * Responsive.getResponsive(context),
+              ),
+              padding: EdgeInsets.symmetric(
+                vertical: 10 * Responsive.getResponsive(context),
+                horizontal: 16 * Responsive.getResponsive(context),
+              ),
+              decoration: BoxDecoration(
+                color: isAllSelected
+                    ? AppTheme.getColor(context).surfaceContainer
+                    : AppTheme.getColor(context).surface,
+                borderRadius: BorderRadius.circular(
+                  12 * Responsive.getResponsive(context),
+                ),
+                border: Border.all(
+                  color: AppTheme.getColor(context).primary,
+                  width: isAllSelected ? 2 : 1,
+                ),
+              ),
+              child: Center(
+                child: CustomText(
+                  isAllSelected ? 'unselect_all' : 'select_all',
+                  isKey: true,
+                  textAlign: TextAlign.center,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14 * Responsive.getResponsiveText(context),
+                  color: isAllSelected
+                      ? AppColors.textPrimary
+                      : AppTheme.getColor(context).onSurface,
+                ),
+              ),
+            ),
+          ),
+
         Expanded(
-          child: ListView.builder(
-            itemCount: filteredList.length,
-            itemBuilder: (context, index) {
-              final item = filteredList[index];
-              final id = item['id'];
-              final name = item['name'] ?? '';
-              final isSelected = id == selectedItemId;
-
-              if (id == null || name.isEmpty) return const SizedBox.shrink();
-
-              return Container(
-                margin: EdgeInsets.symmetric(
-                  vertical: 6 * Responsive.getResponsive(context),
-                ),
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? AppTheme.getColor(context).primary
-                      : Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: AppTheme.getColor(context).primary.withOpacity(0.3),
-                  ),
-                ),
-                child: InkWell(
-                  onTap: () {
-                    setState(() {
-                      selectedItemId = id;
-                    });
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 10 * Responsive.getResponsive(context),
-                      horizontal: 16 * Responsive.getResponsive(context),
-                    ),
-                    decoration: BoxDecoration(
-                      color: isSelected
-                          ? AppTheme.getColor(context).surfaceContainer
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(11),
+          child: filteredList.isEmpty
+              ? Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(
+                      16.0 * Responsive.getResponsive(context),
                     ),
                     child: CustomText(
-                      name,
-                      textAlign: TextAlign.center,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14 * Responsive.getResponsiveText(context),
-                      color: AppColors.textPrimary,
+                      'No matching results found',
+                      fontSize: 16 * Responsive.getResponsiveText(context),
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.getColor(context).onSurface,
                     ),
                   ),
+                )
+              : ListView.builder(
+                  itemCount: filteredList.length,
+                  itemBuilder: (context, index) {
+                    final item = filteredList[index];
+                    final id = item['id'];
+                    final name = item['name'] ?? '';
+                    if (id == null || name.isEmpty) {
+                      return const SizedBox.shrink();
+                    }
+
+                    final isSelected = widget.isMultipleSelection
+                        ? selectedItems.any((e) => e['id'] == id)
+                        : selectedItem != null && selectedItem!['id'] == id;
+
+                    return Container(
+                      height: Responsive.isTablet(context)
+                          ? 0.10 * Responsive.getHeight(context)
+                          : 0.045 * Responsive.getHeight(context),
+                      margin: EdgeInsets.symmetric(
+                        vertical: 0.005 * Responsive.getHeight(context),
+                      ),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? AppColors.lightTeal
+                            : AppTheme.getColor(context).surface,
+                        borderRadius: BorderRadius.circular(
+                          12 * Responsive.getResponsive(context),
+                        ),
+                        border: Border.all(
+                          color: AppTheme.getColor(context).primary,
+                          width: isSelected ? 2 : 1,
+                        ),
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          if (widget.isMultipleSelection) {
+                            _toggleSelection(item);
+                          } else {
+                            setState(() {
+                              selectedItem = item;
+                            });
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10 * Responsive.getResponsive(context),
+                            horizontal: 16 * Responsive.getResponsive(context),
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(11),
+                          ),
+                          child: CustomText(
+                            name,
+                            textAlign: TextAlign.center,
+                            fontWeight: FontWeight.w700,
+                            fontSize:
+                                14 * Responsive.getResponsiveText(context),
+                            color: isSelected
+                                ? AppColors.textPrimary
+                                : AppTheme.getColor(context).onSurface,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
         ),
+        SizedBox(height: 0.01 * Responsive.getHeight(context)),
 
-        SizedBox(height: Responsive.getResponsive(context) * 0.16),
-
-        // Submit button
-        MyCoButton(
-
-          title: LanguageManager().get(widget.btnTitle ?? 'Submit'),
-          // title: widget.btnTitle ?? 'Select',
-          boarderRadius: 50,
-          height: 0.05 * Responsive.getHeight(context),
-          isShadowBottomLeft: true,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w500,
-          onTap: () {
-            if (selectedItemId != null) {
-              Navigator.pop(context, selectedItemId!);
-            } else {
-              Navigator.pop(context);
-            }
-          },
-        ),
+        widget.isCloseButton
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MyCoButton(
+                    title: LanguageManager().get('close'),
+                    textStyle: TextStyle(
+                      color: AppTheme.getColor(context).primary,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16 * Responsive.getResponsiveText(context),
+                    ),
+                    boarderRadius: 50 * Responsive.getResponsive(context),
+                    height: 0.05 * Responsive.getHeight(context),
+                    width: 0.42 * Responsive.getWidth(context),
+                    isShadowBottomLeft: true,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                    backgroundColor: AppTheme.getColor(context).onPrimary,
+                    onTap: () => Navigator.pop(context),
+                    wantBorder: false,
+                  ),
+                  MyCoButton(
+                    title: LanguageManager().get(widget.btnTitle ?? 'submit'),
+                    boarderRadius: 50 * Responsive.getResponsive(context),
+                    height: 0.05 * Responsive.getHeight(context),
+                    width: 0.42 * Responsive.getWidth(context),
+                    isShadowBottomLeft: true,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w500,
+                    onTap: () {
+                      if (widget.isMultipleSelection) {
+                        Navigator.pop(context, selectedItems);
+                      } else if (selectedItem != null) {
+                        Navigator.pop(context, selectedItem);
+                      } else {
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                ],
+              )
+            : MyCoButton(
+                title: LanguageManager().get(widget.btnTitle ?? 'submit'),
+                boarderRadius: 50,
+                height: Responsive.isTablet(context)
+                    ? 0.10 * Responsive.getHeight(context)
+                    : 0.05 * Responsive.getHeight(context),
+                isShadowBottomLeft: true,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w500,
+                onTap: () {
+                  if (widget.isMultipleSelection) {
+                    Navigator.pop(context, selectedItems);
+                  } else if (selectedItem != null) {
+                    Navigator.pop(context, selectedItem);
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
       ],
     ),
   );

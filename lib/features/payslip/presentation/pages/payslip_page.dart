@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -22,8 +24,14 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 
 // ignore: must_be_immutable
 class PayslipPage extends StatefulWidget {
+class PayslipPage extends StatefulWidget {
   PayslipPage({super.key});
 
+  @override
+  State<PayslipPage> createState() => _PayslipPageState();
+}
+
+class _PayslipPageState extends State<PayslipPage> {
   @override
   State<PayslipPage> createState() => _PayslipPageState();
 }
@@ -436,6 +444,12 @@ class OtherEarnings extends StatelessWidget {
     required String numberOfPayoutLeaves,
     required String leavePayoutAmount,
   }) => Container(
+  Container getCommonCardBottomWidget(
+    BuildContext context, {
+    required String leaveTypeName,
+    required String numberOfPayoutLeaves,
+    required String leavePayoutAmount,
+  }) => Container(
     padding: EdgeInsets.symmetric(
       horizontal: 0.04 * Responsive.getWidth(context),
       vertical: 0.01 * Responsive.getHeight(context),
@@ -446,6 +460,7 @@ class OtherEarnings extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomText(
+              leaveTypeName,
               leaveTypeName,
               fontSize: 15 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w700,
@@ -465,11 +480,14 @@ class OtherEarnings extends StatelessWidget {
             CustomText(
               'total_leave_days'
               ': $numberOfPayoutLeaves',
+              'total_leave_days'
+              ': $numberOfPayoutLeaves',
               // 'Total Leaves Day: 0.50',
               fontSize: 15 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,
             ),
             CustomText(
+              leavePayoutAmount,
               leavePayoutAmount,
               fontSize: 15 * Responsive.getResponsiveText(context),
               fontWeight: FontWeight.w500,

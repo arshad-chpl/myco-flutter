@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/bloc/take_order_bloc.dart';
@@ -248,14 +252,14 @@ class DistributorVisitorPage extends StatelessWidget {
                     context.pushNamed(RoutePaths.takeOrder);
                   },
                 ),
-                getCommonColumn(
-                  context,
-                  imagePath: AppAssets.orderHistory,
-                  name: 'order_history',
-                  onTap: () {
-                    context.pushNamed(RoutePaths.orderHistory);
-                  },
-                ),
+                // getCommonColumn(
+                //   context,
+                //   imagePath: AppAssets.orderHistory,
+                //   name: 'order_history',
+                //   onTap: () {
+                //     context.pushNamed(RoutePaths.orderHistory);
+                //   },
+                // ),  //show error in assets
                 getCommonColumn(
                   context,
                   imagePath: AppAssets.noOrder,

@@ -26,24 +26,27 @@ Future<void> initNetworkModule(GetIt sl) async {
   //   userMobile.toString(),
   // );
 
-await refreshApiServiceCompany(sl);
+  await refreshApiServiceCompany(sl);
 }
 
 Future<void> refreshApiServiceCompany(GetIt sl) async {
   final preference = sl<PreferenceManager>();
   final companyId = await preference.getCompanyId();
-  
+
   // TODO: currently static userID and Mobile, need to change later
-  final userId = preference.getUserId();
-  final userMobile = preference.getUserMobile();
+  final userId = await preference.getUserId();
+  final userMobile = await preference.getUserMobileNo();
   var baseUrl = await preference.getBaseUrl();
-  final password = Util.getCurrentPassword(
-    companyId.toString(),
-    userId,
-    userMobile.toString(),
+  print(
+    'UserID: $userId \n userMobile: $userMobile \n companyId: $companyId \n baseUrl: $baseUrl',
   );
-    final credentials = base64Encode(utf8.encode('$userId:$password'));
-    // final Dio dioWithAuth= createDio(credentials);
+  final password = Util.getCurrentPassword(
+    companyId?.toString() ?? '',
+    userId?.toString() ?? '',
+    userMobile?.toString() ?? '7016864065',
+  );
+  final credentials = base64Encode(utf8.encode('$userId:$password'));
+  // final Dio dioWithAuth= createDio(credentials);
   // sl.registerLazySingleton(() => createDio(credentials));
   // sl.registerLazySingleton(() => ApiClient(sl()));
 
@@ -58,7 +61,7 @@ Future<void> refreshApiServiceCompany(GetIt sl) async {
     sl,
     instanceName: VariableBag.masterAPICall,
   );
-if (baseUrl==null) return;
+  if (baseUrl == null) return;
 
   _registerOrReplace<ApiClient>(
     ApiClient(dio, baseUrl: baseUrl + VariableBag.residentApiEnd),

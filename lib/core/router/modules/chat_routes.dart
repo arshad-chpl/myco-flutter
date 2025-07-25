@@ -1,18 +1,23 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
-import 'package:myco_flutter/features/chat/presentation/bloc/chat_bloc.dart';
-import 'package:myco_flutter/features/chat/presentation/page/chat_list.dart';
-import 'package:myco_flutter/features/chat/presentation/page/chat_screen.dart';
-import 'package:myco_flutter/features/chat/presentation/page/groupe_detail.dart';
-import 'package:myco_flutter/features/chat/presentation/page/start_chat.dart';
+import 'package:myco_flutter/features/chat/presentation/bloc/chat_list_bloc/chat_bloc.dart';
+import 'package:myco_flutter/features/chat/presentation/bloc/group_chat_bloc/bloc/group_chat_bloc.dart';
+import 'package:myco_flutter/features/chat/presentation/bloc/member_chat_bloc.dart/bloc/member_chat_bloc.dart';
+import 'package:myco_flutter/features/chat/presentation/pages/chat_list.dart';
+import 'package:myco_flutter/features/chat/presentation/pages/chat_screen.dart';
+import 'package:myco_flutter/features/chat/presentation/pages/groupe_detail.dart';
+import 'package:myco_flutter/features/chat/presentation/pages/start_chat.dart';
 import 'package:myco_flutter/features/custom_bloc/tab-bar/bloc/tabbar_bloc.dart';
 
-List<RouteBase> cahatRoutes = [
+List<RouteBase> chatRoutes = [
   ShellRoute(
     builder: (context, state, child) => MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => ChatBloc()),
+        BlocProvider(create: (context) => GetIt.I<ChatListBloc>()),
+        BlocProvider(create: (context) => GetIt.I<GroupChatBloc>()),
+        BlocProvider(create: (context) => GetIt.I<MemberChatBloc>()),
         BlocProvider(create: (context) => TabbarBloc()),
       ],
       child: child,
@@ -26,7 +31,7 @@ List<RouteBase> cahatRoutes = [
       GoRoute(
         path: RoutePaths.userChatScreen,
         name: 'user-chat',
-        builder: (context, state) => UserChatScreen(),
+        builder: (context, state) => const UserChatScreen(),
       ),
       GoRoute(
         path: RoutePaths.startNewChat,

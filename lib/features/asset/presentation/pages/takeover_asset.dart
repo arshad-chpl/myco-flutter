@@ -1,0 +1,381 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/asset/presentation/text_controllers/takeover_controllers.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/assets_bottom_sheet.dart';
+import 'package:myco_flutter/features/asset/presentation/widgets/assets_label_text_field.dart';
+import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_text_radio_button.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/custom_media_picker_container.dart';
+
+class TakeoverAssets extends StatefulWidget {
+  const TakeoverAssets({super.key});
+
+  @override
+  State<TakeoverAssets> createState() => _TakeoverAssetsState();
+}
+
+class _TakeoverAssetsState extends State<TakeoverAssets> {
+  final _formKey = GlobalKey<FormState>();
+  String? selectedConditionType;
+  String handoverSelected = 'YES';
+
+  final List<String> conditionTypes = [
+    'Good',
+    'Fair',
+    'Damaged',
+    'Needs Repair',
+  ];
+
+  void _openConditionTypeBottomSheet() async {
+    final selected = await showAssetsBottomSheet(
+      context: context,
+      dataList: conditionTypes,
+      selectedBackgroundColor: const Color(0xFFEEF7FD),
+      borderColor: AppTheme.getColor(context).primary,
+      heading: 'Conditional Type',
+    );
+
+    if (selected != null) {
+      setState(() {
+        selectedConditionType = selected;
+      });
+    }
+  }
+
+  final TakeoverAssetsControllers takeoverController =
+      TakeoverAssetsControllers();
+
+  @override
+  // ignore: prefer_expression_function_bodies
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // backgroundColor: const Color(0xFFF6F7FB),
+      appBar: const CustomAppbar(title: 'takeover_assets', titleSpacing: 0),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 0.04 * Responsive.getWidth(context),
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AssetsTextFieldWidget(
+                        label: 'takeover_date',
+                        hintText: 'select',
+                        image: AppAssets.imageNoteFavorite,
+                        controller: takeoverController.takeoverDateController,
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Handover remark is required';
+                          }
+                          return null;
+                        },
+                      ),
+                      AssetsTextFieldWidget(
+                        label: 'takeover_remark',
+                        hintText: 'type_here',
+                        image: AppAssets.lostFoundMessageEdit,
+                        controller: takeoverController.takeoverRemarkController,
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return 'Handover remark is required';
+                          }
+                          return null;
+                        },
+                      ),
+
+                      CustomMediaPickerContainer(
+                        title: 'takeover_assets_image',
+                        imagePath: AppAssets.imageGalleryExport,
+                        imageTitle: 'attach_Image',
+                        multipleImage: 5,
+                        isCameraShow: true,
+                        isGalleryShow: true,
+                        titleColor: AppTheme.getColor(context).onSurfaceVariant,
+                        titleFontSize:
+                            14 * Responsive.getResponsiveText(context),
+                        imageTitleSize:
+                            16 * Responsive.getResponsiveText(context),
+                        imageTitleColor: AppTheme.getColor(
+                          context,
+                        ).onSurfaceVariant,
+                        backgroundColor: const Color(0xFFEEF7FD),
+                        containerHeight: 0.1 * Responsive.getHeight(context),
+                      ),
+                      SizedBox(height: 0.024 * Responsive.getHeight(context)),
+
+                      CustomText(
+                        'handover_asset_to_other_employee',
+                        fontSize: 14 * Responsive.getResponsiveText(context),
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.getColor(context).onSurfaceVariant,
+                      ),
+
+                      SizedBox(height: 0.004 * Responsive.getHeight(context)),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomTextRadioButton(
+                              gender: 'YES',
+                              selectedGender: handoverSelected,
+                              onSelect: (value) {
+                                setState(() {
+                                  handoverSelected = value;
+                                });
+                              },
+                              height: 0.055 * Responsive.getHeight(context),
+                              width: 0.45 * Responsive.getWidth(context),
+                              textStyle: TextStyle(
+                                fontFamily: 'Gilroy-semiBold',
+                                fontSize:
+                                    14 * Responsive.getResponsiveText(context),
+                                fontWeight: FontWeight.w600,
+                                color: AppTheme.getColor(
+                                  context,
+                                ).onSurfaceVariant,
+                              ),
+                              customDecoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppTheme.getColor(context).outline,
+                                ),
+                                borderRadius: BorderRadius.circular(
+                                  10 * Responsive.getResponsive(context),
+                                ),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 0.05 * Responsive.getWidth(context)),
+                          Expanded(
+                            child: CustomTextRadioButton(
+                              gender: 'NO',
+                              selectedGender: handoverSelected,
+                              onSelect: (value) {
+                                setState(() {
+                                  handoverSelected = value;
+                                });
+                              },
+                              height: 0.055 * Responsive.getHeight(context),
+                              width: 0.45 * Responsive.getWidth(context),
+                              textStyle: TextStyle(
+                                fontFamily: 'Gilroy-semiBold',
+                                fontSize:
+                                    14 * Responsive.getResponsiveText(context),
+                                fontWeight: FontWeight.w600,
+                                color: AppTheme.getColor(
+                                  context,
+                                ).onSurfaceVariant,
+                              ),
+                              customDecoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppTheme.getColor(context).outline,
+                                ),
+                                borderRadius: BorderRadius.circular(
+                                  10 * Responsive.getResponsive(context),
+                                ),
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (handoverSelected == 'YES') ...[
+                        SizedBox(height: 0.02 * Responsive.getHeight(context)),
+
+                        AssetsTextFieldWidget(
+                          label: 'handover_date',
+                          hintText: 'select',
+                          image: AppAssets.imageNoteFavorite,
+                          controller: takeoverController.handoverDateController,
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Handover remark is required';
+                            }
+                            return null;
+                          },
+                        ),
+                        AssetsTextFieldWidget(
+                          label: 'branch',
+                          hintText: 'select',
+                          image: AppAssets.lostFoundData,
+                          controller: takeoverController.branchController,
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Handover remark is required';
+                            }
+                            return null;
+                          },
+                        ),
+                        AssetsTextFieldWidget(
+                          label: 'departement',
+                          hintText: 'select',
+                          image: AppAssets.imageNoteFavorite,
+                          controller: takeoverController.departmentController,
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Handover remark is required';
+                            }
+                            return null;
+                          },
+                        ),
+                        AssetsTextFieldWidget(
+                          label: 'custodian',
+                          hintText: 'select',
+                          image: AppAssets.assetsUserTick,
+                          controller: takeoverController.custodianController,
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Handover remark is required';
+                            }
+                            return null;
+                          },
+                        ),
+
+                        CustomText(
+                          'condition_type',
+                          fontSize: 16 * Responsive.getResponsiveText(context),
+                          fontWeight: FontWeight.w600,
+                          color: AppTheme.getColor(context).onSurfaceVariant,
+                        ),
+                        SizedBox(height: 0.002 * Responsive.getHeight(context)),
+                        GestureDetector(
+                          onTap: _openConditionTypeBottomSheet,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 14 * Responsive.getResponsive(context),
+                              horizontal:
+                                  12 * Responsive.getResponsive(context),
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(
+                                12 * Responsive.getResponsive(context),
+                              ),
+                              border: Border.all(
+                                color: selectedConditionType != null
+                                    ? AppTheme.getColor(context).primary
+                                    : AppTheme.getColor(context).outline,
+                                width: 0.002 * Responsive.getWidth(context),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SvgPicture.asset(
+                                  AppAssets.assetsElementEqual,
+                                  height: 0.06 * Responsive.getWidth(context),
+                                ),
+
+                                SizedBox(
+                                  width: 12 * Responsive.getResponsive(context),
+                                ),
+                                Expanded(
+                                  child: CustomText(
+                                    selectedConditionType ?? 'type',
+                                    color: selectedConditionType == null
+                                        ? AppColors.gray
+                                        : AppTheme.getColor(context).onSurface,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize:
+                                        18 *
+                                        Responsive.getResponsiveText(context),
+                                  ),
+                                ),
+                                Icon(
+                                  CupertinoIcons.chevron_down,
+                                  color: AppTheme.getColor(context).primary,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 0.024 * Responsive.getHeight(context)),
+
+                        AssetsTextFieldWidget(
+                          label: 'handover_remark',
+                          hintText: 'type_here',
+                          image: AppAssets.lostFoundMessageEdit,
+                          controller:
+                              takeoverController.handoverRemarkController,
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return 'Handover remark is required';
+                            }
+                            return null;
+                          },
+                        ),
+
+                        CustomMediaPickerContainer(
+                          title: 'assets_image',
+                          imagePath: AppAssets.imageGalleryExport,
+                          imageTitle: 'attach_Image',
+                          multipleImage: 1,
+                          isCameraShow: true,
+                          isGalleryShow: true,
+                          titleColor: AppTheme.getColor(
+                            context,
+                          ).onSurfaceVariant,
+                          titleFontSize:
+                              14 * Responsive.getResponsiveText(context),
+                          imageTitleSize:
+                              16 * Responsive.getResponsiveText(context),
+                          imageTitleColor: AppTheme.getColor(
+                            context,
+                          ).onSurfaceVariant,
+                          backgroundColor: const Color(0xFFEEF7FD),
+                          containerHeight: 0.1 * Responsive.getHeight(context),
+                        ),
+                        SizedBox(height: 0.035 * Responsive.getHeight(context)),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          SizedBox(height: 0.015 * Responsive.getHeight(context)),
+
+          //Submit button
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.04 * Responsive.getWidth(context),
+            ),
+            child: MyCoButton(
+              onTap: () {
+                if (_formKey.currentState!.validate()) {
+                  // All fields are valid
+                  log("Form is valid. Proceed with submission.");
+                } else {
+                  log("Form is invalid. Show errors.");
+                }
+              },
+              title: 'Submit',
+              isShadowBottomLeft: true,
+              boarderRadius: 50,
+              fontFamily: 'Gilroy-Bold',
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: 0.024 * Responsive.getHeight(context)),
+        ],
+      ),
+    );
+  }
+}

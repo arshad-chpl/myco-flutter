@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
@@ -13,6 +14,7 @@ import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_myco_tabbar.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
+class SalaryBreakUpPage extends StatefulWidget {
 class SalaryBreakUpPage extends StatefulWidget {
   const SalaryBreakUpPage({super.key});
 
@@ -29,6 +31,7 @@ class _SalaryBreakUpPageState extends State<SalaryBreakUpPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+    appBar: const CustomAppbar(title: 'Salary Break-Up'),
     appBar: const CustomAppbar(title: 'Salary Break-Up'),
 
     body: Container(

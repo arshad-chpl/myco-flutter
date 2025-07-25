@@ -11,7 +11,9 @@ class PreferenceManager {
   static const String appLanguage = "lang_app";
   static const String languageId = "lang_id";
   static const String userId = "user_id";
-  static const String registrationRequestPendingUserId = "registration_request_pending_user_id";
+  static const String mobileNo = "mobile_no";
+  static const String registrationRequestPendingUserId =
+      "registration_request_pending_user_id";
   static const String subEnd = "employeeMobileApi/";
   static const String residentApiEnd = "residentApiNew/";
   static const String mainKey = "bmsapikey";
@@ -19,6 +21,7 @@ class PreferenceManager {
   static const String masterAPICall = "masterAPICall";
   static const String employeeMobileApi = "employeeMobileApi";
   static const String residentApiNew = "residentApiNew";
+  static const String cachedEmployeeResponse = 'cached_employee_response';
 
   static final PreferenceManager _instance = PreferenceManager._internal();
   factory PreferenceManager() => _instance;
@@ -131,8 +134,13 @@ class PreferenceManager {
   }
 
   //TODO: Dummy static return for now
-  String getUserId() => "40";
-  String getUserMobile() => "8401565883";
+  Future<String?> getUserId() => readString(userId);
+
+  Future<void> setUserMobileNo(String value) async {
+    await writeString(mobileNo, value);
+  }
+
+  Future<String?> getUserMobileNo() => readString(mobileNo);
 
   Future<void> setLanguageId(String value) async {
     await writeString(languageId, value);
@@ -176,6 +184,15 @@ class PreferenceManager {
   //   final json = jsonDecode(jsonString);
   //   return Society.fromJson(json);
   // }
+
+  // ====== Employee Methods ======
+  Future<void> setCachedEmployeeResponse(String json) =>
+      writeString(cachedEmployeeResponse, json);
+
+  Future<String?> getCachedEmployeeResponse() =>
+      readString(cachedEmployeeResponse);
+
+  Future<void> clearCachedEmployeeResponse() => delete(cachedEmployeeResponse);
 
   Future<void> setLoginSession(bool value) async {
     await writeBool("loginSession", value);

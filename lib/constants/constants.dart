@@ -31,6 +31,8 @@ class VariableBag {
   static const String residentApiEnd = 'residentApiNew/';
   static const String mainKey = 'bmsapikey';
   static const String mainURL = 'https://master.my-company.app/mainApiEnc/';
+  static const String URL_PRIVACY = 'https://master.my-company.app/';
+  static const String CP_URL = 'https://www.my-co.app/cancellationpolicy';
   // "https://master.my-company.app/mainApiEnc/";
   static const String masterAPICall = 'masterAPICall';
   static const String employeeMobileApi = 'employeeMobileApi';
@@ -84,6 +86,34 @@ class VariableBag {
   static const String ADMIN_VIEW_MENU_EDUCATION = '65';
   static const String ADMIN_VIEW_MENU_ACHIEVEMENTS = '66';
   static const String ADMIN_VIEW_MENU_EMPLOYEES_FACE = '69';
+
+  /////////////////////////
+  // Hive Boxes
+  ////////////////////////
+
+  static const String ADMIN_VIEW_BOX = 'admin_view_box';
+
+
+  // const variables of pages
+  static const formContentSpacingVertical = 20 ;
+  static const screenHorizontalPadding = 26.0;
+  static const textFieldRowGap = 10;
+  static const buttonBorderRadius = 30.0;
+  static const bottomSheetBorderRadius = 30.0;
+  static const bottomSheetLeftPadding  = 26.0;
+  static const bottomSheetRightPadding = 26.0;
+  static const bottomSheetTopPadding = 20.0;
+  static const bottomSheetBottomPadding = 20.0;
+  static const buttonRowSpacing = 15; // width
+  static const buttonColumnSpacing = 20; // height
+  static const containerBorderRadius = 12.0; // responsive
+  static const shadowContainerVerticalPadding = 16.0;
+  static const commonCardVerticalPadding = 15.0;
+  static const commonCardHorizontalPadding = 10.0;
+  static const commonCardBorderRadius = 15.0;
+  static const tabBarAfterSpace = 30; // height
+  static const searchFiledAfterSpace = 30; // height
+  static const commonContainerPadding = 10.0; //all
 }
 
 class ApiUrl {

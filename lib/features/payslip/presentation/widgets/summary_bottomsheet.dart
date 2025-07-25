@@ -125,6 +125,8 @@ class SummaryBottomsheet extends StatelessWidget {
                             CustomText(
                               // '₹103,930.29',
                               conveyance,
+                              // '₹103,930.29',
+                              conveyance,
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
@@ -146,6 +148,8 @@ class SummaryBottomsheet extends StatelessWidget {
                             CustomText(
                               // '₹13,525.08',
                               paidLeaveAllowance,
+                              // '₹13,525.08',
+                              paidLeaveAllowance,
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
@@ -165,6 +169,8 @@ class SummaryBottomsheet extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                             ),
                             CustomText(
+                              // '₹928.00',
+                              leaveEncashment,
                               // '₹928.00',
                               leaveEncashment,
                               color: AppTheme.getColor(context).onSurface,
@@ -189,6 +195,8 @@ class SummaryBottomsheet extends StatelessWidget {
                                   15 * Responsive.getResponsiveText(context),
                             ),
                             CustomText(
+                              // '₹395,086.90',
+                              totalEarnings,
                               // '₹395,086.90',
                               totalEarnings,
                               color: AppTheme.getColor(context).onSurface,
@@ -229,6 +237,8 @@ class SummaryBottomsheet extends StatelessWidget {
                           CustomText(
                             // '₹2,222.00',
                             professionalTax,
+                            // '₹2,222.00',
+                            professionalTax,
                             color: AppTheme.getColor(context).onSurface,
                             fontSize:
                                 16 * Responsive.getResponsiveText(context),
@@ -251,6 +261,8 @@ class SummaryBottomsheet extends StatelessWidget {
                                 16 * Responsive.getResponsiveText(context),
                           ),
                           CustomText(
+                            // '₹2,222.00',
+                            grossDeductions,
                             // '₹2,222.00',
                             grossDeductions,
                             color: AppTheme.getColor(context).onSurface,
@@ -288,6 +300,8 @@ class SummaryBottomsheet extends StatelessWidget {
                                   15 * Responsive.getResponsiveText(context),
                             ),
                             CustomText(
+                              // '₹0.00',
+                              totalEmplotersContributions,
                               // '₹0.00',
                               totalEmplotersContributions,
                               color: AppTheme.getColor(context).onSurface,

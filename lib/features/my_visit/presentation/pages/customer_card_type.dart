@@ -1,25 +1,16 @@
-import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
-
+import 'package:go_router/go_router.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
-
+import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-
-import 'package:myco_flutter/features/asset/widgets/custom_appbar.dart';
-
 import 'package:myco_flutter/features/my_visit/presentation/widgets/customer_card_no_order.dart';
-
 import 'package:myco_flutter/features/my_visit/presentation/widgets/customer_card_only_visit.dart';
-
 import 'package:myco_flutter/features/my_visit/presentation/widgets/customer_card_order_now.dart';
-
-import 'package:myco_flutter/features/my_visit/presentation/widgets/refresh_reset_buttons_row.dart';
-
-import 'package:myco_flutter/features/my_visit/presentation/widgets/visit_search_bar.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
-
-import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 
 enum CustomerCardType { noOrder, orderTaken, onlyVisit }
 
@@ -32,8 +23,6 @@ class CustomerPage extends StatefulWidget {
 
 class _CustomerPageState extends State<CustomerPage> {
   final TextEditingController searchController = TextEditingController();
-
-  final FocusNode searchFocus = FocusNode();
 
   final List<CustomerCardType> customerCardList = [
     CustomerCardType.noOrder,
@@ -50,40 +39,60 @@ class _CustomerPageState extends State<CustomerPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      appBarBackgoundColor: AppTheme.getColor(context).surface,
-      actions: [
-        RefreshResetButtonsRow(
-          onRefresh: () {},
-          onReset: () {},
-          buttonHeight: 40,
-        ),
-      ],
       title: 'customer',
-
       isKey: true,
+      actions: [
+        MyCoButton(
+          title: 'refresh',
+          onTap: () {},
+          width: 0.20 * Responsive.getWidth(context),
+          height: 0.038 * Responsive.getHeight(context),
+          backgroundColor: AppTheme.getColor(context).secondary,
+          textStyle: TextStyle(
+            color: AppTheme.getColor(context).onSecondary,
+            fontSize: 12 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w500,
+          ),
+          boarderRadius: VariableBag.buttonBorderRadius * Responsive.getResponsive(context),
+          borderColor: AppTheme.getColor(context).secondary,
+          isShadowBottomLeft: true,
+        ),
+        SizedBox(width:VariableBag.buttonRowSpacing * Responsive.getResponsive(context)),
+        MyCoButton(
+          title: 'reset',
+          onTap: () {},
+          width: 0.20 * Responsive.getWidth(context),
+          height: 0.038 * Responsive.getHeight(context),
+          backgroundColor: AppColors.primary,
+          textStyle: TextStyle(
+            color: AppTheme.getColor(context).onSecondary,
+            fontSize: 12 * Responsive.getResponsiveText(context),
+            fontWeight: FontWeight.w500,
+          ),
+          boarderRadius: VariableBag.buttonBorderRadius * Responsive.getResponsive(context),
+          isShadowBottomLeft: true,
+        ),
+        SizedBox(width: 16 * Responsive.getResponsive(context)),
+      ],
     ),
 
     body: SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(16 * Responsive.getResponsive(context)),
+        padding: EdgeInsets.symmetric(
+          horizontal: VariableBag.commonCardHorizontalPadding * Responsive.getResponsive(context),
+        ),
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children: [
-            // Search
-            VisitSearchBar(
-              controller: searchController,
+            CustomSearchField(controller: searchController, hintText: LanguageManager().get('search')),
 
-              focusNode: searchFocus,
-
-              hintText: 'Search',
-            ),
-
-            SizedBox(height: 16 * Responsive.getResponsive(context)),
+            SizedBox(height: VariableBag.searchFiledAfterSpace * Responsive.getResponsive(context)),
 
             // Cards
             Column(
+              spacing: VariableBag.commonCardVerticalPadding * Responsive.getResponsive(context),
               children: customerCardList.map((cardType) {
                 Widget card;
 
@@ -115,6 +124,21 @@ class _CustomerPageState extends State<CustomerPage> {
             ),
           ],
         ),
+      ),
+    ),
+    floatingActionButton: MyCoButton(
+      onTap: () {
+        context.pushNamed("addCustomer");
+      },
+      title: "",
+      boarderRadius: 50 * Responsive.getResponsive(context),
+      height: 0.080 * Responsive.getHeight(context),
+      width: 0.080 * Responsive.getHeight(context),
+      isShadowBottomLeft: true,
+      image: Icon(
+        Icons.add,
+        color: Colors.white,
+        size: 60 * Responsive.getResponsive(context),
       ),
     ),
   );
