@@ -21,7 +21,7 @@ class AppAssets {
 
   static const String stepper = '$basePath/stepper';
   static const String workAllocationSvgs = '$svgsPath/work_allocation';
-  static const String leave = '$svgsPath/leave';
+  static const String leave = '$basePath/leave';
 
   // Images
   static const String myCoLogo = '$imagesPath/logo.png';
