@@ -11,7 +11,7 @@ class MyProfileRepositoryImpl implements MyProfileRepository {
 
   MyProfileRepositoryImpl(this.remoteDataSource, this.safeApiCall);
   @override
-  Future<Either<Failure, ProfileEntity>> getProfileData(
+  Future<Either<Failure, ProfileModelEntity>> getProfileData(
     Map<String, dynamic> dataMap,
   ) async {
     final result = await remoteDataSource.getProfileData(dataMap);

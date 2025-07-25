@@ -10,15 +10,11 @@ class ProfileToolSupportSettingCard extends StatelessWidget {
   ProfileToolSupportSettingCard({super.key});
 
   List svgList = [
-    "assets/dashboard/svgs/nominees.svg",
-    "assets/dashboard/svgs/hold_team_salary.svg",
-    "assets/dashboard/svgs/notfication_settings.svg",
-    "assets/dashboard/svgs/setting.svg",
-    "assets/dashboard/svgs/my_activities.svg",
     "assets/dashboard/svgs/app_support.svg",
+    "assets/dashboard/svgs/my_travel_summary.svg",
+    "assets/dashboard/svgs/my_transaction.svg",
+    "assets/dashboard/svgs/my_activities.svg",
     "assets/dashboard/svgs/rate_app.svg",
-    "assets/dashboard/svgs/share_app.svg",
-    "assets/dashboard/svgs/log_out.svg",
   ];
 
   @override
@@ -30,7 +26,7 @@ class ProfileToolSupportSettingCard extends StatelessWidget {
         gifAssetPath: 'assets/gifs/profile_tool_support_setting.gif',
       ),
       GridView.builder(
-        itemCount: 9,
+        itemCount: 5,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

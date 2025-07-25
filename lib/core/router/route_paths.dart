@@ -64,6 +64,7 @@ class RoutePaths {
   static const String qrScanner = '/qr-scanner';
   static const String assetsHome = '/assets-home';
   static const String myProfile = '/my-profile';
+  static const String otherProfile = '/other-profile';
 
   // ======== Admin View ========
   static const String adminView = '/admin-view';

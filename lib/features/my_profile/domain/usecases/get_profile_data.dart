@@ -7,7 +7,7 @@ class GetProfileData{
   final MyProfileRepository repository;
   GetProfileData(this.repository);
 
-  Future<Either<Failure,ProfileEntity>> getProileData(Map<String,dynamic> dataMap) async{
+  Future<Either<Failure,ProfileModelEntity>> getProileData(Map<String,dynamic> dataMap) async{
     return await repository.getProfileData(dataMap);
   }
 }

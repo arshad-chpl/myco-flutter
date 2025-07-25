@@ -1,143 +1,275 @@
-// domain/entities/profile_entity.dart
-
-// Top-level Profile Entity
 import 'package:myco_flutter/features/dashboard/domain/entites/my_unit_response_entity.dart';
 
-class ProfileEntity {
-  final bool? applyResignation;
-  final String? blockStatus;
+class ProfileModelEntity {
   final List<ProfileMenuEntity>? profileMenu;
-  final List<dynamic>? praiseList;
+  final List<PraiseListEntity>? praiseList;
+  final List<PersonalEntity>? personal;
+  final List<ReportingPersonEntity>? reportingPersons;
+  final List<EmployeementSkillEntity>? employeementSkills;
+  final List<ContactEntity>? contact;
+  final List<SocialLinkEntity>? socialLink;
+  final List<MyTeamEntity>? myTeam;
+  final List<ExperienceEntity>? experience;
+  final List<EducationEntity>? education;
   final String? userId;
+  final String? employeeId;
+  final String? shortName;
   final String? levelId;
   final String? levelName;
   final String? parentLevelId;
+  final String? designation;
+  final String? userProfilePic;
+  final String? userFullName;
+  final String? userMobile;
+  final String? userEmail;
+  final String? gender;
   final String? userFirstName;
+  final String? faceDataImage;
+  final String? faceDataImageTwo;
   final String? userLastName;
-  final String? branchName;
-  final String? departmentName;
-  final String? companyEmployeeId;
   final String? subDepartmentId;
   final String? subDepartmentName;
-  final String? designation;
+  final bool? publicMobile;
+  final String? countryCode;
+  final String? userToken;
+  final String? message;
+  final String? status;
+  final String? blockStatus;
+  final String? branchName;
+  final String? departmentName;
+  final bool? applyResignation;
   final String? jobDescription;
   final String? userJobDescription;
-  final String? shortName;
-  final String? userFaceData;
-  final String? faceAddedDate;
-  final String? faceDataImageTwo;
-  final String? faceDataImage;
-  final String? faceDataImageTwoIos;
-  final String? faceDataImageIos;
-  final List<dynamic>? reportingPersons;
+
+  ProfileModelEntity({
+    this.profileMenu,
+    this.praiseList,
+    this.personal,
+    this.reportingPersons,
+    this.employeementSkills,
+    this.contact,
+    this.socialLink,
+    this.myTeam,
+    this.experience,
+    this.education,
+    this.userId,
+    this.employeeId,
+    this.shortName,
+    this.levelId,
+    this.levelName,
+    this.parentLevelId,
+    this.designation,
+    this.userProfilePic,
+    this.userFullName,
+    this.userMobile,
+    this.userEmail,
+    this.gender,
+    this.userFirstName,
+    this.faceDataImage,
+    this.faceDataImageTwo,
+    this.userLastName,
+    this.subDepartmentId,
+    this.subDepartmentName,
+    this.publicMobile,
+    this.countryCode,
+    this.userToken,
+    this.message,
+    this.status,
+    this.blockStatus,
+    this.branchName,
+    this.departmentName,
+    this.applyResignation,
+    this.jobDescription,
+    this.userJobDescription,
+  });
+}
+
+class ProfileMenuEntity {
+  final String? profileMenuId;
+  final String? profileMenuName;
+  final String? menuClick;
+  final String? languageKeyName;
+  final String? profileMenuPhoto;
+  final String? profileMenuPhotoNew;
+  final String? accessType;
+
+  // These fields are local UI state and should be maintained only in UI layer,
+  // so you can exclude them here or keep if necessary for your domain logic
+  final bool isLocalMenu;
+  final int localImg;
+
+  const ProfileMenuEntity({
+    this.profileMenuId,
+    this.profileMenuName,
+    this.menuClick,
+    this.languageKeyName,
+    this.profileMenuPhoto,
+    this.profileMenuPhotoNew,
+    this.accessType,
+    this.isLocalMenu = false,
+    this.localImg = 0,
+  });
+}
+
+class ReportingPersonEntity {
   final String? reportingPersonId;
   final String? reportingPerson;
   final String? reportingPersonLevelName;
   final String? reportingPersonUserDesignation;
   final String? reportingPersonProfilePic;
   final String? reportingShortName;
-  final SisterCompanyDataEntity? sisterCompanyData;
-  final String? userFullName;
-  final String? userProfilePic;
-  final String? userMobile;
-  final String? userEmail;
-  final String? personalEmail;
-  final String? altMobile;
-  final String? emergencyNumber;
-  final String? whatsappNumber;
-  final String? employeeId;
-  final DateTime? memberDateOfBirth;
-  final String? bloodGroup;
-  final String? gender;
-  final String? userToken;
-  final String? countryCode;
-  final String? maritalStatus;
-  final String? totalFamilyMembers;
-  final String? nationality;
-  final bool? publicMobile;
-  final bool? memberAccessDenied;
-  final bool? chatAccessDenied;
-  final bool? timlineAccessDenied;
-  final List<PersonalEntity>? personal;
-  final List<EmployeementSkillEntity>? employeementSkills;
-  final List<ContactEntity>? contact;
-  final List<dynamic>? experience;
-  final List<dynamic>? education;
-  final List<SocialLinkEntity>? socialLink;
-  final List<MyTeamEntity>? myTeam;
-  final String? message;
-  final String? status;
 
-  ProfileEntity({
-    this.applyResignation,
-    this.blockStatus,
-    this.profileMenu,
-    this.praiseList,
-    this.userId,
-    this.levelId,
-    this.levelName,
-    this.parentLevelId,
-    this.userFirstName,
-    this.userLastName,
-    this.branchName,
-    this.departmentName,
-    this.companyEmployeeId,
-    this.subDepartmentId,
-    this.subDepartmentName,
-    this.designation,
-    this.jobDescription,
-    this.userJobDescription,
-    this.shortName,
-    this.userFaceData,
-    this.faceAddedDate,
-    this.faceDataImageTwo,
-    this.faceDataImage,
-    this.faceDataImageTwoIos,
-    this.faceDataImageIos,
-    this.reportingPersons,
+  const ReportingPersonEntity({
     this.reportingPersonId,
     this.reportingPerson,
     this.reportingPersonLevelName,
     this.reportingPersonUserDesignation,
     this.reportingPersonProfilePic,
     this.reportingShortName,
-    this.sisterCompanyData,
-    this.userFullName,
-    this.userProfilePic,
-    this.userMobile,
-    this.userEmail,
-    this.personalEmail,
-    this.altMobile,
-    this.emergencyNumber,
-    this.whatsappNumber,
-    this.employeeId,
-    this.memberDateOfBirth,
-    this.bloodGroup,
-    this.gender,
-    this.userToken,
-    this.countryCode,
-    this.maritalStatus,
-    this.totalFamilyMembers,
-    this.nationality,
-    this.publicMobile,
-    this.memberAccessDenied,
-    this.chatAccessDenied,
-    this.timlineAccessDenied,
-    this.personal,
-    this.employeementSkills,
-    this.contact,
-    this.experience,
-    this.education,
-    this.socialLink,
-    this.myTeam,
-    this.message,
-    this.status,
   });
-
-
 }
 
-// Nested Entities (matching your inner classes with Entity suffix)
+class PraiseListEntity {
+  final String? employeePraiseTypeId;
+  final String? employeePraiseName;
+  final String? employeePraiseContent;
+  final String? employeePraiseNameColorCode;
+  final String? employeePraiseImage;
+  final String? total;
+
+  const PraiseListEntity({
+    this.employeePraiseTypeId,
+    this.employeePraiseName,
+    this.employeePraiseContent,
+    this.employeePraiseNameColorCode,
+    this.employeePraiseImage,
+    this.total,
+  });
+}
+
+class PersonalEntity {
+  final String? memberDateOfBirth;
+  final String? weddingAnniversaryDate;
+  final String? bloodGroup;
+  final String? gender;
+  final String? maritalStatus;
+  final String? maritalStatusSt;
+  final String? totalFamilyMembers;
+  final String? nationality;
+  final String? memberDateOfBirthView;
+  final String? weddingAnniversaryDateView;
+  final String? intrestHobbies;
+  final String? professionalSkills;
+  final String? specialSkills;
+  final String? languageKnown;
+
+  const PersonalEntity({
+    this.memberDateOfBirth,
+    this.weddingAnniversaryDate,
+    this.bloodGroup,
+    this.gender,
+    this.maritalStatus,
+    this.maritalStatusSt,
+    this.totalFamilyMembers,
+    this.nationality,
+    this.memberDateOfBirthView,
+    this.weddingAnniversaryDateView,
+    this.intrestHobbies,
+    this.professionalSkills,
+    this.specialSkills,
+    this.languageKnown,
+  });
+}
+
+// class MyTeamEntity {
+//   final String? userId;
+//   final String? levelId;
+//   final String? levelName;
+//   final String? userFullName;
+//   final String? userDesignation;
+//   final String? userProfilePic;
+//   final bool? isPresent;
+//   final bool? isLeaveFull;
+//   final bool? isLeaveHalf;
+//   final bool? isBreak;
+//   final String? statusView;
+//   final String? shortName;
+//
+//   const MyTeamEntity({
+//     this.userId,
+//     this.levelId,
+//     this.levelName,
+//     this.userFullName,
+//     this.userDesignation,
+//     this.userProfilePic,
+//     this.isPresent,
+//     this.isLeaveFull,
+//     this.isLeaveHalf,
+//     this.isBreak,
+//     this.statusView,
+//     this.shortName,
+//   });
+// }
+
+class ExperienceEntity {
+  final String? employeeExperienceId;
+  final String? designation;
+  final String? expCompanyName;
+  final String? workFrom;
+  final String? companyLocation;
+
+  const ExperienceEntity({
+    this.employeeExperienceId,
+    this.designation,
+    this.expCompanyName,
+    this.workFrom,
+    this.companyLocation,
+  });
+}
+
+class EducationEntity {
+  final String? employeeAchievementId;
+  final String? achievementName;
+  final String? achievementDate;
+  final String? universityBoardName;
+  final String? archiType;
+
+  const EducationEntity({
+    this.employeeAchievementId,
+    this.achievementName,
+    this.achievementDate,
+    this.universityBoardName,
+    this.archiType,
+  });
+}
+
+class EmployeementSkillEntity {
+  final String? designation;
+  final String? employeeId;
+  final String? employmentType;
+  final DateTime? joiningDate;
+  final String? joiningDateView;
+  final String? probationPeriodEndDate;
+  final String? companyExperience;
+  final String? totalExperience;
+  final String? insuranceNumber;
+  final String? insuranceCompanyName;
+  final String? insuranceExpireDate;
+
+  const EmployeementSkillEntity({
+    this.designation,
+    this.employeeId,
+    this.employmentType,
+    this.joiningDate,
+    this.joiningDateView,
+    this.probationPeriodEndDate,
+    this.companyExperience,
+    this.totalExperience,
+    this.insuranceNumber,
+    this.insuranceCompanyName,
+    this.insuranceExpireDate,
+  });
+}
 
 class ContactEntity {
   final String? userMobile;
@@ -162,7 +294,7 @@ class ContactEntity {
   final String? emergencyNumberCountryCode;
   final String? withoutCountryCodeEmergencyNumber;
 
-  ContactEntity({
+  const ContactEntity({
     this.userMobile,
     this.altMobile,
     this.whatsappNumber,
@@ -187,120 +319,6 @@ class ContactEntity {
   });
 }
 
-class EmployeementSkillEntity {
-  final String? designation;
-  final String? employeeId;
-  final String? employmentType;
-  final DateTime? joiningDate;
-  final String? joiningDateView;
-  final String? probationPeriodEndDate;
-  final String? companyExperience;
-  final String? totalExperience;
-  final String? insuranceNumber;
-  final String? insuranceCompanyName;
-  final String? insuranceExpireDate;
-
-  EmployeementSkillEntity({
-    this.designation,
-    this.employeeId,
-    this.employmentType,
-    this.joiningDate,
-    this.joiningDateView,
-    this.probationPeriodEndDate,
-    this.companyExperience,
-    this.totalExperience,
-    this.insuranceNumber,
-    this.insuranceCompanyName,
-    this.insuranceExpireDate,
-  });
-}
-
-class PersonalEntity {
-  final DateTime? memberDateOfBirth;
-  final DateTime? weddingAnniversaryDate;
-  final String? bloodGroup;
-  final String? gender;
-  final String? maritalStatus;
-  final String? maritalStatusSt;
-  final String? totalFamilyMembers;
-  final String? nationality;
-  final String? memberDateOfBirthView;
-  final String? weddingAnniversaryDateView;
-  final String? intrestHobbies;
-  final String? professionalSkills;
-  final String? specialSkills;
-  final String? languageKnown;
-
-  PersonalEntity({
-    this.memberDateOfBirth,
-    this.weddingAnniversaryDate,
-    this.bloodGroup,
-    this.gender,
-    this.maritalStatus,
-    this.maritalStatusSt,
-    this.totalFamilyMembers,
-    this.nationality,
-    this.memberDateOfBirthView,
-    this.weddingAnniversaryDateView,
-    this.intrestHobbies,
-    this.professionalSkills,
-    this.specialSkills,
-    this.languageKnown,
-  });
-}
-
-class ProfileMenuEntity {
-  final String? profileMenuId;
-  final String? profileMenuName;
-  final String? menuClick;
-  final String? profileMenuPhoto;
-  final String? profileMenuPhotoNew;
-  final String? accessType;
-  final String? languageKeyName;
-
-  ProfileMenuEntity({
-    this.profileMenuId,
-    this.profileMenuName,
-    this.menuClick,
-    this.profileMenuPhoto,
-    this.profileMenuPhotoNew,
-    this.accessType,
-    this.languageKeyName,
-  });
-}
-
-class SisterCompanyDataEntity {
-  final String? sisterCompanyId;
-  final String? sisterCompanyName;
-  final String? sisterCompanyAddress;
-  final String? sisterCompanyPhone;
-  final String? sisterCompanyEmail;
-  final String? sisterCompanyGstNo;
-  final String? sisterCompanyWebsite;
-  final String? sisterCompanyStamp;
-  final String? sisterCompanyLogo;
-  final String? sisterCompanyPincode;
-  final String? sisterCompanyPan;
-  final String? sisterCompanyLatitude;
-  final String? sisterCompanyLongitude;
-
-  SisterCompanyDataEntity({
-    this.sisterCompanyId,
-    this.sisterCompanyName,
-    this.sisterCompanyAddress,
-    this.sisterCompanyPhone,
-    this.sisterCompanyEmail,
-    this.sisterCompanyGstNo,
-    this.sisterCompanyWebsite,
-    this.sisterCompanyStamp,
-    this.sisterCompanyLogo,
-    this.sisterCompanyPincode,
-    this.sisterCompanyPan,
-    this.sisterCompanyLatitude,
-    this.sisterCompanyLongitude,
-  });
-}
-
 class SocialLinkEntity {
   final String? facebook;
   final String? instagram;
@@ -310,7 +328,7 @@ class SocialLinkEntity {
   final String? whatsappNumberCountryCode;
   final String? whatsappNumberWithoutCountryCode;
 
-  SocialLinkEntity({
+  const SocialLinkEntity({
     this.facebook,
     this.instagram,
     this.linkedin,
@@ -319,5 +337,5 @@ class SocialLinkEntity {
     this.whatsappNumberCountryCode,
     this.whatsappNumberWithoutCountryCode,
   });
-
 }
+

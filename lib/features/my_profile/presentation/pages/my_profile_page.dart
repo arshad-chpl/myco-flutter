@@ -11,7 +11,7 @@ import 'package:myco_flutter/features/dashboard/presentation/widgets/custom_sect
 import 'package:myco_flutter/features/dashboard/presentation/widgets/my_team_section.dart';
 import 'package:myco_flutter/features/my_profile/presentation/widgets/profile_details_card.dart';
 import 'package:myco_flutter/features/my_profile/presentation/widgets/profile_personal_info_card.dart';
-import 'package:myco_flutter/features/dashboard/presentation/widgets/profile_reporting_card.dart';
+import 'package:myco_flutter/features/my_profile/presentation/widgets/profile_reporting_card.dart';
 import 'package:myco_flutter/features/my_profile/presentation/widgets/profile_tool_support_setting_card.dart';
 import 'package:myco_flutter/features/my_profile/presentation/widgets/profile_word_attendance_card.dart';
 import 'package:myco_flutter/features/my_profile/presentation/bloc/my_profile_bloc.dart';
@@ -190,26 +190,36 @@ class _MyProfilePageState extends State<MyProfilePage> {
                           //Details Card
                           ProfileDetailsCard(
                             fullName: profileData.userFullName.toString(),
-                            employeeId: profileData.companyEmployeeId.toString(),
+                            employeeId: profileData.employeeId.toString(),
                             designation: profileData.designation.toString(),
                             department: profileData.departmentName.toString(),
                             branchName: profileData.branchName.toString(),
-                            phoneNumber: profileData.whatsappNumber.toString(),
-                            email: profileData.personalEmail.toString(),
+                            phoneNumber: profileData.userMobile.toString(),
+                            email: profileData.userEmail.toString(),
                             profileImage: profileData.userProfilePic.toString(),
                             social_link: profileData.socialLink ?? [],
                           ),
 
                           //Reporting Card
-                          profileData.reportingPersons!=null &&  profileData.reportingPersons!.isNotEmpty?
-                          ProfileReportingCard():SizedBox.shrink(),
+                          profileData.reportingPersons != null &&
+                                  profileData.reportingPersons!.isNotEmpty
+                              ? ProfileReportingCard(
+                                  reportingPersonsList:
+                                      profileData.reportingPersons ?? [],
+                                )
+                              : SizedBox.shrink(),
 
                           //Personal Info Card
-                          profileData.profileMenu!=null && profileData.profileMenu!.isNotEmpty?
-                          ProfilePersonalInfoCard(personalInfoList: profileData.profileMenu??[],): SizedBox.shrink(),
+                          profileData.profileMenu != null &&
+                                  profileData.profileMenu!.isNotEmpty
+                              ? ProfilePersonalInfoCard(
+                                  personalInfoList:
+                                      profileData.profileMenu ?? [],
+                                )
+                              : SizedBox.shrink(),
 
                           //Work Atendance Card
-                          ProfileWordAttendanceCard(),
+                          // ProfileWordAttendanceCard(),
 
                           //Tool Support Setting Card
                           ProfileToolSupportSettingCard(),
