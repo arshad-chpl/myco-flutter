@@ -12,7 +12,7 @@ final class InitialMyProfileState extends MyProfileState {}
 class FetchProfileDataLoadingState extends MyProfileState {}
 
 class FetchProfileDataSuccessState extends MyProfileState {
-  final ProfileEntity profileEntity;
+  final ProfileModelEntity profileEntity;
 
   const FetchProfileDataSuccessState(this.profileEntity);
 

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
 import 'package:myco_flutter/features/dashboard/presentation/widgets/timer_and_slider.dart';
+import 'package:myco_flutter/features/my_profile/data/models/other_profile_args_model.dart';
+import 'package:myco_flutter/features/my_profile/presentation/bloc/my_profile_bloc.dart';
+import 'package:myco_flutter/features/my_profile/presentation/bloc/my_profile_event.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class DashboardAppBar extends StatelessWidget {
@@ -18,6 +22,22 @@ class DashboardAppBar extends StatelessWidget {
       InkWell(
         onTap: () {
           context.pushNamed("my-profile");
+
+          //do not remove thhis code, it is used for other profile page
+          // final args = OtherProfilePageArgs(
+          //   userId: "1504" ,
+          //   societyId: "1",
+          //   unitId: "21",
+          //   blockId: "1",
+          //   floorId: "1",
+          //   myUserId: "1504",
+          //   myProfile: "1",
+          //   getProfileMenuDetails: 'getProfileMenuDetails',
+          //   otherUserBlockId: '',
+          //   otherUserFloorId: '',
+          //
+          // );
+          // context.pushNamed('other-profile',extra: args);
         },
         child: CircleAvatar(
           radius: 22 * Responsive.getDashboardResponsiveText(context),
