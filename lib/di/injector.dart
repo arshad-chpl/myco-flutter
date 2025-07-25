@@ -13,16 +13,10 @@ import 'package:myco_flutter/features/company_selector/presentation/di/request_o
 import 'package:myco_flutter/features/dashboard/presentation/di/dashboard_di.dart';
 import 'package:myco_flutter/features/employees/presentation/di/employee_di.dart';
 import 'package:myco_flutter/features/holiday/presentation/di/holiday_di.dart';
-import 'package:myco_flutter/features/company_selector/presentation/di/request_otp_di.dart';
-import 'package:myco_flutter/features/dashboard/presentation/di/dashboard_di.dart';
-import 'package:myco_flutter/features/holiday/presentation/di/holiday_di.dart';
 import 'package:myco_flutter/features/language_selector/presentation/di/language_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
-import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
 import 'package:myco_flutter/features/leave/presentation/di/leave_di.dart';
 import 'package:myco_flutter/features/my_profile/presentation/di/my_profile_di.dart';
-import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
-import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
 import 'package:myco_flutter/features/payslip/presentation/di/payslip_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/di/work_allocation_di.dart';
@@ -67,9 +61,6 @@ Future<void> initDi() async {
 
   // ========Admin View=========
   await adminViewDi(sl);
-
-  //========VISIT WITH=========
-  visitWithDi(sl);
 
   // ========Employee View=========
   employeeDi(sl);

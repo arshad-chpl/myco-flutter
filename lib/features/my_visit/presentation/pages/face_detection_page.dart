@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myco_flutter/core/utils/app_permissions.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/auto_closed_timer_widgets.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/camera_shimmer_widgets.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/draggable_scrollable_sheet_widget.dart';
@@ -93,7 +93,7 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
       actions: [
         IconButton(
           onPressed: () {
-            final faceDetectionBloc = context.read<FaceDetectionBloc>();
+            final faceDetectionBloc = context.read<VisitBloc>();
 
             showGeneralDialog(
               context: context,
@@ -123,46 +123,52 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
               const GreetingMessageCardWidget(),
               SizedBox(height: 23 * Responsive.getResponsive(context)),
 
-              BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
-                builder: (context, state) {
-                  if (state is FaceDetectionLoaded) {
-                    if (state.scanningState != 'scanning') {
-                      _scanController!.stop();
-                    } else if (!_scanController!.isAnimating) {
-                      _scanController!.repeat(reverse: true);
-                    }
-                    return CustomFaceDetectionWidgets(
-                      controller: state.controller,
-                      /**
-                           * Sets the scanning state use for UI display
-                           *
-                           * Valid values:
-                           * - 'scanning' -> When scanning is in progress.
-                           * - 'success' -> When the face has been successfully scanned.
-                           * - 'failure' -> When the scan failed or timed out.
-                           *
-                           * @param scanningState The state of scan
-                           * */
-                      scanningState: state.scanningState,
-                      topLineAlignment: _topLineAlignment,
-                      bottomLineAlignment: _bottomLineAlignment,
-                      retry: () {
-                        context.read<FaceDetectionBloc>().add(
-                          UpdateScanningState(scanningState: 'scanning'),
-                        );
-                        context.read<FaceDetectionBloc>().add(
-                          StartScanningTimer(),
-                        );
-                      },
-                    );
-                  } else if (state is FaceDetectionLoading) {
-                    return const CameraShimmerWidgets();
-                  } else if (state is FaceDetectionError) {
-                    return Center(child: CustomText(state.message));
+            BlocBuilder<VisitBloc, VisitState>(
+              builder: (context, state) {
+                if (state is VisitLoaded) {
+                  if (!state.cameracontroller!.value.isInitialized) {
+                    return const Center(child: CircularProgressIndicator());
                   }
-                  return const Center(child: CustomText('Camera error'));
-                },
-              ),
+
+                  if (state.scanningState != 'scanning') {
+                    _scanController!.stop();
+                  } else if (!_scanController!.isAnimating) {
+                    _scanController!.repeat(reverse: true);
+                  }
+
+                  return CustomFaceDetectionWidgets(
+                    controller: state.cameracontroller!,
+                    /**
+                     * Sets the scanning state use for UI display
+                     *
+                     * Valid values:
+                     * - 'scanning' -> When scanning is in progress.
+                     * - 'success' -> When the face has been successfully scanned.
+                     * - 'failure' -> When the scan failed or timed out.
+                     *
+                     * @param scanningState The state of scan
+                     */
+                    scanningState: state.scanningState,
+                    topLineAlignment: _topLineAlignment,
+                    bottomLineAlignment: _bottomLineAlignment,
+                    retry: () {
+                      context.read<VisitBloc>().add(
+                        UpdateScanningState(scanningState: 'scanning'),
+                      );
+                      context.read<VisitBloc>().add(
+                        StartScanningTimer(),
+                      );
+                    },
+                  );
+                } else if (state is VisitLoading) {
+                  return const CameraShimmerWidgets();
+                } else if (state is VisitError) {
+                  return Center(child: CustomText(state.message));
+                }
+
+                return const Center(child: CustomText('Camera error'));
+              },
+            ),
               SizedBox(height: 0.013 * Responsive.getHeight(context)),
 
               CustomText(
@@ -172,9 +178,9 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
               ),
               SizedBox(height: 0.040 * Responsive.getHeight(context)),
 
-              BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
+              BlocBuilder<VisitBloc, VisitState>(
                 builder: (context, state) {
-                  if (state is FaceDetectionLoaded) {
+                  if (state is VisitLoaded) {
                     return LinearProgressIndicatorWidget(
                       progress: state.progress,
                     );
@@ -184,9 +190,9 @@ class _FaceDetectionPageState extends State<FaceDetectionPage>
               ),
               SizedBox(height: 0.019 * Responsive.getHeight(context)),
 
-              BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
+              BlocBuilder<VisitBloc, VisitState>(
                 builder: (context, state) {
-                  if (state is FaceDetectionLoaded) {
+                  if (state is VisitLoaded) {
                     return AutoClosedTimerWidgets(
                       remainingTime: state.remainingTime,
                     );

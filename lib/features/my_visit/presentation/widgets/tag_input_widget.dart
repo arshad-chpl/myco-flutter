@@ -27,21 +27,15 @@ class CustomTagInputField extends StatelessWidget {
   final ScrollController _scrollController = ScrollController();
 
   @override
-  Widget build(BuildContext context) {
-    final responsive = Responsive.getResponsive(context);
-    final responsiveText = Responsive.getResponsiveText(context);
-    final themeColor = AppTheme.getColor(context);
-
-    return Container(
+  Widget build(BuildContext context) => Container(
       padding: EdgeInsets.symmetric(
-        horizontal: responsive * 9,
-        vertical: responsive * 9,
+        horizontal:  Responsive.getResponsive(context) * 9,
+        vertical:  Responsive.getResponsive(context) * 9,
       ),
-      margin: EdgeInsets.only(top: responsive * 6),
+      margin: EdgeInsets.only(top:  Responsive.getResponsive(context) * 6),
       decoration: BoxDecoration(
-        border: Border.all(color: themeColor.outline),
-        borderRadius: BorderRadius.circular(responsive * 8),
-        color: Colors.white,
+        border: Border.all(color: AppTheme.getColor(context).outline),
+        borderRadius: BorderRadius.circular( Responsive.getResponsive(context) * 8),
       ),
       child: Row(
         children: [
@@ -59,30 +53,30 @@ class CustomTagInputField extends StatelessWidget {
                         onRemove(tag);
                       },
                       child: Container(
-                        margin: EdgeInsets.only(right: responsive * 6),
+                        margin: EdgeInsets.only(right:  Responsive.getResponsive(context) * 6),
                         padding: EdgeInsets.symmetric(
-                          horizontal: responsive * 9,
-                          vertical: responsive * 5,
+                          horizontal:  Responsive.getResponsive(context) * 9,
+                          vertical:  Responsive.getResponsive(context) * 5,
                         ),
                         decoration: BoxDecoration(
-                          color: themeColor.primary.withAlpha(30),
-                          borderRadius: BorderRadius.circular(responsive * 10),
+                          color: AppTheme.getColor(context).inversePrimary,
+                          borderRadius: BorderRadius.circular( Responsive.getResponsive(context) * 10),
                         ),
                         child: Row(
                           children: [
                             Text(
                               tag,
                               style: TextStyle(
-                                color: themeColor.primary,
-                                fontSize: responsiveText * 14,
+                                color: AppTheme.getColor(context).primary,
+                                fontSize:  Responsive.getResponsiveText(context) * 14,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(width: responsive * 6),
+                            SizedBox(width:  Responsive.getResponsive(context) * 6),
                             Icon(
                               Icons.close,
-                              size: responsive * 14,
-                              color: themeColor.primary,
+                              size:  Responsive.getResponsive(context) * 14,
+                              color: AppTheme.getColor(context).primary,
                             ),
                           ],
                         ),
@@ -90,25 +84,25 @@ class CustomTagInputField extends StatelessWidget {
                     ),
                   ),
                   ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: responsive * 120),
+                    constraints: BoxConstraints(maxWidth:  Responsive.getResponsive(context) * 120),
                     child: TextField(
                       controller: _controller,
                       readOnly: true,
                       maxLines: 1,
                       textAlignVertical: TextAlignVertical.center,
-                      style: TextStyle(fontSize: responsiveText * 16),
+                      style: TextStyle(fontSize:  Responsive.getResponsiveText(context) * 16),
                       decoration: InputDecoration(
                         isDense: true,
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(
-                          horizontal: responsive * 6,
+                          horizontal:  Responsive.getResponsive(context) * 6,
                         ),
                         hintText: tags.isEmpty
                             ? LanguageManager().get(hint)
                             : '',
                         hintStyle: TextStyle(
-                          color: themeColor.outline,
-                          fontSize: responsiveText * 12,
+                          color: AppTheme.getColor(context).outline,
+                          fontSize:  Responsive.getResponsiveText(context) * 12,
                         ),
                       ),
                       onTap: () async {
@@ -138,7 +132,7 @@ class CustomTagInputField extends StatelessWidget {
               }
             },
             child: Padding(
-              padding: EdgeInsets.only(left: responsive * 6),
+              padding: EdgeInsets.only(left:  Responsive.getResponsive(context) * 6),
               child: SvgPicture.asset(AppAssets.arrow_down , color: AppColors.primary,
                 width: 25 * Responsive.getResponsive(context),
                 height: 25 * Responsive.getResponsive(context))
@@ -147,5 +141,4 @@ class CustomTagInputField extends StatelessWidget {
         ],
       ),
     );
-  }
 }

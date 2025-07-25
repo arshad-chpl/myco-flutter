@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/assigned_to.dart';
-import 'package:myco_flutter/widgets/custom_text.dart'; // make sure to import
-import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_with_bloc/Input_Tag_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/visit_with.dart';
 
 class CustomVisitTypeRadioButton extends StatelessWidget {
@@ -41,29 +38,29 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
 
   void _openVisitWithBottomSheet(BuildContext context) {
     showModalBottomSheet(
-      context:  context,
+      context: context,
       isScrollControlled: true,
       backgroundColor: AppTheme.getColor(context).surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (context) => BlocProvider(
-  create: (context) => InputTagBloc(),
-  child: VisitWith(),
-),
+        create: (context) => VisitBloc()..add(InitVisitTags()),
+        child: VisitWith(),
+      ),
     );
   }
 
   void _openAssignedToBottomSheet(BuildContext context) {
     showModalBottomSheet(
-      context:  context,
+      context: context,
       isScrollControlled: true,
       backgroundColor: AppTheme.getColor(context).surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (context) => BlocProvider(
-        create: (context) => InputTagBloc(),
+        create: (context) => VisitBloc()..add(InitVisitTags()),
         child: AssignedTo(),
       ),
     );
@@ -85,7 +82,7 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
       ),
       padding: EdgeInsets.symmetric(
         vertical: 10 * Responsive.getResponsive(context),
-        horizontal: 10* Responsive.getResponsive(context),
+        horizontal: 10 * Responsive.getResponsive(context),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -95,12 +92,14 @@ class CustomVisitTypeRadioButton extends StatelessWidget {
 
           return RadioListTile<String>(
             dense: true,
-            contentPadding: tilePadding ?? const EdgeInsets.symmetric(horizontal: 0),
+            contentPadding:
+                tilePadding ?? const EdgeInsets.symmetric(horizontal: 0),
             visualDensity: VisualDensity.compact,
             activeColor: activeColor ?? theme.primary,
             title: Text(
               option,
-              style: textStyle ??
+              style:
+                  textStyle ??
                   TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 18 * Responsive.getResponsiveText(context),

@@ -6,7 +6,7 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/my_visit/presentation/bloc/face_detection_bloc/face_detection_bloc.dart';
+import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/auto_closed_timer_widgets.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/current_location_with_label_widget.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/gps_accuracy_status_widget.dart';
@@ -78,23 +78,25 @@ class _ShowOutOfRangeBottomSheetState extends State<ShowOutOfRangeBottomSheet> {
 
           NewTextField(
               prefixIconPath: AppAssets.result,
-              label: LanguageManager().get('day_type'),
+              label: 'day_type',
+              isKey: true,
               hintText: LanguageManager().get('select'),
             suffixIconPath: AppAssets.arrowDown,
           ),
 
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
            NewTextField(
-            label: LanguageManager().get('out_of_range_reason'),
+            label: 'out_of_range_reason',
+            isKey: true,
             hintText: LanguageManager().get('write_here'),
             prefixIconPath: AppAssets.result,
           ),
           SizedBox(height: 0.013 * Responsive.getHeight(context)),
           const PrevNextBtnWidget(),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
-          BlocBuilder<FaceDetectionBloc, FaceDetectionState>(
+          BlocBuilder<VisitBloc, VisitState>(
             builder: (context, state) {
-              if (state is FaceDetectionLoaded) {
+              if (state is VisitLoaded) {
                 return AutoClosedTimerWidgets(
                   remainingTime: state.remainingTime,
                 );
