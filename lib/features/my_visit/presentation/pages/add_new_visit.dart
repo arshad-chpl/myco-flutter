@@ -3,12 +3,13 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/my_visit/presentation/widgets/auto_start_checkbox_row.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/field_virtual_visit_toggle.dart';
 import 'package:myco_flutter/features/my_visit/presentation/widgets/my_visit_custom_radio_button.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_checkbox.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
@@ -44,9 +45,9 @@ class _AddNewVisitState extends State<AddNewVisit> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      title: LanguageManager().get('add_new_visit'),
+      title: 'add_new_visit',
+      isKey: true,
       appBarBackgoundColor: AppTheme.getColor(context).surface,
-      leading: const BackButton(),
     ),
     body: SingleChildScrollView(
       child: Padding(
@@ -100,6 +101,7 @@ class _AddNewVisitState extends State<AddNewVisit> {
               onTap: () async {
                 // show date picker
               },
+              enabled: true,
             ),
 
             /// Visit Slot dropdown
@@ -140,15 +142,34 @@ class _AddNewVisitState extends State<AddNewVisit> {
               isKey: true,
               prefixIconPath: AppAssets.sticky_note,
               hintText: LanguageManager().get('write_here'),
-              maxLines: 2,
+              maxLines: 5,
             ),
 
             /// Auto Start Visit checkbox
-            AutoStartCheckboxRow(
-              isChecked: isChecked,
-              onChanged: (val) => {
-                // handle checkbox change
-              },
+            Row(
+              children: [
+                CustomCheckbox(
+                  value: isChecked,
+                  onChanged: (newValue) {
+                    // handle checkbox change
+                  },
+                  borderColor: AppTheme.getColor(context).primary,
+                  activeColor: AppColors.primary,
+                  checkColor: Colors.white,
+                  height: 24 * Responsive.getResponsive(context),
+                  width: 24 * Responsive.getResponsive(context),
+                  unCheckedBackground: Colors.transparent,
+                ),
+                SizedBox(width: 10 * Responsive.getResponsive(context)),
+                Expanded(
+                  child: CustomText(
+                    'auto_start_visit',
+                    isKey: true,
+                    fontSize: 14 * Responsive.getResponsiveText(context),
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
             ),
 
             /// Submit button

@@ -16,17 +16,17 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 import 'package:myco_flutter/widgets/get_common_row.dart';
 
 Widget buildOtherEmployeeVisitTab(
-    BuildContext context, {
-      required TextEditingController searchController,
-      required FocusNode searchFocus,
-      required String formattedDate,
-      required VoidCallback goToPreviousDate,
-      required VoidCallback goToNextDate,
-      required VoidCallback selectDateFromPicker,
-    }) => SingleChildScrollView(
+  BuildContext context, {
+  required TextEditingController searchController,
+  required FocusNode searchFocus,
+  required String formattedDate,
+  required VoidCallback goToPreviousDate,
+  required VoidCallback goToNextDate,
+  required VoidCallback selectDateFromPicker,
+}) => SingleChildScrollView(
   padding: EdgeInsets.symmetric(
     horizontal:
-    VariableBag.screenHorizontalPadding * Responsive.getResponsive(context),
+        VariableBag.screenHorizontalPadding * Responsive.getResponsive(context),
   ),
   child: Padding(
     padding: EdgeInsets.only(top: 20 * Responsive.getResponsive(context)),
@@ -45,7 +45,7 @@ Widget buildOtherEmployeeVisitTab(
           controller: searchController,
           hintText: 'Search With Customer',
         ),
-        SizedBox(height: 10 * Responsive.getResponsive(context),),
+        SizedBox(height: 10 * Responsive.getResponsive(context)),
 
         // CommonCard
         CommonCard(
@@ -54,14 +54,14 @@ Widget buildOtherEmployeeVisitTab(
           subTitle: '03:42 PM 05th Jun 2025',
           subTitleIcon: SvgPicture.asset(AppAssets.calendar),
           borderRadius:
-          VariableBag.commonCardBorderRadius *
+              VariableBag.commonCardBorderRadius *
               Responsive.getResponsive(context),
           showHeaderPrefixIcon: false,
           showBlackShadowInChild: true,
           headerColor: AppTheme.getColor(context).primary,
           borderColor: AppColors.textfieldBorder,
           bottomWidget: Padding(
-            padding: EdgeInsets.all(Responsive.getResponsive(context) *  4),
+            padding: EdgeInsets.all(Responsive.getResponsive(context) * 4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -126,28 +126,28 @@ Widget buildOtherEmployeeVisitTab(
                   children: [
                     getCommonRow(
                       context,
-                      title: 'Visit',
+                      title: 'visit',
                       value: 'Physical',
                       onTap: () {},
                       textColor: AppTheme.getColor(context).outline,
                     ),
                     getCommonRow(
                       context,
-                      title: 'Visit Type',
+                      title: 'visit_type',
                       value: 'Visit Type',
                       onTap: () {},
                       textColor: AppTheme.getColor(context).outline,
                     ),
                     getCommonRow(
                       context,
-                      title: 'Visit Purpose',
+                      title: 'visit_purpose',
                       value: 'Visit Purpose',
                       onTap: () {},
                       textColor: AppTheme.getColor(context).outline,
                     ),
                     getCommonRow(
                       context,
-                      title: 'Address',
+                      title: 'address',
                       value: '5XJ6F9J, Haripura, Gujrat 394325,\nIndia',
                       onTap: () {},
                       textColor: AppTheme.getColor(context).onSurface,
@@ -190,7 +190,9 @@ Widget buildOtherEmployeeVisitTab(
                         fontWeight: FontWeight.w500,
                         fontSize: 13 * Responsive.getResponsiveText(context),
                       ),
-                      boarderRadius: VariableBag.buttonBorderRadius * Responsive.getResponsive(context),
+                      boarderRadius:
+                          VariableBag.buttonBorderRadius *
+                          Responsive.getResponsive(context),
                       height: 0.04 * Responsive.getHeight(context),
                       width: 0.4 * Responsive.getWidth(context),
                       borderColor: AppColors.spanishYellow,

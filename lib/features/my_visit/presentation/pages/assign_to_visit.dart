@@ -38,13 +38,12 @@ class _AssignToVisitState extends State<AssignToVisit> {
     'Visit With',
   ];
 
-
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      title: LanguageManager().get('add_new_visit'),
+      title: 'add_new_visit',
+      isKey: true,
       appBarBackgoundColor: AppTheme.getColor(context).surface,
-      leading: BackButton(),
     ),
     body: SingleChildScrollView(
       child: Padding(
@@ -73,6 +72,7 @@ class _AssignToVisitState extends State<AssignToVisit> {
                 // Handle radio button change
               },
             ),
+
             CommonCard(
               title: LanguageManager().get('assign_to'),
               borderRadius:
@@ -190,12 +190,12 @@ class _AssignToVisitState extends State<AssignToVisit> {
                 // handle tap function
               },
             ),
-      FieldVirtualVisitToggle(
-        selectedValue: selectedFieldVisit,
-        onChanged: (v) => {
-          // handle toggle button
-        },
-      ),
+            FieldVirtualVisitToggle(
+              selectedValue: selectedFieldVisit,
+              onChanged: (v) => {
+                // handle toggle button
+              },
+            ),
 
             NewTextField(
               label: LanguageManager().get('visit_purpose'),

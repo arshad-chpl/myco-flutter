@@ -54,6 +54,9 @@ class _TravelModeState extends State<TravelMode> {
               suffixIconPath: AppAssets.arrow_down,
               controller: travelModeController,
               hintText: LanguageManager().get('select'),
+              onTap: (){
+                // handle tap function
+              },
             ),
 
             /// Site field
@@ -64,6 +67,9 @@ class _TravelModeState extends State<TravelMode> {
               suffixIconPath: AppAssets.arrow_down,
               controller: siteController,
               hintText: LanguageManager().get('select'),
+              onTap: (){
+                // handle tap function
+              },
             ),
 
             /// Buttons row

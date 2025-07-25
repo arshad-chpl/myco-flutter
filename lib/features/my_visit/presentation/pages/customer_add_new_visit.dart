@@ -41,7 +41,8 @@ class _CustomerAddNewVisitState extends State<CustomerAddNewVisit> {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: CustomAppbar(
-      title: LanguageManager().get('add_new_visit'),
+      title:'add_new_visit',
+      isKey: true,
       appBarBackgoundColor: AppTheme.getColor(context).surface,
       leading: const BackButton(),
     ),
