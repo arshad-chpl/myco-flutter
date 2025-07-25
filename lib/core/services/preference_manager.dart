@@ -11,6 +11,7 @@ class PreferenceManager {
   static const String appLanguage = "lang_app";
   static const String languageId = "lang_id";
   static const String userId = "user_id";
+  static const String userName = "user_name";
   static const String mobileNo = "mobile_no";
   static const String registrationRequestPendingUserId =
       "registration_request_pending_user_id";
@@ -149,6 +150,16 @@ class PreferenceManager {
   //TODO: Dummy static return for now
   Future<String?> getUserId() => readString(userId);
 
+
+  Future<void> setUserName(String value) async {
+    await writeString(userName, value);
+  }
+
+  //TODO: Dummy static return for now
+  Future<String?> getUserName() => readString(userName);
+
+
+
   Future<void> setUserMobileNo(String value) async {
     await writeString(mobileNo, value);
   }
@@ -170,6 +181,7 @@ class PreferenceManager {
   Future<void> setCountryId(String value) async {
     await writeString(countryId, '101');
   }
+
 
   Future<String?> getCountryId() => readString(countryId);
 

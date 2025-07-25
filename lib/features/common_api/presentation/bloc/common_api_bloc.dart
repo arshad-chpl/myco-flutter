@@ -67,8 +67,6 @@ class CommonApiBloc extends Bloc<CommonApiEvent, CommonApiState> {
   void _onFetchDepartmentAndDesignation(LoadDepartmentAndDesignation event, Emitter<CommonApiState> emit) async {
     emit(CommonApiLoading());
 
-    print('idBranch: ${event.branchId}');
-
     final request = DepartmentAndDesignationListRequest(
         tag: 'getFloorandUnitNew',
         companyId: event.companyId,

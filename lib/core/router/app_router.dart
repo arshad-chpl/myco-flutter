@@ -123,11 +123,8 @@ class AppRouter {
       ...chatRoutes,
 
       ...employeeRoute,
-      GoRoute(
-        path: RoutePaths.contactAdmin,
-        name: 'contact-admin',
-        builder: (context, state) => const ContactAdminPage(),
-      ),
+
+  // In the code where you NAVIGATE TO ContactAdminPage
 
       ...myVisitRoutes,
 

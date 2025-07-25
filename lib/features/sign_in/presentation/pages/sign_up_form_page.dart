@@ -144,9 +144,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
   }
 
   void _fetchBranchList() {
-
-    print('companyIdData: $companyId');
-
     context.read<CommonApiBloc>().add(LoadBranch(
         companyId ?? '1',
         '0'
@@ -155,7 +152,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
 
   void _fetchFloorUnitList() {
-    print('companyIdData: $companyId');
     context.read<CommonApiBloc>().add(LoadDepartmentAndDesignation(
         companyId ?? '1',
         selectedBranchId
@@ -181,7 +177,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
   Future<void> _fetchAddPrimaryUser() async {
 
     final String platform = Platform.isAndroid ? 'android' : 'ios';
-    String? languageId =  await preferenceManager.getLanguageId();
+    final String? languageId =  await preferenceManager.getLanguageId();
 
     final dataMap = {
       'addPrimaryUser': 'addPrimaryUser',
@@ -781,8 +777,6 @@ class _SignupFormPageState extends State<SignupFormPage> {
               fontWeight: FontWeight.bold,
             ),
             onTap: () {
-
-              print('gender: $Gender');
 
           //    if(formKey.currentState!.validate()){
                 final bool isValid = FormValidator.validateAll(

@@ -17,6 +17,7 @@ import 'package:myco_flutter/features/search_company/presentation/pages/search_c
 import 'package:myco_flutter/features/sign_in/domain/usecases/primary_register_usecase.dart';
 import 'package:myco_flutter/features/sign_in/presentation/bloc/primary_register_bloc.dart';
 import 'package:myco_flutter/features/sign_in/presentation/custome_bloc/my_form_bloc.dart';
+import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_page.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
@@ -100,6 +101,31 @@ List<RouteBase> InitialRoutes = [
       child: const SignupFormPage()
     ),
   ),
+
+  // GoRoute(
+  //   path: RoutePaths.signUpForm,
+  //   name: 'contact-admin',
+  //   builder: (context, state) => MultiBlocProvider(
+  //     providers: [
+  //       BlocProvider(
+  //         create: (context) => PrimaryRegisterBloc(registerUseCase: GetIt.I<PrimaryRegisterUseCase>()),
+  //       ),
+  //     ],
+  //     child: const ContactAdminPage()
+  //   ),
+  // ),
+
+  GoRoute(
+    path: RoutePaths.contactAdmin,
+    name: 'contact-admin',
+    builder: (context, state) => BlocProvider(
+        create: (_) => PrimaryRegisterBloc(registerUseCase: GetIt.I<PrimaryRegisterUseCase>()),
+        child: const ContactAdminPage(),
+      ),
+  ),
+
+
+
   GoRoute(
     path: RoutePaths.getStarted,
     name: 'get-started',

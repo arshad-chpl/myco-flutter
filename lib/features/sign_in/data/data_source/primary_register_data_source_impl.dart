@@ -8,7 +8,11 @@ import 'package:myco_flutter/core/models/data/common_response_model.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/features/sign_in/data/data_source/primary_register_data_source.dart';
-import 'package:myco_flutter/features/sign_in/models/view_pending_profile_response.dart';
+import 'package:myco_flutter/features/sign_in/data/models/request/cancel_pending_profile_request.dart';
+import 'package:myco_flutter/features/sign_in/data/models/request/reminder_pending_profile_Request.dart';
+import 'package:myco_flutter/features/sign_in/data/models/request/society_list_request.dart';
+import 'package:myco_flutter/features/sign_in/data/models/request/view_pending_profile_request.dart';
+import 'package:myco_flutter/features/sign_in/data/models/response/view_pending_profile_response.dart';
 
 class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
   final Dio dio;
@@ -30,14 +34,9 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
 
   //pending profile api
   @override
-  Future<ViewPendingProfileResponse> getViewPendingProfile() async {
-    final dataMap = {
-      'ViewPendingProfile': 'ViewPendingProfile',
-      'user_id': preferenceManager.getKeyValueString(VariableBag.registrationRequestPendingUserId),
-      'society_id': '1'
-    };
+  Future<ViewPendingProfileResponse> getViewPendingProfile(ViewPendingProfileRequest request) async {
 
-    final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
+    final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
     final controller = 'resident_register_controller.php';
 
     final response = await GetIt.I<ApiClient>(
@@ -48,14 +47,9 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
 
 
   @override
-  Future<CommonResponseModel> getCancelPendingProfile() async {
-    final dataMap = {
-      'CancelPendingProfile': 'CancelPendingProfile',
-      'user_id': '1992', /*preferenceManager.getKeyValueString(VariableBag.registrationRequestPendingUserId),*/
-      'society_id': '1'
-    };
+  Future<CommonResponseModel> getCancelPendingProfile(CancelPendingProfileRequest request) async {
 
-    final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
+    final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
     final controller = 'resident_register_controller.php';
 
     final response = await GetIt.I<ApiClient>(
@@ -66,9 +60,9 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
 
 
   @override
-  Future<CommonResponseModel> getReminderPendingProfile(Map<String, dynamic> dataMap) async {
+  Future<CommonResponseModel> getReminderPendingProfile(ReminderPendingProfileRequest request) async {
 
-    final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
+    final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
     final controller = 'resident_register_controller.php';
 
     final response = await GetIt.I<ApiClient>(
@@ -79,18 +73,9 @@ class PrimaryRegisterDataSourceImpl implements PrimaryRegisterDataSource {
 
 
   @override
-  Future<CommonResponseModel> getSociety(String societyId) async {
-    final dataMap = {
-      'getSociety': 'getSociety',
-      'country_id': '',
-      'state_id': '',
-      'city_id': '',
-      'society_id': societyId,
-      'company_name': '',
-      'language_id': ''
-    };
+  Future<CommonResponseModel> getSociety(SocietyListRequest request) async {
 
-    final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
+    final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
     final controller = 'societyListControllerEnc.php';
 
     final response = await GetIt.I<ApiClient>(

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:intl/intl.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/encryption/gzip_util.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
@@ -46,14 +47,20 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
     }
     final controller = 'imageUploadController.php';
 
+    final String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    final String? countryId = await preferenceManager.getCompanyId();
+    final String? userId = await preferenceManager.getUserId();
+    final String? userName = await preferenceManager.getUserName();
+    final String formatName = '${userName}_${currentDate}_${userId}';
+
     final response = await GetIt.I<ApiClient>(instanceName: VariableBag.employeeMobileApi,).postMultipartImage(
       controller,
       'uploadImageToTemp',
-      '1',
-      '0',
+      countryId,
+      userId,
       loginType ? '1' : '0',
-      'User25 S_2025-07-22_1355',
-      files,
+      formatName,
+      files
     );
 
     // Direct parse, NO decrypt:

@@ -6,15 +6,11 @@ import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
-import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/search_company/presentation/widgets/box_design_registration.dart';
-import 'package:myco_flutter/features/sign_in/domain/usecases/primary_register_usecase.dart';
-import 'package:myco_flutter/features/sign_in/models/view_pending_profile_response.dart';
 import 'package:myco_flutter/features/sign_in/presentation/bloc/primary_register_bloc.dart';
-import 'package:myco_flutter/features/sign_in/presentation/pages/contact_admin_shimmer.dart';
-import 'package:myco_flutter/features/sign_in/presentation/widgets/custom_request_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_loader_dialog.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
@@ -40,107 +36,133 @@ class _ContactAdminPageState extends State<ContactAdminPage> {
   String mobileNumber = '';
   String emailAddress = '';
   String profilePicture = '';
+  String? countryName = '';
+
+
 
   @override
-  Widget build(BuildContext context) => BlocProvider(
-      create: (context) =>
-      PrimaryRegisterBloc(registerUseCase: GetIt.I<PrimaryRegisterUseCase>())
-        ..add(LoadPendingProfile()),
-      child: Scaffold(
-        backgroundColor: AppColors.white,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Image.asset('assets/sign_in/back_arrow.png', // <-- your asset path
-              height: 24, // adjust size as needed
-              width: 24,
-            ),
-            onPressed: () {
-              context.go(RoutePaths.signUpForm);
-            },
-          ),
-          title: const Text(
-            'Pending Account',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: AppColors.black,
-            ),
-          ),
-          backgroundColor: Colors.white, // optional: ensure background matches
-          elevation: 0, // optional: no shadow
+  void initState() {
+    super.initState();
+    _fetchViewPendingProfile();
+  }
+
+  void _fetchViewPendingProfile() {
+    context.read<PrimaryRegisterBloc>().add(LoadPendingProfile());
+  }
+
+  void _fetchSociety() {
+    context.read<PrimaryRegisterBloc>().add(LoadSociety());
+  }
+
+  void _fetchCancelProfile() {
+    context.read<PrimaryRegisterBloc>().add(LoadCancelProfile());
+  }
+
+  void _fetchReminderProfile() {
+
+    context
+        .read<PrimaryRegisterBloc>()
+        .add(LoadReminderProfile(
+        blockId,
+        userFirstName,
+        userLastName,
+        userFullName,
+        userFloorName,
+        userBlockName
+    ));
+  }
+
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    backgroundColor: AppColors.white,
+    appBar: AppBar(
+      leading: IconButton(
+        icon: Image.asset('assets/sign_in/back_arrow.png', // <-- your asset path
+          height: 24, // adjust size as needed
+          width: 24,
         ),
-
-        body: BlocConsumer<PrimaryRegisterBloc, PrimaryRegisterState>(
-          listener: (context, state) {
-
-            if (state is PrimaryRegisterLoading) {
-              CustomLoaderDialog.show(context);
-            }
-
-            if (state is PendingAccountSuccess || state is ReminderPendingProfileSuccess || state is CancelPendingProfileSuccess ||
-                state is PrimaryRegisterError) {
-              Navigator.of(context, rootNavigator: true).pop();
-            }
-
-            if (state is PendingAccountSuccess) {
-
-              final response = state.response;
-
-              userFullName = response.userFullName ?? 'N/A';
-              designation = response.designation ?? 'N/A';
-              department = '${response.blockName ?? ' - '} ${response.floorName ?? ''}';
-              mobileNumber = '${response.countryCode ?? ''} ${response.userMobile ?? ''}';
-              emailAddress = response.userEmail ?? 'N/A';
-              profilePicture = response.userProfilePic ?? '';
-              userFirstName = response.userFirstName ?? '';
-              userLastName = response.userLastName ?? '';
-              userBlockName = response.blockName ?? '';
-              userFloorName = response.floorName ?? '';
-              blockId = response.blockId ?? '';
-              messageStatus = response.message ?? '';
-
-
-              if (response.userStatus == '1') {
-                //--Approve
-                preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, "");
-                preferenceManager.setKeyValueBoolean(VariableBag.REGISTRATION_REQUEST_IS_APPROVE, true);
-                Fluttertoast.showToast(msg: state.response.message ?? 'N/A', backgroundColor: Colors.redAccent, textColor: Colors.white,);
-
-
-                () async {
-                  final societyId = await preferenceManager.getCompanyId();
-                  context.read<PrimaryRegisterBloc>().add(LoadSociety(societyId!));
-                };
-
-
-              } else if (response.userStatus == '0') {
-                //--Reject
-              }
-            }
-
-            if (state is ReminderPendingProfileSuccess) {
-              Fluttertoast.showToast(msg: state.response.message ?? 'N/A', backgroundColor: Colors.redAccent, textColor: Colors.white,);
-            }
-
-            if (state is CancelPendingProfileSuccess) {
-              Fluttertoast.showToast(msg: state.response.message ?? 'N/A', backgroundColor: Colors.redAccent, textColor: Colors.white,);
-
-              preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, "");
-              preferenceManager.setKeyValueBoolean(VariableBag.REGISTRATION_REQUEST_IS_APPROVE, true);
-
-              context.go(RoutePaths.splash);
-            }
-
-          },
-          builder: (context, state) {
-            if (state is PrimaryRegisterError) {
-              return Center(child: Text('Error: ${state.message}'));
-            }
-            return _buildBody(context);
-          },
+        onPressed: () {
+          context.go(RoutePaths.signUpForm);
+        },
+      ),
+      title: const Text(
+        'Pending Account',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: AppColors.black,
         ),
       ),
-    );
+      backgroundColor: Colors.white, // optional: ensure background matches
+      elevation: 0, // optional: no shadow
+    ),
+
+    body: BlocConsumer<PrimaryRegisterBloc, PrimaryRegisterState>(
+      listener: (context, state) async {
+
+        if (state is PrimaryRegisterLoading) {
+          CustomLoaderDialog.show(context);
+        }
+
+        if (state is PendingAccountSuccess || state is ReminderPendingProfileSuccess || state is CancelPendingProfileSuccess ||
+            state is PrimaryRegisterError) {
+          Navigator.of(context, rootNavigator: true).pop();
+        }
+
+        if (state is PendingAccountSuccess) {
+
+          final response = state.response;
+
+          countryName = await preferenceManager.getCompanyName();
+          userFullName = response.userFullName ?? 'N/A';
+          designation = response.designation ?? 'N/A';
+          department = '${response.blockName ?? ' - '} ${response.floorName ?? ''}';
+          mobileNumber = '${response.countryCode ?? ''} ${response.userMobile ?? ''}';
+          emailAddress = response.userEmail ?? 'N/A';
+          profilePicture = response.userProfilePic ?? '';
+          userFirstName = response.userFirstName ?? '';
+          userLastName = response.userLastName ?? '';
+          userBlockName = response.blockName ?? '';
+          userFloorName = response.floorName ?? '';
+          blockId = response.blockId ?? '';
+          messageStatus = response.message ?? '';
+
+
+          if (response.userStatus == '1') {
+            //--Approve
+            preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, "");
+            preferenceManager.setKeyValueBoolean(VariableBag.REGISTRATION_REQUEST_IS_APPROVE, true);
+            Fluttertoast.showToast(msg: state.response.message ?? 'N/A', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+            _fetchSociety();
+
+          } else if (response.userStatus == '0') {
+            //--Reject
+          }
+        }
+
+        if (state is ReminderPendingProfileSuccess) {
+          Fluttertoast.showToast(msg: state.response.message ?? 'N/A', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+        }
+
+        if (state is CancelPendingProfileSuccess) {
+          Fluttertoast.showToast(msg: state.response.message ?? 'N/A', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+
+          preferenceManager.setKeyValueString(VariableBag.registrationRequestPendingUserId, "");
+          preferenceManager.setKeyValueBoolean(VariableBag.REGISTRATION_REQUEST_IS_APPROVE, true);
+
+          context.go(RoutePaths.splash);
+        }
+
+      },
+      builder: (context, state) {
+        if (state is PrimaryRegisterError) {
+          Fluttertoast.showToast(msg: state.message ?? 'N/A', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+        }
+        return _buildBody(context);
+      },
+    ),
+  );
 
   Widget _buildBody(BuildContext context) => Padding(
     padding: const EdgeInsets.all(26.0),
@@ -225,10 +247,8 @@ class _ContactAdminPageState extends State<ContactAdminPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MyCoButton(
-                      onTap: () {
-                        context.read<PrimaryRegisterBloc>().add(LoadCancelProfile());
-                      },
-                      title: 'Cancel Request',
+                      onTap: _fetchCancelProfile,
+                      title: LanguageManager().get('cancel'),
                       height: 0.05 * Responsive.getHeight(context),
                       width: 0.37 * Responsive.getWidth(context),
                       boarderRadius:
@@ -242,25 +262,8 @@ class _ContactAdminPageState extends State<ContactAdminPage> {
                       backgroundColor: AppColors.white,
                     ),
                     MyCoButton(
-                      onTap: () {
-                        final dataMap = {
-                          'ReminderPendingProfile':
-                          'ReminderPendingProfile',
-                          'user_id':
-                          '1992', // Should use preferenceManager here if needed
-                          'society_id': '1',
-                          'block_id': blockId,
-                          'user_first_name': userFirstName,
-                          'user_last_name': userLastName,
-                          'user_full_name': userFullName,
-                          'areaName': userFloorName,
-                          'blockName': userBlockName
-                        };
-                        context
-                            .read<PrimaryRegisterBloc>()
-                            .add(LoadReminderProfile(dataMap));
-                      },
-                      title: 'Send Reminder',
+                      onTap: _fetchReminderProfile,
+                      title: LanguageManager().get('reminder'),
                       height: 0.05 * Responsive.getHeight(context),
                       width: 0.37 * Responsive.getWidth(context),
                       boarderRadius:
