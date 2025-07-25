@@ -288,7 +288,6 @@ class MyVisitPage extends StatelessWidget {
                 )
                     : buildOtherEmployeeVisitTab(
                   context,
-                  MediaQuery.of(context).size,
                   searchController: TextEditingController(),
                   searchFocus: FocusNode(),
                   formattedDate: formattedDate(selectedDate),

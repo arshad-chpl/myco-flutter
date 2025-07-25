@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +7,6 @@ import 'package:myco_flutter/features/my_visit/presentation/bloc/visit_bloc.dart
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_customer.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_expense_page.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/add_new_visit.dart';
-import 'package:myco_flutter/features/my_visit/presentation/pages/assign_to_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_add_new_visit.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/customer_card_type.dart';
 import 'package:myco_flutter/features/my_visit/presentation/pages/face_detection_page.dart';
@@ -48,7 +48,7 @@ List<RouteBase> myVisitRoutes = [
         path: RoutePaths.myVisit,
         name: 'my-visit',
         builder: (context, state) => BlocProvider(
-          create: (context) => VisitBloc()..add(InitVisitTags()),
+          create: (_) => GetIt.I<VisitBloc>(),
           child: MyVisitPage(),
         ),
       ),
@@ -70,7 +70,6 @@ List<RouteBase> myVisitRoutes = [
         name: 'add-visit',
         builder: (context, state) => const AddNewVisit(),
       ),
-
       GoRoute(
         path: RoutePaths.faceDetection,
         name: 'faceDetection',
@@ -78,22 +77,6 @@ List<RouteBase> myVisitRoutes = [
           child: BlocProvider(
             create: (context) =>
             GetIt.I<VisitBloc>()..add(LaunchCamera()),
-            child: const FaceDetectionPage(),
-          ),
-        ),
-      ),
-      GoRoute(
-        path: RoutePaths.AssignToVisit,
-        name: 'assign-to-visit',
-        builder: (context, state) => const AssignToVisit(),
-      ),
-      GoRoute(
-        path: RoutePaths.faceDetection,
-        name: 'faceDetection',
-        pageBuilder: (context, state) => MaterialPage(
-          child: BlocProvider(
-            create: (context) =>
-            GetIt.I<FaceDetectionBloc>()..add(LaunchCamera()),
             child: const FaceDetectionPage(),
           ),
         ),

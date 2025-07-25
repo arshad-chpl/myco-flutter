@@ -123,25 +123,6 @@ class AppRouter {
       ...chatRoutes,
       GoRoute(
         path: RoutePaths.signUpForm,
-        name: 'select-other-company',
-        builder: (context, state) => const SignupFormPage(),
-      ),
-      GoRoute(
-        path: RoutePaths.getStarted,
-        name: 'get-started',
-        builder: (context, state) => const GetStarted(),
-      ),
-      GoRoute(
-        path: RoutePaths.companySearch,
-        name: 'companySearch',
-        builder: (context, state) => const SearchCompanyScreen(),
-      ),
-
-      GoRoute(
-        path: RoutePaths.employees,
-        name: 'employees',
-        builder: (context, state) => const EmployeesScreen(),
-      ),
 
       ...employeeRoute,
       GoRoute(
