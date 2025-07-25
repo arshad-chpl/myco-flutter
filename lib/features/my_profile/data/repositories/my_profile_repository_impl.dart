@@ -5,15 +5,20 @@ import 'package:myco_flutter/features/my_profile/data/datasources/myprofile_remo
 import 'package:myco_flutter/features/my_profile/domain/entites/profile_entity.dart';
 import 'package:myco_flutter/features/my_profile/domain/repositories/my_profile_repository.dart';
 
-class MyProfileRepositoryImpl implements MyProfileRepository{
+class MyProfileRepositoryImpl implements MyProfileRepository {
   final MyProfileRemoteDataSource remoteDataSource;
   final SafeApiCall safeApiCall;
 
   MyProfileRepositoryImpl(this.remoteDataSource, this.safeApiCall);
   @override
-  Future<Either<Failure, ProfileEntity>> getProfileData() async{
-    final result = await safeApiCall.execute(remoteDataSource.getProfileData);
+  Future<Either<Failure, ProfileEntity>> getProfileData(
+    Map<String, dynamic> dataMap,
+  ) async {
+    final result = await remoteDataSource.getProfileData(dataMap);
 
-    return result.map((responseModel) => responseModel.toEntity());
+    return result.fold(
+        (failure)=> Left(failure),
+        (profileModel) => Right(profileModel.toEntity()),
+    );
   }
 }

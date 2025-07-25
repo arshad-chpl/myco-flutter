@@ -24,6 +24,7 @@ class NewTextField extends StatelessWidget {
   final bool? isKey;
   final Widget? suffix;
   final Widget? prefix;
+  final int? minLines;
 
   const NewTextField({
     super.key,
@@ -44,6 +45,7 @@ class NewTextField extends StatelessWidget {
     this.isKey = true,
     this.suffix,
     this.prefix,
+    this.minLines,
   });
 
   @override
@@ -124,7 +126,7 @@ class NewTextField extends StatelessWidget {
                         child: IgnorePointer(
                           ignoring: onTap != null,
                           child: TextFormField(
-                            minLines: 1,
+                            minLines: minLines??1,
                             maxLines: maxLines ?? 1,
                             style: TextStyle(
                               fontSize:

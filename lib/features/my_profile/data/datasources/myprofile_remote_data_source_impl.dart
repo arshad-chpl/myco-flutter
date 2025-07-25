@@ -1,30 +1,27 @@
 import 'dart:convert';
 
+import 'package:dartz/dartz.dart';
+import 'package:myco_flutter/core/error/failure.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
+import 'package:myco_flutter/core/utils/safe_api_call.dart';
 import 'package:myco_flutter/features/my_profile/data/datasources/myprofile_remote_data_source.dart';
 import 'package:myco_flutter/features/my_profile/data/models/profile_model.dart';
 
-class MyprofileRemoteDataSourceImpl extends MyProfileRemoteDataSource{
+class MyprofileRemoteDataSourceImpl extends MyProfileRemoteDataSource {
   final ApiClient apiClient;
-
-  MyprofileRemoteDataSourceImpl({required this.apiClient});
+  final SafeApiCall safeApiCall;
+  MyprofileRemoteDataSourceImpl({required this.apiClient,required this.safeApiCall,});
 
   @override
-  Future<ProfileModel> getProfileData() async{
-    Map<String,dynamic> body = {
-    'getProfileMenuDetails':'getProfileMenuDetails',
-    'society_id':'1',
-    'user_id':'21',
-    'unit_id':'21',
-    'block_id':'1',
-    'floor_id':'1',
-    'other_user_block_id': '',
-    'other_user_floor_id': '',
-    'my_user_id':'21',
-    'my_profile':'1',
-    };
-
-    final result = await apiClient.postFormDynamic('profileMenuController.php', body);
-    return ProfileModel.fromJson(jsonDecode(result));
+  Future<Either<Failure, ProfileModel>> getProfileData(
+    Map<String, dynamic> dataMap,
+  ) async {
+    return await safeApiCall.execute<ProfileModel>(() async {
+      final response = await apiClient.postFormDynamic(
+        "profileMenuController.php",
+        dataMap,
+      );
+      return ProfileModel.fromJson(jsonDecode(response));
+    });
   }
 }

@@ -149,6 +149,7 @@ class _MediaFilePickerWidgetState extends State<_MediaFilePickerWidget> {
               : 0.010 * Responsive.getHeight(context),
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             if (widget.isCameraShow)
               GestureDetector(
