@@ -43,7 +43,7 @@ class _StartNewChatState extends State<StartNewChat> {
     final selectedId = await showCustomSimpleBottomSheet(
       context: context,
       heading: 'Select Branch',
-      icon: AssetImage('assets/chat/down_arrow.png'),
+      // icon: AssetImage('assets/chat/down_arrow.png'),
       dataList: departments,
     );
     log(selectedId.toString(), name: "selectedId");

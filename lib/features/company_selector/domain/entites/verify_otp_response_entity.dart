@@ -5,7 +5,7 @@ class VerifyOtpResponseEntity extends Equatable {
   final String? error;
   final String? userId;
   final String? shiftTimeId;
-  final String? societyId;
+  final String? companyId;
   final String? userFullName;
   final String? userFirstName;
   final String? userLastName;
@@ -13,12 +13,12 @@ class VerifyOtpResponseEntity extends Equatable {
   final String? userEmail;
   final String? userIdProof;
   final String? userType;
-  final String? blockId;
-  final String? blockName;
-  final String? floorName;
+  final String? branchId;
+  final String? branchName;
+  final String? departmentName;
   final String? unitName;
   final String? baseUrl;
-  final String? floorId;
+  final String? departmentId;
   final String? gender;
   final String? unitId;
   final String? zoneId;
@@ -86,7 +86,7 @@ class VerifyOtpResponseEntity extends Equatable {
     this.error,
     this.userId,
     this.shiftTimeId,
-    this.societyId,
+    this.companyId,
     this.userFullName,
     this.userFirstName,
     this.userLastName,
@@ -94,12 +94,12 @@ class VerifyOtpResponseEntity extends Equatable {
     this.userEmail,
     this.userIdProof,
     this.userType,
-    this.blockId,
-    this.blockName,
-    this.floorName,
+    this.branchId,
+    this.branchName,
+    this.departmentName,
     this.unitName,
     this.baseUrl,
-    this.floorId,
+    this.departmentId,
     this.gender,
     this.unitId,
     this.zoneId,
@@ -169,7 +169,7 @@ class VerifyOtpResponseEntity extends Equatable {
     error,
     userId,
     shiftTimeId,
-    societyId,
+    companyId,
     userFullName,
     userFirstName,
     userLastName,
@@ -177,12 +177,12 @@ class VerifyOtpResponseEntity extends Equatable {
     userEmail,
     userIdProof,
     userType,
-    blockId,
-    blockName,
-    floorName,
+    branchId,
+    branchName,
+    departmentName,
     unitName,
     baseUrl,
-    floorId,
+    departmentId,
     gender,
     unitId,
     zoneId,

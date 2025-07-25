@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
+import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/holiday/model/request/apply_optional_holiday.dart';
 import 'package:myco_flutter/features/holiday/model/request/delete_optional_holiday.dart';
@@ -15,6 +16,7 @@ import 'package:myco_flutter/features/holiday/presentation/bloc/holiday_state.da
 import 'package:myco_flutter/features/holiday/presentation/widgets/holiday_item_card.dart';
 import 'package:myco_flutter/features/lost_and_found/presentation/widgets/text_field.dart';
 import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
+import 'package:myco_flutter/widgets/custom_month_year_picker_header/month_year_picker_bottom_sheet.dart';
 
 class HolidayListPage extends StatelessWidget {
   final TextEditingController controller;
@@ -144,7 +146,28 @@ class HolidayListPage extends StatelessWidget {
                         icon: const Icon(Icons.arrow_left),
                       ),
                       InkWell(
-                        onTap: () {},
+                        onTap: () async {
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.white,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                            ),
+                            builder: (_) => MonthYearPickerBottomSheet(
+                              initialMonth: selectedDateNotifier.value.month,
+                              initialYear: selectedDateNotifier.value.year,
+                              startYear: 2025,
+                              endYear: 2026,
+                              customMonths: LanguageManager().getList('month_arry'),
+                              onSubmit: (month, year) {
+                                final newDate = DateTime(year, month == 0 ? 1 : month);
+                                selectedDateNotifier.value = newDate;
+                                fetchHolidays(context, newDate);
+                              },
+                            ),
+                          );
+                        },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [

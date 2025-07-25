@@ -97,7 +97,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
 
       final newBranch = evt.branch;
       final possibleDepts = st.departments
-          .where((d) => d.blockId == newBranch.blockId)
+          .where((d) => d.blockId == newBranch.branchId)
           .toList();
 
       final newDept = possibleDepts.isNotEmpty ? possibleDepts.first : null;
@@ -106,7 +106,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
         GetEmployeesParams(
           userId: userId,
           societyId: societyId,
-          blockId: newBranch.blockId,
+          blockId: newBranch.branchId,
           floorId: newDept?.floorId,
         ),
       );
@@ -148,8 +148,8 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
         GetEmployeesParams(
           userId: userId,
           societyId: societyId,
-          blockId: newDept.blockId,
-          floorId: newDept.floorId,
+          blockId: newDept.branchId,
+          floorId: newDept.departmentId,
         ),
       );
 
