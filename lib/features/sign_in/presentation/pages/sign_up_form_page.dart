@@ -434,6 +434,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
                                   );
                                 },
                             ),
+
                             TextSpan(
                               text: ".",
                               style: TextStyle(
