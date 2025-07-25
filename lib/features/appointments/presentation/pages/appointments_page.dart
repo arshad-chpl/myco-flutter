@@ -91,9 +91,6 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
     }
   }
 
-
-
-
   @override
   void dispose() {
     pageController.dispose();

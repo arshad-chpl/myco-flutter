@@ -6,7 +6,6 @@ import 'package:myco_flutter/features/appointments/presentation/bloc/appointment
 class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
   final AppointmentUseCase useCase;
 
-
   AppointmentBloc(this.useCase) : super(const AppointmentInitial()) {
 
     on<AppointmentTabChange>((event, emit) {
@@ -52,7 +51,9 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
         final result = await useCase.approvedAppointment(event.params);
         result.fold(
           (failure) => emit(AppointmentError(failure.message, tabIndex: state.tabIndex)),
-          (approvedAppointment) => emit(CommonResponseAppointment(approvedAppointment, tabIndex: state.tabIndex)),
+          (approvedAppointment) {
+            emit(CommonResponseAppointment(approvedAppointment, tabIndex: state.tabIndex));
+          },
         );
       } catch (e) {
         emit(AppointmentError('Failed to load approved appointment', tabIndex: state.tabIndex));
@@ -65,7 +66,9 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
         final result = await useCase.rejectAppointment(event.params);
         result.fold(
               (failure) => emit(AppointmentError(failure.message, tabIndex: state.tabIndex)),
-              (approvedAppointment) => emit(CommonResponseAppointment(approvedAppointment, tabIndex: state.tabIndex)),
+              (approvedAppointment) {
+                emit(CommonResponseAppointment(approvedAppointment, tabIndex: state.tabIndex));
+              }
         );
       } catch (e) {
         emit(AppointmentError('Failed to load approved appointment', tabIndex: state.tabIndex));

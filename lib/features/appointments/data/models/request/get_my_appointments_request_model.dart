@@ -13,8 +13,8 @@ class GetMyAppointmentsRequestModel {
 
   Map<String, dynamic> toJson() => {
     'getMyAppointments': getMyAppointments,
-    'company_Id': companyId,
-    'user_Id': userId,
-    'language_Id': languageId,
+    'company_id': companyId,
+    'user_id': userId,
+    'language_id': languageId,
   };
 }

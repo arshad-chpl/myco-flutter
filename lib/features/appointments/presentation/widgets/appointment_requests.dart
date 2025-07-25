@@ -9,17 +9,18 @@ import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/appointments/data/models/request/approve_appointment_entity_model.dart';
+import 'package:myco_flutter/features/appointments/data/models/request/get_my_appointments_request_model.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_bloc.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_event.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_state.dart';
 import 'package:myco_flutter/features/appointments/presentation/pages/reject_request_bottom_sheet.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_person_details.dart';
+import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_shimmer.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/reason_value_common_row.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
 import 'package:myco_flutter/widgets/custom_alert_dialog.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:shimmer/shimmer.dart';
 
 class AppointmentRequests extends StatefulWidget {
   const AppointmentRequests({super.key});
@@ -41,20 +42,29 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
   Widget build(
     BuildContext context,
   ) => BlocConsumer<AppointmentBloc, AppointmentState>(
-    listener: (context, state) {
+    listener: (context, state) async {
       if (state is CommonResponseAppointment) {
-        if (Navigator.canPop(context)) {
-          Navigator.pop(context);
-        }
         Fluttertoast.showToast(
           msg: state.commonResponse.message ?? 'Action successful!',
         );
 
-        // context.read<AppointmentBloc>().add(const AppointmentTabChange(tabIndex: 1));
+        final userId = await preferenceManager.getUserId();
+        final companyId = await preferenceManager.getCompanyId();
+        final languageId = await preferenceManager.getLanguageId();
+
+        context.read<AppointmentBloc>().add(
+          GetMyAppointmentEvent(
+            GetMyAppointmentsRequestModel(
+              getMyAppointments: 'getMyAppointments',
+              userId: userId,
+              companyId: companyId,
+              languageId: languageId,
+            ),
+          ),
+        );
+
+        context.read<AppointmentBloc>().add(const AppointmentTabChange(tabIndex: 1));
       } else if (state is AppointmentError) {
-        if (Navigator.canPop(context)) {
-          Navigator.pop(context);
-        }
         Fluttertoast.showToast(msg: state.message);
       }
     },
@@ -65,7 +75,7 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
       }
 
       if (state is AppointmentLoading) {
-        return appointmentRequestsShimmer(context);
+        return const AppointmentShimmer();
       } else if (state is AppointmentLoaded) {
         if (state.appointments.myAppointments == null ||
             state.appointments.myAppointments!.isEmpty) {
@@ -89,7 +99,7 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
                     VariableBag.commonCardBorderRadius *
                     Responsive.getResponsive(context),
                 title: formattedTimeDate,
-                headerPrefixIcon: AppAssets.myCoLogo,
+                headerPrefixIcon: AppAssets.calendarIcon,
                 showHeaderPrefixIcon: true,
                 headerColor: AppTheme.getColor(context).primary,
                 bottomWidget: Padding(
@@ -183,6 +193,7 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
                                   },
                                   cancelText: 'No',
                                   onConfirm: () async {
+                                    Navigator.pop(context);
                                     context.read<AppointmentBloc>().add(
                                       ApprovedAppointmentEvent(
                                         ApproveAppointmentRequestModel(
@@ -234,140 +245,9 @@ class _AppointmentRequestsState extends State<AppointmentRequests> {
           },
         );
       } else if (state is AppointmentError) {
-        return const CustomText('error');
+        return const CustomText('Your internet connection is slow');
       }
       return const Center(child: CustomText('Tap to load appointments'));
     },
   );
-
-  ListView appointmentRequestsShimmer(BuildContext context) {
-    final responsive = Responsive.getResponsive(context);
-    return ListView.builder(
-      itemCount: 4,
-      padding: EdgeInsets.symmetric(horizontal: 16 * responsive),
-      itemBuilder: (context, index) => Padding(
-        padding: EdgeInsets.only(bottom: 21 * responsive),
-        child: Shimmer.fromColors(
-          baseColor: Colors.grey.shade300,
-          highlightColor: Colors.grey.shade100,
-          child: Container(
-            padding: EdgeInsets.all(13 * responsive),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12 * responsive),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Header time bar
-                Container(
-                  height: 10 * responsive,
-                  width: 100 * responsive,
-                  color: Colors.white,
-                ),
-                SizedBox(height: 12 * responsive),
-
-                // Person details section
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 0.12 * Responsive.getWidth(context),
-                      height: 0.06 * Responsive.getHeight(context),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    SizedBox(width: 10 * responsive),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 10 * responsive,
-                            width: double.infinity,
-                            color: Colors.white,
-                          ),
-                          SizedBox(height: 6 * responsive),
-                          Container(
-                            height: 10 * responsive,
-                            width: 150 * responsive,
-                            color: Colors.white,
-                          ),
-                          SizedBox(height: 6 * responsive),
-                          Container(
-                            height: 10 * responsive,
-                            width: 100 * responsive,
-                            color: Colors.white,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 16 * responsive),
-                const Divider(color: Colors.white),
-
-                // Reason for appointment
-                SizedBox(height: 10 * responsive),
-                Container(
-                  height: 10 * responsive,
-                  width: double.infinity,
-                  color: Colors.white,
-                ),
-                SizedBox(height: 8 * responsive),
-                Container(
-                  height: 10 * responsive,
-                  width: double.infinity,
-                  color: Colors.white,
-                ),
-
-                // Location and Phone
-                SizedBox(height: 8 * responsive),
-                Container(
-                  height: 10 * responsive,
-                  width: double.infinity,
-                  color: Colors.white,
-                ),
-                SizedBox(height: 8 * responsive),
-                Container(
-                  height: 10 * responsive,
-                  width: 150 * responsive,
-                  color: Colors.white,
-                ),
-
-                // Buttons
-                SizedBox(height: 20 * responsive),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 0.045 * Responsive.getHeight(context),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(23 * responsive),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 12 * responsive),
-                    Expanded(
-                      child: Container(
-                        height: 0.045 * Responsive.getHeight(context),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(23 * responsive),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }

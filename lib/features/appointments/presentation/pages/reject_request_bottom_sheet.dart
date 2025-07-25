@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/constants/constants.dart';
@@ -38,6 +39,8 @@ class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
   final reasonController = TextEditingController();
   late final PreferenceManager preferenceManager;
 
+  int? currentFieldErrorIndex;
+
   @override
   void initState() {
     super.initState();
@@ -50,24 +53,46 @@ class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
     super.dispose();
   }
 
-  Future<void> submitRejection() async {
-    if (formKey.currentState!.validate()) {
-      final rejectModel = RejectAppointmentRequestModel(
-        rejectAppointment: 'rejectAppointment',
-        userId: await preferenceManager.getUserId(),
-        companyId: await preferenceManager.getCompanyId(),
-        languageId: await preferenceManager.getLanguageId(),
-        appointmentId: widget.appointmentId,
-        appointmentByUserId: widget.appointmentByUserId,
-        userName: widget.userName,
-        appointmentRejectReason: reasonController.text.trim(),
-      );
+  void submitRejection() {
+    final controllers = [
+      reasonController
+    ];
 
-      if (mounted) {
-        context.read<AppointmentBloc>().add(RejectAppointmentEvent(rejectModel));
-      }
+    if (controllers[0].text.trim().isEmpty) {
+      setState(() {
+        currentFieldErrorIndex = 0;
+      });
+      formKey.currentState!.validate();
+      return;
+    }
+
+    setState(() {
+      currentFieldErrorIndex = null;
+    });
+
+    if (formKey.currentState!.validate()) {
+      dispatchRejectionEvent();
     }
   }
+
+  Future<void> dispatchRejectionEvent() async {
+    final rejectModel = RejectAppointmentRequestModel(
+      rejectAppointment: 'rejectAppointment',
+      userId: await preferenceManager.getUserId(),
+      companyId: await preferenceManager.getCompanyId(),
+      languageId: await preferenceManager.getLanguageId(),
+      appointmentId: widget.appointmentId,
+      appointmentByUserId: widget.appointmentByUserId,
+      userName: widget.userName,
+      appointmentRejectReason: reasonController.text.trim(),
+    );
+
+    if (mounted) {
+      context.read<AppointmentBloc>().add(RejectAppointmentEvent(rejectModel));
+      Navigator.pop(context);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) => Form(
@@ -92,6 +117,7 @@ class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
               }
               return null;
             },
+
           ),
           SizedBox(
             height:
@@ -119,11 +145,11 @@ class _RejectRequestBottomSheetState extends State<RejectRequestBottomSheet> {
               Expanded(
                 child: MyCoButton(
                   title: 'Submit',
+                  onTap: submitRejection,
                   height: Responsive.getHeight(context) * .05,
                   isShadowBottomLeft: true,
                   boarderRadius: 30,
                   width: Responsive.getWidth(context) * .450,
-                  onTap: () =>  submitRejection(),
                 ),
               ),
             ],

@@ -8,6 +8,7 @@ import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_bloc.dart';
 import 'package:myco_flutter/features/appointments/presentation/bloc/appointment_state.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_person_details.dart';
+import 'package:myco_flutter/features/appointments/presentation/widgets/appointment_shimmer.dart';
 import 'package:myco_flutter/features/appointments/presentation/widgets/reason_value_common_row.dart';
 import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -23,25 +24,29 @@ class MyAppointments extends StatefulWidget {
 class _MyAppointmentsState extends State<MyAppointments> {
 
   Color getHeaderColor(String status) {
-    if(status.toLowerCase() == 'approved') {
-      return AppTheme.getColor(context).secondary;
-    } else if (status.toLowerCase() == 'pending') {
-      return AppColors.spanishYellow;
-    } else if(status.toLowerCase() == 'rejected') {
-      return AppTheme.getColor(context).error;
+    switch (status) {
+      case '1': // Approved
+        return AppTheme.getColor(context).secondary;
+      case '0': // Pending
+        return AppColors.spanishYellow;
+      case '2': // Rejected
+        return AppTheme.getColor(context).error;
+      default:
+        return Colors.grey;
     }
-    return AppTheme.getColor(context).secondary;
   }
 
-  String getStatusLabel(String label) {
-    if(label.toLowerCase() == 'approved') {
-      return 'Approved';
-    } else if (label.toLowerCase() == 'pending') {
-      return 'Pending';
-    } else if(label.toLowerCase() == 'rejected') {
-      return 'Rejected';
+  String getStatusLabel(String status) {
+    switch (status) {
+      case '1':
+        return 'Approved';
+      case '0':
+        return 'Pending';
+      case '2':
+        return 'Rejected';
+      default:
+        return 'N/A';
     }
-    return 'not define';
   }
 
   @override
@@ -53,31 +58,32 @@ class _MyAppointmentsState extends State<MyAppointments> {
         }
 
         if(state is AppointmentLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const AppointmentShimmer();
         } else if(state is AppointmentLoaded) {
           if (state.appointments.myAppointments == null || state.appointments.myAppointments!.isEmpty) {
             return const Center(child: CustomText('No Appointments Found.'));
           }
           return ListView.builder(
-            itemCount: state.appointments.myAppointments!.length,
+            itemCount: state.appointments.myAppointments?.length ?? 0,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, index) {
               final myAppointment = state.appointments.myAppointments![index];
-              final isRejected = myAppointment.appointmentStatus == 'rejected';
+              final status = myAppointment.appointmentStatus ?? '';
 
               return Padding(
                 padding: EdgeInsets.only(bottom: 21 * Responsive.getResponsive(context)),
                 child: CommonCard(
                   title: myAppointment.appointmentDatetime ?? 'NA',
-                  headerPrefixIcon: AppAssets.myCoLogo,
+                  headerPrefixIcon: AppAssets.calendarIcon,
                   showHeaderPrefixIcon: true,
-                  headerColor: getHeaderColor(myAppointment.appointmentStatusView ?? ''),
-                  suffixIcon: isRejected
+                  headerColor: getHeaderColor(status),
+                  suffixIcon: (status == '0' || status == '2')
                       ? Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SvgPicture.asset(AppAssets.assetBellRinging),
-                      SizedBox(width: 0.01 * Responsive.getWidth(context)),
+                      SizedBox(width: 0.03
+                          * Responsive.getWidth(context)),
                       SvgPicture.asset(AppAssets.assetTrashIcon),
                     ],
                   )
@@ -99,9 +105,9 @@ class _MyAppointmentsState extends State<MyAppointments> {
                             ),
                             MyCoButton(
                               onTap: () {},
-                              title: getStatusLabel(myAppointment.appointmentStatus ?? ''),
+                              title: getStatusLabel(status),
                               textStyle: TextStyle(
-                                color: getHeaderColor(myAppointment.appointmentStatus ?? ''),
+                                color: getHeaderColor(status),
                               ),
                               height: 0.030 * Responsive.getHeight(context),
                               width: 0.23 * Responsive.getWidth(context),
@@ -133,7 +139,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
                           heading: 'Phone No. ',
                           value: myAppointment.userMobile ?? '',
                         ),
-                        if (myAppointment.appointmentRejectReason != null)
+                        if (status == '2')
                           Column(
                             children: [
                               SizedBox(height: 0.01 * Responsive.getHeight(context)),
@@ -163,7 +169,7 @@ class _MyAppointmentsState extends State<MyAppointments> {
             },
           );
         } else if(state is AppointmentError) {
-          return const CustomText('error');
+          return const CustomText('Your internet connection is slow');
         }
         return  const Center(child: CustomText('Tap to load My Appointment'));
       },

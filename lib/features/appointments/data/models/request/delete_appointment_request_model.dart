@@ -13,8 +13,8 @@ class DeleteAppointmentRequestModel {
 
   Map<String, dynamic> toJson() => {
     'deleteAppointment': deleteAppointment,
-    'company_Id': companyId,
-    'language_Id': languageId,
-    'appointment_Id': appointmentId,
+    'company_id': companyId,
+    'language_id': languageId,
+    'appointment_id': appointmentId,
   };
 }
