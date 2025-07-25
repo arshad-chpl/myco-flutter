@@ -237,11 +237,6 @@ class NewTextField extends StatelessWidget {
                                   12 * Responsive.getResponsive(context),
                                 ),
                               ),
-                              disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                ),
-                              ),
                             ),
                             onChanged: (value) {
                               onChange?.call(value);
