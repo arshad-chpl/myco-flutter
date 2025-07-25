@@ -9,7 +9,8 @@ class CustomLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final responsive = Responsive.getResponsive(context);
-    final isTablet = Responsive.screenWidth() > 600;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isTablet = screenWidth > 600;
 
     final double padding = 10 * responsive;
     final double borderRadius = isTablet ? 40 * responsive : 20 * responsive;
