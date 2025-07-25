@@ -11,6 +11,7 @@ import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/core/utils/util.dart';
+import 'package:myco_flutter/features/employees/domain/entites/branch.dart';
 import 'package:myco_flutter/features/employees/domain/entites/department.dart';
 import 'package:myco_flutter/features/employees/presentation/bloc/employee_bloc.dart';
 import 'package:myco_flutter/features/employees/presentation/bloc/employee_event.dart';
@@ -21,12 +22,12 @@ import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/media_picker/widgets/custom_media_picker_container.dart';
 
 class EmployeesScreen extends StatelessWidget {
   EmployeesScreen({super.key});
 
   final EmployeeBloc bloc = GetIt.I<EmployeeBloc>();
+
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -51,34 +52,6 @@ class EmployeesScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          // body: Padding(
-          //   padding: const EdgeInsets.symmetric(
-          //     horizontal: VariableBag.screenHorizontalPadding,
-          //   ),
-          //   child: Column(
-          //     children: [
-          //       //      /Media picker container
-          //       Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: CustomMediaPickerContainer(
-          //           title: 'Assets Image',
-          //           titleFontSize: 14 * Responsive.getResponsiveText(context),
-          //           imageTitle: 'Capture Image',
-          //           // imageTitleSize: 10,
-          //           // containerHeight: 0.100 * Responsive.getHeight(context),
-          //           multipleImage: 5,
-          //           imagePath: AppAssets.assetGalleryExport,
-          //           isCameraShow: true,
-          //           isGalleryShow: true,
-          //           isDocumentShow: true,
-          //           isCropImage: true,
-          //           onSelectedMedia: (files) {
-          //             final paths = files.map((file) => file.path).toList();
-          //             log('Selected file paths: $paths');
-          //           },
-          //         ),
-          //       ),
           body: BlocBuilder<EmployeeBloc, EmployeeState>(
             builder: (context, state) {
               if (state is EmployeeLoading || state is EmployeeInitial) {
@@ -91,9 +64,6 @@ class EmployeesScreen extends StatelessWidget {
               return const SizedBox();
             },
           ),
-          // ],
-          // ),
-          // ),
         ),
       ),
     );
@@ -128,8 +98,10 @@ class EmployeesScreen extends StatelessWidget {
     final double gridPadding = 8 * Responsive.getResponsive(context);
 
     return Padding(
-      padding: EdgeInsets.all(
-        VariableBag.screenHorizontalPadding * Responsive.getResponsive(context),
+      padding: EdgeInsets.symmetric(
+        horizontal:
+            VariableBag.screenHorizontalPadding *
+            Responsive.getResponsive(context),
       ),
       child: Column(
         children: [
@@ -204,9 +176,7 @@ class EmployeesScreen extends StatelessWidget {
                         crossAxisSpacing: Responsive.getGridConfig(
                           context,
                         ).spacing,
-                        childAspectRatio: Responsive.getGridConfig(
-                          context,
-                        ).childAspectRatio,
+                        childAspectRatio: 2 / 2.5,
                       ),
                       itemBuilder: (_, index) {
                         final emp = filteredEmployees[index];
@@ -267,29 +237,54 @@ class EmployeesScreen extends StatelessWidget {
     );
   }
 
-  Widget _dropdownBranch(BuildContext ctx, EmployeeLoaded? st) =>
-      GestureDetector(
-        onTap: () async {
-          if (st == null) return;
-          final id = await showCustomSimpleBottomSheet(
-            context: ctx,
-            heading: 'branch',
-            dataList: st.branches
-                .map((b) => {'id': b.blockId ?? '', 'name': b.blockName ?? ''})
-                .toList(),
-            selectedId: st.selectedBranch?.blockId,
-          );
-          if (id == null || id == st.selectedBranch?.blockId) return;
-          final branch = st.branches.firstWhere((b) => b.blockId == id);
-          _searchController.clear();
-          FocusScope.of(ctx).unfocus();
-          ctx.read<EmployeeBloc>().add(ChangeBranch(branch));
-        },
-        child: _buildDropdownBox(
-          ctx,
-          st?.selectedBranch?.blockName ?? 'branch',
-        ),
+  Widget _dropdownBranch(
+    BuildContext ctx,
+    EmployeeLoaded? st,
+  ) => GestureDetector(
+    onTap: () async {
+      if (st == null) return;
+
+      // The bottom sheet returns a selected map with 'id' and 'name'.
+      final selectedMap = await showCustomSimpleBottomSheet(
+        context: ctx,
+        heading: 'branch',
+        dataList: st.branches
+            .map(
+              (b) => {
+                'id': b.blockId ?? '', // Branch ID
+                'name': b.blockName ?? '', // Branch name
+              },
+            )
+            .toList(),
+        selectedId: st.selectedBranch?.blockId,
       );
+
+      // Debug print the selected map from the bottom sheet
+      debugPrint('Selected Map from Bottom Sheet: $selectedMap');
+
+      // If the user cancelled or selected the same branch again, do nothing.
+      if (selectedMap == null ||
+          selectedMap['id'] == st.selectedBranch?.blockId)
+        return;
+
+      // Create a new Branch instance from the selected map
+      final branch = Branch(
+        blockId: selectedMap['id'],
+        blockName: selectedMap['name'],
+      );
+
+      debugPrint(
+        'New Branch Selected: ${branch.blockId} - ${branch.blockName}',
+      );
+
+      _searchController.clear();
+      FocusScope.of(ctx).unfocus();
+
+      ctx.read<EmployeeBloc>().add(ChangeBranch(branch));
+    },
+
+    child: _buildDropdownBox(ctx, st?.selectedBranch?.blockName ?? 'branch'),
+  );
 
   Widget _dropdownDepartment(
     BuildContext ctx,
@@ -298,20 +293,31 @@ class EmployeesScreen extends StatelessWidget {
   ) => GestureDetector(
     onTap: () async {
       if (st == null) return;
-      final id = await showCustomSimpleBottomSheet(
+
+      final selectedMap = await showCustomSimpleBottomSheet(
         context: ctx,
-        heading: 'departement',
+        heading: 'department',
         dataList: depts
             .map((d) => {'id': d.floorId ?? '', 'name': d.departmentName ?? ''})
             .toList(),
         selectedId: st.selectedDepartment?.floorId,
       );
-      if (id == null || id == st.selectedDepartment?.floorId) return;
-      final dept = depts.firstWhere((d) => d.floorId == id);
+
+      if (selectedMap == null ||
+          selectedMap['id'] == st.selectedDepartment?.floorId)
+        return;
+
+      final dept = Department(
+        floorId: selectedMap['id'],
+        departmentName: selectedMap['name'],
+      );
+
       _searchController.clear();
       FocusScope.of(ctx).unfocus();
+
       ctx.read<EmployeeBloc>().add(ChangeDepartment(dept));
     },
+
     child: _buildDropdownBox(
       ctx,
       st?.selectedDepartment?.departmentName ?? 'departement',
@@ -359,8 +365,12 @@ class EmployeesScreen extends StatelessWidget {
   }
 }
 
-// body: Column(
-//   children: [
+// body: Padding(
+//   padding: const EdgeInsets.symmetric(
+//     horizontal: VariableBag.screenHorizontalPadding,
+//   ),
+//   child: Column(
+//     children: [
 ///Media picker container
 // Padding(
 //   padding: const EdgeInsets.all(8.0),
@@ -369,10 +379,9 @@ class EmployeesScreen extends StatelessWidget {
 //     titleFontSize: 14 * Responsive.getResponsiveText(context),
 //     imageTitle: 'Capture Image',
 //     // imageTitleSize: 10,
-//     // containerHeight: 100,
+//     // containerHeight: 0.100 * Responsive.getHeight(context),
 //     multipleImage: 5,
 //     imagePath: AppAssets.assetGalleryExport,
-//     backgroundColor: Colors.blue.shade50,
 //     isCameraShow: true,
 //     isGalleryShow: true,
 //     isDocumentShow: true,
@@ -381,6 +390,45 @@ class EmployeesScreen extends StatelessWidget {
 //       final paths = files.map((file) => file.path).toList();
 //       log('Selected file paths: $paths');
 //     },
+//   ),
+// ),
+
+// final List<Map<String, String>> countryList = [
+//   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
+//   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
+//   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
+//   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
+//   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
+//   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
+//   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
+//   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
+//   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
+//   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
+//   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
+//   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
+//   {'id': '1', 'name': 'India', 'flag': '🇮🇳', 'code': '+91'},
+//   {'id': '2', 'name': 'Afghanistan', 'flag': '🇦🇫', 'code': '+93'},
+//   {'id': '3', 'name': 'Albania', 'flag': '🇦🇱', 'code': '+355'},
+//   {'id': '4', 'name': 'Algeria', 'flag': '🇩🇿', 'code': '+213'},
+//   {'id': '5', 'name': 'American Samoa', 'flag': '🇦🇸', 'code': '+1684'},
+//   {'id': '6', 'name': 'Andorra', 'flag': '🇦🇩', 'code': '+376'},
+// ];
+
+///Country code bottom sheet
+// ElevatedButton(
+//   onPressed: () async {
+//     final selectedCountry = await showCountryCodeBottomSheet(
+//       context: context,
+//       dataList: countryList,
+//       heading: 'country_code',
+//     );
+//     if (selectedCountry != null) {
+//       debugPrint(selectedCountry['name']);
+//     }
+//   },
+//   child: Icon(Icons.account_tree_rounded),
+// ),
+//     ],
 //   ),
 // ),
 
