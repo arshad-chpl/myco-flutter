@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
@@ -21,16 +22,18 @@ class CommonCard extends StatelessWidget {
   final bool? showHeaderPrefixIcon, showBlackShadowInChild;
   final String? headerPrefixIcon;
   final Widget? suffixIcon, titleSuffix, subTitleIcon, headerPrefix;
-  final double? headerPrefixIconHeight, headerPrefixIconWidth;
+  final double? headerPrefixIconHeight,
+      headerPrefixIconWidth,
+      titleFontSize,
+      secondTitleFontSize,
+      subTitleFontSize,
+      buttonTextFontSize,
+      headerBottomBorderRadius;
   final FontWeight? titleFontWeight,
       secondTitleFontWeight,
       subTitleFontWeight,
       buttonTextFontWeight;
   final Color? titleColor, secondTitleColor, subTitleColor, buttonTextColor;
-  final double? titleFontSize,
-      secondTitleFontSize,
-      subTitleFontSize,
-      buttonTextFontSize;
   const CommonCard({
     required this.title,
     required this.bottomWidget,
@@ -70,6 +73,7 @@ class CommonCard extends StatelessWidget {
     this.buttonTextFontSize,
     this.onHeaderTap,
     this.headerPrefix,
+    this.headerBottomBorderRadius,
   });
 
   @override
@@ -92,12 +96,25 @@ class CommonCard extends StatelessWidget {
             height: headerHeight, //?? 0.06 * Responsive.getHeight(context),
             padding:
                 headerPadding ??
-                EdgeInsets.all(10 * Responsive.getResponsive(context)),
+                EdgeInsets.symmetric(
+                  vertical:
+                      VariableBag.commonCardVerticalPadding *
+                      Responsive.getResponsive(context),
+                  horizontal:
+                      VariableBag.commonCardHorizontalPadding *
+                      Responsive.getResponsive(context),
+                ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(
-                  (borderRadius ?? 12) * Responsive.getResponsive(context) -
-                      1.0,
+                  (borderRadius ?? VariableBag.commonCardBorderRadius) *
+                          Responsive.getResponsive(context) -
+                      3.0,
+                ),
+                bottom: Radius.circular(
+                  (headerBottomBorderRadius ?? 1) *
+                          Responsive.getResponsive(context) -
+                      3.0,
                 ),
               ),
               boxShadow: [

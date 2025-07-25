@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
 import 'package:myco_flutter/di/injector.dart';
+import 'package:myco_flutter/features/asset/presentation/bloc/add_asset/add_asset_bloc.dart';
 import 'package:myco_flutter/features/asset/presentation/bloc/assets_bloc.dart';
 import 'package:myco_flutter/features/asset/presentation/pages/add_assets.dart';
 import 'package:myco_flutter/features/asset/presentation/pages/assets_details_page.dart';
@@ -41,7 +42,12 @@ List<RouteBase> assetsRoutes = [
   GoRoute(
     path: RoutePaths.addAssets,
     name: 'add-assets',
-    builder: (context, state) => const AddAssets(),
+    builder: (context, state) => MultiBlocProvider(
+      providers: [
+        BlocProvider<AddAssetBloc>(create: (_) => sl<AddAssetBloc>()),
+      ],
+      child: const AddAssets(),
+    ),
   ),
   GoRoute(
     path: RoutePaths.editAssets,

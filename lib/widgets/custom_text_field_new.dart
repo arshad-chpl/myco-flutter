@@ -126,7 +126,7 @@ class NewTextField extends StatelessWidget {
                         child: IgnorePointer(
                           ignoring: onTap != null,
                           child: TextFormField(
-                            minLines: minLines??1,
+                            minLines: minLines ?? 1,
                             maxLines: maxLines ?? 1,
                             style: TextStyle(
                               fontSize:
@@ -247,7 +247,7 @@ class NewTextField extends StatelessWidget {
                 ),
               ),
             ),
-            if (field.hasError && controller!.text.isNotEmpty)
+            if (field.hasError && controller!.text.isEmpty)
               Padding(
                 padding: EdgeInsets.only(
                   top: 4 * Responsive.getResponsive(context),

@@ -12,7 +12,7 @@ class AppAssets {
   static const String svgsVisit = '$svgsPath/visit';
   static const String assetVisit = '$basePath/add_expense';
 
-  static const String assets = '$basePath/asset';
+  static const String assets = '$basePath/svgs/asset';
   static const String lostFound = '$basePath/lost_and_found';
   static const String svgsTakeOrder = '$svgsPath/take_order';
   static const String employees = '$basePath/employees';
@@ -172,6 +172,7 @@ class AppAssets {
   static const String assetsSimCard = '$assets/simcard.svg';
   static const String assetsVector = '$assets/Vector.svg';
   static const String assetsUserTick = '$assets/user-tick.svg';
+  static const String assetsData = '$assets/data.svg';
 
   static const String lostFoundData = '$lostFound/data.png';
   static const String lostFoundMessageEdit = '$lostFound/message-edit.png';

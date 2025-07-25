@@ -110,10 +110,9 @@ flutter:
     - assets/svgs/visit/
     - assets/add_expense/
     - assets/dashboard/svgs/
-    - assets/assets/
+    - assets/svgs/asset/
     - assets/chat/
     - assets/svgs/work_allocation/
-    - assets/asset/
     - assets/svgs/take_order/
     - assets/work_allocation/
     - assets/animations/

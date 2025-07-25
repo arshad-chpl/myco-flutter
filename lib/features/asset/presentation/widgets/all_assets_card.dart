@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
+import 'package:myco_flutter/constants/constants.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/asset/presentation/widgets/active_assets_card.dart';
@@ -10,69 +11,47 @@ import 'package:myco_flutter/widgets/cached_image_holder.dart';
 import 'package:myco_flutter/widgets/common_card.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 
-class AllAssetsListPage extends StatelessWidget {
-  const AllAssetsListPage({super.key});
+// class AllAssetsListPage extends StatelessWidget {
+//   const AllAssetsListPage({super.key});
 
-  @override
-  Widget build(BuildContext context) => SliverPadding(
-    padding: EdgeInsets.symmetric(
-      horizontal: 0.04 * Responsive.getWidth(context),
-    ),
-    sliver: SliverList.separated(
-      itemCount: 10,
-      separatorBuilder: (_, __) =>
-          SizedBox(height: 0.02 * Responsive.getHeight(context)),
-      itemBuilder: (_, index) {
-        if (index % 2 != 0) {
-          return AllAssetsCard(
-            title: 'Desktop',
-            subTitle: '(AS101)',
-            image: AppAssets.imageLaptop,
-            brand: 'HP',
-            srNo: 'DELL123456',
-            category: 'Desktop',
-            createdBy: 'Parth Jadav',
-            custodian: 'Arth Sorthiya',
-            onViewDetailsTap: () => context.push('/assets-details'),
-            onEditTap: () => context.push('/edit-assets'),
-            onScannerTap: () => showAssetsHoldersBottomSheet(
-              context: context,
-              handoverImageList: [
-                'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
-                'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                AppAssets.imageLaptop,
-                AppAssets.imageLaptop,
-              ],
-              image: AppAssets.imageLaptop,
-            ),
-          );
-        } else {
-          return AllAssetsCard(
-            onEditTap: () => context.push('/edit-assets'),
-            title: 'Desktop',
-            subTitle: '(AS101)',
-            image: AppAssets.imageLaptop,
-            brand: 'Dell',
-            srNo: 'DELL123456',
-            category: 'Desktop',
-            createdBy: 'Parth Jadav',
-            onViewDetailsTap: () => context.push('/assets-details'),
-            onScannerTap: () => showAssetsHoldersBottomSheet(
-              context: context,
-              handoverImageList: [
-                'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
-                'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
-                AppAssets.imageLaptop,
-                AppAssets.imageLaptop,
-              ],
-              image: AppAssets.imageLaptop,
-            ),
-          );
-        }
-      },
-    ),
-  );
-}
+//   @override
+//   Widget build(BuildContext context) => SliverPadding(
+//     padding: EdgeInsets.symmetric(
+//       horizontal:
+//           VariableBag.screenHorizontalPadding *
+//           Responsive.getResponsive(context),
+//     ),
+//     sliver: SliverList.separated(
+//       itemCount: 10,
+//       separatorBuilder: (_, __) =>
+//           SizedBox(height: 0.02 * Responsive.getHeight(context)),
+//       itemBuilder: (_, index) {
+//         return AllAssetsCard(
+//           title: 'Desktop',
+//           subTitle: '(AS101)',
+//           image: AppAssets.imageLaptop,
+//           brand: 'HP',
+//           srNo: 'DELL123456',
+//           category: 'Desktop',
+//           createdBy: 'Parth Jadav',
+//           custodian: 'Arth Sorthiya',
+//           onViewDetailsTap: () => context.push('/assets-details'),
+//           onEditTap: () => context.push('/edit-assets'),
+//           onScannerTap: () => showAssetsHoldersBottomSheet(
+//             context: context,
+//             handoverImageList: [
+//               'https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg',
+//               'https://images.pexels.com/photos/640781/pexels-photo-640781.jpeg',
+//               AppAssets.imageLaptop,
+//               AppAssets.imageLaptop,
+//             ],
+//             image: AppAssets.imageLaptop,
+//           ),
+//         );
+//       },
+//     ),
+//   );
+// }
 
 class AllAssetsCard extends StatelessWidget {
   final String title;
@@ -129,7 +108,11 @@ class AllAssetsCard extends StatelessWidget {
               color: AppTheme.getColor(context).onPrimary,
             ),
           ),
-          SizedBox(width: 0.045 * Responsive.getWidth(context)),
+          SizedBox(
+            width:
+                VariableBag.buttonRowSpacing *
+                Responsive.getResponsive(context),
+          ),
           GestureDetector(
             onTap: onScannerTap,
             child: Image.asset(
@@ -140,15 +123,18 @@ class AllAssetsCard extends StatelessWidget {
           ),
         ],
       ),
-      headerPadding: EdgeInsets.symmetric(
-        horizontal: 16 * Responsive.getResponsive(context),
-        vertical: 8 * Responsive.getResponsive(context),
-      ),
       showBlackShadowInChild: true,
       bottomWidget: Padding(
         padding:
             childPadding ??
-            EdgeInsets.all(16.0 * Responsive.getResponsive(context)),
+            EdgeInsets.symmetric(
+              horizontal:
+                  VariableBag.commonCardHorizontalPadding *
+                  Responsive.getResponsive(context),
+              vertical:
+                  VariableBag.commonCardVerticalPadding *
+                  Responsive.getResponsive(context),
+            ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,10 +143,22 @@ class AllAssetsCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  if (image.startsWith('http') || image.startsWith('https'))
+                  if (image.startsWith('http') ||
+                      image.startsWith('https') ||
+                      image.isEmpty)
                     CachedImage(
                       imageUrl: image,
+                      fit: BoxFit.contain,
                       width: 0.3 * Responsive.getWidth(context),
+                      height: 0.15 * Responsive.getHeight(context),
+                      errorWidget: SizedBox(
+                        width: 0.3 * Responsive.getWidth(context),
+                        height: 0.3 * Responsive.getWidth(context),
+                        child: Icon(
+                          Icons.broken_image_rounded,
+                          size: 60 * Responsive.getResponsive(context),
+                        ),
+                      ),
                     )
                   else
                     Image.asset(
@@ -216,7 +214,8 @@ class AllAssetsCard extends StatelessWidget {
                                 spaceBetweenData ??
                                 0.02 * Responsive.getHeight(context),
                           ),
-                        if (custodian != null)
+                        if (custodian != null &&
+                            (custodian?.isNotEmpty ?? true))
                           AssetsVerticalData(
                             title: 'custodian',
                             data: custodian ?? '',
