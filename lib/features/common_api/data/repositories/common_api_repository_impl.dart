@@ -2,6 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:myco_flutter/core/error/failure.dart';
 import 'package:myco_flutter/core/utils/safe_api_call.dart';
 import 'package:myco_flutter/features/common_api/data/data_source/common_api_data_source.dart';
+import 'package:myco_flutter/features/common_api/data/models/request/branch_list_request.dart';
+import 'package:myco_flutter/features/common_api/data/models/request/department_and_designation_list_request.dart';
+import 'package:myco_flutter/features/common_api/data/models/request/shift_list_request.dart';
 import 'package:myco_flutter/features/common_api/domain/entities/Branch_response_entity.dart';
 import 'package:myco_flutter/features/common_api/domain/entities/floor_and_unit_response_entity.dart';
 import 'package:myco_flutter/features/common_api/domain/entities/shift_response_entity.dart';
@@ -24,25 +27,25 @@ class CommonApiRepositoryImpl implements CommonApiRepository {
 
 
   @override
-  Future<Either<Failure, BranchResponseEntity>> getBranchList(String companyId, String userId) async =>
+  Future<Either<Failure, BranchResponseEntity>> getBranchList(BranchListRequest request) async =>
       safeApiCall.execute(() async {
-        final responseModel = await remoteDataSource.getBranchList(companyId,userId);
+        final responseModel = await remoteDataSource.getBranchList(request);
         return responseModel.toEntity();
       });
 
 
   @override
-  Future<Either<Failure, FloorAndUnitResponseEntity>> getDepartmentAndDesignation(String companyId, String blockId) async =>
+  Future<Either<Failure, FloorAndUnitResponseEntity>> getDepartmentAndDesignation(DepartmentAndDesignationListRequest request) async =>
       safeApiCall.execute(() async {
-        final responseModel = await remoteDataSource.getDepartmentAndDesignation(companyId,blockId);
+        final responseModel = await remoteDataSource.getDepartmentAndDesignation(request);
         return responseModel.toEntity();
       });
 
 
   @override
-  Future<Either<Failure, ShiftResponseEntity>> getShiftList(String companyId, String floorId) async =>
+  Future<Either<Failure, ShiftResponseEntity>> getShiftList(ShiftListRequest request) async =>
       safeApiCall.execute(() async {
-        final responseModel = await remoteDataSource.getShiftList(companyId,floorId);
+        final responseModel = await remoteDataSource.getShiftList(request);
         return responseModel.toEntity();
       });
 

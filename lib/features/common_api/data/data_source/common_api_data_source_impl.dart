@@ -9,10 +9,13 @@ import 'package:myco_flutter/core/encryption/gzip_util.dart';
 import 'package:myco_flutter/core/network/api_client.dart';
 import 'package:myco_flutter/core/services/preference_manager.dart';
 import 'package:myco_flutter/features/common_api/data/data_source/common_api_data_source.dart';
-import 'package:myco_flutter/features/common_api/data/models/branch_response.dart';
-import 'package:myco_flutter/features/common_api/data/models/floor_and_unit_response.dart';
-import 'package:myco_flutter/features/common_api/data/models/shift_response.dart';
-import 'package:myco_flutter/features/common_api/data/models/uploaded_file_response.dart';
+import 'package:myco_flutter/features/common_api/data/models/request/branch_list_request.dart';
+import 'package:myco_flutter/features/common_api/data/models/request/department_and_designation_list_request.dart';
+import 'package:myco_flutter/features/common_api/data/models/request/shift_list_request.dart';
+import 'package:myco_flutter/features/common_api/data/models/response/branch_response.dart';
+import 'package:myco_flutter/features/common_api/data/models/response/floor_and_unit_response.dart';
+import 'package:myco_flutter/features/common_api/data/models/response/shift_response.dart';
+import 'package:myco_flutter/features/common_api/data/models/response/uploaded_file_response.dart';
 
 class CommonApiDataSourceImpl implements CommonApiDataSource {
   final Dio dio;
@@ -59,32 +62,20 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
 
 
   @override
-  Future<BranchResponseModel> getBranchList(String companyId, String userId) async {
+  Future<BranchResponseModel> getBranchList(BranchListRequest request) async {
 
-    final dataMap = {
-      'getBlocks': 'getBlocks',
-      'society_id': companyId,
-      'user_id': userId,
-      'language_id': '1' /*preferenceManager.getLanguageId()*/
-    };
-
-    final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
+    final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
     final controller = 'blockListControllerEnc.php';
 
     final response = await GetIt.I<ApiClient>(instanceName: VariableBag.employeeMobileApi).postDynamic(controller, encryptedBody);
     return BranchResponseModel.fromJson(json.decode(GzipUtil.decryptAES(response)));
   }
 
-  @override
-  Future<FloorAndUnitResponseModel> getDepartmentAndDesignation(String companyId, String blockId) async {
-    final dataMap = {
-      'getFloorandUnitNew': 'getFloorandUnitNew',
-      'society_id': companyId,
-      'block_id': blockId,
-      'language_id': '1' /*preferenceManager.getLanguageId()*/
-    };
 
-    final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
+  @override
+  Future<FloorAndUnitResponseModel> getDepartmentAndDesignation(DepartmentAndDesignationListRequest request) async {
+
+    final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
     final controller = 'blockListControllerEnc.php';
 
     final response = await GetIt.I<ApiClient>(
@@ -94,15 +85,9 @@ class CommonApiDataSourceImpl implements CommonApiDataSource {
   }
 
   @override
-  Future<ShiftResponseModel> getShiftList(String companyId, String floorId) async {
-    final dataMap = {
-      'getShiftsRegister': 'getShiftsRegister',
-      'society_id': companyId,
-      'floor_id': floorId,
-      'language_id': '1' /*preferenceManager.getLanguageId()*/
-    };
+  Future<ShiftResponseModel> getShiftList(ShiftListRequest request) async {
 
-    final encryptedBody = GzipUtil.encryptAES(jsonEncode(dataMap));
+    final encryptedBody = GzipUtil.encryptAES(jsonEncode(request));
     final controller = 'shift_controller.php';
 
     final response = await GetIt.I<ApiClient>(

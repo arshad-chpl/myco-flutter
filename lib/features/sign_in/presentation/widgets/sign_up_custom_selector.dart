@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/utils/language_manager.dart';
+import 'package:myco_flutter/features/sign_in/presentation/custome_bloc/my_form_bloc.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/select_custom_dialog.dart';
 import 'package:myco_flutter/widgets/custom_text_field_new.dart';
 
@@ -12,91 +14,39 @@ Widget buildCustomSelector({
   required String selectedName,
   required List<String> optionIds,
   required List<String> optionNames,
-  required void Function(String id, String name) onSelected,
-  required String defaultLabelKey,
-  required String prefixIcon, // icon path
+  required String defaultLabelKey, // This is our 'fieldKey'
+  required String prefixIcon,
   bool isRequired = true,
-}) {
-  final String defaultValue = getDefaultLabel(defaultLabelKey);
-  final bool isDefault = selectedName == defaultValue;
-
-  return FormField<String>(
-    validator: (val) {
-
-      if (defaultLabelKey == 'branch' && optionIds.isEmpty) {
-        Fluttertoast.showToast(msg: 'No branch found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
-        return;
-      } else if (defaultLabelKey == 'department' && optionIds.isEmpty) {
-        Fluttertoast.showToast(msg: 'No department found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
-        return;
-      } else if (defaultLabelKey == 'sub department' && optionIds.isEmpty) {
-        Fluttertoast.showToast(msg: 'No sub department found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
-        return;
-      } else if (defaultLabelKey == 'shift' && optionIds.isEmpty) {
-        Fluttertoast.showToast(msg: 'No shift found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
-        return;
-      } else if (defaultLabelKey == 'designation' && optionIds.isEmpty) {
-        Fluttertoast.showToast(msg: 'No designation found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
+}) => NewTextField(
+    label: label,
+    prefixIconPath: prefixIcon,
+    suffixIconPath: AppAssets.downArrow,
+    hintText: LanguageManager().get('select'),
+    isRequired: isRequired,// Prevent keyboard from appearing
+    controller: TextEditingController(text: selectedName),
+    onTap: () {
+      if (optionIds.isEmpty) {
+        Fluttertoast.showToast(msg: 'No ${defaultLabelKey.replaceAll('_', ' ')} found.', backgroundColor: Colors.redAccent, textColor: Colors.white,);
         return;
       }
-
-      return null;
+      _showSelectionDialog(
+        context: context,
+        optionId: optionIds,
+        optionName: optionNames,
+        selectedValue: selectedId,
+        title: defaultLabelKey[0].toUpperCase() + defaultLabelKey.substring(1),
+        fieldKey: defaultLabelKey, // Pass the key
+      );
     },
-    builder: (field) => Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        NewTextField(
-          label: label,
-          prefixIconPath: prefixIcon,
-          suffixIconPath: AppAssets.downArrow,
-          hintText: LanguageManager().get('select'),
-          isRequired: isRequired,
-          controller: TextEditingController(text: selectedName),
-          onTap: () {
-            if (optionIds.isEmpty) {
-              Fluttertoast.showToast(
-                msg: 'No ${defaultLabelKey.replaceAll('_', ' ')} found.',
-                backgroundColor: Colors.redAccent,
-                textColor: Colors.white,
-              );
-              return;
-            }
-            _showSelectionDialog(
-              context: context,
-              optionId: optionIds,
-              optionName: optionNames,
-              selectedValue: selectedId,
-              title: defaultLabelKey[0].toUpperCase() + defaultLabelKey.substring(1),
-              onSelected: (id, name) {
-                onSelected(id, name);
-                field.didChange(name);
-              },
-            );
-          },
-        ),
-        if (field.hasError)
-          Padding(
-            padding: const EdgeInsets.only(left: 12.0, top: 4.0),
-            child: Text(
-              field.errorText ?? '',
-              style: const TextStyle(
-                color: Colors.red,
-                fontSize: 12,
-              ),
-            ),
-          ),
-      ],
-    ),
   );
-}
 
 void _showSelectionDialog({
-  required BuildContext context,
+  required BuildContext context, // This context has access to the BLoC
   required List<String> optionId,
   required List<String> optionName,
   required String? selectedValue,
   required String title,
-  required void Function(String selectedId, String selectedName) onSelected,
+  required String fieldKey, // Receive the key
 }) {
   showModalBottomSheet(
     context: context,
@@ -105,16 +55,21 @@ void _showSelectionDialog({
       borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
     ),
     backgroundColor: Colors.white,
-    builder: (BuildContext context) => SelectCustomDialog(
-      optionIds: optionId,
-      optionNames: optionName,
-      selectedId: selectedValue,
-      title: title,
-      onSelected: onSelected,
+    // **FIX**: Provide the existing BLoC instance to the new route (the modal sheet)
+    builder: (_) => BlocProvider.value(
+      value: BlocProvider.of<MyFormBloc>(context),
+      child: SelectCustomDialog(
+        optionIds: optionId,
+        optionNames: optionName,
+        selectedId: selectedValue,
+        title: title,
+        fieldKey: fieldKey, // Pass the key to the dialog
+      ),
     ),
   );
 }
 
+// ... (Your getDefaultLabel function remains the same)
 String getDefaultLabel(String field) {
   switch (field) {
     case 'branch':

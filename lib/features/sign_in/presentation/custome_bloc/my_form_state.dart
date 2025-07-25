@@ -1,33 +1,32 @@
-// my_form_state.dart
 import 'package:equatable/equatable.dart';
 
-enum FormStatus { initial, loading, success, failure }
+enum FormStatus { initial, success, failure }
 
 class MyFormState extends Equatable {
   const MyFormState({
     this.status = FormStatus.initial,
-    this.fieldOneValue = '',
-    this.fieldTwoValue = '',
-    this.errorMessage,
+    this.selectedId,
+    this.selectedName,
+    this.fieldKey,
   });
 
   final FormStatus status;
-  final String fieldOneValue;
-  final String fieldTwoValue;
-  final String? errorMessage;
+  final String? selectedId;
+  final String? selectedName;
+  final String? fieldKey; // Key to identify the updated field
 
   MyFormState copyWith({
     FormStatus? status,
-    String? fieldOneValue,
-    String? fieldTwoValue,
-    String? errorMessage,
+    String? selectedId,
+    String? selectedName,
+    String? fieldKey,
   }) => MyFormState(
-      status: status ?? this.status,
-      fieldOneValue: fieldOneValue ?? this.fieldOneValue,
-      fieldTwoValue: fieldTwoValue ?? this.fieldTwoValue,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
+    status: status ?? this.status,
+    selectedId: selectedId ?? this.selectedId,
+    selectedName: selectedName ?? this.selectedName,
+    fieldKey: fieldKey ?? this.fieldKey,
+  );
 
   @override
-  List<Object?> get props => [status, fieldOneValue, fieldTwoValue, errorMessage];
+  List<Object?> get props => [status, selectedId, selectedName, fieldKey];
 }

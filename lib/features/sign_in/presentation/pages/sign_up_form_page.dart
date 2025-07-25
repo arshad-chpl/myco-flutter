@@ -20,7 +20,7 @@ import 'package:myco_flutter/features/common_api/presentation/bloc/common_api_bl
 import 'package:myco_flutter/features/leave/presentation/widgets/ios_calendar_time_picker.dart';
 import 'package:myco_flutter/features/sign_in/presentation/bloc/primary_register_bloc.dart';
 import 'package:myco_flutter/features/sign_in/presentation/custome_bloc/my_form_state.dart';
-import 'package:myco_flutter/features/sign_in/presentation/custome_bloc/my_from_bloc.dart';
+import 'package:myco_flutter/features/sign_in/presentation/custome_bloc/my_form_bloc.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/bottom_term_and_condition.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/framed_profile_image.dart';
 import 'package:myco_flutter/features/sign_in/presentation/widgets/sign_up_custom_selector.dart';
@@ -66,7 +66,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
     final args = GoRouterState.of(context).extra as Map<String, dynamic>?;
 
     if (args != null) {
-      companyId = args['companyId'] ?? '';
+      companyId = args['societyId'] ?? '';
       isSociety = args['isSociety'] ?? false;
       societyAddress = args['societyAddress'];
       isAddByAdmin = args['isAddByAdmin'] ?? false;
@@ -74,6 +74,9 @@ class _SignupFormPageState extends State<SignupFormPage> {
       from = args['from'] ?? '0';
       isAddMore = args['isAddMore'] ?? false;
       isAddMoreUnit = args['isAddMoreUnit'] ?? false;
+
+
+      print('companyIdData on: $companyId');
 
     } else {
       // fallback if args is null
@@ -144,6 +147,9 @@ class _SignupFormPageState extends State<SignupFormPage> {
   }
 
   void _fetchBranchList() {
+
+    print('companyIdData: $companyId');
+
     context.read<CommonApiBloc>().add(LoadBranch(
         companyId ?? '1',
         '0'
@@ -152,6 +158,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
 
   void _fetchFloorUnitList() {
+    print('companyIdData: $companyId');
     context.read<CommonApiBloc>().add(LoadDepartmentAndDesignation(
         companyId ?? '1',
         selectedBranchId
@@ -317,17 +324,57 @@ class _SignupFormPageState extends State<SignupFormPage> {
 
                 },
               ),
-
-
               BlocListener<MyFormBloc, MyFormState>(
-                  listener: (context, state) {
+                listener: (context, state) {
+                  if (state.status != FormStatus.success) return;
 
-                  },
+                  switch (state.fieldKey) {
+                    case 'branch':
+
+                      selectedBranchId = state.selectedId!;
+                      selectedBranchName = state.selectedName!;
+
+                      print('branchId: $selectedBranchId');
+                      print('branchName: $selectedBranchName');
+
+                      selectedDepartmentId = '';
+                      selectedDepartmentName = '';
+                      selectedSubDepartmentId = '';
+                      selectedSubDepartmentName = '';
+                      selectedShiftId = '';
+                      selectedShiftName = '';
+                      selectedDesignationId = '';
+                      selectedDesignationName = '';
+                      _fetchFloorUnitList();
+                      break;
+                    case 'department':
+                      selectedDepartmentId = state.selectedId!;
+                      selectedDepartmentName = state.selectedName!;
+                      selectedSubDepartmentId = '';
+                      selectedSubDepartmentName = '';
+                      _fetchShiftList();
+                      break;
+                    case 'sub department':
+                      selectedSubDepartmentId = state.selectedId!;
+                      selectedSubDepartmentName = state.selectedName!;
+                      break;
+                    case 'shift':
+                      selectedShiftId = state.selectedId!;
+                      selectedShiftName = state.selectedName!;
+                      break;
+                    case 'designation':
+                      selectedDesignationId = state.selectedId!;
+                      selectedDesignationName = state.selectedName!;
+                      break;
+                  }
+                },
               ),
-
             ],
+
+
             child: BlocBuilder<CommonApiBloc, CommonApiState>(
               builder: (context, state) {
+
                 if (state is CommonApiError) {
                   Fluttertoast.showToast(msg: state.message, backgroundColor: Colors.redAccent, textColor: Colors.white,);
                 }
@@ -401,20 +448,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
             optionNames: branchOptionNames,
             defaultLabelKey: 'branch',
             prefixIcon: AppAssets.branchIcon,
-            onSelected: (id, name) {
-              selectedBranchId = id;
-              selectedBranchName = name;
-              selectedDepartmentId = '';
-              selectedDepartmentName = '';
-              selectedSubDepartmentId = '';
-              selectedSubDepartmentName = '';
-              selectedShiftId = '';
-              selectedShiftName = '';
-              selectedDesignationId = '';
-              selectedDesignationName = '';
-              _fetchFloorUnitList();
-              setState(() {});
-            },
+            // **REMOVED**: onSelected callback
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
@@ -427,15 +461,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
             optionNames: departmentOptionNames,
             defaultLabelKey: 'department',
             prefixIcon: AppAssets.departmentIcon,
-            onSelected: (id, name) {
-              selectedDepartmentId = id;
-              selectedDepartmentName = name;
-              selectedSubDepartmentId = '';
-              selectedSubDepartmentName = '';
-
-              _fetchShiftList();
-              setState(() {});
-            },
+            // **REMOVED**: onSelected callback
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
@@ -449,12 +475,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
               optionNames: subDepartmentOptionNames,
               defaultLabelKey: 'sub department',
               prefixIcon: AppAssets.subDepartmentIcon,
-              onSelected: (id, name) {
-                selectedSubDepartmentId = id;
-                selectedSubDepartmentName = name;
-
-                setState(() {});
-              },
+              // **REMOVED**: onSelected callback
             ),
             SizedBox(height: 0.015 * Responsive.getHeight(context)),
           ],
@@ -468,12 +489,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
             optionNames: shiftOptionNames,
             defaultLabelKey: 'shift',
             prefixIcon: AppAssets.clockIcon,
-            onSelected: (id, name) {
-              selectedShiftId = id;
-              selectedShiftName = name;
-
-              setState(() {});
-            },
+            // **REMOVED**: onSelected callback
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
 
@@ -486,11 +502,7 @@ class _SignupFormPageState extends State<SignupFormPage> {
             optionNames: floorUnitOptionNames,
             defaultLabelKey: 'designation',
             prefixIcon: AppAssets.designationIcon,
-            onSelected: (id, name) {
-              selectedDesignationId = id;
-              selectedDesignationName = name;
-              setState(() {});
-            },
+            // **REMOVED**: onSelected callback
           ),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
 

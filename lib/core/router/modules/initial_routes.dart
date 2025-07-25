@@ -16,6 +16,7 @@ import 'package:myco_flutter/features/search_company/presentation/pages/get_star
 import 'package:myco_flutter/features/search_company/presentation/pages/search_company.dart';
 import 'package:myco_flutter/features/sign_in/domain/usecases/primary_register_usecase.dart';
 import 'package:myco_flutter/features/sign_in/presentation/bloc/primary_register_bloc.dart';
+import 'package:myco_flutter/features/sign_in/presentation/custome_bloc/my_form_bloc.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/otp_dialog.dart';
 import 'package:myco_flutter/features/sign_in/presentation/pages/sign_up_form_page.dart';
 import 'package:myco_flutter/features/splash/presentation/bloc/splash_bloc.dart';
@@ -86,11 +87,15 @@ List<RouteBase> InitialRoutes = [
     builder: (context, state) => MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => CommonApiBloc(registerUseCase: GetIt.I<CommonApiUserCase>()),
+          create: (context) => CommonApiBloc(commonApiUserCase: GetIt.I<CommonApiUserCase>()),
         ),
         BlocProvider(
           create: (context) => PrimaryRegisterBloc(registerUseCase: GetIt.I<PrimaryRegisterUseCase>(),
           ),
+        ),
+        // --- ADD MyFormBloc HERE ---
+        BlocProvider(
+          create: (context) => MyFormBloc(), // Ensure MyFormBloc is provided
         ),
       ],
       child: const SignupFormPage(),

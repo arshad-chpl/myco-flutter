@@ -10,7 +10,7 @@ import 'package:myco_flutter/features/common_api/presentation/bloc/common_api_bl
 
 Future<void> CommonApiDi(GetIt sl) async {
   // Bloc
-  sl.registerFactory(() => CommonApiBloc(registerUseCase: sl()));
+  sl.registerFactory(() => CommonApiBloc(commonApiUserCase: sl()));
 
   // Use case
   sl.registerLazySingleton(() => CommonApiUserCase(repository: sl()));

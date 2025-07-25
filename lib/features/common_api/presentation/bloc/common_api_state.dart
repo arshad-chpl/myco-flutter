@@ -43,6 +43,7 @@ class FloorUnitApiSuccess extends CommonApiState {
 // Shift api error
 class ShiftApiSuccess extends CommonApiState {
   final ShiftResponseEntity shiftList;
+
   const ShiftApiSuccess(this.shiftList);
 
   @override
