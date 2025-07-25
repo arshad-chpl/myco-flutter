@@ -56,7 +56,7 @@ class HolidayModel {
   final String? holidayDescription;
 
   @JsonKey(name: 'holiday_start_date')
-  final DateTime? holidayStartDate;
+  final String? holidayStartDate;
 
   @JsonKey(name: 'holiday_day')
   final String? holidayDay;
@@ -65,7 +65,7 @@ class HolidayModel {
   final String? holidayMonth;
 
   @JsonKey(name: 'holiday_end_date')
-  final DateTime? holidayEndDate;
+  final String? holidayEndDate;
 
   @JsonKey(name: 'month_view_start')
   final String? monthViewStart;

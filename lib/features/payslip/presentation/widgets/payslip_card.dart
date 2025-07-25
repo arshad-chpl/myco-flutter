@@ -135,7 +135,7 @@ class _PayslipCardState extends State<PayslipCard> {
                   children: [
                     CustomText(
                       '${widget.month} ${widget.year}',
-                      fontSize: 17 * Responsive.getResponsiveText(context),
+                      fontSize: 15 * Responsive.getResponsiveText(context),
                       fontWeight: FontWeight.w700,
                       color: AppTheme.getColor(context).onPrimary,
                     ),

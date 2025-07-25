@@ -10,6 +10,7 @@ class AppAssets {
   static const String splash = '$basePath/splash';
   static const String visit = '$basePath/visit';
   static const String svgsVisit = '$svgsPath/visit';
+
   static const String assetVisit = '$basePath/add_expense';
 
   static const String assets = '$basePath/asset';
@@ -77,6 +78,7 @@ class AppAssets {
   static const String result = '$svgsVisit/result.svg';
   static const String arrowDown = '$svgsPath/arrow_down.svg';
   static const String searchIcon = '$svgsPath/search_icon.svg';
+  static const String warning = '$svgsPath/warning.svg';
 
   // Svgs Take Order
   static const String offers = '$svgsTakeOrder/offers.svg';

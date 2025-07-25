@@ -1,38 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myco_flutter/core/router/route_paths.dart';
-import 'package:myco_flutter/core/theme/app_theme.dart';
-import 'package:myco_flutter/core/utils/language_manager.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/distributor_card.dart';
 import 'package:myco_flutter/widgets/custom_appbar.dart';
+import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
-import 'package:myco_flutter/widgets/custom_text_field.dart';
 
 class AllDistributorPage extends StatelessWidget {
   const AllDistributorPage({super.key});
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: CustomAppbar(title: 'All Distributor'),
+    appBar: const CustomAppbar(title: 'All Distributor'),
     body: Container(
       padding: EdgeInsets.symmetric(
         horizontal: 0.08 * Responsive.getWidth(context),
-        // vertical: 0.02 * Responsive.getHeight(context),
       ),
       child: Column(
         children: [
-          MyCoTextfield(
-            prefix: const Icon(Icons.search),
-            hintText: LanguageManager().get('search'),
-            hintTextStyle: TextStyle(color: AppTheme.getColor(context).outline),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppTheme.getColor(context).outline),
-              borderRadius: BorderRadius.circular(
-                12 * Responsive.getResponsive(context),
-              ),
-            ),
-          ),
+          const CustomSearchField(hintText: 'Search'),
           SizedBox(height: 0.015 * Responsive.getHeight(context)),
           Expanded(
             child: ListView.separated(

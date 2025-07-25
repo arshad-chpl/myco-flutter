@@ -5,24 +5,28 @@ import 'package:myco_flutter/features/payslip/data/datasources/payslip_remote_da
 import 'package:myco_flutter/features/payslip/data/datasources/payslip_remote_datasources_impl.dart';
 import 'package:myco_flutter/features/payslip/data/repositories/payslip_repository_impl.dart';
 import 'package:myco_flutter/features/payslip/domain/repositories/payslip_repository.dart';
+import 'package:myco_flutter/features/payslip/domain/usecases/add_salary_issue.dart';
 import 'package:myco_flutter/features/payslip/domain/usecases/get_ctc_details.dart';
 import 'package:myco_flutter/features/payslip/domain/usecases/get_other_earnings.dart';
 import 'package:myco_flutter/features/payslip/domain/usecases/get_salary.dart';
 import 'package:myco_flutter/features/payslip/domain/usecases/get_salary_details.dart';
-import 'package:myco_flutter/features/payslip/presentation/bloc/payslip_bloc.dart';
-
-// final sl = GetIt.instance;
+import 'package:myco_flutter/features/payslip/presentation/bloc/ctc_bloc/ctc_bloc.dart';
+import 'package:myco_flutter/features/payslip/presentation/bloc/payslip_bloc/payslip_bloc.dart';
+import 'package:myco_flutter/features/payslip/presentation/bloc/payslip_details_bloc/payslip_details_bloc.dart';
 
 Future<void> initPayslipFeatureDI(GetIt sl) async {
   // Bloc
-  sl.registerFactory(() => PayslipBloc(sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => PayslipBloc(sl()));
   sl.registerFactory(() => OtherEarningsBloc(sl()));
+  sl.registerFactory(() => PayslipDetailBloc(sl(), sl()));
+  sl.registerFactory(() => CtcDetailsBloc(sl()));
 
   // UseCase
   sl.registerLazySingleton(() => GetCtcDetails(repository: sl()));
   sl.registerLazySingleton(() => GetSalary(repository: sl()));
   sl.registerLazySingleton(() => GetOtherEarnings(repository: sl()));
   sl.registerLazySingleton(() => GetSalaryDetails(repository: sl()));
+  sl.registerLazySingleton(() => AddSalaryIssue(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<PayslipRepository>(

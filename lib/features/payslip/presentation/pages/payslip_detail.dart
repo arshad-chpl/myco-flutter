@@ -1,55 +1,87 @@
-import 'dart:developer';
+import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:myco_flutter/constants/app_assets.dart';
 import 'package:myco_flutter/core/theme/app_theme.dart';
 import 'package:myco_flutter/core/theme/colors.dart';
 import 'package:myco_flutter/core/utils/responsive.dart';
-import 'package:myco_flutter/features/payslip/presentation/bloc/payslip_bloc.dart';
+import 'package:myco_flutter/features/idea_box/presentation/widgets/common_container.dart';
+import 'package:myco_flutter/features/payslip/presentation/bloc/payslip_details_bloc/payslip_details_bloc.dart';
+import 'package:myco_flutter/features/payslip/presentation/bloc/payslip_details_bloc/payslip_details_event.dart';
+import 'package:myco_flutter/features/payslip/presentation/bloc/payslip_details_bloc/payslip_details_state.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/custom_piechart.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/header_custom_painter.dart';
 import 'package:myco_flutter/features/payslip/presentation/widgets/payslip_card.dart';
+import 'package:myco_flutter/features/payslip/presentation/widgets/payslip_webview.dart';
+import 'package:myco_flutter/features/payslip/presentation/widgets/shimmer_salary_loading.dart';
 import 'package:myco_flutter/features/take_order/presentation/widgets/bottomsheet_config.dart';
-import 'package:myco_flutter/widgets/common_card.dart';
+import 'package:myco_flutter/features/take_order/presentation/widgets/side_by_side_buttons.dart';
+import 'package:myco_flutter/widgets/big_textfield.dart';
 import 'package:myco_flutter/widgets/custom_myco_button/custom_myco_button.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
 
 class PayslipDetail extends StatefulWidget {
-  const PayslipDetail({super.key});
+  final String salarySlipId;
+  const PayslipDetail({super.key, required this.salarySlipId});
 
   @override
   State<PayslipDetail> createState() => _PayslipDetailState();
 }
 
 class _PayslipDetailState extends State<PayslipDetail> {
+  TextEditingController raiseIssueController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
-    context.read<PayslipBloc>().add(GetSalaryDetailsEvent());
+    context.read<PayslipDetailBloc>().add(
+      GetSalaryDetailsEvent(salarySlipId: widget.salarySlipId),
+    );
+  }
+
+  void openPayslipInWebView(String url) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => PayslipWebViewScreen(url: url)),
+    );
+  }
+
+  Future<void> printPayslipFromUrl(String url) async {
+    openPayslipInWebView(url);
   }
 
   @override
   Widget build(BuildContext context) => SafeArea(
-    child: BlocBuilder<PayslipBloc, PayslipState>(
-      builder: (context, state) {
-        if (state is GetSalaryDetailsLoadingState) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
+    child: Scaffold(
+      body: BlocConsumer<PayslipDetailBloc, PayslipDetailsState>(
+        listener: (context, state) {
+          if (state is AddSalaryIssueSuccessState) {
+            // context.read<PayslipBloc>().add(GetSalaryDetailsEvent());
+            raiseIssueController.clear();
+            Navigator.pop(context);
+          }
 
-        if (state is GetSalaryDetailsErrorState) {
-          return Scaffold(body: Center(child: Text(state.error)));
-        }
+          if (state is AddSalaryIssueFailureState) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
+          }
+        },
+        builder: (context, state) {
+          if (state is GetSalaryDetailsLoadingState) {
+            return const ShimmerSalaryLoadingWidget(
+              loadingFor: 'payslipDetails',
+            );
+          }
 
-        if (state is GetSalaryDetailsSuccessState) {
-          log(
-            state.salaryDetails.totalNetSalary.toString(),
-            name: 'totalNetSalary',
-          );
+          if (state is GetSalaryDetailsErrorState) {
+            return Center(child: Text(state.error));
+          }
 
-          return Scaffold(
-            body: SingleChildScrollView(
+          if (state is GetSalaryDetailsSuccessState) {
+            return SingleChildScrollView(
               child: Column(
                 children: [
                   Stack(
@@ -77,6 +109,9 @@ class _PayslipDetailState extends State<PayslipDetail> {
                             ),
                           ),
 
+                          SizedBox(
+                            height: 0.02 * Responsive.getHeight(context),
+                          ),
                           SizedBox(
                             height: 0.02 * Responsive.getHeight(context),
                           ),
@@ -131,7 +166,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                       CustomText(
                                         // '₹38,800.00',
                                         state.salaryDetails.totalNetSalary ??
-                                            "",
+                                            '',
                                         fontWeight: FontWeight.w600,
                                         fontSize:
                                             28 *
@@ -144,7 +179,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                       ),
                                       CustomText(
                                         // 'bank_transaction',
-                                        state.salaryDetails.salaryMode ?? "",
+                                        state.salaryDetails.salaryMode ?? '',
                                         // 'Bank Transaction',
                                         fontWeight: FontWeight.w600,
                                         fontSize:
@@ -178,7 +213,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                   ),
                                   CustomText(
                                     // 'Thirty Eight Thousands Eight Hundred Only',
-                                    state.salaryDetails.amountInWords ?? "",
+                                    state.salaryDetails.amountInWords ?? '',
                                     fontSize:
                                         14 *
                                         Responsive.getResponsiveText(context),
@@ -194,7 +229,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                             ),
                             child: CustomLinePieChart(
                               isValueOnChart: true,
-                              dynamicCenterText: 'Demo',
+                              dynamicCenterText: 'Payslip',
                               totalLeaves: 12.0,
                               totalPaidLeave: 4.0,
                               height: 0.35 * Responsive.getHeight(context),
@@ -202,35 +237,47 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                   80 * Responsive.getResponsive(context),
                               segments: [
                                 LineChartSegment(
-                                  label: 'Sandwich',
-                                  value: 2,
+                                  label: 'Leave Days',
+                                  value: double.parse(
+                                    state.salaryDetails.leaveDays ?? '0',
+                                  ),
                                   color: const Color(0xFF08A4BB),
                                 ),
                                 LineChartSegment(
-                                  label: 'Paid',
-                                  value: 2,
+                                  label: 'Extra Days',
+                                  value: double.parse(
+                                    state.salaryDetails.extraDays ?? '0',
+                                  ),
                                   color: const Color(0xFFFF9FEC),
                                 ),
                                 LineChartSegment(
-                                  label: 'Paid',
-                                  value: 2,
+                                  label: 'Paid Week Off',
+                                  value: double.parse(
+                                    state.salaryDetails.paidWeekOff ?? '0',
+                                  ),
                                   showShadow: false,
                                   color: const Color(0xFF2F648E),
                                 ),
                                 LineChartSegment(
-                                  label: 'Unpaid',
-                                  showShadow: false,
-                                  value: 2,
-                                  color: const Color(0xFF2FBBA4),
-                                ),
-                                LineChartSegment(
-                                  label: 'Unpaid',
-                                  value: 2,
+                                  label: 'Total Working Days',
+                                  value: double.parse(
+                                    state.salaryDetails.totalWorkingDays ?? '0',
+                                  ),
                                   color: const Color(0xFF9FBE00),
                                 ),
                                 LineChartSegment(
-                                  label: 'Holiday',
-                                  value: 2,
+                                  label: 'Paid Holidays',
+                                  value: double.parse(
+                                    state.salaryDetails.paidHolidays ?? '0',
+                                  ),
+                                  color: const Color(0xFF2FBBA4),
+                                ),
+                                LineChartSegment(
+                                  label: 'Total Special Allowance',
+                                  value: double.parse(
+                                    state.salaryDetails.totalSpecialAllowance ??
+                                        '0',
+                                  ),
                                   color: const Color(0xFFFDB913),
                                 ),
                               ],
@@ -259,7 +306,8 @@ class _PayslipDetailState extends State<PayslipDetail> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                  'Basic',
+                                  state.salaryDetails.earningData?[0]?.title ??
+                                      'Basic',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontSize:
                                       15 *
@@ -269,7 +317,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                 CustomText(
                                   // '₹190,780.78',
                                   state.salaryDetails.earningData?[0]?.value ??
-                                      "",
+                                      '',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontSize:
                                       15 *
@@ -282,7 +330,8 @@ class _PayslipDetailState extends State<PayslipDetail> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                  'HRA',
+                                  state.salaryDetails.earningData?[1]?.title ??
+                                      'HRA',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontSize:
                                       15 *
@@ -291,7 +340,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                 ),
                                 CustomText(
                                   state.salaryDetails.earningData?[1]?.value ??
-                                      "",
+                                      '',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontSize:
                                       15 *
@@ -304,7 +353,8 @@ class _PayslipDetailState extends State<PayslipDetail> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                  'conveyance',
+                                  state.salaryDetails.earningData?[2]?.title ??
+                                      'conveyance',
                                   // 'Conveyance',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontSize:
@@ -314,7 +364,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                 ),
                                 CustomText(
                                   state.salaryDetails.earningData?[2]?.value ??
-                                      "",
+                                      '',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontSize:
                                       15 *
@@ -341,7 +391,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                 ),
                                 CustomText(
                                   // '₹395,086.90',
-                                  state.salaryDetails.grossSalary ?? "",
+                                  state.salaryDetails.grossSalary ?? '',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontWeight: FontWeight.w700,
                                   fontSize:
@@ -376,7 +426,11 @@ class _PayslipDetailState extends State<PayslipDetail> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                  'professional_tex',
+                                  state
+                                          .salaryDetails
+                                          .deductionData?[1]
+                                          ?.title ??
+                                      'professional_tex',
                                   // 'Professional Tax',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontSize:
@@ -389,7 +443,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                           .salaryDetails
                                           .deductionData?[1]
                                           ?.value ??
-                                      "",
+                                      '',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontSize:
                                       14 *
@@ -417,7 +471,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                 CustomText(
                                   // '₹2,222.00',
                                   state.salaryDetails.totalDeductionSalary ??
-                                      "",
+                                      '',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontWeight: FontWeight.w700,
                                   fontSize:
@@ -462,7 +516,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                 ),
                                 CustomText(
                                   // '₹2,222.00',
-                                  state.salaryDetails.aB ?? "",
+                                  state.salaryDetails.aB ?? '',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontWeight: FontWeight.bold,
                                   fontSize:
@@ -489,7 +543,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                 ),
                                 CustomText(
                                   // '₹38,800.00',
-                                  state.salaryDetails.totalNetSalary ?? "",
+                                  state.salaryDetails.totalNetSalary ?? '',
                                   color: AppTheme.getColor(context).primary,
                                   fontWeight: FontWeight.bold,
                                   fontSize:
@@ -533,7 +587,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                 ),
                                 CustomText(
                                   // '₹0.00',
-                                  state.salaryDetails.totalContri ?? "",
+                                  state.salaryDetails.totalContri ?? '',
                                   color: AppTheme.getColor(context).onSurface,
                                   fontWeight: FontWeight.bold,
                                   fontSize:
@@ -560,7 +614,7 @@ class _PayslipDetailState extends State<PayslipDetail> {
                                 ),
                                 CustomText(
                                   // '₹38,800.00',
-                                  state.salaryDetails.totalCtcCost ?? "",
+                                  state.salaryDetails.totalCtcCost ?? '',
                                   color: AppColors.myCoCyan,
                                   fontWeight: FontWeight.bold,
                                   fontSize:
@@ -584,7 +638,14 @@ class _PayslipDetailState extends State<PayslipDetail> {
                       children: [
                         Expanded(
                           child: MyCoButton(
-                            onTap: () {},
+                            onTap: () async {
+                              // String fileName =
+                              //     '${state.salaryDetails.salaryMonthYear}-${state.salaryDetails.salarySlipId}';
+                              await printPayslipFromUrl(
+                                state.salaryDetails.payslipDownloadUrl ?? '',
+                                // fileName,
+                              );
+                            },
                             title: 'Download',
                             height: 0.045 * Responsive.getHeight(context),
                             boarderRadius:
@@ -594,15 +655,13 @@ class _PayslipDetailState extends State<PayslipDetail> {
                         Expanded(
                           child: MyCoButton(
                             onTap: () {
-                              getBottomSheet(context, Container());
+                              getRaiseIssueBottomSheet(context, state);
                             },
                             title: 'Raise An Issue',
                             height: 0.045 * Responsive.getHeight(context),
                             boarderRadius:
                                 30 * Responsive.getResponsive(context),
-                            backgroundColor: AppTheme.getColor(
-                              context,
-                            ).onPrimary,
+                            backgroundColor: AppTheme.getColor(context).surface,
                             textStyle: TextStyle(
                               color: AppTheme.getColor(context).primary,
                             ),
@@ -614,11 +673,56 @@ class _PayslipDetailState extends State<PayslipDetail> {
                   SizedBox(height: 0.05 * Responsive.getHeight(context)),
                 ],
               ),
-            ),
-          );
-        }
-        return Center(child: Text('No Data Found'));
-      },
+            );
+          }
+          return const Center(child: Text('No Data Found'));
+        },
+      ),
     ),
   );
+
+  void getRaiseIssueBottomSheet(
+    BuildContext context,
+    GetSalaryDetailsSuccessState state,
+  ) {
+    getBottomSheet(
+      context,
+      Container(
+        color: AppTheme.getColor(context).surface,
+        padding: EdgeInsets.symmetric(
+          horizontal: 0.08 * Responsive.getWidth(context),
+          vertical: 0.02 * Responsive.getHeight(context),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomText(
+              'Raise An Issue',
+              fontSize: 14 * Responsive.getResponsiveText(context),
+            ),
+            BigMyCoTextField(
+              controller: raiseIssueController,
+              prefixImage: SvgPicture.asset(AppAssets.warning),
+              hintText: 'Type Here',
+            ),
+            SizedBox(height: 0.02 * Responsive.getHeight(context)),
+            SideBySideButtons(
+              button1Name: 'Close',
+              button2Name: 'Submit',
+              onTap1: () => Navigator.pop(context),
+              onTap2: () {
+                context.read<PayslipDetailBloc>().add(
+                  AddSalaryIssueEvent(
+                    issueMessage: raiseIssueController.text,
+                    salarySlipId: state.salaryDetails.salarySlipId ?? '',
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
