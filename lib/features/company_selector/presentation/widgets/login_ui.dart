@@ -208,22 +208,22 @@ class LoginUi extends StatelessWidget {
                     onTap: () async {
 
                       final String? countryId = await preferenceManager.getCompanyId();
-
-                      print('countryId: $countryId');
-
+                      final String? blockId = await preferenceManager.getBlockId();
+                      final String? baseUrl = await preferenceManager.getBaseUrl();
+                      final String? apiKey = await preferenceManager.getApiKey();
                       context.push(
                         RoutePaths.signUpForm,
                         extra: {
-                          'BlockNo': preferenceManager.getBlockId(),
-                          'blockId': preferenceManager.getBlockId(),
+                          'BlockNo': blockId,
+                          'blockId': blockId,
                           'floorId': '0',
                           'unitId': '0',
                           'isFamily': false,
                           'societyId': countryId,
                           'type': '0',
                           'from': '0',
-                          'baseUrl': preferenceManager.getBaseUrl(),
-                          'apiKey': preferenceManager.getApiKey(),
+                          'baseUrl': baseUrl,
+                          'apiKey': apiKey,
                           'isAddMore': false,
                           'isAddByAdmin': false,
                           'isAddMoreUnit': false,

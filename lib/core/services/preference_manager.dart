@@ -191,6 +191,24 @@ class PreferenceManager {
 
   Future<String?> getBaseUrl() => readString(baseUrl);
 
+  Future<String?> getBlockId() => readString(companyId);
+
+  Future<void> setBlockId(String value) async {
+    await writeString(countryId, '0');
+  }
+
+  /// Save API key
+  Future<void> setApiKey(String wiFiSession) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('key', wiFiSession);
+  }
+
+  /// Get API key
+  Future<String> getApiKey() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('key') ?? '0';
+  }
+
   // Future<Society?> getSelectedCompany() async {
   //   final jsonString = await readString('selectedCompany');
   //   if (jsonString == null) return null;
