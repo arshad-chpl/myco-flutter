@@ -25,6 +25,7 @@ import 'package:myco_flutter/features/my_profile/presentation/di/my_profile_di.d
 import 'package:myco_flutter/features/my_visit/presentation/di/face_detection_di.dart';
 import 'package:myco_flutter/features/my_visit/presentation/di/visit_with_di.dart';
 import 'package:myco_flutter/features/payslip/presentation/di/payslip_di.dart';
+import 'package:myco_flutter/features/payslip/presentation/di/payslip_di.dart';
 import 'package:myco_flutter/features/splash/presentation/di/splash_di.dart';
 import 'package:myco_flutter/features/work_allocation/presentation/di/work_allocation_di.dart';
 

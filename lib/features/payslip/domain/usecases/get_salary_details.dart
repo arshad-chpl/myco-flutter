@@ -8,6 +8,7 @@ class GetSalaryDetails {
 
   GetSalaryDetails({required this.repository});
 
-  Future<Either<Failure, SalaryDetailsEntity>> call() =>
-      repository.getSalaryDetails();
+  Future<Either<Failure, SalaryDetailsEntity>> call(
+    String salarySlipId,
+  ) async => await repository.getSalaryDetails(salarySlipId);
 }

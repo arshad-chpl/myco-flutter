@@ -8,25 +8,35 @@ import 'package:myco_flutter/widgets/custom_text.dart';
 class SummaryBottomsheet extends StatelessWidget {
   const SummaryBottomsheet({
     required this.basic,
+    required this.basicName,
     required this.hra,
+    required this.hraName,
     required this.conveyance,
+    required this.conveyanceName,
     required this.paidLeaveAllowance,
     required this.leaveEncashment,
     required this.totalEarnings,
     required this.professionalTax,
+    required this.professionalTaxName,
     required this.grossDeductions,
+    required this.grossDeductionsName,
     required this.totalEmplotersContributions,
     super.key,
   });
   final String basic;
+  final String basicName;
   final String hra;
+  final String hraName;
   final String conveyance;
+  final String conveyanceName;
   final String paidLeaveAllowance;
   final String leaveEncashment;
   final String totalEarnings;
 
   final String professionalTax;
+  final String professionalTaxName;
   final String grossDeductions;
+  final String grossDeductionsName;
 
   final String totalEmplotersContributions;
 
@@ -68,14 +78,13 @@ class SummaryBottomsheet extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              'Basic',
+                              basicName,
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w500,
                             ),
                             CustomText(
-                              // '₹190,780.78',
                               basic,
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
@@ -88,14 +97,13 @@ class SummaryBottomsheet extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              'HRA',
+                              hraName,
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w500,
                             ),
                             CustomText(
-                              // '₹87,780.78',
                               hra,
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
@@ -108,14 +116,15 @@ class SummaryBottomsheet extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomText(
-                              'conveyance',
-                              // 'Conveyance',
+                              conveyanceName,
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
                               fontWeight: FontWeight.w500,
                             ),
                             CustomText(
+                              // '₹103,930.29',
+                              conveyance,
                               // '₹103,930.29',
                               conveyance,
                               color: AppTheme.getColor(context).onSurface,
@@ -139,6 +148,8 @@ class SummaryBottomsheet extends StatelessWidget {
                             CustomText(
                               // '₹13,525.08',
                               paidLeaveAllowance,
+                              // '₹13,525.08',
+                              paidLeaveAllowance,
                               color: AppTheme.getColor(context).onSurface,
                               fontSize:
                                   15 * Responsive.getResponsiveText(context),
@@ -158,6 +169,8 @@ class SummaryBottomsheet extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                             ),
                             CustomText(
+                              // '₹928.00',
+                              leaveEncashment,
                               // '₹928.00',
                               leaveEncashment,
                               color: AppTheme.getColor(context).onSurface,
@@ -182,6 +195,8 @@ class SummaryBottomsheet extends StatelessWidget {
                                   15 * Responsive.getResponsiveText(context),
                             ),
                             CustomText(
+                              // '₹395,086.90',
+                              totalEarnings,
                               // '₹395,086.90',
                               totalEarnings,
                               color: AppTheme.getColor(context).onSurface,
@@ -212,7 +227,7 @@ class SummaryBottomsheet extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            'professional_tex',
+                            professionalTaxName,
                             // 'Professional Tax',
                             color: AppTheme.getColor(context).onSurface,
                             fontSize:
@@ -220,6 +235,8 @@ class SummaryBottomsheet extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                           ),
                           CustomText(
+                            // '₹2,222.00',
+                            professionalTax,
                             // '₹2,222.00',
                             professionalTax,
                             color: AppTheme.getColor(context).onSurface,
@@ -236,7 +253,7 @@ class SummaryBottomsheet extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            'gross_deduction',
+                            grossDeductionsName,
                             // 'Total Deduction',
                             color: AppTheme.getColor(context).onSurface,
                             fontWeight: FontWeight.w700,
@@ -244,6 +261,8 @@ class SummaryBottomsheet extends StatelessWidget {
                                 16 * Responsive.getResponsiveText(context),
                           ),
                           CustomText(
+                            // '₹2,222.00',
+                            grossDeductions,
                             // '₹2,222.00',
                             grossDeductions,
                             color: AppTheme.getColor(context).onSurface,
@@ -281,6 +300,8 @@ class SummaryBottomsheet extends StatelessWidget {
                                   15 * Responsive.getResponsiveText(context),
                             ),
                             CustomText(
+                              // '₹0.00',
+                              totalEmplotersContributions,
                               // '₹0.00',
                               totalEmplotersContributions,
                               color: AppTheme.getColor(context).onSurface,

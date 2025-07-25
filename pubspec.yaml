@@ -59,6 +59,12 @@ dependencies:
   geolocator: ^14.0.2
   modal_bottom_sheet: ^3.0.0
   bloc: ^9.0.0
+  path_provider: ^2.1.5
+  open_filex: ^4.7.0
+  printing: ^5.14.2
+  pdf: ^3.11.3
+  screenshot: ^3.0.0
+  flutter_inappwebview: ^6.1.5
 
   hive: ^2.2.3
   hive_flutter: ^1.1.0
@@ -97,10 +103,10 @@ flutter:
     - assets/dashboard/
     - assets/splash/myco_splash.json
     - assets/take_order/
+    - assets/payslip/
     - assets/sign_in/
     - assets/search_society/
     - assets/ideabox/
-    - assets/payslip/
     - assets/visit/
     - assets/media_picker/
     - assets/employees/
@@ -110,6 +116,12 @@ flutter:
     - assets/svgs/visit/
     - assets/add_expense/
     - assets/dashboard/svgs/
+
+    - assets/face_detection/
+    - assets/svgs/visit/
+    - assets/dashboard/svgs/
+    - assets/assets/
+
     - assets/chat/
     - assets/svgs/work_allocation/
     - assets/asset/
