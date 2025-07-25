@@ -18,7 +18,7 @@ class VerifyOtpResponseModel {
   @JsonKey(name: 'shift_time_id')
   final String? shiftTimeId;
   @JsonKey(name: 'society_id')
-  final String? societyId;
+  final String? companyId;
   @JsonKey(name: 'user_full_name')
   final String? userFullName;
   @JsonKey(name: 'user_first_name')
@@ -34,17 +34,17 @@ class VerifyOtpResponseModel {
   @JsonKey(name: 'user_type')
   final String? userType;
   @JsonKey(name: 'block_id')
-  final String? blockId;
+  final String? branchId;
   @JsonKey(name: 'block_name')
-  final String? blockName;
+  final String? branchName;
   @JsonKey(name: 'floor_name')
-  final String? floorName;
+  final String? departmentName;
   @JsonKey(name: 'unit_name')
   final String? unitName;
   @JsonKey(name: 'base_url')
   final String? baseUrl;
   @JsonKey(name: 'floor_id')
-  final String? floorId;
+  final String? departmentId;
   @JsonKey(name: 'gender')
   final String? gender;
   @JsonKey(name: 'unit_id')
@@ -174,7 +174,7 @@ class VerifyOtpResponseModel {
     this.error,
     this.userId,
     this.shiftTimeId,
-    this.societyId,
+    this.companyId,
     this.userFullName,
     this.userFirstName,
     this.userLastName,
@@ -182,12 +182,12 @@ class VerifyOtpResponseModel {
     this.userEmail,
     this.userIdProof,
     this.userType,
-    this.blockId,
-    this.blockName,
-    this.floorName,
+    this.branchId,
+    this.branchName,
+    this.departmentName,
     this.unitName,
     this.baseUrl,
-    this.floorId,
+    this.departmentId,
     this.gender,
     this.unitId,
     this.zoneId,
@@ -262,7 +262,7 @@ class VerifyOtpResponseModel {
     error: error,
     userId: userId,
     shiftTimeId: shiftTimeId,
-    societyId: societyId,
+    companyId: companyId,
     userFullName: userFullName,
     userFirstName: userFirstName,
     userLastName: userLastName,
@@ -270,12 +270,12 @@ class VerifyOtpResponseModel {
     userEmail: userEmail,
     userIdProof: userIdProof,
     userType: userType,
-    blockId: blockId,
-    blockName: blockName,
-    floorName: floorName,
+    branchId: branchId,
+    branchName: branchName,
+    departmentName: departmentName,
     unitName: unitName,
     baseUrl: baseUrl,
-    floorId: floorId,
+    departmentId: departmentId,
     gender: gender,
     unitId: unitId,
     zoneId: zoneId,

@@ -23,10 +23,10 @@ class HolidayEntity extends Equatable {
   final String? companyId;
   final String? holidayName;
   final String? holidayDescription;
-  final DateTime? holidayStartDate;
+  final String? holidayStartDate;
   final String? holidayDay;
   final String? holidayMonth;
-  final DateTime? holidayEndDate;
+  final String? holidayEndDate;
   final String? monthViewStart;
   final String? monthStart;
   final String? monthViewEnd;
