@@ -101,7 +101,7 @@ class Responsive {
         : 3;
 
     final itemWidth =
-        (screenWidth - (spacing * (itemCount - 1)) + 50) / itemCount;
+        (screenWidth - (spacing * (itemCount - 1))) / itemCount;
     final itemHeight = screenWidth > 600
         ? 180.0
         : screenWidth > 500
