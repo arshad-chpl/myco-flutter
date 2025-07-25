@@ -110,7 +110,7 @@ class ChatListCard extends StatelessWidget {
         leading: CircleAvatar(
           backgroundColor: AppTheme.getColor(context).secondary,
           radius: 35 * Responsive.getResponsive(context),
-          backgroundImage: NetworkImage(profileImagePath),
+          backgroundImage: profileImagePath.isEmpty ? NetworkImage('https://avatar.iran.liara.run/public/1',) : NetworkImage(profileImagePath),
           // Use NetworkImage(profileImageUrl) if needed
         ),
         title: CustomText(
@@ -132,7 +132,7 @@ class ChatListCard extends StatelessWidget {
           children: [
             const Spacer(),
             CustomText(
-              timeAgo,
+              timeAgo.toString(),
               fontSize: 12 * Responsive.getResponsiveText(context),
             )
           ],

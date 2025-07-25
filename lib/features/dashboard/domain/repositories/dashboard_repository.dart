@@ -20,6 +20,4 @@ abstract class DashboardRepository {
 
   /// Returns a [List<Map<String, dynamic>>] containing the news articles.
   Future<Either<Failure,MyUnitResponseEntity>> getMyUnits(Map<String,dynamic> dataMap);
-
-  
 }
