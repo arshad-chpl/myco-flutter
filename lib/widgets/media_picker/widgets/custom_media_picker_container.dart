@@ -35,6 +35,7 @@ class CustomMediaPickerContainer extends StatelessWidget {
       isCropImage,
       titleIsKey,
       imageTitleIsKey;
+  final bool? isRequired;
   final Function(List<File> files)? onSelectedMedia;
 
   const CustomMediaPickerContainer({
@@ -59,6 +60,7 @@ class CustomMediaPickerContainer extends StatelessWidget {
     this.titleColor,
     this.imageTitleColor,
     this.imageTitleSize,
+    this.isRequired = false,
   });
 
   @override
@@ -94,6 +96,7 @@ class CustomMediaPickerContainer extends StatelessWidget {
         isCropImage: isCropImage,
         titleIsKey: titleIsKey,
         imageTitleIsKey: imageTitleIsKey,
+        isRequired: isRequired,
       ),
     ),
   );
@@ -116,6 +119,7 @@ class _MediaPickerContent extends StatelessWidget {
       isCropImage,
       titleIsKey,
       imageTitleIsKey;
+  final bool? isRequired;
   final Function(List<File> files)? onSelectedMedia;
 
   const _MediaPickerContent({
@@ -137,17 +141,21 @@ class _MediaPickerContent extends StatelessWidget {
     this.isCropImage = false,
     this.titleIsKey = false,
     this.imageTitleIsKey = false,
+    this.isRequired = false,
     this.onSelectedMedia,
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) =>
-      BlocBuilder<CustomMediaPickerBloc, CustomMediaPickerState>(
-        builder: (context, state) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (title != null)
+  Widget build(
+    BuildContext context,
+  ) => BlocBuilder<CustomMediaPickerBloc, CustomMediaPickerState>(
+    builder: (context, state) => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (title != null)
+          Row(
+            children: [
               CustomText(
                 title!,
                 isKey: titleIsKey,
@@ -157,22 +165,31 @@ class _MediaPickerContent extends StatelessWidget {
                 color:
                     titleColor ?? AppTheme.getColor(context).onSurfaceVariant,
               ),
-            SizedBox(height: 0.008 * Responsive.getHeight(context)),
-            if (state.images.isNotEmpty)
-              _buildImageGrid(context, state.images)
-            else if (state.document != null)
-              _buildDocumentPreview(context, state.document!)
-            else
-              _buildInitialPicker(context),
-          ],
-        ),
-      );
+              if (isRequired == true)
+                CustomText(
+                  '*',
+                  color: AppColors.red,
+                  fontSize: 14 * Responsive.getResponsiveText(context),
+                  fontWeight: FontWeight.w700,
+                ),
+            ],
+          ),
+        SizedBox(height: 0.008 * Responsive.getHeight(context)),
+        if (state.images.isNotEmpty)
+          _buildImageGrid(context, state.images)
+        else if (state.document != null)
+          _buildDocumentPreview(context, state.document!)
+        else
+          _buildInitialPicker(context),
+      ],
+    ),
+  );
 
   Widget _buildImageGrid(BuildContext context, List<File> images) =>
       DesignBorderContainer(
         borderRadius: 8 * Responsive.getResponsive(context),
         borderColor: AppTheme.getColor(context).primary,
-        backgroundColor: AppTheme.getColor(context).surface,
+        backgroundColor: AppTheme.getColor(context).surfaceContainerHigh,
         child: GridView.count(
           crossAxisCount: 4,
           crossAxisSpacing: 8,
@@ -303,7 +320,8 @@ class _MediaPickerContent extends StatelessWidget {
     child: DesignBorderContainer(
       borderRadius: 12 * Responsive.getResponsive(context),
       borderColor: AppTheme.getColor(context).primary,
-      backgroundColor: backgroundColor ?? AppTheme.getColor(context).surface,
+      backgroundColor:
+          backgroundColor ?? AppTheme.getColor(context).surfaceContainerHigh,
       padding: EdgeInsets.all(10 * Responsive.getResponsive(context)),
       child: SizedBox(
         width: double.infinity,

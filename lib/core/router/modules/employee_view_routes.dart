@@ -9,7 +9,7 @@ import 'package:myco_flutter/features/employees/presentation/pages/employees_scr
 List<GoRoute> employeeRoute = [
   GoRoute(
     path: RoutePaths.employees,
-    name: 'employees',
+    name: 'MemberVC',
     builder: (context, state) => BlocProvider<EmployeeBloc>(
       create: (_) => sl<EmployeeBloc>()..add(LoadUserData()),
       child: EmployeesScreen(),

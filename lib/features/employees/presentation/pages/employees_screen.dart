@@ -22,6 +22,7 @@ import 'package:myco_flutter/widgets/custom_appbar.dart';
 import 'package:myco_flutter/widgets/custom_searchfield.dart';
 import 'package:myco_flutter/widgets/custom_simple_bottom_sheet.dart';
 import 'package:myco_flutter/widgets/custom_text.dart';
+import 'package:myco_flutter/widgets/media_picker/widgets/custom_media_picker_container.dart';
 
 class EmployeesScreen extends StatelessWidget {
   EmployeesScreen({super.key});
@@ -52,6 +53,7 @@ class EmployeesScreen extends StatelessWidget {
               ),
             ),
           ),
+
           body: BlocBuilder<EmployeeBloc, EmployeeState>(
             builder: (context, state) {
               if (state is EmployeeLoading || state is EmployeeInitial) {
@@ -176,7 +178,9 @@ class EmployeesScreen extends StatelessWidget {
                         crossAxisSpacing: Responsive.getGridConfig(
                           context,
                         ).spacing,
-                        childAspectRatio: 2 / 2.5,
+                        childAspectRatio: Responsive.getGridConfig(
+                          context,
+                        ).childAspectRatio,
                       ),
                       itemBuilder: (_, index) {
                         final emp = filteredEmployees[index];
@@ -364,6 +368,37 @@ class EmployeesScreen extends StatelessWidget {
     );
   }
 }
+
+/*
+body:
+              ///Media picker container
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal:
+                      VariableBag.screenHorizontalPadding *
+                      Responsive.getResponsive(context),
+                ),
+                child: CustomMediaPickerContainer(
+                  title: 'Assets Image',
+                  titleFontSize: 14 * Responsive.getResponsiveText(context),
+                  imageTitle: 'Capture Image',
+                  // imageTitleSize: 10,
+                  // containerHeight: 0.100 * Responsive.getHeight(context),
+                  multipleImage: 5,
+                  imagePath: AppAssets.assetGalleryExport,
+                  isCameraShow: true,
+                  isGalleryShow: true,
+                  isDocumentShow: true,
+                  isCropImage: true,
+                  isRequired: true,
+                  onSelectedMedia: (files) {
+                    final paths = files.map((file) => file.path).toList();
+                    log('Selected file paths: $paths');
+                  },
+                ),
+              ),
+
+ */
 
 // body: Padding(
 //   padding: const EdgeInsets.symmetric(

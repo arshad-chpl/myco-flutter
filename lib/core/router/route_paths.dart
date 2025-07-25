@@ -51,7 +51,7 @@ class RoutePaths {
   static const String addShortLeaveScreen = '/add_short_leave_screen';
   static const String addLeaveScreen = '/add_leave_screen';
 
-  static const String employees = '/employees';
+  static const String employees = '/MemberVC';
 
   static const String lostAndFound = '/lost-and-found';
   static const String lostAndFoundAddScreen = '/lost-and-found-add-screen';

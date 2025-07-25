@@ -102,12 +102,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
           children: [
             // AppBar
             const DashboardAppBar(),
-            ElevatedButton(
-              onPressed: () {
-                context.pushNamed('employees');
-              },
-              child: const Icon(Icons.person, color: Colors.blue),
-            ),
             // Body content
             Expanded(
               child: BlocBuilder<DashboardBloc, DashboardState>(
